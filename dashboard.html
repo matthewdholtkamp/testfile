@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous AI Research Pipeline Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --panel-bg: #161b22;
+            --border-color: #30363d;
+            --accent-color: #58a6ff;
+            --success-color: #2ea043;
+            --error-color: #da3633;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max_width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 18px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            background-color: #0d1117;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .slider-container {
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button.secondary {
+            background-color: var(--border-color);
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .status-value {
+            font-family: monospace;
+        }
+
+        .error-log {
+            background-color: #000;
+            color: var(--error-color);
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            height: 100px;
+            overflow-y: auto;
+        }
+
+        .gh-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .sub-section {
+            margin-left: 10px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Autonomous AI Research Pipeline</h1>
+        <div class="gh-actions">
+            <input type="password" id="gh-token" placeholder="GitHub PAT (optional)" style="width: 200px; margin-bottom: 0;">
+            <button onclick="triggerWorkflow()">Run Now</button>
+            <a href="https://github.com" target="_blank" style="color: var(--accent-color); text-decoration: none; margin-left: 10px;">View Repo</a>
+        </div>
+    </header>
+
+    <div class="grid">
+        <!-- Status Panel -->
+        <div class="panel">
+            <h2>System Status</h2>
+            <div class="status-item">
+                <span>Last Run:</span>
+                <span class="status-value" id="status-last-run">Loading...</span>
+            </div>
+            <div class="status-item">
+                <span>Papers Ingested (Today):</span>
+                <span class="status-value" id="status-papers-today">0</span>
+            </div>
+            <div class="status-item">
+                <span>Claims Extracted:</span>
+                <span class="status-value" id="status-claims">0</span>
+            </div>
+            <div class="status-item">
+                <span>Errors:</span>
+                <span class="status-value" style="color: var(--error-color)" id="status-errors">0</span>
+            </div>
+            <div class="status-item">
+                <span>NCBI Rate Limit:</span>
+                <span class="status-value" style="color: var(--success-color)">OK</span>
+            </div>
+            <br>
+            <label>Recent Error Log</label>
+            <div class="error-log" id="error-log">
+                No recent errors.
+            </div>
+        </div>
+
+        <!-- Configuration Actions -->
+        <div class="panel">
+            <h2>Configuration</h2>
+            <p style="font-size: 14px; color: #8b949e;">Manage pipeline settings via JSON configuration.</p>
+            <div style="display: flex; gap: 10px;">
+                <button class="secondary" onclick="document.getElementById('config-upload').click()">Load Config</button>
+                <input type="file" id="config-upload" style="display: none" accept=".json" onchange="loadConfigFromFile(this)">
+                <button onclick="downloadConfig()">Save Config</button>
+            </div>
+            <br>
+            <label>Or Edit Raw JSON:</label>
+            <textarea id="raw-config" style="height: 150px; font-family: monospace; font-size: 12px;"></textarea>
+            <button class="secondary" onclick="applyRawConfig()" style="width: 100%;">Apply Changes from Textarea</button>
+        </div>
+
+        <!-- Database Controls -->
+        <div class="panel" id="db-controls">
+            <h2>Database Controls</h2>
+            <!-- PubMed -->
+            <div class="toggle-group">
+                <input type="checkbox" id="pubmed-enabled" checked disabled title="PubMed is always enabled">
+                <label for="pubmed-enabled">PubMed</label>
+            </div>
+            <div class="sub-section">
+                <label>Max Results per Domain</label>
+                <input type="number" id="pubmed-max" value="50">
+
+                <label>Search Domains (Pillars)</label>
+                <div id="pubmed-domains">
+                    <!-- Domain inputs generated by JS -->
+                </div>
+            </div>
+
+            <hr style="border-color: var(--border-color); opacity: 0.3;">
+
+            <!-- Other DBs -->
+            <div class="toggle-group">
+                <input type="checkbox" id="biorxiv-enabled">
+                <label for="biorxiv-enabled">bioRxiv</label>
+                <select id="biorxiv-freq" style="width: auto; margin-left: auto; margin-bottom: 0; padding: 4px;">
+                    <option value="6h">Every 6h</option>
+                    <option value="12h">Every 12h</option>
+                    <option value="24h">Every 24h</option>
+                    <option value="48h">Every 48h</option>
+                    <option value="weekly">Weekly</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <input type="checkbox" id="clinical-enabled">
+                <label for="clinical-enabled">ClinicalTrials.gov</label>
+                <select id="clinical-freq" style="width: auto; margin-left: auto; margin-bottom: 0; padding: 4px;">
+                    <option value="6h">Every 6h</option>
+                    <option value="12h">Every 12h</option>
+                    <option value="24h">Every 24h</option>
+                    <option value="48h">Every 48h</option>
+                    <option value="weekly">Weekly</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <input type="checkbox" id="geo-enabled">
+                <label for="geo-enabled">GEO (Gene Expression Omnibus)</label>
+                <select id="geo-freq" style="width: auto; margin-left: auto; margin-bottom: 0; padding: 4px;">
+                    <option value="6h">Every 6h</option>
+                    <option value="12h">Every 12h</option>
+                    <option value="24h">Every 24h</option>
+                    <option value="48h">Every 48h</option>
+                    <option value="weekly">Weekly</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Filter & Extraction Controls -->
+        <div class="panel">
+            <h2>Filters & Extraction</h2>
+
+            <label>Gemini Model</label>
+            <select id="gemini-model">
+                <option value="gemini-flash">Gemini Flash (Speed)</option>
+                <option value="gemini-pro">Gemini Pro (Quality)</option>
+            </select>
+
+            <label>Max Papers to Extract</label>
+            <input type="number" id="max-papers" value="10">
+
+            <div class="toggle-group">
+                <input type="checkbox" id="extract-claims">
+                <label for="extract-claims">Extract Claims</label>
+            </div>
+
+            <label>Min Sample Size (Human)</label>
+            <input type="number" id="min-sample-human" value="100">
+
+            <label>Min Sample Size (Mouse)</label>
+            <input type="number" id="min-sample-mouse" value="20">
+
+            <label>Min Effect Size (%)</label>
+            <input type="number" id="min-effect-size" value="10">
+
+            <label>Species Weights (0.0 - 1.0)</label>
+            <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <label style="font-size: 12px">Human</label>
+                    <input type="number" step="0.1" id="weight-human" value="1.0">
+                </div>
+                <div>
+                    <label style="font-size: 12px">Primate</label>
+                    <input type="number" step="0.1" id="weight-primate" value="0.8">
+                </div>
+                <div>
+                    <label style="font-size: 12px">Mouse</label>
+                    <input type="number" step="0.1" id="weight-mouse" value="0.6">
+                </div>
+                 <div>
+                    <label style="font-size: 12px">Cell</label>
+                    <input type="number" step="0.1" id="weight-cell" value="0.2">
+                </div>
+                 <div>
+                    <label style="font-size: 12px">Invert.</label>
+                    <input type="number" step="0.1" id="weight-invert" value="0.1">
+                </div>
+            </div>
+
+            <div class="toggle-group" style="margin-top: 15px;">
+                <input type="checkbox" id="require-replication">
+                <label for="require-replication">Require Replication</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Default Configuration Structure
+    let config = {
+      "pipeline": {
+        "rate_limits": { "ncbi_requests_per_second": 3 },
+        "ingestion": {
+          "pubmed": {
+            "max_results_per_domain": 50,
+            "date_range": "30 days",
+            "domains": {
+              "Genomic Instability": { "query": "genomic instability AND aging" },
+              "Telomere Attrition": { "query": "telomere attrition AND aging" },
+              "Epigenetic Alterations": { "query": "epigenetic alterations AND aging" },
+              "Loss of Proteostasis": { "query": "proteostasis AND aging" },
+              "Deregulated Nutrient Sensing": { "query": "nutrient sensing AND aging" },
+              "Mitochondrial Dysfunction": { "query": "mitochondrial dysfunction AND aging" }
+            }
+          },
+          "biorxiv": { "enabled": true, "frequency": "24h" },
+          "clinicaltrials": { "enabled": true, "frequency": "24h" },
+          "geo": { "enabled": true, "frequency": "24h" }
+        },
+        "extraction": {
+          "model": "gemini-flash",
+          "extract_claims": true,
+          "max_papers": 10
+        },
+        "filters": {
+          "min_sample_size": { "human": 100, "mouse": 20, "cell": 3 },
+          "min_effect_size": 10,
+          "species_weights": { "human": 1.0, "primate": 0.8, "mouse": 0.6, "cell": 0.2, "invertebrate": 0.1 },
+          "require_replication": false
+        }
+      }
+    };
+
+    // Initialize Dashboard
+    document.addEventListener('DOMContentLoaded', () => {
+        // Try to fetch local config.json if running on a server
+        fetch('config/config.json')
+            .then(response => {
+                if (response.ok) return response.json();
+                throw new Error('Config not found');
+            })
+            .then(data => {
+                config = data;
+                renderConfig();
+                updateRawConfig();
+            })
+            .catch(e => {
+                console.log('Using default config or failed to load:', e);
+                renderConfig();
+                updateRawConfig();
+            });
+
+        // Mock Status
+        document.getElementById('status-last-run').innerText = new Date().toLocaleString();
+        document.getElementById('status-papers-today').innerText = Math.floor(Math.random() * 50);
+        document.getElementById('status-claims').innerText = Math.floor(Math.random() * 20);
+    });
+
+    function renderConfig() {
+        const p = config.pipeline;
+
+        // PubMed
+        document.getElementById('pubmed-max').value = p.ingestion.pubmed.max_results_per_domain;
+
+        const domainsContainer = document.getElementById('pubmed-domains');
+        domainsContainer.innerHTML = '';
+        for (const [domain, details] of Object.entries(p.ingestion.pubmed.domains)) {
+            const div = document.createElement('div');
+            div.style.marginBottom = '10px';
+            div.innerHTML = `
+                <label style="font-size: 12px; color: #8b949e;">${domain}</label>
+                <input type="text" value="${details.query}" onchange="updateDomainQuery('${domain}', this.value)">
+            `;
+            domainsContainer.appendChild(div);
+        }
+
+        // Other DBs
+        document.getElementById('biorxiv-enabled').checked = p.ingestion.biorxiv.enabled;
+        document.getElementById('biorxiv-freq').value = p.ingestion.biorxiv.frequency;
+
+        document.getElementById('clinical-enabled').checked = p.ingestion.clinicaltrials.enabled;
+        document.getElementById('clinical-freq').value = p.ingestion.clinicaltrials.frequency;
+
+        document.getElementById('geo-enabled').checked = p.ingestion.geo.enabled;
+        document.getElementById('geo-freq').value = p.ingestion.geo.frequency;
+
+        // Extraction
+        document.getElementById('gemini-model').value = p.extraction.model;
+        document.getElementById('max-papers').value = p.extraction.max_papers;
+        document.getElementById('extract-claims').checked = p.extraction.extract_claims;
+
+        // Filters
+        document.getElementById('min-sample-human').value = p.filters.min_sample_size.human;
+        document.getElementById('min-sample-mouse').value = p.filters.min_sample_size.mouse;
+        document.getElementById('min-effect-size').value = p.filters.min_effect_size;
+
+        document.getElementById('weight-human').value = p.filters.species_weights.human;
+        document.getElementById('weight-primate').value = p.filters.species_weights.primate;
+        document.getElementById('weight-mouse').value = p.filters.species_weights.mouse;
+        document.getElementById('weight-cell').value = p.filters.species_weights.cell;
+        document.getElementById('weight-invert').value = p.filters.species_weights.invertebrate;
+
+        document.getElementById('require-replication').checked = p.filters.require_replication;
+    }
+
+    function updateConfigFromUI() {
+        const p = config.pipeline;
+
+        p.ingestion.pubmed.max_results_per_domain = parseInt(document.getElementById('pubmed-max').value);
+
+        // Domain queries updated via onchange directly
+
+        p.ingestion.biorxiv.enabled = document.getElementById('biorxiv-enabled').checked;
+        p.ingestion.biorxiv.frequency = document.getElementById('biorxiv-freq').value;
+
+        p.ingestion.clinicaltrials.enabled = document.getElementById('clinical-enabled').checked;
+        p.ingestion.clinicaltrials.frequency = document.getElementById('clinical-freq').value;
+
+        p.ingestion.geo.enabled = document.getElementById('geo-enabled').checked;
+        p.ingestion.geo.frequency = document.getElementById('geo-freq').value;
+
+        p.extraction.model = document.getElementById('gemini-model').value;
+        p.extraction.max_papers = parseInt(document.getElementById('max-papers').value);
+        p.extraction.extract_claims = document.getElementById('extract-claims').checked;
+
+        p.filters.min_sample_size.human = parseInt(document.getElementById('min-sample-human').value);
+        p.filters.min_sample_size.mouse = parseInt(document.getElementById('min-sample-mouse').value);
+        p.filters.min_effect_size = parseFloat(document.getElementById('min-effect-size').value);
+
+        p.filters.species_weights.human = parseFloat(document.getElementById('weight-human').value);
+        p.filters.species_weights.primate = parseFloat(document.getElementById('weight-primate').value);
+        p.filters.species_weights.mouse = parseFloat(document.getElementById('weight-mouse').value);
+        p.filters.species_weights.cell = parseFloat(document.getElementById('weight-cell').value);
+        p.filters.species_weights.invertebrate = parseFloat(document.getElementById('weight-invert').value);
+
+        p.filters.require_replication = document.getElementById('require-replication').checked;
+
+        updateRawConfig();
+    }
+
+    function updateDomainQuery(domain, query) {
+        config.pipeline.ingestion.pubmed.domains[domain].query = query;
+        updateRawConfig();
+    }
+
+    function updateRawConfig() {
+        document.getElementById('raw-config').value = JSON.stringify(config, null, 2);
+    }
+
+    function applyRawConfig() {
+        try {
+            const newConfig = JSON.parse(document.getElementById('raw-config').value);
+            config = newConfig;
+            renderConfig();
+            alert('Configuration applied from textarea!');
+        } catch (e) {
+            alert('Invalid JSON: ' + e.message);
+        }
+    }
+
+    function downloadConfig() {
+        updateConfigFromUI();
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "config.json");
+        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    }
+
+    function loadConfigFromFile(input) {
+        const file = input.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                config = JSON.parse(e.target.result);
+                renderConfig();
+                updateRawConfig();
+                alert('Configuration loaded successfully!');
+            } catch (e) {
+                alert('Error parsing JSON file');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function triggerWorkflow() {
+        const token = document.getElementById('gh-token').value;
+        if (!token) {
+            alert('Please enter a GitHub PAT to trigger the workflow, or manually run:\n\ncurl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/OWNER/REPO/actions/workflows/main.yml/dispatches -d \'{"ref":"main"}\'');
+            return;
+        }
+
+        // This is a placeholder for the actual API call logic
+        // You would need to know the repo owner/name
+        alert(`Attempting to trigger workflow via GitHub API...\n(Note: This requires the correct repo/owner in the URL which is currently generic)`);
+    }
+
+    // Attach listeners to inputs to update config state
+    document.querySelectorAll('input, select').forEach(el => {
+        el.addEventListener('change', updateConfigFromUI);
+    });
+</script>
+
+</body>
+</html>
