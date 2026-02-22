@@ -141,24 +141,24 @@ def save_papers(papers, domain):
 
 def main():
     print("Starting PubMed Ingestion...")
-    # Initialize status file
-    pipeline_utils.initialize_status()
-
-    domains = config["pipeline"]["ingestion"]["pubmed"]["domains"]
-    max_results = config["pipeline"]["ingestion"]["pubmed"]["max_results_per_domain"]
-
-    # Check for Smoke Test mode
-    if os.environ.get("SMOKE_TEST") == "true":
-        print("SMOKE TEST MODE: Limiting to 1 domain and 5 results.")
-        # Pick just the first domain
-        first_domain_key = list(domains.keys())[0]
-        domains = {first_domain_key: domains[first_domain_key]}
-        max_results = 5
-
-    total_papers = 0
-    last_output_dir = ""
-
     try:
+        # Initialize status file
+        pipeline_utils.initialize_status()
+
+        domains = config["pipeline"]["ingestion"]["pubmed"]["domains"]
+        max_results = config["pipeline"]["ingestion"]["pubmed"]["max_results_per_domain"]
+
+        # Check for Smoke Test mode
+        if os.environ.get("SMOKE_TEST") == "true":
+            print("SMOKE TEST MODE: Limiting to 1 domain and 5 results.")
+            # Pick just the first domain
+            first_domain_key = list(domains.keys())[0]
+            domains = {first_domain_key: domains[first_domain_key]}
+            max_results = 5
+
+        total_papers = 0
+        last_output_dir = ""
+
         for domain, details in domains.items():
             query = details["query"]
             print(f"Searching domain: {domain}")
@@ -176,10 +176,7 @@ def main():
 
             except Exception as e:
                 print(f"Error processing domain {domain}: {e}")
-                # We log this but don't stop the whole pipeline if one domain fails?
-                # The requirement says "If any step fails, still write status file".
-                # If a domain fails, we might want to continue to others.
-                # But if the whole script crashes, we catch it below.
+                # Log error but continue to next domain
                 pass
 
         # Determine relative path for output directory
@@ -199,8 +196,9 @@ def main():
         )
 
     except Exception as e:
-        pipeline_utils.update_status("ingest_pubmed", "fail", error=e)
-        raise e
+        pipeline_utils.update_status("ingest_pubmed", "fail", error=str(e))
+        # Do not re-raise, exit gracefully so pipeline continues
+        return
     finally:
         pipeline_utils.print_handoff()
 

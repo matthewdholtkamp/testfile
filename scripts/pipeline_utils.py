@@ -61,10 +61,12 @@ def initialize_status():
     return data
 
 def save_status(status_data):
-    """Saves the status data to the file."""
+    """Saves the status data to the file atomically."""
     ensure_admin_dir()
-    with open(STATUS_FILE, "w") as f:
+    temp_file = STATUS_FILE + ".tmp"
+    with open(temp_file, "w") as f:
         json.dump(status_data, f, indent=2)
+    os.rename(temp_file, STATUS_FILE)
 
 def update_status(step_name, status, count=None, error=None, outputs=None):
     """
@@ -103,21 +105,18 @@ def print_handoff(summary_path=None):
 
     status_rel_path = "/00_ADMIN/pipeline_status.json"
 
-    if summary_path:
-        # Make sure summary path starts with /
-        if not summary_path.startswith("/"):
-             # If it's a relative path from repo root
-             if not summary_path.startswith("04_RESULTS"):
-                 # Try to make it relative to repo root if it's absolute
-                 try:
-                     summary_path = "/" + os.path.relpath(summary_path, BASE_DIR)
-                 except ValueError:
-                     pass # keep as is
-             else:
-                 summary_path = "/" + summary_path
-    else:
+    if not summary_path:
         # Try to read from status file if not provided
         data = load_status()
-        summary_path = "/" + data["outputs"].get("claims_summary", "unknown")
+        summary_path = data["outputs"].get("claims_summary", "")
+
+    # Normalize summary_path to start with / if it's relative
+    if summary_path and not summary_path.startswith("/"):
+        summary_path = "/" + summary_path
+
+    # If summary_path is still empty/None, output "unknown" or empty string?
+    # The prompt implies it should be a path. If missing, maybe just empty string or "None".
+    if not summary_path:
+        summary_path = "unknown"
 
     print(f"HANDOFF: status={status_rel_path} summary={summary_path}")

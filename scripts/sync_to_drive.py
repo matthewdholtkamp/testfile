@@ -32,6 +32,8 @@ class DriveSync:
     def __init__(self):
         self.service = self.authenticate()
         self.folder_cache = {} # path_string -> folder_id
+        self.uploaded_count = 0
+        self.skipped_count = 0
 
     def authenticate(self):
         """Authenticates with Google Drive API."""
@@ -91,13 +93,12 @@ class DriveSync:
         """Recursively uploads a directory to Drive."""
         if not os.path.exists(local_path):
             logging.warning(f"Local path {local_path} does not exist. Skipping.")
-            return 0
-
-        count = 0
+            return
 
         # If it's a file (unlikely to be called directly but good for robustness)
         if os.path.isfile(local_path):
-            return self.upload_file(local_path, parent_id)
+            self.upload_file(local_path, parent_id)
+            return
 
         folder_name = os.path.basename(local_path)
         folder_id = self.get_folder_id(folder_name, parent_id)
@@ -105,12 +106,10 @@ class DriveSync:
         for item in os.listdir(local_path):
             item_path = os.path.join(local_path, item)
             if os.path.isdir(item_path):
-                count += self.upload_recursive(item_path, folder_id)
+                self.upload_recursive(item_path, folder_id)
             elif os.path.isfile(item_path):
                 if not item.startswith('.'): # Skip hidden files
-                    if self.upload_file(item_path, folder_id):
-                        count += 1
-        return count
+                    self.upload_file(item_path, folder_id)
 
     def upload_file(self, local_path, parent_id):
         """Uploads a file if it's new or changed."""
@@ -123,6 +122,7 @@ class DriveSync:
             remote_md5 = remote_file.get('md5Checksum')
             if remote_md5 == local_md5:
                 # logging.info(f"Skipping {filename} (no change)")
+                self.skipped_count += 1
                 return False
             else:
                 logging.info(f"Updating {filename} (changed)")
@@ -132,6 +132,7 @@ class DriveSync:
                     fileId=remote_file['id'],
                     media_body=media
                 ).execute()
+                self.uploaded_count += 1
                 return True
         else:
             logging.info(f"Uploading {filename} (new)")
@@ -142,6 +143,7 @@ class DriveSync:
                 media_body=media,
                 fields='id'
             ).execute()
+            self.uploaded_count += 1
             return True
 
     def sync(self):
@@ -149,8 +151,6 @@ class DriveSync:
             logging.error("Authentication failed. Aborting sync.")
             pipeline_utils.update_status("sync_to_drive", "fail", error="Authentication failed")
             return
-
-        total_uploaded = 0
 
         # Prioritize pipeline_status.json and claims_extracted.json
         # We handle this by specifically uploading them first if they exist,
@@ -160,8 +160,7 @@ class DriveSync:
         status_path = os.path.join(BASE_DIR, "00_ADMIN", "pipeline_status.json")
         if os.path.exists(status_path):
             admin_id = self.get_folder_id("00_ADMIN", 'root')
-            if self.upload_file(status_path, admin_id):
-                total_uploaded += 1
+            self.upload_file(status_path, admin_id)
 
         # 2. Claims Summary (find latest)
         # We need to know where it is. We can look at status file or just walk.
@@ -178,8 +177,7 @@ class DriveSync:
                 for part in parts[:-1]: # Directories
                     parent_id = self.get_folder_id(part, parent_id)
 
-                if self.upload_file(summary_path, parent_id):
-                    total_uploaded += 1
+                self.upload_file(summary_path, parent_id)
 
         # 3. Recursive sync for all relevant dirs
         # Note: This might re-check the files we just uploaded, but checksum will match so it's cheap.
@@ -188,9 +186,10 @@ class DriveSync:
             # We want to map local_dir (e.g. 00_ADMIN) to a folder in Drive root
             # upload_recursive takes the folder path and creates it under parent_id
             # So upload_recursive(local_dir, 'root') will create/find 00_ADMIN in root.
-            total_uploaded += self.upload_recursive(local_dir, 'root')
+            self.upload_recursive(local_dir, 'root')
 
-        pipeline_utils.update_status("sync_to_drive", "success", count=total_uploaded)
+        logging.info(f"Sync complete. Uploaded: {self.uploaded_count}, Skipped: {self.skipped_count}")
+        pipeline_utils.update_status("sync_to_drive", "success", count=self.uploaded_count)
 
         # Re-upload status file to capture the "success" state
         status_path = os.path.join(BASE_DIR, "00_ADMIN", "pipeline_status.json")
