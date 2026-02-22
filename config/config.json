@@ -318,7 +318,28 @@
       "emerging_max_score": 6,
       "evidence_backed_max_score": 12,
       "cornerstone_min_score": 13
-    }
+    },
+    "scoring": {
+      "match_weights": {
+        "domain_overlap": 0.45,
+        "token_jaccard": 0.4,
+        "entity_score": 0.15
+      },
+      "match_threshold": 20,
+      "top_k": 3,
+      "composite_weights": {
+        "match": 0.55,
+        "evidence_quality": 0.45,
+        "replication_modifier": 0.1,
+        "contradiction_modifier": 0.35
+      },
+      "evidence_quality_weights": {
+        "evidence_strength": 0.5,
+        "species_relevance": 0.25,
+        "sample_size": 0.25
+      }
+    },
+    "hypothesis_ledger_path": "02_HYPOTHESES/hypothesis_ledger.md"
   },
   "discovery": {
     "enabled": true,
