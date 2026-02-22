@@ -22,7 +22,8 @@ def get_default_status():
         "steps": {
             "ingest_pubmed": {"status": "pending", "count": 0, "error": None},
             "extract_claims": {"status": "pending", "count": 0, "error": None},
-            "sync_to_drive": {"status": "pending", "count": 0, "error": None}
+            "sync_to_drive": {"status": "pending", "count": 0, "error": None},
+            "validate_hypotheses": {"status": "pending", "count": 0, "error": None}
         },
         "outputs": {
             "ingest_dir": "",
@@ -40,11 +41,6 @@ def load_status():
                 data = json.load(f)
                 # Check if this is a new run
                 current_run_id = os.environ.get("GITHUB_RUN_ID", "local_run")
-                # If run_ids mismatch, we might return default, but we should let the caller decide if they want to overwrite
-                # For safety in sequential scripts, we trust the file if it exists, unless explicitly initialized.
-                # However, if the file is from a *previous* unrelated run (locally), we might want to reset.
-                # In GitHub Actions, the runner is clean, so existence implies it was created in this run.
-                # Locally, we might want to check run_id.
                 if current_run_id != "local_run" and data.get("run_id") != current_run_id:
                      return get_default_status()
                 return data
@@ -68,16 +64,17 @@ def save_status(status_data):
         json.dump(status_data, f, indent=2)
     os.rename(temp_file, STATUS_FILE)
 
-def update_status(step_name, status, count=None, error=None, outputs=None):
+def update_status(step_name, status, count=None, outputs=None, config=None, error=None):
     """
     Updates the status of a specific step.
 
     Args:
-        step_name (str): One of "ingest_pubmed", "extract_claims", "sync_to_drive".
+        step_name (str): One of "ingest_pubmed", "extract_claims", "sync_to_drive", "validate_hypotheses".
         status (str): "success" or "fail".
         count (int, optional): Number of items processed.
-        error (str, optional): Error message if failed.
         outputs (dict, optional): Dictionary of output paths to update in the "outputs" section.
+        config (dict, optional): Configuration dictionary (unused but kept for compatibility).
+        error (str, optional): Error message if failed.
     """
     data = load_status()
 
@@ -101,9 +98,7 @@ def update_status(step_name, status, count=None, error=None, outputs=None):
 def print_handoff(summary_path=None):
     """Prints the handoff message."""
     # Ensure paths are relative to repo root for clarity, or absolute if preferred.
-    # The requirement asks for: HANDOFF: status=/00_ADMIN/pipeline_status.json summary=/04_RESULTS/YYYY/MM/DD/claims_extracted.json
-
-    status_rel_path = "/00_ADMIN/pipeline_status.json"
+    # Requirement: [HANDOFF] {path}
 
     if not summary_path:
         # Try to read from status file if not provided
@@ -114,9 +109,24 @@ def print_handoff(summary_path=None):
     if summary_path and not summary_path.startswith("/"):
         summary_path = "/" + summary_path
 
-    # If summary_path is still empty/None, output "unknown" or empty string?
-    # The prompt implies it should be a path. If missing, maybe just empty string or "None".
+    # If summary_path is still empty/None
     if not summary_path:
         summary_path = "unknown"
 
-    print(f"HANDOFF: status={status_rel_path} summary={summary_path}")
+    print(f"[HANDOFF] {summary_path}")
+
+def get_run_date_utc():
+    """Returns (year, month, day) strings based on UTC time."""
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    return now_utc.strftime("%Y"), now_utc.strftime("%m"), now_utc.strftime("%d")
+
+def get_results_dir(config):
+    """Returns 04_RESULTS/YYYY/MM/DD path, creates if needed."""
+    year, month, day = get_run_date_utc()
+    results_dir = os.path.join(BASE_DIR, "04_RESULTS", year, month, day)
+    os.makedirs(results_dir, exist_ok=True)
+    return results_dir
+
+def get_git_sha():
+    """Returns current git SHA or 'unknown'."""
+    return os.environ.get("GITHUB_SHA", "unknown")
