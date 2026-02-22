@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../scripts"))
 # and just mock it heavily or rely on the fact that we will modify it.
 # Actually, since the class structure will change, I should probably write the test
 # expecting the new structure.
-from gemini_client import GeminiClient
+from gemini_client import GeminiClient, ALLOWED_GEMINI_MODELS
 
 class TestGeminiRetry(unittest.TestCase):
     def setUp(self):
@@ -155,7 +155,7 @@ class TestGeminiRetry(unittest.TestCase):
             url = args[0]
             if "gemini-2.5-flash-lite" in url:
                 return r1
-            elif "gemini-1.5-flash" in url:
+            elif "gemini-3-flash" in url:
                 return r2
             return r1
 
@@ -163,7 +163,7 @@ class TestGeminiRetry(unittest.TestCase):
 
         client = GeminiClient(
             model_name="gemini-2.5-flash-lite",
-            fallback_models=["gemini-1.5-flash"]
+            fallback_models=["gemini-3-flash"]
         )
         result = client.extract_claims({"pmid": "123"})
 
@@ -184,12 +184,27 @@ class TestGeminiRetry(unittest.TestCase):
 
         client = GeminiClient(
             model_name="gemini-2.5-flash-lite",
-            fallback_models=["gemini-1.5-flash"]
+            fallback_models=["gemini-3-flash"]
         )
         result = client.extract_claims({"pmid": "123"})
 
         self.assertEqual(result, {"error": "quota_exhausted", "reason": "all_models_failed"})
         self.assertEqual(mock_post.call_count, 2) # Tried both
+
+    @patch("gemini_client.requests.post")
+    def test_disallowed_model_raises_error(self, mock_post):
+        """Test that using a disallowed model raises ValueError."""
+
+        # Instantiate with a disallowed model
+        client = GeminiClient(model_name="gemini-2.0-flash")
+
+        # We expect the error when we try to use it (extract_claims) because
+        # that's when _generate_content_with_retry is called
+        with self.assertRaises(ValueError) as cm:
+            client.extract_claims({"pmid": "123", "title": "Test"})
+
+        self.assertIn("Model not allowed", str(cm.exception))
+        self.assertFalse(mock_post.called)
 
 if __name__ == "__main__":
     unittest.main()

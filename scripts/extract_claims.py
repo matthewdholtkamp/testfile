@@ -9,7 +9,7 @@ import traceback
 # Add script directory to path to allow imports
 sys.path.append(os.path.dirname(__file__))
 
-from gemini_client import GeminiClient
+from gemini_client import GeminiClient, ALLOWED_GEMINI_MODELS
 import pipeline_utils
 
 class MockGeminiClient:
@@ -184,10 +184,22 @@ def main():
     max_papers = int(env_max) if env_max else config["extraction"]["max_papers_per_run"]
 
     # Model Selection
-    gemini_model = os.getenv("GEMINI_MODEL", config["extraction"].get("gemini_model", "gemini-2.5-flash-lite"))
+    gemini_model = os.getenv("GEMINI_MODEL", config["extraction"].get("gemini_model", "gemini-2.5-flash-lite")).strip()
 
     fallback_str = os.getenv("GEMINI_MODEL_FALLBACK", "")
-    fallback_models = [m.strip() for m in fallback_str.split(",") if m.strip()]
+    fallback_models_raw = [m.strip() for m in fallback_str.split(",") if m.strip()]
+
+    # Validate primary model
+    if gemini_model not in ALLOWED_GEMINI_MODELS:
+        print(f"CRITICAL: Primary model {gemini_model} is not allowed.")
+        sys.exit(1)
+
+    # Filter fallback models
+    dropped = [m for m in fallback_models_raw if m not in ALLOWED_GEMINI_MODELS]
+    fallback_models = [m for m in fallback_models_raw if m in ALLOWED_GEMINI_MODELS]
+
+    if dropped:
+        print(f"Warning: Dropped disallowed fallback models: {', '.join(dropped)}")
 
     print(f"Configuration: Model={gemini_model}, Fallbacks={fallback_models}, MaxPapers={max_papers}")
 

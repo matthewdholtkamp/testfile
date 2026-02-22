@@ -31,7 +31,7 @@ jobs:
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GEMINI_MODEL: "gemini-2.5-flash-lite"
-        GEMINI_MODEL_FALLBACK: "gemini-2.5-flash,gemini-1.5-flash"
+        GEMINI_MODEL_FALLBACK: "gemini-2.5-flash,gemini-3-flash"
         MAX_PAPERS_PER_RUN: "10"
       run: python scripts/extract_claims.py
 

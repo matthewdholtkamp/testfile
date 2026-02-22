@@ -16,6 +16,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "../config/config.json")
 
+ALLOWED_GEMINI_MODELS = {"gemini-2.5-flash-lite", "gemini-2.5-flash", "gemini-3-flash"}
+
 class QuotaExhaustedException(Exception):
     """Exception raised when API quota is exhausted (limit: 0)."""
     pass
@@ -65,6 +67,8 @@ class GeminiClient:
             except QuotaExhaustedException:
                 logging.warning(f"Quota exhausted for model {model}. Trying next model if available.")
                 continue
+            except ValueError:
+                raise
             except Exception as e:
                 logging.error(f"Unexpected error with model {model}: {e}")
                 # Depending on error type, might want to continue or stop.
@@ -80,6 +84,10 @@ class GeminiClient:
         Generates content with a specific model, handling retries for 429 errors.
         Raises QuotaExhaustedException if limit is 0.
         """
+        model = model.strip()
+        if model not in ALLOWED_GEMINI_MODELS:
+            raise ValueError(f"Model not allowed: {model}")
+
         url = f"{self.base_url}/{model}:generateContent"
         params = {"key": self.api_key}
         headers = {
