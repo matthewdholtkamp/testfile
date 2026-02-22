@@ -357,6 +357,68 @@
     "search_terms_template": "({target}) AND ({intervention}) AND (\"no effect\" OR \"no significant\" OR \"failed\" OR \"negative\" OR \"adverse\" OR \"contradiction\" OR \"replication failure\")",
     "include_retraction_search": true
   },
+  "backfill": {
+    "years_back": 5,
+    "target_count": 1000,
+    "fulltext_only_if_pmcid": true,
+    "anchor_terms": [
+      "aging",
+      "ageing",
+      "longevity",
+      "lifespan",
+      "healthspan",
+      "geroscience",
+      "frailty",
+      "senescence",
+      "SASP",
+      "inflammaging",
+      "autophagy",
+      "mitophagy",
+      "proteostasis",
+      "epigenetic clock",
+      "DNA methylation",
+      "reprogramming",
+      "Yamanaka",
+      "OSK",
+      "OSKM",
+      "NAD",
+      "NAD+",
+      "sirtuin",
+      "mTOR",
+      "AMPK",
+      "rapamycin",
+      "metformin",
+      "spermidine",
+      "mitochondrial",
+      "oxidative stress",
+      "ROS",
+      "stem cell exhaustion",
+      "ECM",
+      "fibrosis"
+    ],
+    "exclude_terms": [
+      "battery",
+      "electrolyte",
+      "redox",
+      "catalyst",
+      "corrosion",
+      "electrode",
+      "anode",
+      "cathode",
+      "zinc",
+      "iodine",
+      "photovoltaic",
+      "semiconductor"
+    ],
+    "scoring": {
+      "weights": {
+        "domain": 0.40,
+        "anchors": 0.35,
+        "article_type": 0.20,
+        "pmcid": 0.05
+      }
+    }
+  },
   "drive_sync": {
     "enabled": true,
     "service_account_key_env": "GOOGLE_DRIVE_SA_KEY",
@@ -372,7 +434,8 @@
       "writing": "05_WRITING",
       "models": "06_MODELS",
       "notebooklm": "07_NOTEBOOKLM",
-      "discovery": "08_DISCOVERY"
+      "discovery": "08_DISCOVERY",
+      "raw_backfill": "01_RAW/pubmed_backfill"
     }
   },
   "pipeline": {
