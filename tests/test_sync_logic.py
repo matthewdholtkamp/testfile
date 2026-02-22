@@ -91,6 +91,7 @@ class TestDriveSync(unittest.TestCase):
 
     @patch('sync_to_drive.pipeline_utils.update_status')
     @patch('sync_to_drive.pipeline_utils.load_status')
+    @patch('sync_to_drive.DIRS_TO_SYNC', ["00_ADMIN", "01_INGEST", "04_RESULTS"])
     def test_sync_order(self, mock_load_status, mock_update_status):
         # We want to verify that upload_file is called in correct order
         # 1. pipeline_status.json

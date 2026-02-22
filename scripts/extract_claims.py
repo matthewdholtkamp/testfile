@@ -40,12 +40,12 @@ RATE_LIMIT_DELAY = 60.0 / gemini_rpm
 def validate_config(config):
     """Validates that critical configuration keys exist."""
     try:
-        if "gemini_model" not in config["pipeline"]["extraction"]:
-            raise KeyError("pipeline.extraction.gemini_model missing")
-        if "max_papers_per_run" not in config["pipeline"]["extraction"]:
-            raise KeyError("pipeline.extraction.max_papers_per_run missing")
-        if not isinstance(config["pipeline"]["extraction"]["max_papers_per_run"], int):
-            raise ValueError("pipeline.extraction.max_papers_per_run must be int")
+        if "gemini_model" not in config["extraction"]:
+            raise KeyError("extraction.gemini_model missing")
+        if "max_papers_per_run" not in config["extraction"]:
+            raise KeyError("extraction.max_papers_per_run missing")
+        if not isinstance(config["extraction"]["max_papers_per_run"], int):
+            raise ValueError("extraction.max_papers_per_run must be int")
         if "gemini_requests_per_minute" not in config["pipeline"]["rate_limits"]:
             raise KeyError("pipeline.rate_limits.gemini_requests_per_minute missing")
         if not isinstance(config["pipeline"]["rate_limits"]["gemini_requests_per_minute"], int):
@@ -195,7 +195,7 @@ def main():
     files = get_todays_papers()
 
     # Check for smoke test
-    max_papers = config["pipeline"]["extraction"]["max_papers_per_run"]
+    max_papers = config["extraction"]["max_papers_per_run"]
     if os.environ.get("SMOKE_TEST") == "true":
         print("SMOKE TEST MODE: Limiting to 2 papers.")
         max_papers = 2

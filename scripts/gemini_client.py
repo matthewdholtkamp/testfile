@@ -24,7 +24,7 @@ class GeminiClient:
         # Load config
         with open(CONFIG_PATH, "r") as f:
             config = json.load(f)
-            extraction_config = config["pipeline"]["extraction"]
+            extraction_config = config["extraction"]
             self.model_name = extraction_config.get("gemini_model", "gemini-1.5-flash")
             self.temperature = extraction_config.get("temperature", 0.1)
             self.max_output_tokens = extraction_config.get("max_output_tokens", 4096)
