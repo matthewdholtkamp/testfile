@@ -32,13 +32,39 @@ jobs:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       run: python scripts/extract_claims.py
 
-    - name: Run Drive Sync
+    - name: Write OAuth token.json
       if: always()
       env:
-        SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        GOOGLE_DRIVE_TOKEN_JSON: ${{ secrets.GOOGLE_DRIVE_TOKEN_JSON }}
       run: |
-        # If the user stored JSON in a secret, write it to file
-        if [ -n "$SERVICE_ACCOUNT_JSON" ]; then
-          echo "$SERVICE_ACCOUNT_JSON" > service_account.json
-        fi
+        cat > token.json <<'JSON'
+        ${{ secrets.GOOGLE_DRIVE_TOKEN_JSON }}
+        JSON
+        chmod 600 token.json
+
+    - name: Verify token.json
+      if: always()
+      run: |
+        python -c 'import json; t=json.load(open("token.json")); assert "refresh_token" in t'
+
+    - name: Run Drive Sync
+      if: always()
+      continue-on-error: true
+      env:
+        DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+      run: |
         python scripts/sync_to_drive.py
+
+    - name: Cleanup token
+      if: always()
+      run: rm -f token.json || true
+
+    - name: Upload Artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: pipeline-results
+        path: |
+          01_INGEST/**
+          04_RESULTS/**
+          00_ADMIN/pipeline_status.json
