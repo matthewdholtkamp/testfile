@@ -27,6 +27,27 @@ jobs:
         NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
       run: python scripts/ingest_pubmed.py
 
+    - name: Count Ingested Papers
+      id: ingest_count
+      run: |
+        python -c '
+        import os, datetime, json, glob
+        try:
+            date_path = datetime.datetime.now(datetime.timezone.utc).strftime("%Y/%m/%d")
+            path = f"01_INGEST/papers/{date_path}/*.json"
+            files = glob.glob(path)
+            count = 0
+            for f in files:
+                try:
+                    with open(f) as fp: count += len(json.load(fp))
+                except: pass
+        except:
+            count = 0
+        print(f"paper_count={count}")
+        with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+            print(f"paper_count={count}", file=fh)
+        '
+
     - name: Run Extraction
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -34,6 +55,15 @@ jobs:
         GEMINI_MODEL_FALLBACK: "gemini-2.5-flash,gemini-3-flash"
         MAX_PAPERS_PER_RUN: "10"
       run: python scripts/extract_claims.py
+
+    - name: Run Validation
+      if: always() && steps.ingest_count.outputs.paper_count != '0'
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GEMINI_MODEL: "gemini-2.5-flash-lite"
+        GEMINI_MODEL_FALLBACK: "gemini-2.5-flash,gemini-3-flash"
+        MAX_PAPERS_PER_RUN: "10"
+      run: python scripts/validate_hypotheses.py
 
     - name: Write OAuth token.json
       if: always()
@@ -70,4 +100,5 @@ jobs:
         path: |
           01_INGEST/**
           04_RESULTS/**
+          04_RESULTS/**/validated_claims.json
           00_ADMIN/pipeline_status.json
