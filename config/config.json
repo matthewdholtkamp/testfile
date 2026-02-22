@@ -369,12 +369,24 @@
         "date_range": null,
         "max_results_per_domain": 100,
         "domains": {
-          "epigenetic": {},
-          "senescence": {},
-          "mitochondrial": {},
-          "nutrient_sensing": {},
-          "stem_cell_ecm": {},
-          "comparative": {}
+          "epigenetic": {
+            "query": "(\"Aging\"[MeSH] OR \"biological aging\"[tiab] OR \"epigenetic aging\"[tiab]) AND (\"DNA Methylation\"[MeSH] OR \"Epigenomics\"[MeSH] OR \"Histones\"[MeSH] OR \"epigenetic clock\"[tiab] OR \"GrimAge\"[tiab] OR \"DunedinPACE\"[tiab] OR \"Horvath clock\"[tiab] OR \"methylation drift\"[tiab] OR \"chromatin remodeling\"[tiab] OR \"transcriptomic noise\"[tiab] OR \"histone modification\"[tiab]) AND (\"biomarker\"[tiab] OR \"intervention\"[tiab] OR \"treatment\"[tiab] OR \"reprogramming\"[tiab] OR \"HDAC\"[tiab] OR \"alpha-ketoglutarate\"[tiab] OR \"clinical trial\"[pt] OR \"cohort\"[tiab] OR \"longitudinal\"[tiab])"
+          },
+          "senescence": {
+            "query": "(\"Cellular Senescence\"[MeSH] OR \"cellular senescence\"[tiab] OR \"inflammaging\"[tiab] OR \"inflamm-aging\"[tiab] OR \"immunosenescence\"[tiab]) AND (\"SASP\"[tiab] OR \"senescence-associated secretory\"[tiab] OR \"senolytic\"[tiab] OR \"senomorphic\"[tiab] OR \"p16\"[tiab] OR \"CDKN2A\"[tiab] OR \"SA-beta-gal\"[tiab] OR \"dasatinib\"[tiab] OR \"quercetin\"[tiab] OR \"fisetin\"[tiab] OR \"navitoclax\"[tiab] OR \"ABT-263\"[tiab] OR \"Interleukin-6\"[MeSH] OR \"Tumor Necrosis Factor-alpha\"[MeSH] OR \"senescent cells\"[tiab] OR \"senostatic\"[tiab]) AND (\"Aging\"[MeSH] OR \"aging\"[tiab] OR \"aged\"[tiab] OR \"age-related\"[tiab] OR \"lifespan\"[tiab] OR \"healthspan\"[tiab] OR \"longevity\"[tiab])"
+          },
+          "mitochondrial": {
+            "query": "(\"Mitochondria\"[MeSH] OR \"mitochondrial dysfunction\"[tiab] OR \"Mitophagy\"[MeSH] OR \"mitophagy\"[tiab]) AND (\"Aging\"[MeSH] OR \"aging\"[tiab] OR \"age-related\"[tiab] OR \"aged\"[tiab]) AND (\"NAD\"[tiab] OR \"NAD+\"[tiab] OR \"NMN\"[tiab] OR \"nicotinamide mononucleotide\"[tiab] OR \"nicotinamide riboside\"[tiab] OR \"urolithin\"[tiab] OR \"electron transport\"[tiab] OR \"oxidative phosphorylation\"[tiab] OR \"mtDNA\"[tiab] OR \"mitochondrial DNA\"[tiab] OR \"Complex I\"[tiab] OR \"reactive oxygen species\"[tiab] OR \"MitoQ\"[tiab] OR \"elamipretide\"[tiab] OR \"biomarker\"[tiab] OR \"intervention\"[tiab])"
+          },
+          "nutrient_sensing": {
+            "query": "(\"TOR Serine-Threonine Kinases\"[MeSH] OR \"mTOR\"[tiab] OR \"AMP-Activated Protein Kinases\"[MeSH] OR \"AMPK\"[tiab] OR \"Autophagy\"[MeSH] OR \"autophagy\"[tiab] OR \"proteostasis\"[tiab] OR \"protein homeostasis\"[tiab] OR \"Insulin-Like Growth Factor I\"[MeSH] OR \"insulin-IGF\"[tiab]) AND (\"Aging\"[MeSH] OR \"aging\"[tiab] OR \"lifespan\"[tiab] OR \"longevity\"[tiab] OR \"healthspan\"[tiab] OR \"age-related\"[tiab]) AND (\"rapamycin\"[tiab] OR \"rapalog\"[tiab] OR \"everolimus\"[tiab] OR \"metformin\"[tiab] OR \"spermidine\"[tiab] OR \"caloric restriction\"[tiab] OR \"calorie restriction\"[tiab] OR \"dietary restriction\"[tiab] OR \"fasting\"[tiab] OR \"protein aggregation\"[tiab] OR \"unfolded protein response\"[tiab] OR \"proteasome\"[tiab] OR \"intervention\"[tiab] OR \"clinical trial\"[pt])"
+          },
+          "stem_cell_ecm": {
+            "query": "(\"Stem Cells\"[MeSH] OR \"stem cell\"[tiab] OR \"progenitor cell\"[tiab] OR \"Extracellular Matrix\"[MeSH] OR \"extracellular matrix\"[tiab] OR \"Fibrosis\"[MeSH] OR \"tissue stiffness\"[tiab] OR \"regenerative capacity\"[tiab]) AND (\"Aging\"[MeSH] OR \"aging\"[tiab] OR \"age-related\"[tiab] OR \"aged\"[tiab]) AND (\"stem cell exhaustion\"[tiab] OR \"niche\"[tiab] OR \"Klotho\"[tiab] OR \"GDF11\"[tiab] OR \"parabiosis\"[tiab] OR \"plasma exchange\"[tiab] OR \"plasma dilution\"[tiab] OR \"pirfenidone\"[tiab] OR \"collagen crosslink\"[tiab] OR \"MMP\"[tiab] OR \"TIMP\"[tiab] OR \"telomere\"[tiab] OR \"telomerase\"[tiab] OR \"regeneration\"[tiab] OR \"intervention\"[tiab])"
+          },
+          "comparative": {
+            "query": "(\"Longevity\"[MeSH] OR \"longevity\"[tiab] OR \"lifespan\"[tiab] OR \"long-lived\"[tiab] OR \"negligible senescence\"[tiab]) AND (\"species\"[tiab] OR \"comparative\"[tiab] OR \"evolutionary\"[tiab] OR \"Heterocephalus\"[tiab] OR \"naked mole rat\"[tiab] OR \"bowhead whale\"[tiab] OR \"Balaena\"[tiab] OR \"Greenland shark\"[tiab] OR \"Myotis\"[tiab] OR \"bat\"[tiab] OR \"tortoise\"[tiab] OR \"rockfish\"[tiab] OR \"Sebastes\"[tiab] OR \"cancer resistance\"[tiab] OR \"cross-species\"[tiab] OR \"ortholog\"[tiab] OR \"maximum lifespan\"[tiab])"
+          }
         }
       }
     }
