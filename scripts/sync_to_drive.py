@@ -3,6 +3,7 @@ import sys
 import logging
 import hashlib
 import json
+import datetime
 import argparse
 import pipeline_utils
 from google.oauth2.credentials import Credentials
@@ -27,7 +28,7 @@ except Exception as e:
     config = {}
 
 # Constants
-SCOPES = ['https://www.googleapis.com/auth/drive.file']
+SCOPES = ['https://www.googleapis.com/auth/drive']
 TOKEN_FILE = 'token.json'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -331,17 +332,62 @@ def main():
 
     except SystemExit:
         # Expected exit from validation failures
-        if not args.pull_index:
-             pipeline_utils.update_status("sync_to_drive", "fail", error="Validation/Auth failed")
+        if args.pull_index:
+            logging.warning("Pull index failed (likely auth/scope issue). Continuing best-effort...")
+
+            pipeline_utils.update_status("sync_to_drive", "warning", error="Pull index failed (best-effort)")
+
+            try:
+                admin_dir = os.path.join(BASE_DIR, "00_ADMIN")
+                os.makedirs(admin_dir, exist_ok=True)
+                manifest_path = os.path.join(admin_dir, "run_manifest.jsonl")
+
+                warning_entry = {
+                    "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    "level": "WARNING",
+                    "message": "Pull index failed due to auth/scope error. Deduplication may be incomplete."
+                }
+
+                with open(manifest_path, "a") as f:
+                    f.write(json.dumps(warning_entry) + "\n")
+            except Exception:
+                pass
+
+            sys.exit(0)
+
+        pipeline_utils.update_status("sync_to_drive", "fail", error="Validation/Auth failed")
         pipeline_utils.print_handoff()
         sys.exit(1)
     except Exception as e:
         logging.error(f"Sync failed: {str(e).split('For help')[0]}")
-        if not args.pull_index:
-             pipeline_utils.update_status("sync_to_drive", "fail", error=str(e))
+
+        if args.pull_index:
+            logging.warning("Pull index failed with exception. Continuing best-effort...")
+
+            pipeline_utils.update_status("sync_to_drive", "warning", error=f"Pull index failed: {str(e)}")
+
+            try:
+                admin_dir = os.path.join(BASE_DIR, "00_ADMIN")
+                os.makedirs(admin_dir, exist_ok=True)
+                manifest_path = os.path.join(admin_dir, "run_manifest.jsonl")
+
+                warning_entry = {
+                    "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    "level": "WARNING",
+                    "message": f"Pull index failed: {str(e)}. Deduplication may be incomplete."
+                }
+
+                with open(manifest_path, "a") as f:
+                    f.write(json.dumps(warning_entry) + "\n")
+            except Exception:
+                pass
+
+            sys.exit(0)
+
+        pipeline_utils.update_status("sync_to_drive", "fail", error=str(e))
 
         # Try to upload status if syncer is available and authenticated
-        if syncer and syncer.service and not args.pull_index:
+        if syncer and syncer.service:
             try:
                 status_path = os.path.join(BASE_DIR, "00_ADMIN", "pipeline_status.json")
                 if os.path.exists(status_path):
