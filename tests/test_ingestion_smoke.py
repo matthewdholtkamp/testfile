@@ -13,16 +13,14 @@ class TestIngestPubmed(unittest.TestCase):
         with open(config_path, 'r') as f:
             config = json.load(f)
 
-        self.assertIn('pipeline', config)
-        self.assertIn('ingestion', config['pipeline'])
-        self.assertIn('pubmed', config['pipeline']['ingestion'])
+        self.assertIn('domains', config)
 
         # Check domain queries are present
-        domains = config['pipeline']['ingestion']['pubmed']['domains']
+        domains = config['domains']
         self.assertIsInstance(domains, dict)
         self.assertTrue(len(domains) > 0)
         for domain, details in domains.items():
-            self.assertIn('query', details)
+            self.assertIn('pubmed_query', details)
 
 if __name__ == '__main__':
     unittest.main()

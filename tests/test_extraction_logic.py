@@ -22,11 +22,11 @@ class TestExtractionLogic(unittest.TestCase):
         }
         # Config mock
         self.config = {
+            "extraction": {
+                "max_papers_per_run": 2,
+                "gemini_model": "test-model"
+            },
             "pipeline": {
-                "extraction": {
-                    "max_papers_per_run": 2,
-                    "gemini_model": "test-model"
-                },
                 "rate_limits": {
                     "gemini_requests_per_minute": 60
                 }

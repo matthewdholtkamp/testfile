@@ -18,7 +18,10 @@ NCBI_API_KEY = secrets.ncbi_api_key
 
 # Constants
 BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
-RATE_LIMIT_DELAY = 1.0 / config["pipeline"]["rate_limits"]["ncbi_requests_per_second"]
+# Get rate limit from databases config, falling back to pipeline config if needed
+rate_limit = config["databases"]["pubmed"].get("rate_limit_per_second",
+             config["pipeline"]["rate_limits"].get("ncbi_requests_per_second", 10))
+RATE_LIMIT_DELAY = 1.0 / rate_limit
 DB = "pubmed"
 
 def rate_limited_request(url, params):
@@ -32,26 +35,17 @@ def rate_limited_request(url, params):
 def search_pubmed(query, max_results):
     """Searches PubMed for a query and returns list of UIDs."""
     # Add date range if specified in config
-    date_range = config["pipeline"]["ingestion"]["pubmed"].get("date_range")
-    if date_range == "30 days":
-        params = {
-            "db": DB,
-            "term": query,
-            "retmax": max_results,
-            "usehistory": "y",
-            "retmode": "json",
-            "reldate": 30,
-            "datetype": "edat"  # Filter by Entrez date (publication date)
-        }
-    else:
-        # Default fallback or custom logic could go here
-        params = {
-            "db": DB,
-            "term": query,
-            "retmax": max_results,
-            "usehistory": "y",
-            "retmode": "json"
-        }
+    lookback_days = config["databases"]["pubmed"].get("lookback_days", 1)
+
+    params = {
+        "db": DB,
+        "term": query,
+        "retmax": max_results,
+        "usehistory": "y",
+        "retmode": "json",
+        "reldate": lookback_days,
+        "datetype": config["databases"]["pubmed"].get("date_type", "edat")
+    }
 
     response = rate_limited_request(f"{BASE_URL}/esearch.fcgi", params)
     data = response.json()
@@ -145,8 +139,8 @@ def main():
         # Initialize status file
         pipeline_utils.initialize_status()
 
-        domains = config["pipeline"]["ingestion"]["pubmed"]["domains"]
-        max_results = config["pipeline"]["ingestion"]["pubmed"]["max_results_per_domain"]
+        domains = config["domains"]
+        max_results = config["databases"]["pubmed"].get("max_results_per_query", 100)
 
         # Check for Smoke Test mode
         if os.environ.get("SMOKE_TEST") == "true":
@@ -160,7 +154,16 @@ def main():
         last_output_dir = ""
 
         for domain, details in domains.items():
-            query = details["query"]
+            # Check if domain is enabled (if enabled key exists)
+            if not details.get("enabled", True):
+                print(f"Skipping domain {domain} (disabled)")
+                continue
+
+            query = details.get("pubmed_query")
+            if not query:
+                 print(f"Skipping domain {domain} (no pubmed_query)")
+                 continue
+
             print(f"Searching domain: {domain}")
 
             try:

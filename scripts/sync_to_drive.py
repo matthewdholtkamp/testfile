@@ -3,6 +3,7 @@ import sys
 import logging
 import hashlib
 import datetime
+import json
 import pipeline_utils
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -14,11 +15,38 @@ sys.path.append(os.path.dirname(__file__))
 # Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# Load configuration
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), "../config/config.json")
+try:
+    with open(CONFIG_PATH, "r") as f:
+        config = json.load(f)
+except Exception as e:
+    logging.warning(f"Could not load config: {e}. Using defaults.")
+    config = {}
+
 # Constants
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
 SERVICE_ACCOUNT_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'service_account.json')
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DIRS_TO_SYNC = ["00_ADMIN", "01_INGEST", "04_RESULTS"]
+
+def get_dirs_to_sync():
+    """Extracts unique top-level directories to sync from config."""
+    folders = config.get("drive_sync", {}).get("folders", {}).values()
+    if not folders:
+        # Fallback default if config is missing/empty
+        return ["00_ADMIN", "01_INGEST", "04_RESULTS"]
+
+    top_level_dirs = set()
+    for folder in folders:
+        # Normalize path separators
+        folder = folder.replace("\\", "/")
+        parts = folder.split("/")
+        if parts:
+            top_level_dirs.add(parts[0])
+
+    return sorted(list(top_level_dirs))
+
+DIRS_TO_SYNC = get_dirs_to_sync()
 
 def calculate_md5(filepath):
     """Calculates MD5 checksum of a local file."""
