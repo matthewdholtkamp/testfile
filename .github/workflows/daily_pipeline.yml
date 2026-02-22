@@ -34,13 +34,13 @@ jobs:
 
     - name: Write OAuth token.json
       if: always()
-      env:
-        GOOGLE_DRIVE_TOKEN_JSON: ${{ secrets.GOOGLE_DRIVE_TOKEN_JSON }}
+      shell: bash
       run: |
         cat > token.json <<'JSON'
-        ${{ secrets.GOOGLE_DRIVE_TOKEN_JSON }}
+        ${{ secrets.GOOGLE_TOKEN_JSON }}
         JSON
         chmod 600 token.json
+        test -s token.json
 
     - name: Verify token.json
       if: always()
