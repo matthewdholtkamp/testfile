@@ -1,672 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PROJECT LONGEVITY — Pipeline Dashboard</title>
-  <style>
-    :root{
-      --bg:#0d1117; --text:#c9d1d9; --muted:#8b949e;
-      --panel:#161b22; --border:#30363d; --accent:#58a6ff;
-      --good:#2ea043; --warn:#d29922; --bad:#da3633;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-    }
-    *{box-sizing:border-box}
-    body{
-      font-family:var(--sans);
-      background:var(--bg);
-      color:var(--text);
-      margin:0;
-      padding:20px;
-    }
-    .container{max-width:1200px;margin:0 auto;}
-    header{
-      display:flex;justify-content:space-between;align-items:center;gap:12px;
-      margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);
-      flex-wrap:wrap;
-    }
-    h1{margin:0;font-size:20px;letter-spacing:0.2px}
-    .subhead{color:var(--muted);font-size:13px;margin-top:4px}
-    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .actions input[type="password"], .actions input[type="text"]{
-      width:240px;max-width:60vw;
-      padding:8px;background:#0b0f14;border:1px solid var(--border);
-      color:var(--text);border-radius:6px;
-    }
-    .actions button, button{
-      background:var(--accent);color:#fff;border:none;
-      padding:9px 12px;border-radius:6px;cursor:pointer;
-      font-weight:600;font-size:13px;
-    }
-    button:hover{opacity:.92}
-    button.secondary{background:transparent;border:1px solid var(--border);color:var(--text)}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PROJECT LONGEVITY — Research Pipeline</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --bg-deep: #0d1117;
+            --panel-bg: #161b22;
+            --border-color: #30363d;
+            --accent-blue: #58a6ff;
+            --success-green: #238636;
+            --warning-yellow: #d29922;
+            --error-red: #da3633;
+        }
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-      gap:16px;
-    }
-    .panel{
-      background:var(--panel);border:1px solid var(--border);
-      border-radius:10px;padding:16px;
-    }
-    .panel h2{
-      margin:0 0 12px 0;font-size:15px;
-      padding-bottom:10px;border-bottom:1px solid var(--border);
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-    }
-    .pill{
-      font-size:12px;border:1px solid var(--border);
-      padding:3px 8px;border-radius:999px;color:var(--muted)
-    }
-    .status-list{display:grid;gap:10px}
-    .row{display:flex;justify-content:space-between;gap:12px;font-size:13px}
-    .value{font-family:var(--mono)}
-    .ok{color:var(--good)} .bad{color:var(--bad)} .warn{color:var(--warn)}
-    .small{font-size:12px;color:var(--muted)}
-    .error-log{
-      background:#0b0f14;border:1px solid var(--border);
-      color:var(--bad);padding:10px;border-radius:8px;
-      font-family:var(--mono);font-size:12px;height:140px;overflow:auto;
-      white-space:pre-wrap;
-    }
-    textarea{
-      width:100%;padding:10px;border-radius:8px;
-      background:#0b0f14;border:1px solid var(--border);
-      color:var(--text);font-family:var(--mono);font-size:12px;
-      min-height:220px;
-    }
-    label{display:block;margin:10px 0 6px;font-weight:700;font-size:12px;color:var(--muted)}
-    select,input[type="number"],input[type="text"]{
-      width:100%;padding:8px;border-radius:8px;
-      background:#0b0f14;border:1px solid var(--border);
-      color:var(--text);
-    }
-    .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .kpi{
-      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px
-    }
-    .card{
-      border:1px solid var(--border);border-radius:10px;padding:12px;background:#0b0f14;
-    }
-    .card .t{font-size:12px;color:var(--muted)}
-    .card .n{font-size:18px;font-family:var(--mono);margin-top:4px}
-    .step{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:10px;border:1px solid var(--border);border-radius:10px;background:#0b0f14;margin-top:10px;
-      font-size:13px;
-    }
-    .step .name{font-weight:700}
-    .step .meta{font-family:var(--mono);font-size:12px;color:var(--muted)}
-    .step .state{font-weight:800}
-    .divider{height:1px;background:var(--border);margin:12px 0;opacity:.7}
-    .hint{color:var(--muted);font-size:12px;line-height:1.35}
-    .btnrow{display:flex;gap:10px;flex-wrap:wrap}
-    .mono{font-family:var(--mono)}
-  </style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: #c9d1d9;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .glass-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .input-field {
+            background: #0b0f14;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #f0f6fc;
+            transition: all 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: #30363d;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-blue);
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .status-pill {
+            padding: 2px 10px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .scroll-custom::-webkit-scrollbar { width: 6px; }
+        .scroll-custom::-webkit-scrollbar-track { background: transparent; }
+        .scroll-custom::-webkit-scrollbar-thumb { background: #30363d; border-radius: 10px; }
+
+        @keyframes pulse-opacity {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .running-pulse { animation: pulse-opacity 2s infinite ease-in-out; }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            transform: translateY(100px);
+            transition: transform 0.3s ease-out;
+        }
+        .toast.show { transform: translateY(0); }
+    </style>
 </head>
-<body>
-<div class="container">
-  <header>
-    <div>
-      <h1>PROJECT LONGEVITY — Autonomous Research Pipeline</h1>
-      <div class="subhead">Ingest → Extract → Validate → Sync. Deterministic scoring. Daily UTC run.</div>
+<body class="p-4 md:p-8 min-h-screen">
+
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="toast glass-panel p-4 flex items-center gap-3 border-l-4 border-l-blue-500 min-w-[300px]">
+        <div id="toastIcon" class="text-blue-500">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <div id="toastMessage" class="text-sm font-medium">Notification message</div>
     </div>
 
-    <div class="actions">
-      <input type="text" id="repo" value="matthewdholtkamp/testfile" title="owner/repo" />
-      <input type="password" id="gh-token" placeholder="GitHub PAT (optional)" />
-      <button onclick="refreshAll()">Refresh</button>
-      <button class="secondary" onclick="triggerWorkflow()">Run Now</button>
-      <a id="repoLink" href="https://github.com/matthewdholtkamp/testfile" target="_blank">View Repo</a>
+    <div class="max-w-7xl mx-auto space-y-6">
+        
+        <!-- Top Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-[#30363d]">
+            <div>
+                <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <span class="text-blue-500">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.642.316a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.823.362l-1.177.904A2 2 0 013.5 13V6a2 2 0 012-2h11a2 2 0 012 2v2.5"></path></svg>
+                    </span>
+                    PROJECT LONGEVITY
+                </h1>
+                <p class="text-sm text-gray-400 mt-1 uppercase tracking-widest font-medium">Research Intelligence Pipeline</p>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden md:block">
+                    <p class="text-[10px] uppercase text-gray-500 font-bold">Automatic Schedule</p>
+                    <p class="text-xs mono text-green-400" id="scheduleDisplay">DAILY @ 00:00 UTC</p>
+                </div>
+                <div class="h-8 w-[1px] bg-[#30363d] mx-2"></div>
+                <div class="flex gap-2">
+                    <button onclick="refreshAll()" class="bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] font-semibold text-sm px-4 py-2 rounded-md border border-[#30363d] transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Refresh
+                    </button>
+                    <button onclick="triggerWorkflow()" class="bg-[#238636] hover:bg-[#2ea043] text-white font-semibold text-sm px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        Manual Pull
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Column: Health & Steps -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- KPI Section -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="glass-panel p-4">
+                        <p class="text-xs font-bold text-gray-500 uppercase">Current Session</p>
+                        <div id="statusPill" class="mt-2 inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-gray-800 text-gray-400">LOADING</div>
+                        <p class="text-[10px] text-gray-500 mt-2 mono truncate" id="kpiLastRun">PENDING SYNC</p>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="text-xs font-bold text-gray-500 uppercase">Ingested Papers</p>
+                        <p class="text-2xl font-bold text-white mt-1 mono" id="kpiPapers">0</p>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="text-xs font-bold text-gray-500 uppercase">Extraction Count</p>
+                        <p class="text-2xl font-bold text-white mt-1 mono" id="kpiClaims">0</p>
+                    </div>
+                    <div class="glass-panel p-4">
+                        <p class="text-xs font-bold text-gray-500 uppercase">Validated</p>
+                        <p class="text-2xl font-bold text-green-500 mt-1 mono" id="kpiValidated">0</p>
+                    </div>
+                </div>
+
+                <!-- Pipeline Lifecycle -->
+                <div class="glass-panel p-6">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-8 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Live Execution State
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+                        <div class="absolute left-0 top-4 right-0 h-[2px] bg-[#30363d] hidden md:block -z-0 translate-y-[-1px]"></div>
+                        
+                        <div class="z-10 bg-[#161b22] pr-4">
+                            <div id="stepIngestDot" class="w-8 h-8 rounded-full border-2 border-[#30363d] flex items-center justify-center text-xs font-bold mb-3 bg-[#0d1117]">1</div>
+                            <h4 class="text-xs font-bold text-white uppercase mb-1">Ingest</h4>
+                            <span id="stepIngestState" class="status-pill bg-gray-800 text-[9px]">idle</span>
+                        </div>
+                        <div class="z-10 bg-[#161b22] pr-4">
+                            <div id="stepExtractDot" class="w-8 h-8 rounded-full border-2 border-[#30363d] flex items-center justify-center text-xs font-bold mb-3 bg-[#0d1117]">2</div>
+                            <h4 class="text-xs font-bold text-white uppercase mb-1">Extract</h4>
+                            <span id="stepExtractState" class="status-pill bg-gray-800 text-[9px]">idle</span>
+                        </div>
+                        <div class="z-10 bg-[#161b22] pr-4">
+                            <div id="stepValidateDot" class="w-8 h-8 rounded-full border-2 border-[#30363d] flex items-center justify-center text-xs font-bold mb-3 bg-[#0d1117]">3</div>
+                            <h4 class="text-xs font-bold text-white uppercase mb-1">Validate</h4>
+                            <span id="stepValidateState" class="status-pill bg-gray-800 text-[9px]">idle</span>
+                        </div>
+                        <div class="z-10 bg-[#161b22]">
+                            <div id="stepSyncDot" class="w-8 h-8 rounded-full border-2 border-[#30363d] flex items-center justify-center text-xs font-bold mb-3 bg-[#0d1117]">4</div>
+                            <h4 class="text-xs font-bold text-white uppercase mb-1">Sync</h4>
+                            <span id="stepSyncState" class="status-pill bg-gray-800 text-[9px]">idle</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logs & Results -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-panel p-6">
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Activity Log (Last 24h)
+                        </h3>
+                        <div id="actionLog" class="mono text-[10px] p-4 bg-black/50 rounded-lg border border-[#30363d] h-48 overflow-y-auto scroll-custom leading-relaxed space-y-2">
+                            Awaiting deployment data...
+                        </div>
+                    </div>
+                    <div class="glass-panel p-6">
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Scientific Evidence
+                        </h3>
+                        <div id="validatedPreview" class="text-[10px] space-y-3 mono text-gray-400 h-48 overflow-y-auto scroll-custom">
+                            No claims synchronized.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Control Center -->
+            <div class="space-y-6">
+                
+                <!-- Independent Configuration Tuners -->
+                <div class="glass-panel p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider">Pipeline Tuners</h3>
+                        <button onclick="applyConfiguration()" class="text-[10px] bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded transition-all">PUSH CHANGES</button>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Model Select -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-[11px] text-gray-400 font-bold uppercase">LLM Engine</label>
+                            </div>
+                            <select id="cfgModel" class="input-field w-full px-3 py-2 text-xs bg-black/50">
+                                <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite (Stable)</option>
+                                <option value="gemini-2.5-flash">gemini-2.5-flash (High-Res)</option>
+                            </select>
+                        </div>
+
+                        <!-- Inflow Ceiling -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-[11px] text-gray-400 font-bold uppercase">Inflow Ceiling</label>
+                                <span class="text-xs mono text-blue-400" id="valMaxPapers">10</span>
+                            </div>
+                            <input type="range" id="cfgMaxPapers" min="1" max="20" value="10" class="slider" oninput="updateVal('valMaxPapers', this.value)">
+                            <p class="text-[9px] text-gray-600 mt-1 uppercase italic">Range: 1–20 publications</p>
+                        </div>
+
+                        <!-- Velocity Tuner -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-[11px] text-gray-400 font-bold uppercase">Velocity (RPM)</label>
+                                <span class="text-xs mono text-blue-400" id="valRpm">2</span>
+                            </div>
+                            <input type="range" id="cfgRpm" min="1" max="5" value="2" class="slider" oninput="updateVal('valRpm', this.value)">
+                            <p class="text-[9px] text-gray-600 mt-1 uppercase italic">Range: 1–5 Requests/Min</p>
+                        </div>
+
+                        <!-- Sensitivity Threshold -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-[11px] text-gray-400 font-bold uppercase">Sensitivity</label>
+                                <span class="text-xs mono text-blue-400" id="valThreshold">100%</span>
+                            </div>
+                            <input type="range" id="cfgThreshold" min="50" max="100" value="100" class="slider" oninput="updateVal('valThreshold', this.value + '%')">
+                            <p class="text-[9px] text-gray-600 mt-1 uppercase italic">Range: 50%–100% Match Quality</p>
+                        </div>
+
+                        <!-- Evidence Depth -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-[11px] text-gray-400 font-bold uppercase">Evidence Depth</label>
+                                <span class="text-xs mono text-blue-400" id="valTopK">3</span>
+                            </div>
+                            <input type="range" id="cfgTopK" min="1" max="5" value="3" class="slider" oninput="updateVal('valTopK', this.value)">
+                            <p class="text-[9px] text-gray-600 mt-1 uppercase italic">Range: 1–5 Reference Matches</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-[#30363d] flex gap-2">
+                        <button onclick="downloadConfig()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-300 text-[10px] font-bold py-2 rounded uppercase tracking-wider">Export JSON</button>
+                        <button onclick="fetchRepoConfig()" class="flex-1 border border-[#30363d] hover:bg-[#30363d] text-gray-400 text-[10px] font-bold py-2 rounded uppercase tracking-wider">Sync Repo</button>
+                    </div>
+                </div>
+
+                <!-- Schedule Panel -->
+                <div class="glass-panel p-6">
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Automation Schedule</h3>
+                    <div class="space-y-4 text-[10px] mono">
+                        <div class="p-3 bg-black/30 rounded border border-[#30363d]">
+                            <div class="flex justify-between mb-1"><span class="text-gray-600">Primary Frequency</span><span class="text-green-500 font-bold">DAILY</span></div>
+                            <div class="flex justify-between mb-1"><span class="text-gray-600">Extraction Window</span><span class="text-blue-400">00:00 UTC</span></div>
+                            <div class="flex justify-between mb-1"><span class="text-gray-600">Retention Policy</span><span class="text-gray-400">90 DAYS</span></div>
+                        </div>
+                        <div class="text-[9px] text-gray-500 uppercase italic text-center">
+                            Calculated Next Run: <span id="nextRunTimer" class="text-blue-500">--:--:--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="text-center pt-8 border-t border-[#30363d] opacity-50 text-[10px] uppercase tracking-widest flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                Project Longevity Intelligence Network
+            </div>
+            <div id="footerTime" class="mono text-blue-400">00:00:00 UTC</div>
+        </footer>
     </div>
-  </header>
-
-  <div class="grid">
-
-    <!-- System Status -->
-    <div class="panel">
-      <h2>
-        System Status
-        <span class="pill" id="statusPill">loading</span>
-      </h2>
-
-      <div class="kpi">
-        <div class="card">
-          <div class="t">Last Run (UTC)</div>
-          <div class="n" id="kpiLastRun">—</div>
-        </div>
-        <div class="card">
-          <div class="t">Run Date (UTC)</div>
-          <div class="n" id="kpiRunDate">—</div>
-        </div>
-        <div class="card">
-          <div class="t">Papers Ingested</div>
-          <div class="n" id="kpiPapers">—</div>
-        </div>
-        <div class="card">
-          <div class="t">Claims Extracted</div>
-          <div class="n" id="kpiClaims">—</div>
-        </div>
-        <div class="card">
-          <div class="t">Claims Validated</div>
-          <div class="n" id="kpiValidated">—</div>
-        </div>
-        <div class="card">
-          <div class="t">Errors / Warnings</div>
-          <div class="n" id="kpiErrors">—</div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="step">
-        <div>
-          <div class="name">Ingestion</div>
-          <div class="meta" id="stepIngestMeta">—</div>
-        </div>
-        <div class="state" id="stepIngestState">—</div>
-      </div>
-
-      <div class="step">
-        <div>
-          <div class="name">Extraction</div>
-          <div class="meta" id="stepExtractMeta">—</div>
-        </div>
-        <div class="state" id="stepExtractState">—</div>
-      </div>
-
-      <div class="step">
-        <div>
-          <div class="name">Validation</div>
-          <div class="meta" id="stepValidateMeta">—</div>
-        </div>
-        <div class="state" id="stepValidateState">—</div>
-      </div>
-
-      <div class="step">
-        <div>
-          <div class="name">Drive Sync</div>
-          <div class="meta" id="stepSyncMeta">—</div>
-        </div>
-        <div class="state" id="stepSyncState">—</div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="btnrow">
-        <button class="secondary" onclick="openTodayFile('00_ADMIN/pipeline_status.json')">Open pipeline_status.json</button>
-        <button class="secondary" onclick="openTodayFile(todayResultsPath('claims_extracted.json'))">Open claims_extracted.json</button>
-        <button class="secondary" onclick="openTodayFile(todayResultsPath('validated_claims.json'))">Open validated_claims.json</button>
-      </div>
-
-      <label>Recent Errors / Warnings</label>
-      <div class="error-log" id="errorLog">Loading…</div>
-      <div class="hint" style="margin-top:10px">
-        If this shows “Not found” and your repo is private, enter a GitHub PAT so the dashboard can fetch via the GitHub API.
-      </div>
-    </div>
-
-    <!-- Config Editor -->
-    <div class="panel">
-      <h2>Configuration <span class="pill">config/config.json</span></h2>
-
-      <div class="btnrow">
-        <button class="secondary" onclick="document.getElementById('config-upload').click()">Load Local Config</button>
-        <input type="file" id="config-upload" style="display:none" accept=".json" onchange="loadConfigFromFile(this)">
-        <button onclick="downloadConfig()">Download Edited Config</button>
-        <button class="secondary" onclick="fetchRepoConfig()">Fetch From Repo</button>
-      </div>
-
-      <label>Raw JSON (edit here)</label>
-      <textarea id="rawConfig"></textarea>
-
-      <div class="btnrow" style="margin-top:10px">
-        <button class="secondary" onclick="validateJson()">Validate JSON</button>
-        <button onclick="applyConfig()">Apply to UI (local only)</button>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="hint">
-        This dashboard cannot push config changes back to GitHub without committing via API. Treat this as an editor/exporter unless you build a secure backend.
-      </div>
-    </div>
-
-    <!-- Controls aligned to pipeline -->
-    <div class="panel">
-      <h2>Pipeline Controls <span class="pill">aligned</span></h2>
-
-      <label>Gemini Model (allowlist)</label>
-      <select id="geminiModel">
-        <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
-        <option value="gemini-2.5-flash">gemini-2.5-flash</option>
-      </select>
-
-      <div class="two">
-        <div>
-          <label>Max Papers / Run</label>
-          <input type="number" id="maxPapers" value="10" min="0" />
-        </div>
-        <div>
-          <label>Gemini RPM</label>
-          <input type="number" id="geminiRpm" value="4" min="1" />
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <h3 style="margin:0 0 10px 0;font-size:14px">Validation Scoring (preview)</h3>
-
-      <div class="two">
-        <div>
-          <label>Match Threshold</label>
-          <input type="number" id="matchThreshold" value="20" min="0" max="100" />
-        </div>
-        <div>
-          <label>Top K Matches</label>
-          <input type="number" id="topK" value="3" min="1" max="10" />
-        </div>
-      </div>
-
-      <label class="small">Tip: validator uses config.validation.scoring.*; edit in the Raw JSON panel for full control.</label>
-
-      <div class="divider"></div>
-
-      <label>Workflow Dispatch Command (copy/paste)</label>
-      <textarea id="dispatchCurl" style="min-height:110px;"></textarea>
-    </div>
-
-    <!-- Results Preview -->
-    <div class="panel">
-      <h2>Today’s Outputs <span class="pill" id="todayPill">—</span></h2>
-
-      <div class="status-list">
-        <div class="row"><span>Claims directory</span><span class="value" id="claimsDir">—</span></div>
-        <div class="row"><span>validated_claims.json</span><span class="value" id="validatedPath">—</span></div>
-      </div>
-
-      <div class="divider"></div>
-
-      <label>Validated Claims — quick view (top 5)</label>
-      <div class="error-log" id="validatedPreview" style="color:var(--text);height:220px">Loading…</div>
-
-      <div class="hint" style="margin-top:10px">
-        This preview shows the highest composite_confidence claims (if present). It reads today’s validated_claims.json.
-      </div>
-    </div>
-
-  </div>
-</div>
 
 <script>
-  // ---------- Helpers ----------
-  const stopwords = new Set(["the","and","of","in","to","with","a","an","for","on","by","from"]);
-  const nowUtc = () => new Date(new Date().toLocaleString("en-US",{timeZone:"UTC"}));
-  const pad2 = (n) => String(n).padStart(2,"0");
-  const utcYmdPath = (d = nowUtc()) => `${d.getUTCFullYear()}/${pad2(d.getUTCMonth()+1)}/${pad2(d.getUTCDate())}`;
-  const todayResultsPath = (file) => `04_RESULTS/${utcYmdPath()}/${file}`;
-  const todayClaimsDir = () => `04_RESULTS/${utcYmdPath()}/claims/`;
+    // ---------- Static Config & Identity ----------
+    const TARGET_REPO = "matthewdholtkamp/testfile";
+    const STATIC_PAT = ""; // Embed PAT if required for private repos
 
-  function setPill(el, text, cls){
-    el.textContent = text;
-    el.className = "pill" + (cls ? ` ${cls}` : "");
-  }
+    const API_RETRY_DELAYS = [1000, 2000, 4000, 8000, 16000];
+    const nowUtc = () => new Date(new Date().toLocaleString("en-US", { timeZone: "UTC" }));
+    const pad2 = (n) => String(n).padStart(2, "0");
+    const utcYmdPath = (d = nowUtc()) => `${d.getUTCFullYear()}/${pad2(d.getUTCMonth() + 1)}/${pad2(d.getUTCDate())}`;
+    const todayResultsPath = (file) => `04_RESULTS/${utcYmdPath()}/${file}`;
 
-  function fmtState(s){
-    if(!s) return {txt:"unknown", cls:"warn"};
-    const t = String(s).toLowerCase();
-    if(t.includes("success")) return {txt:"success", cls:"ok"};
-    if(t.includes("fail") || t.includes("error")) return {txt:"fail", cls:"bad"};
-    if(t.includes("running")) return {txt:"running", cls:"warn"};
-    return {txt:t, cls:"warn"};
-  }
+    let currentConfig = {};
+    let currentStatus = {};
 
-  function repoFromUI(){ return (document.getElementById("repo").value || "matthewdholtkamp/testfile").trim(); }
-  function tokenFromUI(){ return (document.getElementById("gh-token").value || "").trim(); }
+    // ---------- UI Helpers ----------
 
-  function repoRawUrl(path){
-    // Works for public repos or if file is served by GitHub Pages at same origin.
-    // If you host this in-repo as a static file, relative fetch will work.
-    return path;
-  }
-
-  async function fetchWithOptionalPat(path){
-    const token = tokenFromUI();
-    // Try relative first (works on Pages/public files)
-    try{
-      const r = await fetch(repoRawUrl(path), {cache:"no-store"});
-      if(r.ok) return await r.text();
-    }catch(e){}
-
-    // PAT fallback: GitHub API contents
-    if(!token){
-      throw new Error(`Not found (and no PAT). Path: ${path}`);
+    function updateVal(id, val) {
+        document.getElementById(id).textContent = val;
     }
-    const repo = repoFromUI();
-    const api = `https://api.github.com/repos/${repo}/contents/${path}`;
-    const r2 = await fetch(api, {
-      headers: {
-        "Accept":"application/vnd.github+json",
-        "Authorization": `Bearer ${token}`
-      },
-      cache:"no-store"
+
+    function notify(message, type = 'info') {
+        const toast = document.getElementById('notificationToast');
+        const msgEl = document.getElementById('toastMessage');
+        msgEl.textContent = message;
+        toast.className = `toast glass-panel p-4 flex items-center gap-3 border-l-4 min-w-[300px] show ${
+            type === 'error' ? 'border-l-red-500' : type === 'success' ? 'border-l-green-500' : 'border-l-blue-500'
+        }`;
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    function setPill(el, text, type) {
+        if (!el) return;
+        el.textContent = text.toUpperCase();
+        const colors = {
+            'ok': 'bg-green-900/30 text-green-400 border border-green-700/50',
+            'bad': 'bg-red-900/30 text-red-400 border border-red-700/50',
+            'warn': 'bg-yellow-900/30 text-yellow-400 border border-yellow-700/50',
+            'idle': 'bg-gray-800 text-gray-500 border border-gray-700'
+        };
+        el.className = `status-pill ${colors[type] || colors.idle}`;
+    }
+
+    function setStepVisual(stepId, state) {
+        const dot = document.getElementById(`step${stepId}Dot`);
+        const pill = document.getElementById(`step${stepId}State`);
+        const lowerState = String(state).toLowerCase();
+        
+        let type = 'idle';
+        if (lowerState.includes('success') || lowerState === 'done') type = 'ok';
+        else if (lowerState.includes('error') || lowerState === 'failed') type = 'bad';
+        else if (lowerState.includes('running') || lowerState === 'active') type = 'warn';
+
+        setPill(pill, state || 'idle', type);
+        dot.className = `w-8 h-8 rounded-full border-2 transition-all duration-500 flex items-center justify-center text-xs font-bold mb-3 ${
+            type === 'ok' ? 'bg-green-900 text-green-300 border-green-500 shadow-[0_0_10px_rgba(34,197,94,0.2)]' :
+            type === 'bad' ? 'bg-red-900 text-red-300 border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]' :
+            type === 'warn' ? 'bg-yellow-900 text-yellow-300 border-yellow-500 running-pulse' :
+            'bg-[#0d1117] text-gray-500 border-[#30363d]'
+        }`;
+    }
+
+    // ---------- GitHub API Core ----------
+
+    async function fetchFromGH(path) {
+        const api = `https://api.github.com/repos/${TARGET_REPO}/contents/${path}`;
+        const headers = { "Accept": "application/vnd.github+json" };
+        if (STATIC_PAT) headers["Authorization"] = `Bearer ${STATIC_PAT}`;
+
+        try {
+            const res = await fetch(api, { headers, cache: "no-store" });
+            if (res.ok) {
+                const data = await res.json();
+                return atob(data.content.replace(/\n/g, ""));
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        return null;
+    }
+
+    async function fetchWorkflowActivity() {
+        const api = `https://api.github.com/repos/${TARGET_REPO}/actions/runs?per_page=15`;
+        const headers = { "Accept": "application/vnd.github+json" };
+        if (STATIC_PAT) headers["Authorization"] = `Bearer ${STATIC_PAT}`;
+
+        const logEl = document.getElementById("actionLog");
+        try {
+            const res = await fetch(api, { headers, cache: "no-store" });
+            if (res.ok) {
+                const data = await res.json();
+                const now = new Date();
+                const past24 = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                
+                const runs = data.workflow_runs.filter(r => new Date(r.created_at) > past24);
+                
+                if (runs.length === 0) {
+                    logEl.innerHTML = `<div class="text-gray-500 uppercase tracking-tighter">[!] NO PIPELINE ACTIVITY IN LAST 24H</div>`;
+                    return;
+                }
+
+                logEl.innerHTML = runs.map(r => {
+                    const time = new Date(r.created_at).toLocaleTimeString([], { hour12: false });
+                    const color = r.conclusion === 'success' ? 'text-green-500' : r.conclusion === 'failure' ? 'text-red-500' : 'text-yellow-500';
+                    const icon = r.conclusion === 'success' ? '✓' : r.conclusion === 'failure' ? '✗' : '●';
+                    return `<div class="flex justify-between items-center border-b border-white/5 pb-1">
+                        <span class="text-gray-500">${time}</span>
+                        <span class="truncate px-2 flex-1 text-gray-300">${r.name || 'DAILY_PULL'}</span>
+                        <span class="${color} font-bold">${icon} ${r.conclusion || r.status}</span>
+                    </div>`;
+                }).join('');
+            }
+        } catch (e) {
+            logEl.innerHTML = `<div class="text-red-900/50">Telemetery unreachable</div>`;
+        }
+    }
+
+    async function refreshAll() {
+        notify("Refreshing pipeline synchronization...");
+        
+        // Pipeline Status
+        const statusTxt = await fetchFromGH("00_ADMIN/pipeline_status.json");
+        if (statusTxt) {
+            currentStatus = JSON.parse(statusTxt);
+            renderStatus();
+        }
+
+        // Configuration
+        const configTxt = await fetchFromGH("config/config.json");
+        if (configTxt) {
+            currentConfig = JSON.parse(configTxt);
+            syncConfigUIToObject();
+        }
+
+        // Claims
+        await loadClaimsPreview();
+        // Activity
+        await fetchWorkflowActivity();
+    }
+
+    function renderStatus() {
+        if (!currentStatus) return;
+        const s = currentStatus;
+        
+        document.getElementById("kpiLastRun").textContent = `SESSION: ${s.last_run_utc || s.timestamp_utc || "IDLE"}`;
+        document.getElementById("kpiPapers").textContent = s.papers_ingested || 0;
+        document.getElementById("kpiClaims").textContent = s.claims_extracted || 0;
+        document.getElementById("kpiValidated").textContent = s.claims_validated || 0;
+
+        const steps = s.steps || {};
+        const stepMap = Array.isArray(steps) ? steps.reduce((acc, step) => ({ ...acc, [step.name]: step }), {}) : steps;
+
+        setStepVisual("Ingest", stepMap["ingest"]?.status || stepMap["ingest_pubmed"]?.status || "idle");
+        setStepVisual("Extract", stepMap["extract"]?.status || stepMap["extract_claims"]?.status || "idle");
+        setStepVisual("Validate", stepMap["validate"]?.status || stepMap["validate_hypotheses"]?.status || "idle");
+        setStepVisual("Sync", stepMap["sync"]?.status || stepMap["drive_sync"]?.status || "idle");
+
+        setPill(document.getElementById("statusPill"), s.overall_status || 'IDLE', 
+                (s.overall_status || '').toLowerCase().includes('fail') ? 'bad' : 
+                (s.overall_status || '').toLowerCase().includes('success') ? 'ok' : 'warn');
+    }
+
+    // ---------- Config Sync ----------
+
+    function syncConfigUIToObject() {
+        if (!currentConfig) return;
+        const p = currentConfig.pipeline || {};
+        const e = p.extraction || {};
+        const r = p.rate_limits || {};
+        const v = currentConfig.validation?.scoring || {};
+
+        document.getElementById("cfgModel").value = e.gemini_model || "gemini-2.5-flash-lite";
+        document.getElementById("cfgMaxPapers").value = e.max_papers_per_run || 10;
+        document.getElementById("cfgRpm").value = r.gemini_requests_per_minute || 2;
+        document.getElementById("cfgThreshold").value = v.match_threshold || 100;
+        document.getElementById("cfgTopK").value = v.top_k || 3;
+
+        updateVal('valMaxPapers', document.getElementById("cfgMaxPapers").value);
+        updateVal('valRpm', document.getElementById("cfgRpm").value);
+        updateVal('valThreshold', document.getElementById("cfgThreshold").value + '%');
+        updateVal('valTopK', document.getElementById("cfgTopK").value);
+    }
+
+    function constructConfigFromUI() {
+        return {
+            ...currentConfig,
+            pipeline: {
+                ...(currentConfig.pipeline || {}),
+                extraction: {
+                    ...(currentConfig.pipeline?.extraction || {}),
+                    gemini_model: document.getElementById("cfgModel").value,
+                    max_papers_per_run: parseInt(document.getElementById("cfgMaxPapers").value)
+                },
+                rate_limits: {
+                    ...(currentConfig.pipeline?.rate_limits || {}),
+                    gemini_requests_per_minute: parseInt(document.getElementById("cfgRpm").value)
+                }
+            },
+            validation: {
+                ...(currentConfig.validation || {}),
+                scoring: {
+                    ...(currentConfig.validation?.scoring || {}),
+                    match_threshold: parseInt(document.getElementById("cfgThreshold").value),
+                    top_k: parseInt(document.getElementById("cfgTopK").value)
+                }
+            }
+        };
+    }
+
+    function applyConfiguration() {
+        currentConfig = constructConfigFromUI();
+        notify("Changes staged for local execution cycle.", "success");
+    }
+
+    function downloadConfig() {
+        const fullConfig = constructConfigFromUI();
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullConfig, null, 2));
+        const a = document.createElement('a');
+        a.setAttribute("href", dataStr);
+        a.setAttribute("download", "config.json");
+        a.click();
+    }
+
+    async function fetchRepoConfig() {
+        const configTxt = await fetchFromGH("config/config.json");
+        if (configTxt) {
+            currentConfig = JSON.parse(configTxt);
+            syncConfigUIToObject();
+            notify("Synced config with repository remote.", "success");
+        }
+    }
+
+    // ---------- Claims & Timers ----------
+
+    async function loadClaimsPreview() {
+        const previewEl = document.getElementById("validatedPreview");
+        const resultsTxt = await fetchFromGH(todayResultsPath("validated_claims.json"));
+        if (!resultsTxt) {
+            previewEl.innerHTML = `<p class="text-gray-700 italic">No scientific outputs for ${utcYmdPath()}</p>`;
+            return;
+        }
+        const data = JSON.parse(resultsTxt);
+        const claims = data.validated_claims || [];
+        if (claims.length === 0) {
+            previewEl.innerHTML = '<p class="text-gray-600">Zero matches today.</p>';
+            return;
+        }
+        const top = claims.sort((a,b) => (b.scores?.composite_confidence || 0) - (a.scores?.composite_confidence || 0)).slice(0, 5);
+        previewEl.innerHTML = top.map(c => `
+            <div class="border-b border-[#30363d]/50 pb-2">
+                <div class="flex justify-between font-bold text-blue-400">
+                    <span>CONF: ${(c.scores?.composite_confidence || 0).toFixed(2)}</span>
+                    <span>ID: ${c.matches?.best?.hypothesis_id || 'UNK'}</span>
+                </div>
+                <p class="truncate text-gray-500 leading-tight mt-1 italic">"${c.extracted?.claim_text || c.claim_text}"</p>
+            </div>
+        `).join('');
+    }
+
+    async function triggerWorkflow() {
+        if (!STATIC_PAT) { notify("Manual override requires PAT configuration.", "error"); return; }
+        const url = `https://api.github.com/repos/${TARGET_REPO}/actions/workflows/daily_pipeline.yml/dispatches`;
+        try {
+            const res = await fetch(url, {
+                method: "POST",
+                headers: { "Accept": "application/vnd.github+json", "Authorization": `Bearer ${STATIC_PAT}`, "Content-Type": "application/json" },
+                body: JSON.stringify({ ref: "main" })
+            });
+            if (res.status === 204) { notify("Manual pull initiated.", "success"); setTimeout(fetchWorkflowActivity, 2000); }
+            else notify(`Deployment Fail: ${res.status}`, "error");
+        } catch (e) { notify("Network Timeout", "error"); }
+    }
+
+    function updateFooterClock() {
+        const now = nowUtc();
+        document.getElementById('footerTime').textContent = `${pad2(now.getUTCHours())}:${pad2(now.getUTCMinutes())}:${pad2(now.getUTCSeconds())} UTC`;
+        
+        // Calculate countdown to midnight UTC
+        const nextRun = new Date(now);
+        nextRun.setUTCHours(24, 0, 0, 0);
+        const diff = nextRun - now;
+        const h = Math.floor(diff / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        document.getElementById('nextRunTimer').textContent = `${pad2(h)}:${pad2(m)}:${pad2(s)}`;
+    }
+
+    // Init
+    document.addEventListener("DOMContentLoaded", () => {
+        refreshAll();
+        setInterval(updateFooterClock, 1000);
+        updateFooterClock();
     });
-    if(!r2.ok){
-      throw new Error(`GitHub API error ${r2.status} for ${path}`);
-    }
-    const data = await r2.json();
-    if(!data.content) throw new Error(`No content in API response for ${path}`);
-    const decoded = atob(data.content.replace(/\n/g,""));
-    return decoded;
-  }
-
-  async function fetchJsonWithOptionalPat(path){
-    const txt = await fetchWithOptionalPat(path);
-    return JSON.parse(txt);
-  }
-
-  function openTodayFile(path){
-    const repo = repoFromUI();
-    const token = tokenFromUI();
-    // If PAT exists, open GitHub UI directly; otherwise open relative (Pages) or repo UI.
-    if(token){
-      window.open(`https://github.com/${repo}/blob/main/${path}`, "_blank");
-    }else{
-      // relative works if hosted in repo pages; otherwise open repo UI
-      window.open(path, "_blank");
-    }
-  }
-
-  // ---------- Dashboard state ----------
-  let config = null;
-  let status = null;
-
-  // ---------- Render ----------
-  function updateDispatchCurl(){
-    const repo = repoFromUI();
-    const wfFile = "daily_pipeline.yml"; // actual file name in .github/workflows
-    const curl = [
-      "curl -X POST \\",
-      "  -H \"Accept: application/vnd.github+json\" \\",
-      "  -H \"Authorization: Bearer <YOUR_GITHUB_PAT>\" \\",
-      `  https://api.github.com/repos/${repo}/actions/workflows/${wfFile}/dispatches \\`,
-      "  -d '{\"ref\":\"main\"}'"
-    ].join("\n");
-    document.getElementById("dispatchCurl").value = curl;
-    document.getElementById("repoLink").href = `https://github.com/${repo}`;
-  }
-
-  function renderStatus(){
-    const statusPill = document.getElementById("statusPill");
-    const todayPill = document.getElementById("todayPill");
-    const ymd = utcYmdPath();
-
-    document.getElementById("kpiRunDate").textContent = ymd;
-    document.getElementById("todayPill").textContent = ymd;
-    document.getElementById("claimsDir").textContent = todayClaimsDir();
-    document.getElementById("validatedPath").textContent = todayResultsPath("validated_claims.json");
-
-    if(!status){
-      setPill(statusPill, "no status", "warn");
-      document.getElementById("kpiLastRun").textContent = "—";
-      document.getElementById("kpiPapers").textContent = "—";
-      document.getElementById("kpiClaims").textContent = "—";
-      document.getElementById("kpiValidated").textContent = "—";
-      document.getElementById("kpiErrors").textContent = "—";
-      document.getElementById("errorLog").textContent = "No pipeline_status.json loaded.";
-      return;
-    }
-
-    const steps = status.steps || status.pipeline_steps || {};
-    // Flexible support: some implementations store as dict, some as list
-    const stepLookup = {};
-    if(Array.isArray(steps)){
-      for(const s of steps){ stepLookup[s.step_name || s.name] = s; }
-    }else{
-      Object.assign(stepLookup, steps);
-    }
-
-    const ingest = stepLookup["ingest_pubmed"] || stepLookup["ingest"] || stepLookup["ingestion"];
-    const extract = stepLookup["extract_claims"] || stepLookup["extract"] || stepLookup["extraction"];
-    const validate = stepLookup["validate_hypotheses"] || stepLookup["validate"] || stepLookup["validation"];
-    const sync = stepLookup["sync_to_drive"] || stepLookup["sync"] || stepLookup["drive_sync"];
-
-    const lastRun = status.last_run_utc || status.updated_at_utc || status.timestamp_utc || status.last_updated || null;
-    document.getElementById("kpiLastRun").textContent = lastRun ? String(lastRun).replace("T"," ").replace("Z","Z") : "—";
-
-    const papers = (ingest && (ingest.count ?? ingest.papers ?? ingest.num_papers)) ?? status.papers_ingested ?? 0;
-    const claims = (extract && (extract.count ?? extract.claims ?? extract.num_claims)) ?? status.claims_extracted ?? 0;
-    const validated = (validate && (validate.count ?? validate.validated_claims ?? validate.num_validated)) ?? status.claims_validated ?? 0;
-
-    const errors = (status.errors?.length ?? 0) + (status.warnings?.length ?? 0);
-
-    document.getElementById("kpiPapers").textContent = String(papers);
-    document.getElementById("kpiClaims").textContent = String(claims);
-    document.getElementById("kpiValidated").textContent = String(validated);
-    document.getElementById("kpiErrors").textContent = String(errors);
-
-    // Step rendering
-    function renderStep(metaEl, stateEl, obj){
-      if(!obj){
-        metaEl.textContent = "—";
-        stateEl.textContent = "unknown";
-        stateEl.className = "state warn";
-        return;
-      }
-      const st = fmtState(obj.status || obj.state);
-      metaEl.textContent = `count=${obj.count ?? obj.papers ?? obj.claims ?? 0}`;
-      stateEl.textContent = st.txt;
-      stateEl.className = "state " + st.cls;
-    }
-
-    renderStep(document.getElementById("stepIngestMeta"), document.getElementById("stepIngestState"), ingest);
-    renderStep(document.getElementById("stepExtractMeta"), document.getElementById("stepExtractState"), extract);
-    renderStep(document.getElementById("stepValidateMeta"), document.getElementById("stepValidateState"), validate);
-    renderStep(document.getElementById("stepSyncMeta"), document.getElementById("stepSyncState"), sync);
-
-    // Overall pill
-    const overall = status.overall_status || status.status || "unknown";
-    const o = fmtState(overall);
-    setPill(statusPill, `overall: ${o.txt}`, o.cls);
-
-    // Errors/warnings view
-    const lines = [];
-    if(Array.isArray(status.errors) && status.errors.length){
-      lines.push("ERRORS:");
-      for(const e of status.errors) lines.push(`- ${typeof e === "string" ? e : JSON.stringify(e)}`);
-      lines.push("");
-    }
-    if(Array.isArray(status.warnings) && status.warnings.length){
-      lines.push("WARNINGS:");
-      for(const w of status.warnings) lines.push(`- ${typeof w === "string" ? w : JSON.stringify(w)}`);
-      lines.push("");
-    }
-    if(!lines.length) lines.push("No recent errors or warnings.");
-    document.getElementById("errorLog").textContent = lines.join("\n");
-  }
-
-  function renderConfig(){
-    if(!config){
-      document.getElementById("rawConfig").value = "";
-      return;
-    }
-    document.getElementById("rawConfig").value = JSON.stringify(config, null, 2);
-
-    // Best-effort fill UI fields
-    const p = config.pipeline || {};
-    const extraction = p.extraction || {};
-    const rate = p.rate_limits || {};
-
-    document.getElementById("geminiModel").value = extraction.gemini_model || "gemini-2.5-flash-lite";
-    document.getElementById("maxPapers").value = extraction.max_papers_per_run ?? 10;
-    document.getElementById("geminiRpm").value = rate.gemini_requests_per_minute ?? 4;
-
-    const v = (config.validation && config.validation.scoring) ? config.validation.scoring : {};
-    document.getElementById("matchThreshold").value = v.match_threshold ?? 20;
-    document.getElementById("topK").value = v.top_k ?? 3;
-  }
-
-  // ---------- Actions ----------
-  async function refreshAll(){
-    updateDispatchCurl();
-    // Render today pill paths
-    document.getElementById("todayPill").textContent = utcYmdPath();
-    document.getElementById("claimsDir").textContent = todayClaimsDir();
-    document.getElementById("validatedPath").textContent = todayResultsPath("validated_claims.json");
-
-    // 1) pipeline_status.json
-    try{
-      status = await fetchJsonWithOptionalPat("00_ADMIN/pipeline_status.json");
-    }catch(e){
-      status = null;
-      document.getElementById("errorLog").textContent = `Could not load pipeline_status.json\n${e.message}`;
-    }
-    renderStatus();
-
-    // 2) config/config.json
-    try{
-      config = await fetchJsonWithOptionalPat("config/config.json");
-    }catch(e){
-      // fall back silently
-      config = config || null;
-    }
-    renderConfig();
-
-    // 3) validated_claims.json preview
-    await loadValidatedPreview();
-  }
-
-  async function fetchRepoConfig(){
-    try{
-      config = await fetchJsonWithOptionalPat("config/config.json");
-      renderConfig();
-      alert("Loaded config/config.json from repo.");
-    }catch(e){
-      alert("Failed to fetch config from repo: " + e.message);
-    }
-  }
-
-  function validateJson(){
-    try{
-      JSON.parse(document.getElementById("rawConfig").value);
-      alert("JSON is valid.");
-    }catch(e){
-      alert("Invalid JSON: " + e.message);
-    }
-  }
-
-  function applyConfig(){
-    try{
-      config = JSON.parse(document.getElementById("rawConfig").value);
-      renderConfig();
-      alert("Applied JSON to UI (local only).");
-    }catch(e){
-      alert("Invalid JSON: " + e.message);
-    }
-  }
-
-  function downloadConfig(){
-    try{
-      const obj = JSON.parse(document.getElementById("rawConfig").value);
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj, null, 2));
-      const a = document.createElement("a");
-      a.setAttribute("href", dataStr);
-      a.setAttribute("download", "config.json");
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }catch(e){
-      alert("Invalid JSON: " + e.message);
-    }
-  }
-
-  function loadConfigFromFile(input){
-    const file = input.files?.[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try{
-        config = JSON.parse(e.target.result);
-        renderConfig();
-        alert("Loaded config from file.");
-      }catch(err){
-        alert("Could not parse JSON: " + err.message);
-      }
-    };
-    reader.readAsText(file);
-  }
-
-  async function loadValidatedPreview(){
-    const preview = document.getElementById("validatedPreview");
-    preview.textContent = "Loading…";
-    try{
-      const v = await fetchJsonWithOptionalPat(todayResultsPath("validated_claims.json"));
-      const arr = v.validated_claims || [];
-      if(!arr.length){
-        preview.textContent = "validated_claims.json loaded, but contains 0 validated_claims (this is normal on empty/partial days).";
-        document.getElementById("kpiValidated").textContent = "0";
-        return;
-      }
-      // sort by composite_confidence descending if present
-      const sorted = [...arr].sort((a,b) => (b?.scores?.composite_confidence ?? 0) - (a?.scores?.composite_confidence ?? 0));
-      const top = sorted.slice(0,5).map(c => {
-        const cc = c?.scores?.composite_confidence ?? 0;
-        const mid = c?.matches?.best?.hypothesis_id ?? (c?.matches?.candidates?.[0]?.hypothesis_id ?? "—");
-        const txt = c?.extracted?.claim_text ?? c?.claim_text ?? "—";
-        return `• ${cc.toFixed(1)} | ${mid} | ${txt}`;
-      });
-      preview.textContent = top.join("\n");
-      document.getElementById("kpiValidated").textContent = String(arr.length);
-    }catch(e){
-      preview.textContent = `Could not load ${todayResultsPath("validated_claims.json")}\n${e.message}`;
-    }
-  }
-
-  async function triggerWorkflow(){
-    const token = tokenFromUI();
-    const repo = repoFromUI();
-    if(!token){
-      alert("Enter a GitHub PAT (repo + workflow permissions) to trigger the workflow.\n\nA curl command is provided in the Pipeline Controls panel.");
-      return;
-    }
-    // Find the workflow file name you use (daily_pipeline.yml)
-    const wfFile = "daily_pipeline.yml";
-    const url = `https://api.github.com/repos/${repo}/actions/workflows/${wfFile}/dispatches`;
-    const body = { ref: "main" };
-
-    try{
-      const r = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Accept":"application/vnd.github+json",
-          "Authorization": `Bearer ${token}`,
-          "Content-Type":"application/json"
-        },
-        body: JSON.stringify(body)
-      });
-      if(r.status === 204){
-        alert("Workflow dispatch sent. Refresh in ~1–2 minutes.");
-        return;
-      }
-      const t = await r.text();
-      throw new Error(`Dispatch failed: HTTP ${r.status} ${t}`);
-    }catch(e){
-      alert(e.message);
-    }
-  }
-
-  // Init
-  document.addEventListener("DOMContentLoaded", () => {
-    updateDispatchCurl();
-    document.getElementById("todayPill").textContent = utcYmdPath();
-    document.getElementById("claimsDir").textContent = todayClaimsDir();
-    document.getElementById("validatedPath").textContent = todayResultsPath("validated_claims.json");
-    refreshAll();
-  });
 </script>
 </body>
 </html>
