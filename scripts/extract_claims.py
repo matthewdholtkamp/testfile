@@ -12,6 +12,17 @@ sys.path.append(os.path.dirname(__file__))
 from gemini_client import GeminiClient
 import pipeline_utils
 
+class MockGeminiClient:
+    def extract_claims(self, paper):
+        return {
+            "claims": [
+                {
+                    "claim_text": f"Mock claim for {paper.get('title', 'unknown')}",
+                    "confidence": "high"
+                }
+            ]
+        }
+
 # Paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INGEST_DIR = os.path.join(BASE_DIR, "01_INGEST", "papers")
@@ -147,8 +158,8 @@ def generate_summary(stats, date_dir):
         "processed_pmids": stats["processed_pmids"],
         "failures": stats["failures"],
         "counts_by_domain": stats["counts_by_domain"],
-        "top_20_claims": top_20,
-        "pointer_paths": [os.path.relpath(p, BASE_DIR) for p in stats["output_files"]]
+        "top_claims": top_20,
+        "pointers": [os.path.relpath(p, BASE_DIR) for p in stats["output_files"]]
     }
 
     with open(summary_path, "w") as f:
@@ -170,7 +181,11 @@ def main():
     }
 
     try:
-        client = GeminiClient()
+        if os.environ.get("SMOKE_TEST") == "true":
+            print("SMOKE TEST MODE: Using MockGeminiClient.")
+            client = MockGeminiClient()
+        else:
+            client = GeminiClient()
     except ValueError as e:
         print(f"Error initializing Gemini Client: {e}")
         pipeline_utils.update_status("extract_claims", "fail", error=e)
@@ -190,8 +205,35 @@ def main():
         # Sorting logic
         scored_csv_path = os.path.join(BASE_DIR, "daily_scored.csv")
         if os.path.exists(scored_csv_path):
-            print("Found daily_scored.csv, using explicit sort order (not fully implemented).")
-            pass
+            print("Found daily_scored.csv, using score-based sort order.")
+            try:
+                import csv
+                scores = {}
+                with open(scored_csv_path, "r") as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        # Assuming 'filename' or 'pmid' and 'score' columns
+                        key = row.get("filename") or row.get("pmid")
+                        score = float(row.get("score", 0))
+                        if key:
+                            scores[key] = score
+
+                # Sort files based on score (highest first).
+                # Match filename or pmid in filename.
+                def get_score(filepath):
+                    filename = os.path.basename(filepath)
+                    # Try exact filename match
+                    if filename in scores:
+                        return scores[filename]
+                    # Try pmid match (filename starts with pmid usually? No, domain_pubmed_HHMMSS.json)
+                    # But the json content has pmid. We don't want to open all files to sort.
+                    # So we rely on filename match if possible.
+                    return 0
+
+                files.sort(key=get_score, reverse=True)
+            except Exception as e:
+                print(f"Error sorting by daily_scored.csv: {e}. Fallback to newest.")
+                files.sort(key=os.path.getmtime, reverse=True)
         else:
             files.sort(key=os.path.getmtime, reverse=True)
 
