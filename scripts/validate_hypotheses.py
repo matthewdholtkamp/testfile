@@ -25,8 +25,10 @@ TIER_C_HYPOTHESES = [
 ]
 
 def load_config():
-    with open(CONFIG_PATH, "r") as f:
-        return json.load(f)
+    if os.path.exists(CONFIG_PATH):
+        with open(CONFIG_PATH, "r") as f:
+            return json.load(f)
+    return {}
 
 def normalize_text(text):
     if not text:
@@ -41,56 +43,147 @@ def get_tokens(text):
     tokens = set(normalize_text(text).split())
     return tokens - stopwords
 
+def parse_comma_separated(value):
+    if not value: return []
+    return [x.strip() for x in value.split(',') if x.strip()]
+
+def parse_tier_b_markdown(content, config_domains):
+    hypotheses = []
+    lines = content.split('\n')
+    current_hyp = None
+
+    hyp_pattern = re.compile(r'^\s*-\s*\*\*\[(HYP-[^\]]+)\]\*\*\s*(.*)')
+    keywords_pattern = re.compile(r'^\s+-\s*Keywords:\s*(.*)', re.IGNORECASE)
+    domain_tags_pattern = re.compile(r'^\s+-\s*Domain tags:\s*(.*)', re.IGNORECASE)
+    expected_pattern = re.compile(r'^\s+-\s*Expected:\s*(.*)', re.IGNORECASE)
+    evidence_for_pattern = re.compile(r'^\s+-\s*Evidence FOR:\s*(.*)', re.IGNORECASE)
+    evidence_against_pattern = re.compile(r'^\s+-\s*Evidence AGAINST:\s*(.*)', re.IGNORECASE)
+
+    def finalize_hyp(hyp):
+        if not hyp: return
+
+        # Expected
+        if hyp.get("_expected_raw"):
+            match = re.search(r'target=(.*?)\s+direction=(.*)', hyp["_expected_raw"])
+            if match:
+                hyp["expected_effect"] = [{"target": match.group(1).strip(), "direction": match.group(2).strip()}]
+            else:
+                hyp["expected_effect"] = []
+            del hyp["_expected_raw"]
+        else:
+             hyp["expected_effect"] = []
+
+        # Domain
+        hyp["domain"] = "unknown"
+        if hyp.get("domain_tags"):
+            for tag in hyp["domain_tags"]:
+                tag_norm = tag.lower().replace(" ", "_")
+                for d_key in config_domains:
+                    if d_key in tag_norm:
+                        hyp["domain"] = d_key
+                        break
+                if hyp["domain"] != "unknown": break
+
+            if hyp["domain"] == "unknown" and hyp["domain_tags"]:
+                hyp["domain"] = hyp["domain_tags"][0]
+
+        hypotheses.append(hyp)
+
+    for line in lines:
+        m_hyp = hyp_pattern.match(line)
+        if m_hyp:
+            if current_hyp: finalize_hyp(current_hyp)
+            current_hyp = {
+                "id": m_hyp.group(1),
+                "text": m_hyp.group(2).strip(),
+                "keywords": [],
+                "domain_tags": [],
+                "evidence_for": [],
+                "evidence_against": []
+            }
+            continue
+
+        if current_hyp:
+            m_kw = keywords_pattern.match(line)
+            if m_kw:
+                current_hyp["keywords"] = parse_comma_separated(m_kw.group(1))
+                continue
+
+            m_dt = domain_tags_pattern.match(line)
+            if m_dt:
+                current_hyp["domain_tags"] = parse_comma_separated(m_dt.group(1))
+                continue
+
+            m_exp = expected_pattern.match(line)
+            if m_exp:
+                current_hyp["_expected_raw"] = m_exp.group(1).strip()
+                continue
+
+            m_ev_for = evidence_for_pattern.match(line)
+            if m_ev_for:
+                val = m_ev_for.group(1)
+                pmids = parse_comma_separated(val)
+                current_hyp["evidence_for"].extend([p.replace("PMID:", "").strip() for p in pmids])
+                continue
+
+            m_ev_ag = evidence_against_pattern.match(line)
+            if m_ev_ag:
+                val = m_ev_ag.group(1)
+                pmids = parse_comma_separated(val)
+                current_hyp["evidence_against"].extend([p.replace("PMID:", "").strip() for p in pmids])
+                continue
+
+    if current_hyp: finalize_hyp(current_hyp)
+    return hypotheses
+
 def load_hypotheses(config):
-    ledger_path = os.path.join(BASE_DIR, config["validation"]["hypothesis_ledger_path"])
+    ledger_path_rel = config.get("validation", {}).get("hypothesis_ledger_path", "02_HYPOTHESES/hypothesis_ledger.md")
+    ledger_path = os.path.join(BASE_DIR, ledger_path_rel)
     hypotheses = []
 
-    # Tier A: JSON Block
     if os.path.exists(ledger_path):
         with open(ledger_path, "r") as f:
             content = f.read()
 
+        # Tier A: JSON Block
         json_match = re.search(r'<!-- HYPOTHESIS_REGISTRY_JSON_START -->(.*?)<!-- HYPOTHESIS_REGISTRY_JSON_END -->', content, re.DOTALL)
         if json_match:
             try:
-                hypotheses = json.loads(json_match.group(1))
-                print(f"Loaded {len(hypotheses)} hypotheses from Tier A (JSON).")
-                return hypotheses
+                json_content = json_match.group(1).strip()
+                if json_content:
+                    parsed = json.loads(json_content)
+                    if isinstance(parsed, list):
+                        hypotheses = parsed
+                    elif isinstance(parsed, dict) and "hypotheses" in parsed:
+                        hypotheses = parsed["hypotheses"]
+
+                    if hypotheses:
+                        print(f"Loaded hypotheses: tier=A count={len(hypotheses)}")
+                        return hypotheses, "A"
             except json.JSONDecodeError:
                 print("Warning: Tier A JSON block found but invalid.")
 
         # Tier B: Markdown Lines
-        lines = content.split('\n')
-        tier_b_hyps = []
-        for line in lines:
-            match = re.match(r'^\s*-\s*\*\*\[(HYP-[^\]]+)\]\*\*\s*(.*)', line)
-            if match:
-                hyp_id = match.group(1)
-                text = match.group(2).strip()
-                domain = "unknown"
-                for key in config["domains"]:
-                    if key in text.lower():
-                        domain = key
-                        break
-                tier_b_hyps.append({"id": hyp_id, "text": text, "domain": domain})
+        config_domains = config.get("domains", {}).keys()
+        tier_b_hyps = parse_tier_b_markdown(content, config_domains)
 
         if tier_b_hyps:
-            print(f"Loaded {len(tier_b_hyps)} hypotheses from Tier B (Markdown).")
-            return tier_b_hyps
+            print(f"Loaded hypotheses: tier=B count={len(tier_b_hyps)}")
+            return tier_b_hyps, "B"
 
     # Tier C: Fallback
-    print("Using Tier C fallback hypotheses.")
-    return TIER_C_HYPOTHESES
+    print(f"Loaded hypotheses: tier=C count={len(TIER_C_HYPOTHESES)}")
+    return TIER_C_HYPOTHESES, "C"
 
 def calculate_match_score(claim, hypothesis, config):
-    weights = config["validation"]["scoring"]["match_weights"]
+    weights = config.get("validation", {}).get("scoring", {}).get("match_weights", {})
+    if not weights: # fallback safety
+        weights = {"domain_overlap": 0.45, "token_jaccard": 0.40, "entity_score": 0.15}
 
-    # Domain Overlap
     claim_domain = claim.get("domain_primary", "unknown")
     hyp_domain = hypothesis.get("domain", "unknown")
     domain_score = 100 if claim_domain == hyp_domain else 0
 
-    # Token Jaccard
     claim_tokens = get_tokens(claim.get("claim_text", ""))
     hyp_tokens = get_tokens(hypothesis.get("text", ""))
 
@@ -101,11 +194,12 @@ def calculate_match_score(claim, hypothesis, config):
         union = len(claim_tokens | hyp_tokens)
         jaccard_score = 100 * (intersection / union)
 
-    # Entity Score
     keywords = hypothesis.get("keywords", [])
-    if not keywords and hyp_domain in config["domains"]:
-         keywords = config["domains"][hyp_domain].get("key_biomarkers", []) + \
-                    config["domains"][hyp_domain].get("biorxiv_keywords", [])
+    # Fallback to domain keywords if not present
+    domains_config = config.get("domains", {})
+    if not keywords and hyp_domain in domains_config:
+         keywords = domains_config[hyp_domain].get("key_biomarkers", []) + \
+                    domains_config[hyp_domain].get("biorxiv_keywords", [])
 
     entity_score = 0
     if keywords:
@@ -117,9 +211,9 @@ def calculate_match_score(claim, hypothesis, config):
         if len(keywords) > 0:
             entity_score = 100 * (matches / len(keywords))
 
-    match_score = 100 * (weights["domain_overlap"] * (domain_score/100) +
-                         weights["token_jaccard"] * (jaccard_score/100) +
-                         weights["entity_score"] * (entity_score/100))
+    match_score = 100 * (weights.get("domain_overlap", 0.45) * (domain_score/100) +
+                         weights.get("token_jaccard", 0.40) * (jaccard_score/100) +
+                         weights.get("entity_score", 0.15) * (entity_score/100))
 
     return match_score
 
@@ -209,11 +303,6 @@ def calculate_contradiction_score(claim, hypothesis):
     if contradiction.get("contradicts_existing"): score -= 25
 
     if contradiction.get("contradiction_notes"):
-        # Simple heuristic: if notes exist, minor penalty?
-        # Or if notes mention hypothesis keywords?
-        # Prompt says "-40 hypothesis contradiction".
-        # Without LLM, checking if it contradicts THIS hypothesis is hard.
-        # We'll skip specific hypothesis contradiction check to avoid false positives.
         pass
 
     return max(0, min(100, score))
@@ -223,15 +312,18 @@ def process_claims(config):
     date_path = os.path.join("04_RESULTS", year, month, day, "claims")
     full_claims_path = os.path.join(BASE_DIR, date_path)
 
+    run_errors = []
+
     claims_files = glob.glob(os.path.join(full_claims_path, "*.json"))
 
     if not claims_files:
         print(f"No claims found in {full_claims_path}.")
+        # Use defaults if config validation missing
         pipeline_utils.update_status("validate_hypotheses", "success", count=0, config=config)
         pipeline_utils.print_handoff(summary_path=None)
         return
 
-    hypotheses = load_hypotheses(config)
+    hypotheses, source_tier = load_hypotheses(config)
 
     all_claims_flat = []
 
@@ -239,7 +331,24 @@ def process_claims(config):
         try:
             with open(filepath, "r") as f:
                 data = json.load(f)
+                if not isinstance(data, list):
+                     # Should be list of paper objects
+                     run_errors.append({
+                         "file": os.path.basename(filepath),
+                         "error": "Expected JSON array of objects",
+                         "action": "skipped_file"
+                     })
+                     continue
+
                 for item in data:
+                    if "input_paper" not in item:
+                        run_errors.append({
+                            "file": os.path.basename(filepath),
+                            "error": "Missing input_paper",
+                            "action": "skipped_paper"
+                        })
+                        continue
+
                     pmid = item["input_paper"].get("pmid", "unknown")
                     extracted = item.get("extracted_claims", {})
                     if extracted and "claims" in extracted:
@@ -248,8 +357,23 @@ def process_claims(config):
                             claim["_pmid"] = pmid
                             claim["_seq"] = i + 1
                             all_claims_flat.append(claim)
-        except json.JSONDecodeError:
+                    # Note: if extracted is missing or empty, it's just a paper with no claims, not necessarily an error
+
+        except json.JSONDecodeError as e:
             print(f"Skipping malformed file: {filepath}")
+            run_errors.append({
+                "file": os.path.basename(filepath),
+                "error": f"JSON Decode Error: {str(e)}",
+                "action": "skipped_file"
+            })
+            continue
+        except Exception as e:
+            print(f"Error processing file {filepath}: {e}")
+            run_errors.append({
+                "file": os.path.basename(filepath),
+                "error": str(e),
+                "action": "skipped_file"
+            })
             continue
 
     cluster_counts = {}
@@ -268,7 +392,16 @@ def process_claims(config):
         cluster_counts[c1["_temp_id"]] = count
 
     validated_claims = []
-    scoring_config = config["validation"]["scoring"]
+
+    scoring_config = config.get("validation", {}).get("scoring", {})
+    # Safety defaults
+    if "match_threshold" not in scoring_config: scoring_config["match_threshold"] = 20
+    if "top_k" not in scoring_config: scoring_config["top_k"] = 3
+    if "composite_weights" not in scoring_config:
+        scoring_config["composite_weights"] = {"match": 0.55, "evidence_quality": 0.45, "replication_modifier": 0.10, "contradiction_modifier": 0.35}
+    if "evidence_quality_weights" not in scoring_config:
+        scoring_config["evidence_quality_weights"] = {"evidence_strength": 0.50, "species_relevance": 0.25, "sample_size": 0.25}
+
 
     for claim in all_claims_flat:
         pmid = claim["_pmid"]
@@ -287,15 +420,15 @@ def process_claims(config):
                 contra_score = calculate_contradiction_score(claim, hyp)
 
                 eq_weights = scoring_config["evidence_quality_weights"]
-                evidence_quality = (eq_weights["evidence_strength"] * ev_strength +
-                                    eq_weights["species_relevance"] * sp_relevance +
-                                    eq_weights["sample_size"] * sz_score)
+                evidence_quality = (eq_weights.get("evidence_strength", 0.5) * ev_strength +
+                                    eq_weights.get("species_relevance", 0.25) * sp_relevance +
+                                    eq_weights.get("sample_size", 0.25) * sz_score)
 
                 comp_weights = scoring_config["composite_weights"]
-                composite = (comp_weights["match"] * match_score +
-                             comp_weights["evidence_quality"] * evidence_quality +
-                             comp_weights["replication_modifier"] * (rep_score - 50) -
-                             (100 - contra_score) * comp_weights["contradiction_modifier"])
+                composite = (comp_weights.get("match", 0.55) * match_score +
+                             comp_weights.get("evidence_quality", 0.45) * evidence_quality +
+                             comp_weights.get("replication_modifier", 0.1) * (rep_score - 50) -
+                             (100 - contra_score) * comp_weights.get("contradiction_modifier", 0.35))
 
                 composite = max(0, min(100, composite))
 
@@ -330,12 +463,16 @@ def process_claims(config):
         "meta": {
             "run_date": f"{year}-{month}-{day}",
             "git_sha": pipeline_utils.get_git_sha(),
-            "config_version": config["_meta"]["version"]
+            "config_version": config.get("_meta", {}).get("version", "unknown")
         },
-        "hypotheses_index": [h["id"] for h in hypotheses],
+        "hypotheses_index": {
+            "source_tier": source_tier,
+            "num_hypotheses": len(hypotheses),
+            "hypothesis_ids": [h["id"] for h in hypotheses]
+        },
         "validated_claims": validated_claims,
         "run_warnings": [],
-        "run_errors": [],
+        "run_errors": run_errors,
         "summary": {
             "total_claims_processed": len(all_claims_flat),
             "claims_validated": len(validated_claims)
