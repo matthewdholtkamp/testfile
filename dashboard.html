@@ -271,8 +271,9 @@
 
             <label>Gemini Model</label>
             <select id="gemini-model">
-                <option value="gemini-flash">Gemini Flash (Speed)</option>
-                <option value="gemini-pro">Gemini Pro (Quality)</option>
+                <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+                <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
             </select>
 
             <label>Max Papers to Extract</label>
@@ -347,9 +348,9 @@
           "geo": { "enabled": true, "frequency": "24h" }
         },
         "extraction": {
-          "model": "gemini-flash",
-          "extract_claims": true,
-          "max_papers": 10
+          "gemini_model": "gemini-2.0-flash",
+          "enabled": true,
+          "max_papers_per_run": 50
         },
         "filters": {
           "min_sample_size": { "human": 100, "mouse": 20, "cell": 3 },
@@ -404,32 +405,44 @@
         }
 
         // Other DBs
-        document.getElementById('biorxiv-enabled').checked = p.ingestion.biorxiv.enabled;
-        document.getElementById('biorxiv-freq').value = p.ingestion.biorxiv.frequency;
+        if (p.ingestion.biorxiv) {
+            document.getElementById('biorxiv-enabled').checked = p.ingestion.biorxiv.enabled;
+            document.getElementById('biorxiv-freq').value = p.ingestion.biorxiv.frequency;
+        }
 
-        document.getElementById('clinical-enabled').checked = p.ingestion.clinicaltrials.enabled;
-        document.getElementById('clinical-freq').value = p.ingestion.clinicaltrials.frequency;
+        if (p.ingestion.clinicaltrials) {
+            document.getElementById('clinical-enabled').checked = p.ingestion.clinicaltrials.enabled;
+            document.getElementById('clinical-freq').value = p.ingestion.clinicaltrials.frequency;
+        }
 
-        document.getElementById('geo-enabled').checked = p.ingestion.geo.enabled;
-        document.getElementById('geo-freq').value = p.ingestion.geo.frequency;
+        if (p.ingestion.geo) {
+            document.getElementById('geo-enabled').checked = p.ingestion.geo.enabled;
+            document.getElementById('geo-freq').value = p.ingestion.geo.frequency;
+        }
 
         // Extraction
-        document.getElementById('gemini-model').value = p.extraction.model;
-        document.getElementById('max-papers').value = p.extraction.max_papers;
-        document.getElementById('extract-claims').checked = p.extraction.extract_claims;
+        document.getElementById('gemini-model').value = p.extraction.gemini_model || p.extraction.model;
+        document.getElementById('max-papers').value = p.extraction.max_papers_per_run || p.extraction.max_papers;
+        document.getElementById('extract-claims').checked = (p.extraction.enabled !== undefined) ? p.extraction.enabled : p.extraction.extract_claims;
 
         // Filters
-        document.getElementById('min-sample-human').value = p.filters.min_sample_size.human;
-        document.getElementById('min-sample-mouse').value = p.filters.min_sample_size.mouse;
-        document.getElementById('min-effect-size').value = p.filters.min_effect_size;
+        const filters = config.filters || p.filters || {};
 
-        document.getElementById('weight-human').value = p.filters.species_weights.human;
-        document.getElementById('weight-primate').value = p.filters.species_weights.primate;
-        document.getElementById('weight-mouse').value = p.filters.species_weights.mouse;
-        document.getElementById('weight-cell').value = p.filters.species_weights.cell;
-        document.getElementById('weight-invert').value = p.filters.species_weights.invertebrate;
+        if (filters.min_sample_size) {
+            document.getElementById('min-sample-human').value = filters.min_sample_size.human;
+            document.getElementById('min-sample-mouse').value = filters.min_sample_size.mouse;
+        }
+        document.getElementById('min-effect-size').value = filters.min_effect_size;
 
-        document.getElementById('require-replication').checked = p.filters.require_replication;
+        if (filters.species_weights) {
+            document.getElementById('weight-human').value = filters.species_weights.human;
+            document.getElementById('weight-primate').value = filters.species_weights.primate;
+            document.getElementById('weight-mouse').value = filters.species_weights.mouse;
+            document.getElementById('weight-cell').value = filters.species_weights.cell || filters.species_weights.cell_line;
+            document.getElementById('weight-invert').value = filters.species_weights.invertebrate || filters.species_weights.other;
+        }
+
+        document.getElementById('require-replication').checked = filters.require_replication;
     }
 
     function updateConfigFromUI() {
@@ -448,21 +461,35 @@
         p.ingestion.geo.enabled = document.getElementById('geo-enabled').checked;
         p.ingestion.geo.frequency = document.getElementById('geo-freq').value;
 
-        p.extraction.model = document.getElementById('gemini-model').value;
-        p.extraction.max_papers = parseInt(document.getElementById('max-papers').value);
-        p.extraction.extract_claims = document.getElementById('extract-claims').checked;
+        p.extraction.gemini_model = document.getElementById('gemini-model').value;
+        p.extraction.max_papers_per_run = parseInt(document.getElementById('max-papers').value);
+        p.extraction.enabled = document.getElementById('extract-claims').checked;
 
-        p.filters.min_sample_size.human = parseInt(document.getElementById('min-sample-human').value);
-        p.filters.min_sample_size.mouse = parseInt(document.getElementById('min-sample-mouse').value);
-        p.filters.min_effect_size = parseFloat(document.getElementById('min-effect-size').value);
+        delete p.extraction.model;
+        delete p.extraction.max_papers;
+        delete p.extraction.extract_claims;
 
-        p.filters.species_weights.human = parseFloat(document.getElementById('weight-human').value);
-        p.filters.species_weights.primate = parseFloat(document.getElementById('weight-primate').value);
-        p.filters.species_weights.mouse = parseFloat(document.getElementById('weight-mouse').value);
-        p.filters.species_weights.cell = parseFloat(document.getElementById('weight-cell').value);
-        p.filters.species_weights.invertebrate = parseFloat(document.getElementById('weight-invert').value);
+        const filters = config.filters || p.filters;
+        if (filters) {
+            if (filters.min_sample_size) {
+                filters.min_sample_size.human = parseInt(document.getElementById('min-sample-human').value);
+                filters.min_sample_size.mouse = parseInt(document.getElementById('min-sample-mouse').value);
+            }
+            filters.min_effect_size = parseFloat(document.getElementById('min-effect-size').value);
 
-        p.filters.require_replication = document.getElementById('require-replication').checked;
+            if (filters.species_weights) {
+                filters.species_weights.human = parseFloat(document.getElementById('weight-human').value);
+                filters.species_weights.primate = parseFloat(document.getElementById('weight-primate').value);
+                filters.species_weights.mouse = parseFloat(document.getElementById('weight-mouse').value);
+                if (filters.species_weights.cell !== undefined) filters.species_weights.cell = parseFloat(document.getElementById('weight-cell').value);
+                if (filters.species_weights.cell_line !== undefined) filters.species_weights.cell_line = parseFloat(document.getElementById('weight-cell').value);
+
+                if (filters.species_weights.invertebrate !== undefined) filters.species_weights.invertebrate = parseFloat(document.getElementById('weight-invert').value);
+                if (filters.species_weights.other !== undefined) filters.species_weights.other = parseFloat(document.getElementById('weight-invert').value);
+            }
+
+            filters.require_replication = document.getElementById('require-replication').checked;
+        }
 
         updateRawConfig();
     }

@@ -24,7 +24,10 @@ class GeminiClient:
         # Load config
         with open(CONFIG_PATH, "r") as f:
             config = json.load(f)
-            self.model_name = config["pipeline"]["extraction"].get("gemini_model", "gemini-1.5-flash")
+            extraction_config = config["pipeline"]["extraction"]
+            self.model_name = extraction_config.get("gemini_model", "gemini-1.5-flash")
+            self.temperature = extraction_config.get("temperature", 0.1)
+            self.max_output_tokens = extraction_config.get("max_output_tokens", 4096)
 
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
 
@@ -33,6 +36,8 @@ class GeminiClient:
         Extracts structured claims from a paper abstract using Gemini via REST API.
         """
         prompt_text = self._construct_prompt(paper_data)
+
+        logging.info(f"Extracting claims for PMID: {paper_data.get('pmid')} using {self.model_name} (T={self.temperature}, MaxTokens={self.max_output_tokens})")
 
         url = f"{self.base_url}/{self.model_name}:generateContent"
         params = {"key": self.api_key}
@@ -46,7 +51,8 @@ class GeminiClient:
                 "parts": [{"text": prompt_text}]
             }],
             "generationConfig": {
-                "temperature": 0.1,  # Low temperature for factual extraction
+                "temperature": self.temperature,
+                "maxOutputTokens": self.max_output_tokens,
                 "responseMimeType": "application/json" # Force JSON response
             }
         }
