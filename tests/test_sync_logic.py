@@ -17,6 +17,11 @@ class TestDriveSync(unittest.TestCase):
         self.mock_authenticate = patcher.start()
         self.addCleanup(patcher.stop)
 
+        # Mock validate_root_folder to do nothing
+        validate_patcher = patch('sync_to_drive.DriveSync.validate_root_folder')
+        self.mock_validate = validate_patcher.start()
+        self.addCleanup(validate_patcher.stop)
+
         # Prevent actual logging
         logging_patcher = patch('sync_to_drive.logging')
         self.mock_logging = logging_patcher.start()
@@ -28,7 +33,8 @@ class TestDriveSync(unittest.TestCase):
     def test_idempotency_skip(self, mock_isfile, mock_exists, mock_md5):
         mock_md5.return_value = "hash123"
 
-        syncer = sync_to_drive.DriveSync()
+        with patch.dict(os.environ, {"DRIVE_FOLDER_ID": "root_123"}):
+            syncer = sync_to_drive.DriveSync()
 
         # Mock remote file having same hash
         mock_files = self.mock_service.files.return_value
@@ -52,7 +58,8 @@ class TestDriveSync(unittest.TestCase):
     def test_idempotency_update(self, mock_isfile, mock_exists, mock_md5, mock_media):
         mock_md5.return_value = "new_hash"
 
-        syncer = sync_to_drive.DriveSync()
+        with patch.dict(os.environ, {"DRIVE_FOLDER_ID": "root_123"}):
+            syncer = sync_to_drive.DriveSync()
 
         # Mock remote file having DIFFERENT hash
         mock_files = self.mock_service.files.return_value
@@ -75,7 +82,8 @@ class TestDriveSync(unittest.TestCase):
     def test_new_upload(self, mock_isfile, mock_exists, mock_md5, mock_media):
         mock_md5.return_value = "hash123"
 
-        syncer = sync_to_drive.DriveSync()
+        with patch.dict(os.environ, {"DRIVE_FOLDER_ID": "root_123"}):
+            syncer = sync_to_drive.DriveSync()
 
         # Mock remote file NOT existing
         mock_files = self.mock_service.files.return_value
@@ -98,7 +106,9 @@ class TestDriveSync(unittest.TestCase):
         # 2. claims summary
         # 3. recursive dirs
 
-        syncer = sync_to_drive.DriveSync()
+        with patch.dict(os.environ, {"DRIVE_FOLDER_ID": "root_123"}):
+            syncer = sync_to_drive.DriveSync()
+
         syncer.upload_file = MagicMock()
         syncer.upload_recursive = MagicMock()
         syncer.get_folder_id = MagicMock(return_value="root") # simplify

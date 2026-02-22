@@ -7,3 +7,5 @@ __pycache__/
 *.log
 venv/
 *.pkl
+token.json
+client_secret.json
