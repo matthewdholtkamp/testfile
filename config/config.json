@@ -363,7 +363,7 @@
     "notification_email_env": "NOTIFICATION_EMAIL",
     "rate_limits": {
       "ncbi_requests_per_second": 10,
-      "gemini_requests_per_minute": 10
+      "gemini_requests_per_minute": 4
     }
   }
 }

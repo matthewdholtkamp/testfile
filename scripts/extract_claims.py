@@ -112,6 +112,10 @@ def process_file(filepath, client, limit, stats):
                 stop_run = True
                 break
 
+            if isinstance(claims_json, dict) and claims_json.get("parse_error"):
+                print(f"Parse error for PMID {pmid}. Using fallback.")
+                stats["parse_errors"] += 1
+
             if claims_json:
                 result = {
                     "input_paper": paper,
@@ -156,6 +160,7 @@ def generate_summary(stats, date_dir):
     summary = {
         "processed_pmids": stats["processed_pmids"],
         "failures": stats["failures"],
+        "parse_errors": stats.get("parse_errors", 0),
         "counts_by_domain": stats["counts_by_domain"],
         "top_claims": top_20,
         "pointers": [os.path.relpath(p, BASE_DIR) for p in stats["output_files"]]
@@ -174,6 +179,7 @@ def main():
     stats = {
         "processed_pmids": [],
         "failures": [],
+        "parse_errors": 0,
         "counts_by_domain": {},
         "top_claims": [],
         "output_files": []
