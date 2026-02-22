@@ -3,6 +3,7 @@ import sys
 import logging
 import hashlib
 import json
+import argparse
 import pipeline_utils
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
@@ -230,6 +231,39 @@ class DriveSync:
              logging.error(f"Unexpected error uploading '{filename}': {str(e).split('For help')[0]}") # Try to keep it clean
              return False
 
+    def pull_index(self):
+        """Downloads papers_index.jsonl and run_manifest.jsonl from Drive to local 00_ADMIN."""
+        logging.info("Attempting to pull index files from Drive...")
+
+        try:
+            # Check/Create 00_ADMIN first locally
+            admin_local_dir = os.path.join(BASE_DIR, "00_ADMIN")
+            os.makedirs(admin_local_dir, exist_ok=True)
+
+            admin_id = self.get_folder_id("00_ADMIN", self.root_folder_id)
+        except Exception as e:
+            logging.error(f"Could not find/create 00_ADMIN folder on Drive: {e}")
+            return
+
+        files_to_pull = ["papers_index.jsonl", "run_manifest.jsonl"]
+
+        for filename in files_to_pull:
+            local_path = os.path.join(BASE_DIR, "00_ADMIN", filename)
+            try:
+                remote_file = self.get_remote_file(filename, admin_id)
+                if remote_file:
+                    file_id = remote_file['id']
+                    logging.info(f"Downloading {filename} from Drive (ID: {file_id})...")
+                    request = self.service.files().get_media(fileId=file_id)
+                    with open(local_path, "wb") as f:
+                        f.write(request.execute())
+                    logging.info(f"Successfully downloaded {filename}")
+                else:
+                    logging.info(f"{filename} not found on Drive. Skipping.")
+            except Exception as e:
+                logging.error(f"Failed to download {filename}: {e}")
+
+
     def sync(self):
         if not self.service:
              # Should be caught by __init__ but double check
@@ -282,21 +316,32 @@ class DriveSync:
         pipeline_utils.print_handoff()
 
 def main():
+    parser = argparse.ArgumentParser(description="Sync to Drive")
+    parser.add_argument("--pull-index", action="store_true", help="Download index files from Drive")
+    args = parser.parse_args()
+
     syncer = None
     try:
         syncer = DriveSync()
-        syncer.sync()
+
+        if args.pull_index:
+            syncer.pull_index()
+        else:
+            syncer.sync()
+
     except SystemExit:
         # Expected exit from validation failures
-        pipeline_utils.update_status("sync_to_drive", "fail", error="Validation/Auth failed")
+        if not args.pull_index:
+             pipeline_utils.update_status("sync_to_drive", "fail", error="Validation/Auth failed")
         pipeline_utils.print_handoff()
         sys.exit(1)
     except Exception as e:
         logging.error(f"Sync failed: {str(e).split('For help')[0]}")
-        pipeline_utils.update_status("sync_to_drive", "fail", error=str(e))
+        if not args.pull_index:
+             pipeline_utils.update_status("sync_to_drive", "fail", error=str(e))
 
         # Try to upload status if syncer is available and authenticated
-        if syncer and syncer.service:
+        if syncer and syncer.service and not args.pull_index:
             try:
                 status_path = os.path.join(BASE_DIR, "00_ADMIN", "pipeline_status.json")
                 if os.path.exists(status_path):
