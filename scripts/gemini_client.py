@@ -5,6 +5,7 @@ import os
 import sys
 import time
 import random
+import re
 
 # Add script directory to path to allow imports
 sys.path.append(os.path.dirname(__file__))
@@ -16,7 +17,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "../config/config.json")
 
-ALLOWED_GEMINI_MODELS = {"gemini-2.5-flash-lite", "gemini-2.5-flash", "gemini-3-flash"}
+ALLOWED_GEMINI_MODELS = {"gemini-2.5-flash-lite", "gemini-2.5-flash"}
 
 class QuotaExhaustedException(Exception):
     """Exception raised when API quota is exhausted (limit: 0)."""
@@ -43,8 +44,8 @@ class GeminiClient:
 
             # Retry config
             self.max_attempts = 5
-            self.base_backoff = 2.0
-            self.max_sleep_total = 120.0
+            self.base_backoff = 60.0
+            self.max_sleep_total = 600.0
 
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
 
@@ -180,25 +181,51 @@ class GeminiClient:
         return max(backoff, header_delay, json_delay)
 
     def _parse_response(self, result, pmid):
-        """Parses the successful JSON response."""
+        """Parses the successful JSON response with robust fallback."""
         candidates = result.get("candidates", [])
         if not candidates:
             logging.warning(f"No candidates returned for {pmid}")
             return None
 
         text = candidates[0].get("content", {}).get("parts", [])[0].get("text", "")
+        original_text = text  # Keep for fallback
 
-        # Clean up potential markdown code blocks
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text:
-            text = text.split("```")[1].split("```")[0].strip()
+        # Step 1: Strip markdown code fences
+        if "```" in text:
+            # Handle ```json ... ``` or just ``` ... ```
+            # We want to find the first occurrence of ``` and the next occurrence of ```
+            match = re.search(r"```(?:\w+)?\s(.*?)```", text, re.DOTALL)
+            if match:
+                text = match.group(1).strip()
+            else:
+                # Fallback if regex doesn't match perfectly but ``` exists (e.g. unclosed)
+                # Just try to remove lines starting with ```
+                lines = text.split('\n')
+                text = '\n'.join([line for line in lines if not line.strip().startswith('```')]).strip()
 
+        # Step 2: Attempt json.loads(clean_text)
         try:
             return json.loads(text)
         except json.JSONDecodeError:
-            logging.error(f"Failed to parse JSON for {pmid}: {text[:100]}...")
-            return None
+            pass
+
+        # Step 3: Attempt to parse substring between first { and last }
+        try:
+            start_index = text.find('{')
+            end_index = text.rfind('}')
+            if start_index != -1 and end_index != -1 and end_index > start_index:
+                json_str = text[start_index : end_index + 1]
+                return json.loads(json_str)
+        except json.JSONDecodeError:
+            pass
+
+        # Step 4: Return fallback structure
+        logging.error(f"Failed to parse JSON for {pmid}. Returning fallback.")
+        return {
+            "claims": [],
+            "parse_error": True,
+            "raw_snippet": original_text[:200]
+        }
 
     def _construct_prompt(self, paper):
         return f"""

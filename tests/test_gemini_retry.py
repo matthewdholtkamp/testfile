@@ -89,7 +89,7 @@ class TestGeminiRetry(unittest.TestCase):
         """Test respecting Retry-After header."""
         r1 = MagicMock()
         r1.status_code = 429
-        r1.headers = {"Retry-After": "10"} # String seconds
+        r1.headers = {"Retry-After": "100"} # String seconds, larger than base backoff (60s)
         r1.json.return_value = {"error": {"message": "Rate limit"}}
         r1.raise_for_status.side_effect = requests.exceptions.HTTPError("429")
 
@@ -102,8 +102,13 @@ class TestGeminiRetry(unittest.TestCase):
         client = GeminiClient(model_name="gemini-2.5-flash-lite")
         client.extract_claims({"pmid": "123"})
 
-        # Should sleep 10s (plus maybe some jitter, but at least 10)
-        mock_sleep.assert_called_with(10) # Or verify >= 10 if jitter added
+        # Should sleep 100s (plus maybe some jitter, but at least 100)
+        # Note: implementation uses max(backoff, header). Backoff is ~60s. Header is 100s.
+        # So expected is 100.
+        # But wait, logic is: return max(backoff, header_delay, json_delay)
+        # If backoff has jitter, it might be 60.5.
+        # If header is 100, then max is 100.
+        mock_sleep.assert_called_with(100.0)
 
     @patch("gemini_client.requests.post")
     @patch("gemini_client.time.sleep")
@@ -155,7 +160,7 @@ class TestGeminiRetry(unittest.TestCase):
             url = args[0]
             if "gemini-2.5-flash-lite" in url:
                 return r1
-            elif "gemini-3-flash" in url:
+            elif "gemini-2.5-flash" in url:
                 return r2
             return r1
 
@@ -163,7 +168,7 @@ class TestGeminiRetry(unittest.TestCase):
 
         client = GeminiClient(
             model_name="gemini-2.5-flash-lite",
-            fallback_models=["gemini-3-flash"]
+            fallback_models=["gemini-2.5-flash"]
         )
         result = client.extract_claims({"pmid": "123"})
 
@@ -184,7 +189,7 @@ class TestGeminiRetry(unittest.TestCase):
 
         client = GeminiClient(
             model_name="gemini-2.5-flash-lite",
-            fallback_models=["gemini-3-flash"]
+            fallback_models=["gemini-2.5-flash"]
         )
         result = client.extract_claims({"pmid": "123"})
 
