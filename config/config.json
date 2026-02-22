@@ -360,6 +360,23 @@
     "github_actions_timeout_minutes": 45,
     "log_level": "INFO",
     "dry_run": false,
-    "notification_email_env": "NOTIFICATION_EMAIL"
+    "notification_email_env": "NOTIFICATION_EMAIL",
+    "rate_limits": {
+      "ncbi_requests_per_second": 10
+    },
+    "ingestion": {
+      "pubmed": {
+        "date_range": null,
+        "max_results_per_domain": 100,
+        "domains": {
+          "epigenetic": {},
+          "senescence": {},
+          "mitochondrial": {},
+          "nutrient_sensing": {},
+          "stem_cell_ecm": {},
+          "comparative": {}
+        }
+      }
+    }
   }
 }
