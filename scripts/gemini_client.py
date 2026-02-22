@@ -3,6 +3,8 @@ import json
 import logging
 import os
 import sys
+import time
+import random
 
 # Add script directory to path to allow imports
 sys.path.append(os.path.dirname(__file__))
@@ -14,8 +16,12 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "../config/config.json")
 
+class QuotaExhaustedException(Exception):
+    """Exception raised when API quota is exhausted (limit: 0)."""
+    pass
+
 class GeminiClient:
-    def __init__(self):
+    def __init__(self, model_name=None, fallback_models=None):
         secrets = SecretsManager()
         self.api_key = secrets.gemini_api_key
         if not self.api_key:
@@ -25,21 +31,56 @@ class GeminiClient:
         with open(CONFIG_PATH, "r") as f:
             config = json.load(f)
             extraction_config = config["extraction"]
-            self.model_name = extraction_config.get("gemini_model", "gemini-1.5-flash")
+
+            # Prioritize passed model_name, then config, then default
+            self.model_name = model_name or extraction_config.get("gemini_model", "gemini-2.5-flash-lite")
+            self.fallback_models = fallback_models or []
+
             self.temperature = extraction_config.get("temperature", 0.1)
             self.max_output_tokens = extraction_config.get("max_output_tokens", 4096)
+
+            # Retry config
+            self.max_attempts = 5
+            self.base_backoff = 2.0
+            self.max_sleep_total = 120.0
 
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
 
     def extract_claims(self, paper_data):
         """
         Extracts structured claims from a paper abstract using Gemini via REST API.
+        Implements robust retry logic and model fallback.
         """
         prompt_text = self._construct_prompt(paper_data)
 
-        logging.info(f"Extracting claims for PMID: {paper_data.get('pmid')} using {self.model_name} (T={self.temperature}, MaxTokens={self.max_output_tokens})")
+        # List of models to try: [primary, fallback1, fallback2, ...]
+        models_to_try = [self.model_name] + self.fallback_models
 
-        url = f"{self.base_url}/{self.model_name}:generateContent"
+        for model in models_to_try:
+            try:
+                logging.info(f"Extracting claims for PMID: {paper_data.get('pmid')} using {model}")
+                result = self._generate_content_with_retry(prompt_text, model, paper_data.get('pmid'))
+                if result:
+                    return result
+            except QuotaExhaustedException:
+                logging.warning(f"Quota exhausted for model {model}. Trying next model if available.")
+                continue
+            except Exception as e:
+                logging.error(f"Unexpected error with model {model}: {e}")
+                # Depending on error type, might want to continue or stop.
+                # For now, continue to next model.
+                continue
+
+        # If we reach here, all models failed
+        logging.error(f"All models failed for PMID {paper_data.get('pmid')}. Returning quota_exhausted.")
+        return {"error": "quota_exhausted", "reason": "all_models_failed"}
+
+    def _generate_content_with_retry(self, prompt_text, model, pmid):
+        """
+        Generates content with a specific model, handling retries for 429 errors.
+        Raises QuotaExhaustedException if limit is 0.
+        """
+        url = f"{self.base_url}/{model}:generateContent"
         params = {"key": self.api_key}
         headers = {
             "Content-Type": "application/json",
@@ -53,40 +94,102 @@ class GeminiClient:
             "generationConfig": {
                 "temperature": self.temperature,
                 "maxOutputTokens": self.max_output_tokens,
-                "responseMimeType": "application/json" # Force JSON response
+                "responseMimeType": "application/json"
             }
         }
 
-        try:
-            response = requests.post(url, params=params, headers=headers, json=payload)
-            response.raise_for_status()
+        total_sleep = 0
 
-            result = response.json()
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                response = requests.post(url, params=params, headers=headers, json=payload)
 
-            # Parse response
-            # Candidates -> Content -> Parts -> Text
-            candidates = result.get("candidates", [])
-            if not candidates:
-                logging.warning(f"No candidates returned for {paper_data.get('pmid')}")
+                if response.status_code == 200:
+                    return self._parse_response(response.json(), pmid)
+
+                if response.status_code == 429:
+                    # Check for hard limit (limit: 0)
+                    error_data = response.json().get("error", {})
+                    message = error_data.get("message", "")
+
+                    if "limit: 0" in message or "limit:0" in message:
+                        logging.warning(f"Quota hard limit reached for {model}: {message}")
+                        raise QuotaExhaustedException()
+
+                    # Calculate delay
+                    delay = self._calculate_retry_delay(response, attempt)
+
+                    if total_sleep + delay > self.max_sleep_total:
+                        logging.error(f"Max sleep time exceeded for {model}. Giving up.")
+                        return None # Or raise
+
+                    logging.warning(f"Rate limited (429) on {model}. Retrying in {delay:.2f}s (Attempt {attempt}/{self.max_attempts})")
+                    time.sleep(delay)
+                    total_sleep += delay
+                    continue
+
+                # Other errors
+                logging.error(f"HTTP {response.status_code} for {pmid}: {response.text}")
                 return None
 
-            text = candidates[0].get("content", {}).get("parts", [])[0].get("text", "")
+            except requests.exceptions.RequestException as e:
+                logging.error(f"Network error for {pmid}: {e}")
+                return None
 
-            # Clean up potential markdown code blocks if not handled by responseMimeType
-            if "```json" in text:
-                text = text.split("```json")[1].split("```")[0].strip()
-            elif "```" in text:
-                text = text.split("```")[1].split("```")[0].strip()
+        logging.error(f"Max attempts reached for {model} on PMID {pmid}")
+        return None
 
-            return json.loads(text)
+    def _calculate_retry_delay(self, response, attempt):
+        """Calculates delay based on Backoff, Header, or JSON body."""
+        # 1. Exponential Backoff
+        backoff = self.base_backoff * (2 ** (attempt - 1))
+        # Add jitter
+        backoff += random.uniform(0, 1)
 
-        except requests.exceptions.HTTPError as e:
-            logging.error(f"HTTP Error extracting claims for {paper_data.get('pmid')}: {e}")
-            if e.response is not None:
-                logging.error(f"Response: {e.response.text}")
+        # 2. Retry-After Header
+        header_delay = 0
+        retry_after = response.headers.get("Retry-After")
+        if retry_after:
+            try:
+                header_delay = float(retry_after)
+            except ValueError:
+                pass # parse error, ignore
+
+        # 3. retryDelay in JSON
+        json_delay = 0
+        try:
+            data = response.json()
+            if "error" in data and "details" in data["error"]:
+                for detail in data["error"]["details"]:
+                    if "retryDelay" in detail:
+                        # Format might be "3.5s"
+                        d = detail["retryDelay"]
+                        if d.endswith("s"):
+                            json_delay = float(d[:-1])
+        except Exception:
+            pass
+
+        return max(backoff, header_delay, json_delay)
+
+    def _parse_response(self, result, pmid):
+        """Parses the successful JSON response."""
+        candidates = result.get("candidates", [])
+        if not candidates:
+            logging.warning(f"No candidates returned for {pmid}")
             return None
-        except Exception as e:
-            logging.error(f"Error extracting claims for {paper_data.get('pmid')}: {e}")
+
+        text = candidates[0].get("content", {}).get("parts", [])[0].get("text", "")
+
+        # Clean up potential markdown code blocks
+        if "```json" in text:
+            text = text.split("```json")[1].split("```")[0].strip()
+        elif "```" in text:
+            text = text.split("```")[1].split("```")[0].strip()
+
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            logging.error(f"Failed to parse JSON for {pmid}: {text[:100]}...")
             return None
 
     def _construct_prompt(self, paper):

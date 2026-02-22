@@ -65,7 +65,10 @@ def get_todays_papers():
     return glob.glob(search_path)
 
 def process_file(filepath, client, limit, stats):
-    """Reads a paper JSON file, extracts claims, and saves the result."""
+    """
+    Reads a paper JSON file, extracts claims, and saves the result.
+    Returns tuple: (processed_count, stop_run_flag)
+    """
     print(f"Processing file: {filepath}")
 
     # Determine output path: 04_RESULTS/YYYY/MM/DD/claims/filename.json
@@ -77,29 +80,23 @@ def process_file(filepath, client, limit, stats):
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, filename)
 
-    # Check if already processed (skip if exists? prompt doesn't strictly say, but good practice)
-    # However, if we are re-running for some reason, maybe we want to process?
-    # For now, I'll keep the skip logic but maybe "smoke test" forces it?
     if os.path.exists(output_path) and os.environ.get("SMOKE_TEST") != "true":
         print(f"Skipping {filepath} - already processed.")
-        # We should arguably still count these towards stats if we want a full daily summary,
-        # but the prompt implies "processing" generates the summary.
-        # I'll skip counting them for "processed" count but maybe add to list?
-        return 0
+        return 0, False
 
     with open(filepath, "r") as f:
         papers = json.load(f)
 
     extracted_data = []
     processed_count = 0
+    stop_run = False
 
     for paper in papers:
         if processed_count >= limit:
             break
 
         pmid = paper.get("pmid", "unknown")
-        domain = "unknown" # Need to extract domain from filename or paper?
-        # Filename format: domain_pubmed_HHMMSS.json
+        domain = "unknown"
         if "_" in filename:
             domain = filename.split("_")[0]
 
@@ -107,6 +104,13 @@ def process_file(filepath, client, limit, stats):
 
         try:
             claims_json = client.extract_claims(paper)
+
+            # Check for quota exhaustion
+            if isinstance(claims_json, dict) and claims_json.get("error") == "quota_exhausted":
+                print(f"Quota exhausted for PMID {pmid}. Stopping extraction run.")
+                stats["failures"].append({"pmid": pmid, "reason": "quota_exhausted"})
+                stop_run = True
+                break
 
             if claims_json:
                 result = {
@@ -119,11 +123,8 @@ def process_file(filepath, client, limit, stats):
                 stats["processed_pmids"].append(pmid)
                 stats["counts_by_domain"][domain] = stats["counts_by_domain"].get(domain, 0) + 1
 
-                # Collect high confidence claims (assuming structure, otherwise just take top 2)
-                # Structure of claims_json depends on Gemini prompt. Assuming list of objects.
                 if isinstance(claims_json, dict) and "claims" in claims_json:
                     for claim in claims_json["claims"]:
-                        # naive "high confidence" check or just take all for now, limiting later
                         stats["top_claims"].append(claim)
                 elif isinstance(claims_json, list):
                     for claim in claims_json:
@@ -136,22 +137,20 @@ def process_file(filepath, client, limit, stats):
         processed_count += 1
         time.sleep(RATE_LIMIT_DELAY)
 
-    # Save results if any were processed
+    # Save results if any were processed (even if we stopped early)
     if extracted_data:
         with open(output_path, "w") as f:
             json.dump(extracted_data, f, indent=2)
         print(f"Saved extracted claims to {output_path}")
         stats["output_files"].append(output_path)
 
-    return processed_count
+    return processed_count, stop_run
 
 def generate_summary(stats, date_dir):
     """Generates the daily summary JSON."""
     summary_path = os.path.join(RESULTS_DIR, date_dir, "claims_extracted.json")
     os.makedirs(os.path.dirname(summary_path), exist_ok=True)
 
-    # Sort and slice top claims
-    # Assuming claim has "confidence" or similar. If not, just take first 20.
     top_20 = stats["top_claims"][:20]
 
     summary = {
@@ -180,29 +179,38 @@ def main():
         "output_files": []
     }
 
+    # Configurable limits
+    env_max = os.getenv("MAX_PAPERS_PER_RUN")
+    max_papers = int(env_max) if env_max else config["extraction"]["max_papers_per_run"]
+
+    # Model Selection
+    gemini_model = os.getenv("GEMINI_MODEL", config["extraction"].get("gemini_model", "gemini-2.5-flash-lite"))
+
+    fallback_str = os.getenv("GEMINI_MODEL_FALLBACK", "")
+    fallback_models = [m.strip() for m in fallback_str.split(",") if m.strip()]
+
+    print(f"Configuration: Model={gemini_model}, Fallbacks={fallback_models}, MaxPapers={max_papers}")
+
     try:
         if os.environ.get("SMOKE_TEST") == "true":
             print("SMOKE TEST MODE: Using MockGeminiClient.")
             client = MockGeminiClient()
         else:
-            client = GeminiClient()
+            client = GeminiClient(model_name=gemini_model, fallback_models=fallback_models)
     except ValueError as e:
         print(f"Error initializing Gemini Client: {e}")
         pipeline_utils.update_status("extract_claims", "fail", error=e)
-        pipeline_utils.print_handoff() # Early exit
+        pipeline_utils.print_handoff()
         sys.exit(1)
 
     files = get_todays_papers()
 
-    # Check for smoke test
-    max_papers = config["extraction"]["max_papers_per_run"]
     if os.environ.get("SMOKE_TEST") == "true":
         print("SMOKE TEST MODE: Limiting to 2 papers.")
         max_papers = 2
-        # Use simple sort for smoke test
         files.sort(key=os.path.getmtime, reverse=True)
     else:
-        # Sorting logic
+        # Sorting logic (score or newest)
         scored_csv_path = os.path.join(BASE_DIR, "daily_scored.csv")
         if os.path.exists(scored_csv_path):
             print("Found daily_scored.csv, using score-based sort order.")
@@ -212,22 +220,15 @@ def main():
                 with open(scored_csv_path, "r") as f:
                     reader = csv.DictReader(f)
                     for row in reader:
-                        # Assuming 'filename' or 'pmid' and 'score' columns
                         key = row.get("filename") or row.get("pmid")
                         score = float(row.get("score", 0))
                         if key:
                             scores[key] = score
 
-                # Sort files based on score (highest first).
-                # Match filename or pmid in filename.
                 def get_score(filepath):
                     filename = os.path.basename(filepath)
-                    # Try exact filename match
                     if filename in scores:
                         return scores[filename]
-                    # Try pmid match (filename starts with pmid usually? No, domain_pubmed_HHMMSS.json)
-                    # But the json content has pmid. We don't want to open all files to sort.
-                    # So we rely on filename match if possible.
                     return 0
 
                 files.sort(key=get_score, reverse=True)
@@ -248,8 +249,12 @@ def main():
                 break
 
             remaining = max_papers - total_processed
-            count = process_file(filepath, client, remaining, stats)
+            count, stop_run = process_file(filepath, client, remaining, stats)
             total_processed += count
+
+            if stop_run:
+                print("Stopping run due to quota exhaustion.")
+                break
 
         print(f"Total papers processed: {total_processed}")
 
