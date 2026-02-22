@@ -1,12 +1,10 @@
-name: Daily Research Pipeline
+name: Smoke Test Pipeline
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
   workflow_dispatch:
 
 jobs:
-  build-and-run:
+  smoke-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,17 +20,19 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Run Ingestion
+    - name: Run Ingestion (Smoke Test)
       env:
         NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+        SMOKE_TEST: "true"
       run: python scripts/ingest_pubmed.py
 
-    - name: Run Extraction
+    - name: Run Extraction (Smoke Test)
       env:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        SMOKE_TEST: "true"
       run: python scripts/extract_claims.py
 
-    - name: Run Drive Sync
+    - name: Run Drive Sync (Smoke Test)
       if: always()
       env:
         SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
@@ -42,3 +42,20 @@ jobs:
           echo "$SERVICE_ACCOUNT_JSON" > service_account.json
         fi
         python scripts/sync_to_drive.py
+
+    - name: Verify Files
+      if: always()
+      run: |
+        if [ ! -f "00_ADMIN/pipeline_status.json" ]; then
+          echo "ERROR: pipeline_status.json not found!"
+          exit 1
+        fi
+
+        # Verify claims_extracted.json (path depends on date)
+        # We can just check if any exists in 04_RESULTS
+        if ! find 04_RESULTS -name "claims_extracted.json" | grep -q .; then
+          echo "ERROR: claims_extracted.json not found!"
+          exit 1
+        fi
+
+        echo "Smoke Test Verification Passed: Status and Summary files exist."

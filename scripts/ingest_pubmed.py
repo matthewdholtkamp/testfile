@@ -5,6 +5,7 @@ import requests
 import datetime
 from xml.etree import ElementTree
 from secrets_manager import SecretsManager
+import pipeline_utils
 
 # Load configuration
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "../config/config.json")
@@ -136,27 +137,72 @@ def save_papers(papers, domain):
         json.dump(papers, f, indent=2)
 
     print(f"Saved {len(papers)} papers for domain '{domain}' to {filepath}")
+    return output_dir
 
 def main():
     print("Starting PubMed Ingestion...")
+    # Initialize status file
+    pipeline_utils.initialize_status()
+
     domains = config["pipeline"]["ingestion"]["pubmed"]["domains"]
     max_results = config["pipeline"]["ingestion"]["pubmed"]["max_results_per_domain"]
 
-    for domain, details in domains.items():
-        query = details["query"]
-        print(f"Searching domain: {domain}")
+    # Check for Smoke Test mode
+    if os.environ.get("SMOKE_TEST") == "true":
+        print("SMOKE TEST MODE: Limiting to 1 domain and 5 results.")
+        # Pick just the first domain
+        first_domain_key = list(domains.keys())[0]
+        domains = {first_domain_key: domains[first_domain_key]}
+        max_results = 5
 
-        try:
-            id_list = search_pubmed(query, max_results)
-            print(f"Found {len(id_list)} papers.")
+    total_papers = 0
+    last_output_dir = ""
 
-            if id_list:
-                xml_content = fetch_details(id_list)
-                papers = parse_pubmed_xml(xml_content)
-                save_papers(papers, domain)
+    try:
+        for domain, details in domains.items():
+            query = details["query"]
+            print(f"Searching domain: {domain}")
 
-        except Exception as e:
-            print(f"Error processing domain {domain}: {e}")
+            try:
+                id_list = search_pubmed(query, max_results)
+                print(f"Found {len(id_list)} papers.")
+
+                if id_list:
+                    xml_content = fetch_details(id_list)
+                    papers = parse_pubmed_xml(xml_content)
+                    output_dir = save_papers(papers, domain)
+                    total_papers += len(papers)
+                    last_output_dir = output_dir
+
+            except Exception as e:
+                print(f"Error processing domain {domain}: {e}")
+                # We log this but don't stop the whole pipeline if one domain fails?
+                # The requirement says "If any step fails, still write status file".
+                # If a domain fails, we might want to continue to others.
+                # But if the whole script crashes, we catch it below.
+                pass
+
+        # Determine relative path for output directory
+        if last_output_dir:
+            rel_output_dir = os.path.relpath(last_output_dir, pipeline_utils.BASE_DIR)
+        else:
+            # Fallback if no papers found
+            now_utc = datetime.datetime.now(datetime.timezone.utc)
+            today = now_utc.strftime("%Y/%m/%d")
+            rel_output_dir = f"01_INGEST/papers/{today}"
+
+        pipeline_utils.update_status(
+            "ingest_pubmed",
+            "success",
+            count=total_papers,
+            outputs={"ingest_dir": rel_output_dir + "/"}
+        )
+
+    except Exception as e:
+        pipeline_utils.update_status("ingest_pubmed", "fail", error=e)
+        raise e
+    finally:
+        pipeline_utils.print_handoff()
 
 if __name__ == "__main__":
     main()
