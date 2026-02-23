@@ -82,7 +82,11 @@ class BackfillPipeline:
             "fulltext_pmc": 0,
             "paywalled_or_unknown": 0,
             "errors": 0,
-            "skipped_partial": 0
+            "skipped_partial": 0,
+            "xml_fetched_count": 0,
+            "chunks_success_count": 0,
+            "chunks_failed_count": 0,
+            "xml_only_count": 0
         }
 
     def load_seen_pmids(self):
@@ -288,16 +292,48 @@ class BackfillPipeline:
         chunks = []
         try:
             root = ET.fromstring(pmc_xml)
-            body = root.find("body")
-            if body is None:
-                return []
+
+            # Helper to split large text
+            def split_text(text, max_len=3000, target_len=2500):
+                if len(text) <= max_len:
+                    return [text]
+
+                parts = []
+                current = text
+                while len(current) > max_len:
+                    # Find split point
+                    split_idx = -1
+                    # Try paragraph end or sentence end
+                    # We search in the range [1000, max_len] to avoid small chunks
+                    search_end = max_len
+                    search_start = 1000
+
+                    candidates = [
+                        current.rfind("\n\n", search_start, search_end),
+                        current.rfind(". ", search_start, search_end)
+                    ]
+                    best_candidate = max(candidates)
+
+                    if best_candidate > search_start:
+                        split_idx = best_candidate + (2 if current[best_candidate:best_candidate+2] == ". " else 0)
+                    else:
+                        # Hard split
+                        split_idx = target_len
+
+                    parts.append(current[:split_idx].strip())
+                    current = current[split_idx:].strip()
+
+                if current:
+                    parts.append(current)
+                return parts
 
             chunk_index = 0
 
-            # Recursive function to extract text from sections
+            # 1. Try standard Body traversal
+            body = root.find("body")
+
             def process_element(elem, current_section_title="Main"):
                 nonlocal chunk_index
-
                 # Check if this is a section
                 if elem.tag == "sec":
                     title_elem = elem.find("title")
@@ -308,25 +344,52 @@ class BackfillPipeline:
                 if elem.tag == "p":
                     text = "".join(elem.itertext()).strip()
                     if len(text) > 50: # Min length filter
-                        chunks.append({
-                            "paper_id": paper_id,
-                            "pmid": paper_id.replace("PMID-", ""), # normalize
-                            "pmcid": None, # Filled later
-                            "doi": None, # Filled later
-                            "source": "PMC_XML",
-                            "section": "Body", # Generalized
-                            "section_title": current_section_title,
-                            "chunk_index": chunk_index,
-                            "text": text,
-                            "char_len": len(text)
-                        })
-                        chunk_index += 1
+                        sub_texts = split_text(text)
+                        for sub_text in sub_texts:
+                            chunks.append({
+                                "paper_id": paper_id,
+                                "pmid": paper_id.replace("PMID-", ""), # normalize
+                                "pmcid": None, # Filled later
+                                "doi": None, # Filled later
+                                "source": "PMC_XML",
+                                "section": "Body", # Generalized
+                                "section_title": current_section_title,
+                                "chunk_index": chunk_index,
+                                "text": sub_text,
+                                "char_len": len(sub_text)
+                            })
+                            chunk_index += 1
 
                 # Recurse
                 for child in elem:
                     process_element(child, current_section_title)
 
-            process_element(body)
+            if body is not None:
+                process_element(body)
+
+            # 2. Fallback: Scan ALL <p> tags if no chunks found
+            if not chunks:
+                logging.info(f"No chunks from body traversal for {paper_id}. Attempting fallback.")
+                all_ps = root.findall(".//p")
+                for p in all_ps:
+                    text = "".join(p.itertext()).strip()
+                    # Content aware filter: must have alphanumeric and len > 20
+                    if len(text) > 20 and any(c.isalnum() for c in text):
+                        sub_texts = split_text(text)
+                        for sub_text in sub_texts:
+                            chunks.append({
+                                "paper_id": paper_id,
+                                "pmid": paper_id.replace("PMID-", ""),
+                                "pmcid": None,
+                                "doi": None,
+                                "source": "PMC_XML_FALLBACK",
+                                "section": "Body",
+                                "section_title": "Fallback",
+                                "chunk_index": chunk_index,
+                                "text": sub_text,
+                                "char_len": len(sub_text)
+                            })
+                            chunk_index += 1
 
         except ET.ParseError:
             logging.error(f"Failed to parse PMC XML for {paper_id}")
@@ -426,13 +489,46 @@ class BackfillPipeline:
                         self.stats["skipped_partial"] += 1
                         continue
 
+                    self.stats["xml_fetched_count"] += 1
+
+                    # --- ALLXML LAKE START ---
+                    try:
+                        allxml_dir = os.path.join(RAW_DIR, "ALLXML", year, month, day, f"pmcid_{pmcid}__pmid_{pmid}")
+                        os.makedirs(allxml_dir, exist_ok=True)
+                        with open(os.path.join(allxml_dir, "pmc.xml"), "wb") as f:
+                            f.write(xml_content)
+
+                        allxml_manifest = {
+                            "pmid": pmid,
+                            "pmcid": pmcid,
+                            "doi": paper.get("doi"),
+                            "title": paper.get("title"),
+                            "pub_date": paper.get("pub_date"),
+                            "domain_tags": paper.get("domain_tags"),
+                            "fetch_timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                            "xml_bytes": len(xml_content)
+                        }
+                        with open(os.path.join(allxml_dir, "manifest.json"), "w") as f:
+                            json.dump(allxml_manifest, f, indent=2)
+                    except Exception as e:
+                        logging.error(f"Failed to write ALLXML for {pmcid}: {e}")
+                    # --- ALLXML LAKE END ---
+
                     # Chunk
                     chunks = self.chunk_xml(xml_content, f"PMID-{pmid}")
+
+                    fulltext_status = "pmc_available"
+                    has_chunks = False
+
                     if not chunks:
-                         logging.warning(f"No chunks generated for {pmcid}. Skipping.")
-                         shutil.rmtree(paper_dir_abs) # Cleanup
-                         self.stats["skipped_partial"] += 1
-                         continue
+                         # New Logic: Do not skip, mark as xml_only
+                         logging.warning(f"No chunks generated for {pmcid}. Marking as xml_only.")
+                         fulltext_status = "xml_only"
+                         self.stats["chunks_failed_count"] += 1
+                         self.stats["xml_only_count"] += 1
+                    else:
+                        has_chunks = True
+                        self.stats["chunks_success_count"] += 1
 
                     # Write files
                     if self.output_mode == "xml_only":
@@ -458,15 +554,16 @@ class BackfillPipeline:
 
                         # 4. text_chunks.jsonl
                         sections_present = set()
-                        with open(os.path.join(paper_dir_abs, "text_chunks.jsonl"), "w") as f:
-                            for chunk in chunks:
-                                chunk["pmcid"] = pmcid
-                                chunk["doi"] = paper.get("doi")
-                                f.write(json.dumps(chunk) + "\n")
+                        if has_chunks:
+                            with open(os.path.join(paper_dir_abs, "text_chunks.jsonl"), "w") as f:
+                                for chunk in chunks:
+                                    chunk["pmcid"] = pmcid
+                                    chunk["doi"] = paper.get("doi")
+                                    f.write(json.dumps(chunk) + "\n")
 
-                                # Track sections for integrity
-                                section = chunk.get("section_title") or chunk.get("section") or "Other"
-                                sections_present.add(normalize_section_header(section))
+                                    # Track sections for integrity
+                                    section = chunk.get("section_title") or chunk.get("section") or "Other"
+                                    sections_present.add(normalize_section_header(section))
 
                         # 5. manifest.json (Full Integrity)
                         manifest = {
@@ -479,13 +576,12 @@ class BackfillPipeline:
                             "pub_date": paper.get("pub_date"),
                             "domain_tags": paper["domain_tags"],
                             "relevance_score": paper["relevance_score"],
-                            "fulltext_status": "pmc_available",
+                            "fulltext_status": fulltext_status,
                             "doi_url": f"https://doi.org/{paper.get('doi')}" if paper.get("doi") else None,
                             "files": {
                                 "pubmed_record": "pubmed_record.json",
                                 "abstract": "abstract.txt",
-                                "fulltext_source": "pmc.xml",
-                                "chunks": "text_chunks.jsonl"
+                                "fulltext_source": "pmc.xml"
                             },
                             "integrity": {
                                 "fulltext_bytes": len(xml_content),
@@ -494,6 +590,9 @@ class BackfillPipeline:
                                 "generated_at_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
                             }
                         }
+
+                        if has_chunks:
+                            manifest["files"]["chunks"] = "text_chunks.jsonl"
 
                         with open(os.path.join(paper_dir_abs, "manifest.json"), "w") as f:
                             json.dump(manifest, f, indent=2)
@@ -508,7 +607,10 @@ class BackfillPipeline:
                         "doi": paper.get("doi"),
                         "domain_tags": paper["domain_tags"],
                         "relevance_score": paper["relevance_score"],
-                        "fulltext_status": "pmc_available",
+                        "fulltext_status": fulltext_status,
+                        "chunks_count": len(chunks),
+                        "xml_bytes": len(xml_content),
+                        "has_chunks": has_chunks,
                         "storage_path": paper_dir_rel,
                         "pmc_xml_path": f"{paper_dir_rel}/pmc.xml"
                     })
@@ -542,7 +644,10 @@ class BackfillPipeline:
                         "relevance_score": record["relevance_score"],
                         "fulltext_status": record["fulltext_status"],
                         "drive_path": record["storage_path"],
-                        "pmc_xml_path": record.get("pmc_xml_path")
+                        "pmc_xml_path": record.get("pmc_xml_path"),
+                        "chunks_count": record.get("chunks_count", 0),
+                        "xml_bytes": record.get("xml_bytes", 0),
+                        "has_chunks": record.get("has_chunks", False)
                     }
                     f.write(json.dumps(entry) + "\n")
             logging.info(f"Appended {len(records)} entries to papers_index.jsonl")
