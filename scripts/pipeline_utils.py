@@ -2,6 +2,7 @@ import os
 import json
 import datetime
 import sys
+import re
 
 # Define base paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -130,3 +131,62 @@ def get_results_dir(config):
 def get_git_sha():
     """Returns current git SHA or 'unknown'."""
     return os.environ.get("GITHUB_SHA", "unknown")
+
+def normalize_section_header(header):
+    """
+    Normalizes a section header string into a standard key.
+
+    Returns one of: "Introduction", "Methods", "Results", "Discussion",
+                    "Tables", "Figures", "Other"
+
+    Deterministic rules:
+    1. Lowercase, strip whitespace/punctuation.
+    2. Apply mapping rules (including abbreviations).
+    """
+    if not header:
+        return "Other"
+
+    # Lowercase and strip
+    h = header.lower().strip()
+
+    # Common exact or substring matches
+
+    # 1. Methods
+    if any(x in h for x in ["materials and methods", "material and methods", "methodology", "methods"]):
+        return "Methods"
+    if "material" in h and "method" in h:
+         return "Methods"
+
+    # 2. Results (must come before Discussion check to catch "Results and Discussion")
+    if "results and discussion" in h:
+        return "Results" # Special case as per requirement
+    if "results" in h:
+        return "Results"
+
+    # 3. Discussion
+    if "discussion" in h:
+        return "Discussion"
+    if "conclusion" in h: # Covers "conclusion", "conclusions"
+        return "Discussion"
+
+    # 4. Introduction
+    if "background" in h:
+        return "Introduction"
+    if "introduction" in h:
+        return "Introduction"
+
+    # 5. Tables
+    # "tab", "tab.", "tbl" -> "Tables"
+    if "table" in h or "tbl" in h or h.startswith("tab ") or h.startswith("tab.") or h == "tab":
+        return "Tables"
+
+    # 6. Figures
+    # "fig", "fig.", "figs" -> "Figures"
+    if "figure" in h or "figs" in h or h.startswith("fig ") or h.startswith("fig.") or h == "fig":
+        return "Figures"
+
+    # 7. Other
+    if "supplement" in h or "appendix" in h:
+        return "Other"
+
+    return "Other"
