@@ -1,0 +1,47 @@
+name: Repair Backfill Outputs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  repair_backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Write Token
+        env:
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+        run: |
+          echo "$GOOGLE_TOKEN_JSON" > token.json
+
+      - name: Run Repair Script
+        run: |
+          python scripts/repair_backfill_outputs.py
+
+      - name: Sync Results to Drive
+        env:
+          GOOGLE_DRIVE_ROOT_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_ROOT_FOLDER_ID }}
+        run: |
+          python scripts/sync_to_drive.py
+
+      - name: Upload Repair Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: repair-report
+          path: 00_ADMIN/repair_report_*.json
+
+      - name: Cleanup Token
+        if: always()
+        run: |
+          rm -f token.json

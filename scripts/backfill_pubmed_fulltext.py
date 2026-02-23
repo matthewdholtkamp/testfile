@@ -5,10 +5,12 @@ import time
 import datetime
 import logging
 import argparse
+import shutil
 import requests
 import xml.etree.ElementTree as ET
 from secrets_manager import SecretsManager
 import pipeline_utils
+from pipeline_utils import normalize_section_header
 
 # Add script directory to path
 sys.path.append(os.path.dirname(__file__))
@@ -78,7 +80,8 @@ class BackfillPipeline:
             "processed": 0,
             "fulltext_pmc": 0,
             "paywalled_or_unknown": 0,
-            "errors": 0
+            "errors": 0,
+            "skipped_partial": 0
         }
 
     def load_seen_pmids(self):
@@ -405,64 +408,107 @@ class BackfillPipeline:
                 logging.info(f"Skipping existing local folder for {pmid}")
                 continue
 
+            # Strict No-Partial-Save Check
+            if not pmcid:
+                self.stats["paywalled_or_unknown"] += 1
+                continue # Skip if no PMCID (per current policy, only fulltext)
+
             if not self.dry_run:
-                os.makedirs(paper_dir_abs, exist_ok=True)
+                try:
+                    os.makedirs(paper_dir_abs, exist_ok=True)
 
-                # Write pubmed_record.json
-                with open(os.path.join(paper_dir_abs, "pubmed_record.json"), "w") as f:
-                    json.dump(paper, f, indent=2)
-
-                # Write abstract.txt
-                with open(os.path.join(paper_dir_abs, "abstract.txt"), "w") as f:
-                    f.write(f"Title: {paper['title']}\n\nAbstract:\n{paper['abstract']}")
-
-                fulltext_status = "paywalled_or_unknown"
-
-                # Handle Fulltext
-                if pmcid:
-                    fulltext_dir = os.path.join(paper_dir_abs, "fulltext")
-                    os.makedirs(fulltext_dir, exist_ok=True)
-
+                    # Fetch Fulltext
                     xml_content = self.fetch_pmc_xml(pmcid)
-                    if xml_content:
-                        # Write XML
-                        with open(os.path.join(fulltext_dir, "pmc.xml"), "wb") as f:
-                            f.write(xml_content)
+                    if not xml_content or len(xml_content) == 0:
+                        logging.warning(f"Failed to fetch XML for {pmcid}. Skipping.")
+                        shutil.rmtree(paper_dir_abs) # Cleanup
+                        self.stats["skipped_partial"] += 1
+                        continue
 
-                        # Chunk
-                        chunks = self.chunk_xml(xml_content, f"PMID-{pmid}")
-                        if chunks:
-                            with open(os.path.join(fulltext_dir, "text_chunks.jsonl"), "w") as f:
-                                for chunk in chunks:
-                                    chunk["pmcid"] = pmcid
-                                    chunk["doi"] = paper.get("doi")
-                                    f.write(json.dumps(chunk) + "\n")
+                    # Chunk
+                    chunks = self.chunk_xml(xml_content, f"PMID-{pmid}")
+                    if not chunks:
+                         logging.warning(f"No chunks generated for {pmcid}. Skipping.")
+                         shutil.rmtree(paper_dir_abs) # Cleanup
+                         self.stats["skipped_partial"] += 1
+                         continue
 
-                        fulltext_status = "pmc_available"
-                        self.stats["fulltext_pmc"] += 1
-                    else:
-                         logging.warning(f"Failed to fetch XML for {pmcid}")
-                else:
-                    self.stats["paywalled_or_unknown"] += 1
+                    # Write files (Flat structure)
 
-                # Write Manifest
-                manifest = {
-                    "paper_id": f"PMID-{pmid}",
-                    "pmid": pmid,
-                    "pmcid": pmcid,
-                    "doi": paper.get("doi"),
-                    "domain_tags": paper["domain_tags"],
-                    "relevance_score": paper["relevance_score"],
-                    "fulltext_status": fulltext_status,
-                    "doi_url": f"https://doi.org/{paper.get('doi')}" if paper.get("doi") else None,
-                    "storage_path": paper_dir_rel
-                }
+                    # 1. pubmed_record.json
+                    with open(os.path.join(paper_dir_abs, "pubmed_record.json"), "w") as f:
+                        json.dump(paper, f, indent=2)
 
-                with open(os.path.join(paper_dir_abs, "manifest.json"), "w") as f:
-                    json.dump(manifest, f, indent=2)
+                    # 2. abstract.txt
+                    with open(os.path.join(paper_dir_abs, "abstract.txt"), "w") as f:
+                        f.write(f"Title: {paper['title']}\n\nAbstract:\n{paper['abstract']}")
 
-                processed_records.append(manifest)
-                self.stats["processed"] += 1
+                    # 3. pmc.xml
+                    with open(os.path.join(paper_dir_abs, "pmc.xml"), "wb") as f:
+                        f.write(xml_content)
+
+                    # 4. text_chunks.jsonl
+                    sections_present = set()
+                    with open(os.path.join(paper_dir_abs, "text_chunks.jsonl"), "w") as f:
+                        for chunk in chunks:
+                            chunk["pmcid"] = pmcid
+                            chunk["doi"] = paper.get("doi")
+                            f.write(json.dumps(chunk) + "\n")
+
+                            # Track sections for integrity
+                            section = chunk.get("section_title") or chunk.get("section") or "Other"
+                            sections_present.add(normalize_section_header(section))
+
+                    # 5. manifest.json (Full Integrity)
+                    manifest = {
+                        "paper_id": f"PMID-{pmid}",
+                        "pmid": pmid,
+                        "pmcid": pmcid,
+                        "doi": paper.get("doi"),
+                        "title": paper.get("title"),
+                        "journal": paper.get("journal"),
+                        "pub_date": paper.get("pub_date"),
+                        "domain_tags": paper["domain_tags"],
+                        "relevance_score": paper["relevance_score"],
+                        "fulltext_status": "pmc_available",
+                        "doi_url": f"https://doi.org/{paper.get('doi')}" if paper.get("doi") else None,
+                        "files": {
+                            "pubmed_record": "pubmed_record.json",
+                            "abstract": "abstract.txt",
+                            "fulltext_source": "pmc.xml",
+                            "chunks": "text_chunks.jsonl"
+                        },
+                        "integrity": {
+                            "fulltext_bytes": len(xml_content),
+                            "chunks_count": len(chunks),
+                            "sections_present": sorted(list(sections_present)),
+                            "generated_at_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                        }
+                    }
+
+                    with open(os.path.join(paper_dir_abs, "manifest.json"), "w") as f:
+                        json.dump(manifest, f, indent=2)
+
+                    # Success
+                    self.stats["fulltext_pmc"] += 1
+
+                    # Store path relative for index
+                    processed_records.append({
+                        "pmid": pmid,
+                        "pmcid": pmcid,
+                        "doi": paper.get("doi"),
+                        "domain_tags": paper["domain_tags"],
+                        "relevance_score": paper["relevance_score"],
+                        "fulltext_status": "pmc_available",
+                        "storage_path": paper_dir_rel
+                    })
+                    self.stats["processed"] += 1
+
+                except Exception as e:
+                    logging.error(f"Error processing {pmid}: {e}")
+                    if os.path.exists(paper_dir_abs):
+                        shutil.rmtree(paper_dir_abs)
+                    self.stats["errors"] += 1
 
         # 6. Update Indices
         if not self.dry_run and processed_records:
