@@ -68,6 +68,7 @@ class BackfillPipeline:
         self.target_count = target_count
         self.dry_run = dry_run
         self.backfill_config = config.get("backfill", {})
+        self.output_mode = self.backfill_config.get("output_mode", "full")
         self.seen_pmids = self.load_seen_pmids()
         self.run_date_utc = datetime.datetime.now(datetime.timezone.utc)
         self.run_id = f"backfill_{self.run_date_utc.strftime('%Y%m%d_%H%M%S')}"
@@ -433,61 +434,69 @@ class BackfillPipeline:
                          self.stats["skipped_partial"] += 1
                          continue
 
-                    # Write files (Flat structure)
+                    # Write files
+                    if self.output_mode == "xml_only":
+                        # XML Only Mode: pmc.xml only
+                        with open(os.path.join(paper_dir_abs, "pmc.xml"), "wb") as f:
+                            f.write(xml_content)
 
-                    # 1. pubmed_record.json
-                    with open(os.path.join(paper_dir_abs, "pubmed_record.json"), "w") as f:
-                        json.dump(paper, f, indent=2)
+                        # No other files
+                    else:
+                        # Full Mode: All files
 
-                    # 2. abstract.txt
-                    with open(os.path.join(paper_dir_abs, "abstract.txt"), "w") as f:
-                        f.write(f"Title: {paper['title']}\n\nAbstract:\n{paper['abstract']}")
+                        # 1. pubmed_record.json
+                        with open(os.path.join(paper_dir_abs, "pubmed_record.json"), "w") as f:
+                            json.dump(paper, f, indent=2)
 
-                    # 3. pmc.xml
-                    with open(os.path.join(paper_dir_abs, "pmc.xml"), "wb") as f:
-                        f.write(xml_content)
+                        # 2. abstract.txt
+                        with open(os.path.join(paper_dir_abs, "abstract.txt"), "w") as f:
+                            f.write(f"Title: {paper['title']}\n\nAbstract:\n{paper['abstract']}")
 
-                    # 4. text_chunks.jsonl
-                    sections_present = set()
-                    with open(os.path.join(paper_dir_abs, "text_chunks.jsonl"), "w") as f:
-                        for chunk in chunks:
-                            chunk["pmcid"] = pmcid
-                            chunk["doi"] = paper.get("doi")
-                            f.write(json.dumps(chunk) + "\n")
+                        # 3. pmc.xml
+                        with open(os.path.join(paper_dir_abs, "pmc.xml"), "wb") as f:
+                            f.write(xml_content)
 
-                            # Track sections for integrity
-                            section = chunk.get("section_title") or chunk.get("section") or "Other"
-                            sections_present.add(normalize_section_header(section))
+                        # 4. text_chunks.jsonl
+                        sections_present = set()
+                        with open(os.path.join(paper_dir_abs, "text_chunks.jsonl"), "w") as f:
+                            for chunk in chunks:
+                                chunk["pmcid"] = pmcid
+                                chunk["doi"] = paper.get("doi")
+                                f.write(json.dumps(chunk) + "\n")
 
-                    # 5. manifest.json (Full Integrity)
-                    manifest = {
-                        "paper_id": f"PMID-{pmid}",
-                        "pmid": pmid,
-                        "pmcid": pmcid,
-                        "doi": paper.get("doi"),
-                        "title": paper.get("title"),
-                        "journal": paper.get("journal"),
-                        "pub_date": paper.get("pub_date"),
-                        "domain_tags": paper["domain_tags"],
-                        "relevance_score": paper["relevance_score"],
-                        "fulltext_status": "pmc_available",
-                        "doi_url": f"https://doi.org/{paper.get('doi')}" if paper.get("doi") else None,
-                        "files": {
-                            "pubmed_record": "pubmed_record.json",
-                            "abstract": "abstract.txt",
-                            "fulltext_source": "pmc.xml",
-                            "chunks": "text_chunks.jsonl"
-                        },
-                        "integrity": {
-                            "fulltext_bytes": len(xml_content),
-                            "chunks_count": len(chunks),
-                            "sections_present": sorted(list(sections_present)),
-                            "generated_at_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                                # Track sections for integrity
+                                section = chunk.get("section_title") or chunk.get("section") or "Other"
+                                sections_present.add(normalize_section_header(section))
+
+                        # 5. manifest.json (Full Integrity)
+                        manifest = {
+                            "paper_id": f"PMID-{pmid}",
+                            "pmid": pmid,
+                            "pmcid": pmcid,
+                            "doi": paper.get("doi"),
+                            "title": paper.get("title"),
+                            "journal": paper.get("journal"),
+                            "pub_date": paper.get("pub_date"),
+                            "domain_tags": paper["domain_tags"],
+                            "relevance_score": paper["relevance_score"],
+                            "fulltext_status": "pmc_available",
+                            "doi_url": f"https://doi.org/{paper.get('doi')}" if paper.get("doi") else None,
+                            "files": {
+                                "pubmed_record": "pubmed_record.json",
+                                "abstract": "abstract.txt",
+                                "fulltext_source": "pmc.xml",
+                                "chunks": "text_chunks.jsonl"
+                            },
+                            "integrity": {
+                                "fulltext_bytes": len(xml_content),
+                                "chunks_count": len(chunks),
+                                "sections_present": sorted(list(sections_present)),
+                                "generated_at_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                            }
                         }
-                    }
 
-                    with open(os.path.join(paper_dir_abs, "manifest.json"), "w") as f:
-                        json.dump(manifest, f, indent=2)
+                        with open(os.path.join(paper_dir_abs, "manifest.json"), "w") as f:
+                            json.dump(manifest, f, indent=2)
 
                     # Success
                     self.stats["fulltext_pmc"] += 1
@@ -500,7 +509,8 @@ class BackfillPipeline:
                         "domain_tags": paper["domain_tags"],
                         "relevance_score": paper["relevance_score"],
                         "fulltext_status": "pmc_available",
-                        "storage_path": paper_dir_rel
+                        "storage_path": paper_dir_rel,
+                        "pmc_xml_path": f"{paper_dir_rel}/pmc.xml"
                     })
                     self.stats["processed"] += 1
 
@@ -531,7 +541,8 @@ class BackfillPipeline:
                         "domain_tags": record["domain_tags"],
                         "relevance_score": record["relevance_score"],
                         "fulltext_status": record["fulltext_status"],
-                        "drive_path": record["storage_path"]
+                        "drive_path": record["storage_path"],
+                        "pmc_xml_path": record.get("pmc_xml_path")
                     }
                     f.write(json.dumps(entry) + "\n")
             logging.info(f"Appended {len(records)} entries to papers_index.jsonl")
@@ -560,10 +571,13 @@ def main():
     parser.add_argument("--dry_run", action="store_true", help="Dry run")
     args = parser.parse_args()
 
-    # Load default target from config if not provided
-    target_count = args.target_count or config.get("backfill", {}).get("target_count", 1000)
+    # Determine target count based on mode and config
+    if args.mode == "daily":
+        target_count = args.target_count or config.get("backfill", {}).get("daily_target_count", 100)
+    else:
+        target_count = args.target_count or config.get("backfill", {}).get("target_count", 1000)
 
-    logging.info(f"Starting Backfill in mode: {args.mode}")
+    logging.info(f"Starting Backfill in mode: {args.mode} (Target: {target_count})")
     pipeline = BackfillPipeline(target_count=target_count, dry_run=args.dry_run)
     pipeline.run()
 
