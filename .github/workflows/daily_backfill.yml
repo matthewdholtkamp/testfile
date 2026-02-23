@@ -1,0 +1,76 @@
+name: Daily Backfill Full-Text Data Lake
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # 12:00 UTC (06:00 CST)
+  workflow_dispatch:
+
+jobs:
+  daily_backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Write OAuth token.json
+      shell: bash
+      run: |
+        cat > token.json <<'JSON'
+        ${{ secrets.GOOGLE_TOKEN_JSON }}
+        JSON
+        chmod 600 token.json
+
+    - name: Verify token.json
+      run: |
+        python -c 'import json; t=json.load(open("token.json")); assert "refresh_token" in t'
+
+    - name: Pull Papers Index
+      env:
+        DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+      continue-on-error: true
+      run: |
+        python scripts/sync_to_drive.py --pull-index || true
+
+    - name: Run Daily Backfill
+      env:
+        NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+      run: |
+        python scripts/backfill_pubmed_fulltext.py --mode daily
+
+    - name: Build ALLXML Bundle
+      run: |
+        python scripts/build_allxml.py --scope day
+
+    - name: Sync Results to Drive
+      if: always()
+      env:
+        DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+      run: |
+        python scripts/sync_to_drive.py
+
+    - name: Cleanup token
+      if: always()
+      run: rm -f token.json || true
+
+    - name: Upload Artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: daily-backfill-outputs
+        path: |
+          00_ADMIN/papers_index.jsonl
+          00_ADMIN/run_manifest.jsonl
+          00_ADMIN/pipeline_status.json
+          04_PRODUCTS/ALLXML/ALLXML_*.xml
+          04_PRODUCTS/ALLXML/ALLXML_*_report.json

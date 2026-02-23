@@ -360,6 +360,8 @@
   "backfill": {
     "years_back": 5,
     "target_count": 1000,
+    "daily_target_count": 100,
+    "output_mode": "xml_only",
     "fulltext_only_if_pmcid": true,
     "anchor_terms": [
       "aging",
