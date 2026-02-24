@@ -1,0 +1,88 @@
+name: Daily XML Corpus Export
+
+on:
+  schedule:
+    - cron: '30 2 * * *' # Run at 02:30 UTC daily
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Export Mode'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+        - daily
+        - one_time
+      strategy:
+        description: 'Export Strategy'
+        required: true
+        default: 'incremental'
+        type: choice
+        options:
+        - incremental
+        - snapshot
+      source_folder_id:
+        description: 'Source Drive Folder ID (overrides secret)'
+        required: false
+        type: string
+      force:
+        description: 'Force overwrite existing files'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  export-xml:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Write OAuth token.json
+      shell: bash
+      run: |
+        cat > token.json <<'JSON'
+        ${{ secrets.GOOGLE_TOKEN_JSON }}
+        JSON
+        chmod 600 token.json
+
+    - name: Run Export Script
+      env:
+        # Use input if provided, else secret, else empty (script will fail if empty)
+        SOURCE_ID_INPUT: ${{ github.event.inputs.source_folder_id }}
+        SOURCE_ID_SECRET: ${{ secrets.SOURCE_FOLDER_ID }}
+        DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+        MODE: ${{ github.event.inputs.mode || 'daily' }}
+        STRATEGY: ${{ github.event.inputs.strategy || 'incremental' }}
+        FORCE_FLAG: ${{ github.event.inputs.force == 'true' && '--force' || '' }}
+      run: |
+        # Determine Source ID
+        if [ -n "$SOURCE_ID_INPUT" ]; then
+          SOURCE_ID="$SOURCE_ID_INPUT"
+        else
+          SOURCE_ID="$SOURCE_ID_SECRET"
+        fi
+
+        if [ -z "$SOURCE_ID" ]; then
+          echo "Error: Source Folder ID not provided via input or secrets.SOURCE_FOLDER_ID"
+          exit 1
+        fi
+
+        python scripts/export_xml_corpus.py \
+          --mode "$MODE" \
+          --strategy "$STRATEGY" \
+          --source_folder_id "$SOURCE_ID" \
+          $FORCE_FLAG
+
+    - name: Cleanup token
+      if: always()
+      run: rm -f token.json || true
