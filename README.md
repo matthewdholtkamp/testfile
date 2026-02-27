@@ -35,22 +35,10 @@ This deletes all non-trashed files/folders inside `DRIVE_ROOT_FOLDER_ID` before 
 
 ## Environment Variables
 
-- `GOOGLE_APPLICATION_CREDENTIALS` → service account JSON path (optional if using `secrets/google_drive_service_account.json`)
+- `GOOGLE_APPLICATION_CREDENTIALS` → service account JSON path
 - `DRIVE_ROOT_FOLDER_ID` → Drive folder to manage
 
 ## Notes
 
 - XML output is normalized for AI: metadata in attributes, plain text in `body` nodes.
 - Filenames are slugged and deterministic for easier retrieval.
-
-## One-time GitHub Action reboot
-
-You can run a single destructive reboot directly in GitHub Actions using:
-- workflow: `One-Time Drive Reboot`
-- required secret: `GOOGLE_SERVICE_ACCOUNT_JSON`
-- required secret: `DRIVE_ROOT_FOLDER_ID`
-- required confirmation input: `RUN-DRIVE-REBOOT`
-
-Detailed runbook: `docs/ONE_TIME_GITHUB_REBOOT.md`.
-
-The one-time GitHub workflow writes credentials into `secrets/google_drive_service_account.json` during runtime and removes it before completion.

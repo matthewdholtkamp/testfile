@@ -12,17 +12,11 @@ from googleapiclient.http import MediaFileUpload
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 
 
-def resolve_credentials_path() -> Path:
-    return Path(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "secrets/google_drive_service_account.json"))
-
-
 def get_service():
-    creds_path = resolve_credentials_path()
-    if not creds_path.exists():
-        raise RuntimeError(
-            "Google credentials not found. Set GOOGLE_APPLICATION_CREDENTIALS or place key at secrets/google_drive_service_account.json"
-        )
-    creds = service_account.Credentials.from_service_account_file(str(creds_path), scopes=SCOPES)
+    creds_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+    if not creds_path:
+        raise RuntimeError("GOOGLE_APPLICATION_CREDENTIALS is required")
+    creds = service_account.Credentials.from_service_account_file(creds_path, scopes=SCOPES)
     return build("drive", "v3", credentials=creds)
 
 
