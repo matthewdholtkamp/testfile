@@ -1,0 +1,118 @@
+name: One-Time Drive Reboot
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_confirmation:
+        description: "Type RUN-DRIVE-REBOOT to confirm destructive reset"
+        required: true
+        type: string
+      day:
+        description: "Day folder to build/upload (YYYY-MM-DD). Leave blank for today UTC"
+        required: false
+        type: string
+      reset_root:
+        description: "Delete all existing items under DRIVE_ROOT_FOLDER_ID before upload"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  reboot:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.run_confirmation == 'RUN-DRIVE-REBOOT' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Resolve day folder
+        id: day
+        shell: bash
+        run: |
+          if [ -n "${{ github.event.inputs.day }}" ]; then
+            DAY="${{ github.event.inputs.day }}"
+          else
+            DAY="$(date -u +%F)"
+          fi
+          echo "day=$DAY" >> "$GITHUB_OUTPUT"
+          echo "Using day folder: $DAY"
+
+      - name: Build XML corpus
+        run: |
+          python tools/build_xml_corpus.py \
+            --input data/inbox \
+            --output data/xml_daily \
+            --date "${{ steps.day.outputs.day }}"
+
+      - name: Write service account key to repo secrets folder
+        shell: bash
+        run: |
+          mkdir -p secrets
+          cat > secrets/google_drive_service_account.json <<'JSON'
+          ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          JSON
+          chmod 600 secrets/google_drive_service_account.json
+          test -s secrets/google_drive_service_account.json
+
+      - name: Drive reboot and upload
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: secrets/google_drive_service_account.json
+          DRIVE_ROOT_FOLDER_ID: ${{ secrets.DRIVE_ROOT_FOLDER_ID }}
+        run: |
+          CMD=(python tools/drive_flat_sync.py --local-day "data/xml_daily/${{ steps.day.outputs.day }}")
+          if [ "${{ github.event.inputs.reset_root }}" = "true" ]; then
+            CMD+=(--reset-root)
+          fi
+          printf 'Running: %q ' "${CMD[@]}"; echo
+          "${CMD[@]}"
+
+      - name: Upload generated day artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: xml-daily-${{ steps.day.outputs.day }}
+          path: data/xml_daily/${{ steps.day.outputs.day }}
+
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f secrets/google_drive_service_account.json
+
+      - name: Remove this one-time workflow after successful run
+        if: success()
+        shell: bash
+        run: |
+          rm -f .github/workflows/one_time_drive_reboot.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No workflow cleanup change to commit"
+            exit 0
+          fi
+          git commit -m "chore: remove one-time drive reboot workflow after use"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+  confirmation_failed:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.run_confirmation != 'RUN-DRIVE-REBOOT' }}
+    steps:
+      - name: Stop due to missing confirmation string
+        run: |
+          echo "Confirmation string mismatch."
+          echo "Set run_confirmation to exactly: RUN-DRIVE-REBOOT"
+          exit 1
