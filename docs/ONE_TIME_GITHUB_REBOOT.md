@@ -4,8 +4,8 @@ Use this when you want GitHub Actions to perform a single destructive Drive rese
 
 ## 1) Configure GitHub repository secrets
 
-- `SERVICE_ACCOUNT_JSON` (legacy, preferred) or `GOOGLE_SERVICE_ACCOUNT_JSON` = full service-account JSON content
-- `DRIVE_FOLDER_ID` (legacy, preferred) or `DRIVE_ROOT_FOLDER_ID` = target Google Drive folder ID
+- `GOOGLE_SERVICE_ACCOUNT_JSON` = full service-account JSON content
+- `DRIVE_ROOT_FOLDER_ID` = target Google Drive folder ID
 
 ## 2) Run the workflow
 
@@ -21,7 +21,7 @@ Use this when you want GitHub Actions to perform a single destructive Drive rese
 
 1. Builds XML corpus into `data/xml_daily/<day>/`.
 2. Writes the service account key into `secrets/google_drive_service_account.json` during the run.
-3. Optionally deletes all existing children under `DRIVE_FOLDER_ID` (legacy, preferred) or `DRIVE_ROOT_FOLDER_ID`.
+3. Optionally deletes all existing children under `DRIVE_ROOT_FOLDER_ID`.
 4. Uploads all files from `data/xml_daily/<day>/` into a single Drive day folder.
 5. Uploads the local day folder as a GitHub artifact.
 6. Deletes the temporary service account key file.

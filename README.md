@@ -31,50 +31,14 @@ If you want to wipe a target Drive folder and restart clean:
 python tools/drive_flat_sync.py --local-day data/xml_daily/$(date +%F) --reset-root
 ```
 
-This deletes all non-trashed files/folders inside `DRIVE_FOLDER_ID` (legacy, preferred) or `DRIVE_ROOT_FOLDER_ID` before upload.
+This deletes all non-trashed files/folders inside `DRIVE_ROOT_FOLDER_ID` before upload.
 
 ## Environment Variables
 
-- `GOOGLE_APPLICATION_CREDENTIALS` → service account JSON path (optional if using `secrets/google_drive_service_account.json`)
-- `DRIVE_FOLDER_ID` (legacy, preferred) or `DRIVE_ROOT_FOLDER_ID` → Drive folder to manage
-- Optional: `PROJECT_LONGEVITY_FOLDER_ID` fallback
-- If none are set, the tool defaults to the Project Longevity root folder ID
+- `GOOGLE_APPLICATION_CREDENTIALS` → service account JSON path
+- `DRIVE_ROOT_FOLDER_ID` → Drive folder to manage
 
 ## Notes
 
 - XML output is normalized for AI: metadata in attributes, plain text in `body` nodes.
 - Filenames are slugged and deterministic for easier retrieval.
-
-## One-time GitHub Action reboot
-
-You can run a single destructive reboot directly in GitHub Actions using:
-- workflow: `One-Time Drive Reboot`
-- required secret: `SERVICE_ACCOUNT_JSON` (legacy, preferred) or `GOOGLE_SERVICE_ACCOUNT_JSON`
-- required secret: `DRIVE_FOLDER_ID` (legacy, preferred) or `DRIVE_ROOT_FOLDER_ID`
-- required confirmation input: `RUN-DRIVE-REBOOT`
-
-Detailed runbook: `docs/ONE_TIME_GITHUB_REBOOT.md`.
-
-The one-time GitHub workflow writes credentials into `secrets/google_drive_service_account.json` during runtime and removes it before completion.
-
-
-## RUN ROUND 2 (daily + manual)
-
-A GitHub Actions workflow named **RUN ROUND 2** now runs once per day and also supports manual runs from the Actions tab.
-
-It performs:
-- daily XML build
-- Google Drive folder rebuild (`INBOX`, `XML_DAILY`, `LOGS`, `ARCHIVE`)
-- upload to `XML_DAILY/YYYY-MM-DD`
-
-Workflow file: `.github/workflows/run_round_2.yml`.
-
-
-## RUN ROUND 2 (CORRECT FLOW)
-
-If the original `RUN ROUND 2` workflow is pinned to an older commit in a run context, use the manual workflow:
-
-- **Workflow name:** `RUN ROUND 2 (CORRECT FLOW)`
-- **File:** `.github/workflows/run_round_2_fixed.yml`
-
-This workflow uses the current Drive sync command path (no deprecated `--rebuild-folders` CLI dependency), while still rebuilding folders via `ROUND2_REBUILD_FOLDERS=1`.

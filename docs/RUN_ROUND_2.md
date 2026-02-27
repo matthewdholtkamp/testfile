@@ -9,9 +9,8 @@
 
 ## Required GitHub secrets
 
-- `SERVICE_ACCOUNT_JSON` (legacy, preferred) or `GOOGLE_SERVICE_ACCOUNT_JSON`
-- `DRIVE_FOLDER_ID` (legacy, preferred) or `DRIVE_ROOT_FOLDER_ID`
-- Optional: `PROJECT_LONGEVITY_FOLDER_ID` (if both are absent, tool defaults to the known Project Longevity root folder ID)
+- `GOOGLE_SERVICE_ACCOUNT_JSON`
+- `DRIVE_ROOT_FOLDER_ID`
 
 ## Manual inputs
 
@@ -28,7 +27,3 @@
    - `ARCHIVE`
 3. Uploads files into `XML_DAILY/<day>/`.
 4. Cleans up temporary credentials file.
-
-
-## Compatibility note
-The workflow now enables folder rebuild via `ROUND2_REBUILD_FOLDERS=1` in environment, so it remains compatible even if older script invocations omit `--rebuild-folders`.
