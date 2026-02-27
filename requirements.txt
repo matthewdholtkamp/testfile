@@ -1,7 +1,5 @@
-# PROJECT LONGEVITY - Pipeline Dependencies
 requests>=2.31.0
 lxml>=4.9.0
 google-auth>=2.22.0
-google-auth-httplib2>=0.1.0
 google-api-python-client>=2.95.0
-biopython>=1.81
+pytest>=8.0.0
