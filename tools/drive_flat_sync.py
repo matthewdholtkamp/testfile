@@ -10,20 +10,13 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
 SCOPES = ["https://www.googleapis.com/auth/drive"]
-ROUND2_FOLDERS = ["INBOX", "XML_DAILY", "LOGS", "ARCHIVE"]
-
-
-def resolve_credentials_path() -> Path:
-    return Path(os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "secrets/google_drive_service_account.json"))
 
 
 def get_service():
-    creds_path = resolve_credentials_path()
-    if not creds_path.exists():
-        raise RuntimeError(
-            "Google credentials not found. Set GOOGLE_APPLICATION_CREDENTIALS or place key at secrets/google_drive_service_account.json"
-        )
-    creds = service_account.Credentials.from_service_account_file(str(creds_path), scopes=SCOPES)
+    creds_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+    if not creds_path:
+        raise RuntimeError("GOOGLE_APPLICATION_CREDENTIALS is required")
+    creds = service_account.Credentials.from_service_account_file(creds_path, scopes=SCOPES)
     return build("drive", "v3", credentials=creds)
 
 
@@ -53,26 +46,6 @@ def ensure_folder(service, parent_id: str, name: str) -> str:
     return service.files().create(body=body, fields="id").execute()["id"]
 
 
-def ensure_round2_structure(service, root_id: str) -> dict[str, str]:
-    folder_ids: dict[str, str] = {}
-    for folder in ROUND2_FOLDERS:
-        folder_ids[folder] = ensure_folder(service, root_id, folder)
-    return folder_ids
-
-
-
-
-def should_rebuild_folders(cli_flag: bool) -> bool:
-    return cli_flag or os.environ.get("ROUND2_REBUILD_FOLDERS") == "1"
-
-
-def resolve_drive_root_id() -> str:
-    root_id = os.environ.get("DRIVE_FOLDER_ID") or os.environ.get("DRIVE_ROOT_FOLDER_ID")
-    if not root_id:
-        raise RuntimeError("DRIVE_FOLDER_ID or DRIVE_ROOT_FOLDER_ID is required")
-    return root_id
-
-
 def upload_flat(service, parent_id: str, local_day: Path):
     for path in sorted(local_day.iterdir()):
         if not path.is_file():
@@ -86,14 +59,11 @@ def main():
     parser = argparse.ArgumentParser(description="Flat Google Drive daily sync with optional root reset.")
     parser.add_argument("--local-day", required=True, help="Local folder for one day of XML corpus")
     parser.add_argument("--reset-root", action="store_true", help="Delete all children under DRIVE_ROOT_FOLDER_ID")
-    parser.add_argument(
-        "--rebuild-folders",
-        action="store_true",
-        help="Ensure ROUND 2 folder structure (INBOX/XML_DAILY/LOGS/ARCHIVE) under root before upload",
-    )
     args = parser.parse_args()
 
-    root_id = resolve_drive_root_id()
+    root_id = os.environ.get("DRIVE_ROOT_FOLDER_ID")
+    if not root_id:
+        raise RuntimeError("DRIVE_ROOT_FOLDER_ID is required")
 
     local_day = Path(args.local_day)
     if not local_day.exists() or not local_day.is_dir():
@@ -104,14 +74,7 @@ def main():
     if args.reset_root:
         delete_tree(service, root_id)
 
-    rebuild_folders = should_rebuild_folders(args.rebuild_folders)
-
-    target_parent = root_id
-    if rebuild_folders:
-        structure = ensure_round2_structure(service, root_id)
-        target_parent = structure["XML_DAILY"]
-
-    day_folder_id = ensure_folder(service, target_parent, local_day.name)
+    day_folder_id = ensure_folder(service, root_id, local_day.name)
     upload_flat(service, day_folder_id, local_day)
     print(f"Uploaded {local_day} to Drive folder {local_day.name}")
 

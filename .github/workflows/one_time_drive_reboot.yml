@@ -12,7 +12,7 @@ on:
         required: false
         type: string
       reset_root:
-        description: "Delete all existing items under DRIVE_FOLDER_ID/DRIVE_ROOT_FOLDER_ID before upload"
+        description: "Delete all existing items under DRIVE_ROOT_FOLDER_ID before upload"
         required: true
         default: true
         type: boolean
@@ -62,24 +62,17 @@ jobs:
 
       - name: Write service account key to repo secrets folder
         shell: bash
-        env:
-          LEGACY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-          NEW_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
           mkdir -p secrets
-          SERVICE_JSON="${LEGACY_SERVICE_ACCOUNT_JSON:-$NEW_SERVICE_ACCOUNT_JSON}"
-          if [ -z "$SERVICE_JSON" ]; then
-            echo "Missing service account secret: SERVICE_ACCOUNT_JSON or GOOGLE_SERVICE_ACCOUNT_JSON"
-            exit 1
-          fi
-          printf "%s" "$SERVICE_JSON" > secrets/google_drive_service_account.json
+          cat > secrets/google_drive_service_account.json <<'JSON'
+          ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          JSON
           chmod 600 secrets/google_drive_service_account.json
           test -s secrets/google_drive_service_account.json
 
       - name: Drive reboot and upload
         env:
           GOOGLE_APPLICATION_CREDENTIALS: secrets/google_drive_service_account.json
-          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
           DRIVE_ROOT_FOLDER_ID: ${{ secrets.DRIVE_ROOT_FOLDER_ID }}
         run: |
           CMD=(python tools/drive_flat_sync.py --local-day "data/xml_daily/${{ steps.day.outputs.day }}")
