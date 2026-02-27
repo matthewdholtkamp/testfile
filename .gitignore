@@ -9,3 +9,4 @@ venv/
 *.pkl
 token.json
 client_secret.json
+docs/*.docx
