@@ -1,0 +1,94 @@
+name: RUN ROUND 2 (CORRECT FLOW)
+
+on:
+  workflow_dispatch:
+    inputs:
+      day:
+        description: "Day folder to build/upload (YYYY-MM-DD). Leave blank for today UTC"
+        required: false
+        type: string
+      reset_root:
+        description: "Delete all existing items under DRIVE root before rebuilding folders"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  round2_correct:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Resolve day
+        id: day
+        shell: bash
+        run: |
+          if [ -n "${{ github.event.inputs.day }}" ]; then
+            DAY="${{ github.event.inputs.day }}"
+          else
+            DAY="$(date -u +%F)"
+          fi
+          echo "day=$DAY" >> "$GITHUB_OUTPUT"
+          echo "Using day folder: $DAY"
+
+      - name: Build XML corpus
+        run: |
+          python tools/build_xml_corpus.py \
+            --input data/inbox \
+            --output data/xml_daily \
+            --date "${{ steps.day.outputs.day }}"
+
+      - name: Write service account key (legacy-first)
+        shell: bash
+        env:
+          LEGACY_SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          NEW_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          mkdir -p secrets
+          SERVICE_JSON="${LEGACY_SERVICE_ACCOUNT_JSON:-$NEW_SERVICE_ACCOUNT_JSON}"
+          if [ -z "$SERVICE_JSON" ]; then
+            echo "Missing service account secret: SERVICE_ACCOUNT_JSON or GOOGLE_SERVICE_ACCOUNT_JSON"
+            exit 1
+          fi
+          printf "%s" "$SERVICE_JSON" > secrets/google_drive_service_account.json
+          chmod 600 secrets/google_drive_service_account.json
+          test -s secrets/google_drive_service_account.json
+
+      - name: Run correct Drive sync flow
+        env:
+          ROUND2_REBUILD_FOLDERS: "1"
+          GOOGLE_APPLICATION_CREDENTIALS: secrets/google_drive_service_account.json
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          DRIVE_ROOT_FOLDER_ID: ${{ secrets.DRIVE_ROOT_FOLDER_ID }}
+        run: |
+          CMD=(python tools/drive_flat_sync.py --local-day "data/xml_daily/${{ steps.day.outputs.day }}")
+          if [ "${{ github.event.inputs.reset_root }}" = "true" ]; then
+            CMD+=(--reset-root)
+          fi
+          printf 'Running: %q ' "${CMD[@]}"; echo
+          "${CMD[@]}"
+
+      - name: Upload generated day artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-round-2-correct-${{ steps.day.outputs.day }}
+          path: data/xml_daily/${{ steps.day.outputs.day }}
+
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f secrets/google_drive_service_account.json
