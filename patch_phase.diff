@@ -1,0 +1,18 @@
+<<<<<<< SEARCH
+    expansion_phases = [
+        {'pool_size': candidate_pool_size, 'days': 180},
+        {'pool_size': 150, 'days': 180},
+        {'pool_size': 200, 'days': 180},
+        {'pool_size': 200, 'days': 730}
+    ]
+
+    import re
+=======
+    expansion_phases = [
+        {'pool_size': 100, 'days': 730},
+        {'pool_size': 150, 'days': 730},
+        {'pool_size': 200, 'days': 730}
+    ]
+
+    import re
+>>>>>>> REPLACE
