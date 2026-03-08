@@ -84,6 +84,7 @@ def upload_state_file(service, folder_id, state, filename="pipeline_state.json")
             service.files().update(fileId=file_id, media_body=media).execute()
         except Exception as e:
             print(f"Error updating state file: {e}")
+            raise
     else:
         file_metadata = {
             'name': filename,
@@ -93,6 +94,7 @@ def upload_state_file(service, folder_id, state, filename="pipeline_state.json")
             service.files().create(body=file_metadata, media_body=media, fields='id').execute()
         except Exception as e:
             print(f"Error creating state file: {e}")
+            raise
 
 def get_domain_cooldown(failed_runs_count):
     if failed_runs_count == 1:
@@ -524,11 +526,11 @@ def sanitize_filename(name):
     clean = re.sub(r'[^a-zA-Z0-9\s\-_]', '', name)
     return re.sub(r'\s+', '_', clean.strip())
 
-def resolve_doi_and_find_pdf(doi, domain_tracker=None, blocked_domains=None):
+def resolve_doi_and_find_pdf(doi, domain_stats=None, blocked_domains=None, current_phase_stats=None):
     """
     Follows the DOI redirect, fetches the landing page HTML, and searches
     for a PDF URL. Returns (html_content, pdf_url).
-    Records blocked domains into domain_tracker dict.
+    Records stats into domain_stats dict.
     """
     if not doi:
         return None, None
@@ -551,8 +553,16 @@ def resolve_doi_and_find_pdf(doi, domain_tracker=None, blocked_domains=None):
              print(f"    Skipping {resolved_domain} due to active cooldown.")
              return None, None
 
-        if domain_tracker and domain_tracker.get(resolved_domain, 0) >= 3:
-             print(f"    Skipping {resolved_domain} due to within-run failures (>= 3).")
+        if domain_stats and resolved_domain in domain_stats and domain_stats[resolved_domain].get('hard_failure', 0) >= 3:
+             print(f"    Skipping {resolved_domain} due to within-run hard failures (>= 3).")
+             return None, None
+
+        if response.status_code in [401, 403]:
+             print(f"    Access Denied ({response.status_code}) from {resolved_domain}")
+             if domain_stats is not None:
+                 record_domain_attempt(domain_stats, resolved_domain, success=False, is_hard_failure=True)
+             if current_phase_stats is not None:
+                 current_phase_stats['blocked_domain_failures_in_phase'] += 1
              return None, None
 
         response.raise_for_status()
@@ -585,11 +595,19 @@ def resolve_doi_and_find_pdf(doi, domain_tracker=None, blocked_domains=None):
                     break
 
         return html_content, pdf_url
+    except requests.exceptions.RequestException as e:
+        print(f"    Error resolving DOI {doi} (Network Error): {e}")
+        failed_domain = resolved_domain or "doi.org"
+        if domain_stats is not None:
+             record_domain_attempt(domain_stats, failed_domain, success=False, is_hard_failure=True)
+        if current_phase_stats is not None:
+             current_phase_stats['blocked_domain_failures_in_phase'] += 1
+        return None, None
     except Exception as e:
-        print(f"    Error resolving DOI {doi}: {e}")
-        if domain_tracker is not None:
-             failed_domain = resolved_domain or "doi.org"
-             domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
+        print(f"    Error resolving DOI {doi} (Other Error): {e}")
+        failed_domain = resolved_domain or "doi.org"
+        if domain_stats is not None:
+             record_domain_attempt(domain_stats, failed_domain, success=False, is_hard_failure=False)
         return None, None
 
 def extract_html_text(html_content):
@@ -633,7 +651,21 @@ def is_valid_pdf_response(response):
         return False, "Invalid PDF magic bytes"
     return True, "Valid PDF"
 
-def extract_pdf_text(pdf_url, domain_tracker=None, blocked_domains=None):
+def record_domain_attempt(domain_stats, domain, success, is_hard_failure=False):
+    if not domain:
+        return
+    if domain not in domain_stats:
+        domain_stats[domain] = {'attempted': 0, 'success': 0, 'failure': 0, 'hard_failure': 0}
+
+    domain_stats[domain]['attempted'] += 1
+    if success:
+        domain_stats[domain]['success'] += 1
+    else:
+        domain_stats[domain]['failure'] += 1
+        if is_hard_failure:
+            domain_stats[domain]['hard_failure'] += 1
+
+def extract_pdf_text(pdf_url, domain_stats=None, blocked_domains=None, current_phase_stats=None):
     """
     Downloads PDF and extracts text using pypdf.
     """
@@ -647,8 +679,8 @@ def extract_pdf_text(pdf_url, domain_tracker=None, blocked_domains=None):
         print(f"    Skipping PDF fetch from {domain} due to active cooldown.")
         return None
 
-    if domain_tracker and domain_tracker.get(domain, 0) >= 3:
-        print(f"    Skipping PDF fetch from {domain} due to within-run failures (>= 3).")
+    if domain_stats and domain in domain_stats and domain_stats[domain].get('hard_failure', 0) >= 3:
+        print(f"    Skipping PDF fetch from {domain} due to within-run hard failures (>= 3).")
         return None
 
     try:
@@ -657,14 +689,24 @@ def extract_pdf_text(pdf_url, domain_tracker=None, blocked_domains=None):
             'Accept': 'application/pdf,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8'
         }
         response = requests.get(pdf_url, headers=headers, timeout=20, allow_redirects=True)
+        final_domain = urlparse(response.url).netloc or domain
+
+        if response.status_code in [401, 403, 404]:
+             if domain_stats is not None:
+                 record_domain_attempt(domain_stats, final_domain, success=False, is_hard_failure=True)
+             if current_phase_stats is not None:
+                 current_phase_stats['blocked_domain_failures_in_phase'] += 1
+             return None
+
+        response.raise_for_status()
 
         is_valid, reason = is_valid_pdf_response(response)
         if not is_valid:
             print(f"    Failed strict PDF validation for {pdf_url}: {reason}")
-            if domain_tracker is not None:
-                from urllib.parse import urlparse
-                failed_domain = urlparse(pdf_url).netloc or urlparse(response.url).netloc
-                domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
+            if domain_stats is not None:
+                record_domain_attempt(domain_stats, final_domain, success=False, is_hard_failure=True)
+            if current_phase_stats is not None:
+                current_phase_stats['blocked_domain_failures_in_phase'] += 1
             return None
 
         pdf_file = BytesIO(response.content)
@@ -699,14 +741,26 @@ def extract_pdf_text(pdf_url, domain_tracker=None, blocked_domains=None):
         # Add double newlines before common headers like "Introduction", "Methods" etc to preserve some structure
         text = re.sub(r' (Introduction|Methods|Results|Discussion|Conclusion) ', r'\n\n### \1\n\n', text, flags=re.IGNORECASE)
 
-        return text if len(text.strip()) > 500 else None
+        is_success = len(text.strip()) > 500
+        if domain_stats is not None:
+             record_domain_attempt(domain_stats, final_domain, success=is_success, is_hard_failure=False)
+        return text if is_success else None
 
+    except requests.exceptions.RequestException as e:
+        print(f"    Error extracting PDF text from {pdf_url} (Network Error): {e}")
+        from urllib.parse import urlparse
+        failed_domain = urlparse(pdf_url).netloc
+        if domain_stats is not None:
+             record_domain_attempt(domain_stats, failed_domain, success=False, is_hard_failure=True)
+        if current_phase_stats is not None:
+             current_phase_stats['blocked_domain_failures_in_phase'] += 1
+        return None
     except Exception as e:
-        print(f"    Error extracting PDF text from {pdf_url}: {e}")
-        if domain_tracker is not None:
-             from urllib.parse import urlparse
-             failed_domain = urlparse(pdf_url).netloc
-             domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
+        print(f"    Error extracting PDF text from {pdf_url} (Parsing/Other Error): {e}")
+        from urllib.parse import urlparse
+        failed_domain = urlparse(pdf_url).netloc
+        if domain_stats is not None:
+             record_domain_attempt(domain_stats, failed_domain, success=False, is_hard_failure=False)
         return None
 
 def generate_markdown(pmid, data, full_text, extraction_source="Abstract only", extraction_rank=1):
@@ -780,7 +834,7 @@ def main():
     os.makedirs('output', exist_ok=True)
 
     stats = {
-        'processed': 0, 'errors': 0,
+        'processed': 0, 'fatal_errors': 0, 'nonfatal_warnings': 0,
         'uploaded_new_count': 0, 'replaced_upgraded_count': 0,
         'skipped_equal_or_better_count': 0, 'skipped_existing_unknown_count': 0,
         'duplicate_files_deleted_count': 0,
@@ -788,7 +842,8 @@ def main():
         'unpaywall_success_count': 0, 'europepmc_success_count': 0, 'crossref_hint_count': 0
     }
 
-    domain_tracker = {}
+    domain_tracker = {} # Legacy fallback, will phase out
+    domain_stats = {}
     full_text_success_count = 0
     manifest_rows = []
 
@@ -808,7 +863,6 @@ def main():
         {'pool_size': candidate_pool_size, 'days': 180},
         {'pool_size': 150, 'days': 180},
         {'pool_size': 200, 'days': 180},
-        {'pool_size': 200, 'days': 365},
         {'pool_size': 200, 'days': 730}
     ]
 
@@ -824,6 +878,8 @@ def main():
         processed_in_phase = 0
         full_text_hits_in_phase = 0
         abstract_only_in_phase = 0
+        skipped_equal_or_better_in_phase = 0
+        blocked_domain_failures_in_phase = 0
 
         query = f"{base_query} AND (\"last {current_days} days\"[PDat])"
         print(f"\n--- Phase {phase_idx + 1}: Pool Size {current_pool_size}, {current_days} Days ---")
@@ -835,6 +891,7 @@ def main():
             print(f"Found {len(pmids)} candidate articles.")
         except Exception as e:
             print(f"Error searching PubMed: {e}")
+            stats['fatal_errors'] += 1
             sys.exit(1)
 
         if not pmids:
@@ -862,6 +919,7 @@ def main():
             metadata = fetch_metadata(new_pmids, ncbi_api_key)
         except Exception as e:
             print(f"Error fetching metadata: {e}")
+            stats['fatal_errors'] += 1
             sys.exit(1)
 
         # Fail-Fast Check: Validate first 5 titles (only in phase 1)
@@ -899,10 +957,12 @@ def main():
             if len(validation_pool) > 0:
                 if len(validation_pool) == 5 and passed_count < 4:
                     print("Error: Fewer than 4 of the first 5 articles contain a core TBI anchor term. The query is likely returning unrelated literature. Failing fast.")
+                    stats['fatal_errors'] += 1
                     sys.exit(1)
                 elif len(validation_pool) < 5 and passed_count < len(validation_pool):
                      # If we have less than 5 items returned at all, expect all of them to match to be safe.
                      print("Error: Not enough returned articles contain a core TBI anchor term. The query is likely returning unrelated literature. Failing fast.")
+                     stats['fatal_errors'] += 1
                      sys.exit(1)
 
         for pmid in new_pmids:
@@ -916,7 +976,7 @@ def main():
             data = metadata.get(pmid)
             if not data:
                 print(f"[{pmid}] Warning: Could not fetch metadata.")
-                stats['errors'] += 1
+                stats['nonfatal_warnings'] += 1
                 continue
 
         print(f"[{pmid}] Processing...")
@@ -927,7 +987,7 @@ def main():
             existing_files = find_files_by_pmid(drive_service, drive_folder_id, pmid)
         except Exception as e:
             print(f"[{pmid}] Error checking Drive for existing files: {e}")
-            stats['errors'] += 1
+            stats['nonfatal_warnings'] += 1
             continue
 
         best_existing_file, inferior_files = resolve_existing_files(drive_service, existing_files)
@@ -953,6 +1013,8 @@ def main():
         extraction_source = "Abstract only"
         extraction_rank = 1
 
+        current_phase_stats = {'blocked_domain_failures_in_phase': blocked_domain_failures_in_phase}
+
         # 1. PMC / PMCID
         if data['pmcid']:
             print(f"[{pmid}]   Source 1: Fetching PMC XML for {data['pmcid']}...")
@@ -962,9 +1024,13 @@ def main():
                     extraction_source = "PMC XML"
                     extraction_rank = 5
                     stats['pmc_fulltext_count'] += 1
+                    record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=True)
                     print(f"[{pmid}]     -> Success: PMC XML extracted.")
+                else:
+                    record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=False)
             except Exception as e:
                 print(f"[{pmid}]     Error fetching PMC full text: {e}")
+                record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=False, is_hard_failure=True)
 
         # 2. Unpaywall DOI lookup
         if not full_text and data['doi'] and unpaywall_email:
@@ -972,7 +1038,7 @@ def main():
             unpaywall_pdf_url = fetch_unpaywall_pdf(data['doi'], unpaywall_email)
             if unpaywall_pdf_url:
                 print(f"[{pmid}]     Found Unpaywall PDF URL: {unpaywall_pdf_url}")
-                full_text = extract_pdf_text(unpaywall_pdf_url, domain_tracker, blocked_domains)
+                full_text = extract_pdf_text(unpaywall_pdf_url, domain_stats, blocked_domains, current_phase_stats)
                 if full_text:
                     extraction_source = "Unpaywall PDF"
                     extraction_rank = 4
@@ -988,10 +1054,11 @@ def main():
                 extraction_source = "Europe PMC XML"
                 extraction_rank = 5
                 stats['europepmc_success_count'] += 1
+                record_domain_attempt(domain_stats, 'europepmc.org', success=True)
                 print(f"[{pmid}]     -> Success: Europe PMC XML extracted.")
             elif epmc_pdf_url:
                 print(f"[{pmid}]     Found Europe PMC PDF URL: {epmc_pdf_url}")
-                full_text = extract_pdf_text(epmc_pdf_url, domain_tracker, blocked_domains)
+                full_text = extract_pdf_text(epmc_pdf_url, domain_stats, blocked_domains, current_phase_stats)
                 if full_text:
                     extraction_source = "Europe PMC PDF"
                     extraction_rank = 4
@@ -1001,11 +1068,13 @@ def main():
         # 4. Crossref hints
         if not full_text and data['doi']:
             print(f"[{pmid}]   Source 4: Querying Crossref hints for DOI {data['doi']}...")
+            # We track the Crossref API call itself, though the extraction happens downstream
+            record_domain_attempt(domain_stats, 'api.crossref.org', success=True)
             crossref_urls = fetch_crossref_hints(data['doi'])
             for cr_url in crossref_urls:
                 if not full_text:
                     print(f"[{pmid}]     Attempting Crossref URL: {cr_url}")
-                    full_text = extract_pdf_text(cr_url, domain_tracker, blocked_domains)
+                    full_text = extract_pdf_text(cr_url, domain_stats, blocked_domains, current_phase_stats)
                     if full_text:
                         extraction_source = "Crossref PDF"
                         extraction_rank = 2
@@ -1018,7 +1087,7 @@ def main():
             domain_is_cooled_down = False
             # We don't know the domain until we resolve DOI, but we can do a best effort or track post-resolution.
             print(f"[{pmid}]   Source 5: Resolving DOI {data['doi']} for Publisher HTML/PDF...")
-            html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'], domain_tracker, blocked_domains)
+            html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'], domain_stats, blocked_domains, current_phase_stats)
             if html_content:
                 full_text = extract_html_text(html_content)
                 if full_text:
@@ -1026,21 +1095,17 @@ def main():
                     extraction_rank = 3
                     stats['html_fulltext_count'] += 1
                     print(f"[{pmid}]     -> Success: Publisher HTML extracted.")
-                else:
-                    from urllib.parse import urlparse
-                    failed_domain = "unknown"
-                    if data.get('doi'):
-                         failed_domain = "doi.org"
-                    domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
 
             if not full_text and pdf_url:
                 print(f"[{pmid}]     Fallback: Fetching Publisher PDF...")
-                full_text = extract_pdf_text(pdf_url, domain_tracker, blocked_domains)
+                full_text = extract_pdf_text(pdf_url, domain_stats, blocked_domains, current_phase_stats)
                 if full_text:
                     extraction_source = "Publisher PDF"
                     extraction_rank = 2
                     stats['pdf_fulltext_count'] += 1
                     print(f"[{pmid}]     -> Success: Publisher PDF extracted.")
+
+        blocked_domain_failures_in_phase = current_phase_stats['blocked_domain_failures_in_phase']
 
         # 6. Abstract only fallback
         if not full_text:
@@ -1111,10 +1176,12 @@ def main():
                 else:
                     print(f"[{pmid}] Same rank ({extraction_rank}), new content not significantly better. Skipping.")
                     stats['skipped_equal_or_better_count'] += 1
+                    skipped_equal_or_better_in_phase += 1
                     action = "skipped_equal_or_better"
             else:
                 print(f"[{pmid}] New rank ({extraction_rank}) is lower than existing ({mapped_existing_rank}). Skipping.")
                 stats['skipped_equal_or_better_count'] += 1
+                skipped_equal_or_better_in_phase += 1
                 action = "skipped_lower_rank"
 
         if should_upload:
@@ -1152,10 +1219,11 @@ def main():
 
             except Exception as e:
                 print(f"[{pmid}] Error uploading/updating to Drive: {e}")
-                stats['errors'] += 1
+                stats['nonfatal_warnings'] += 1
                 action = "upload_error"
                 if stats['uploaded_new_count'] + stats['replaced_upgraded_count'] == 0:
                     print("\nError: The first attempted upload to Google Drive failed. Failing fast to prevent cascading errors.")
+                    stats['fatal_errors'] += 1
                     sys.exit(1)
 
         # Record manifest entry
@@ -1179,10 +1247,17 @@ def main():
 
         stats['processed'] += 1
 
-    print(f"\n--- Phase {phase_idx + 1} End Summary ---")
-    print(f"Processed in phase: {processed_in_phase}")
-    print(f"Full-text hits in phase: {full_text_hits_in_phase}")
-    print(f"Abstract only in phase: {abstract_only_in_phase}\n")
+        print(f"\n--- Phase {phase_idx + 1} End Summary ---")
+        print(f"Processed in phase: {processed_in_phase}")
+        print(f"Full-text hits in phase: {full_text_hits_in_phase}")
+        print(f"Abstract only in phase: {abstract_only_in_phase}")
+        print(f"Skipped (equal or better) in phase: {skipped_equal_or_better_in_phase}")
+        print(f"Blocked domain failures in phase: {blocked_domain_failures_in_phase}")
+        if new_candidates > 0:
+            novel_yield = full_text_hits_in_phase / new_candidates
+            print(f"Novel full-text yield: {novel_yield:.2f}\n")
+        else:
+            print(f"Novel full-text yield: 0.00\n")
 
     # Generate and Upload Manifest
     if manifest_rows:
@@ -1224,7 +1299,8 @@ def main():
     print(f"Skipped (Equal or Better Exists): {stats['skipped_equal_or_better_count']}")
     print(f"Skipped (Existing Rank Unknown): {stats['skipped_existing_unknown_count']}")
     print(f"Duplicate Files Deleted: {stats['duplicate_files_deleted_count']}")
-    print(f"Errors: {stats['errors']}")
+    print(f"Fatal Errors: {stats['fatal_errors']}")
+    print(f"Nonfatal Warnings: {stats['nonfatal_warnings']}")
     print("\n--- Extraction Source Counts ---")
     print(f"PMC XML extracted: {stats['pmc_fulltext_count']}")
     print(f"Unpaywall extracted: {stats['unpaywall_success_count']}")
@@ -1234,12 +1310,14 @@ def main():
     print(f"Publisher PDF extracted: {stats['pdf_fulltext_count']}")
     print(f"Abstract only fallback: {stats['abstract_only_count']}")
 
-    print("\n--- Blocked/Failed Domain Summary ---")
-    if domain_tracker:
-        for domain, count in sorted(domain_tracker.items(), key=lambda item: item[1], reverse=True):
-            print(f"{domain}: {count} failures")
+    print("\n--- Yield by Source Domain Summary ---")
+    if domain_stats:
+        print(f"{'Domain/Source':<35} | {'Attempted':<9} | {'Success':<7} | {'Failure':<7} | {'Hard Fail':<9}")
+        print("-" * 75)
+        for domain, d_stats in sorted(domain_stats.items(), key=lambda item: item[1]['attempted'], reverse=True):
+            print(f"{domain:<35} | {d_stats['attempted']:<9} | {d_stats['success']:<7} | {d_stats['failure']:<7} | {d_stats['hard_failure']:<9}")
     else:
-        print("No domain failures tracked.")
+        print("No domains tracked.")
 
     print("\n--- Target Status ---")
     if full_text_success_count >= target_full_text:
@@ -1248,14 +1326,14 @@ def main():
         print(f"WARNING: Target not reached. Found {full_text_success_count} full-text articles out of a target of {target_full_text}. Candidate pool exhausted.")
 
     # Save state
-    # Update cooldowns
-    for domain in domain_tracker:
-        if domain_tracker[domain] >= 3:
+    # Update cooldowns based on hard failures
+    for domain, d_stats in domain_stats.items():
+        if d_stats['hard_failure'] >= 3:
             blocked_domains[domain] = blocked_domains.get(domain, 0) + 1
 
     # Decrement active cooldowns for domains not seen in this run
     for domain in list(blocked_domains.keys()):
-        if domain not in domain_tracker:
+        if domain not in domain_stats:
             if blocked_domains[domain] > 0:
                 blocked_domains[domain] -= 1
             if blocked_domains[domain] <= 0:
