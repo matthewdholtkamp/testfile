@@ -6,6 +6,9 @@ import re
 import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
+import trafilatura
+from pypdf import PdfReader
+from io import BytesIO
 
 from google.oauth2 import service_account
 from google.oauth2.credentials import Credentials
@@ -172,25 +175,184 @@ def fetch_pmc_fulltext(pmcid, api_key):
     if not body:
         return None
 
-    # Extract readable text
+    # Recursive extraction to preserve section headers and paragraph structure
     text_parts = []
-    for sec in body.find_all(['sec', 'p']):
-        if sec.name == 'sec':
-            title = sec.find('title', recursive=False)
+
+    def process_node(node):
+        # Stop processing if we hit a references section
+        if node.name == 'sec':
+            sec_type = node.get('sec-type', '').lower()
+            if 'reference' in sec_type or 'biblio' in sec_type:
+                return
+
+            title = node.find('title', recursive=False)
             if title:
-                text_parts.append(f"\n### {title.text}\n")
-        elif sec.name == 'p':
-            # Skip empty paragraphs or those just with citations
-            text = sec.get_text(strip=True)
+                title_text = title.get_text(strip=True)
+                if re.match(r'^(References|Bibliography|Literature Cited)$', title_text, re.IGNORECASE):
+                    return # Stop processing this section entirely
+                text_parts.append(f"\n### {title_text}\n")
+
+            # Process children sequentially
+            for child in node.children:
+                if child.name and child.name != 'title':
+                    process_node(child)
+        elif node.name == 'p':
+            text = node.get_text(strip=True)
             if text:
                 text_parts.append(text)
+        elif node.name:
+            # Process children of other tags (e.g. lists, boxed text)
+            for child in node.children:
+                if child.name:
+                    process_node(child)
 
-    return '\n\n'.join(text_parts) if text_parts else None
+    # Start recursive process from body children
+    for child in body.children:
+        if child.name:
+            process_node(child)
+
+    text = '\n\n'.join(text_parts)
+    return text if len(text.strip()) > 500 else None
 
 def sanitize_filename(name):
-    return re.sub(r'[^a-zA-Z0-9]', '', name)
+    # Keep alphanumeric, spaces, dashes, and underscores but remove unsafe chars
+    # Then replace spaces with underscores
+    clean = re.sub(r'[^a-zA-Z0-9\s\-_]', '', name)
+    return re.sub(r'\s+', '_', clean.strip())
 
-def generate_markdown(pmid, data, full_text):
+def resolve_doi_and_find_pdf(doi):
+    """
+    Follows the DOI redirect, fetches the landing page HTML, and searches
+    for a PDF URL. Returns (html_content, pdf_url).
+    """
+    if not doi:
+        return None, None
+
+    url = f"https://doi.org/{doi}"
+    try:
+        # Use a real browser user agent to avoid basic bot blocks
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        }
+        # Follow redirects
+        response = requests.get(url, headers=headers, allow_redirects=True, timeout=15)
+        response.raise_for_status()
+
+        html_content = response.text
+        pdf_url = None
+
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        # Look for citation_pdf_url
+        meta_pdf = soup.find('meta', attrs={'name': 'citation_pdf_url'})
+        if meta_pdf and meta_pdf.get('content'):
+            pdf_url = meta_pdf['content']
+
+        # Fallback to looking for links that end in .pdf
+        if not pdf_url:
+            for link in soup.find_all('a', href=True):
+                href = link['href']
+                if href.lower().endswith('.pdf'):
+                    # Handle relative URLs
+                    if href.startswith('/'):
+                        from urllib.parse import urlparse
+                        parsed_url = urlparse(response.url)
+                        pdf_url = f"{parsed_url.scheme}://{parsed_url.netloc}{href}"
+                    elif not href.startswith('http'):
+                        # Skip complex relative URLs for now to avoid bad links
+                        continue
+                    else:
+                        pdf_url = href
+                    break
+
+        return html_content, pdf_url
+    except Exception as e:
+        print(f"    Error resolving DOI {doi}: {e}")
+        return None, None
+
+def extract_html_text(html_content):
+    """
+    Extracts readable text from HTML using trafilatura.
+    Attempts to strip references.
+    """
+    if not html_content:
+        return None
+
+    try:
+        # trafilatura does a good job of stripping boilerplate and often references
+        extracted_text = trafilatura.extract(html_content, include_comments=False, include_tables=True, no_fallback=False)
+
+        if not extracted_text:
+            return None
+
+        # Optional manual reference cleanup if trafilatura missed it
+        lines = extracted_text.split('\n')
+        cleaned_lines = []
+        for line in lines:
+            if re.match(r'^#*\s*(References|Bibliography|Literature Cited)\s*$', line, re.IGNORECASE):
+                break
+            cleaned_lines.append(line)
+
+        text = '\n\n'.join(cleaned_lines)
+        return text if len(text.strip()) > 500 else None # minimum usefulness check
+
+    except Exception as e:
+        print(f"    Error extracting HTML text: {e}")
+        return None
+
+def extract_pdf_text(pdf_url):
+    """
+    Downloads PDF and extracts text using pypdf.
+    """
+    if not pdf_url:
+        return None
+
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        }
+        response = requests.get(pdf_url, headers=headers, timeout=20)
+        response.raise_for_status()
+
+        pdf_file = BytesIO(response.content)
+        reader = PdfReader(pdf_file)
+
+        text_parts = []
+        for page in reader.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text_parts.append(page_text)
+
+        raw_text = '\n'.join(text_parts)
+
+        # Clean up text (handle line wraps, hyphenation)
+        # This is basic cleanup; PDFs can be messy
+        cleaned_text = re.sub(r'-\n', '', raw_text) # remove hyphenation
+
+        # Split into lines and attempt to strip references
+        lines = cleaned_text.split('\n')
+        final_lines = []
+        for line in lines:
+            if re.match(r'^\s*References\s*$', line, re.IGNORECASE) or re.match(r'^\s*Bibliography\s*$', line, re.IGNORECASE):
+                break
+            final_lines.append(line.strip())
+
+        # Rejoin and attempt to recreate paragraphs (double newlines)
+        # Assuming single newlines are just line wraps in the middle of a paragraph
+        text = '\n'.join(final_lines)
+        text = re.sub(r'(?<!\n)\n(?!\n)', ' ', text) # Replace single newlines with space
+        text = re.sub(r' \s+', ' ', text) # clean up extra spaces
+
+        # Add double newlines before common headers like "Introduction", "Methods" etc to preserve some structure
+        text = re.sub(r' (Introduction|Methods|Results|Discussion|Conclusion) ', r'\n\n### \1\n\n', text, flags=re.IGNORECASE)
+
+        return text if len(text.strip()) > 500 else None
+
+    except Exception as e:
+        print(f"    Error extracting PDF text from {pdf_url}: {e}")
+        return None
+
+def generate_markdown(pmid, data, full_text, extraction_source="Abstract only"):
     md = f"# {data['title']}\n\n"
 
     md += f"**Authors:** {', '.join(data['authors']) if data['authors'] else 'Unknown'}\n"
@@ -202,6 +364,7 @@ def generate_markdown(pmid, data, full_text):
     md += f"**PubMed URL:** https://pubmed.ncbi.nlm.nih.gov/{pmid}/\n"
     if data['pmcid']:
         md += f"**PMC URL:** https://www.ncbi.nlm.nih.gov/pmc/articles/{data['pmcid']}/\n"
+    md += f"**Extraction Source:** {extraction_source}\n"
 
     md += "\n## Abstract\n\n"
     if data['abstract']:
@@ -216,7 +379,7 @@ def generate_markdown(pmid, data, full_text):
         if not data['abstract']:
             md += "*Note: Neither full text nor abstract is available for this article.*\n"
         else:
-            md += "*Full text not cleanly available from PubMed Central.*\n"
+            md += "*Full text not cleanly available.*\n"
 
     return md
 
@@ -304,7 +467,10 @@ def main():
 
     os.makedirs('output', exist_ok=True)
 
-    stats = {'processed': 0, 'skipped': 0, 'uploaded': 0, 'errors': 0}
+    stats = {
+        'processed': 0, 'skipped': 0, 'uploaded': 0, 'errors': 0,
+        'pmc_fulltext_count': 0, 'html_fulltext_count': 0, 'pdf_fulltext_count': 0, 'abstract_only_count': 0
+    }
 
     for pmid in pmids:
         data = metadata.get(pmid)
@@ -339,17 +505,50 @@ def main():
             stats['errors'] += 1
             continue
 
-        # Fetch full text
+        # Fetch full text through Tiers
         full_text = None
+        extraction_source = "Abstract only"
+
+        # Tier A: PMC XML
         if data['pmcid']:
-            print(f"[{pmid}] Fetching full text for {data['pmcid']}...")
+            print(f"[{pmid}]   Tier A: Fetching PMC XML for {data['pmcid']}...")
             try:
                 full_text = fetch_pmc_fulltext(data['pmcid'], ncbi_api_key)
+                if full_text:
+                    extraction_source = "PMC XML"
+                    stats['pmc_fulltext_count'] += 1
+                    print(f"[{pmid}]     -> Success: PMC XML extracted.")
             except Exception as e:
-                print(f"[{pmid}] Error fetching full text: {e}")
+                print(f"[{pmid}]     Error fetching PMC full text: {e}")
+
+        # Tier B: Publisher HTML
+        html_content, pdf_url = None, None
+        if not full_text and data['doi']:
+            print(f"[{pmid}]   Tier B: Resolving DOI {data['doi']} for HTML...")
+            html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'])
+            if html_content:
+                full_text = extract_html_text(html_content)
+                if full_text:
+                    extraction_source = "Publisher HTML"
+                    stats['html_fulltext_count'] += 1
+                    print(f"[{pmid}]     -> Success: Publisher HTML extracted.")
+
+        # Tier C: PDF
+        if not full_text and pdf_url:
+            print(f"[{pmid}]   Tier C: Fetching PDF...")
+            full_text = extract_pdf_text(pdf_url)
+            if full_text:
+                extraction_source = "PDF"
+                stats['pdf_fulltext_count'] += 1
+                print(f"[{pmid}]     -> Success: PDF text extracted.")
+
+        # Tier D: Abstract fallback
+        if not full_text:
+            print(f"[{pmid}]   Tier D: Falling back to Abstract only.")
+            stats['abstract_only_count'] += 1
 
         # Generate markdown
-        md_content = generate_markdown(pmid, data, full_text)
+        md_content = generate_markdown(pmid, data, full_text, extraction_source)
         local_filepath = os.path.join('output', filename)
 
         with open(local_filepath, 'w', encoding='utf-8') as f:
@@ -380,6 +579,11 @@ def main():
     print(f"Skipped (already in Drive): {stats['skipped']}")
     print(f"Uploaded: {stats['uploaded']}")
     print(f"Errors: {stats['errors']}")
+    print("\n--- Tier Counts ---")
+    print(f"PMC XML extracted: {stats['pmc_fulltext_count']}")
+    print(f"Publisher HTML extracted: {stats['html_fulltext_count']}")
+    print(f"PDF extracted: {stats['pdf_fulltext_count']}")
+    print(f"Abstract only fallback: {stats['abstract_only_count']}")
     print("-------------------")
 
 if __name__ == '__main__':
