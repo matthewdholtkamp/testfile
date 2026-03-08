@@ -45,6 +45,64 @@ def get_google_drive_service():
 
     raise Exception("Could not authenticate with Google Drive using provided secrets.")
 
+def download_state_file(service, folder_id, filename="pipeline_state.json"):
+    query = f"name='{filename}' and '{folder_id}' in parents and trashed=false"
+    results = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
+    items = results.get('files', [])
+    if not items:
+        return {'blocked_domains': {}, 'pmid_attempts': {}}
+
+    file_id = items[0]['id']
+    content = download_file_content(service, file_id)
+    if not content:
+        return {'blocked_domains': {}, 'pmid_attempts': {}}
+
+    try:
+        state = json.loads(content)
+        # Ensure default keys
+        if 'blocked_domains' not in state: state['blocked_domains'] = {}
+        if 'pmid_attempts' not in state: state['pmid_attempts'] = {}
+        return state
+    except Exception as e:
+        print(f"Error parsing pipeline state file: {e}")
+        return {'blocked_domains': {}, 'pmid_attempts': {}}
+
+def upload_state_file(service, folder_id, state, filename="pipeline_state.json"):
+    query = f"name='{filename}' and '{folder_id}' in parents and trashed=false"
+    results = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
+    items = results.get('files', [])
+
+    local_path = os.path.join('output', filename)
+    with open(local_path, 'w', encoding='utf-8') as f:
+        json.dump(state, f, indent=2)
+
+    media = MediaFileUpload(local_path, mimetype='application/json', resumable=True)
+
+    if items:
+        file_id = items[0]['id']
+        try:
+            service.files().update(fileId=file_id, media_body=media).execute()
+        except Exception as e:
+            print(f"Error updating state file: {e}")
+    else:
+        file_metadata = {
+            'name': filename,
+            'parents': [drive_folder_id]
+        }
+        try:
+            service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+        except Exception as e:
+            print(f"Error creating state file: {e}")
+
+def get_domain_cooldown(failed_runs_count):
+    if failed_runs_count == 1:
+        return 1
+    elif failed_runs_count == 2:
+        return 2
+    elif failed_runs_count >= 3:
+        return 5
+    return 0
+
 def check_file_exists(service, folder_id, filename):
     query = f"name='{filename}' and '{folder_id}' in parents and trashed=false"
     results = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
@@ -466,7 +524,7 @@ def sanitize_filename(name):
     clean = re.sub(r'[^a-zA-Z0-9\s\-_]', '', name)
     return re.sub(r'\s+', '_', clean.strip())
 
-def resolve_doi_and_find_pdf(doi, domain_tracker=None):
+def resolve_doi_and_find_pdf(doi, domain_tracker=None, blocked_domains=None):
     """
     Follows the DOI redirect, fetches the landing page HTML, and searches
     for a PDF URL. Returns (html_content, pdf_url).
@@ -487,6 +545,15 @@ def resolve_doi_and_find_pdf(doi, domain_tracker=None):
 
         from urllib.parse import urlparse
         resolved_domain = urlparse(response.url).netloc
+
+        # Check cooldown before downloading full content
+        if blocked_domains and blocked_domains.get(resolved_domain, 0) > 0:
+             print(f"    Skipping {resolved_domain} due to active cooldown.")
+             return None, None
+
+        if domain_tracker and domain_tracker.get(resolved_domain, 0) >= 3:
+             print(f"    Skipping {resolved_domain} due to within-run failures (>= 3).")
+             return None, None
 
         response.raise_for_status()
 
@@ -555,19 +622,50 @@ def extract_html_text(html_content):
         print(f"    Error extracting HTML text: {e}")
         return None
 
-def extract_pdf_text(pdf_url, domain_tracker=None):
+def is_valid_pdf_response(response):
+    if response.status_code != 200:
+        return False, "HTTP Status not 200"
+    content_type = response.headers.get('Content-Type', '').lower()
+    if 'text/html' in content_type or 'xml' in content_type:
+        return False, f"Invalid Content-Type: {content_type}"
+    # Verify magic bytes %PDF-
+    if not response.content.startswith(b'%PDF-'):
+        return False, "Invalid PDF magic bytes"
+    return True, "Valid PDF"
+
+def extract_pdf_text(pdf_url, domain_tracker=None, blocked_domains=None):
     """
     Downloads PDF and extracts text using pypdf.
     """
     if not pdf_url:
         return None
 
+    from urllib.parse import urlparse
+    domain = urlparse(pdf_url).netloc
+
+    if blocked_domains and blocked_domains.get(domain, 0) > 0:
+        print(f"    Skipping PDF fetch from {domain} due to active cooldown.")
+        return None
+
+    if domain_tracker and domain_tracker.get(domain, 0) >= 3:
+        print(f"    Skipping PDF fetch from {domain} due to within-run failures (>= 3).")
+        return None
+
     try:
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+            'Accept': 'application/pdf,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8'
         }
-        response = requests.get(pdf_url, headers=headers, timeout=20)
-        response.raise_for_status()
+        response = requests.get(pdf_url, headers=headers, timeout=20, allow_redirects=True)
+
+        is_valid, reason = is_valid_pdf_response(response)
+        if not is_valid:
+            print(f"    Failed strict PDF validation for {pdf_url}: {reason}")
+            if domain_tracker is not None:
+                from urllib.parse import urlparse
+                failed_domain = urlparse(pdf_url).netloc or urlparse(response.url).netloc
+                domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
+            return None
 
         pdf_file = BytesIO(response.content)
         reader = PdfReader(pdf_file)
@@ -658,7 +756,7 @@ def main():
     else:
         candidate_pool_size = 100
 
-    query = config.get('PUBMED_QUERY', '').strip()
+    base_query = config.get('PUBMED_QUERY', '').strip()
 
     ncbi_api_key = os.environ.get('NCBI_API_KEY')
     drive_folder_id = os.environ.get('DRIVE_FOLDER_ID')
@@ -679,68 +777,6 @@ def main():
         print(f"Error authenticating to Google Drive: {e}")
         sys.exit(1)
 
-    print(f"Using PubMed Query:\n{query}\n")
-    print(f"Searching PubMed for up to {candidate_pool_size} candidate articles (Targeting {target_full_text} full-text)...")
-    try:
-        pmids = search_pubmed(query, candidate_pool_size, ncbi_api_key)
-        print(f"Found {len(pmids)} candidate articles.")
-    except Exception as e:
-        print(f"Error searching PubMed: {e}")
-        sys.exit(1)
-
-    if not pmids:
-        print("No articles found. Exiting.")
-        return
-
-    print("Fetching metadata...")
-    try:
-        metadata = fetch_metadata(pmids, ncbi_api_key)
-    except Exception as e:
-        print(f"Error fetching metadata: {e}")
-        sys.exit(1)
-
-    # Fail-Fast Check: Validate first 5 titles
-    print("\n--- Validating First 5 Articles ---")
-    core_tbi_terms = [
-        "traumatic brain injury", "tbi", "mild traumatic brain injury", "mtbi",
-        "concussion", "post-concussion", "post-concussive", "diffuse axonal injury", "blast injury"
-    ]
-
-    validation_pool = [pmid for pmid in pmids[:5] if pmid in metadata]
-    passed_count = 0
-
-    import re
-
-    for i, pmid in enumerate(validation_pool):
-        data = metadata[pmid]
-        title = data.get('title', '')
-        abstract = data.get('abstract', '')
-
-        print(f"{i+1}. {title}")
-
-        text_to_check = (title + " " + abstract).lower()
-
-        # Use regex to avoid false positives on short terms like 'tbi' (e.g., 'frostbite')
-        matched = False
-        for term in core_tbi_terms:
-            if re.search(r'\b' + re.escape(term) + r'\b', text_to_check):
-                matched = True
-                break
-
-        if matched:
-            passed_count += 1
-
-    print(f"\nValidation Result: {passed_count} out of {len(validation_pool)} passed anchor term check.")
-
-    if len(validation_pool) > 0:
-        if len(validation_pool) == 5 and passed_count < 4:
-            print("Error: Fewer than 4 of the first 5 articles contain a core TBI anchor term. The query is likely returning unrelated literature. Failing fast.")
-            sys.exit(1)
-        elif len(validation_pool) < 5 and passed_count < len(validation_pool):
-             # If we have less than 5 items returned at all, expect all of them to match to be safe.
-             print("Error: Not enough returned articles contain a core TBI anchor term. The query is likely returning unrelated literature. Failing fast.")
-             sys.exit(1)
-
     os.makedirs('output', exist_ok=True)
 
     stats = {
@@ -756,16 +792,112 @@ def main():
     full_text_success_count = 0
     manifest_rows = []
 
-    for pmid in pmids:
+    # Load state
+    pipeline_state = download_state_file(drive_service, drive_folder_id)
+    blocked_domains = pipeline_state.get('blocked_domains', {})
+    pmid_attempts = pipeline_state.get('pmid_attempts', {})
+
+    processed_pmids_in_run = set()
+
+    expansion_phases = [
+        {'pool_size': candidate_pool_size, 'days': 180},
+        {'pool_size': 150, 'days': 180},
+        {'pool_size': 200, 'days': 180},
+        {'pool_size': 200, 'days': 365},
+        {'pool_size': 200, 'days': 730}
+    ]
+
+    import re
+
+    for phase_idx, phase in enumerate(expansion_phases):
         if full_text_success_count >= target_full_text:
-            print(f"\nReached target of {target_full_text} full-text articles. Stopping processing.")
             break
 
-        data = metadata.get(pmid)
-        if not data:
-            print(f"[{pmid}] Warning: Could not fetch metadata.")
-            stats['errors'] += 1
+        current_pool_size = phase['pool_size']
+        current_days = phase['days']
+
+        query = f"{base_query} AND (\"last {current_days} days\"[PDat])"
+        print(f"\n--- Phase {phase_idx + 1}: Pool Size {current_pool_size}, {current_days} Days ---")
+        print(f"Using PubMed Query:\n{query}\n")
+        print(f"Searching PubMed for up to {current_pool_size} candidate articles (Targeting {target_full_text} full-text)...")
+
+        try:
+            pmids = search_pubmed(query, current_pool_size, ncbi_api_key)
+            print(f"Found {len(pmids)} candidate articles.")
+        except Exception as e:
+            print(f"Error searching PubMed: {e}")
+            sys.exit(1)
+
+        if not pmids:
+            print("No articles found in this phase.")
             continue
+
+        # Filter out already processed PMIDs in this run
+        new_pmids = [p for p in pmids if p not in processed_pmids_in_run]
+        if not new_pmids:
+            print("All PMIDs in this phase have already been processed in this run.")
+            continue
+
+        print("Fetching metadata...")
+        try:
+            metadata = fetch_metadata(new_pmids, ncbi_api_key)
+        except Exception as e:
+            print(f"Error fetching metadata: {e}")
+            sys.exit(1)
+
+        # Fail-Fast Check: Validate first 5 titles (only in phase 1)
+        if phase_idx == 0:
+            print("\n--- Validating First 5 Articles ---")
+            core_tbi_terms = [
+                "traumatic brain injury", "tbi", "mild traumatic brain injury", "mtbi",
+                "concussion", "post-concussion", "post-concussive", "diffuse axonal injury", "blast injury"
+            ]
+
+            validation_pool = [pmid for pmid in new_pmids[:5] if pmid in metadata]
+            passed_count = 0
+
+            for i, pmid in enumerate(validation_pool):
+                data = metadata[pmid]
+                title = data.get('title', '')
+                abstract = data.get('abstract', '')
+
+                print(f"{i+1}. {title}")
+
+                text_to_check = (title + " " + abstract).lower()
+
+                # Use regex to avoid false positives on short terms like 'tbi' (e.g., 'frostbite')
+                matched = False
+                for term in core_tbi_terms:
+                    if re.search(r'\b' + re.escape(term) + r'\b', text_to_check):
+                        matched = True
+                        break
+
+                if matched:
+                    passed_count += 1
+
+            print(f"\nValidation Result: {passed_count} out of {len(validation_pool)} passed anchor term check.")
+
+            if len(validation_pool) > 0:
+                if len(validation_pool) == 5 and passed_count < 4:
+                    print("Error: Fewer than 4 of the first 5 articles contain a core TBI anchor term. The query is likely returning unrelated literature. Failing fast.")
+                    sys.exit(1)
+                elif len(validation_pool) < 5 and passed_count < len(validation_pool):
+                     # If we have less than 5 items returned at all, expect all of them to match to be safe.
+                     print("Error: Not enough returned articles contain a core TBI anchor term. The query is likely returning unrelated literature. Failing fast.")
+                     sys.exit(1)
+
+        for pmid in new_pmids:
+            if full_text_success_count >= target_full_text:
+                print(f"\nReached target of {target_full_text} full-text articles. Stopping processing.")
+                break
+
+            processed_pmids_in_run.add(pmid)
+
+            data = metadata.get(pmid)
+            if not data:
+                print(f"[{pmid}] Warning: Could not fetch metadata.")
+                stats['errors'] += 1
+                continue
 
         print(f"[{pmid}] Processing...")
 
@@ -820,7 +952,7 @@ def main():
             unpaywall_pdf_url = fetch_unpaywall_pdf(data['doi'], unpaywall_email)
             if unpaywall_pdf_url:
                 print(f"[{pmid}]     Found Unpaywall PDF URL: {unpaywall_pdf_url}")
-                full_text = extract_pdf_text(unpaywall_pdf_url, domain_tracker)
+                full_text = extract_pdf_text(unpaywall_pdf_url, domain_tracker, blocked_domains)
                 if full_text:
                     extraction_source = "Unpaywall PDF"
                     extraction_rank = 4
@@ -839,7 +971,7 @@ def main():
                 print(f"[{pmid}]     -> Success: Europe PMC XML extracted.")
             elif epmc_pdf_url:
                 print(f"[{pmid}]     Found Europe PMC PDF URL: {epmc_pdf_url}")
-                full_text = extract_pdf_text(epmc_pdf_url, domain_tracker)
+                full_text = extract_pdf_text(epmc_pdf_url, domain_tracker, blocked_domains)
                 if full_text:
                     extraction_source = "Europe PMC PDF"
                     extraction_rank = 4
@@ -853,7 +985,7 @@ def main():
             for cr_url in crossref_urls:
                 if not full_text:
                     print(f"[{pmid}]     Attempting Crossref URL: {cr_url}")
-                    full_text = extract_pdf_text(cr_url, domain_tracker)
+                    full_text = extract_pdf_text(cr_url, domain_tracker, blocked_domains)
                     if full_text:
                         extraction_source = "Crossref PDF"
                         extraction_rank = 2
@@ -862,8 +994,11 @@ def main():
 
         # 5. Publisher HTML/PDF Fallback
         if not full_text and data['doi']:
+            # Check domain cooldown state
+            domain_is_cooled_down = False
+            # We don't know the domain until we resolve DOI, but we can do a best effort or track post-resolution.
             print(f"[{pmid}]   Source 5: Resolving DOI {data['doi']} for Publisher HTML/PDF...")
-            html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'], domain_tracker)
+            html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'], domain_tracker, blocked_domains)
             if html_content:
                 full_text = extract_html_text(html_content)
                 if full_text:
@@ -880,7 +1015,7 @@ def main():
 
             if not full_text and pdf_url:
                 print(f"[{pmid}]     Fallback: Fetching Publisher PDF...")
-                full_text = extract_pdf_text(pdf_url, domain_tracker)
+                full_text = extract_pdf_text(pdf_url, domain_tracker, blocked_domains)
                 if full_text:
                     extraction_source = "Publisher PDF"
                     extraction_rank = 2
@@ -1083,6 +1218,25 @@ def main():
         print(f"SUCCESS: Reached target of {target_full_text} full-text articles.")
     else:
         print(f"WARNING: Target not reached. Found {full_text_success_count} full-text articles out of a target of {target_full_text}. Candidate pool exhausted.")
+
+    # Save state
+    # Update cooldowns
+    for domain in domain_tracker:
+        if domain_tracker[domain] >= 3:
+            blocked_domains[domain] = blocked_domains.get(domain, 0) + 1
+
+    # Decrement active cooldowns for domains not seen in this run
+    for domain in list(blocked_domains.keys()):
+        if domain not in domain_tracker:
+            if blocked_domains[domain] > 0:
+                blocked_domains[domain] -= 1
+            if blocked_domains[domain] <= 0:
+                del blocked_domains[domain]
+
+    pipeline_state['blocked_domains'] = blocked_domains
+    pipeline_state['pmid_attempts'] = pmid_attempts
+
+    upload_state_file(drive_service, drive_folder_id, pipeline_state)
 
     print("-------------------")
 
