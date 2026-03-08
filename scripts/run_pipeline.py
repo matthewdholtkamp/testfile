@@ -332,15 +332,17 @@ def sanitize_filename(name):
     clean = re.sub(r'[^a-zA-Z0-9\s\-_]', '', name)
     return re.sub(r'\s+', '_', clean.strip())
 
-def resolve_doi_and_find_pdf(doi):
+def resolve_doi_and_find_pdf(doi, domain_tracker=None):
     """
     Follows the DOI redirect, fetches the landing page HTML, and searches
     for a PDF URL. Returns (html_content, pdf_url).
+    Records blocked domains into domain_tracker dict.
     """
     if not doi:
         return None, None
 
     url = f"https://doi.org/{doi}"
+    resolved_domain = None
     try:
         # Use a real browser user agent to avoid basic bot blocks
         headers = {
@@ -348,6 +350,10 @@ def resolve_doi_and_find_pdf(doi):
         }
         # Follow redirects
         response = requests.get(url, headers=headers, allow_redirects=True, timeout=15)
+
+        from urllib.parse import urlparse
+        resolved_domain = urlparse(response.url).netloc
+
         response.raise_for_status()
 
         html_content = response.text
@@ -380,6 +386,9 @@ def resolve_doi_and_find_pdf(doi):
         return html_content, pdf_url
     except Exception as e:
         print(f"    Error resolving DOI {doi}: {e}")
+        if domain_tracker is not None:
+             failed_domain = resolved_domain or "doi.org"
+             domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
         return None, None
 
 def extract_html_text(html_content):
@@ -412,7 +421,7 @@ def extract_html_text(html_content):
         print(f"    Error extracting HTML text: {e}")
         return None
 
-def extract_pdf_text(pdf_url):
+def extract_pdf_text(pdf_url, domain_tracker=None):
     """
     Downloads PDF and extracts text using pypdf.
     """
@@ -462,6 +471,10 @@ def extract_pdf_text(pdf_url):
 
     except Exception as e:
         print(f"    Error extracting PDF text from {pdf_url}: {e}")
+        if domain_tracker is not None:
+             from urllib.parse import urlparse
+             failed_domain = urlparse(pdf_url).netloc
+             domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
         return None
 
 def generate_markdown(pmid, data, full_text, extraction_source="Abstract only", extraction_rank=1):
@@ -499,7 +512,8 @@ def generate_markdown(pmid, data, full_text, extraction_source="Abstract only", 
 def main():
     print("Starting PubMed TBI Pipeline...")
     config = load_config()
-    max_articles = config.get('MAX_ARTICLES_PER_RUN', 25)
+    target_full_text = config.get('TARGET_FULL_TEXT_PER_RUN', 25)
+    candidate_pool_size = config.get('PUBMED_CANDIDATE_POOL_SIZE', config.get('MAX_ARTICLES_PER_RUN', 25))
     query = config.get('PUBMED_QUERY', '').strip()
 
     ncbi_api_key = os.environ.get('NCBI_API_KEY')
@@ -517,10 +531,10 @@ def main():
         sys.exit(1)
 
     print(f"Using PubMed Query:\n{query}\n")
-    print(f"Searching PubMed for up to {max_articles} articles...")
+    print(f"Searching PubMed for up to {candidate_pool_size} candidate articles (Targeting {target_full_text} full-text)...")
     try:
-        pmids = search_pubmed(query, max_articles, ncbi_api_key)
-        print(f"Found {len(pmids)} articles.")
+        pmids = search_pubmed(query, candidate_pool_size, ncbi_api_key)
+        print(f"Found {len(pmids)} candidate articles.")
     except Exception as e:
         print(f"Error searching PubMed: {e}")
         sys.exit(1)
@@ -588,7 +602,14 @@ def main():
         'pmc_fulltext_count': 0, 'html_fulltext_count': 0, 'pdf_fulltext_count': 0, 'abstract_only_count': 0
     }
 
+    domain_tracker = {}
+    full_text_success_count = 0
+
     for pmid in pmids:
+        if full_text_success_count >= target_full_text:
+            print(f"\nReached target of {target_full_text} full-text articles. Stopping processing.")
+            break
+
         data = metadata.get(pmid)
         if not data:
             print(f"[{pmid}] Warning: Could not fetch metadata.")
@@ -646,7 +667,7 @@ def main():
         html_content, pdf_url = None, None
         if not full_text and data['doi']:
             print(f"[{pmid}]   Tier B: Resolving DOI {data['doi']} for HTML...")
-            html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'])
+            html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'], domain_tracker)
             if html_content:
                 full_text = extract_html_text(html_content)
                 if full_text:
@@ -654,11 +675,18 @@ def main():
                     extraction_rank = 3
                     stats['html_fulltext_count'] += 1
                     print(f"[{pmid}]     -> Success: Publisher HTML extracted.")
+                else:
+                    # Trafilatura failed or didn't find enough text
+                    from urllib.parse import urlparse
+                    failed_domain = "unknown"
+                    if data.get('doi'):
+                         failed_domain = "doi.org" # default fallback
+                    domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
 
         # Tier C: PDF
         if not full_text and pdf_url:
             print(f"[{pmid}]   Tier C: Fetching PDF...")
-            full_text = extract_pdf_text(pdf_url)
+            full_text = extract_pdf_text(pdf_url, domain_tracker)
             if full_text:
                 extraction_source = "PDF"
                 extraction_rank = 2
@@ -750,6 +778,11 @@ def main():
                     ).execute()
                     stats['uploaded_new_count'] += 1
 
+                # If we successfully uploaded a full-text document, increment the success count
+                if extraction_source in ["PMC XML", "Publisher HTML", "PDF"]:
+                    full_text_success_count += 1
+                    print(f"[{pmid}] Full-text target progress: {full_text_success_count}/{target_full_text}")
+
             except Exception as e:
                 print(f"[{pmid}] Error uploading/updating to Drive: {e}")
                 stats['errors'] += 1
@@ -766,19 +799,36 @@ def main():
         stats['processed'] += 1
 
     print("\n--- Run Summary ---")
-    print(f"Total PMIDs found: {len(pmids)}")
-    print(f"Processed: {stats['processed']}")
-    print(f"Uploaded New: {stats['uploaded_new_count']}")
+    print(f"Candidate pool size: {candidate_pool_size}")
+    print(f"Total candidate PMIDs found: {len(pmids)}")
+    print(f"Processed candidates: {stats['processed']}")
+    print(f"Full-text target: {target_full_text}")
+    print(f"Full-text successfully extracted and uploaded: {full_text_success_count}")
+    print(f"\nUploaded New: {stats['uploaded_new_count']}")
     print(f"Replaced/Upgraded: {stats['replaced_upgraded_count']}")
     print(f"Skipped (Equal or Better Exists): {stats['skipped_equal_or_better_count']}")
     print(f"Skipped (Existing Rank Unknown): {stats['skipped_existing_unknown_count']}")
     print(f"Duplicate Files Deleted: {stats['duplicate_files_deleted_count']}")
     print(f"Errors: {stats['errors']}")
-    print("\n--- Tier Counts ---")
+    print("\n--- Extraction Tier Counts (attempted) ---")
     print(f"PMC XML extracted: {stats['pmc_fulltext_count']}")
     print(f"Publisher HTML extracted: {stats['html_fulltext_count']}")
     print(f"PDF extracted: {stats['pdf_fulltext_count']}")
     print(f"Abstract only fallback: {stats['abstract_only_count']}")
+
+    print("\n--- Blocked/Failed Domain Summary ---")
+    if domain_tracker:
+        for domain, count in sorted(domain_tracker.items(), key=lambda item: item[1], reverse=True):
+            print(f"{domain}: {count} failures")
+    else:
+        print("No domain failures tracked.")
+
+    print("\n--- Target Status ---")
+    if full_text_success_count >= target_full_text:
+        print(f"SUCCESS: Reached target of {target_full_text} full-text articles.")
+    else:
+        print(f"WARNING: Target not reached. Found {full_text_success_count} full-text articles out of a target of {target_full_text}. Candidate pool exhausted.")
+
     print("-------------------")
 
 if __name__ == '__main__':
