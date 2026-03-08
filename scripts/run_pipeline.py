@@ -87,7 +87,7 @@ def upload_state_file(service, folder_id, state, filename="pipeline_state.json")
     else:
         file_metadata = {
             'name': filename,
-            'parents': [drive_folder_id]
+            'parents': [folder_id]
         }
         try:
             service.files().create(body=file_metadata, media_body=media, fields='id').execute()
@@ -793,7 +793,12 @@ def main():
     manifest_rows = []
 
     # Load state
-    pipeline_state = download_state_file(drive_service, drive_folder_id)
+    try:
+        pipeline_state = download_state_file(drive_service, drive_folder_id)
+    except Exception as e:
+        print(f"Warning: Failed to download pipeline state. Continuing with empty state. Error: {e}")
+        pipeline_state = {'blocked_domains': {}, 'pmid_attempts': {}}
+
     blocked_domains = pipeline_state.get('blocked_domains', {})
     pmid_attempts = pipeline_state.get('pmid_attempts', {})
 
@@ -816,6 +821,10 @@ def main():
         current_pool_size = phase['pool_size']
         current_days = phase['days']
 
+        processed_in_phase = 0
+        full_text_hits_in_phase = 0
+        abstract_only_in_phase = 0
+
         query = f"{base_query} AND (\"last {current_days} days\"[PDat])"
         print(f"\n--- Phase {phase_idx + 1}: Pool Size {current_pool_size}, {current_days} Days ---")
         print(f"Using PubMed Query:\n{query}\n")
@@ -834,6 +843,16 @@ def main():
 
         # Filter out already processed PMIDs in this run
         new_pmids = [p for p in pmids if p not in processed_pmids_in_run]
+
+        total_candidates = len(pmids)
+        new_candidates = len(new_pmids)
+        skipped_candidates = total_candidates - new_candidates
+
+        print(f"Novelty Diagnostics for Phase {phase_idx + 1} (Start):")
+        print(f"  Total Candidates: {total_candidates}")
+        print(f"  New Candidates: {new_candidates}")
+        print(f"  Skipped (Already Processed in Run): {skipped_candidates}")
+
         if not new_pmids:
             print("All PMIDs in this phase have already been processed in this run.")
             continue
@@ -892,6 +911,7 @@ def main():
                 break
 
             processed_pmids_in_run.add(pmid)
+            processed_in_phase += 1
 
             data = metadata.get(pmid)
             if not data:
@@ -1026,7 +1046,10 @@ def main():
         if not full_text:
             print(f"[{pmid}]   Source 6: Falling back to Abstract only.")
             stats['abstract_only_count'] += 1
+            abstract_only_in_phase += 1
             extraction_rank = 1
+        else:
+            full_text_hits_in_phase += 1
 
         # Generate markdown
         md_content = generate_markdown(pmid, data, full_text, extraction_source, extraction_rank)
@@ -1156,6 +1179,11 @@ def main():
 
         stats['processed'] += 1
 
+    print(f"\n--- Phase {phase_idx + 1} End Summary ---")
+    print(f"Processed in phase: {processed_in_phase}")
+    print(f"Full-text hits in phase: {full_text_hits_in_phase}")
+    print(f"Abstract only in phase: {abstract_only_in_phase}\n")
+
     # Generate and Upload Manifest
     if manifest_rows:
         print("\n--- Generating and Uploading Manifest ---")
@@ -1236,7 +1264,10 @@ def main():
     pipeline_state['blocked_domains'] = blocked_domains
     pipeline_state['pmid_attempts'] = pmid_attempts
 
-    upload_state_file(drive_service, drive_folder_id, pipeline_state)
+    try:
+        upload_state_file(drive_service, drive_folder_id, pipeline_state)
+    except Exception as e:
+        print(f"Warning: Failed to upload pipeline state. Error: {e}")
 
     print("-------------------")
 
