@@ -550,11 +550,11 @@ def resolve_doi_and_find_pdf(doi, domain_stats=None, blocked_domains=None, curre
 
         # Check cooldown before downloading full content
         if blocked_domains and blocked_domains.get(resolved_domain, 0) > 0:
-             print(f"    Skipping {resolved_domain} due to active cooldown.")
+             print(f"    Skipping {resolved_domain} due to persisted prior-run cooldown.")
              return None, None
 
         if domain_stats and resolved_domain in domain_stats and domain_stats[resolved_domain].get('hard_failure', 0) >= 3:
-             print(f"    Skipping {resolved_domain} due to within-run hard failures (>= 3).")
+             print(f"    Skipping {resolved_domain} due to current-run hard failures.")
              return None, None
 
         if response.status_code in [401, 403]:
@@ -676,11 +676,11 @@ def extract_pdf_text(pdf_url, domain_stats=None, blocked_domains=None, current_p
     domain = urlparse(pdf_url).netloc
 
     if blocked_domains and blocked_domains.get(domain, 0) > 0:
-        print(f"    Skipping PDF fetch from {domain} due to active cooldown.")
+        print(f"    Skipping PDF fetch from {domain} due to persisted prior-run cooldown.")
         return None
 
     if domain_stats and domain in domain_stats and domain_stats[domain].get('hard_failure', 0) >= 3:
-        print(f"    Skipping PDF fetch from {domain} due to within-run hard failures (>= 3).")
+        print(f"    Skipping PDF fetch from {domain} due to current-run hard failures.")
         return None
 
     try:
@@ -858,11 +858,11 @@ def main():
     pmid_attempts = pipeline_state.get('pmid_attempts', {})
 
     processed_pmids_in_run = set()
+    total_attempted_across_phases = 0
 
     expansion_phases = [
-        {'pool_size': candidate_pool_size, 'days': 180},
-        {'pool_size': 150, 'days': 180},
-        {'pool_size': 200, 'days': 180},
+        {'pool_size': 100, 'days': 730},
+        {'pool_size': 150, 'days': 730},
         {'pool_size': 200, 'days': 730}
     ]
 
@@ -965,9 +965,15 @@ def main():
                      stats['fatal_errors'] += 1
                      sys.exit(1)
 
-        for pmid in new_pmids:
+        actual_pmids_attempted = 0
+        actual_pmids_completed = 0
+        why_phase_ended = 'phase exhausted'
+        for i, pmid in enumerate(new_pmids):
+            actual_pmids_attempted += 1
+            print(f"Phase {phase_idx + 1} | PMID {pmid} | Index {i + 1}/{len(new_pmids)}")
             if full_text_success_count >= target_full_text:
                 print(f"\nReached target of {target_full_text} full-text articles. Stopping processing.")
+                why_phase_ended = 'target reached'
                 break
 
             processed_pmids_in_run.add(pmid)
@@ -977,289 +983,293 @@ def main():
             if not data:
                 print(f"[{pmid}] Warning: Could not fetch metadata.")
                 stats['nonfatal_warnings'] += 1
+                actual_pmids_completed += 1
                 continue
 
-        print(f"[{pmid}] Processing...")
+            print(f"[{pmid}] Processing...")
 
-        # Find existing files by PMID
-        existing_files = []
-        try:
-            existing_files = find_files_by_pmid(drive_service, drive_folder_id, pmid)
-        except Exception as e:
-            print(f"[{pmid}] Error checking Drive for existing files: {e}")
-            stats['nonfatal_warnings'] += 1
-            continue
-
-        best_existing_file, inferior_files = resolve_existing_files(drive_service, existing_files)
-
-        if best_existing_file:
-            print(f"[{pmid}] Found existing file: {best_existing_file['file']['name']} (Rank: {best_existing_file['rank']}, Length: {best_existing_file['length']})")
-
-        # Generate filename: YYYY-MM-DD_FirstAuthorEtAl_ShortTitle_PMID12345678.md
-        date_prefix = datetime.now().strftime("%Y-%m-%d")
-
-        if data['authors'] and len(data['authors']) > 0:
-            author_prefix = sanitize_filename(data['authors'][0].split()[-1]) + "EtAl"
-        else:
-            author_prefix = "UnknownAuthor"
-
-        short_title_words = data['title'].split()[:4]
-        short_title = sanitize_filename(''.join(short_title_words))
-
-        filename = f"{date_prefix}_{author_prefix}_{short_title}_PMID{pmid}.md"
-
-        # Fetch full text through Tiers
-        full_text = None
-        extraction_source = "Abstract only"
-        extraction_rank = 1
-
-        current_phase_stats = {'blocked_domain_failures_in_phase': blocked_domain_failures_in_phase}
-
-        # 1. PMC / PMCID
-        if data['pmcid']:
-            print(f"[{pmid}]   Source 1: Fetching PMC XML for {data['pmcid']}...")
+            # Find existing files by PMID
+            existing_files = []
             try:
-                full_text = fetch_pmc_fulltext(data['pmcid'], ncbi_api_key)
-                if full_text:
-                    extraction_source = "PMC XML"
-                    extraction_rank = 5
-                    stats['pmc_fulltext_count'] += 1
-                    record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=True)
-                    print(f"[{pmid}]     -> Success: PMC XML extracted.")
-                else:
-                    record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=False)
+                existing_files = find_files_by_pmid(drive_service, drive_folder_id, pmid)
             except Exception as e:
-                print(f"[{pmid}]     Error fetching PMC full text: {e}")
-                record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=False, is_hard_failure=True)
+                print(f"[{pmid}] Error checking Drive for existing files: {e}")
+                stats['nonfatal_warnings'] += 1
+                actual_pmids_completed += 1
+                continue
 
-        # 2. Unpaywall DOI lookup
-        if not full_text and data['doi'] and unpaywall_email:
-            print(f"[{pmid}]   Source 2: Querying Unpaywall for DOI {data['doi']}...")
-            unpaywall_pdf_url = fetch_unpaywall_pdf(data['doi'], unpaywall_email)
-            if unpaywall_pdf_url:
-                print(f"[{pmid}]     Found Unpaywall PDF URL: {unpaywall_pdf_url}")
-                full_text = extract_pdf_text(unpaywall_pdf_url, domain_stats, blocked_domains, current_phase_stats)
-                if full_text:
-                    extraction_source = "Unpaywall PDF"
-                    extraction_rank = 4
-                    stats['unpaywall_success_count'] += 1
-                    print(f"[{pmid}]     -> Success: Unpaywall PDF extracted.")
+            best_existing_file, inferior_files = resolve_existing_files(drive_service, existing_files)
 
-        # 3. Europe PMC lookup
-        if not full_text:
-            print(f"[{pmid}]   Source 3: Querying Europe PMC...")
-            epmc_xml, epmc_pdf_url = fetch_europepmc_fulltext(pmid, data['pmcid'], data['doi'])
-            if epmc_xml:
-                full_text = epmc_xml
-                extraction_source = "Europe PMC XML"
-                extraction_rank = 5
-                stats['europepmc_success_count'] += 1
-                record_domain_attempt(domain_stats, 'europepmc.org', success=True)
-                print(f"[{pmid}]     -> Success: Europe PMC XML extracted.")
-            elif epmc_pdf_url:
-                print(f"[{pmid}]     Found Europe PMC PDF URL: {epmc_pdf_url}")
-                full_text = extract_pdf_text(epmc_pdf_url, domain_stats, blocked_domains, current_phase_stats)
-                if full_text:
-                    extraction_source = "Europe PMC PDF"
-                    extraction_rank = 4
-                    stats['europepmc_success_count'] += 1
-                    print(f"[{pmid}]     -> Success: Europe PMC PDF extracted.")
+            if best_existing_file:
+                print(f"[{pmid}] Found existing file: {best_existing_file['file']['name']} (Rank: {best_existing_file['rank']}, Length: {best_existing_file['length']})")
 
-        # 4. Crossref hints
-        if not full_text and data['doi']:
-            print(f"[{pmid}]   Source 4: Querying Crossref hints for DOI {data['doi']}...")
-            # We track the Crossref API call itself, though the extraction happens downstream
-            record_domain_attempt(domain_stats, 'api.crossref.org', success=True)
-            crossref_urls = fetch_crossref_hints(data['doi'])
-            for cr_url in crossref_urls:
-                if not full_text:
-                    print(f"[{pmid}]     Attempting Crossref URL: {cr_url}")
-                    full_text = extract_pdf_text(cr_url, domain_stats, blocked_domains, current_phase_stats)
-                    if full_text:
-                        extraction_source = "Crossref PDF"
-                        extraction_rank = 2
-                        stats['crossref_hint_count'] += 1
-                        print(f"[{pmid}]     -> Success: Crossref PDF extracted.")
+            # Generate filename: YYYY-MM-DD_FirstAuthorEtAl_ShortTitle_PMID12345678.md
+            date_prefix = datetime.now().strftime("%Y-%m-%d")
 
-        # 5. Publisher HTML/PDF Fallback
-        if not full_text and data['doi']:
-            # Check domain cooldown state
-            domain_is_cooled_down = False
-            # We don't know the domain until we resolve DOI, but we can do a best effort or track post-resolution.
-            print(f"[{pmid}]   Source 5: Resolving DOI {data['doi']} for Publisher HTML/PDF...")
-            html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'], domain_stats, blocked_domains, current_phase_stats)
-            if html_content:
-                full_text = extract_html_text(html_content)
-                if full_text:
-                    extraction_source = "Publisher HTML"
-                    extraction_rank = 3
-                    stats['html_fulltext_count'] += 1
-                    print(f"[{pmid}]     -> Success: Publisher HTML extracted.")
+            if data['authors'] and len(data['authors']) > 0:
+                author_prefix = sanitize_filename(data['authors'][0].split()[-1]) + "EtAl"
+            else:
+                author_prefix = "UnknownAuthor"
 
-            if not full_text and pdf_url:
-                print(f"[{pmid}]     Fallback: Fetching Publisher PDF...")
-                full_text = extract_pdf_text(pdf_url, domain_stats, blocked_domains, current_phase_stats)
-                if full_text:
-                    extraction_source = "Publisher PDF"
-                    extraction_rank = 2
-                    stats['pdf_fulltext_count'] += 1
-                    print(f"[{pmid}]     -> Success: Publisher PDF extracted.")
+            short_title_words = data['title'].split()[:4]
+            short_title = sanitize_filename(''.join(short_title_words))
 
-        blocked_domain_failures_in_phase = current_phase_stats['blocked_domain_failures_in_phase']
+            filename = f"{date_prefix}_{author_prefix}_{short_title}_PMID{pmid}.md"
 
-        # 6. Abstract only fallback
-        if not full_text:
-            print(f"[{pmid}]   Source 6: Falling back to Abstract only.")
-            stats['abstract_only_count'] += 1
-            abstract_only_in_phase += 1
+            # Fetch full text through Tiers
+            full_text = None
+            extraction_source = "Abstract only"
             extraction_rank = 1
-        else:
-            full_text_hits_in_phase += 1
 
-        # Generate markdown
-        md_content = generate_markdown(pmid, data, full_text, extraction_source, extraction_rank)
-        local_filepath = os.path.join('output', filename)
+            current_phase_stats = {'blocked_domain_failures_in_phase': blocked_domain_failures_in_phase}
 
-        with open(local_filepath, 'w', encoding='utf-8') as f:
-            f.write(md_content)
+            # 1. PMC / PMCID
+            if data['pmcid']:
+                print(f"[{pmid}]   Source 1: Fetching PMC XML for {data['pmcid']}...")
+                try:
+                    full_text = fetch_pmc_fulltext(data['pmcid'], ncbi_api_key)
+                    if full_text:
+                        extraction_source = "PMC XML"
+                        extraction_rank = 5
+                        stats['pmc_fulltext_count'] += 1
+                        record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=True)
+                        print(f"[{pmid}]     -> Success: PMC XML extracted.")
+                    else:
+                        record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=False)
+                except Exception as e:
+                    print(f"[{pmid}]     Error fetching PMC full text: {e}")
+                    record_domain_attempt(domain_stats, 'pmc.ncbi.nlm.nih.gov', success=False, is_hard_failure=True)
 
-        new_content_length = len(re.sub(r'\s+', '', md_content))
+            # 2. Unpaywall DOI lookup
+            if not full_text and data['doi'] and unpaywall_email:
+                print(f"[{pmid}]   Source 2: Querying Unpaywall for DOI {data['doi']}...")
+                unpaywall_pdf_url = fetch_unpaywall_pdf(data['doi'], unpaywall_email)
+                if unpaywall_pdf_url:
+                    print(f"[{pmid}]     Found Unpaywall PDF URL: {unpaywall_pdf_url}")
+                    full_text = extract_pdf_text(unpaywall_pdf_url, domain_stats, blocked_domains, current_phase_stats)
+                    if full_text:
+                        extraction_source = "Unpaywall PDF"
+                        extraction_rank = 4
+                        stats['unpaywall_success_count'] += 1
+                        print(f"[{pmid}]     -> Success: Unpaywall PDF extracted.")
 
-        # Determine whether to replace, upload new, or skip
-        should_upload = False
-        action = None # "upload_new" or "replace_upgraded"
+            # 3. Europe PMC lookup
+            if not full_text:
+                print(f"[{pmid}]   Source 3: Querying Europe PMC...")
+                epmc_xml, epmc_pdf_url = fetch_europepmc_fulltext(pmid, data['pmcid'], data['doi'])
+                if epmc_xml:
+                    full_text = epmc_xml
+                    extraction_source = "Europe PMC XML"
+                    extraction_rank = 5
+                    stats['europepmc_success_count'] += 1
+                    record_domain_attempt(domain_stats, 'europepmc.org', success=True)
+                    print(f"[{pmid}]     -> Success: Europe PMC XML extracted.")
+                elif epmc_pdf_url:
+                    print(f"[{pmid}]     Found Europe PMC PDF URL: {epmc_pdf_url}")
+                    full_text = extract_pdf_text(epmc_pdf_url, domain_stats, blocked_domains, current_phase_stats)
+                    if full_text:
+                        extraction_source = "Europe PMC PDF"
+                        extraction_rank = 4
+                        stats['europepmc_success_count'] += 1
+                        print(f"[{pmid}]     -> Success: Europe PMC PDF extracted.")
 
-        if not best_existing_file:
-            should_upload = True
-            action = "upload_new"
-        else:
-            existing_rank = best_existing_file['rank']
+            # 4. Crossref hints
+            if not full_text and data['doi']:
+                print(f"[{pmid}]   Source 4: Querying Crossref hints for DOI {data['doi']}...")
+                crossref_urls = fetch_crossref_hints(data['doi'])
+                for cr_url in crossref_urls:
+                    if not full_text:
+                        print(f"[{pmid}]     Attempting Crossref URL: {cr_url}")
+                        full_text = extract_pdf_text(cr_url, domain_stats, blocked_domains, current_phase_stats)
+                        if full_text:
+                            extraction_source = "Crossref PDF"
+                            extraction_rank = 2
+                            stats['crossref_hint_count'] += 1
+                            print(f"[{pmid}]     -> Success: Crossref PDF extracted.")
 
-            # Map legacy ranks if found in existing files for safe comparison
-            # Legacy: PMC XML=4, HTML=3, PDF=2, Abstract=1
-            # New: XML=5, Unpaywall/EuropePMC PDF=4, HTML=3, PDF/Crossref=2, Abstract=1
-            # We map legacy 4 -> 5 to prevent unnecessary downgrades/upgrades between PMC XMLs
-            mapped_existing_rank = existing_rank
-            if best_existing_file.get('source') == 'PMC XML' and existing_rank == 4:
-                mapped_existing_rank = 5
-            elif best_existing_file.get('source') == 'Publisher HTML' and existing_rank == 3:
-                mapped_existing_rank = 3
-            elif best_existing_file.get('source') == 'PDF' and existing_rank == 2:
-                mapped_existing_rank = 2
+            # 5. Publisher HTML/PDF Fallback
+            if not full_text and data['doi']:
+                # Check domain cooldown state
+                domain_is_cooled_down = False
+                # We don't know the domain until we resolve DOI, but we can do a best effort or track post-resolution.
+                print(f"[{pmid}]   Source 5: Resolving DOI {data['doi']} for Publisher HTML/PDF...")
+                html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'], domain_stats, blocked_domains, current_phase_stats)
+                if html_content:
+                    full_text = extract_html_text(html_content)
+                    if full_text:
+                        extraction_source = "Publisher HTML"
+                        extraction_rank = 3
+                        stats['html_fulltext_count'] += 1
+                        print(f"[{pmid}]     -> Success: Publisher HTML extracted.")
 
-            if existing_rank == -1:
-                # Rank unknown.
-                content_lower = best_existing_file['content'].lower()
-                is_clearly_abstract = (
-                    "extraction source: abstract only" in content_lower or
-                    "full text unavailable" in content_lower or
-                    "full text not cleanly available" in content_lower
-                )
-                if is_clearly_abstract:
-                    print(f"[{pmid}] Existing rank unknown, but clearly abstract-only. Allowing replacement.")
-                    should_upload = True
-                    action = "replace_upgraded"
-                else:
-                    print(f"[{pmid}] Existing rank unknown. Skipping conservatively.")
-                    stats['skipped_existing_unknown_count'] += 1
-            elif extraction_rank > mapped_existing_rank:
-                print(f"[{pmid}] Upgrading rank from {mapped_existing_rank} (legacy {existing_rank}) to {extraction_rank}.")
+                if not full_text and pdf_url:
+                    print(f"[{pmid}]     Fallback: Fetching Publisher PDF...")
+                    full_text = extract_pdf_text(pdf_url, domain_stats, blocked_domains, current_phase_stats)
+                    if full_text:
+                        extraction_source = "Publisher PDF"
+                        extraction_rank = 2
+                        stats['pdf_fulltext_count'] += 1
+                        print(f"[{pmid}]     -> Success: Publisher PDF extracted.")
+
+            blocked_domain_failures_in_phase = current_phase_stats['blocked_domain_failures_in_phase']
+
+            # 6. Abstract only fallback
+            if not full_text:
+                print(f"[{pmid}]   Source 6: Falling back to Abstract only.")
+                stats['abstract_only_count'] += 1
+                abstract_only_in_phase += 1
+                extraction_rank = 1
+            else:
+                full_text_hits_in_phase += 1
+
+            # Generate markdown
+            md_content = generate_markdown(pmid, data, full_text, extraction_source, extraction_rank)
+            local_filepath = os.path.join('output', filename)
+
+            with open(local_filepath, 'w', encoding='utf-8') as f:
+                f.write(md_content)
+
+            new_content_length = len(re.sub(r'\s+', '', md_content))
+
+            # Determine whether to replace, upload new, or skip
+            should_upload = False
+            action = None # "upload_new" or "replace_upgraded"
+
+            if not best_existing_file:
                 should_upload = True
-                action = "replace_upgraded"
-            elif extraction_rank == mapped_existing_rank:
-                # Same rank. Check content length.
-                existing_length = best_existing_file['length']
-                if new_content_length > existing_length * 1.2 and bool(re.search(r'\*\*PMID:\*\*', md_content)):
-                    print(f"[{pmid}] Same rank ({extraction_rank}), but new content is >20% larger ({new_content_length} vs {existing_length}). Upgrading.")
+                action = "upload_new"
+            else:
+                existing_rank = best_existing_file['rank']
+
+                # Map legacy ranks if found in existing files for safe comparison
+                # Legacy: PMC XML=4, HTML=3, PDF=2, Abstract=1
+                # New: XML=5, Unpaywall/EuropePMC PDF=4, HTML=3, PDF/Crossref=2, Abstract=1
+                # We map legacy 4 -> 5 to prevent unnecessary downgrades/upgrades between PMC XMLs
+                mapped_existing_rank = existing_rank
+                if best_existing_file.get('source') == 'PMC XML' and existing_rank == 4:
+                    mapped_existing_rank = 5
+                elif best_existing_file.get('source') == 'Publisher HTML' and existing_rank == 3:
+                    mapped_existing_rank = 3
+                elif best_existing_file.get('source') == 'PDF' and existing_rank == 2:
+                    mapped_existing_rank = 2
+
+                if existing_rank == -1:
+                    # Rank unknown.
+                    content_lower = best_existing_file['content'].lower()
+                    is_clearly_abstract = (
+                        "extraction source: abstract only" in content_lower or
+                        "full text unavailable" in content_lower or
+                        "full text not cleanly available" in content_lower
+                    )
+                    if is_clearly_abstract:
+                        print(f"[{pmid}] Existing rank unknown, but clearly abstract-only. Allowing replacement.")
+                        should_upload = True
+                        action = "replace_upgraded"
+                    else:
+                        print(f"[{pmid}] Existing rank unknown. Skipping conservatively.")
+                        stats['skipped_existing_unknown_count'] += 1
+                elif extraction_rank > mapped_existing_rank:
+                    print(f"[{pmid}] Upgrading rank from {mapped_existing_rank} (legacy {existing_rank}) to {extraction_rank}.")
                     should_upload = True
                     action = "replace_upgraded"
+                elif extraction_rank == mapped_existing_rank:
+                    # Same rank. Check content length.
+                    existing_length = best_existing_file['length']
+                    if new_content_length > existing_length * 1.2 and bool(re.search(r'\*\*PMID:\*\*', md_content)):
+                        print(f"[{pmid}] Same rank ({extraction_rank}), but new content is >20% larger ({new_content_length} vs {existing_length}). Upgrading.")
+                        should_upload = True
+                        action = "replace_upgraded"
+                    else:
+                        print(f"[{pmid}] Same rank ({extraction_rank}), new content not significantly better. Skipping.")
+                        stats['skipped_equal_or_better_count'] += 1
+                        skipped_equal_or_better_in_phase += 1
+                        action = "skipped_equal_or_better"
                 else:
-                    print(f"[{pmid}] Same rank ({extraction_rank}), new content not significantly better. Skipping.")
+                    print(f"[{pmid}] New rank ({extraction_rank}) is lower than existing ({mapped_existing_rank}). Skipping.")
                     stats['skipped_equal_or_better_count'] += 1
                     skipped_equal_or_better_in_phase += 1
-                    action = "skipped_equal_or_better"
-            else:
-                print(f"[{pmid}] New rank ({extraction_rank}) is lower than existing ({mapped_existing_rank}). Skipping.")
-                stats['skipped_equal_or_better_count'] += 1
-                skipped_equal_or_better_in_phase += 1
-                action = "skipped_lower_rank"
+                    action = "skipped_lower_rank"
 
-        if should_upload:
-            print(f"[{pmid}] Uploading {filename} to Drive...")
-            try:
-                media = MediaFileUpload(local_filepath, mimetype='text/markdown', resumable=True)
+            if should_upload:
+                print(f"[{pmid}] Uploading {filename} to Drive...")
+                try:
+                    media = MediaFileUpload(local_filepath, mimetype='text/markdown', resumable=True)
 
-                if action == "replace_upgraded" and best_existing_file:
-                    # Update existing file metadata and content
-                    file_metadata = {'name': filename} # Rename it if necessary
-                    drive_service.files().update(
-                        fileId=best_existing_file['file']['id'],
-                        body=file_metadata,
-                        media_body=media
-                    ).execute()
-                    stats['replaced_upgraded_count'] += 1
-                    print(f"[{pmid}] Successfully replaced/updated existing file.")
-                else:
-                    # Create new file
-                    file_metadata = {
-                        'name': filename,
-                        'parents': [drive_folder_id]
-                    }
-                    drive_service.files().create(
-                        body=file_metadata,
-                        media_body=media,
-                        fields='id'
-                    ).execute()
-                    stats['uploaded_new_count'] += 1
+                    if action == "replace_upgraded" and best_existing_file:
+                        # Update existing file metadata and content
+                        file_metadata = {'name': filename} # Rename it if necessary
+                        drive_service.files().update(
+                            fileId=best_existing_file['file']['id'],
+                            body=file_metadata,
+                            media_body=media
+                        ).execute()
+                        stats['replaced_upgraded_count'] += 1
+                        print(f"[{pmid}] Successfully replaced/updated existing file.")
+                    else:
+                        # Create new file
+                        file_metadata = {
+                            'name': filename,
+                            'parents': [drive_folder_id]
+                        }
+                        drive_service.files().create(
+                            body=file_metadata,
+                            media_body=media,
+                            fields='id'
+                        ).execute()
+                        stats['uploaded_new_count'] += 1
 
-                # If we successfully uploaded a full-text document, increment the success count
-                if extraction_rank > 1:
-                    full_text_success_count += 1
-                    print(f"[{pmid}] Full-text target progress: {full_text_success_count}/{target_full_text}")
+                    # If we successfully uploaded a full-text document, increment the success count
+                    if extraction_rank > 1:
+                        full_text_success_count += 1
+                        print(f"[{pmid}] Full-text target progress: {full_text_success_count}/{target_full_text}")
 
-            except Exception as e:
-                print(f"[{pmid}] Error uploading/updating to Drive: {e}")
-                stats['nonfatal_warnings'] += 1
-                action = "upload_error"
-                if stats['uploaded_new_count'] + stats['replaced_upgraded_count'] == 0:
-                    print("\nError: The first attempted upload to Google Drive failed. Failing fast to prevent cascading errors.")
-                    stats['fatal_errors'] += 1
-                    sys.exit(1)
+                except Exception as e:
+                    print(f"[{pmid}] Error uploading/updating to Drive: {e}")
+                    stats['nonfatal_warnings'] += 1
+                    action = "upload_error"
+                    if stats['uploaded_new_count'] + stats['replaced_upgraded_count'] == 0:
+                        print("\nError: The first attempted upload to Google Drive failed. Failing fast to prevent cascading errors.")
+                        stats['fatal_errors'] += 1
+                        sys.exit(1)
 
-        # Record manifest entry
-        manifest_rows.append({
-            'PMID': pmid,
-            'title': data.get('title', ''),
-            'DOI': data.get('doi', ''),
-            'PMCID': data.get('pmcid', ''),
-            'extraction_source': extraction_source,
-            'extraction_rank': extraction_rank,
-            'action_taken': action,
-            'blocked_domain': failed_domain if 'failed_domain' in locals() and not full_text else '',
-            'notes': f"Length: {new_content_length}"
-        })
+            # Record manifest entry
+            manifest_rows.append({
+                'PMID': pmid,
+                'title': data.get('title', ''),
+                'DOI': data.get('doi', ''),
+                'PMCID': data.get('pmcid', ''),
+                'extraction_source': extraction_source,
+                'extraction_rank': extraction_rank,
+                'action_taken': action,
+                'blocked_domain': failed_domain if 'failed_domain' in locals() and not full_text else '',
+                'notes': f"Length: {new_content_length}"
+            })
 
-        # Cleanup inferior files (Duplicates)
-        for inf_file in inferior_files:
-            print(f"[{pmid}] Deleting duplicate file: {inf_file['name']}")
-            if delete_file_from_drive(drive_service, inf_file['id']):
-                stats['duplicate_files_deleted_count'] += 1
+            # Cleanup inferior files (Duplicates)
+            for inf_file in inferior_files:
+                print(f"[{pmid}] Deleting duplicate file: {inf_file['name']}")
+                if delete_file_from_drive(drive_service, inf_file['id']):
+                    stats['duplicate_files_deleted_count'] += 1
 
-        stats['processed'] += 1
+            stats['processed'] += 1
+            actual_pmids_completed += 1
 
+        total_attempted_across_phases += actual_pmids_attempted
         print(f"\n--- Phase {phase_idx + 1} End Summary ---")
-        print(f"Processed in phase: {processed_in_phase}")
+        print(f"Total candidates: {total_candidates}")
+        print(f"New candidates: {new_candidates}")
+        print(f"Actual PMIDs attempted: {actual_pmids_attempted}")
+        print(f"Actual PMIDs completed: {actual_pmids_completed}")
         print(f"Full-text hits in phase: {full_text_hits_in_phase}")
         print(f"Abstract only in phase: {abstract_only_in_phase}")
         print(f"Skipped (equal or better) in phase: {skipped_equal_or_better_in_phase}")
         print(f"Blocked domain failures in phase: {blocked_domain_failures_in_phase}")
         if new_candidates > 0:
             novel_yield = full_text_hits_in_phase / new_candidates
-            print(f"Novel full-text yield: {novel_yield:.2f}\n")
+            print(f"Novel full-text yield: {novel_yield:.2f}")
         else:
-            print(f"Novel full-text yield: 0.00\n")
-
-    # Generate and Upload Manifest
+            print(f"Novel full-text yield: 0.00")
+        print(f"Why phase ended: {why_phase_ended}\n")
     if manifest_rows:
         print("\n--- Generating and Uploading Manifest ---")
         manifest_filename = f"pubmed_tbi_manifest_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
@@ -1292,6 +1302,11 @@ def main():
     print(f"Candidate pool size: {candidate_pool_size}")
     print(f"Total candidate PMIDs found: {len(pmids)}")
     print(f"Processed candidates: {stats['processed']}")
+    print(f"Sum of actual_pmids_attempted across phases: {total_attempted_across_phases}")
+    if stats['processed'] != total_attempted_across_phases:
+        print("\n=======================================================")
+        print("LOUD WARNING: stats['processed'] DOES NOT MATCH total actual attempted PMIDs!")
+        print("=======================================================\n")
     print(f"Full-text target: {target_full_text}")
     print(f"Full-text successfully extracted and uploaded: {full_text_success_count}")
     print(f"\nUploaded New: {stats['uploaded_new_count']}")
