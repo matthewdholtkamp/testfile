@@ -25,8 +25,16 @@ The Markdown files contain:
 - Publication Date
 - IDs (PMID, PMCID, DOI)
 - Links to PubMed and PMC
+- Extraction Source
 - Abstract
-- Full Text (if cleanly available from PMC in XML format)
+- Full Text
+
+### Full Text Retrieval Tiers
+The pipeline attempts to extract full text using the following priority order:
+1. **Tier A (PMC XML):** Directly extracts text from PubMed Central if a PMCID is available.
+2. **Tier B (Publisher HTML):** Resolves the DOI to the publisher's landing page and extracts readable HTML text.
+3. **Tier C (PDF):** Locates a PDF link on the publisher's landing page and extracts text from the PDF.
+4. **Tier D (Abstract only):** Fallback if the above methods fail or yield insufficient text.
 
 Filename format: `YYYY-MM-DD_FirstAuthorEtAl_ShortTitle_PMID12345678.md`
 
