@@ -51,6 +51,118 @@ def check_file_exists(service, folder_id, filename):
     items = results.get('files', [])
     return len(items) > 0
 
+def find_files_by_pmid(service, folder_id, pmid):
+    """Searches for any file containing '_PMID<pmid>.md' in its name."""
+    query = f"name contains '_PMID{pmid}.md' and '{folder_id}' in parents and trashed=false"
+    results = service.files().list(q=query, spaces='drive', fields='files(id, name, modifiedTime)').execute()
+    return results.get('files', [])
+
+def download_file_content(service, file_id):
+    """Downloads the content of a Google Drive file."""
+    try:
+        from googleapiclient.http import MediaIoBaseDownload
+        request = service.files().get_media(fileId=file_id)
+        file = BytesIO()
+        downloader = MediaIoBaseDownload(file, request)
+        done = False
+        while done is False:
+            status, done = downloader.next_chunk()
+        return file.getvalue().decode('utf-8')
+    except Exception as e:
+        print(f"Error downloading file {file_id}: {e}")
+        return ""
+
+def delete_file_from_drive(service, file_id):
+    """Deletes a file from Google Drive."""
+    try:
+        service.files().delete(fileId=file_id).execute()
+        return True
+    except Exception as e:
+        print(f"Error deleting file {file_id}: {e}")
+        return False
+
+def parse_existing_file_metadata(content):
+    """
+    Parses the downloaded markdown content to determine the existing Extraction Rank and non-whitespace character count.
+    Returns (rank, source_string, non_whitespace_len, valid_metadata_block).
+    """
+    if not content:
+        return None, None, 0, False
+
+    rank = None
+    source = None
+
+    # Try to find Extraction Rank: and Extraction Source:
+    rank_match = re.search(r'\*\*Extraction Rank:\*\*\s*(\d+)', content)
+    if rank_match:
+        try:
+            rank = int(rank_match.group(1))
+        except ValueError:
+            pass
+
+    source_match = re.search(r'\*\*Extraction Source:\*\*\s*(.+)', content)
+    if source_match:
+        source = source_match.group(1).strip()
+
+    # Determine rank from source if explicit rank is missing
+    if rank is None and source:
+        source_lower = source.lower()
+        if "pmc xml" in source_lower:
+            rank = 4
+        elif "publisher html" in source_lower:
+            rank = 3
+        elif "pdf" in source_lower:
+            rank = 2
+        elif "abstract only" in source_lower:
+            rank = 1
+
+    valid_metadata_block = bool(re.search(r'\*\*PMID:\*\*', content))
+
+    non_whitespace_len = len(re.sub(r'\s+', '', content))
+
+    return rank, source, non_whitespace_len, valid_metadata_block
+
+def resolve_existing_files(service, files):
+    """
+    Downloads and evaluates all existing files for a PMID.
+    Returns (best_file, inferior_files)
+    """
+    if not files:
+        return None, []
+
+    evaluated_files = []
+    for f in files:
+        content = download_file_content(service, f['id'])
+        rank, source, length, valid_meta = parse_existing_file_metadata(content)
+
+        # Try parsing modifiedTime if available
+        mod_time = datetime.min
+        try:
+            if 'modifiedTime' in f:
+                # e.g. "2023-08-15T12:00:00.000Z"
+                mod_time_str = f['modifiedTime'].replace('Z', '+00:00')
+                mod_time = datetime.fromisoformat(mod_time_str)
+        except Exception:
+            pass
+
+        evaluated_files.append({
+            'file': f,
+            'rank': rank if rank is not None else -1,
+            'source': source,
+            'length': length,
+            'valid_meta': valid_meta,
+            'mod_time': mod_time,
+            'content': content
+        })
+
+    # Sort primarily by rank (desc), then length (desc), then mod_time (desc)
+    evaluated_files.sort(key=lambda x: (x['rank'], x['length'], x['mod_time']), reverse=True)
+
+    best_file = evaluated_files[0]
+    inferior_files = [x['file'] for x in evaluated_files[1:]]
+
+    return best_file, inferior_files
+
 def search_pubmed(query, max_results, api_key):
     url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
     params = {
@@ -352,7 +464,7 @@ def extract_pdf_text(pdf_url):
         print(f"    Error extracting PDF text from {pdf_url}: {e}")
         return None
 
-def generate_markdown(pmid, data, full_text, extraction_source="Abstract only"):
+def generate_markdown(pmid, data, full_text, extraction_source="Abstract only", extraction_rank=1):
     md = f"# {data['title']}\n\n"
 
     md += f"**Authors:** {', '.join(data['authors']) if data['authors'] else 'Unknown'}\n"
@@ -365,6 +477,7 @@ def generate_markdown(pmid, data, full_text, extraction_source="Abstract only"):
     if data['pmcid']:
         md += f"**PMC URL:** https://www.ncbi.nlm.nih.gov/pmc/articles/{data['pmcid']}/\n"
     md += f"**Extraction Source:** {extraction_source}\n"
+    md += f"**Extraction Rank:** {extraction_rank}\n"
 
     md += "\n## Abstract\n\n"
     if data['abstract']:
@@ -468,7 +581,10 @@ def main():
     os.makedirs('output', exist_ok=True)
 
     stats = {
-        'processed': 0, 'skipped': 0, 'uploaded': 0, 'errors': 0,
+        'processed': 0, 'errors': 0,
+        'uploaded_new_count': 0, 'replaced_upgraded_count': 0,
+        'skipped_equal_or_better_count': 0, 'skipped_existing_unknown_count': 0,
+        'duplicate_files_deleted_count': 0,
         'pmc_fulltext_count': 0, 'html_fulltext_count': 0, 'pdf_fulltext_count': 0, 'abstract_only_count': 0
     }
 
@@ -480,6 +596,20 @@ def main():
             continue
 
         print(f"[{pmid}] Processing...")
+
+        # Find existing files by PMID
+        existing_files = []
+        try:
+            existing_files = find_files_by_pmid(drive_service, drive_folder_id, pmid)
+        except Exception as e:
+            print(f"[{pmid}] Error checking Drive for existing files: {e}")
+            stats['errors'] += 1
+            continue
+
+        best_existing_file, inferior_files = resolve_existing_files(drive_service, existing_files)
+
+        if best_existing_file:
+            print(f"[{pmid}] Found existing file: {best_existing_file['file']['name']} (Rank: {best_existing_file['rank']}, Length: {best_existing_file['length']})")
 
         # Generate filename: YYYY-MM-DD_FirstAuthorEtAl_ShortTitle_PMID12345678.md
         date_prefix = datetime.now().strftime("%Y-%m-%d")
@@ -494,20 +624,10 @@ def main():
 
         filename = f"{date_prefix}_{author_prefix}_{short_title}_PMID{pmid}.md"
 
-        # Check if already exists in Drive
-        try:
-            if check_file_exists(drive_service, drive_folder_id, filename):
-                print(f"[{pmid}] File {filename} already exists in Drive. Skipping.")
-                stats['skipped'] += 1
-                continue
-        except Exception as e:
-            print(f"[{pmid}] Error checking Drive for {filename}: {e}")
-            stats['errors'] += 1
-            continue
-
         # Fetch full text through Tiers
         full_text = None
         extraction_source = "Abstract only"
+        extraction_rank = 1
 
         # Tier A: PMC XML
         if data['pmcid']:
@@ -516,6 +636,7 @@ def main():
                 full_text = fetch_pmc_fulltext(data['pmcid'], ncbi_api_key)
                 if full_text:
                     extraction_source = "PMC XML"
+                    extraction_rank = 4
                     stats['pmc_fulltext_count'] += 1
                     print(f"[{pmid}]     -> Success: PMC XML extracted.")
             except Exception as e:
@@ -530,6 +651,7 @@ def main():
                 full_text = extract_html_text(html_content)
                 if full_text:
                     extraction_source = "Publisher HTML"
+                    extraction_rank = 3
                     stats['html_fulltext_count'] += 1
                     print(f"[{pmid}]     -> Success: Publisher HTML extracted.")
 
@@ -539,6 +661,7 @@ def main():
             full_text = extract_pdf_text(pdf_url)
             if full_text:
                 extraction_source = "PDF"
+                extraction_rank = 2
                 stats['pdf_fulltext_count'] += 1
                 print(f"[{pmid}]     -> Success: PDF text extracted.")
 
@@ -546,38 +669,110 @@ def main():
         if not full_text:
             print(f"[{pmid}]   Tier D: Falling back to Abstract only.")
             stats['abstract_only_count'] += 1
+            extraction_rank = 1
 
         # Generate markdown
-        md_content = generate_markdown(pmid, data, full_text, extraction_source)
+        md_content = generate_markdown(pmid, data, full_text, extraction_source, extraction_rank)
         local_filepath = os.path.join('output', filename)
 
         with open(local_filepath, 'w', encoding='utf-8') as f:
             f.write(md_content)
 
-        # Upload to Drive
-        print(f"[{pmid}] Uploading {filename} to Drive...")
-        try:
-            file_metadata = {
-                'name': filename,
-                'parents': [drive_folder_id]
-            }
-            media = MediaFileUpload(local_filepath, mimetype='text/markdown', resumable=True)
-            drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-            stats['uploaded'] += 1
-        except Exception as e:
-            print(f"[{pmid}] Error uploading to Drive: {e}")
-            stats['errors'] += 1
-            if stats['uploaded'] == 0:
-                print("\nError: The first attempted upload to Google Drive failed. Failing fast to prevent cascading errors.")
-                sys.exit(1)
+        new_content_length = len(re.sub(r'\s+', '', md_content))
+
+        # Determine whether to replace, upload new, or skip
+        should_upload = False
+        action = None # "upload_new" or "replace_upgraded"
+
+        if not best_existing_file:
+            should_upload = True
+            action = "upload_new"
+        else:
+            existing_rank = best_existing_file['rank']
+            if existing_rank == -1:
+                # Rank unknown.
+                content_lower = best_existing_file['content'].lower()
+                is_clearly_abstract = (
+                    "extraction source: abstract only" in content_lower or
+                    "full text unavailable" in content_lower or
+                    "full text not cleanly available" in content_lower
+                )
+                if is_clearly_abstract:
+                    print(f"[{pmid}] Existing rank unknown, but clearly abstract-only. Allowing replacement.")
+                    should_upload = True
+                    action = "replace_upgraded"
+                else:
+                    print(f"[{pmid}] Existing rank unknown. Skipping conservatively.")
+                    stats['skipped_existing_unknown_count'] += 1
+            elif extraction_rank > existing_rank:
+                print(f"[{pmid}] Upgrading rank from {existing_rank} to {extraction_rank}.")
+                should_upload = True
+                action = "replace_upgraded"
+            elif extraction_rank == existing_rank:
+                # Same rank. Check content length.
+                existing_length = best_existing_file['length']
+                if new_content_length > existing_length * 1.2 and bool(re.search(r'\*\*PMID:\*\*', md_content)):
+                    print(f"[{pmid}] Same rank ({extraction_rank}), but new content is >20% larger ({new_content_length} vs {existing_length}). Upgrading.")
+                    should_upload = True
+                    action = "replace_upgraded"
+                else:
+                    print(f"[{pmid}] Same rank ({extraction_rank}), new content not significantly better. Skipping.")
+                    stats['skipped_equal_or_better_count'] += 1
+            else:
+                print(f"[{pmid}] New rank ({extraction_rank}) is lower than existing ({existing_rank}). Skipping.")
+                stats['skipped_equal_or_better_count'] += 1
+
+        if should_upload:
+            print(f"[{pmid}] Uploading {filename} to Drive...")
+            try:
+                media = MediaFileUpload(local_filepath, mimetype='text/markdown', resumable=True)
+
+                if action == "replace_upgraded" and best_existing_file:
+                    # Update existing file metadata and content
+                    file_metadata = {'name': filename} # Rename it if necessary
+                    drive_service.files().update(
+                        fileId=best_existing_file['file']['id'],
+                        body=file_metadata,
+                        media_body=media
+                    ).execute()
+                    stats['replaced_upgraded_count'] += 1
+                    print(f"[{pmid}] Successfully replaced/updated existing file.")
+                else:
+                    # Create new file
+                    file_metadata = {
+                        'name': filename,
+                        'parents': [drive_folder_id]
+                    }
+                    drive_service.files().create(
+                        body=file_metadata,
+                        media_body=media,
+                        fields='id'
+                    ).execute()
+                    stats['uploaded_new_count'] += 1
+
+            except Exception as e:
+                print(f"[{pmid}] Error uploading/updating to Drive: {e}")
+                stats['errors'] += 1
+                if stats['uploaded_new_count'] + stats['replaced_upgraded_count'] == 0:
+                    print("\nError: The first attempted upload to Google Drive failed. Failing fast to prevent cascading errors.")
+                    sys.exit(1)
+
+        # Cleanup inferior files (Duplicates)
+        for inf_file in inferior_files:
+            print(f"[{pmid}] Deleting duplicate file: {inf_file['name']}")
+            if delete_file_from_drive(drive_service, inf_file['id']):
+                stats['duplicate_files_deleted_count'] += 1
 
         stats['processed'] += 1
 
     print("\n--- Run Summary ---")
     print(f"Total PMIDs found: {len(pmids)}")
     print(f"Processed: {stats['processed']}")
-    print(f"Skipped (already in Drive): {stats['skipped']}")
-    print(f"Uploaded: {stats['uploaded']}")
+    print(f"Uploaded New: {stats['uploaded_new_count']}")
+    print(f"Replaced/Upgraded: {stats['replaced_upgraded_count']}")
+    print(f"Skipped (Equal or Better Exists): {stats['skipped_equal_or_better_count']}")
+    print(f"Skipped (Existing Rank Unknown): {stats['skipped_existing_unknown_count']}")
+    print(f"Duplicate Files Deleted: {stats['duplicate_files_deleted_count']}")
     print(f"Errors: {stats['errors']}")
     print("\n--- Tier Counts ---")
     print(f"PMC XML extracted: {stats['pmc_fulltext_count']}")
