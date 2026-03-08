@@ -17,20 +17,10 @@ def load_config():
         return yaml.safe_load(f)
 
 def get_google_drive_service():
-    """Authenticates to Google Drive using SERVICE_ACCOUNT_JSON with fallback to GOOGLE_TOKEN_JSON."""
+    """Authenticates to Google Drive using GOOGLE_TOKEN_JSON with fallback to SERVICE_ACCOUNT_JSON."""
     scopes = ['https://www.googleapis.com/auth/drive']
 
-    # Try Service Account First
-    sa_json_str = os.environ.get('SERVICE_ACCOUNT_JSON')
-    if sa_json_str:
-        try:
-            sa_info = json.loads(sa_json_str)
-            creds = service_account.Credentials.from_service_account_info(sa_info, scopes=scopes)
-            return build('drive', 'v3', credentials=creds)
-        except Exception as e:
-            print(f"Failed to auth with SERVICE_ACCOUNT_JSON: {e}")
-
-    # Try Token Fallback
+    # Try Token First
     token_json_str = os.environ.get('GOOGLE_TOKEN_JSON')
     if token_json_str:
         try:
@@ -39,6 +29,16 @@ def get_google_drive_service():
             return build('drive', 'v3', credentials=creds)
         except Exception as e:
             print(f"Failed to auth with GOOGLE_TOKEN_JSON: {e}")
+
+    # Try Service Account Fallback
+    sa_json_str = os.environ.get('SERVICE_ACCOUNT_JSON')
+    if sa_json_str:
+        try:
+            sa_info = json.loads(sa_json_str)
+            creds = service_account.Credentials.from_service_account_info(sa_info, scopes=scopes)
+            return build('drive', 'v3', credentials=creds)
+        except Exception as e:
+            print(f"Failed to auth with SERVICE_ACCOUNT_JSON: {e}")
 
     raise Exception("Could not authenticate with Google Drive using provided secrets.")
 
@@ -240,6 +240,7 @@ def main():
         print(f"Error authenticating to Google Drive: {e}")
         sys.exit(1)
 
+    print(f"Using PubMed Query:\n{query}\n")
     print(f"Searching PubMed for up to {max_articles} articles...")
     try:
         pmids = search_pubmed(query, max_articles, ncbi_api_key)
@@ -258,6 +259,48 @@ def main():
     except Exception as e:
         print(f"Error fetching metadata: {e}")
         sys.exit(1)
+
+    # Fail-Fast Check: Validate first 5 titles
+    print("\n--- Validating First 5 Articles ---")
+    core_tbi_terms = [
+        "traumatic brain injury", "tbi", "mild traumatic brain injury", "mtbi",
+        "concussion", "post-concussion", "post-concussive", "diffuse axonal injury", "blast injury"
+    ]
+
+    validation_pool = [pmid for pmid in pmids[:5] if pmid in metadata]
+    passed_count = 0
+
+    import re
+
+    for i, pmid in enumerate(validation_pool):
+        data = metadata[pmid]
+        title = data.get('title', '')
+        abstract = data.get('abstract', '')
+
+        print(f"{i+1}. {title}")
+
+        text_to_check = (title + " " + abstract).lower()
+
+        # Use regex to avoid false positives on short terms like 'tbi' (e.g., 'frostbite')
+        matched = False
+        for term in core_tbi_terms:
+            if re.search(r'\b' + re.escape(term) + r'\b', text_to_check):
+                matched = True
+                break
+
+        if matched:
+            passed_count += 1
+
+    print(f"\nValidation Result: {passed_count} out of {len(validation_pool)} passed anchor term check.")
+
+    if len(validation_pool) > 0:
+        if len(validation_pool) == 5 and passed_count < 4:
+            print("Error: Fewer than 4 of the first 5 articles contain a core TBI anchor term. The query is likely returning unrelated literature. Failing fast.")
+            sys.exit(1)
+        elif len(validation_pool) < 5 and passed_count < len(validation_pool):
+             # If we have less than 5 items returned at all, expect all of them to match to be safe.
+             print("Error: Not enough returned articles contain a core TBI anchor term. The query is likely returning unrelated literature. Failing fast.")
+             sys.exit(1)
 
     os.makedirs('output', exist_ok=True)
 
@@ -325,6 +368,9 @@ def main():
         except Exception as e:
             print(f"[{pmid}] Error uploading to Drive: {e}")
             stats['errors'] += 1
+            if stats['uploaded'] == 0:
+                print("\nError: The first attempted upload to Google Drive failed. Failing fast to prevent cascading errors.")
+                sys.exit(1)
 
         stats['processed'] += 1
 
