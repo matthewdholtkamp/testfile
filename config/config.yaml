@@ -8,9 +8,17 @@ PUBMED_QUERY: |
     OR "mild traumatic brain injury"[Title/Abstract]
     OR mTBI[Title/Abstract]
     OR concussion[Title/Abstract]
-    OR "brain injury, traumatic"[MeSH Terms]
+    OR "post-concussion"[Title/Abstract]
+    OR "post-concussive"[Title/Abstract]
     OR "diffuse axonal injury"[Title/Abstract]
-    OR "axonal injury"[Title/Abstract]
+    OR "blast injury"[Title/Abstract]
+    OR "brain injury, traumatic"[MeSH Terms]
+  )
+  AND
+  (
+    pathophysiology[Title/Abstract]
+    OR mechanism[Title/Abstract]
+    OR mechanisms[Title/Abstract]
     OR neuroinflammation[Title/Abstract]
     OR microglia[Title/Abstract]
     OR astrocyte[Title/Abstract]
@@ -18,7 +26,6 @@ PUBMED_QUERY: |
     OR "blood brain barrier"[Title/Abstract]
     OR excitotoxicity[Title/Abstract]
     OR mitochondrial[Title/Abstract]
-    OR metabolism[Title/Abstract]
     OR bioenergetics[Title/Abstract]
     OR oxidative[Title/Abstract]
     OR cytokine[Title/Abstract]
@@ -34,8 +41,6 @@ PUBMED_QUERY: |
     OR NfL[Title/Abstract]
     OR "neurofilament light"[Title/Abstract]
     OR biomarker[Title/Abstract]
-    OR pathophysiology[Title/Abstract]
-    OR mechanism[Title/Abstract]
-    OR mechanisms[Title/Abstract]
+    OR axonal[Title/Abstract]
   )
   AND ("last 180 days"[PDat])
