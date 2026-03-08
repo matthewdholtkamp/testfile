@@ -1,0 +1,41 @@
+# Configuration for PubMed TBI Pipeline
+MAX_ARTICLES_PER_RUN: 25
+
+PUBMED_QUERY: |
+  (
+    "traumatic brain injury"[Title/Abstract]
+    OR TBI[Title/Abstract]
+    OR "mild traumatic brain injury"[Title/Abstract]
+    OR mTBI[Title/Abstract]
+    OR concussion[Title/Abstract]
+    OR "brain injury, traumatic"[MeSH Terms]
+    OR "diffuse axonal injury"[Title/Abstract]
+    OR "axonal injury"[Title/Abstract]
+    OR neuroinflammation[Title/Abstract]
+    OR microglia[Title/Abstract]
+    OR astrocyte[Title/Abstract]
+    OR "blood-brain barrier"[Title/Abstract]
+    OR "blood brain barrier"[Title/Abstract]
+    OR excitotoxicity[Title/Abstract]
+    OR mitochondrial[Title/Abstract]
+    OR metabolism[Title/Abstract]
+    OR bioenergetics[Title/Abstract]
+    OR oxidative[Title/Abstract]
+    OR cytokine[Title/Abstract]
+    OR chemokine[Title/Abstract]
+    OR inflammasome[Title/Abstract]
+    OR synaptic[Title/Abstract]
+    OR dendritic[Title/Abstract]
+    OR "white matter"[Title/Abstract]
+    OR tau[Title/Abstract]
+    OR "phosphorylated tau"[Title/Abstract]
+    OR GFAP[Title/Abstract]
+    OR "UCH-L1"[Title/Abstract]
+    OR NfL[Title/Abstract]
+    OR "neurofilament light"[Title/Abstract]
+    OR biomarker[Title/Abstract]
+    OR pathophysiology[Title/Abstract]
+    OR mechanism[Title/Abstract]
+    OR mechanisms[Title/Abstract]
+  )
+  AND ("last 180 days"[PDat])

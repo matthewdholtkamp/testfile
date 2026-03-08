@@ -1,44 +1,40 @@
-# Project Longevity (AI-First Reset)
+# PubMed TBI to Google Drive Pipeline
 
-This repository was rebuilt to prioritize **fast AI retrieval** and **minimal folder depth**.
+This repository contains a minimal, reliable pipeline to search PubMed for recent Traumatic Brain Injury (TBI) articles, convert them into readable Markdown files, and upload them into a single, flat Google Drive folder.
 
-## New Operating Model
+## Setup & Configuration
 
-- Keep raw files in one place: `data/inbox/`
-- Convert everything to AI-friendly XML bundles by day: `data/xml_daily/YYYY-MM-DD/`
-- Sync to Google Drive in a flat structure (single daily folder, no deep nesting)
+- `config/config.yaml`: Contains the configurable parameters, such as `MAX_ARTICLES_PER_RUN` and the full `PUBMED_QUERY`.
+- `scripts/run_pipeline.py`: The Python script that performs the search, extraction, parsing, and uploading logic.
 
-## Folder Structure
+## GitHub Actions
 
-- `data/inbox/` → source docs dropped here (PDF/TXT/MD/JSON)
-- `data/xml_daily/` → generated XML corpus + manifest per day
-- `tools/` → small CLI scripts for build and Drive sync/reset
-- `docs/` → architecture and migration plan
+The pipeline runs manually via GitHub Actions.
+1. Navigate to **Actions** > **Manual PubMed to Google Drive Pipeline**
+2. Click **Run workflow**
+3. Select the branch and execute
 
-## Quick Start
+No automatic or scheduled triggers are configured.
 
-```bash
-pip install -r requirements.txt
-python tools/build_xml_corpus.py --input data/inbox --output data/xml_daily
-python tools/drive_flat_sync.py --local-day data/xml_daily/$(date +%F)
-```
+## Output Format
 
-## Google Drive reset (dangerous)
+The Markdown files contain:
+- Title
+- Authors
+- Journal
+- Publication Date
+- IDs (PMID, PMCID, DOI)
+- Links to PubMed and PMC
+- Abstract
+- Full Text (if cleanly available from PMC in XML format)
 
-If you want to wipe a target Drive folder and restart clean:
+Filename format: `YYYY-MM-DD_FirstAuthorEtAl_ShortTitle_PMID12345678.md`
 
-```bash
-python tools/drive_flat_sync.py --local-day data/xml_daily/$(date +%F) --reset-root
-```
+## Secrets
 
-This deletes all non-trashed files/folders inside `DRIVE_ROOT_FOLDER_ID` before upload.
-
-## Environment Variables
-
-- `GOOGLE_APPLICATION_CREDENTIALS` → service account JSON path
-- `DRIVE_ROOT_FOLDER_ID` → Drive folder to manage
-
-## Notes
-
-- XML output is normalized for AI: metadata in attributes, plain text in `body` nodes.
-- Filenames are slugged and deterministic for easier retrieval.
+The repository utilizes the following environment secrets:
+- `DRIVE_FOLDER_ID`: The target Google Drive Folder ID.
+- `NCBI_API_KEY`: API Key for accessing the NCBI/PubMed APIs.
+- `SERVICE_ACCOUNT_JSON`: Primary Google Drive auth for GitHub Actions.
+- `GOOGLE_TOKEN_JSON`: Fallback Google auth.
+- `GEMINI_API_KEY`: Kept for future use, but unused in v1.

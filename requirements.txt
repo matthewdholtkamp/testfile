@@ -1,5 +1,6 @@
+google-api-python-client>=2.100.0
+google-auth>=2.23.0
 requests>=2.31.0
+PyYAML>=6.0.1
+beautifulsoup4>=4.12.2
 lxml>=4.9.0
-google-auth>=2.22.0
-google-api-python-client>=2.95.0
-pytest>=8.0.0
