@@ -326,6 +326,140 @@ def fetch_pmc_fulltext(pmcid, api_key):
     text = '\n\n'.join(text_parts)
     return text if len(text.strip()) > 500 else None
 
+def fetch_unpaywall_pdf(doi, email):
+    """
+    Queries the Unpaywall API using DOI and email to find the best Open Access PDF URL.
+    Returns the URL if found, else None.
+    """
+    if not doi or not email:
+        return None
+    url = f"https://api.unpaywall.org/v2/{doi}?email={email}"
+    try:
+        response = requests.get(url, timeout=15)
+        response.raise_for_status()
+        data = response.json()
+        best_oa = data.get('best_oa_location', {})
+        if best_oa:
+            return best_oa.get('url_for_pdf') or best_oa.get('url')
+    except Exception as e:
+        print(f"    Error querying Unpaywall for {doi}: {e}")
+    return None
+
+def fetch_europepmc_fulltext(pmid, pmcid, doi):
+    """
+    Queries Europe PMC REST API using available identifiers to find full-text XML or PDF URLs.
+    Returns (xml_text, pdf_url).
+    """
+    xml_text, pdf_url = None, None
+    query_parts = []
+    if pmcid:
+        query_parts.append(f"PMCID:{pmcid}")
+    if pmid:
+        query_parts.append(f"EXT_ID:{pmid}")
+    if doi:
+        query_parts.append(f"DOI:{doi}")
+
+    if not query_parts:
+        return None, None
+
+    query_str = " OR ".join(query_parts)
+    url = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
+    params = {
+        'query': query_str,
+        'format': 'json',
+        'resultType': 'core'
+    }
+
+    try:
+        response = requests.get(url, params=params, timeout=15)
+        response.raise_for_status()
+        data = response.json()
+        result_list = data.get('resultList', {}).get('result', [])
+
+        for result in result_list:
+            # Check for full-text XML via REST API
+            has_text_xml = result.get('hasTextMinedTerms') == 'Y' or result.get('isOpenAccess') == 'Y'
+            pmcid_result = result.get('pmcid')
+
+            if pmcid_result and (result.get('hasTextMinedTerms') == 'Y' or result.get('isOpenAccess') == 'Y' or result.get('inEPMC') == 'Y'):
+                xml_url = f"https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid_result}/fullTextXML"
+                try:
+                    xml_response = requests.get(xml_url, timeout=15)
+                    if xml_response.status_code == 200:
+                        soup = BeautifulSoup(xml_response.content, 'xml')
+                        body = soup.find('body')
+                        if body:
+                            text_parts = []
+                            def process_node(node):
+                                if node.name == 'sec':
+                                    sec_type = node.get('sec-type', '').lower()
+                                    if 'reference' in sec_type or 'biblio' in sec_type:
+                                        return
+                                    title = node.find('title', recursive=False)
+                                    if title:
+                                        title_text = title.get_text(strip=True)
+                                        if re.match(r'^(References|Bibliography|Literature Cited)$', title_text, re.IGNORECASE):
+                                            return
+                                        text_parts.append(f"\n### {title_text}\n")
+                                    for child in node.children:
+                                        if child.name and child.name != 'title':
+                                            process_node(child)
+                                elif node.name == 'p':
+                                    text = node.get_text(strip=True)
+                                    if text:
+                                        text_parts.append(text)
+                                elif node.name:
+                                    for child in node.children:
+                                        if child.name:
+                                            process_node(child)
+                            for child in body.children:
+                                if child.name:
+                                    process_node(child)
+                            extracted_text = '\n\n'.join(text_parts)
+                            if len(extracted_text.strip()) > 500:
+                                xml_text = extracted_text
+                                break
+                except Exception as e:
+                    print(f"    Error fetching Europe PMC XML for {pmcid_result}: {e}")
+
+            # Check for PDF links
+            full_text_url_list = result.get('fullTextUrlList', {}).get('fullTextUrl', [])
+            for url_entry in full_text_url_list:
+                if url_entry.get('documentStyle') == 'pdf':
+                    pdf_url = url_entry.get('url')
+                    break
+
+            if xml_text or pdf_url:
+                break
+    except Exception as e:
+        print(f"    Error querying Europe PMC: {e}")
+
+    return xml_text, pdf_url
+
+def fetch_crossref_hints(doi):
+    """
+    Queries Crossref for full-text hints (URLs to PDF/XML) using DOI.
+    Returns a list of potential URLs.
+    """
+    if not doi:
+        return []
+    url = f"https://api.crossref.org/works/{doi}"
+    try:
+        response = requests.get(url, timeout=15)
+        response.raise_for_status()
+        data = response.json()
+        links = data.get('message', {}).get('link', [])
+        potential_urls = []
+        for link in links:
+            content_type = link.get('content-type', '').lower()
+            if 'application/pdf' in content_type or 'text/xml' in content_type or 'unspecified' in content_type:
+                potential_urls.append(link.get('URL'))
+        return potential_urls
+    except Exception as e:
+        print(f"    Error querying Crossref for {doi}: {e}")
+    return []
+
+
 def sanitize_filename(name):
     # Keep alphanumeric, spaces, dashes, and underscores but remove unsafe chars
     # Then replace spaces with underscores
@@ -509,15 +643,30 @@ def generate_markdown(pmid, data, full_text, extraction_source="Abstract only", 
 
     return md
 
+import csv
+
 def main():
     print("Starting PubMed TBI Pipeline...")
     config = load_config()
     target_full_text = config.get('TARGET_FULL_TEXT_PER_RUN', 25)
-    candidate_pool_size = config.get('PUBMED_CANDIDATE_POOL_SIZE', config.get('MAX_ARTICLES_PER_RUN', 25))
+
+    # Priority: PUBMED_CANDIDATE_POOL_SIZE -> MAX_ARTICLES_PER_RUN -> default 100
+    if 'PUBMED_CANDIDATE_POOL_SIZE' in config:
+        candidate_pool_size = config['PUBMED_CANDIDATE_POOL_SIZE']
+    elif 'MAX_ARTICLES_PER_RUN' in config:
+        candidate_pool_size = config['MAX_ARTICLES_PER_RUN']
+    else:
+        candidate_pool_size = 100
+
     query = config.get('PUBMED_QUERY', '').strip()
 
     ncbi_api_key = os.environ.get('NCBI_API_KEY')
     drive_folder_id = os.environ.get('DRIVE_FOLDER_ID')
+
+    unpaywall_email = os.environ.get('UNPAYWALL_EMAIL', config.get('UNPAYWALL_EMAIL'))
+
+    if not unpaywall_email:
+        print("Warning: UNPAYWALL_EMAIL is not set in environment or config. Unpaywall discovery will be skipped.")
 
     if not drive_folder_id:
         print("Error: DRIVE_FOLDER_ID secret is missing.")
@@ -599,11 +748,13 @@ def main():
         'uploaded_new_count': 0, 'replaced_upgraded_count': 0,
         'skipped_equal_or_better_count': 0, 'skipped_existing_unknown_count': 0,
         'duplicate_files_deleted_count': 0,
-        'pmc_fulltext_count': 0, 'html_fulltext_count': 0, 'pdf_fulltext_count': 0, 'abstract_only_count': 0
+        'pmc_fulltext_count': 0, 'html_fulltext_count': 0, 'pdf_fulltext_count': 0, 'abstract_only_count': 0,
+        'unpaywall_success_count': 0, 'europepmc_success_count': 0, 'crossref_hint_count': 0
     }
 
     domain_tracker = {}
     full_text_success_count = 0
+    manifest_rows = []
 
     for pmid in pmids:
         if full_text_success_count >= target_full_text:
@@ -650,23 +801,68 @@ def main():
         extraction_source = "Abstract only"
         extraction_rank = 1
 
-        # Tier A: PMC XML
+        # 1. PMC / PMCID
         if data['pmcid']:
-            print(f"[{pmid}]   Tier A: Fetching PMC XML for {data['pmcid']}...")
+            print(f"[{pmid}]   Source 1: Fetching PMC XML for {data['pmcid']}...")
             try:
                 full_text = fetch_pmc_fulltext(data['pmcid'], ncbi_api_key)
                 if full_text:
                     extraction_source = "PMC XML"
-                    extraction_rank = 4
+                    extraction_rank = 5
                     stats['pmc_fulltext_count'] += 1
                     print(f"[{pmid}]     -> Success: PMC XML extracted.")
             except Exception as e:
                 print(f"[{pmid}]     Error fetching PMC full text: {e}")
 
-        # Tier B: Publisher HTML
-        html_content, pdf_url = None, None
+        # 2. Unpaywall DOI lookup
+        if not full_text and data['doi'] and unpaywall_email:
+            print(f"[{pmid}]   Source 2: Querying Unpaywall for DOI {data['doi']}...")
+            unpaywall_pdf_url = fetch_unpaywall_pdf(data['doi'], unpaywall_email)
+            if unpaywall_pdf_url:
+                print(f"[{pmid}]     Found Unpaywall PDF URL: {unpaywall_pdf_url}")
+                full_text = extract_pdf_text(unpaywall_pdf_url, domain_tracker)
+                if full_text:
+                    extraction_source = "Unpaywall PDF"
+                    extraction_rank = 4
+                    stats['unpaywall_success_count'] += 1
+                    print(f"[{pmid}]     -> Success: Unpaywall PDF extracted.")
+
+        # 3. Europe PMC lookup
+        if not full_text:
+            print(f"[{pmid}]   Source 3: Querying Europe PMC...")
+            epmc_xml, epmc_pdf_url = fetch_europepmc_fulltext(pmid, data['pmcid'], data['doi'])
+            if epmc_xml:
+                full_text = epmc_xml
+                extraction_source = "Europe PMC XML"
+                extraction_rank = 5
+                stats['europepmc_success_count'] += 1
+                print(f"[{pmid}]     -> Success: Europe PMC XML extracted.")
+            elif epmc_pdf_url:
+                print(f"[{pmid}]     Found Europe PMC PDF URL: {epmc_pdf_url}")
+                full_text = extract_pdf_text(epmc_pdf_url, domain_tracker)
+                if full_text:
+                    extraction_source = "Europe PMC PDF"
+                    extraction_rank = 4
+                    stats['europepmc_success_count'] += 1
+                    print(f"[{pmid}]     -> Success: Europe PMC PDF extracted.")
+
+        # 4. Crossref hints
         if not full_text and data['doi']:
-            print(f"[{pmid}]   Tier B: Resolving DOI {data['doi']} for HTML...")
+            print(f"[{pmid}]   Source 4: Querying Crossref hints for DOI {data['doi']}...")
+            crossref_urls = fetch_crossref_hints(data['doi'])
+            for cr_url in crossref_urls:
+                if not full_text:
+                    print(f"[{pmid}]     Attempting Crossref URL: {cr_url}")
+                    full_text = extract_pdf_text(cr_url, domain_tracker)
+                    if full_text:
+                        extraction_source = "Crossref PDF"
+                        extraction_rank = 2
+                        stats['crossref_hint_count'] += 1
+                        print(f"[{pmid}]     -> Success: Crossref PDF extracted.")
+
+        # 5. Publisher HTML/PDF Fallback
+        if not full_text and data['doi']:
+            print(f"[{pmid}]   Source 5: Resolving DOI {data['doi']} for Publisher HTML/PDF...")
             html_content, pdf_url = resolve_doi_and_find_pdf(data['doi'], domain_tracker)
             if html_content:
                 full_text = extract_html_text(html_content)
@@ -676,26 +872,24 @@ def main():
                     stats['html_fulltext_count'] += 1
                     print(f"[{pmid}]     -> Success: Publisher HTML extracted.")
                 else:
-                    # Trafilatura failed or didn't find enough text
                     from urllib.parse import urlparse
                     failed_domain = "unknown"
                     if data.get('doi'):
-                         failed_domain = "doi.org" # default fallback
+                         failed_domain = "doi.org"
                     domain_tracker[failed_domain] = domain_tracker.get(failed_domain, 0) + 1
 
-        # Tier C: PDF
-        if not full_text and pdf_url:
-            print(f"[{pmid}]   Tier C: Fetching PDF...")
-            full_text = extract_pdf_text(pdf_url, domain_tracker)
-            if full_text:
-                extraction_source = "PDF"
-                extraction_rank = 2
-                stats['pdf_fulltext_count'] += 1
-                print(f"[{pmid}]     -> Success: PDF text extracted.")
+            if not full_text and pdf_url:
+                print(f"[{pmid}]     Fallback: Fetching Publisher PDF...")
+                full_text = extract_pdf_text(pdf_url, domain_tracker)
+                if full_text:
+                    extraction_source = "Publisher PDF"
+                    extraction_rank = 2
+                    stats['pdf_fulltext_count'] += 1
+                    print(f"[{pmid}]     -> Success: Publisher PDF extracted.")
 
-        # Tier D: Abstract fallback
+        # 6. Abstract only fallback
         if not full_text:
-            print(f"[{pmid}]   Tier D: Falling back to Abstract only.")
+            print(f"[{pmid}]   Source 6: Falling back to Abstract only.")
             stats['abstract_only_count'] += 1
             extraction_rank = 1
 
@@ -717,6 +911,19 @@ def main():
             action = "upload_new"
         else:
             existing_rank = best_existing_file['rank']
+
+            # Map legacy ranks if found in existing files for safe comparison
+            # Legacy: PMC XML=4, HTML=3, PDF=2, Abstract=1
+            # New: XML=5, Unpaywall/EuropePMC PDF=4, HTML=3, PDF/Crossref=2, Abstract=1
+            # We map legacy 4 -> 5 to prevent unnecessary downgrades/upgrades between PMC XMLs
+            mapped_existing_rank = existing_rank
+            if best_existing_file.get('source') == 'PMC XML' and existing_rank == 4:
+                mapped_existing_rank = 5
+            elif best_existing_file.get('source') == 'Publisher HTML' and existing_rank == 3:
+                mapped_existing_rank = 3
+            elif best_existing_file.get('source') == 'PDF' and existing_rank == 2:
+                mapped_existing_rank = 2
+
             if existing_rank == -1:
                 # Rank unknown.
                 content_lower = best_existing_file['content'].lower()
@@ -732,11 +939,11 @@ def main():
                 else:
                     print(f"[{pmid}] Existing rank unknown. Skipping conservatively.")
                     stats['skipped_existing_unknown_count'] += 1
-            elif extraction_rank > existing_rank:
-                print(f"[{pmid}] Upgrading rank from {existing_rank} to {extraction_rank}.")
+            elif extraction_rank > mapped_existing_rank:
+                print(f"[{pmid}] Upgrading rank from {mapped_existing_rank} (legacy {existing_rank}) to {extraction_rank}.")
                 should_upload = True
                 action = "replace_upgraded"
-            elif extraction_rank == existing_rank:
+            elif extraction_rank == mapped_existing_rank:
                 # Same rank. Check content length.
                 existing_length = best_existing_file['length']
                 if new_content_length > existing_length * 1.2 and bool(re.search(r'\*\*PMID:\*\*', md_content)):
@@ -746,9 +953,11 @@ def main():
                 else:
                     print(f"[{pmid}] Same rank ({extraction_rank}), new content not significantly better. Skipping.")
                     stats['skipped_equal_or_better_count'] += 1
+                    action = "skipped_equal_or_better"
             else:
-                print(f"[{pmid}] New rank ({extraction_rank}) is lower than existing ({existing_rank}). Skipping.")
+                print(f"[{pmid}] New rank ({extraction_rank}) is lower than existing ({mapped_existing_rank}). Skipping.")
                 stats['skipped_equal_or_better_count'] += 1
+                action = "skipped_lower_rank"
 
         if should_upload:
             print(f"[{pmid}] Uploading {filename} to Drive...")
@@ -779,16 +988,30 @@ def main():
                     stats['uploaded_new_count'] += 1
 
                 # If we successfully uploaded a full-text document, increment the success count
-                if extraction_source in ["PMC XML", "Publisher HTML", "PDF"]:
+                if extraction_rank > 1:
                     full_text_success_count += 1
                     print(f"[{pmid}] Full-text target progress: {full_text_success_count}/{target_full_text}")
 
             except Exception as e:
                 print(f"[{pmid}] Error uploading/updating to Drive: {e}")
                 stats['errors'] += 1
+                action = "upload_error"
                 if stats['uploaded_new_count'] + stats['replaced_upgraded_count'] == 0:
                     print("\nError: The first attempted upload to Google Drive failed. Failing fast to prevent cascading errors.")
                     sys.exit(1)
+
+        # Record manifest entry
+        manifest_rows.append({
+            'PMID': pmid,
+            'title': data.get('title', ''),
+            'DOI': data.get('doi', ''),
+            'PMCID': data.get('pmcid', ''),
+            'extraction_source': extraction_source,
+            'extraction_rank': extraction_rank,
+            'action_taken': action,
+            'blocked_domain': failed_domain if 'failed_domain' in locals() and not full_text else '',
+            'notes': f"Length: {new_content_length}"
+        })
 
         # Cleanup inferior files (Duplicates)
         for inf_file in inferior_files:
@@ -797,6 +1020,35 @@ def main():
                 stats['duplicate_files_deleted_count'] += 1
 
         stats['processed'] += 1
+
+    # Generate and Upload Manifest
+    if manifest_rows:
+        print("\n--- Generating and Uploading Manifest ---")
+        manifest_filename = f"pubmed_tbi_manifest_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
+        manifest_filepath = os.path.join('output', manifest_filename)
+
+        try:
+            with open(manifest_filepath, 'w', newline='', encoding='utf-8') as csvfile:
+                fieldnames = ['PMID', 'title', 'DOI', 'PMCID', 'extraction_source', 'extraction_rank', 'action_taken', 'blocked_domain', 'notes']
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                for row in manifest_rows:
+                    writer.writerow(row)
+
+            print(f"Uploading manifest {manifest_filename} to Drive...")
+            media = MediaFileUpload(manifest_filepath, mimetype='text/csv', resumable=True)
+            file_metadata = {
+                'name': manifest_filename,
+                'parents': [drive_folder_id]
+            }
+            drive_service.files().create(
+                body=file_metadata,
+                media_body=media,
+                fields='id'
+            ).execute()
+            print("Manifest upload successful.")
+        except Exception as e:
+            print(f"Error generating or uploading manifest: {e}")
 
     print("\n--- Run Summary ---")
     print(f"Candidate pool size: {candidate_pool_size}")
@@ -810,10 +1062,13 @@ def main():
     print(f"Skipped (Existing Rank Unknown): {stats['skipped_existing_unknown_count']}")
     print(f"Duplicate Files Deleted: {stats['duplicate_files_deleted_count']}")
     print(f"Errors: {stats['errors']}")
-    print("\n--- Extraction Tier Counts (attempted) ---")
+    print("\n--- Extraction Source Counts ---")
     print(f"PMC XML extracted: {stats['pmc_fulltext_count']}")
+    print(f"Unpaywall extracted: {stats['unpaywall_success_count']}")
+    print(f"Europe PMC extracted: {stats['europepmc_success_count']}")
+    print(f"Crossref hints extracted: {stats['crossref_hint_count']}")
     print(f"Publisher HTML extracted: {stats['html_fulltext_count']}")
-    print(f"PDF extracted: {stats['pdf_fulltext_count']}")
+    print(f"Publisher PDF extracted: {stats['pdf_fulltext_count']}")
     print(f"Abstract only fallback: {stats['abstract_only_count']}")
 
     print("\n--- Blocked/Failed Domain Summary ---")
