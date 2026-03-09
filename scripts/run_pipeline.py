@@ -19,6 +19,17 @@ def load_config():
     with open('config/config.yaml', 'r') as f:
         return yaml.safe_load(f)
 
+
+def load_json_config(filepath):
+    try:
+        if os.path.exists(filepath):
+            with open(filepath, 'r') as f:
+                return json.load(f)
+        return {}
+    except Exception as e:
+        print(f"Error loading {filepath}: {e}")
+        return {}
+
 def get_google_drive_service():
     """Authenticates to Google Drive using GOOGLE_TOKEN_JSON with fallback to SERVICE_ACCOUNT_JSON."""
     scopes = ['https://www.googleapis.com/auth/drive']
@@ -763,7 +774,7 @@ def extract_pdf_text(pdf_url, domain_stats=None, blocked_domains=None, current_p
              record_domain_attempt(domain_stats, failed_domain, success=False, is_hard_failure=False)
         return None
 
-def generate_markdown(pmid, data, full_text, extraction_source="Abstract only", extraction_rank=1):
+def generate_markdown(pmid, data, full_text, extraction_source="Abstract only", extraction_rank=1, expanded_metadata=None):
     md = f"# {data['title']}\n\n"
 
     md += f"**Authors:** {', '.join(data['authors']) if data['authors'] else 'Unknown'}\n"
@@ -777,6 +788,13 @@ def generate_markdown(pmid, data, full_text, extraction_source="Abstract only", 
         md += f"**PMC URL:** https://www.ncbi.nlm.nih.gov/pmc/articles/{data['pmcid']}/\n"
     md += f"**Extraction Source:** {extraction_source}\n"
     md += f"**Extraction Rank:** {extraction_rank}\n"
+
+    if expanded_metadata:
+        md += f"**Retrieval Mode:** {expanded_metadata.get('retrieval_mode', 'legacy')}\n"
+        md += f"**Source Query:** {expanded_metadata.get('source_query', '')}\n"
+        md += f"**Domain:** {expanded_metadata.get('domain', '')}\n"
+        md += f"**Tier:** {expanded_metadata.get('tier', '')}\n"
+        md += f"**Expansion Reason:** {expanded_metadata.get('expansion_reason', '')}\n"
 
     md += "\n## Abstract\n\n"
     if data['abstract']:
@@ -856,6 +874,52 @@ def main():
 
     blocked_domains = pipeline_state.get('blocked_domains', {})
     pmid_attempts = pipeline_state.get('pmid_attempts', {})
+    expanded_state = pipeline_state.get('expanded_retrieval_state', {})
+
+    # Determine retrieval mode
+    retrieval_mode = config.get('retrieval_mode', 'legacy')
+    is_expanded_mode = (retrieval_mode == 'expanded')
+
+    active_query_id = None
+    active_query_text = base_query
+    active_domain = 'legacy_tbi'
+    active_tier = ''
+    expansion_reason = 'legacy_mode'
+    last_novelty_score = expanded_state.get('last_novelty_score', None)
+
+    query_bank = {}
+    novelty_rules = {}
+
+    if is_expanded_mode:
+        print("Running in EXPANDED retrieval mode.")
+        try:
+            query_bank_data = load_json_config('config/query_bank.json')
+            query_bank = {q['query_id']: q for q in query_bank_data.get('queries', [])}
+            novelty_rules = load_json_config('config/novelty_scoring_rules.json')
+
+            # Determine starting query if we don't have one in state
+            active_query_id = expanded_state.get('active_query_id')
+            if not active_query_id or active_query_id not in query_bank:
+                active_query_id = 'core_tbi_dai' # default starting point
+                expansion_reason = 'initial_start'
+            else:
+                expansion_reason = expanded_state.get('last_expansion_reason', 'persisted_state')
+
+            q_obj = query_bank[active_query_id]
+            active_query_text = q_obj['query_text']
+            active_domain = q_obj['domain']
+            active_tier = q_obj['tier']
+        except Exception as e:
+            print(f"Error loading expanded configurations. Falling back to legacy mode. Error: {e}")
+            is_expanded_mode = False
+            retrieval_mode = 'legacy'
+            active_query_id = None
+            active_query_text = base_query
+            active_domain = 'legacy_tbi'
+            active_tier = ''
+            expansion_reason = 'legacy_mode_fallback'
+    else:
+        print("Running in LEGACY retrieval mode.")
 
     processed_pmids_in_run = set()
     total_attempted_across_phases = 0
@@ -880,9 +944,12 @@ def main():
         abstract_only_in_phase = 0
         skipped_equal_or_better_in_phase = 0
         blocked_domain_failures_in_phase = 0
+        existing_or_already_processed_in_phase = 0
 
-        query = f"{base_query} AND (\"last {current_days} days\"[PDat])"
+        query = f"{active_query_text} AND (\"last {current_days} days\"[PDat])"
         print(f"\n--- Phase {phase_idx + 1}: Pool Size {current_pool_size}, {current_days} Days ---")
+        if is_expanded_mode:
+            print(f"Active Family: {active_query_id} (Domain: {active_domain}, Tier: {active_tier})")
         print(f"Using PubMed Query:\n{query}\n")
         print(f"Searching PubMed for up to {current_pool_size} candidate articles (Targeting {target_full_text} full-text)...")
 
@@ -904,6 +971,7 @@ def main():
         total_candidates = len(pmids)
         new_candidates = len(new_pmids)
         skipped_candidates = total_candidates - new_candidates
+        existing_or_already_processed_in_phase += skipped_candidates
 
         print(f"Novelty Diagnostics for Phase {phase_idx + 1} (Start):")
         print(f"  Total Candidates: {total_candidates}")
@@ -1002,6 +1070,7 @@ def main():
 
             if best_existing_file:
                 print(f"[{pmid}] Found existing file: {best_existing_file['file']['name']} (Rank: {best_existing_file['rank']}, Length: {best_existing_file['length']})")
+                existing_or_already_processed_in_phase += 1
 
             # Generate filename: YYYY-MM-DD_FirstAuthorEtAl_ShortTitle_PMID12345678.md
             date_prefix = datetime.now().strftime("%Y-%m-%d")
@@ -1123,7 +1192,14 @@ def main():
                 full_text_hits_in_phase += 1
 
             # Generate markdown
-            md_content = generate_markdown(pmid, data, full_text, extraction_source, extraction_rank)
+            expanded_metadata = {
+                'retrieval_mode': retrieval_mode,
+                'source_query': active_query_id or 'legacy_query',
+                'domain': active_domain,
+                'tier': active_tier,
+                'expansion_reason': expansion_reason
+            }
+            md_content = generate_markdown(pmid, data, full_text, extraction_source, extraction_rank, expanded_metadata)
             local_filepath = os.path.join('output', filename)
 
             with open(local_filepath, 'w', encoding='utf-8') as f:
@@ -1242,7 +1318,13 @@ def main():
                 'extraction_rank': extraction_rank,
                 'action_taken': action,
                 'blocked_domain': failed_domain if 'failed_domain' in locals() and not full_text else '',
-                'notes': f"Length: {new_content_length}"
+                'notes': f"Length: {new_content_length}",
+                'source_query': active_query_id or 'legacy_query',
+                'domain': active_domain,
+                'tier': active_tier,
+                'expansion_reason': expansion_reason,
+                'retrieval_mode': retrieval_mode,
+                'novelty_score': '' # will be updated at phase end
             })
 
             # Cleanup inferior files (Duplicates)
@@ -1270,6 +1352,84 @@ def main():
         else:
             print(f"Novel full-text yield: 0.00")
         print(f"Why phase ended: {why_phase_ended}\n")
+
+        # Novelty scoring and expansion decision
+        if is_expanded_mode and total_candidates > 0:
+            truly_new_pmids = total_candidates - existing_or_already_processed_in_phase
+            novelty_score = truly_new_pmids / total_candidates
+
+            print(f"\n--- Expansion Decision Logistics ---")
+            print(f"Total Candidate PMIDs Considered: {total_candidates}")
+            print(f"Existing or already processed: {existing_or_already_processed_in_phase}")
+            print(f"Truly New PMIDs: {truly_new_pmids}")
+            print(f"Primary Novelty Score: {novelty_score:.4f}")
+
+            # update manifest rows for this phase with the score
+            for row in manifest_rows[-actual_pmids_attempted:]:
+                row['novelty_score'] = f"{novelty_score:.4f}"
+
+            last_novelty_score = novelty_score
+            expanded_state['last_novelty_score'] = novelty_score
+
+            # evaluate thresholds
+            high_thresh = novelty_rules.get('novelty_thresholds', {}).get('high', {}).get('min_score', 0.30)
+            moderate_thresh = novelty_rules.get('novelty_thresholds', {}).get('moderate', {}).get('min_score', 0.10)
+
+            if novelty_score >= high_thresh:
+                print("Novelty is HIGH. Staying in current family.")
+                expansion_reason = 'stay_high_novelty'
+            elif novelty_score >= moderate_thresh:
+                print("Novelty is MODERATE. Allowing one more pass.")
+                expansion_reason = 'stay_moderate_novelty'
+            else:
+                print("Novelty is LOW. Expanding at next boundary.")
+                expansion_reason = 'expand_low_novelty'
+
+                # expansion logic: find next linked family
+                current_q_obj = query_bank.get(active_query_id)
+                linked_families = current_q_obj.get('linked_families', []) if current_q_obj else []
+                next_family = None
+
+                # Check linked families
+                # We need to know which ones have been saturated.
+                # For V1, we'll just pick the first linked family that hasn't been recently active.
+                # A more robust check would involve checking 'domain_novelty_scores', but for V1 simplicity
+                # we just advance to the first linked family if available, else cycle to next core.
+
+                history = expanded_state.get('query_history', [])
+                for linked_id in linked_families:
+                    if linked_id in query_bank and linked_id not in history[-3:]: # prevent immediate loops
+                        next_family = linked_id
+                        break
+
+                if next_family:
+                    print(f"Expanding to linked family: {next_family}")
+                else:
+                    # if no linked families or all recently used, find the next core
+                    core_families = [q_id for q_id, q in query_bank.items() if q['tier'] == 1]
+                    try:
+                        current_idx = core_families.index(active_query_id)
+                        next_family = core_families[(current_idx + 1) % len(core_families)]
+                    except ValueError:
+                        next_family = core_families[0] if core_families else active_query_id
+                    print(f"No valid linked families found. Falling back to next core family: {next_family}")
+
+                active_query_id = next_family
+                active_query_text = query_bank[active_query_id]['query_text']
+                active_domain = query_bank[active_query_id]['domain']
+                active_tier = query_bank[active_query_id]['tier']
+
+            expanded_state['active_query_id'] = active_query_id
+            expanded_state['last_expansion_reason'] = expansion_reason
+
+            qh = expanded_state.get('query_history', [])
+            qh.append(active_query_id)
+            expanded_state['query_history'] = qh[-10:] # keep last 10
+
+            dn = expanded_state.get('domain_novelty_scores', {})
+            dn[active_domain] = novelty_score
+            expanded_state['domain_novelty_scores'] = dn
+
     if manifest_rows:
         print("\n--- Generating and Uploading Manifest ---")
         manifest_filename = f"pubmed_tbi_manifest_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
@@ -1277,7 +1437,7 @@ def main():
 
         try:
             with open(manifest_filepath, 'w', newline='', encoding='utf-8') as csvfile:
-                fieldnames = ['PMID', 'title', 'DOI', 'PMCID', 'extraction_source', 'extraction_rank', 'action_taken', 'blocked_domain', 'notes']
+                fieldnames = ['PMID', 'title', 'DOI', 'PMCID', 'extraction_source', 'extraction_rank', 'action_taken', 'blocked_domain', 'notes', 'source_query', 'domain', 'tier', 'expansion_reason', 'retrieval_mode', 'novelty_score']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
                 for row in manifest_rows:
@@ -1356,6 +1516,7 @@ def main():
 
     pipeline_state['blocked_domains'] = blocked_domains
     pipeline_state['pmid_attempts'] = pmid_attempts
+    pipeline_state['expanded_retrieval_state'] = expanded_state
 
     try:
         upload_state_file(drive_service, drive_folder_id, pipeline_state)

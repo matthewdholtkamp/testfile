@@ -1,0 +1,26 @@
+{
+  "expansion_rules": {
+    "boundary_type": "phase",
+    "trigger_threshold": "low",
+    "fallback_threshold": "moderate"
+  },
+  "progression_strategy": {
+    "doctrine": [
+      "Start with a core TBI mechanism family.",
+      "Exhaust that family while novelty remains acceptable.",
+      "When novelty falls low, expand to the next prerequisite adjacent family.",
+      "Only after core domains are relatively saturated should the system step into broader normal-biology prerequisite domains."
+    ],
+    "selection_logic": {
+      "if_high_novelty": "stay",
+      "if_moderate_novelty": "stay",
+      "if_low_novelty": "expand"
+    },
+    "hierarchy": {
+      "tier_1": "Core TBI mechanism domains",
+      "tier_2": "Adjacent mechanistic support domains",
+      "tier_3": "Prerequisite normal biology",
+      "expansion_order": "core -> linked_adjacent -> linked_prerequisite -> next_core"
+    }
+  }
+}

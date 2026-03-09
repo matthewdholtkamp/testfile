@@ -1,0 +1,90 @@
+{
+  "domains": {
+    "diffuse_axonal_injury": {
+      "tier": 1,
+      "description": "Core TBI: Diffuse Axonal Injury"
+    },
+    "neurovascular_unit_bbb_dysfunction": {
+      "tier": 1,
+      "description": "Core TBI: Neurovascular Unit and Blood-Brain Barrier Dysfunction"
+    },
+    "mitochondrial_metabolic_crisis": {
+      "tier": 1,
+      "description": "Core TBI: Mitochondrial and Metabolic Crisis"
+    },
+    "glial_neuroimmune_response": {
+      "tier": 1,
+      "description": "Core TBI: Glial and Neuroimmune Response"
+    },
+    "axonal_transport_failure": {
+      "tier": 2,
+      "description": "Adjacent Mechanism: Axonal Transport Failure"
+    },
+    "mechanoporation_cytoskeletal_injury": {
+      "tier": 2,
+      "description": "Adjacent Mechanism: Mechanoporation and Cytoskeletal Injury"
+    },
+    "endothelial_activation_pericyte_dysfunction": {
+      "tier": 2,
+      "description": "Adjacent Mechanism: Endothelial Activation and Pericyte Dysfunction"
+    },
+    "glymphatic_impairment_edema": {
+      "tier": 2,
+      "description": "Adjacent Mechanism: Glymphatic Impairment and Edema"
+    },
+    "oxidative_stress": {
+      "tier": 2,
+      "description": "Adjacent Mechanism: Oxidative Stress"
+    },
+    "excitotoxicity_calcium_overload": {
+      "tier": 2,
+      "description": "Adjacent Mechanism: Excitotoxicity and Calcium Overload"
+    },
+    "inflammasome_complement_signaling": {
+      "tier": 2,
+      "description": "Adjacent Mechanism: Inflammasome and Complement Signaling"
+    },
+    "astrocyte_microglia_reactivity": {
+      "tier": 2,
+      "description": "Adjacent Mechanism: Astrocyte and Microglia Reactivity"
+    },
+    "normal_axonal_cytoskeleton": {
+      "tier": 3,
+      "description": "Prerequisite Biology: Normal Axonal Cytoskeleton"
+    },
+    "membrane_lipid_biology": {
+      "tier": 3,
+      "description": "Prerequisite Biology: Membrane Lipid Biology"
+    },
+    "bbb_physiology": {
+      "tier": 3,
+      "description": "Prerequisite Biology: BBB Physiology"
+    },
+    "nvu_signaling": {
+      "tier": 3,
+      "description": "Prerequisite Biology: NVU Signaling"
+    },
+    "glymphatic_perivascular_clearance": {
+      "tier": 3,
+      "description": "Prerequisite Biology: Glymphatic and Perivascular Clearance"
+    },
+    "mitochondrial_bioenergetics": {
+      "tier": 3,
+      "description": "Prerequisite Biology: Mitochondrial Bioenergetics"
+    },
+    "calcium_buffering": {
+      "tier": 3,
+      "description": "Prerequisite Biology: Calcium Buffering"
+    },
+    "normal_glia_biology": {
+      "tier": 3,
+      "description": "Prerequisite Biology: Normal Glia Biology"
+    }
+  },
+  "tiers": {
+    "1": "Core TBI mechanism domains",
+    "2": "Adjacent mechanistic support domains",
+    "3": "Prerequisite normal biology domains",
+    "4": "Analog domains"
+  }
+}

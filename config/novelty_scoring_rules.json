@@ -1,0 +1,41 @@
+{
+  "novelty_thresholds": {
+    "high": {
+      "min_score": 0.30,
+      "description": "High proportion of new, relevant papers.",
+      "action": "stay_in_current_family"
+    },
+    "moderate": {
+      "min_score": 0.10,
+      "max_score": 0.2999,
+      "description": "Moderate proportion of new papers. Domain is partially saturated.",
+      "action": "allow_one_more_pass_if_important"
+    },
+    "low": {
+      "max_score": 0.0999,
+      "description": "Low proportion of new papers. Domain is highly saturated.",
+      "action": "expand_at_next_boundary"
+    }
+  },
+  "metrics": {
+    "primary": {
+      "name": "novelty_score",
+      "formula": "truly_new_pmids / total_candidate_pmids_considered",
+      "description": "The ratio of genuinely new PMIDs (not seen in this run or persisted corpus) to the total PMIDs evaluated."
+    },
+    "optional_telemetry": [
+      {
+        "name": "fulltext_novelty",
+        "formula": "newly_uploaded_fulltext_papers / total_candidate_pmids_considered"
+      },
+      {
+        "name": "duplicate_ratio",
+        "formula": "skipped_existing_or_already_processed / total_candidate_pmids_considered"
+      },
+      {
+        "name": "novel_fulltext_yield",
+        "formula": "newly_uploaded_fulltext_papers / truly_new_pmids"
+      }
+    ]
+  }
+}
