@@ -20,6 +20,12 @@ To run a real extraction test, navigate to **Actions** > **Manual PubMed Extract
 - **Run in dry-run mode:** `OFF` (must be `false` for a real extraction run)
 - **Include papers with status 'needs_review':** `OFF` (leave `false` for the first real run)
 
+### Extraction throttling and model settings
+The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.
+- `extraction_model`: The exact Gemini model string used by the extraction pipeline.
+- `max_papers_per_run`: A hard cap on the number of papers attempted per run.
+- `inter_paper_delay_seconds`: A pause (in seconds) applied after each processed paper to reduce rate-limit risk.
+
 Extraction outputs are routed to an `extraction_outputs` folder tree (separate from the source paper markdown files) based on the routing paths in `config/config.yaml`.
 **Note:** The extraction process relies on `scripts/run_extraction.py` and does not change `run_pipeline.py` or the current retrieval behavior.
 

@@ -372,12 +372,26 @@ def main():
     include_needs_review = '--include-needs-review' in sys.argv
 
     extraction_mode = config.get('extraction_mode', 'disabled')
+    extraction_model = config.get('extraction_model', 'gemini-3.1-flash-lite')
+    max_papers_per_run = config.get('max_papers_per_run', 5)
+    inter_paper_delay_seconds = config.get('inter_paper_delay_seconds', 8)
     extraction_routing = config.get('extraction_routing', {})
+
+    if max_papers_per_run <= 0:
+        print(f"Error: max_papers_per_run must be strictly positive, but got {max_papers_per_run}.")
+        sys.exit(1)
+
+    if inter_paper_delay_seconds < 0:
+        print(f"Error: inter_paper_delay_seconds cannot be negative, but got {inter_paper_delay_seconds}.")
+        sys.exit(1)
 
     # Print startup config summary for explicit verification
     print("\n--- Startup Configuration Summary ---")
     print("Config file loaded: config/config.yaml")
     print(f"Extraction Mode: {extraction_mode}")
+    print(f"Extraction Model: {extraction_model}")
+    print(f"Max Papers Per Run: {max_papers_per_run}")
+    print(f"Inter-Paper Delay (seconds): {inter_paper_delay_seconds}")
     print("Resolved Extraction Routing:")
     for key, path in extraction_routing.items():
         print(f"  {key}: '{path}'")
@@ -456,7 +470,11 @@ def main():
 
     print("Finding eligible papers...")
     eligible_papers = find_eligible_papers(drive_service, papers_folder_id, state_dict, include_needs_review)
-    print(f"Found {len(eligible_papers)} papers eligible for extraction.")
+    print(f"Found {len(eligible_papers)} total papers eligible for extraction.")
+
+    # Cap the number of papers per run
+    eligible_papers = eligible_papers[:max_papers_per_run]
+    print(f"Will process {len(eligible_papers)} papers in this run (capped by max_papers_per_run={max_papers_per_run}).")
 
     if dry_run:
         print("Dry run complete. Exiting.")
@@ -477,105 +495,108 @@ def main():
         state_dict[paper_id]['extraction_status'] = 'processing'
         state_dict[paper_id]['drive_file_id'] = file_id
 
-        # Download content
-        content = download_file_content(drive_service, file_id)
-        if not content:
-            print(f"[{paper_id}] Failed to download content. Marking failed.")
-            state_dict[paper_id]['extraction_status'] = 'failed'
-            state_dict[paper_id]['last_error'] = 'Download failed'
-            upload_state(drive_service, state_folder_id, state_dict, manifest_list)
-            continue
-
-        checksum = compute_checksum(content)
-        state_dict[paper_id]['checksum'] = checksum
-
-        # Parse with Gemini
-        print(f"[{paper_id}] Calling Gemini API for extraction...")
-        extracted_data, error = parse_with_gemini(content, extraction_schema, taxonomy_configs)
-
-        if error or not extracted_data:
-            print(f"[{paper_id}] Extraction failed: {error}")
-
-            # Save failure log locally
-            fail_log_path = f"outputs/extraction/failure_logs/{paper_id}_failure.log"
-            with open(fail_log_path, 'w', encoding='utf-8') as f:
-                f.write(f"Error:\n{error}\n\n")
-
-            state_dict[paper_id]['extraction_status'] = 'needs_review'
-            state_dict[paper_id]['last_error'] = str(error)[:200]
-            update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'needs_review', state_dict[paper_id]['last_error'])
-            upload_state(drive_service, state_folder_id, state_dict, manifest_list)
-            continue
-
-        # Validate schema
-        print(f"[{paper_id}] Validating against schema...")
         try:
-            jsonschema.validate(instance=extracted_data, schema=extraction_schema)
-        except jsonschema.exceptions.ValidationError as e:
-            print(f"[{paper_id}] Schema validation failed: {e.message}")
+            # Download content
+            content = download_file_content(drive_service, file_id)
+            if not content:
+                print(f"[{paper_id}] Failed to download content. Marking failed.")
+                state_dict[paper_id]['extraction_status'] = 'failed'
+                state_dict[paper_id]['last_error'] = 'Download failed'
+                upload_state(drive_service, state_folder_id, state_dict, manifest_list)
+                continue
 
-            fail_log_path = f"outputs/extraction/failure_logs/{paper_id}_schema_failure.log"
-            with open(fail_log_path, 'w', encoding='utf-8') as f:
-                f.write(f"Schema Error:\n{e.message}\n\nExtracted Data:\n{json.dumps(extracted_data, indent=2)}")
+            checksum = compute_checksum(content)
+            state_dict[paper_id]['checksum'] = checksum
 
-            state_dict[paper_id]['extraction_status'] = 'needs_review'
-            state_dict[paper_id]['last_error'] = f"Schema validation failed: {e.message}"
-            update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'needs_review', state_dict[paper_id]['last_error'])
+            # Parse with Gemini
+            print(f"[{paper_id}] Calling Gemini API for extraction...")
+            extracted_data, error = parse_with_gemini(content, extraction_schema, taxonomy_configs)
+
+            if error or not extracted_data:
+                print(f"[{paper_id}] Extraction failed: {error}")
+
+                # Save failure log locally
+                fail_log_path = f"outputs/extraction/failure_logs/{paper_id}_failure.log"
+                with open(fail_log_path, 'w', encoding='utf-8') as f:
+                    f.write(f"Error:\n{error}\n\n")
+
+                state_dict[paper_id]['extraction_status'] = 'needs_review'
+                state_dict[paper_id]['last_error'] = str(error)[:200]
+                update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'needs_review', state_dict[paper_id]['last_error'])
+                upload_state(drive_service, state_folder_id, state_dict, manifest_list)
+                continue
+
+            # Validate schema
+            print(f"[{paper_id}] Validating against schema...")
+            try:
+                jsonschema.validate(instance=extracted_data, schema=extraction_schema)
+            except jsonschema.exceptions.ValidationError as e:
+                print(f"[{paper_id}] Schema validation failed: {e.message}")
+
+                fail_log_path = f"outputs/extraction/failure_logs/{paper_id}_schema_failure.log"
+                with open(fail_log_path, 'w', encoding='utf-8') as f:
+                    f.write(f"Schema Error:\n{e.message}\n\nExtracted Data:\n{json.dumps(extracted_data, indent=2)}")
+
+                state_dict[paper_id]['extraction_status'] = 'needs_review'
+                state_dict[paper_id]['last_error'] = f"Schema validation failed: {e.message}"
+                update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'needs_review', state_dict[paper_id]['last_error'])
+                upload_state(drive_service, state_folder_id, state_dict, manifest_list)
+                continue
+
+            print(f"[{paper_id}] Extracted successfully. Saving and uploading outputs...")
+
+            # Generate gap report
+            gap_report_md = generate_gap_report(
+                extracted_data.get('paper_summary', {}),
+                extracted_data.get('decision', {}),
+                extracted_data.get('claims', [])
+            )
+
+            # Local paths
+            ps_path = f"outputs/extraction/paper_summaries/{paper_id}_summary.json"
+            cl_path = f"outputs/extraction/claims/{paper_id}_claims.json"
+            dc_path = f"outputs/extraction/decisions/{paper_id}_decision.json"
+            ed_path = f"outputs/extraction/edges/{paper_id}_edges.json"
+            gp_path = f"outputs/extraction/gap_reports/{paper_id}_gap_report.md"
+
+            # Write locally
+            with open(ps_path, 'w', encoding='utf-8') as f: json.dump(extracted_data.get('paper_summary', {}), f, indent=2)
+            with open(cl_path, 'w', encoding='utf-8') as f: json.dump(extracted_data.get('claims', []), f, indent=2)
+            with open(dc_path, 'w', encoding='utf-8') as f: json.dump(extracted_data.get('decision', {}), f, indent=2)
+            with open(ed_path, 'w', encoding='utf-8') as f: json.dump(extracted_data.get('graph_edges', []), f, indent=2)
+            with open(gp_path, 'w', encoding='utf-8') as f: f.write(gap_report_md)
+
+            # Upload
+            try:
+                _upload_file(drive_service, dirs['paper_summaries'], ps_path, f"{paper_id}_summary.json", 'application/json')
+                _upload_file(drive_service, dirs['claims'], cl_path, f"{paper_id}_claims.json", 'application/json')
+                _upload_file(drive_service, dirs['decisions'], dc_path, f"{paper_id}_decision.json", 'application/json')
+                _upload_file(drive_service, dirs['edges'], ed_path, f"{paper_id}_edges.json", 'application/json')
+                _upload_file(drive_service, dirs['gaps'], gp_path, f"{paper_id}_gap_report.md", 'text/markdown')
+            except Exception as e:
+                print(f"[{paper_id}] Failed to upload outputs to Drive: {e}")
+                state_dict[paper_id]['extraction_status'] = 'failed'
+                state_dict[paper_id]['last_error'] = f"Upload failed: {e}"
+                update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'failed', state_dict[paper_id]['last_error'])
+                upload_state(drive_service, state_folder_id, state_dict, manifest_list)
+                continue
+
+            # Success!
+            print(f"[{paper_id}] Successfully completed.")
+            state_dict[paper_id]['extraction_status'] = 'completed'
+            state_dict[paper_id]['extracted_at'] = datetime.utcnow().isoformat()
+            state_dict[paper_id]['extraction_version'] = 'v1'
+            state_dict[paper_id]['last_error'] = ''
+
+            update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'completed', '', state_dict[paper_id]['extracted_at'])
+
+            # Persist state after successful paper
             upload_state(drive_service, state_folder_id, state_dict, manifest_list)
-            continue
 
-        print(f"[{paper_id}] Extracted successfully. Saving and uploading outputs...")
-
-        # Generate gap report
-        gap_report_md = generate_gap_report(
-            extracted_data.get('paper_summary', {}),
-            extracted_data.get('decision', {}),
-            extracted_data.get('claims', [])
-        )
-
-        # Local paths
-        ps_path = f"outputs/extraction/paper_summaries/{paper_id}_summary.json"
-        cl_path = f"outputs/extraction/claims/{paper_id}_claims.json"
-        dc_path = f"outputs/extraction/decisions/{paper_id}_decision.json"
-        ed_path = f"outputs/extraction/edges/{paper_id}_edges.json"
-        gp_path = f"outputs/extraction/gap_reports/{paper_id}_gap_report.md"
-
-        # Write locally
-        with open(ps_path, 'w', encoding='utf-8') as f: json.dump(extracted_data.get('paper_summary', {}), f, indent=2)
-        with open(cl_path, 'w', encoding='utf-8') as f: json.dump(extracted_data.get('claims', []), f, indent=2)
-        with open(dc_path, 'w', encoding='utf-8') as f: json.dump(extracted_data.get('decision', {}), f, indent=2)
-        with open(ed_path, 'w', encoding='utf-8') as f: json.dump(extracted_data.get('graph_edges', []), f, indent=2)
-        with open(gp_path, 'w', encoding='utf-8') as f: f.write(gap_report_md)
-
-        # Upload
-        try:
-            _upload_file(drive_service, dirs['paper_summaries'], ps_path, f"{paper_id}_summary.json", 'application/json')
-            _upload_file(drive_service, dirs['claims'], cl_path, f"{paper_id}_claims.json", 'application/json')
-            _upload_file(drive_service, dirs['decisions'], dc_path, f"{paper_id}_decision.json", 'application/json')
-            _upload_file(drive_service, dirs['edges'], ed_path, f"{paper_id}_edges.json", 'application/json')
-            _upload_file(drive_service, dirs['gaps'], gp_path, f"{paper_id}_gap_report.md", 'text/markdown')
-        except Exception as e:
-            print(f"[{paper_id}] Failed to upload outputs to Drive: {e}")
-            state_dict[paper_id]['extraction_status'] = 'failed'
-            state_dict[paper_id]['last_error'] = f"Upload failed: {e}"
-            update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'failed', state_dict[paper_id]['last_error'])
-            upload_state(drive_service, state_folder_id, state_dict, manifest_list)
-            continue
-
-        # Success!
-        print(f"[{paper_id}] Successfully completed.")
-        state_dict[paper_id]['extraction_status'] = 'completed'
-        state_dict[paper_id]['extracted_at'] = datetime.utcnow().isoformat()
-        state_dict[paper_id]['extraction_version'] = 'v1'
-        state_dict[paper_id]['last_error'] = ''
-
-        update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'completed', '', state_dict[paper_id]['extracted_at'])
-
-        # Persist state after successful paper
-        upload_state(drive_service, state_folder_id, state_dict, manifest_list)
-
-        # Brief pacing delay
-        time.sleep(2)
+        finally:
+            # Pacing delay applied after every paper (success or handled failure)
+            print(f"[{paper_id}] Applying inter-paper delay of {inter_paper_delay_seconds} seconds...")
+            time.sleep(inter_paper_delay_seconds)
 
     print("\nExtraction Pipeline Complete.")
 
