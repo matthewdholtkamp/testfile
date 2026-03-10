@@ -14,7 +14,9 @@ UNPAYWALL_EMAIL: ""
 # --- Extraction Pipeline Configuration ---
 # 'extraction_mode': 'disabled' or 'atlas_v1'. Default is 'disabled'.
 extraction_mode: atlas_v1
-extraction_model: "gemini-2.5-flash"
+extraction_model: "gemini-3.1-flash-lite"
+max_papers_per_run: 5
+inter_paper_delay_seconds: 8
 
 # Optional Google Drive routing paths for structured extraction outputs.
 # If a path is left empty or not provided, the pipeline defaults to uploading
