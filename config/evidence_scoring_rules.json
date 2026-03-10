@@ -1,0 +1,30 @@
+{
+  "mechanistic_depth": {
+    "1": "Superficial mention, no mechanism",
+    "2": "Associative link suggested",
+    "3": "Specific mechanism proposed but not tested directly",
+    "4": "Mechanism directly tested (e.g., inhibition/knockout)",
+    "5": "Detailed molecular pathway mapping with causal proof"
+  },
+  "evidence_strength": {
+    "1": "Hypothesis / Speculation",
+    "2": "In vitro only / In silico",
+    "3": "Animal model (single study)",
+    "4": "Animal model (replicated) or Human observational",
+    "5": "Human interventional or large-scale multi-modal validation"
+  },
+  "translational_relevance": {
+    "1": "Basic biology, distant from clinic",
+    "2": "Early mechanistic target identified",
+    "3": "Target with known drugability / clear biomarker potential",
+    "4": "Pre-clinical validation of intervention/biomarker",
+    "5": "Directly informs clinical trials or clinical management"
+  },
+  "causal_confidence": {
+    "1": "Correlational only",
+    "2": "Temporal precedence established",
+    "3": "Necessary (e.g., knockout blocks effect)",
+    "4": "Sufficient (e.g., overexpression drives effect)",
+    "5": "Necessary and sufficient"
+  }
+}
