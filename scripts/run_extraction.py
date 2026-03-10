@@ -367,13 +367,27 @@ def main():
     print("Starting Extraction Pipeline...")
     config = load_config()
 
-    if config.get('extraction_mode', 'disabled') != 'atlas_v1':
-        print("Extraction mode is not enabled (set to 'disabled'). Exiting cleanly.")
-        sys.exit(0)
-
     # Check for dry run
     dry_run = '--dry-run' in sys.argv
     include_needs_review = '--include-needs-review' in sys.argv
+
+    extraction_mode = config.get('extraction_mode', 'disabled')
+    extraction_routing = config.get('extraction_routing', {})
+
+    # Print startup config summary for explicit verification
+    print("\n--- Startup Configuration Summary ---")
+    print("Config file loaded: config/config.yaml")
+    print(f"Extraction Mode: {extraction_mode}")
+    print("Resolved Extraction Routing:")
+    for key, path in extraction_routing.items():
+        print(f"  {key}: '{path}'")
+    print(f"CLI Flag --dry-run: {dry_run}")
+    print(f"CLI Flag --include-needs-review: {include_needs_review}")
+    print("-------------------------------------\n")
+
+    if extraction_mode != 'atlas_v1':
+        print(f"Extraction mode is not enabled (set to '{extraction_mode}'). Exiting cleanly.")
+        sys.exit(0)
 
     if dry_run:
         print("--- DRY RUN MODE ACTIVE ---")
