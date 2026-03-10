@@ -13,18 +13,18 @@ UNPAYWALL_EMAIL: ""
 
 # --- Extraction Pipeline Configuration ---
 # 'extraction_mode': 'disabled' or 'atlas_v1'. Default is 'disabled'.
-extraction_mode: disabled
+extraction_mode: atlas_v1
 extraction_model: "gemini-2.5-flash"
 
 # Optional Google Drive routing paths for structured extraction outputs.
 # If a path is left empty or not provided, the pipeline defaults to uploading
 # to the root of DRIVE_FOLDER_ID (preserving backwards compatibility).
 extraction_routing:
-  papers: ""            # Where to look for source .md files
-  manifests: ""         # Where to save the gap_report.md
-  paper_summaries: ""   # Where to save paper_summary.json
-  claims: ""            # Where to save claims.json
-  decisions: ""         # Where to save decision.json
-  gaps: ""              # Where to save gap_report.md
-  edges: ""             # Where to save graph_edges.json
-  state: ""             # Where to save extraction_state.json and extraction_manifest.csv
+  papers: ""
+  manifests: "extraction_outputs/manifests"
+  paper_summaries: "extraction_outputs/paper_summaries"
+  claims: "extraction_outputs/claims"
+  decisions: "extraction_outputs/decisions"
+  gaps: "extraction_outputs/gap_reports"
+  edges: "extraction_outputs/graph_edges"
+  state: "extraction_outputs/state"

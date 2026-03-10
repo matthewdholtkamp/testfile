@@ -9,12 +9,19 @@ This repository contains a minimal, reliable pipeline to search PubMed for recen
 
 ## GitHub Actions
 
-The pipeline runs manually via GitHub Actions.
-1. Navigate to **Actions** > **Manual PubMed to Google Drive Pipeline**
-2. Click **Run workflow**
-3. Select the branch and execute
+The project includes two manual GitHub Actions workflows:
 
-No automatic or scheduled triggers are configured.
+1. **Manual PubMed to Google Drive Pipeline:** Runs the search and retrieval process.
+2. **Manual PubMed Extraction Pipeline:** Runs the Gemini-based extraction process.
+
+### Running the Extraction Pipeline
+To run a real extraction test, navigate to **Actions** > **Manual PubMed Extraction Pipeline**, click **Run workflow**, and ensure the following exact settings:
+- **Use workflow from:** `main` (or your active branch)
+- **Run in dry-run mode:** `OFF` (must be `false` for a real extraction run)
+- **Include papers with status 'needs_review':** `OFF` (leave `false` for the first real run)
+
+Extraction outputs are routed to an `extraction_outputs` folder tree (separate from the source paper markdown files) based on the routing paths in `config/config.yaml`.
+**Note:** The extraction process relies on `scripts/run_extraction.py` and does not change `run_pipeline.py` or the current retrieval behavior.
 
 ## Output Format
 
