@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "paper_summary": {
+      "type": "object",
+      "properties": {
+        "paper_id": {"type": "string"},
+        "title": {"type": "string"},
+        "authors": {"type": "array", "items": {"type": "string"}},
+        "year": {"type": "integer"},
+        "journal": {"type": "string"},
+        "study_type": {"type": "string"},
+        "species_model": {"type": "string"},
+        "high_level_relevance": {"type": "string"},
+        "dominant_atlas_layers": {"type": "array", "items": {"type": "string"}},
+        "major_mechanisms": {"type": "array", "items": {"type": "string"}},
+        "major_limitations": {"type": "array", "items": {"type": "string"}},
+        "translational_relevance": {"type": "string"}
+      },
+      "required": ["paper_id", "dominant_atlas_layers"]
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim_id": {"type": "string"},
+          "paper_id": {"type": "string"},
+          "claim_text": {"type": "string"},
+          "normalized_claim": {"type": "string"},
+          "atlas_layer": {"type": "string"},
+          "mechanism": {"type": "string"},
+          "direction_of_effect": {"type": "string"},
+          "causal_status": {
+            "type": "string",
+            "enum": ["causal", "associative", "descriptive", "negative_finding", "speculative"]
+          },
+          "evidence_type": {"type": "string"},
+          "species": {"type": "string"},
+          "model": {"type": "string"},
+          "anatomy": {"type": "string"},
+          "cell_type": {"type": "string"},
+          "timing_bin": {"type": "string"},
+          "biomarkers": {"type": "array", "items": {"type": "string"}},
+          "interventions": {"type": "array", "items": {"type": "string"}},
+          "outcome_measures": {"type": "array", "items": {"type": "string"}},
+          "confidence_score": {"type": "number"},
+          "mechanistic_depth_score": {"type": "number"},
+          "translational_relevance_score": {"type": "number"},
+          "notes": {"type": "string"}
+        },
+        "required": ["claim_id", "paper_id", "claim_text", "atlas_layer"]
+      }
+    },
+    "decision": {
+      "type": "object",
+      "properties": {
+        "paper_id": {"type": "string"},
+        "include_in_core_atlas": {"type": "boolean"},
+        "primary_domain": {"type": "string"},
+        "novelty_estimate": {"type": "string"},
+        "whether_human_relevant": {"type": "boolean"},
+        "whether_mechanistically_informative": {"type": "boolean"},
+        "whether_needs_manual_review": {"type": "boolean"},
+        "key_reasoning_summary": {"type": "string"}
+      },
+      "required": ["paper_id", "include_in_core_atlas"]
+    },
+    "graph_edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "edge_id": {"type": "string"},
+          "source_node": {"type": "string"},
+          "relation": {
+            "type": "string",
+            "enum": ["drives", "disrupts", "precedes", "correlates_with", "predicts", "attenuates", "increases", "decreases"]
+          },
+          "target_node": {"type": "string"},
+          "paper_id": {"type": "string"},
+          "atlas_layer": {"type": "string"},
+          "anatomy": {"type": "string"},
+          "cell_type": {"type": "string"},
+          "timing_bin": {"type": "string"},
+          "species": {"type": "string"},
+          "evidence_strength": {"type": "string"},
+          "contradiction_flag": {"type": "boolean"},
+          "notes": {"type": "string"}
+        },
+        "required": ["edge_id", "source_node", "relation", "target_node", "paper_id"]
+      }
+    }
+  },
+  "required": ["paper_summary", "claims", "decision", "graph_edges"]
+}

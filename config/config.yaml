@@ -10,3 +10,21 @@ TARGET_FULL_TEXT_PER_RUN: 25
 
 # Optional: Add Unpaywall email to enable better Open Access PDF discovery
 UNPAYWALL_EMAIL: ""
+
+# --- Extraction Pipeline Configuration ---
+# 'extraction_mode': 'enabled' or 'disabled'. Default is 'disabled'.
+extraction_mode: enabled
+extraction_model: "gemini-2.5-flash"
+
+# Optional Google Drive routing paths for structured extraction outputs.
+# If a path is left empty or not provided, the pipeline defaults to uploading
+# to the root of DRIVE_FOLDER_ID (preserving backwards compatibility).
+extraction_routing:
+  papers: ""            # Where to look for source .md files
+  manifests: ""         # Where to save the gap_report.md
+  paper_summaries: ""   # Where to save paper_summary.json
+  claims: ""            # Where to save claims.json
+  decisions: ""         # Where to save decision.json
+  gaps: ""              # Where to save gap_report.md
+  edges: ""             # Where to save graph_edges.json
+  state: ""             # Where to save extraction_state.json and extraction_manifest.csv
