@@ -367,7 +367,7 @@ def main():
     print("Starting Extraction Pipeline...")
     config = load_config()
 
-    if config.get('extraction_mode', 'disabled') != 'enabled':
+    if config.get('extraction_mode', 'disabled') != 'atlas_v1':
         print("Extraction mode is not enabled (set to 'disabled'). Exiting cleanly.")
         sys.exit(0)
 

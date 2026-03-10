@@ -12,8 +12,8 @@ TARGET_FULL_TEXT_PER_RUN: 25
 UNPAYWALL_EMAIL: ""
 
 # --- Extraction Pipeline Configuration ---
-# 'extraction_mode': 'enabled' or 'disabled'. Default is 'disabled'.
-extraction_mode: enabled
+# 'extraction_mode': 'disabled' or 'atlas_v1'. Default is 'disabled'.
+extraction_mode: disabled
 extraction_model: "gemini-2.5-flash"
 
 # Optional Google Drive routing paths for structured extraction outputs.
