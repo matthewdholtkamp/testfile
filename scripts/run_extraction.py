@@ -341,6 +341,95 @@ PAPER TEXT:
 
     return None, "Max retries exceeded."
 
+def normalize_extracted_data(paper_id, data, schema):
+    """
+    Normalizes the extracted data before schema validation.
+    - Recursively converts None to "" for string fields
+    - Maps canonical evidence and relation labels
+    """
+
+    causal_mapping = {
+        'sufficient': 'causal',
+        'necessary': 'causal',
+        'correlational': 'associative',
+        'predictive': 'associative'
+    }
+
+    relation_mapping = {
+        'causes': 'drives',
+        'induces': 'drives',
+        'promotes': 'drives',
+        'impairs': 'disrupts',
+        'blocks': 'attenuates',
+        'inhibits': 'attenuates',
+        'reduces': 'decreases',
+        'lowers': 'decreases',
+        'raises': 'increases',
+        'elevates': 'increases',
+        'associated': 'correlates_with',
+        'associated_with': 'correlates_with',
+        'correlates': 'correlates_with',
+        'forecasts': 'predicts'
+    }
+
+    def walk_and_normalize(path, current_data, current_schema):
+        # Defensively handle missing or malformed schemas
+        if not isinstance(current_schema, dict):
+            return current_data
+
+        expected_type = current_schema.get('type')
+        if not expected_type:
+            return current_data
+
+        # Normalize None -> "" for expected strings
+        if current_data is None:
+            if expected_type == 'string':
+                print(f"[{paper_id}] Normalized {path}: None -> ''")
+                return ""
+            else:
+                return current_data
+
+        if expected_type == 'object' and isinstance(current_data, dict):
+            properties = current_schema.get('properties', {})
+            for key, val in current_data.items():
+                if key in properties:
+                    new_path = f"{path}.{key}" if path else key
+                    current_data[key] = walk_and_normalize(new_path, val, properties[key])
+            return current_data
+
+        elif expected_type == 'array' and isinstance(current_data, list):
+            items_schema = current_schema.get('items', {})
+            for i in range(len(current_data)):
+                new_path = f"{path}[{i}]"
+                current_data[i] = walk_and_normalize(new_path, current_data[i], items_schema)
+            return current_data
+
+        elif expected_type == 'string' and isinstance(current_data, str):
+            is_causal_status = ".causal_status" in path and ("claims[" in path)
+            is_relation = ".relation" in path and ("graph_edges[" in path)
+
+            if is_causal_status:
+                raw_val = current_data.strip().lower()
+                if raw_val in causal_mapping:
+                    mapped_val = causal_mapping[raw_val]
+                    print(f"[{paper_id}] Normalized {path}: '{current_data}' -> '{mapped_val}'")
+                    return mapped_val
+            elif is_relation:
+                raw_val = current_data.strip().lower().replace(" ", "_").replace("-", "_")
+                if raw_val in relation_mapping:
+                    mapped_val = relation_mapping[raw_val]
+                    print(f"[{paper_id}] Normalized {path}: '{current_data}' -> '{mapped_val}'")
+                    return mapped_val
+
+            return current_data
+
+        else:
+            return current_data
+
+    # Start walking from an empty string for cleaner paths (e.g., 'claims[0].causal_status')
+    walk_and_normalize("", data, schema)
+    return data
+
 def generate_gap_report(paper_summary, decisions, claims):
     report = f"# Gap Report for {paper_summary.get('paper_id', 'Unknown')}\n\n"
     report += f"**Novelty Estimate:** {decisions.get('novelty_estimate', 'Unknown')}\n\n"
@@ -525,6 +614,10 @@ def main():
                 update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'needs_review', state_dict[paper_id]['last_error'])
                 upload_state(drive_service, state_folder_id, state_dict, manifest_list)
                 continue
+
+            # Normalize extracted data before validation
+            print(f"[{paper_id}] Normalizing extracted data...")
+            extracted_data = normalize_extracted_data(paper_id, extracted_data, extraction_schema)
 
             # Validate schema
             print(f"[{paper_id}] Validating against schema...")
