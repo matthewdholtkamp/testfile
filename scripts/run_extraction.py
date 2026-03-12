@@ -282,6 +282,20 @@ Do not include markdown code fences (like ```json), just the raw JSON text.
 Ensure you return an object with these top-level keys: `paper_summary`, `claims`, `decision`, `graph_edges`.
 `graph_edges` can be an empty array [] if no explicit relations are found.
 
+EXTRACTION INSTRUCTIONS (CRITICAL):
+1. **Section-Aware Reading:** Use the Abstract ONLY for high-level orientation. Prioritize extracting mechanistic details, data, and claims directly from the Methods, Results, figure/table legends, and Discussion sections. Do NOT just paraphrase the abstract.
+2. **Mechanistic Precision:** Prefer highly specific pathways, molecular mediators, and structures over generic labels (e.g., name the specific cytokine, not just "inflammation").
+3. **Explicit Detail Extraction:** You must emphasize sharpening the following details using the schema fields:
+   - Injury mechanism
+   - Timing/window (prefer explicit timing over vague temporal language)
+   - Anatomy/brain region (be specific, avoid broad summary phrases)
+   - Cell types involved
+   - Biomarkers/imaging
+   - Intervention and direction of effect (state directional mechanistic relationships over narrative summaries)
+   - Causal vs associative status
+   - Atlas layer placement
+4. **Direct Claims (No Filler):** State biological and mechanistic claims DIRECTLY. Do NOT use vague literature-summary filler phrases such as "this study suggests", "results indicate", "we observed", "the authors found", or "may play a role". Use the schema fields (like `causal_status`, `confidence_score`) to encode uncertainty or claim typing rather than hedging in the text.
+
 When extracting claims, use the following canonical taxonomies and rules where possible:
 ATLAS LAYERS:
 {atlas_layers}
