@@ -7,6 +7,8 @@ import time
 import hashlib
 import re
 import traceback
+import ssl
+import socket
 from datetime import datetime
 from io import StringIO
 
@@ -14,6 +16,8 @@ from google.oauth2 import service_account
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload, MediaIoBaseUpload
+from googleapiclient.errors import HttpError
+import urllib3
 
 # Ensure googleapiclient.http.MediaIoBaseDownload is imported for file downloads
 from googleapiclient.http import MediaIoBaseDownload
@@ -136,20 +140,61 @@ def download_file_content(service, file_id):
         return ""
 
 def _upload_file(service, folder_id, local_path, filename, mimetype):
-    query = f"name='{filename}' and '{folder_id}' in parents and trashed=false"
-    results = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
-    items = results.get('files', [])
+    max_retries = 4
+    base_delay = 2
 
-    media = MediaFileUpload(local_path, mimetype=mimetype, resumable=True)
-    if items:
-        file_id = items[0]['id']
-        service.files().update(fileId=file_id, media_body=media).execute()
-    else:
-        file_metadata = {
-            'name': filename,
-            'parents': [folder_id]
-        }
-        service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    for attempt in range(max_retries):
+        try:
+            query = f"name='{filename}' and '{folder_id}' in parents and trashed=false"
+            results = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
+            items = results.get('files', [])
+
+            media = MediaFileUpload(local_path, mimetype=mimetype, resumable=True)
+            if items:
+                file_id = items[0]['id']
+                service.files().update(fileId=file_id, media_body=media).execute()
+            else:
+                file_metadata = {
+                    'name': filename,
+                    'parents': [folder_id]
+                }
+                service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+
+            # Successfully uploaded
+            return
+
+        except Exception as e:
+            # Check if it's a retryable error
+            is_retryable = False
+
+            if isinstance(e, ssl.SSLEOFError) or isinstance(e, socket.error) or isinstance(e, urllib3.exceptions.ProtocolError):
+                is_retryable = True
+            elif isinstance(e, HttpError):
+                # Retry on 5xx errors or 429 Too Many Requests
+                if e.resp.status >= 500 or e.resp.status == 429:
+                    is_retryable = True
+                else:
+                    # Non-retryable HTTP error (e.g. 400, 401, 403, 404)
+                    print(f"Non-retryable HttpError {e.resp.status} during upload of {filename}: {e}")
+                    raise
+            else:
+                # Other generic exceptions might be network-related (e.g. ConnectionResetError, BrokenPipeError, etc.)
+                error_str = str(e).lower()
+                if "connection reset" in error_str or "broken pipe" in error_str or "eof" in error_str:
+                    is_retryable = True
+                else:
+                    # If we don't recognize it as a transient error, bubble it up
+                    print(f"Non-retryable error during upload of {filename}: {e}")
+                    raise
+
+            if is_retryable:
+                if attempt < max_retries - 1:
+                    delay = base_delay * (2 ** attempt)
+                    print(f"Transient error '{e}' uploading {filename}. Retrying in {delay}s (Attempt {attempt+1}/{max_retries})...")
+                    time.sleep(delay)
+                else:
+                    print(f"Failed to upload {filename} after {max_retries} attempts due to transient errors: {e}")
+                    raise
 
 def atomic_write_json(filepath, data):
     temp_path = filepath + ".tmp"
@@ -169,14 +214,24 @@ def atomic_write_csv(filepath, data, fieldnames):
 def upload_state(service, folder_id, state, manifest):
     os.makedirs('outputs/state', exist_ok=True)
 
+    # First, persist to local disk.
+    # This ensures that even if Drive upload fails permanently, the local state is secure.
     state_path = 'outputs/state/extraction_state.json'
     atomic_write_json(state_path, state)
-    _upload_file(service, folder_id, state_path, "extraction_state.json", 'application/json')
 
     manifest_path = 'outputs/state/extraction_manifest.csv'
     fieldnames = ['paper_id', 'md_path', 'source_query', 'domain', 'tier', 'retrieval_mode', 'extraction_status', 'extraction_version', 'extracted_at', 'checksum', 'last_error', 'drive_file_id']
     atomic_write_csv(manifest_path, manifest, fieldnames)
-    _upload_file(service, folder_id, manifest_path, "extraction_manifest.csv", 'text/csv')
+
+    # Second, attempt to upload to Drive. _upload_file includes retries.
+    try:
+        _upload_file(service, folder_id, state_path, "extraction_state.json", 'application/json')
+        _upload_file(service, folder_id, manifest_path, "extraction_manifest.csv", 'text/csv')
+    except Exception as e:
+        print(f"Failed to upload state/manifest to Drive: {e}")
+        # We catch and print the error to prevent transient failure at the state upload phase
+        # from terminating the entire extraction run if it happens to be unrecoverable.
+        # The local files are successfully written, so we don't lose data.
 
 def compute_checksum(text):
     return hashlib.md5(text.encode('utf-8')).hexdigest()
@@ -284,8 +339,9 @@ Ensure you return an object with these top-level keys: `paper_summary`, `claims`
 
 EXTRACTION INSTRUCTIONS (CRITICAL):
 1. **Section-Aware Reading:** Use the Abstract ONLY for high-level orientation. Prioritize extracting mechanistic details, data, and claims directly from the Methods, Results, figure/table legends, and Discussion sections. Do NOT just paraphrase the abstract.
-2. **Mechanistic Precision:** Prefer highly specific pathways, molecular mediators, and structures over generic labels (e.g., name the specific cytokine, not just "inflammation").
-3. **Explicit Detail Extraction:** You must emphasize sharpening the following details using the schema fields:
+2. **Compact & Focused Output:** Limit the output to a maximum of 8 claims and 12 graph edges. Prioritize the highest-value mechanistic claims, the strongest causal or biologically informative relationships, and the most specific timing/anatomy/cell-type details. Do not attempt exhaustive coverage, especially for dense review papers.
+3. **Mechanistic Precision:** Prefer highly specific pathways, molecular mediators, and structures over generic labels (e.g., name the specific cytokine, not just "inflammation").
+4. **Explicit Detail Extraction:** You must emphasize sharpening the following details using the schema fields:
    - Injury mechanism
    - Timing/window (prefer explicit timing over vague temporal language)
    - Anatomy/brain region (be specific, avoid broad summary phrases)
@@ -294,7 +350,7 @@ EXTRACTION INSTRUCTIONS (CRITICAL):
    - Intervention and direction of effect (state directional mechanistic relationships over narrative summaries)
    - Causal vs associative status
    - Atlas layer placement
-4. **Direct Claims (No Filler):** State biological and mechanistic claims DIRECTLY. Do NOT use vague literature-summary filler phrases such as "this study suggests", "results indicate", "we observed", "the authors found", or "may play a role". Use the schema fields (like `causal_status`, `confidence_score`) to encode uncertainty or claim typing rather than hedging in the text.
+5. **Direct Claims (No Filler):** State biological and mechanistic claims DIRECTLY. Do NOT use vague literature-summary filler phrases such as "this study suggests", "results indicate", "we observed", "the authors found", or "may play a role". Use the schema fields (like `causal_status`, `confidence_score`) to encode uncertainty or claim typing rather than hedging in the text.
 
 When extracting claims, use the following canonical taxonomies and rules where possible:
 ATLAS LAYERS:
@@ -346,11 +402,16 @@ PAPER TEXT:
                 print(f"Bad Request (400) from Gemini: {e}")
                 return None, f"Bad Request: {e}"
             elif isinstance(e, json.JSONDecodeError):
-                print(f"Failed to parse JSON from Gemini response (Attempt {attempt+1}/{max_retries})")
+                print(f"Failed to parse JSON from Gemini response (Attempt {attempt+1}/{max_retries}): {e}")
                 if attempt == max_retries - 1:
-                    return None, f"JSON Decode Error: {e}\nRaw Response: {response.text}"
+                    # Capture response text gracefully even if it's truncated or unavailable
+                    resp_text = getattr(response, 'text', str(response))
+                    return None, f"JSON Decode Error: {e}\nRaw Response: {resp_text}"
             else:
-                print(f"Error calling Gemini: {e}")
+                print(f"Error calling Gemini (Attempt {attempt+1}/{max_retries}): {e}")
+                if attempt == max_retries - 1:
+                    resp_text = getattr(response, 'text', str(response)) if 'response' in locals() else 'No response object'
+                    return None, f"Error: {e}\nRaw Response: {resp_text}"
                 time.sleep((attempt + 1) * 5)
 
     return None, "Max retries exceeded."
