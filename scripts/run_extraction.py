@@ -369,7 +369,12 @@ def normalize_extracted_data(paper_id, data, schema):
         'associated': 'correlates_with',
         'associated_with': 'correlates_with',
         'correlates': 'correlates_with',
-        'forecasts': 'predicts'
+        'forecasts': 'predicts',
+        'destabilizes': 'disrupts',
+        'facilitates': 'drives',
+        'exacerbates': 'increases',
+        'worsens': 'increases',
+        'suppresses': 'attenuates'
     }
 
     def walk_and_normalize(path, current_data, current_schema):
