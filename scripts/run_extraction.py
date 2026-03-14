@@ -140,7 +140,7 @@ def download_file_content(service, file_id):
         return ""
 
 def _upload_file(service, folder_id, local_path, filename, mimetype):
-    max_retries = 4
+    max_retries = 5
     base_delay = 2
 
     for attempt in range(max_retries):
@@ -175,7 +175,7 @@ def _upload_file(service, folder_id, local_path, filename, mimetype):
                     is_retryable = True
                 else:
                     # Non-retryable HTTP error (e.g. 400, 401, 403, 404)
-                    print(f"Non-retryable HttpError {e.resp.status} during upload of {filename}: {e}")
+                    print(f"Drive upload/state failure: Non-retryable HttpError {e.resp.status} during upload of {filename}: {e}")
                     raise
             else:
                 # Other generic exceptions might be network-related (e.g. ConnectionResetError, BrokenPipeError, etc.)
@@ -184,7 +184,7 @@ def _upload_file(service, folder_id, local_path, filename, mimetype):
                     is_retryable = True
                 else:
                     # If we don't recognize it as a transient error, bubble it up
-                    print(f"Non-retryable error during upload of {filename}: {e}")
+                    print(f"Drive upload/state failure: Non-retryable error during upload of {filename}: {e}")
                     raise
 
             if is_retryable:
@@ -193,7 +193,7 @@ def _upload_file(service, folder_id, local_path, filename, mimetype):
                     print(f"Transient error '{e}' uploading {filename}. Retrying in {delay}s (Attempt {attempt+1}/{max_retries})...")
                     time.sleep(delay)
                 else:
-                    print(f"Failed to upload {filename} after {max_retries} attempts due to transient errors: {e}")
+                    print(f"Drive upload/state failure: Failed to upload {filename} after {max_retries} attempts due to transient errors: {e}")
                     raise
 
 def atomic_write_json(filepath, data):
@@ -228,10 +228,10 @@ def upload_state(service, folder_id, state, manifest):
         _upload_file(service, folder_id, state_path, "extraction_state.json", 'application/json')
         _upload_file(service, folder_id, manifest_path, "extraction_manifest.csv", 'text/csv')
     except Exception as e:
-        print(f"Failed to upload state/manifest to Drive: {e}")
-        # We catch and print the error to prevent transient failure at the state upload phase
-        # from terminating the entire extraction run if it happens to be unrecoverable.
-        # The local files are successfully written, so we don't lose data.
+        print(f"Drive upload/state failure: Failed to upload state/manifest to Drive: {e}")
+        # We preserve the local files but do NOT silently swallow the error.
+        # The run needs to fail fast so the problem is visible, and so we don't pretend it succeeded.
+        raise
 
 def compute_checksum(text):
     return hashlib.md5(text.encode('utf-8')).hexdigest()
@@ -339,7 +339,7 @@ Ensure you return an object with these top-level keys: `paper_summary`, `claims`
 
 EXTRACTION INSTRUCTIONS (CRITICAL):
 1. **Section-Aware Reading:** Use the Abstract ONLY for high-level orientation. Prioritize extracting mechanistic details, data, and claims directly from the Methods, Results, figure/table legends, and Discussion sections. Do NOT just paraphrase the abstract.
-2. **Compact & Focused Output:** Limit the output to a maximum of 8 claims and 12 graph edges. Prioritize the highest-value mechanistic claims, the strongest causal or biologically informative relationships, and the most specific timing/anatomy/cell-type details. Do not attempt exhaustive coverage, especially for dense review papers.
+2. **Compact & Focused Output:** Limit the output to a maximum of 8 claims and 12 graph edges. Extract highest-value mechanistic claims only. Do not attempt exhaustive coverage, especially for dense reviews. Ensure the structured output is as compact as possible. Prioritize the strongest causal or biologically informative relationships, and the most specific timing/anatomy/cell-type details.
 3. **Mechanistic Precision:** Prefer highly specific pathways, molecular mediators, and structures over generic labels (e.g., name the specific cytokine, not just "inflammation").
 4. **Explicit Detail Extraction:** You must emphasize sharpening the following details using the schema fields:
    - Injury mechanism
@@ -406,12 +406,12 @@ PAPER TEXT:
                 if attempt == max_retries - 1:
                     # Capture response text gracefully even if it's truncated or unavailable
                     resp_text = getattr(response, 'text', str(response))
-                    return None, f"JSON Decode Error: {e}\nRaw Response: {resp_text}"
+                    return None, f"Model malformed JSON failure: JSON Decode Error: {e}\nRaw Response: {resp_text}"
             else:
                 print(f"Error calling Gemini (Attempt {attempt+1}/{max_retries}): {e}")
                 if attempt == max_retries - 1:
                     resp_text = getattr(response, 'text', str(response)) if 'response' in locals() else 'No response object'
-                    return None, f"Error: {e}\nRaw Response: {resp_text}"
+                    return None, f"Model malformed JSON failure: Error: {e}\nRaw Response: {resp_text}"
                 time.sleep((attempt + 1) * 5)
 
     return None, "Max retries exceeded."
@@ -689,9 +689,15 @@ def main():
                 with open(fail_log_path, 'w', encoding='utf-8') as f:
                     f.write(f"Error:\n{error}\n\n")
 
-                state_dict[paper_id]['extraction_status'] = 'needs_review'
-                state_dict[paper_id]['last_error'] = str(error)[:200]
-                update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'needs_review', state_dict[paper_id]['last_error'])
+                if error and error.startswith("Model malformed JSON failure:"):
+                    state_dict[paper_id]['extraction_status'] = 'needs_review'
+                    state_dict[paper_id]['last_error'] = str(error)[:200]
+                    update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'needs_review', state_dict[paper_id]['last_error'])
+                else:
+                    state_dict[paper_id]['extraction_status'] = 'failed'
+                    state_dict[paper_id]['last_error'] = str(error)[:200]
+                    update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'failed', state_dict[paper_id]['last_error'])
+
                 upload_state(drive_service, state_folder_id, state_dict, manifest_list)
                 continue
 
@@ -711,7 +717,7 @@ def main():
                     f.write(f"Schema Error:\n{e.message}\n\nExtracted Data:\n{json.dumps(extracted_data, indent=2)}")
 
                 state_dict[paper_id]['extraction_status'] = 'needs_review'
-                state_dict[paper_id]['last_error'] = f"Schema validation failed: {e.message}"
+                state_dict[paper_id]['last_error'] = f"Schema validation failure: {e.message}"
                 update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'needs_review', state_dict[paper_id]['last_error'])
                 upload_state(drive_service, state_folder_id, state_dict, manifest_list)
                 continue
@@ -747,15 +753,20 @@ def main():
                 _upload_file(drive_service, dirs['edges'], ed_path, f"{paper_id}_edges.json", 'application/json')
                 _upload_file(drive_service, dirs['gaps'], gp_path, f"{paper_id}_gap_report.md", 'text/markdown')
             except Exception as e:
-                print(f"[{paper_id}] Failed to upload outputs to Drive: {e}")
+                print(f"[{paper_id}] Drive upload/state failure: Failed to upload outputs to Drive: {e}")
                 state_dict[paper_id]['extraction_status'] = 'failed'
-                state_dict[paper_id]['last_error'] = f"Upload failed: {e}"
+                state_dict[paper_id]['last_error'] = f"Drive upload/state failure: Upload failed: {e}"
                 update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'failed', state_dict[paper_id]['last_error'])
-                upload_state(drive_service, state_folder_id, state_dict, manifest_list)
+
+                try:
+                    upload_state(drive_service, state_folder_id, state_dict, manifest_list)
+                except Exception as upload_err:
+                    print(f"[{paper_id}] State persistence also failed: {upload_err}")
+
                 continue
 
             # Success!
-            print(f"[{paper_id}] Successfully completed.")
+            print(f"[{paper_id}] Successfully completed locally and outputs uploaded.")
             state_dict[paper_id]['extraction_status'] = 'completed'
             state_dict[paper_id]['extracted_at'] = datetime.utcnow().isoformat()
             state_dict[paper_id]['extraction_version'] = 'v1'
@@ -764,7 +775,13 @@ def main():
             update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, 'completed', '', state_dict[paper_id]['extracted_at'])
 
             # Persist state after successful paper
-            upload_state(drive_service, state_folder_id, state_dict, manifest_list)
+            try:
+                upload_state(drive_service, state_folder_id, state_dict, manifest_list)
+            except Exception as e:
+                print(f"[{paper_id}] State upload failed after successful extraction. The paper is NOT marked failed locally, but state is out of sync remotely.")
+                # We do not revert the local success state since extraction was completed and local files exist,
+                # but we raise to let the pipeline fail fast and not pretend state was updated.
+                raise
 
         finally:
             # Pacing delay applied after every paper (success or handled failure)
