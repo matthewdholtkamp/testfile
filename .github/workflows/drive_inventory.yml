@@ -1,0 +1,46 @@
+name: Manual Drive Inventory
+
+on:
+  workflow_dispatch:
+    inputs:
+      download_metadata:
+        description: "Download file content to parse rank/source metadata"
+        required: false
+        default: "true"
+
+jobs:
+  drive-inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Drive inventory
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          mkdir -p reports
+          if [ "${{ inputs.download_metadata }}" = "true" ]; then
+            python scripts/drive_inventory.py --download-metadata
+          else
+            python scripts/drive_inventory.py
+          fi
+          ls -la reports
+
+      - name: Upload inventory artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: drive_inventory
+          path: reports/drive_inventory_*.csv
