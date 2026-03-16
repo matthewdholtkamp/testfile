@@ -35,29 +35,34 @@ def write_csv(path, rows, fieldnames):
 def compute_summary(rows):
     folders = [row for row in rows if row.get('mime_type') == FOLDER_MIME_TYPE]
     files = [row for row in rows if row.get('mime_type') != FOLDER_MIME_TYPE]
+    structured_outputs = [row for row in rows if row.get('full_path', '').startswith('extraction_outputs/')]
     markdown_files = [row for row in files if row.get('name', '').endswith('.md') or row.get('mime_type') == 'text/markdown']
-    paper_files = [row for row in markdown_files if row.get('pmid')]
-    structured_outputs = [row for row in rows if row.get('full_path', '').startswith('extraction_outputs')]
-    abstract_only = [row for row in paper_files if row.get('extraction_rank') == '1']
-    no_metadata = [row for row in paper_files if not row.get('valid_metadata_block')]
+    source_paper_files = [
+        row for row in markdown_files
+        if row.get('pmid') and not row.get('full_path', '').startswith('extraction_outputs/')
+    ]
+    abstract_only = [row for row in source_paper_files if row.get('extraction_rank') == '1']
+    no_metadata = [row for row in source_paper_files if not row.get('valid_metadata_block')]
 
-    rank_counts = Counter(row.get('extraction_rank') for row in paper_files if row.get('extraction_rank'))
-    source_counts = Counter(row.get('extraction_source') for row in paper_files if row.get('extraction_source'))
-    top_level_counts = Counter(
-        (
-            row.get('full_path', row.get('name', '')).split('/', 1)[0]
-            if row.get('full_path', row.get('name', ''))
-            else ''
-        )
-        for row in rows
-    )
+    rank_counts = Counter(row.get('extraction_rank') for row in source_paper_files if row.get('extraction_rank'))
+    source_counts = Counter(row.get('extraction_source') for row in source_paper_files if row.get('extraction_source'))
 
-    pmid_counts = Counter(row.get('pmid') for row in paper_files if row.get('pmid'))
+    collection_counts = Counter()
+    collection_counts['root_papers'] = len(source_paper_files)
+    for row in structured_outputs:
+        parts = row.get('full_path', '').split('/')
+        if len(parts) >= 2:
+            collection_counts['/'.join(parts[:2])] += 1
+        elif parts and parts[0]:
+            collection_counts[parts[0]] += 1
+
+    pmid_counts = Counter(row.get('pmid') for row in source_paper_files if row.get('pmid'))
     duplicate_pmid_count = sum(1 for _, count in pmid_counts.items() if count > 1)
+    structured_output_pmids = Counter(row.get('pmid') for row in structured_outputs if row.get('pmid'))
 
     latest_paper = None
-    if paper_files:
-        latest_paper = max(paper_files, key=sortable_modified_time)
+    if source_paper_files:
+        latest_paper = max(source_paper_files, key=sortable_modified_time)
 
     summary = {
         'generated_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
@@ -65,17 +70,18 @@ def compute_summary(rows):
         'folder_count': len(folders),
         'file_count': len(files),
         'markdown_file_count': len(markdown_files),
-        'paper_file_count': len(paper_files),
+        'source_paper_file_count': len(source_paper_files),
         'structured_output_count': len(structured_outputs),
         'pmid_count': len(pmid_counts),
-        'duplicate_pmid_count': duplicate_pmid_count,
-        'valid_metadata_count': sum(1 for row in paper_files if str(row.get('valid_metadata_block', '')).lower() == 'true'),
+        'source_paper_duplicate_pmid_count': duplicate_pmid_count,
+        'structured_output_pmid_count': len(structured_output_pmids),
+        'valid_metadata_count': sum(1 for row in source_paper_files if str(row.get('valid_metadata_block', '')).lower() == 'true'),
         'abstract_only_count': len(abstract_only),
         'full_text_like_count': sum(rank_counts.get(rank, 0) for rank in ('5', '4', '3', '2')),
         'no_metadata_count': len(no_metadata),
         'rank_counts': dict(rank_counts),
         'source_counts': dict(source_counts),
-        'top_level_counts': dict(top_level_counts),
+        'collection_counts': dict(collection_counts),
         'latest_paper': {
             'pmid': latest_paper.get('pmid', ''),
             'full_path': latest_paper.get('full_path', ''),
@@ -88,7 +94,10 @@ def compute_summary(rows):
 
 
 def build_upgrade_targets(rows):
-    paper_rows = [row for row in rows if row.get('pmid')]
+    paper_rows = [
+        row for row in rows
+        if row.get('pmid') and not row.get('full_path', '').startswith('extraction_outputs/')
+    ]
     abstract_only = [row for row in paper_rows if row.get('extraction_rank') == '1']
     abstract_only.sort(
         key=lambda row: (sortable_modified_time(row), row.get('pmid', '')),
@@ -120,14 +129,15 @@ def render_markdown(summary, upgrade_targets, inventory_path):
         f"- Folders: `{summary['folder_count']}`",
         f"- Files: `{summary['file_count']}`",
         f"- Markdown files: `{summary['markdown_file_count']}`",
-        f"- Paper files with PMID: `{summary['paper_file_count']}`",
+        f"- Source paper files with PMID: `{summary['source_paper_file_count']}`",
         f"- Structured outputs under `extraction_outputs`: `{summary['structured_output_count']}`",
-        f"- Unique PMIDs: `{summary['pmid_count']}`",
-        f"- Duplicate PMIDs: `{summary['duplicate_pmid_count']}`",
-        f"- Paper files with valid metadata: `{summary['valid_metadata_count']}`",
-        f"- Abstract-only papers: `{summary['abstract_only_count']}`",
-        f"- Full-text-like papers (rank 2-5): `{summary['full_text_like_count']}`",
-        f"- Paper files missing metadata block: `{summary['no_metadata_count']}`",
+        f"- Source paper PMIDs: `{summary['pmid_count']}`",
+        f"- Duplicate source paper PMIDs: `{summary['source_paper_duplicate_pmid_count']}`",
+        f"- Structured output PMIDs: `{summary['structured_output_pmid_count']}`",
+        f"- Source papers with valid metadata: `{summary['valid_metadata_count']}`",
+        f"- Abstract-only source papers: `{summary['abstract_only_count']}`",
+        f"- Full-text-like source papers (rank 2-5): `{summary['full_text_like_count']}`",
+        f"- Source papers missing metadata block: `{summary['no_metadata_count']}`",
         '',
         '## Extraction Rank Counts',
         '',
@@ -140,9 +150,9 @@ def render_markdown(summary, upgrade_targets, inventory_path):
     for source, count in sorted(summary['source_counts'].items(), key=lambda item: (-item[1], item[0])):
         lines.append(f"- {source}: `{count}`")
 
-    lines.extend(['', '## Top-Level Drive Contents', ''])
-    for name, count in sorted(summary['top_level_counts'].items(), key=lambda item: (-item[1], item[0])):
-        lines.append(f"- {name or '[root]'}: `{count}`")
+    lines.extend(['', '## Collection Counts', ''])
+    for name, count in sorted(summary['collection_counts'].items(), key=lambda item: (-item[1], item[0])):
+        lines.append(f"- {name}: `{count}`")
 
     latest = summary.get('latest_paper')
     if latest:
