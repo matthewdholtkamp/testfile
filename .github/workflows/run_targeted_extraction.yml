@@ -1,0 +1,78 @@
+name: Targeted Full-Text Extraction Batch
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "Number of full-text-ready papers to extract in this run"
+        required: false
+        default: "10"
+      offset:
+        description: "Zero-based offset into the full-text-ready backlog"
+        required: false
+        default: "0"
+      dry_run:
+        description: "Build the batch and resolve eligible papers without calling Gemini"
+        required: false
+        type: boolean
+        default: false
+      include_needs_review:
+        description: "Include papers already marked needs_review if they are in the allowlist"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  targeted-extraction:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt google-generativeai jsonschema
+
+      - name: Build targeted extraction batch and run extraction
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          mkdir -p reports output outputs/state
+          python scripts/drive_inventory.py --recursive --download-metadata
+          latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
+          python scripts/analyze_drive_inventory.py --inventory "$latest_inventory" --output-dir reports
+          latest_backlog=$(ls -1t reports/drive_extraction_backlog_*.csv | head -n1)
+          python scripts/build_extraction_allowlist.py \
+            --backlog "$latest_backlog" \
+            --output outputs/state/extraction_allowlist.txt \
+            --manifest outputs/state/targeted_extraction_batch.csv \
+            --batch-size "${{ inputs.batch_size }}" \
+            --offset "${{ inputs.offset }}"
+          ARGS="--allowlist outputs/state/extraction_allowlist.txt --max-papers ${{ inputs.batch_size }}"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ "${{ inputs.include_needs_review }}" = "true" ]; then
+            ARGS="$ARGS --include-needs-review"
+          fi
+          python scripts/run_extraction.py $ARGS
+
+      - name: Upload Local Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: targeted-extraction-run-outputs
+          path: |
+            reports/
+            output/
+            outputs/
+          retention-days: 7

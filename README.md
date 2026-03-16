@@ -13,12 +13,20 @@ The project includes two manual GitHub Actions workflows:
 
 1. **Manual PubMed to Google Drive Pipeline:** Runs the search and retrieval process.
 2. **Manual PubMed Extraction Pipeline:** Runs the Gemini-based extraction process.
+3. **Targeted Full-Text Extraction Batch:** Builds a fresh Drive inventory, selects on-topic backlog papers that are already full-text-like, and runs extraction only on that ordered batch.
 
 ### Running the Extraction Pipeline
 To run a real extraction test, navigate to **Actions** > **Manual PubMed Extraction Pipeline**, click **Run workflow**, and ensure the following exact settings:
 - **Use workflow from:** `main` (or your active branch)
 - **Run in dry-run mode:** `OFF` (must be `false` for a real extraction run)
 - **Include papers with status 'needs_review':** `OFF` (leave `false` for the first real run)
+
+### Running the Targeted Full-Text Backlog Batch
+To process only the on-topic backlog papers that are already full-text-like:
+- Open **Actions** > **Targeted Full-Text Extraction Batch**
+- Set `batch_size` and `offset`
+- Leave `dry_run` off for a real run
+- Leave `include_needs_review` off unless you explicitly want to revisit prior review-needed papers in the selected batch
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.

@@ -36,6 +36,40 @@ def load_config():
     with open('config/config.yaml', 'r') as f:
         return yaml.safe_load(f)
 
+
+def has_cli_flag(flag):
+    return flag in sys.argv
+
+
+def get_cli_value(flag, default=''):
+    if flag not in sys.argv:
+        return default
+    idx = sys.argv.index(flag)
+    if idx + 1 >= len(sys.argv):
+        print(f"Error: {flag} requires a value.")
+        sys.exit(1)
+    return sys.argv[idx + 1]
+
+
+def load_allowlist_paper_ids(filepath):
+    if not filepath:
+        return []
+    if not os.path.exists(filepath):
+        print(f"Error: allowlist file not found: {filepath}")
+        sys.exit(1)
+
+    ordered_ids = []
+    seen = set()
+    with open(filepath, 'r', encoding='utf-8') as handle:
+        for raw_line in handle:
+            value = raw_line.strip()
+            if not value or value.startswith('#'):
+                continue
+            if value not in seen:
+                ordered_ids.append(value)
+                seen.add(value)
+    return ordered_ids
+
 def load_json_config(filepath):
     try:
         if os.path.exists(filepath):
@@ -268,9 +302,11 @@ def update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, s
     if not updated:
         manifest_list.append(manifest_row)
 
-def find_eligible_papers(service, folder_id, state_dict, include_needs_review):
+def find_eligible_papers(service, folder_id, state_dict, include_needs_review, allowlist_paper_ids=None):
     """Finds all .md files in the configured folder and filters them based on state."""
     query = f"mimeType='text/markdown' and '{folder_id}' in parents and trashed=false"
+    allowlist_set = set(allowlist_paper_ids or [])
+    allowlist_order = {paper_id: idx for idx, paper_id in enumerate(allowlist_paper_ids or [])}
 
     eligible = []
     page_token = None
@@ -285,6 +321,9 @@ def find_eligible_papers(service, folder_id, state_dict, include_needs_review):
                 continue
 
             paper_id = extract_paper_id_from_filename(item['name'])
+
+            if allowlist_set and paper_id not in allowlist_set:
+                continue
 
             # Check state
             paper_state = state_dict.get(paper_id, {})
@@ -308,6 +347,9 @@ def find_eligible_papers(service, folder_id, state_dict, include_needs_review):
         page_token = results.get('nextPageToken')
         if not page_token:
             break
+
+    if allowlist_order:
+        eligible.sort(key=lambda item: allowlist_order.get(item['paper_id'], len(allowlist_order)))
 
     return eligible
 
@@ -537,12 +579,15 @@ def main():
     config = load_config()
 
     # Check for dry run
-    dry_run = '--dry-run' in sys.argv
-    include_needs_review = '--include-needs-review' in sys.argv
+    dry_run = has_cli_flag('--dry-run')
+    include_needs_review = has_cli_flag('--include-needs-review')
+    allowlist_path = get_cli_value('--allowlist', '')
+    allowlist_paper_ids = load_allowlist_paper_ids(allowlist_path)
+    max_papers_override = get_cli_value('--max-papers', '')
 
     extraction_mode = config.get('extraction_mode', 'disabled')
     extraction_model = config.get('extraction_model', 'gemini-3.1-flash-lite')
-    max_papers_per_run = config.get('max_papers_per_run', 5)
+    max_papers_per_run = int(max_papers_override) if max_papers_override else config.get('max_papers_per_run', 5)
     inter_paper_delay_seconds = config.get('inter_paper_delay_seconds', 8)
     extraction_routing = config.get('extraction_routing', {})
 
@@ -566,6 +611,9 @@ def main():
         print(f"  {key}: '{path}'")
     print(f"CLI Flag --dry-run: {dry_run}")
     print(f"CLI Flag --include-needs-review: {include_needs_review}")
+    print(f"CLI Flag --allowlist: {allowlist_path if allowlist_path else '(none)'}")
+    print(f"Resolved allowlist size: {len(allowlist_paper_ids)}")
+    print(f"CLI Flag --max-papers override: {max_papers_override if max_papers_override else '(none)'}")
     print("-------------------------------------\n")
 
     if extraction_mode != 'atlas_v1':
@@ -638,7 +686,13 @@ def main():
     manifest_list = download_manifest_file(drive_service, state_folder_id)
 
     print("Finding eligible papers...")
-    eligible_papers = find_eligible_papers(drive_service, papers_folder_id, state_dict, include_needs_review)
+    eligible_papers = find_eligible_papers(
+        drive_service,
+        papers_folder_id,
+        state_dict,
+        include_needs_review,
+        allowlist_paper_ids=allowlist_paper_ids,
+    )
     print(f"Found {len(eligible_papers)} total papers eligible for extraction.")
 
     # Cap the number of papers per run
