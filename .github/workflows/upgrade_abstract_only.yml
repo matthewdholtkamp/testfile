@@ -1,0 +1,63 @@
+name: Batch Upgrade Abstract-Only Papers
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "Number of abstract-only papers to attempt in this run"
+        required: false
+        default: "15"
+      offset:
+        description: "Zero-based offset into the upgrade target list"
+        required: false
+        default: "0"
+      dry_run:
+        description: "Generate the target batch manifest without modifying Drive"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  upgrade-batch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build upgrade targets and run batch
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+          UNPAYWALL_EMAIL: ${{ secrets.UNPAYWALL_EMAIL }}
+        run: |
+          mkdir -p reports output
+          python scripts/drive_inventory.py --recursive --download-metadata
+          latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
+          python scripts/analyze_drive_inventory.py --inventory "$latest_inventory" --output-dir reports
+          latest_targets=$(ls -1t reports/drive_upgrade_targets_*.csv | head -n1)
+          ARGS="--targets $latest_targets --batch-size ${{ inputs.batch_size }} --offset ${{ inputs.offset }}"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          python scripts/run_upgrade_batch.py $ARGS
+
+      - name: Upload batch artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: abstract_only_upgrade_batch
+          path: |
+            reports/
+            output/
