@@ -13,6 +13,18 @@ sys.path.insert(0, REPO_ROOT)
 
 import scripts.run_pipeline as rp
 
+CORE_TBI_TERMS = [
+    "traumatic brain injury",
+    "tbi",
+    "mild traumatic brain injury",
+    "mtbi",
+    "concussion",
+    "post-concussion",
+    "post-concussive",
+    "diffuse axonal injury",
+    "blast injury",
+]
+
 
 def latest_targets_path():
     candidates = sorted(glob('reports/drive_upgrade_targets_*.csv'))
@@ -28,6 +40,14 @@ def load_targets(path):
 
 def select_targets(rows, batch_size, offset):
     return rows[offset:offset + batch_size]
+
+
+def matches_tbi_anchor(data):
+    text_to_check = (data.get('title', '') + " " + data.get('abstract', '')).lower()
+    for term in CORE_TBI_TERMS:
+        if re.search(r'\b' + re.escape(term) + r'\b', text_to_check):
+            return True
+    return False
 
 
 def build_filename(pmid, data):
@@ -218,15 +238,34 @@ def main():
 
     targets_path = args.targets or latest_targets_path()
     all_targets = load_targets(targets_path)
-    selected_targets = select_targets(all_targets, args.batch_size, args.offset)
-
-    if not selected_targets:
-        raise SystemExit("No upgrade targets selected. Check batch size and offset.")
-
     os.makedirs('output', exist_ok=True)
 
     manifest_timestamp = datetime.now().strftime('%Y-%m-%d_%H%M%S')
     manifest_path = os.path.join('output', f'upgrade_batch_manifest_{manifest_timestamp}.csv')
+
+    ncbi_api_key = os.environ.get('NCBI_API_KEY')
+    candidate_targets = all_targets[args.offset:]
+    selection_metadata = {}
+    skipped_non_tbi = 0
+
+    if ncbi_api_key and candidate_targets:
+        selection_pmids = [row.get('pmid', '') for row in candidate_targets if row.get('pmid')]
+        selection_metadata = rp.fetch_metadata(selection_pmids, ncbi_api_key)
+        selected_targets = []
+        for row in candidate_targets:
+            pmid = row.get('pmid', '')
+            data = selection_metadata.get(pmid)
+            if not data or not matches_tbi_anchor(data):
+                skipped_non_tbi += 1
+                continue
+            selected_targets.append(row)
+            if len(selected_targets) >= args.batch_size:
+                break
+    else:
+        selected_targets = select_targets(all_targets, args.batch_size, args.offset)
+
+    if not selected_targets:
+        raise SystemExit("No upgrade targets selected after anchor filtering. Check offset or target list quality.")
 
     if args.dry_run:
         dry_rows = []
@@ -248,10 +287,10 @@ def main():
         write_manifest(manifest_path, dry_rows)
         print(f"Dry-run manifest written: {manifest_path}")
         print(f"Selected {len(dry_rows)} targets from {targets_path}")
+        print(f"Skipped non-TBI candidates during selection: {skipped_non_tbi}")
         return
 
     config = rp.load_config()
-    ncbi_api_key = os.environ.get('NCBI_API_KEY')
     drive_folder_id = os.environ.get('DRIVE_FOLDER_ID')
     unpaywall_email = os.environ.get('UNPAYWALL_EMAIL', config.get('UNPAYWALL_EMAIL'))
 
@@ -263,7 +302,10 @@ def main():
     blocked_domains = pipeline_state.get('blocked_domains', {})
 
     pmids = [row.get('pmid', '') for row in selected_targets if row.get('pmid')]
-    metadata = rp.fetch_metadata(pmids, ncbi_api_key)
+    metadata = {pmid: selection_metadata[pmid] for pmid in pmids if pmid in selection_metadata}
+    missing_pmids = [pmid for pmid in pmids if pmid not in metadata]
+    if missing_pmids:
+        metadata.update(rp.fetch_metadata(missing_pmids, ncbi_api_key))
 
     domain_stats = {}
     manifest_rows = []
@@ -390,6 +432,7 @@ def main():
     print("\n--- Upgrade Batch Summary ---")
     print(f"Targets file: {targets_path}")
     print(f"Batch size selected: {len(selected_targets)}")
+    print(f"Skipped non-TBI candidates during selection: {skipped_non_tbi}")
     print(f"Upgraded in place: {stats['upgraded']}")
     print(f"Created new files: {stats['created']}")
     print(f"Skipped: {stats['skipped']}")
