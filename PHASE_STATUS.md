@@ -17,24 +17,24 @@ This phase is complete when corpus maintenance is repeatable and the queue is cl
 
 ## Verified Current State
 
-Based on the topic-aware Drive inventory run `23160422921`:
+Based on the topic-aware Drive inventory run `23166094230`:
 
 - `332` source-paper PMIDs in Drive
 - `281` on-topic source papers
 - `51` off-topic or unclear source papers
-- `173` structured-output files under `extraction_outputs/`
-- `33` source-paper PMIDs with any structured outputs
-- `16` on-topic papers with structured outputs
-- `265` on-topic papers still missing structured outputs
+- `213` structured-output files under `extraction_outputs/`
+- `41` source-paper PMIDs with any structured outputs
+- `24` on-topic papers with structured outputs
+- `257` on-topic papers still missing structured outputs
 - `149` abstract-only source papers overall
 - `128` on-topic abstract-only source papers overall
 - `179` full-text-like source papers overall
 - `0` duplicate source-paper PMIDs
 
-Within the on-topic extraction backlog (`265` papers missing structured outputs):
+Within the on-topic extraction backlog (`257` papers missing structured outputs):
 
 - `120` are still abstract-only and should be upgrade-first
-- `145` are already full-text-like and are ready for extraction now
+- `137` are already full-text-like and are ready for extraction now
 
 ## What Changed Recently
 
@@ -57,6 +57,13 @@ Across the two real filtered upgrade batches completed so far:
 - `15` on-topic abstract-only papers were attempted
 - `2` were upgraded to a better source
 - measured upgrade yield so far: `13.3%`
+
+Across the first two targeted full-text extraction batches:
+
+- `8` on-topic source papers were completed into structured outputs
+- `0` remain in `needs_review` from those two batches after the normalization patch
+- the first targeted batch yielded `3` completions and exposed two schema-normalization misses
+- the second targeted batch converted those two review papers and added `3` more completions
 
 ## Current Bottleneck
 
@@ -86,5 +93,5 @@ At that point, the project should shift emphasis from corpus improvement to extr
 ## Recommended Next Moves
 
 1. Keep running filtered upgrade batches against the on-topic abstract-only queue.
-2. Start scheduled or manual extraction against the `145` on-topic full-text-ready papers with no structured outputs.
+2. Keep running targeted extraction batches against the `137` on-topic full-text-ready papers with no structured outputs.
 3. Add a lightweight extraction QA gate so scaling does not create a larger low-quality output pile.
