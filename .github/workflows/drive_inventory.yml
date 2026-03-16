@@ -33,14 +33,16 @@ jobs:
         run: |
           mkdir -p reports
           if [ "${{ inputs.download_metadata }}" = "true" ]; then
-            python scripts/drive_inventory.py --download-metadata
+            python scripts/drive_inventory.py --recursive --download-metadata
           else
-            python scripts/drive_inventory.py
+            python scripts/drive_inventory.py --recursive
           fi
+          latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
+          python scripts/analyze_drive_inventory.py --inventory "$latest_inventory" --output-dir reports
           ls -la reports
 
       - name: Upload inventory artifact
         uses: actions/upload-artifact@v4
         with:
           name: drive_inventory
-          path: reports/drive_inventory_*.csv
+          path: reports/
