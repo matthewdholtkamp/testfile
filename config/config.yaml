@@ -14,7 +14,7 @@ UNPAYWALL_EMAIL: ""
 # --- Extraction Pipeline Configuration ---
 # 'extraction_mode': 'disabled' or 'atlas_v1'. Default is 'disabled'.
 extraction_mode: atlas_v1
-extraction_model: "gemini-2.5-flash"
+extraction_model: "gemini-3.1-flash-lite-preview"
 max_papers_per_run: 5
 inter_paper_delay_seconds: 8
 

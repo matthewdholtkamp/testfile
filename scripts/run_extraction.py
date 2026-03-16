@@ -355,7 +355,7 @@ def find_eligible_papers(service, folder_id, state_dict, include_needs_review, a
 
 def parse_with_gemini(text, schema_json, taxonomy_configs):
     """Calls Gemini to parse the text and extract structured JSON."""
-    model_name = load_config().get('extraction_model', 'gemini-2.5-flash')
+    model_name = load_config().get('extraction_model', 'gemini-3.1-flash-lite-preview')
 
     try:
         model = genai.GenerativeModel(model_name)
@@ -591,7 +591,7 @@ def main():
     max_papers_override = get_cli_value('--max-papers', '')
 
     extraction_mode = config.get('extraction_mode', 'disabled')
-    extraction_model = config.get('extraction_model', 'gemini-3.1-flash-lite')
+    extraction_model = config.get('extraction_model', 'gemini-3.1-flash-lite-preview')
     max_papers_per_run = int(max_papers_override) if max_papers_override else config.get('max_papers_per_run', 5)
     inter_paper_delay_seconds = config.get('inter_paper_delay_seconds', 8)
     extraction_routing = config.get('extraction_routing', {})
