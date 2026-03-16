@@ -10,6 +10,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
 
 import scripts.run_pipeline as rp
+from scripts.topic_utils import classify_markdown_topic
 
 FOLDER_MIME_TYPE = 'application/vnd.google-apps.folder'
 
@@ -106,6 +107,9 @@ def main():
         extraction_source = ''
         content_length = ''
         valid_metadata_block = ''
+        topic_bucket = ''
+        topic_anchor = ''
+        title_excerpt = ''
         pmid = extract_pmid(name)
 
         if mime_type == FOLDER_MIME_TYPE:
@@ -121,6 +125,7 @@ def main():
                 extraction_source = source or ''
                 content_length = length
                 valid_metadata_block = bool(valid_meta)
+                topic_bucket, topic_anchor, title_excerpt = classify_markdown_topic(content, full_path)
                 metadata_parsed += 1
                 if not pmid:
                     pmid = extract_pmid(name, content)
@@ -139,6 +144,9 @@ def main():
             'extraction_source': extraction_source,
             'content_length': content_length,
             'valid_metadata_block': valid_metadata_block,
+            'topic_bucket': topic_bucket,
+            'topic_anchor': topic_anchor,
+            'title_excerpt': title_excerpt,
             'modified_time': modified_time,
             'mime_type': mime_type,
             'size': size,
@@ -146,7 +154,7 @@ def main():
 
     fieldnames = [
         'file_id', 'parent_path', 'full_path', 'depth', 'name', 'pmid', 'extraction_rank', 'extraction_source', 'content_length',
-        'valid_metadata_block', 'modified_time', 'mime_type', 'size'
+        'valid_metadata_block', 'topic_bucket', 'topic_anchor', 'title_excerpt', 'modified_time', 'mime_type', 'size'
     ]
 
     with open(output_path, 'w', newline='', encoding='utf-8') as f:

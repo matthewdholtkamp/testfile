@@ -244,25 +244,25 @@ def main():
     manifest_path = os.path.join('output', f'upgrade_batch_manifest_{manifest_timestamp}.csv')
 
     ncbi_api_key = os.environ.get('NCBI_API_KEY')
-    candidate_targets = all_targets[args.offset:]
+    candidate_targets = all_targets
     selection_metadata = {}
     skipped_non_tbi = 0
+    filtered_targets = []
 
     if ncbi_api_key and candidate_targets:
         selection_pmids = [row.get('pmid', '') for row in candidate_targets if row.get('pmid')]
         selection_metadata = rp.fetch_metadata(selection_pmids, ncbi_api_key)
-        selected_targets = []
         for row in candidate_targets:
             pmid = row.get('pmid', '')
             data = selection_metadata.get(pmid)
             if not data or not matches_tbi_anchor(data):
                 skipped_non_tbi += 1
                 continue
-            selected_targets.append(row)
-            if len(selected_targets) >= args.batch_size:
-                break
+            filtered_targets.append(row)
     else:
-        selected_targets = select_targets(all_targets, args.batch_size, args.offset)
+        filtered_targets = all_targets
+
+    selected_targets = select_targets(filtered_targets, args.batch_size, args.offset)
 
     if not selected_targets:
         raise SystemExit("No upgrade targets selected after anchor filtering. Check offset or target list quality.")
@@ -287,6 +287,7 @@ def main():
         write_manifest(manifest_path, dry_rows)
         print(f"Dry-run manifest written: {manifest_path}")
         print(f"Selected {len(dry_rows)} targets from {targets_path}")
+        print(f"Total filtered on-topic candidates: {len(filtered_targets)}")
         print(f"Skipped non-TBI candidates during selection: {skipped_non_tbi}")
         return
 
@@ -431,6 +432,7 @@ def main():
 
     print("\n--- Upgrade Batch Summary ---")
     print(f"Targets file: {targets_path}")
+    print(f"Total filtered on-topic candidates: {len(filtered_targets)}")
     print(f"Batch size selected: {len(selected_targets)}")
     print(f"Skipped non-TBI candidates during selection: {skipped_non_tbi}")
     print(f"Upgraded in place: {stats['upgraded']}")
