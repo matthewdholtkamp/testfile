@@ -17,7 +17,7 @@ This phase is complete when corpus maintenance is repeatable and the queue is cl
 
 ## Verified Current State
 
-Based on the topic-aware Drive inventory run `23160021982`:
+Based on the topic-aware Drive inventory run `23160422921`:
 
 - `332` source-paper PMIDs in Drive
 - `281` on-topic source papers
@@ -26,15 +26,15 @@ Based on the topic-aware Drive inventory run `23160021982`:
 - `33` source-paper PMIDs with any structured outputs
 - `16` on-topic papers with structured outputs
 - `265` on-topic papers still missing structured outputs
-- `150` abstract-only source papers overall
-- `129` on-topic abstract-only source papers overall
-- `178` full-text-like source papers overall
+- `149` abstract-only source papers overall
+- `128` on-topic abstract-only source papers overall
+- `179` full-text-like source papers overall
 - `0` duplicate source-paper PMIDs
 
 Within the on-topic extraction backlog (`265` papers missing structured outputs):
 
-- `121` are still abstract-only and should be upgrade-first
-- `144` are already full-text-like and are ready for extraction now
+- `120` are still abstract-only and should be upgrade-first
+- `145` are already full-text-like and are ready for extraction now
 
 ## What Changed Recently
 
@@ -47,9 +47,16 @@ The repository now includes:
 - manual GitHub workflow for inventory: `.github/workflows/drive_inventory.yml`
 - manual GitHub workflow for upgrade batches: `.github/workflows/upgrade_abstract_only.yml`
 
-The upgrade workflow has already produced at least one confirmed source-quality improvement:
+The upgrade workflow has already produced confirmed source-quality improvements:
 
 - PMID `41100047` upgraded from rank `1` (`Abstract only`) to rank `3` (`Publisher HTML`)
+- PMID `41177833` upgraded from rank `1` (`Abstract only`) to rank `3` (`Publisher HTML`)
+
+Across the two real filtered upgrade batches completed so far:
+
+- `15` on-topic abstract-only papers were attempted
+- `2` were upgraded to a better source
+- measured upgrade yield so far: `13.3%`
 
 ## Current Bottleneck
 
@@ -79,5 +86,5 @@ At that point, the project should shift emphasis from corpus improvement to extr
 ## Recommended Next Moves
 
 1. Keep running filtered upgrade batches against the on-topic abstract-only queue.
-2. Start scheduled or manual extraction against the `144` on-topic full-text-ready papers with no structured outputs.
+2. Start scheduled or manual extraction against the `145` on-topic full-text-ready papers with no structured outputs.
 3. Add a lightweight extraction QA gate so scaling does not create a larger low-quality output pile.
