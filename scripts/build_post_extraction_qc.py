@@ -11,10 +11,16 @@ from scripts.run_extraction import download_file_content, get_google_drive_servi
 
 
 def latest_inventory_path():
-    candidates = sorted(glob.glob("reports/drive_inventory_*.csv"))
+    candidates = sorted(glob.glob("reports/**/drive_inventory_*.csv", recursive=True))
     if not candidates:
         raise FileNotFoundError("No drive inventory CSV found under reports/. Run scripts/drive_inventory.py first.")
-    return candidates[-1]
+    for candidate in reversed(candidates):
+        with open(candidate, newline="", encoding="utf-8") as handle:
+            reader = csv.reader(handle)
+            header = next(reader, [])
+        if {"pmid", "full_path", "topic_bucket", "modified_time"}.issubset(set(header)):
+            return candidate
+    raise FileNotFoundError("No drive inventory CSV with required columns found under reports/.")
 
 
 def load_inventory(inventory_path: str) -> List[Dict[str, str]]:
@@ -97,7 +103,7 @@ def derive_qa_bucket(record):
         reasons.append("sparse")
     if record["vague_output"]:
         reasons.append("low_confidence")
-    if record["avg_mechanistic_depth_score"] is not None and record["avg_mechanistic_depth_score"] < 0.5:
+    if record["avg_mechanistic_depth_score"] is not None and record["avg_mechanistic_depth_score"] < 2.5:
         reasons.append("low_mechanistic_depth")
 
     if record["whether_needs_manual_review"]:
@@ -204,7 +210,7 @@ def build_qc_records(
 
         flags = {
             "sparse": claim_count < 3 and edge_count < 3,
-            "vague": avg_confidence is None or (avg_confidence is not None and avg_confidence < 0.5),
+            "vague": avg_confidence is None or (avg_confidence is not None and avg_confidence < 2.5),
             "needs_deeper_pass": extraction_rank == "1",
         }
         record = {

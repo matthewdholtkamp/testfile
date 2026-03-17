@@ -21,18 +21,42 @@ EXTRACTION_COLLECTIONS = {
     'decisions': 'decision',
     'graph_edges': 'edges',
 }
+INVENTORY_REQUIRED_COLUMNS = {'pmid', 'full_path', 'topic_bucket', 'modified_time'}
+LOW_SCORE_THRESHOLD = 2.5
+HIGH_SIGNAL_DEPTH_THRESHOLD = 3.5
 
 
 def latest_inventory_path():
-    candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', 'drive_inventory_*.csv')))
+    candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', 'drive_inventory_*.csv'), recursive=True))
     if not candidates:
         raise FileNotFoundError('No drive_inventory CSV found under reports/.')
-    return candidates[-1]
+    valid_candidates = [path for path in candidates if inventory_has_required_columns(path)]
+    if not valid_candidates:
+        raise FileNotFoundError(
+            f'No drive_inventory CSV with required columns {sorted(INVENTORY_REQUIRED_COLUMNS)} found under reports/.'
+        )
+    return valid_candidates[-1]
+
+
+def inventory_has_required_columns(path):
+    try:
+        with open(path, newline='', encoding='utf-8') as handle:
+            reader = csv.reader(handle)
+            header = next(reader)
+    except (FileNotFoundError, StopIteration):
+        return False
+    return INVENTORY_REQUIRED_COLUMNS.issubset(set(header))
 
 
 def read_csv(path):
     with open(path, newline='', encoding='utf-8') as handle:
-        return list(csv.DictReader(handle))
+        reader = csv.DictReader(handle)
+        if not INVENTORY_REQUIRED_COLUMNS.issubset(set(reader.fieldnames or [])):
+            raise ValueError(
+                f'Inventory CSV {path} is missing required columns {sorted(INVENTORY_REQUIRED_COLUMNS)}. '
+                f'Found columns: {reader.fieldnames or []}'
+            )
+        return list(reader)
 
 
 def write_csv(path, rows, fieldnames):
@@ -146,11 +170,11 @@ def quality_bucket(source_tier, claim_count, edge_count, avg_depth, needs_review
         return 'empty'
     if source_tier == 'abstract_only' and claim_count <= 2 and edge_count == 0:
         return 'sparse_abstract'
-    if avg_depth != '' and avg_depth >= 0.7:
+    if avg_depth != '' and avg_depth >= HIGH_SIGNAL_DEPTH_THRESHOLD and (claim_count >= 3 or edge_count >= 2):
         return 'high_signal'
-    if claim_count >= 4 or edge_count >= 3:
+    if claim_count >= 5 or edge_count >= 4:
         return 'high_signal'
-    if claim_count >= 2:
+    if claim_count >= 2 or edge_count >= 1:
         return 'usable'
     return 'sparse'
 
@@ -160,7 +184,7 @@ def investigation_priority(source_tier, claim_count, edge_count, needs_review):
         return 'manual_review'
     if source_tier == 'full_text_like' and (claim_count >= 4 or edge_count >= 2):
         return 'high'
-    if claim_count >= 2:
+    if claim_count >= 2 or edge_count >= 1:
         return 'medium'
     return 'low'
 
@@ -168,6 +192,8 @@ def investigation_priority(source_tier, claim_count, edge_count, needs_review):
 def build_paper_rows(service, source_map, output_index, on_topic_only):
     pmids = sorted(output_index)
     paper_rows = []
+    claim_export_rows = []
+    edge_export_rows = []
     mechanism_accumulator = defaultdict(list)
     atlas_accumulator = defaultdict(list)
     biomarker_accumulator = defaultdict(list)
@@ -237,6 +263,71 @@ def build_paper_rows(service, source_map, output_index, on_topic_only):
         }
         paper_rows.append(paper_row)
 
+        for claim in claims_json:
+            if not isinstance(claim, dict):
+                continue
+            claim_export_rows.append({
+                'pmid': pmid,
+                'paper_id': paper_row['paper_id'],
+                'title': paper_row['title'],
+                'source_quality_tier': source_tier,
+                'topic_anchor': paper_row['topic_anchor'],
+                'claim_id': claim.get('claim_id', ''),
+                'claim_text': claim.get('claim_text', ''),
+                'normalized_claim': claim.get('normalized_claim', ''),
+                'atlas_layer': claim.get('atlas_layer', ''),
+                'mechanism': claim.get('mechanism', ''),
+                'direction_of_effect': claim.get('direction_of_effect', ''),
+                'causal_status': claim.get('causal_status', ''),
+                'evidence_type': claim.get('evidence_type', ''),
+                'species': claim.get('species', ''),
+                'model': claim.get('model', ''),
+                'anatomy': claim.get('anatomy', ''),
+                'cell_type': claim.get('cell_type', ''),
+                'timing_bin': claim.get('timing_bin', ''),
+                'biomarkers': join_sorted(claim.get('biomarkers', []) or []),
+                'interventions': join_sorted(claim.get('interventions', []) or []),
+                'outcome_measures': join_sorted(claim.get('outcome_measures', []) or []),
+                'confidence_score': claim.get('confidence_score', ''),
+                'mechanistic_depth_score': claim.get('mechanistic_depth_score', ''),
+                'translational_relevance_score': claim.get('translational_relevance_score', ''),
+                'include_in_core_atlas': decision_json.get('include_in_core_atlas', ''),
+                'whether_human_relevant': decision_json.get('whether_human_relevant', ''),
+                'whether_mechanistically_informative': decision_json.get('whether_mechanistically_informative', ''),
+                'whether_needs_manual_review': needs_review,
+                'primary_domain': decision_json.get('primary_domain', ''),
+                'novelty_estimate': decision_json.get('novelty_estimate', ''),
+            })
+
+        for edge in edges_json:
+            if not isinstance(edge, dict):
+                continue
+            edge_export_rows.append({
+                'pmid': pmid,
+                'paper_id': paper_row['paper_id'],
+                'title': paper_row['title'],
+                'source_quality_tier': source_tier,
+                'topic_anchor': paper_row['topic_anchor'],
+                'edge_id': edge.get('edge_id', ''),
+                'source_node': edge.get('source_node', ''),
+                'relation': edge.get('relation', ''),
+                'target_node': edge.get('target_node', ''),
+                'atlas_layer': edge.get('atlas_layer', ''),
+                'anatomy': edge.get('anatomy', ''),
+                'cell_type': edge.get('cell_type', ''),
+                'timing_bin': edge.get('timing_bin', ''),
+                'species': edge.get('species', ''),
+                'evidence_strength': edge.get('evidence_strength', ''),
+                'contradiction_flag': edge.get('contradiction_flag', ''),
+                'notes': edge.get('notes', ''),
+                'include_in_core_atlas': decision_json.get('include_in_core_atlas', ''),
+                'whether_human_relevant': decision_json.get('whether_human_relevant', ''),
+                'whether_mechanistically_informative': decision_json.get('whether_mechanistically_informative', ''),
+                'whether_needs_manual_review': needs_review,
+                'primary_domain': decision_json.get('primary_domain', ''),
+                'novelty_estimate': decision_json.get('novelty_estimate', ''),
+            })
+
         for mechanism in {value for value in mechanisms if value}:
             mechanism_accumulator[mechanism].append(paper_row)
         for atlas_layer in {value for value in atlas_layers if value}:
@@ -244,7 +335,7 @@ def build_paper_rows(service, source_map, output_index, on_topic_only):
         for biomarker in {value for value in biomarkers if value}:
             biomarker_accumulator[biomarker].append(paper_row)
 
-    return paper_rows, mechanism_accumulator, atlas_accumulator, biomarker_accumulator
+    return paper_rows, claim_export_rows, edge_export_rows, mechanism_accumulator, atlas_accumulator, biomarker_accumulator
 
 
 def aggregate_group(grouped_rows, label_name):
@@ -282,14 +373,14 @@ def build_caution_rows(paper_rows, limit=15):
     caution_rows = [
         row for row in paper_rows
         if row['quality_bucket'] in {'review_needed', 'sparse_abstract', 'empty', 'sparse'}
-        or numeric_or_default(row['avg_confidence_score'], 1.0) < 0.5
+        or numeric_or_default(row['avg_confidence_score'], 5.0) < LOW_SCORE_THRESHOLD
     ]
     caution_rows.sort(
         key=lambda row: (
             row['quality_bucket'] != 'review_needed',
             row['source_quality_tier'] != 'abstract_only',
-            numeric_or_default(row['avg_confidence_score'], 1.0),
-            numeric_or_default(row['avg_mechanistic_depth_score'], 1.0),
+            numeric_or_default(row['avg_confidence_score'], 5.0),
+            numeric_or_default(row['avg_mechanistic_depth_score'], 5.0),
             row['pmid'],
         )
     )
@@ -316,7 +407,7 @@ def build_core_atlas_candidates(paper_rows, limit=15):
     return candidates[:limit]
 
 
-def build_summary_payload(paper_rows, mechanism_rows, atlas_rows, biomarker_rows, inventory_path):
+def build_summary_payload(paper_rows, claim_export_rows, edge_export_rows, mechanism_rows, atlas_rows, biomarker_rows, inventory_path):
     quality_counts = Counter(row['quality_bucket'] for row in paper_rows)
     tier_counts = Counter(row['source_quality_tier'] for row in paper_rows)
     priority_counts = Counter(row['investigation_priority'] for row in paper_rows)
@@ -330,6 +421,8 @@ def build_summary_payload(paper_rows, mechanism_rows, atlas_rows, biomarker_rows
         'generated_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
         'inventory_path': inventory_path,
         'paper_count': len(paper_rows),
+        'claim_export_count': len(claim_export_rows),
+        'edge_export_count': len(edge_export_rows),
         'source_quality_tier_counts': dict(tier_counts),
         'quality_bucket_counts': dict(quality_counts),
         'investigation_priority_counts': dict(priority_counts),
@@ -355,6 +448,8 @@ def render_markdown(summary):
         f"- Generated at: `{summary['generated_at']}`",
         f"- Inventory path: `{summary['inventory_path']}`",
         f"- On-topic papers analyzed: `{summary['paper_count']}`",
+        f"- Claim rows exported: `{summary['claim_export_count']}`",
+        f"- Edge rows exported: `{summary['edge_export_count']}`",
         '',
         '## Source Quality Tiers',
         '',
@@ -424,9 +519,9 @@ def render_investigation_brief(summary):
             reasons.append('abstract-only')
         if row['quality_bucket'] in {'sparse_abstract', 'empty', 'sparse'}:
             reasons.append(row['quality_bucket'].replace('_', ' '))
-        if numeric_or_default(row['avg_confidence_score'], 1.0) < 0.5:
+        if numeric_or_default(row['avg_confidence_score'], 5.0) < LOW_SCORE_THRESHOLD:
             reasons.append('low confidence')
-        if numeric_or_default(row['avg_mechanistic_depth_score'], 1.0) < 0.5:
+        if numeric_or_default(row['avg_mechanistic_depth_score'], 5.0) < LOW_SCORE_THRESHOLD:
             reasons.append('low depth')
         return ', '.join(dict.fromkeys(reasons)) or row['quality_bucket']
 
@@ -544,7 +639,7 @@ def main():
 
     service = rp.get_google_drive_service()
 
-    paper_rows, mechanism_accumulator, atlas_accumulator, biomarker_accumulator = build_paper_rows(
+    paper_rows, claim_export_rows, edge_export_rows, mechanism_accumulator, atlas_accumulator, biomarker_accumulator = build_paper_rows(
         service,
         source_map,
         output_index,
@@ -554,7 +649,15 @@ def main():
     mechanism_rows = aggregate_group(mechanism_accumulator, 'mechanism')
     atlas_rows = aggregate_group(atlas_accumulator, 'atlas_layer')
     biomarker_rows = aggregate_group(biomarker_accumulator, 'biomarker')
-    summary = build_summary_payload(paper_rows, mechanism_rows, atlas_rows, biomarker_rows, inventory_path)
+    summary = build_summary_payload(
+        paper_rows,
+        claim_export_rows,
+        edge_export_rows,
+        mechanism_rows,
+        atlas_rows,
+        biomarker_rows,
+        inventory_path,
+    )
 
     ts = datetime.now().strftime('%Y-%m-%d_%H%M%S')
     os.makedirs(args.output_dir, exist_ok=True)
@@ -563,6 +666,8 @@ def main():
     mechanism_path = os.path.join(args.output_dir, f'mechanism_aggregation_{ts}.csv')
     atlas_path = os.path.join(args.output_dir, f'atlas_layer_aggregation_{ts}.csv')
     biomarker_path = os.path.join(args.output_dir, f'biomarker_aggregation_{ts}.csv')
+    claim_export_path = os.path.join(args.output_dir, f'investigation_claims_{ts}.csv')
+    edge_export_path = os.path.join(args.output_dir, f'investigation_edges_{ts}.csv')
     summary_json_path = os.path.join(args.output_dir, f'post_extraction_summary_{ts}.json')
     summary_md_path = os.path.join(args.output_dir, f'post_extraction_summary_{ts}.md')
     investigation_brief_path = os.path.join(args.output_dir, f'tbi_investigation_brief_{ts}.md')
@@ -595,6 +700,22 @@ def main():
         'abstract_only_papers', 'review_needed_papers', 'avg_confidence_score',
         'avg_mechanistic_depth_score', 'top_pmids',
     ])
+    write_csv(claim_export_path, claim_export_rows, list(claim_export_rows[0].keys()) if claim_export_rows else [
+        'pmid', 'paper_id', 'title', 'source_quality_tier', 'topic_anchor', 'claim_id', 'claim_text',
+        'normalized_claim', 'atlas_layer', 'mechanism', 'direction_of_effect', 'causal_status',
+        'evidence_type', 'species', 'model', 'anatomy', 'cell_type', 'timing_bin', 'biomarkers',
+        'interventions', 'outcome_measures', 'confidence_score', 'mechanistic_depth_score',
+        'translational_relevance_score', 'include_in_core_atlas', 'whether_human_relevant',
+        'whether_mechanistically_informative', 'whether_needs_manual_review', 'primary_domain',
+        'novelty_estimate',
+    ])
+    write_csv(edge_export_path, edge_export_rows, list(edge_export_rows[0].keys()) if edge_export_rows else [
+        'pmid', 'paper_id', 'title', 'source_quality_tier', 'topic_anchor', 'edge_id', 'source_node',
+        'relation', 'target_node', 'atlas_layer', 'anatomy', 'cell_type', 'timing_bin', 'species',
+        'evidence_strength', 'contradiction_flag', 'notes', 'include_in_core_atlas',
+        'whether_human_relevant', 'whether_mechanistically_informative', 'whether_needs_manual_review',
+        'primary_domain', 'novelty_estimate',
+    ])
     write_json(summary_json_path, summary)
     with open(summary_md_path, 'w', encoding='utf-8') as handle:
         handle.write(render_markdown(summary))
@@ -605,6 +726,8 @@ def main():
     print(f'Mechanism aggregation CSV written: {mechanism_path}')
     print(f'Atlas-layer aggregation CSV written: {atlas_path}')
     print(f'Biomarker aggregation CSV written: {biomarker_path}')
+    print(f'Investigation claims CSV written: {claim_export_path}')
+    print(f'Investigation edges CSV written: {edge_export_path}')
     print(f'Post-extraction summary JSON written: {summary_json_path}')
     print(f'Post-extraction summary Markdown written: {summary_md_path}')
     print(f'TBI investigation brief written: {investigation_brief_path}')
