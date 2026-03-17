@@ -180,7 +180,9 @@ def parse_existing_file_metadata(content):
         source_lower = source.lower()
         if "pmc xml" in source_lower:
             rank = 4
-        elif "publisher html" in source_lower:
+        elif "xml" in source_lower:
+            rank = 4
+        elif "html" in source_lower:
             rank = 3
         elif "pdf" in source_lower:
             rank = 2
@@ -651,6 +653,46 @@ def extract_html_text(html_content):
         print(f"    Error extracting HTML text: {e}")
         return None
 
+
+def extract_xml_text(xml_content):
+    """
+    Extracts readable text from XML-like article content.
+    Works well for publisher API payloads such as Elsevier full-text XML.
+    """
+    if not xml_content:
+        return None
+
+    try:
+        soup = BeautifulSoup(xml_content, 'xml')
+        tag_names = [
+            'ce:section-title', 'sec-title', 'section-title', 'title',
+            'ce:para', 'para', 'p', 'AbstractText', 'abstract'
+        ]
+        fragments = []
+        seen = set()
+        for tag_name in tag_names:
+            for node in soup.find_all(tag_name):
+                text = node.get_text(' ', strip=True)
+                normalized = re.sub(r'\s+', ' ', text).strip()
+                if not normalized or len(normalized) < 25 or normalized in seen:
+                    continue
+                seen.add(normalized)
+                fragments.append(normalized)
+
+        text = '\n\n'.join(fragments) if fragments else soup.get_text('\n', strip=True)
+        lines = text.split('\n')
+        cleaned_lines = []
+        for line in lines:
+            if re.match(r'^#*\s*(References|Bibliography|Literature Cited)\s*$', line, re.IGNORECASE):
+                break
+            cleaned_lines.append(line.strip())
+
+        text = '\n\n'.join(line for line in cleaned_lines if line)
+        return text if len(text.strip()) > 500 else None
+    except Exception as e:
+        print(f"    Error extracting XML text: {e}")
+        return None
+
 def is_valid_pdf_response(response):
     if response.status_code != 200:
         return False, "HTTP Status not 200"
@@ -661,6 +703,46 @@ def is_valid_pdf_response(response):
     if not response.content.startswith(b'%PDF-'):
         return False, "Invalid PDF magic bytes"
     return True, "Valid PDF"
+
+
+def extract_pdf_response_text(response, final_domain, domain_stats=None, current_phase_stats=None):
+    is_valid, reason = is_valid_pdf_response(response)
+    if not is_valid:
+        print(f"    Failed strict PDF validation for {response.url}: {reason}")
+        if domain_stats is not None:
+            record_domain_attempt(domain_stats, final_domain, success=False, is_hard_failure=True)
+        if current_phase_stats is not None:
+            current_phase_stats['blocked_domain_failures_in_phase'] += 1
+        return None
+
+    pdf_file = BytesIO(response.content)
+    reader = PdfReader(pdf_file)
+
+    text_parts = []
+    for page in reader.pages:
+        page_text = page.extract_text()
+        if page_text:
+            text_parts.append(page_text)
+
+    raw_text = '\n'.join(text_parts)
+    cleaned_text = re.sub(r'-\n', '', raw_text)
+
+    lines = cleaned_text.split('\n')
+    final_lines = []
+    for line in lines:
+        if re.match(r'^\s*References\s*$', line, re.IGNORECASE) or re.match(r'^\s*Bibliography\s*$', line, re.IGNORECASE):
+            break
+        final_lines.append(line.strip())
+
+    text = '\n'.join(final_lines)
+    text = re.sub(r'(?<!\n)\n(?!\n)', ' ', text)
+    text = re.sub(r' \s+', ' ', text)
+    text = re.sub(r' (Introduction|Methods|Results|Discussion|Conclusion) ', r'\n\n### \1\n\n', text, flags=re.IGNORECASE)
+
+    is_success = len(text.strip()) > 500
+    if domain_stats is not None:
+        record_domain_attempt(domain_stats, final_domain, success=is_success, is_hard_failure=False)
+    return text if is_success else None
 
 def record_domain_attempt(domain_stats, domain, success, is_hard_failure=False):
     if not domain:
@@ -675,6 +757,80 @@ def record_domain_attempt(domain_stats, domain, success, is_hard_failure=False):
         domain_stats[domain]['failure'] += 1
         if is_hard_failure:
             domain_stats[domain]['hard_failure'] += 1
+
+
+def extract_linked_full_text(url, domain_stats=None, blocked_domains=None, current_phase_stats=None):
+    """
+    Fetches a Crossref or publisher-supplied full-text URL and extracts text
+    based on the returned content type rather than assuming PDF.
+    """
+    if not url:
+        return None, None, None
+
+    from urllib.parse import urlparse
+
+    domain = urlparse(url).netloc
+    if blocked_domains and blocked_domains.get(domain, 0) > 0:
+        print(f"    Skipping linked fetch from {domain} due to persisted prior-run cooldown.")
+        return None, None, None
+
+    if domain_stats and domain in domain_stats and domain_stats[domain].get('hard_failure', 0) >= 3:
+        print(f"    Skipping linked fetch from {domain} due to current-run hard failures.")
+        return None, None, None
+
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+            'Accept': 'application/pdf,text/xml,application/xml,text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
+        }
+        response = requests.get(url, headers=headers, timeout=20, allow_redirects=True)
+        final_domain = urlparse(response.url).netloc or domain
+
+        if response.status_code in [401, 403, 404]:
+            if domain_stats is not None:
+                record_domain_attempt(domain_stats, final_domain, success=False, is_hard_failure=True)
+            if current_phase_stats is not None:
+                current_phase_stats['blocked_domain_failures_in_phase'] += 1
+            return None, None, None
+
+        response.raise_for_status()
+        content_type = (response.headers.get('Content-Type') or '').lower()
+
+        if 'pdf' in content_type or response.content.startswith(b'%PDF-'):
+            text = extract_pdf_response_text(response, final_domain, domain_stats, current_phase_stats)
+            return (text, 'PDF', 2) if text else (None, None, None)
+
+        body_text = response.text
+        if 'xml' in content_type or 'httpaccept=text/xml' in url.lower():
+            text = extract_xml_text(body_text)
+            if text:
+                if domain_stats is not None:
+                    record_domain_attempt(domain_stats, final_domain, success=True, is_hard_failure=False)
+                return text, 'XML', 4
+
+        text = extract_html_text(body_text)
+        if text:
+            if domain_stats is not None:
+                record_domain_attempt(domain_stats, final_domain, success=True, is_hard_failure=False)
+            return text, 'HTML', 3
+
+        if domain_stats is not None:
+            record_domain_attempt(domain_stats, final_domain, success=False, is_hard_failure=False)
+        return None, None, None
+    except requests.exceptions.RequestException as e:
+        print(f"    Error fetching linked full text {url}: {e}")
+        failed_domain = domain or "unknown"
+        if domain_stats is not None:
+            record_domain_attempt(domain_stats, failed_domain, success=False, is_hard_failure=True)
+        if current_phase_stats is not None:
+            current_phase_stats['blocked_domain_failures_in_phase'] += 1
+        return None, None, None
+    except Exception as e:
+        print(f"    Error extracting linked full text {url}: {e}")
+        failed_domain = domain or "unknown"
+        if domain_stats is not None:
+            record_domain_attempt(domain_stats, failed_domain, success=False, is_hard_failure=False)
+        return None, None, None
 
 def extract_pdf_text(pdf_url, domain_stats=None, blocked_domains=None, current_phase_stats=None):
     """
@@ -711,51 +867,7 @@ def extract_pdf_text(pdf_url, domain_stats=None, blocked_domains=None, current_p
 
         response.raise_for_status()
 
-        is_valid, reason = is_valid_pdf_response(response)
-        if not is_valid:
-            print(f"    Failed strict PDF validation for {pdf_url}: {reason}")
-            if domain_stats is not None:
-                record_domain_attempt(domain_stats, final_domain, success=False, is_hard_failure=True)
-            if current_phase_stats is not None:
-                current_phase_stats['blocked_domain_failures_in_phase'] += 1
-            return None
-
-        pdf_file = BytesIO(response.content)
-        reader = PdfReader(pdf_file)
-
-        text_parts = []
-        for page in reader.pages:
-            page_text = page.extract_text()
-            if page_text:
-                text_parts.append(page_text)
-
-        raw_text = '\n'.join(text_parts)
-
-        # Clean up text (handle line wraps, hyphenation)
-        # This is basic cleanup; PDFs can be messy
-        cleaned_text = re.sub(r'-\n', '', raw_text) # remove hyphenation
-
-        # Split into lines and attempt to strip references
-        lines = cleaned_text.split('\n')
-        final_lines = []
-        for line in lines:
-            if re.match(r'^\s*References\s*$', line, re.IGNORECASE) or re.match(r'^\s*Bibliography\s*$', line, re.IGNORECASE):
-                break
-            final_lines.append(line.strip())
-
-        # Rejoin and attempt to recreate paragraphs (double newlines)
-        # Assuming single newlines are just line wraps in the middle of a paragraph
-        text = '\n'.join(final_lines)
-        text = re.sub(r'(?<!\n)\n(?!\n)', ' ', text) # Replace single newlines with space
-        text = re.sub(r' \s+', ' ', text) # clean up extra spaces
-
-        # Add double newlines before common headers like "Introduction", "Methods" etc to preserve some structure
-        text = re.sub(r' (Introduction|Methods|Results|Discussion|Conclusion) ', r'\n\n### \1\n\n', text, flags=re.IGNORECASE)
-
-        is_success = len(text.strip()) > 500
-        if domain_stats is not None:
-             record_domain_attempt(domain_stats, final_domain, success=is_success, is_hard_failure=False)
-        return text if is_success else None
+        return extract_pdf_response_text(response, final_domain, domain_stats, current_phase_stats)
 
     except requests.exceptions.RequestException as e:
         print(f"    Error extracting PDF text from {pdf_url} (Network Error): {e}")
@@ -1149,12 +1261,17 @@ def main():
                 for cr_url in crossref_urls:
                     if not full_text:
                         print(f"[{pmid}]     Attempting Crossref URL: {cr_url}")
-                        full_text = extract_pdf_text(cr_url, domain_stats, blocked_domains, current_phase_stats)
+                        full_text, crossref_kind, crossref_rank = extract_linked_full_text(
+                            cr_url,
+                            domain_stats,
+                            blocked_domains,
+                            current_phase_stats
+                        )
                         if full_text:
-                            extraction_source = "Crossref PDF"
-                            extraction_rank = 2
+                            extraction_source = f"Crossref {crossref_kind}"
+                            extraction_rank = crossref_rank
                             stats['crossref_hint_count'] += 1
-                            print(f"[{pmid}]     -> Success: Crossref PDF extracted.")
+                            print(f"[{pmid}]     -> Success: Crossref {crossref_kind} extracted.")
 
             # 5. Publisher HTML/PDF Fallback
             if not full_text and data['doi']:

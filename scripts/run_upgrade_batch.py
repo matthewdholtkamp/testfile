@@ -132,11 +132,16 @@ def fetch_best_available_content(pmid, data, ncbi_api_key, unpaywall_email, doma
     if not full_text and data.get('doi'):
         print(f"[{pmid}] Source 4: Querying Crossref hints for {data['doi']}...")
         for crossref_url in rp.fetch_crossref_hints(data['doi']):
-            full_text = rp.extract_pdf_text(crossref_url, domain_stats, blocked_domains, phase_stats)
+            full_text, crossref_kind, crossref_rank = rp.extract_linked_full_text(
+                crossref_url,
+                domain_stats,
+                blocked_domains,
+                phase_stats
+            )
             if full_text:
-                extraction_source = "Crossref PDF"
-                extraction_rank = 2
-                print(f"[{pmid}]   Success: Crossref PDF extracted.")
+                extraction_source = f"Crossref {crossref_kind}"
+                extraction_rank = crossref_rank
+                print(f"[{pmid}]   Success: Crossref {crossref_kind} extracted.")
                 break
 
     if not full_text and data.get('doi'):
