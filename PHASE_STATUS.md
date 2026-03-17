@@ -17,24 +17,23 @@ This phase is complete when corpus maintenance is repeatable and the queue is cl
 
 ## Verified Current State
 
-Based on the topic-aware Drive inventory run `23176693019`:
+Based on the topic-aware Drive inventory run `23178854658`:
 
 - `332` source-paper PMIDs in Drive
 - `281` on-topic source papers
 - `51` off-topic or unclear source papers
-- `493` structured-output files under `extraction_outputs/`
-- `97` source-paper PMIDs with any structured outputs
-- `80` on-topic papers with structured outputs
-- `201` on-topic papers still missing structured outputs
-- `149` abstract-only source papers overall
+- `928` structured-output files under `extraction_outputs/`
+- `184` source-paper PMIDs with any structured outputs
+- `161` on-topic papers with structured outputs
+- `120` on-topic papers still missing structured outputs
 - `128` on-topic abstract-only source papers overall
 - `179` full-text-like source papers overall
 - `0` duplicate source-paper PMIDs
 
-Within the on-topic extraction backlog (`201` papers missing structured outputs):
+Within the on-topic extraction backlog (`120` papers missing structured outputs):
 
-- `120` are still abstract-only and should be upgrade-first
-- `81` are already full-text-like and are ready for extraction now
+- `120` are still upgrade-first
+- `0` are currently full-text-ready and waiting for extraction
 
 ## What Changed Recently
 
@@ -60,14 +59,12 @@ Across the two real filtered upgrade batches completed so far:
 
 Across the targeted full-text extraction campaign so far:
 
-- `64` on-topic source papers were completed into structured outputs
-- the on-topic structured-output count has moved from `16` at campaign start to `80`
-- the full-text-ready extraction backlog has dropped from `145` to `81`
+- `145` on-topic source papers were completed into structured outputs
+- the on-topic structured-output count has moved from `16` at campaign start to `161`
+- the full-text-ready extraction backlog has dropped from `145` to `0`
 - the first targeted batches exposed several recurring schema-normalization misses, which have now been patched in `scripts/run_extraction.py`
-- the latest retry batch on `gemini-3.1-flash-lite-preview` completed `5/5`
-- the latest clean batch on `gemini-3.1-flash-lite-preview` also completed `5/5`
-- the next two scaled batches at `10` papers each both completed `10/10`
-- the following two scaled batches also completed `10/10`, bringing the scaled-batch streak to four clean runs
+- `gemini-3.1-flash-lite-preview` held through the later campaign with repeated clean `5/5`, `10/10`, and final drain batches
+- the final serial drain cleared the extractable queue completely; everything remaining now requires upgrade-first work
 
 Current model posture:
 
@@ -77,16 +74,16 @@ Current model posture:
 
 ## Current Bottleneck
 
-The main bottleneck is no longer corpus visibility. It is queue throughput:
+The main bottleneck is now the upgrade-first queue:
 
-- too many on-topic papers still lack structured outputs
-- a significant subset of that queue is already full-text-like and does not need more retrieval work
-- upgrade efforts should focus on the abstract-only subset, while extraction should expand on the full-text-ready subset
+- the extractable full-text-ready queue has been cleared
+- every remaining on-topic paper without structured outputs now needs a better source before extraction
+- throughput pressure has moved from extraction coverage to source-quality improvement
 
 In other words:
 
-- upgrade queue = quality problem
-- extraction backlog = coverage problem
+- upgrade queue = active bottleneck
+- extraction queue = currently clear
 
 ## End State Of This Phase
 
@@ -98,10 +95,10 @@ This phase ends when:
 - abstract-only counts are trending down in measured batches
 - the remaining on-topic backlog is mostly full-text-like and ready for extraction
 
-At that point, the project should shift emphasis from corpus improvement to extraction coverage and quality gates.
+At that point, the project should shift emphasis from corpus improvement to quality-gated extraction coverage.
 
 ## Recommended Next Moves
 
-1. Keep running filtered upgrade batches against the `120` on-topic abstract-only papers.
-2. Keep running targeted extraction batches against the `81` on-topic full-text-ready papers with no structured outputs.
-3. Add a lightweight extraction QA gate so scaling does not create a larger low-quality output pile.
+1. Keep running filtered upgrade batches against the `120` upgrade-first on-topic papers.
+2. As papers upgrade successfully, feed them directly into targeted extraction rather than rebuilding a large ready queue.
+3. Add a lightweight extraction QA gate so the next scale-up does not create a larger low-quality output pile.
