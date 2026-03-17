@@ -17,22 +17,22 @@ This phase is complete when corpus maintenance is repeatable and the queue is cl
 
 ## Verified Current State
 
-Based on the topic-aware Drive inventory run `23179208840`:
+Based on the topic-aware Drive inventory run `23194702849`:
 
 - `332` source-paper PMIDs in Drive
 - `281` on-topic source papers
 - `51` off-topic or unclear source papers
-- `933` structured-output files under `extraction_outputs/`
-- `185` source-paper PMIDs with any structured outputs
-- `162` on-topic papers with structured outputs
-- `119` on-topic papers still missing structured outputs
+- `993` structured-output files under `extraction_outputs/`
+- `197` source-paper PMIDs with any structured outputs
+- `174` on-topic papers with structured outputs
+- `107` on-topic papers still missing structured outputs
 - `127` on-topic abstract-only source papers overall
 - `179` full-text-like source papers overall
 - `0` duplicate source-paper PMIDs
 
-Within the on-topic extraction backlog (`119` papers missing structured outputs):
+Within the on-topic extraction backlog (`107` papers missing structured outputs):
 
-- `119` are still upgrade-first
+- `107` are still upgrade-first
 - `0` are currently full-text-ready and waiting for extraction
 
 ## What Changed Recently
@@ -59,13 +59,14 @@ Across the two real filtered upgrade batches completed so far:
 
 Across the targeted full-text extraction campaign so far:
 
-- `145` on-topic source papers were completed into structured outputs
-- the on-topic structured-output count has moved from `16` at campaign start to `162`
+- `157` on-topic source papers were completed into structured outputs
+- the on-topic structured-output count has moved from `16` at campaign start to `174`
 - the full-text-ready extraction backlog has dropped from `145` to `0`
 - the first targeted batches exposed several recurring schema-normalization misses, which have now been patched in `scripts/run_extraction.py`
 - `gemini-3.1-flash-lite-preview` held through the later campaign with repeated clean `5/5`, `10/10`, and final drain batches
 - one follow-on upgrade batch converted PMID `41299145` from rank `1` to rank `3`, and the newly upgraded paper was immediately extracted
-- the final serial drain cleared the extractable queue completely; everything remaining now requires upgrade-first work
+- the unattended drain controller reduced the remaining upgrade-first backlog from `119` to `107`
+- one additional full drain pass produced no further shrink, which means the current retrieval stack appears exhausted on the remaining `107` papers
 
 Current model posture:
 
@@ -80,6 +81,7 @@ The main bottleneck is now the upgrade-first queue:
 - the extractable full-text-ready queue has been cleared
 - every remaining on-topic paper without structured outputs now needs a better source before extraction
 - throughput pressure has moved from extraction coverage to source-quality improvement
+- the current retrieval stack has already been re-run across the remaining queue and did not shrink it further
 
 In other words:
 
@@ -100,6 +102,6 @@ At that point, the project should shift emphasis from corpus improvement to qual
 
 ## Recommended Next Moves
 
-1. Keep running filtered upgrade batches against the `119` upgrade-first on-topic papers.
-2. As papers upgrade successfully, feed them directly into targeted extraction rather than rebuilding a large ready queue.
-3. Add a lightweight extraction QA gate so the next scale-up does not create a larger low-quality output pile.
+1. The current upgrade-first queue is now effectively exhausted under the existing retrieval logic; further identical reruns are unlikely to help.
+2. To reduce the remaining `107`, the next gain likely requires a retrieval-strategy change rather than more of the same batching.
+3. Keep the lightweight extraction QA gate in place so any newly unlocked papers continue to flow directly into structured outputs.
