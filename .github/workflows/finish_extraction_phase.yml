@@ -1,10 +1,10 @@
-name: Finish Remaining Extraction Phase
+name: Finish Extraction Phase
 
 on:
   workflow_dispatch:
     inputs:
       max_passes:
-        description: "Maximum extraction passes over the remaining on-topic backlog"
+        description: "Maximum number of extraction passes to attempt over the backlog"
         required: false
         default: "3"
       batch_size:
@@ -17,23 +17,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-          cache: 'pip'
+          python-version: "3.10"
+          cache: "pip"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt google-generativeai jsonschema
+        run: pip install -r requirements.txt
 
       - name: Finish extraction phase
         env:
           DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
-          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+          UNPAYWALL_EMAIL: ${{ secrets.UNPAYWALL_EMAIL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           mkdir -p reports output outputs/state
@@ -41,13 +43,12 @@ jobs:
             --max-passes "${{ inputs.max_passes }}" \
             --batch-size "${{ inputs.batch_size }}"
 
-      - name: Upload artifacts
+      - name: Upload finish artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: finish-extraction-phase-outputs
+          name: finish_extraction_phase_outputs
           path: |
             reports/
             output/
-            outputs/
-          retention-days: 7
+            outputs/state/
