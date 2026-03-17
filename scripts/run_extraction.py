@@ -486,7 +486,9 @@ def normalize_extracted_data(paper_id, data, schema):
         'lowers': 'decreases',
         'raises': 'increases',
         'elevates': 'increases',
+        'impacts': 'correlates_with',
         'modulates': 'correlates_with',
+        'modifies': 'correlates_with',
         'associated': 'correlates_with',
         'associated_with': 'correlates_with',
         'correlates': 'correlates_with',
@@ -497,6 +499,7 @@ def normalize_extracted_data(paper_id, data, schema):
         'destabilizes': 'disrupts',
         'facilitates': 'drives',
         'exacerbates': 'increases',
+        'normalizes': 'attenuates',
         'worsens': 'increases',
         'suppresses': 'attenuates'
     }
