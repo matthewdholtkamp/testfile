@@ -48,6 +48,15 @@ def write_allowlist(path, rows, limit=0):
     return selected_rows, paper_ids
 
 
+def filter_backlog_rows(rows, ready_only=False):
+    if not ready_only:
+        return rows
+    return [
+        row for row in rows
+        if (row.get('needs_upgrade_before_extraction') or '').lower() != 'yes'
+    ]
+
+
 def latest_summary_json():
     return latest_file(os.path.join(REPO_ROOT, 'reports', 'drive_inventory_summary_*.json'))
 
@@ -92,6 +101,7 @@ def main():
     parser = argparse.ArgumentParser(description='Finish the extraction phase for all remaining in-folder papers.')
     parser.add_argument('--max-passes', type=int, default=3, help='Maximum number of extraction passes over the remaining backlog.')
     parser.add_argument('--batch-size', type=int, default=0, help='Optional cap on papers processed per pass (0 = all remaining).')
+    parser.add_argument('--ready-only', action='store_true', help='Only extract papers that do not require a retrieval upgrade first.')
     args = parser.parse_args()
 
     if args.max_passes <= 0:
@@ -119,11 +129,13 @@ def main():
             print('\nNo remaining on-topic papers are missing structured outputs. Extraction phase is complete.', flush=True)
             break
 
+        candidate_rows = filter_backlog_rows(backlog_rows, ready_only=args.ready_only)
         allowlist_path = os.path.join(state_dir, f'extraction_allowlist_{pass_number:03d}.txt')
-        selected_rows, paper_ids = write_allowlist(allowlist_path, backlog_rows, limit=args.batch_size)
+        selected_rows, paper_ids = write_allowlist(allowlist_path, candidate_rows, limit=args.batch_size)
 
         if not paper_ids:
-            print('\nBacklog still exists, but no PMIDs were available to build an allowlist. Stopping.', flush=True)
+            reason = 'Backlog still exists, but no PMIDs were extraction-ready.' if args.ready_only else 'Backlog still exists, but no PMIDs were available to build an allowlist.'
+            print(f'\n{reason} Stopping.', flush=True)
             break
 
         print(

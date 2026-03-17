@@ -3,6 +3,10 @@ name: Ongoing Literature Cycle
 on:
   workflow_dispatch:
     inputs:
+      upgrade_max_chunks:
+        description: "Maximum upgrade-first chunks to process in this cycle (0 = all remaining)"
+        required: false
+        default: "2"
       extraction_max_passes:
         description: "Maximum extraction finisher passes in this cycle"
         required: false
@@ -41,12 +45,17 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           mkdir -p reports output outputs/state
+          UPGRADE_CHUNKS="${{ inputs.upgrade_max_chunks }}"
           EXTRACT_PASSES="${{ inputs.extraction_max_passes }}"
+          if [ -z "$UPGRADE_CHUNKS" ]; then
+            UPGRADE_CHUNKS=2
+          fi
           if [ -z "$EXTRACT_PASSES" ]; then
             EXTRACT_PASSES=5
           fi
           python scripts/run_pipeline.py
-          python scripts/finish_extraction_phase.py --max-passes "$EXTRACT_PASSES" --batch-size 0
+          python scripts/drain_upgrade_queue.py --chunk-size 10 --max-chunks "$UPGRADE_CHUNKS"
+          python scripts/finish_extraction_phase.py --max-passes "$EXTRACT_PASSES" --batch-size 0 --ready-only
           latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
           python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
 

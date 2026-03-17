@@ -46,9 +46,12 @@ For the staged automatic lane:
 - Open **Actions** > **Ongoing Literature Cycle**
 - This workflow:
   1. runs retrieval
-  2. runs the extraction finisher to clear any newly created backlog
-  3. refreshes the post-extraction analysis outputs
+  2. drains a bounded number of upgrade-first chunks
+  3. runs extraction only on papers that are already extract-ready
+  4. refreshes the post-extraction analysis outputs
 - It also has a weekly schedule and is intended as a staging pipeline, not a direct publishing/promote step
+- `upgrade_max_chunks` controls how much abstract-only upgrade work happens in that cycle
+- `extraction_max_passes` controls how many ready-only extraction cleanup passes happen after upgrades
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.
