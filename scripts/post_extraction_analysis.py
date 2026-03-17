@@ -416,19 +416,33 @@ def render_markdown(summary):
 
 
 def render_investigation_brief(summary):
+    def caution_reason(row):
+        reasons = []
+        if row['whether_needs_manual_review']:
+            reasons.append('manual review')
+        if row['source_quality_tier'] == 'abstract_only':
+            reasons.append('abstract-only')
+        if row['quality_bucket'] in {'sparse_abstract', 'empty', 'sparse'}:
+            reasons.append(row['quality_bucket'].replace('_', ' '))
+        if numeric_or_default(row['avg_confidence_score'], 1.0) < 0.5:
+            reasons.append('low confidence')
+        if numeric_or_default(row['avg_mechanistic_depth_score'], 1.0) < 0.5:
+            reasons.append('low depth')
+        return ', '.join(dict.fromkeys(reasons)) or row['quality_bucket']
+
     lines = [
         '# TBI Investigation Brief',
         '',
         'This brief is the post-extraction synthesis layer for the current on-topic corpus. It is designed to help decide what mechanisms, atlas layers, and biomarkers deserve attention next, while keeping source-quality caveats visible.',
         '',
-        '## Corpus Posture',
-        '',
+        f"- Generated at: `{summary['generated_at']}`",
         f"- On-topic papers analyzed: `{summary['paper_count']}`",
         f"- Full-text-like papers: `{summary['source_quality_tier_counts'].get('full_text_like', 0)}`",
         f"- Abstract-only papers: `{summary['source_quality_tier_counts'].get('abstract_only', 0)}`",
         f"- High-signal papers: `{summary['high_signal_paper_count']}`",
         f"- Review-needed papers: `{summary['review_needed_paper_count']}`",
         f"- Sparse abstract papers: `{summary['sparse_abstract_paper_count']}`",
+        "- Rankings favor recurrence across papers first, then full-text support, mechanistic depth, and confidence.",
         '',
         '## Strongest Mechanism Signals',
         '',
@@ -438,8 +452,8 @@ def render_investigation_brief(summary):
     for row in summary['strongest_mechanisms'][:10]:
         lines.append(
             f"| {row['mechanism']} | {row['paper_count']} | {row['full_text_like_papers']} | "
-            f"{row['abstract_only_papers']} | {row['avg_mechanistic_depth_score']} | "
-            f"{row['avg_confidence_score']} | {row['top_pmids']} |"
+            f"{row['abstract_only_papers']} | {row['avg_mechanistic_depth_score']} | {row['avg_confidence_score']} | "
+            f"{row['top_pmids']} |"
         )
 
     lines.extend([
@@ -490,14 +504,10 @@ def render_investigation_brief(summary):
         '| --- | --- | --- | --- | --- | --- | --- |',
     ])
     for row in summary['papers_needing_caution'][:10]:
-        caution_reason = row['quality_bucket']
-        if row['whether_needs_manual_review']:
-            caution_reason = 'manual_review'
-        elif row['source_quality_tier'] == 'abstract_only':
-            caution_reason = f"{caution_reason}; abstract_only"
         lines.append(
             f"| {row['pmid']} | {row['title']} | {row['source_quality_tier']} | {row['quality_bucket']} | "
-            f"{row['avg_confidence_score']} | {row['avg_mechanistic_depth_score']} | {caution_reason} |"
+            f"{row['avg_confidence_score']} | {row['avg_mechanistic_depth_score']} | "
+            f"{caution_reason(row)} |"
         )
 
     lines.extend([
