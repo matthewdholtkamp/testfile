@@ -1,0 +1,48 @@
+name: Drain Upgrade-First Queue
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "Upgrade PMIDs per batch"
+        required: false
+        default: "10"
+
+jobs:
+  drain-upgrade-queue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt google-generativeai jsonschema
+
+      - name: Drain upgrade-first queue
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+          UNPAYWALL_EMAIL: ${{ secrets.UNPAYWALL_EMAIL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          mkdir -p reports output outputs/state
+          python scripts/drain_upgrade_queue.py --batch-size "${{ inputs.batch_size }}"
+
+      - name: Upload drain artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: drain-upgrade-queue-artifacts
+          path: |
+            reports/
+            output/
+            outputs/

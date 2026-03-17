@@ -38,7 +38,27 @@ def load_targets(path):
         return list(csv.DictReader(handle))
 
 
-def select_targets(rows, batch_size, offset):
+def load_pmid_file(path):
+    if not path:
+        return []
+    with open(path, encoding='utf-8') as handle:
+        values = []
+        seen = set()
+        for raw_line in handle:
+            value = raw_line.strip()
+            if not value or value.startswith('#'):
+                continue
+            if value in seen:
+                continue
+            values.append(value)
+            seen.add(value)
+    return values
+
+
+def select_targets(rows, batch_size, offset, pmid_order=None):
+    if pmid_order:
+        index = {row.get('pmid', ''): row for row in rows}
+        return [index[pmid] for pmid in pmid_order if pmid in index]
     return rows[offset:offset + batch_size]
 
 
@@ -233,6 +253,8 @@ def main():
     parser.add_argument('--targets', default='', help='Path to drive_upgrade_targets CSV. Defaults to latest report.')
     parser.add_argument('--batch-size', type=int, default=25, help='Number of PMIDs to attempt in this batch.')
     parser.add_argument('--offset', type=int, default=0, help='Zero-based offset into the target CSV.')
+    parser.add_argument('--pmid-file', default='', help='Optional newline-delimited PMID allowlist. Preserves file order and overrides offset slicing.')
+    parser.add_argument('--manifest-path', default='', help='Optional explicit manifest output path.')
     parser.add_argument('--dry-run', action='store_true', help='Select the batch and write a manifest without touching Drive.')
     args = parser.parse_args()
 
@@ -241,7 +263,8 @@ def main():
     os.makedirs('output', exist_ok=True)
 
     manifest_timestamp = datetime.now().strftime('%Y-%m-%d_%H%M%S')
-    manifest_path = os.path.join('output', f'upgrade_batch_manifest_{manifest_timestamp}.csv')
+    manifest_path = args.manifest_path or os.path.join('output', f'upgrade_batch_manifest_{manifest_timestamp}.csv')
+    pmid_order = load_pmid_file(args.pmid_file)
 
     ncbi_api_key = os.environ.get('NCBI_API_KEY')
     candidate_targets = all_targets
@@ -262,14 +285,15 @@ def main():
     else:
         filtered_targets = all_targets
 
-    selected_targets = select_targets(filtered_targets, args.batch_size, args.offset)
+    selected_targets = select_targets(filtered_targets, args.batch_size, args.offset, pmid_order=pmid_order)
 
     if not selected_targets:
         raise SystemExit("No upgrade targets selected after anchor filtering. Check offset or target list quality.")
 
     if args.dry_run:
         dry_rows = []
-        for idx, row in enumerate(selected_targets, start=args.offset + 1):
+        start_index = 1 if pmid_order else args.offset + 1
+        for idx, row in enumerate(selected_targets, start=start_index):
             dry_rows.append({
                 'selected_order': idx,
                 'pmid': row.get('pmid', ''),
@@ -319,7 +343,8 @@ def main():
         'no_better_source': 0,
     }
 
-    for selected_order, target_row in enumerate(selected_targets, start=args.offset + 1):
+    start_index = 1 if pmid_order else args.offset + 1
+    for selected_order, target_row in enumerate(selected_targets, start=start_index):
         pmid = target_row.get('pmid', '')
         print(f"\n--- Upgrade target {selected_order}: PMID {pmid} ---")
 
