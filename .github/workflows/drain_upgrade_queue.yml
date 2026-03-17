@@ -3,10 +3,14 @@ name: Drain Upgrade-First Queue
 on:
   workflow_dispatch:
     inputs:
-      batch_size:
-        description: "Upgrade PMIDs per batch"
+      chunk_size:
+        description: "Number of upgrade-first PMIDs to process per chunk"
         required: false
         default: "10"
+      max_chunks:
+        description: "Optional chunk cap for partial runs (0 = all chunks)"
+        required: false
+        default: "0"
 
 jobs:
   drain-upgrade-queue:
@@ -23,7 +27,7 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt google-generativeai jsonschema
+        run: pip install -r requirements.txt
 
       - name: Drain upgrade-first queue
         env:
@@ -35,14 +39,16 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           mkdir -p reports output outputs/state
-          python scripts/drain_upgrade_queue.py --batch-size "${{ inputs.batch_size }}"
+          python scripts/drain_upgrade_queue.py \
+            --chunk-size "${{ inputs.chunk_size }}" \
+            --max-chunks "${{ inputs.max_chunks }}"
 
       - name: Upload drain artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: drain-upgrade-queue-artifacts
+          name: drain_upgrade_queue_outputs
           path: |
             reports/
             output/
-            outputs/
+            outputs/state/
