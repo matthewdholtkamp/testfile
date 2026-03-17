@@ -66,6 +66,11 @@ def join_sorted(values):
     return '; '.join(clean)
 
 
+def numeric_or_default(value, default=0.0):
+    parsed = normalize_float(value)
+    return parsed if parsed is not None else default
+
+
 def extract_collection(full_path):
     match = re.match(r'^extraction_outputs/([^/]+)/', full_path or '')
     if not match:
@@ -260,10 +265,66 @@ def aggregate_group(grouped_rows, label_name):
     return aggregated_rows
 
 
+def rank_aggregates(rows):
+    return sorted(
+        rows,
+        key=lambda row: (
+            -int(row.get('full_text_like_papers', 0) or 0),
+            -int(row.get('paper_count', 0) or 0),
+            -numeric_or_default(row.get('avg_mechanistic_depth_score')),
+            -numeric_or_default(row.get('avg_confidence_score')),
+            row.get('top_pmids', ''),
+        ),
+    )
+
+
+def build_caution_rows(paper_rows, limit=15):
+    caution_rows = [
+        row for row in paper_rows
+        if row['quality_bucket'] in {'review_needed', 'sparse_abstract', 'empty', 'sparse'}
+        or numeric_or_default(row['avg_confidence_score'], 1.0) < 0.5
+    ]
+    caution_rows.sort(
+        key=lambda row: (
+            row['quality_bucket'] != 'review_needed',
+            row['source_quality_tier'] != 'abstract_only',
+            numeric_or_default(row['avg_confidence_score'], 1.0),
+            numeric_or_default(row['avg_mechanistic_depth_score'], 1.0),
+            row['pmid'],
+        )
+    )
+    return caution_rows[:limit]
+
+
+def build_core_atlas_candidates(paper_rows, limit=15):
+    candidates = [
+        row for row in paper_rows
+        if row['include_in_core_atlas'] is True
+        and row['whether_mechanistically_informative'] is True
+        and row['whether_needs_manual_review'] is not True
+    ]
+    candidates.sort(
+        key=lambda row: (
+            row['source_quality_tier'] != 'full_text_like',
+            row['quality_bucket'] != 'high_signal',
+            -numeric_or_default(row['avg_mechanistic_depth_score']),
+            -numeric_or_default(row['avg_confidence_score']),
+            -int(row['claim_count']),
+            row['pmid'],
+        )
+    )
+    return candidates[:limit]
+
+
 def build_summary_payload(paper_rows, mechanism_rows, atlas_rows, biomarker_rows, inventory_path):
     quality_counts = Counter(row['quality_bucket'] for row in paper_rows)
     tier_counts = Counter(row['source_quality_tier'] for row in paper_rows)
     priority_counts = Counter(row['investigation_priority'] for row in paper_rows)
+    strongest_mechanisms = rank_aggregates(mechanism_rows)[:15]
+    strongest_atlas_layers = rank_aggregates(atlas_rows)[:15]
+    biomarker_hotspots = rank_aggregates(biomarker_rows)[:15]
+    caution_rows = build_caution_rows(paper_rows)
+    core_atlas_candidates = build_core_atlas_candidates(paper_rows)
 
     summary = {
         'generated_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
@@ -275,9 +336,14 @@ def build_summary_payload(paper_rows, mechanism_rows, atlas_rows, biomarker_rows
         'high_signal_paper_count': sum(1 for row in paper_rows if row['quality_bucket'] == 'high_signal'),
         'review_needed_paper_count': sum(1 for row in paper_rows if row['quality_bucket'] == 'review_needed'),
         'sparse_abstract_paper_count': sum(1 for row in paper_rows if row['quality_bucket'] == 'sparse_abstract'),
-        'top_mechanisms': mechanism_rows[:15],
-        'top_atlas_layers': atlas_rows[:15],
-        'top_biomarkers': biomarker_rows[:15],
+        'top_mechanisms': strongest_mechanisms,
+        'top_atlas_layers': strongest_atlas_layers,
+        'top_biomarkers': biomarker_hotspots,
+        'strongest_mechanisms': strongest_mechanisms,
+        'strongest_atlas_layers': strongest_atlas_layers,
+        'biomarker_hotspots': biomarker_hotspots,
+        'papers_needing_caution': caution_rows,
+        'core_atlas_candidates': core_atlas_candidates,
     }
     return summary
 
@@ -349,6 +415,104 @@ def render_markdown(summary):
     return '\n'.join(lines) + '\n'
 
 
+def render_investigation_brief(summary):
+    lines = [
+        '# TBI Investigation Brief',
+        '',
+        'This brief is the post-extraction synthesis layer for the current on-topic corpus. It is designed to help decide what mechanisms, atlas layers, and biomarkers deserve attention next, while keeping source-quality caveats visible.',
+        '',
+        '## Corpus Posture',
+        '',
+        f"- On-topic papers analyzed: `{summary['paper_count']}`",
+        f"- Full-text-like papers: `{summary['source_quality_tier_counts'].get('full_text_like', 0)}`",
+        f"- Abstract-only papers: `{summary['source_quality_tier_counts'].get('abstract_only', 0)}`",
+        f"- High-signal papers: `{summary['high_signal_paper_count']}`",
+        f"- Review-needed papers: `{summary['review_needed_paper_count']}`",
+        f"- Sparse abstract papers: `{summary['sparse_abstract_paper_count']}`",
+        '',
+        '## Strongest Mechanism Signals',
+        '',
+        '| Mechanism | Papers | Full-text-like | Abstract-only | Avg Depth | Avg Confidence | Representative PMIDs |',
+        '| --- | --- | --- | --- | --- | --- | --- |',
+    ]
+    for row in summary['strongest_mechanisms'][:10]:
+        lines.append(
+            f"| {row['mechanism']} | {row['paper_count']} | {row['full_text_like_papers']} | "
+            f"{row['abstract_only_papers']} | {row['avg_mechanistic_depth_score']} | "
+            f"{row['avg_confidence_score']} | {row['top_pmids']} |"
+        )
+
+    lines.extend([
+        '',
+        '## Strongest Atlas Layers',
+        '',
+        '| Atlas Layer | Papers | Claims | Edges | Full-text-like | Avg Depth | Representative PMIDs |',
+        '| --- | --- | --- | --- | --- | --- | --- |',
+    ])
+    for row in summary['strongest_atlas_layers'][:10]:
+        lines.append(
+            f"| {row['atlas_layer']} | {row['paper_count']} | {row['claim_total']} | {row['edge_total']} | "
+            f"{row['full_text_like_papers']} | {row['avg_mechanistic_depth_score']} | {row['top_pmids']} |"
+        )
+
+    lines.extend([
+        '',
+        '## Biomarker Hotspots',
+        '',
+        '| Biomarker | Papers | Full-text-like | Abstract-only | Avg Confidence | Representative PMIDs |',
+        '| --- | --- | --- | --- | --- | --- |',
+    ])
+    for row in summary['biomarker_hotspots'][:10]:
+        lines.append(
+            f"| {row['biomarker']} | {row['paper_count']} | {row['full_text_like_papers']} | "
+            f"{row['abstract_only_papers']} | {row['avg_confidence_score']} | {row['top_pmids']} |"
+        )
+
+    lines.extend([
+        '',
+        '## Core Atlas Candidates',
+        '',
+        '| PMID | Title | Tier | Claims | Edges | Avg Depth | Avg Confidence | Mechanisms |',
+        '| --- | --- | --- | --- | --- | --- | --- | --- |',
+    ])
+    for row in summary['core_atlas_candidates'][:10]:
+        lines.append(
+            f"| {row['pmid']} | {row['title']} | {row['source_quality_tier']} | {row['claim_count']} | "
+            f"{row['edge_count']} | {row['avg_mechanistic_depth_score']} | {row['avg_confidence_score']} | "
+            f"{row['major_mechanisms']} |"
+        )
+
+    lines.extend([
+        '',
+        '## Papers Needing Caution',
+        '',
+        '| PMID | Title | Tier | Bucket | Avg Confidence | Avg Depth | Why be careful |',
+        '| --- | --- | --- | --- | --- | --- | --- |',
+    ])
+    for row in summary['papers_needing_caution'][:10]:
+        caution_reason = row['quality_bucket']
+        if row['whether_needs_manual_review']:
+            caution_reason = 'manual_review'
+        elif row['source_quality_tier'] == 'abstract_only':
+            caution_reason = f"{caution_reason}; abstract_only"
+        lines.append(
+            f"| {row['pmid']} | {row['title']} | {row['source_quality_tier']} | {row['quality_bucket']} | "
+            f"{row['avg_confidence_score']} | {row['avg_mechanistic_depth_score']} | {caution_reason} |"
+        )
+
+    lines.extend([
+        '',
+        '## How To Use This Brief',
+        '',
+        '- Treat the strongest mechanism and atlas-layer tables as the best starting point for the first mechanistic atlas slices.',
+        '- Treat the core atlas candidates as the safest papers to promote into deeper synthesis and contradiction review.',
+        '- Treat the caution table as a do-not-overinterpret list until those papers get a deeper pass or better full text.',
+        '',
+    ])
+
+    return '\n'.join(lines) + '\n'
+
+
 def main():
     parser = argparse.ArgumentParser(description='Build post-extraction QA and mechanism aggregation artifacts from Drive outputs.')
     parser.add_argument('--inventory', default='', help='Path to drive_inventory CSV. Defaults to latest reports/drive_inventory_*.csv')
@@ -391,6 +555,7 @@ def main():
     biomarker_path = os.path.join(args.output_dir, f'biomarker_aggregation_{ts}.csv')
     summary_json_path = os.path.join(args.output_dir, f'post_extraction_summary_{ts}.json')
     summary_md_path = os.path.join(args.output_dir, f'post_extraction_summary_{ts}.md')
+    investigation_brief_path = os.path.join(args.output_dir, f'tbi_investigation_brief_{ts}.md')
 
     if paper_rows:
         write_csv(paper_qa_path, paper_rows, list(paper_rows[0].keys()))
@@ -423,6 +588,8 @@ def main():
     write_json(summary_json_path, summary)
     with open(summary_md_path, 'w', encoding='utf-8') as handle:
         handle.write(render_markdown(summary))
+    with open(investigation_brief_path, 'w', encoding='utf-8') as handle:
+        handle.write(render_investigation_brief(summary))
 
     print(f'Post-extraction paper QA CSV written: {paper_qa_path}')
     print(f'Mechanism aggregation CSV written: {mechanism_path}')
@@ -430,6 +597,7 @@ def main():
     print(f'Biomarker aggregation CSV written: {biomarker_path}')
     print(f'Post-extraction summary JSON written: {summary_json_path}')
     print(f'Post-extraction summary Markdown written: {summary_md_path}')
+    print(f'TBI investigation brief written: {investigation_brief_path}')
     print(f'Papers analyzed: {summary["paper_count"]}')
 
 

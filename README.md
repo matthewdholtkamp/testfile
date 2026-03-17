@@ -39,6 +39,7 @@ To convert the current Drive extraction corpus into QA and aggregation artifacts
   - mechanism aggregation
   - atlas-layer aggregation
   - biomarker aggregation
+  - TBI investigation brief
 
 ### Ongoing Staging Cycle
 For the staged automatic lane:
@@ -87,4 +88,4 @@ The repository utilizes the following environment secrets:
 - `NCBI_API_KEY`: API Key for accessing the NCBI/PubMed APIs.
 - `SERVICE_ACCOUNT_JSON`: Primary Google Drive auth for GitHub Actions.
 - `GOOGLE_TOKEN_JSON`: Fallback Google auth.
-- `GEMINI_API_KEY`: Kept for future use, but unused in v1.
+- `GEMINI_API_KEY`: Used by the Gemini extraction pipeline and the ongoing staging cycle.

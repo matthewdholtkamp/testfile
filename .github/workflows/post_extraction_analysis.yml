@@ -9,6 +9,10 @@ on:
         type: boolean
         default: false
 
+concurrency:
+  group: post-extraction-analysis
+  cancel-in-progress: false
+
 jobs:
   post-extraction-analysis:
     runs-on: ubuntu-latest
