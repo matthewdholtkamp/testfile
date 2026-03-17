@@ -15,6 +15,8 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
+DEFAULT_HTTP_TIMEOUT = 30
+
 def load_config():
     with open('config/config.yaml', 'r') as f:
         config = yaml.safe_load(f)
@@ -255,7 +257,7 @@ def search_pubmed(query, max_results, api_key):
     if api_key:
         params['api_key'] = api_key
 
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=params, timeout=DEFAULT_HTTP_TIMEOUT)
     response.raise_for_status()
     data = response.json()
     return data.get('esearchresult', {}).get('idlist', [])
@@ -273,7 +275,7 @@ def fetch_metadata(pmids, api_key):
     if api_key:
         params['api_key'] = api_key
 
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=params, timeout=DEFAULT_HTTP_TIMEOUT)
     response.raise_for_status()
 
     soup = BeautifulSoup(response.content, 'xml')
@@ -358,7 +360,7 @@ def fetch_pmc_fulltext(pmcid, api_key):
     if api_key:
         params['api_key'] = api_key
 
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=params, timeout=DEFAULT_HTTP_TIMEOUT)
     if response.status_code != 200:
         return None
 
