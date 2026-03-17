@@ -17,24 +17,24 @@ This phase is complete when corpus maintenance is repeatable and the queue is cl
 
 ## Verified Current State
 
-Based on the topic-aware Drive inventory run `23175546516`:
+Based on the topic-aware Drive inventory run `23176148115`:
 
 - `332` source-paper PMIDs in Drive
 - `281` on-topic source papers
 - `51` off-topic or unclear source papers
-- `293` structured-output files under `extraction_outputs/`
-- `57` source-paper PMIDs with any structured outputs
-- `40` on-topic papers with structured outputs
-- `241` on-topic papers still missing structured outputs
+- `393` structured-output files under `extraction_outputs/`
+- `77` source-paper PMIDs with any structured outputs
+- `60` on-topic papers with structured outputs
+- `221` on-topic papers still missing structured outputs
 - `149` abstract-only source papers overall
 - `128` on-topic abstract-only source papers overall
 - `179` full-text-like source papers overall
 - `0` duplicate source-paper PMIDs
 
-Within the on-topic extraction backlog (`241` papers missing structured outputs):
+Within the on-topic extraction backlog (`221` papers missing structured outputs):
 
 - `120` are still abstract-only and should be upgrade-first
-- `121` are already full-text-like and are ready for extraction now
+- `101` are already full-text-like and are ready for extraction now
 
 ## What Changed Recently
 
@@ -60,12 +60,13 @@ Across the two real filtered upgrade batches completed so far:
 
 Across the targeted full-text extraction campaign so far:
 
-- `24` on-topic source papers were completed into structured outputs
-- the on-topic structured-output count has moved from `16` at campaign start to `40`
-- the full-text-ready extraction backlog has dropped from `145` to `121`
+- `44` on-topic source papers were completed into structured outputs
+- the on-topic structured-output count has moved from `16` at campaign start to `60`
+- the full-text-ready extraction backlog has dropped from `145` to `101`
 - the first targeted batches exposed several recurring schema-normalization misses, which have now been patched in `scripts/run_extraction.py`
 - the latest retry batch on `gemini-3.1-flash-lite-preview` completed `5/5`
 - the latest clean batch on `gemini-3.1-flash-lite-preview` also completed `5/5`
+- the next two scaled batches at `10` papers each both completed `10/10`
 
 Current model posture:
 
@@ -101,5 +102,5 @@ At that point, the project should shift emphasis from corpus improvement to extr
 ## Recommended Next Moves
 
 1. Keep running filtered upgrade batches against the `120` on-topic abstract-only papers.
-2. Keep running targeted extraction batches against the `121` on-topic full-text-ready papers with no structured outputs.
+2. Keep running targeted extraction batches against the `101` on-topic full-text-ready papers with no structured outputs.
 3. Add a lightweight extraction QA gate so scaling does not create a larger low-quality output pile.
