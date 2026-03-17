@@ -14,6 +14,8 @@ The project includes two manual GitHub Actions workflows:
 1. **Manual PubMed to Google Drive Pipeline:** Runs the search and retrieval process.
 2. **Manual PubMed Extraction Pipeline:** Runs the Gemini-based extraction process.
 3. **Targeted Full-Text Extraction Batch:** Builds a fresh Drive inventory, selects on-topic backlog papers that are already full-text-like, and runs extraction only on that ordered batch.
+4. **Post-Extraction Analysis:** Builds a fresh Drive inventory, downloads the structured extraction JSONs from Drive, and emits per-paper QA plus cross-paper mechanism summaries.
+5. **Ongoing Literature Cycle:** Weekly/manual staging cycle that runs retrieval, clears the extraction backlog, and refreshes the post-extraction analysis artifacts.
 
 ### Running the Extraction Pipeline
 To run a real extraction test, navigate to **Actions** > **Manual PubMed Extraction Pipeline**, click **Run workflow**, and ensure the following exact settings:
@@ -27,6 +29,25 @@ To process only the on-topic backlog papers that are already full-text-like:
 - Set `batch_size` and `offset`
 - Leave `dry_run` off for a real run
 - Leave `include_needs_review` off unless you explicitly want to revisit prior review-needed papers in the selected batch
+
+### Running Post-Extraction Analysis
+To convert the current Drive extraction corpus into QA and aggregation artifacts:
+- Open **Actions** > **Post-Extraction Analysis**
+- Leave `include_off_topic` off unless you explicitly want non-TBI rows in the per-paper QA table
+- Download the artifact to review:
+  - per-paper QA
+  - mechanism aggregation
+  - atlas-layer aggregation
+  - biomarker aggregation
+
+### Ongoing Staging Cycle
+For the staged automatic lane:
+- Open **Actions** > **Ongoing Literature Cycle**
+- This workflow:
+  1. runs retrieval
+  2. runs the extraction finisher to clear any newly created backlog
+  3. refreshes the post-extraction analysis outputs
+- It also has a weekly schedule and is intended as a staging pipeline, not a direct publishing/promote step
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.

@@ -1,0 +1,61 @@
+name: Ongoing Literature Cycle
+
+on:
+  workflow_dispatch:
+    inputs:
+      extraction_max_passes:
+        description: "Maximum extraction finisher passes in this cycle"
+        required: false
+        default: "5"
+  schedule:
+    - cron: "0 13 * * 1"
+
+concurrency:
+  group: ongoing-literature-cycle
+  cancel-in-progress: false
+
+jobs:
+  literature-cycle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run retrieval cycle
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+          UNPAYWALL_EMAIL: ${{ secrets.UNPAYWALL_EMAIL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          mkdir -p reports output outputs/state
+          EXTRACT_PASSES="${{ inputs.extraction_max_passes }}"
+          if [ -z "$EXTRACT_PASSES" ]; then
+            EXTRACT_PASSES=5
+          fi
+          python scripts/run_pipeline.py
+          python scripts/finish_extraction_phase.py --max-passes "$EXTRACT_PASSES" --batch-size 0
+          latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
+          python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+
+      - name: Upload cycle artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ongoing_literature_cycle_outputs
+          path: |
+            reports/
+            output/
+            outputs/state/

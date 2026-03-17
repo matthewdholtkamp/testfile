@@ -1,0 +1,58 @@
+name: Post-Extraction Analysis
+
+on:
+  workflow_dispatch:
+    inputs:
+      include_off_topic:
+        description: "Include off-topic papers in the paper QA table"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  post-extraction-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build fresh Drive inventory
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          mkdir -p reports output outputs/state
+          python scripts/drive_inventory.py --recursive --download-metadata
+
+      - name: Run post-extraction analysis
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
+          ARGS="--inventory $latest_inventory --output-dir reports"
+          if [ "${{ inputs.include_off_topic }}" = "true" ]; then
+            ARGS="$ARGS --include-off-topic"
+          fi
+          python scripts/post_extraction_analysis.py $ARGS
+
+      - name: Upload post-extraction artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: post_extraction_analysis_outputs
+          path: |
+            reports/
+          retention-days: 7
