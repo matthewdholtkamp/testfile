@@ -186,7 +186,7 @@ def main():
     print(f'Final on-topic with structured outputs: {final_summary.get("on_topic_with_structured_outputs_count")}', flush=True)
     print(f'Final on-topic missing structured outputs: {final_missing}', flush=True)
     print(f'Final extraction-ready backlog: {final_ready_now}', flush=True)
-    print(f'Final abstract-only source-paper count: {final_upgrade_first}', flush=True)
+    print(f'Final upgrade-first backlog: {final_upgrade_first}', flush=True)
     print(f'Pass summary written: {summary_csv}', flush=True)
 
 
