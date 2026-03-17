@@ -1,0 +1,53 @@
+name: Finish Remaining Extraction Phase
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_passes:
+        description: "Maximum extraction passes over the remaining on-topic backlog"
+        required: false
+        default: "3"
+      batch_size:
+        description: "Optional cap on papers processed per pass (0 = all remaining)"
+        required: false
+        default: "0"
+
+jobs:
+  finish-extraction-phase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt google-generativeai jsonschema
+
+      - name: Finish extraction phase
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          mkdir -p reports output outputs/state
+          python scripts/finish_extraction_phase.py \
+            --max-passes "${{ inputs.max_passes }}" \
+            --batch-size "${{ inputs.batch_size }}"
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: finish-extraction-phase-outputs
+          path: |
+            reports/
+            output/
+            outputs/
+          retention-days: 7
