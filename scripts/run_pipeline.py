@@ -17,7 +17,14 @@ from googleapiclient.http import MediaFileUpload
 
 def load_config():
     with open('config/config.yaml', 'r') as f:
-        return yaml.safe_load(f)
+        config = yaml.safe_load(f)
+    retrieval_mode_override = os.environ.get('RETRIEVAL_MODE_OVERRIDE', '').strip()
+    if retrieval_mode_override:
+        config['retrieval_mode'] = retrieval_mode_override
+    pubmed_query_override = os.environ.get('PUBMED_QUERY_OVERRIDE', '').strip()
+    if pubmed_query_override:
+        config['PUBMED_QUERY'] = pubmed_query_override
+    return config
 
 
 def load_json_config(filepath):

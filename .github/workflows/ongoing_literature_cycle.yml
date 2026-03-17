@@ -37,6 +37,7 @@ jobs:
 
       - name: Run retrieval cycle
         env:
+          RETRIEVAL_MODE_OVERRIDE: legacy
           DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
           GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
           SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
