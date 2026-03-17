@@ -20,6 +20,19 @@ DEFAULT_HTTP_TIMEOUT = 30
 def load_config():
     with open('config/config.yaml', 'r') as f:
         config = yaml.safe_load(f)
+
+    for env_name, config_key in (
+        ('PUBMED_CANDIDATE_POOL_SIZE_OVERRIDE', 'PUBMED_CANDIDATE_POOL_SIZE'),
+        ('MAX_ARTICLES_PER_RUN_OVERRIDE', 'MAX_ARTICLES_PER_RUN'),
+        ('TARGET_FULL_TEXT_PER_RUN_OVERRIDE', 'TARGET_FULL_TEXT_PER_RUN'),
+    ):
+        override_value = os.environ.get(env_name, '').strip()
+        if override_value:
+            try:
+                config[config_key] = int(override_value)
+            except ValueError:
+                print(f"Warning: ignoring invalid integer override for {env_name}: {override_value}")
+
     retrieval_mode_override = os.environ.get('RETRIEVAL_MODE_OVERRIDE', '').strip()
     if retrieval_mode_override:
         config['retrieval_mode'] = retrieval_mode_override

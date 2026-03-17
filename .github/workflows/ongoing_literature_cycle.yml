@@ -3,6 +3,14 @@ name: Ongoing Literature Cycle
 on:
   workflow_dispatch:
     inputs:
+      max_articles_per_run:
+        description: "Manual override for MAX_ARTICLES_PER_RUN"
+        required: false
+        default: "5"
+      target_full_text_per_run:
+        description: "Manual override for TARGET_FULL_TEXT_PER_RUN"
+        required: false
+        default: "5"
       upgrade_max_chunks:
         description: "Maximum upgrade-first chunks to process in this cycle (0 = all remaining)"
         required: false
@@ -38,6 +46,8 @@ jobs:
       - name: Run retrieval cycle
         env:
           RETRIEVAL_MODE_OVERRIDE: legacy
+          MAX_ARTICLES_PER_RUN_OVERRIDE: ${{ inputs.max_articles_per_run }}
+          TARGET_FULL_TEXT_PER_RUN_OVERRIDE: ${{ inputs.target_full_text_per_run }}
           DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
           GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
           SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}

@@ -53,6 +53,7 @@ For the staged automatic lane:
   4. refreshes the post-extraction analysis outputs
 - It also has a weekly schedule and is intended as a staging pipeline, not a direct publishing/promote step
 - The staged lane forces `legacy` retrieval mode for stability, even though the repo default can remain `expanded` for manual experimentation
+- `max_articles_per_run` and `target_full_text_per_run` let you run a smaller manual validation slice without changing the repo default config
 - `upgrade_max_chunks` controls how much abstract-only upgrade work happens in that cycle
 - `extraction_max_passes` controls how many ready-only extraction cleanup passes happen after upgrades
 
