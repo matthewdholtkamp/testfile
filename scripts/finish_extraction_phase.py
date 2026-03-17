@@ -68,6 +68,7 @@ def write_summary(path, rows):
     fieldnames = [
         'pass_number',
         'before_missing',
+        'before_upgrade_first',
         'selected_count',
         'after_missing',
         'after_upgrade_first',
@@ -109,6 +110,10 @@ def main():
     for pass_number in range(1, args.max_passes + 1):
         summary, backlog_path, backlog_rows = analyze_current_state()
         before_missing = int(summary.get('on_topic_missing_structured_outputs_count', 0))
+        before_upgrade_first = sum(
+            1 for row in backlog_rows
+            if (row.get('needs_upgrade_before_extraction') or '').lower() == 'yes'
+        )
 
         if before_missing == 0:
             print('\nNo remaining on-topic papers are missing structured outputs. Extraction phase is complete.', flush=True)
@@ -134,14 +139,18 @@ def main():
             '--include-needs-review',
         ])
 
-        after_summary, _, _ = analyze_current_state()
+        after_summary, _, after_backlog_rows = analyze_current_state()
         after_missing = int(after_summary.get('on_topic_missing_structured_outputs_count', 0))
-        after_upgrade_first = int(after_summary.get('on_topic_abstract_only_count', 0))
+        after_upgrade_first = sum(
+            1 for row in after_backlog_rows
+            if (row.get('needs_upgrade_before_extraction') or '').lower() == 'yes'
+        )
         after_ready_now = after_missing - after_upgrade_first
 
         summary_rows.append({
             'pass_number': pass_number,
             'before_missing': before_missing,
+            'before_upgrade_first': before_upgrade_first,
             'selected_count': len(paper_ids),
             'after_missing': after_missing,
             'after_upgrade_first': after_upgrade_first,
@@ -152,6 +161,7 @@ def main():
 
         print(
             f'Pass {pass_number} result: after_missing={after_missing} '
+            f'before_upgrade_first={before_upgrade_first} '
             f'after_upgrade_first={after_upgrade_first} after_ready_now={after_ready_now}',
             flush=True,
         )
@@ -164,9 +174,12 @@ def main():
             print('\nNo further shrink after the latest extraction pass. Stopping.', flush=True)
             break
 
-    final_summary, _, _ = load_counts()
+    final_summary, _, final_backlog_rows = load_counts()
     final_missing = int(final_summary.get('on_topic_missing_structured_outputs_count', 0))
-    final_upgrade_first = int(final_summary.get('on_topic_abstract_only_count', 0))
+    final_upgrade_first = sum(
+        1 for row in final_backlog_rows
+        if (row.get('needs_upgrade_before_extraction') or '').lower() == 'yes'
+    )
     final_ready_now = final_missing - final_upgrade_first
 
     print('\n--- Finish Extraction Phase Summary ---', flush=True)
