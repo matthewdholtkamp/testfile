@@ -39,6 +39,8 @@ To convert the current Drive extraction corpus into QA and aggregation artifacts
   - mechanism aggregation
   - atlas-layer aggregation
   - biomarker aggregation
+  - investigation-ready claim export
+  - investigation-ready edge export
   - TBI investigation brief
 
 ### Ongoing Staging Cycle

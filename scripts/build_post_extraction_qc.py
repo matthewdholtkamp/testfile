@@ -72,6 +72,8 @@ def compute_average(values):
 def derive_source_tier(rank: str, source: str) -> str:
     rank = (rank or "").strip()
     source_lower = (source or "").lower()
+    if not rank and not source_lower:
+        return "unknown"
     if rank == "5" or "pmc" in source_lower:
         return "full_text_like"
     if rank in {"4", "3"} or "html" in source_lower:
@@ -84,6 +86,8 @@ def derive_source_tier(rank: str, source: str) -> str:
 def derive_source_subtier(rank: str, source: str) -> str:
     rank = (rank or "").strip()
     source_lower = (source or "").lower()
+    if not rank and not source_lower:
+        return "unknown"
     if rank == "5" or "pmc" in source_lower:
         return "pmc_xml"
     if rank in {"4", "3"} or "html" in source_lower:
