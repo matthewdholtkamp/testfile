@@ -50,6 +50,12 @@ def main():
     parser.add_argument('--manifest', default='', help='Optional CSV manifest of the selected batch')
     parser.add_argument('--batch-size', type=int, default=10, help='Number of extraction-ready papers to select')
     parser.add_argument('--offset', type=int, default=0, help='Zero-based offset into the extraction-ready queue')
+    parser.add_argument(
+        '--selection-mode',
+        choices=['ready', 'upgrade_first', 'all_missing'],
+        default='ready',
+        help='Which backlog slice to select from: extraction-ready only, upgrade-first only, or all missing papers.',
+    )
     args = parser.parse_args()
 
     if args.batch_size <= 0:
@@ -58,12 +64,20 @@ def main():
         raise SystemExit('--offset cannot be negative.')
 
     rows = read_backlog(args.backlog)
-    extraction_ready = [
-        row for row in rows
-        if row.get('needs_upgrade_before_extraction') != 'yes'
-    ]
+    if args.selection_mode == 'ready':
+        selected_pool = [
+            row for row in rows
+            if row.get('needs_upgrade_before_extraction') != 'yes'
+        ]
+    elif args.selection_mode == 'upgrade_first':
+        selected_pool = [
+            row for row in rows
+            if row.get('needs_upgrade_before_extraction') == 'yes'
+        ]
+    else:
+        selected_pool = rows
 
-    selected = extraction_ready[args.offset:args.offset + args.batch_size]
+    selected = selected_pool[args.offset:args.offset + args.batch_size]
     selected_manifest_rows = []
     ordered_paper_ids = []
 
@@ -85,7 +99,8 @@ def main():
         write_manifest(args.manifest, selected_manifest_rows)
 
     print(f"Backlog file: {args.backlog}")
-    print(f"Extraction-ready papers in backlog: {len(extraction_ready)}")
+    print(f"Selection mode: {args.selection_mode}")
+    print(f"Papers in selected backlog slice: {len(selected_pool)}")
     print(f"Selected papers in this batch: {len(ordered_paper_ids)}")
     print(f"Allowlist written: {args.output}")
     if args.manifest:

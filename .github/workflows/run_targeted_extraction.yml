@@ -1,16 +1,20 @@
-name: Targeted Full-Text Extraction Batch
+name: Targeted Extraction Batch
 
 on:
   workflow_dispatch:
     inputs:
       batch_size:
-        description: "Number of full-text-ready papers to extract in this run"
+        description: "Number of backlog papers to extract in this run"
         required: false
         default: "10"
       offset:
-        description: "Zero-based offset into the full-text-ready backlog"
+        description: "Zero-based offset into the selected backlog slice"
         required: false
         default: "0"
+      selection_mode:
+        description: "Backlog slice to extract from: ready, upgrade_first, or all_missing"
+        required: false
+        default: "ready"
       dry_run:
         description: "Build the batch and resolve eligible papers without calling Gemini"
         required: false
@@ -56,7 +60,8 @@ jobs:
             --output outputs/state/extraction_allowlist.txt \
             --manifest outputs/state/targeted_extraction_batch.csv \
             --batch-size "${{ inputs.batch_size }}" \
-            --offset "${{ inputs.offset }}"
+            --offset "${{ inputs.offset }}" \
+            --selection-mode "${{ inputs.selection_mode }}"
           ARGS="--allowlist outputs/state/extraction_allowlist.txt --max-papers ${{ inputs.batch_size }}"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             ARGS="$ARGS --dry-run"
