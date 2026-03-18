@@ -9,7 +9,7 @@ This repository contains a minimal, reliable pipeline to search PubMed for recen
 
 ## GitHub Actions
 
-The project includes two manual GitHub Actions workflows:
+The project includes several manual and scheduled GitHub Actions workflows:
 
 1. **Manual PubMed to Google Drive Pipeline:** Runs the search and retrieval process.
 2. **Manual PubMed Extraction Pipeline:** Runs the Gemini-based extraction process.

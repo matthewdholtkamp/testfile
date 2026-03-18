@@ -81,6 +81,11 @@ At `HEAD`, the workflow split is:
   - post-extraction analysis
   - investigation action queue
   - atlas backbone
+- `Action Queue Extraction`:
+  - rebuild current investigation outputs
+  - select a specific action lane such as `deepen_extraction`
+  - rerun extraction only on that subset
+  - refresh the queue to measure whether the lane improved
 - `Build Atlas Slices`:
   - fresh inventory
   - post-extraction analysis
