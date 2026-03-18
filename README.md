@@ -80,9 +80,25 @@ To build mechanism-specific atlas briefs from the current investigation outputs:
   - per-mechanism atlas slice markdown files
 
 This workflow is the first direct bridge from extraction outputs into mechanistic atlas assembly.
+It produces:
+- per-mechanism atlas slice briefs
+- atlas slice index
+- atlas backbone matrix
+- atlas backbone paper anchors
+- atlas backbone summary
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.
+
+### Ongoing weekly staged cycle
+The scheduled `Ongoing Literature Cycle` workflow now does more than retrieval and extraction staging. Each weekly run:
+- pulls new literature into the staging corpus
+- upgrades and extracts what it can
+- refreshes post-extraction investigation outputs
+- emits atlas backbone artifacts
+- emits default atlas slices for the current starter mechanisms
+
+That keeps the staging lane moving toward a usable investigation engine without auto-promoting raw outputs into a final atlas by hand.
 - `extraction_model`: The exact Gemini model string used by the extraction pipeline.
 - `max_papers_per_run`: A hard cap on the number of papers attempted per run.
 - `inter_paper_delay_seconds`: A pause (in seconds) applied after each processed paper to reduce rate-limit risk.
