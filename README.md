@@ -104,6 +104,8 @@ It produces:
 - atlas backbone summary
 - starter atlas packet
 - first atlas narrative outline
+- mechanism evidence table
+- first atlas narrative draft
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.

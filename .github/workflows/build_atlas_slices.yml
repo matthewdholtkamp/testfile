@@ -87,6 +87,19 @@ jobs:
           python scripts/build_atlas_narrative_outline.py \
             --packet-json "$latest_packet" \
             --output-dir reports/atlas_narrative_outline
+          python scripts/build_mechanism_evidence_table.py \
+            --claims-csv "$latest_claims" \
+            --backbone-csv "$latest_backbone" \
+            --anchors-csv "$latest_anchors" \
+            --paper-qa-csv "$latest_paper_qa" \
+            --action-queue-csv "$latest_action_queue" \
+            --output-dir reports/mechanism_evidence_table
+          latest_outline=$(ls -1t reports/atlas_narrative_outline/atlas_narrative_outline_*.md | head -n1)
+          python scripts/build_atlas_narrative_draft.py \
+            --packet-json "$latest_packet" \
+            --backbone-csv "$latest_backbone" \
+            --outline-md "$latest_outline" \
+            --output-dir reports/atlas_narrative_draft
 
       - name: Upload atlas artifacts
         if: always()

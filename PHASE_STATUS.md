@@ -109,6 +109,8 @@ The most important additions are:
 - atlas backbone anchor list
 - atlas backbone summary
 - starter atlas packet
+- mechanism evidence table
+- first atlas narrative draft
 - a clearer rule that contradiction outputs are tension cues only
 
 ## What This Means
