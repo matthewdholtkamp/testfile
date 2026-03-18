@@ -1,0 +1,77 @@
+name: Build Atlas Slices
+
+on:
+  workflow_dispatch:
+    inputs:
+      mechanisms:
+        description: "Comma-separated canonical mechanisms (blank = defaults)"
+        required: false
+        default: ""
+
+concurrency:
+  group: build-atlas-slices
+  cancel-in-progress: false
+
+jobs:
+  build-atlas-slices:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build fresh Drive inventory
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          mkdir -p reports output outputs/state
+          python scripts/drive_inventory.py --recursive --download-metadata
+
+      - name: Run post-extraction analysis
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
+          python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+
+      - name: Build atlas slices
+        run: |
+          latest_claims=$(ls -1t reports/investigation_claims_*.csv | head -n1)
+          latest_edges=$(ls -1t reports/investigation_edges_*.csv | head -n1)
+          latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
+          if [ -n "${{ inputs.mechanisms }}" ]; then
+            python scripts/build_atlas_slices.py \
+              --claims-csv "$latest_claims" \
+              --edges-csv "$latest_edges" \
+              --paper-qa-csv "$latest_paper_qa" \
+              --output-dir reports/atlas_slices \
+              --mechanisms "${{ inputs.mechanisms }}"
+          else
+            python scripts/build_atlas_slices.py \
+              --claims-csv "$latest_claims" \
+              --edges-csv "$latest_edges" \
+              --paper-qa-csv "$latest_paper_qa" \
+              --output-dir reports/atlas_slices
+          fi
+
+      - name: Upload atlas artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas_slice_outputs
+          path: |
+            reports/
+          retention-days: 7

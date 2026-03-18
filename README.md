@@ -16,6 +16,7 @@ The project includes two manual GitHub Actions workflows:
 3. **Targeted Full-Text Extraction Batch:** Builds a fresh Drive inventory, selects on-topic backlog papers that are already full-text-like, and runs extraction only on that ordered batch.
 4. **Post-Extraction Analysis:** Builds a fresh Drive inventory, downloads the structured extraction JSONs from Drive, and emits the investigation-layer artifacts used for QA and cross-paper synthesis.
 5. **Ongoing Literature Cycle:** Weekly/manual staging cycle that runs retrieval, clears the extraction backlog, and refreshes the post-extraction investigation artifacts.
+6. **Build Atlas Slices:** Runs the investigation layer and emits first-pass mechanism-specific atlas slice briefs.
 
 ### Running the Extraction Pipeline
 To run a real extraction test, navigate to **Actions** > **Manual PubMed Extraction Pipeline**, click **Run workflow**, and ensure the following exact settings:
@@ -66,6 +67,19 @@ For the staged automatic lane:
 - `upgrade_max_chunks` controls how much abstract-only upgrade work happens in that cycle
 - `extraction_max_passes` controls how many ready-only extraction cleanup passes happen after upgrades
 - This lane has been validated as a staging workflow and is the right place to accumulate newly pulled papers before promoting them into deeper atlas work
+
+### Building Atlas Slices
+To build mechanism-specific atlas briefs from the current investigation outputs:
+- Open **Actions** > **Build Atlas Slices**
+- Leave `mechanisms` blank to use the current default slices:
+  - blood-brain barrier dysfunction
+  - mitochondrial dysfunction
+  - neuroinflammation / microglial activation
+- Download the artifact to review:
+  - atlas slice index
+  - per-mechanism atlas slice markdown files
+
+This workflow is the first direct bridge from extraction outputs into mechanistic atlas assembly.
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.
