@@ -58,17 +58,21 @@ def extract_markdown_section(content, section_name):
     return match.group(1).strip()
 
 
+def contains_term(text, term):
+    return bool(re.search(r'\b' + re.escape(term) + r'\b', text))
+
+
 def match_tbi_anchor(text):
     text_to_check = (text or '').lower()
     for term in STRONG_TBI_TERMS:
-        if re.search(r'\b' + re.escape(term) + r'\b', text_to_check):
+        if contains_term(text_to_check, term):
             return True, term
 
     for term in AMBIGUOUS_TBI_TERMS:
-        if not re.search(r'\b' + re.escape(term) + r'\b', text_to_check):
+        if not contains_term(text_to_check, term):
             continue
-        has_supporting_context = any(context in text_to_check for context in SUPPORTING_TBI_CONTEXT)
-        has_negative_context = any(context in text_to_check for context in NEGATIVE_TBI_CONTEXT)
+        has_supporting_context = any(contains_term(text_to_check, context) for context in SUPPORTING_TBI_CONTEXT)
+        has_negative_context = any(contains_term(text_to_check, context) for context in NEGATIVE_TBI_CONTEXT)
         if has_supporting_context and not has_negative_context:
             return True, term
     return False, ''
