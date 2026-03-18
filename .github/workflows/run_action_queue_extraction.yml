@@ -1,0 +1,102 @@
+name: Action Queue Extraction
+
+on:
+  workflow_dispatch:
+    inputs:
+      lanes:
+        description: "Comma-separated action lanes to target (for example: deepen_extraction or deepen_extraction,manual_review)"
+        required: false
+        default: "deepen_extraction"
+      batch_size:
+        description: "Number of queued papers to re-extract in this run"
+        required: false
+        default: "10"
+      offset:
+        description: "Zero-based offset into the selected action-lane queue"
+        required: false
+        default: "0"
+      dry_run:
+        description: "Build the queue batch and allowlist without calling Gemini"
+        required: false
+        type: boolean
+        default: false
+      include_needs_review:
+        description: "Allow reprocessing papers already marked needs_review"
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  action-queue-extraction:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt google-generativeai jsonschema
+
+      - name: Build queue batch and run targeted extraction
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          mkdir -p reports output outputs/state
+          python scripts/drive_inventory.py --recursive --download-metadata
+          latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
+          python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+          latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
+          python scripts/build_investigation_action_queue.py \
+            --paper-qa-csv "$latest_paper_qa" \
+            --output-dir reports/investigation_queue
+          latest_action_queue=$(ls -1t reports/investigation_queue/investigation_action_queue_*.csv | head -n1)
+          python scripts/build_action_allowlist.py \
+            --action-queue "$latest_action_queue" \
+            --output outputs/state/action_queue_allowlist.txt \
+            --manifest outputs/state/action_queue_batch.csv \
+            --lanes "${{ inputs.lanes }}" \
+            --batch-size "${{ inputs.batch_size }}" \
+            --offset "${{ inputs.offset }}"
+          ARGS="--allowlist outputs/state/action_queue_allowlist.txt --max-papers ${{ inputs.batch_size }}"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ "${{ inputs.include_needs_review }}" = "true" ]; then
+            ARGS="$ARGS --include-needs-review"
+          fi
+          python scripts/run_extraction.py $ARGS
+
+      - name: Refresh queue after extraction
+        if: always()
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+        run: |
+          python scripts/drive_inventory.py --recursive --download-metadata
+          latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
+          python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+          latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
+          python scripts/build_investigation_action_queue.py \
+            --paper-qa-csv "$latest_paper_qa" \
+            --output-dir reports/investigation_queue
+
+      - name: Upload action-queue extraction artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: action-queue-extraction-outputs
+          path: |
+            reports/
+            output/
+            outputs/
+          retention-days: 7

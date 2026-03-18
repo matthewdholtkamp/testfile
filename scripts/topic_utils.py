@@ -1,15 +1,43 @@
 import re
 
-CORE_TBI_TERMS = [
+STRONG_TBI_TERMS = [
     "traumatic brain injury",
-    "tbi",
     "mild traumatic brain injury",
-    "mtbi",
     "concussion",
     "post-concussion",
     "post-concussive",
     "diffuse axonal injury",
     "blast injury",
+]
+
+AMBIGUOUS_TBI_TERMS = [
+    "tbi",
+    "mtbi",
+]
+
+SUPPORTING_TBI_CONTEXT = [
+    "brain",
+    "head",
+    "injury",
+    "concuss",
+    "neuro",
+    "axonal",
+    "white matter",
+    "cortex",
+    "cortical",
+    "glial",
+    "gli",
+    "post-traumatic",
+    "post traumatic",
+]
+
+NEGATIVE_TBI_CONTEXT = [
+    "tuberculosis",
+    "tb infection",
+    "mycobacterium tuberculosis",
+    "icu tuberculosis",
+    "active tuberculosis",
+    "mtb",
 ]
 
 
@@ -32,8 +60,16 @@ def extract_markdown_section(content, section_name):
 
 def match_tbi_anchor(text):
     text_to_check = (text or '').lower()
-    for term in CORE_TBI_TERMS:
+    for term in STRONG_TBI_TERMS:
         if re.search(r'\b' + re.escape(term) + r'\b', text_to_check):
+            return True, term
+
+    for term in AMBIGUOUS_TBI_TERMS:
+        if not re.search(r'\b' + re.escape(term) + r'\b', text_to_check):
+            continue
+        has_supporting_context = any(context in text_to_check for context in SUPPORTING_TBI_CONTEXT)
+        has_negative_context = any(context in text_to_check for context in NEGATIVE_TBI_CONTEXT)
+        if has_supporting_context and not has_negative_context:
             return True, term
     return False, ''
 

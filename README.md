@@ -17,6 +17,7 @@ The project includes two manual GitHub Actions workflows:
 4. **Post-Extraction Analysis:** Builds a fresh Drive inventory, downloads the structured extraction JSONs from Drive, and emits the investigation-layer artifacts used for QA and cross-paper synthesis.
 5. **Ongoing Literature Cycle:** Weekly/manual staging cycle that runs retrieval, clears the extraction backlog, and refreshes the post-extraction investigation artifacts.
 6. **Build Atlas Slices:** Runs the investigation layer and emits first-pass mechanism-specific atlas slice briefs.
+7. **Action Queue Extraction:** Uses the investigation action queue to rerun extraction only on papers assigned to specific work lanes such as `deepen_extraction`.
 
 ### Running the Extraction Pipeline
 To run a real extraction test, navigate to **Actions** > **Manual PubMed Extraction Pipeline**, click **Run workflow**, and ensure the following exact settings:
@@ -52,6 +53,21 @@ This workflow is the current investigation layer. It is where the repo now turns
 - cross-paper mechanism rollups
 - contradiction/tension review shortlist
 - first-pass atlas inputs
+
+### Running Action Queue Extraction
+To rerun extraction on a specific work lane instead of reopening the whole corpus:
+- Open **Actions** > **Action Queue Extraction**
+- Leave `lanes` as `deepen_extraction` for the default deeper-pass lane
+- Use `batch_size` and `offset` to walk the queue in controlled slices
+- Leave `dry_run` on only when you want to preview the queue batch and allowlist without calling Gemini
+- Leave `include_needs_review` on if you want the lane to be allowed to revisit prior review-needed papers
+
+This workflow:
+- rebuilds the current investigation layer
+- refreshes the action queue
+- selects only the requested action lanes
+- reruns extraction on that subset
+- refreshes the queue again so you can see whether the lane improved the backlog
 
 ### Ongoing Staging Cycle
 For the staged automatic lane:
