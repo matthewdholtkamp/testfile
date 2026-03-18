@@ -83,6 +83,10 @@ jobs:
             --anchors-csv "$latest_anchors" \
             --action-queue-csv "$latest_action_queue" \
             --output-dir reports/starter_atlas_packet
+          latest_packet=$(ls -1t reports/starter_atlas_packet/starter_atlas_packet_*.json | head -n1)
+          python scripts/build_atlas_narrative_outline.py \
+            --packet-json "$latest_packet" \
+            --output-dir reports/atlas_narrative_outline
 
       - name: Upload atlas artifacts
         if: always()
