@@ -100,9 +100,8 @@ The scheduled `Ongoing Literature Cycle` workflow now does more than retrieval a
 - refreshes post-extraction investigation outputs
 - emits an investigation action queue for deeper review or source upgrading
 - emits atlas backbone artifacts
-- emits default atlas slices for the current starter mechanisms
 
-That keeps the staging lane moving toward a usable investigation engine without auto-promoting raw outputs into a final atlas by hand.
+That keeps the staging lane moving toward a usable investigation engine without auto-promoting raw outputs into a final atlas by hand. Default mechanism slice briefs remain a manual workflow so the weekly cycle stays stable and semantically tighter.
 
 Extraction outputs are routed to an `extraction_outputs` folder tree (separate from the source paper markdown files) based on the routing paths in `config/config.yaml`.
 **Note:** The extraction process relies on `scripts/run_extraction.py` and does not change `run_pipeline.py` or the current retrieval behavior.
