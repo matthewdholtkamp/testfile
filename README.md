@@ -68,6 +68,7 @@ This workflow:
 - selects only the requested action lanes
 - reruns extraction on that subset
 - refreshes the queue again so you can see whether the lane improved the backlog
+- emits an action-queue impact report that compares the before/after paper QA and lane transitions for that run
 
 ### Ongoing Staging Cycle
 For the staged automatic lane:

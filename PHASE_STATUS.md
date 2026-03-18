@@ -86,6 +86,7 @@ At `HEAD`, the workflow split is:
   - select a specific action lane such as `deepen_extraction`
   - rerun extraction only on that subset
   - refresh the queue to measure whether the lane improved
+  - emit a run-specific impact report showing lane transitions and paper-level deltas
 - `Build Atlas Slices`:
   - fresh inventory
   - post-extraction analysis
@@ -105,6 +106,7 @@ The project moved beyond “all papers extracted” into “papers are classifie
 The most important additions are:
 - canonical mechanism aggregation
 - investigation action queue
+- action queue impact report
 - atlas backbone matrix
 - atlas backbone anchor list
 - atlas backbone summary
