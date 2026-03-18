@@ -14,8 +14,8 @@ The project includes two manual GitHub Actions workflows:
 1. **Manual PubMed to Google Drive Pipeline:** Runs the search and retrieval process.
 2. **Manual PubMed Extraction Pipeline:** Runs the Gemini-based extraction process.
 3. **Targeted Full-Text Extraction Batch:** Builds a fresh Drive inventory, selects on-topic backlog papers that are already full-text-like, and runs extraction only on that ordered batch.
-4. **Post-Extraction Analysis:** Builds a fresh Drive inventory, downloads the structured extraction JSONs from Drive, and emits per-paper QA plus cross-paper mechanism summaries.
-5. **Ongoing Literature Cycle:** Weekly/manual staging cycle that runs retrieval, clears the extraction backlog, and refreshes the post-extraction analysis artifacts.
+4. **Post-Extraction Analysis:** Builds a fresh Drive inventory, downloads the structured extraction JSONs from Drive, and emits the investigation-layer artifacts used for QA and cross-paper synthesis.
+5. **Ongoing Literature Cycle:** Weekly/manual staging cycle that runs retrieval, clears the extraction backlog, and refreshes the post-extraction investigation artifacts.
 
 ### Running the Extraction Pipeline
 To run a real extraction test, navigate to **Actions** > **Manual PubMed Extraction Pipeline**, click **Run workflow**, and ensure the following exact settings:
@@ -37,11 +37,20 @@ To convert the current Drive extraction corpus into QA and aggregation artifacts
 - Download the artifact to review:
   - per-paper QA
   - mechanism aggregation
+  - canonical mechanism aggregation
   - atlas-layer aggregation
   - biomarker aggregation
+  - contradiction aggregation
   - investigation-ready claim export
   - investigation-ready edge export
   - TBI investigation brief
+
+This workflow is the current investigation layer. It is where the repo now turns paper-by-paper extraction into:
+- source-quality tiering
+- quality buckets and caution lists
+- cross-paper mechanism rollups
+- contradiction/tension review
+- first-pass atlas inputs
 
 ### Ongoing Staging Cycle
 For the staged automatic lane:
@@ -50,12 +59,13 @@ For the staged automatic lane:
   1. runs retrieval
   2. drains a bounded number of upgrade-first chunks
   3. runs extraction only on papers that are already extract-ready
-  4. refreshes the post-extraction analysis outputs
+  4. refreshes the post-extraction investigation outputs
 - It also has a weekly schedule and is intended as a staging pipeline, not a direct publishing/promote step
 - The staged lane forces `legacy` retrieval mode for stability, even though the repo default can remain `expanded` for manual experimentation
 - `max_articles_per_run` and `target_full_text_per_run` let you run a smaller manual validation slice without changing the repo default config
 - `upgrade_max_chunks` controls how much abstract-only upgrade work happens in that cycle
 - `extraction_max_passes` controls how many ready-only extraction cleanup passes happen after upgrades
+- This lane has been validated as a staging workflow and is the right place to accumulate newly pulled papers before promoting them into deeper atlas work
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.
