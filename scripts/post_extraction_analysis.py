@@ -522,7 +522,7 @@ def build_contradiction_rows(edge_export_rows):
         contradiction_rows_for_key = [row for row in rows if parse_bool(row.get('contradiction_flag'))]
         support_rows_for_key = [row for row in rows if not parse_bool(row.get('contradiction_flag'))]
         pmids = sorted({row['pmid'] for row in rows})
-        if not contradiction_rows_for_key and len(pmids) < 2:
+        if not contradiction_rows_for_key:
             continue
 
         contradiction_rows.append({
@@ -775,7 +775,7 @@ def render_markdown(summary):
 
     lines.extend([
         '',
-        '## Cross-Paper Tension Signals',
+        '## Cross-Paper Tension Cues',
         '',
         '| Source | Relation | Target | Signal | Papers | Supporting | Contradicting |',
         '| --- | --- | --- | --- | --- | --- | --- |',
@@ -859,7 +859,7 @@ def render_investigation_brief(summary):
 
     lines.extend([
         '',
-        '## Cross-Paper Tension Signals',
+        '## Cross-Paper Tension Cues',
         '',
         '| Source | Relation | Target | Signal | Papers | Supporting | Contradicting | Representative PMIDs |',
         '| --- | --- | --- | --- | --- | --- | --- | --- |',
@@ -943,7 +943,7 @@ def render_investigation_brief(summary):
         '## How To Use This Brief',
         '',
         '- Treat the strongest mechanism and atlas-layer tables as the best starting point for the first mechanistic atlas slices.',
-        '- Treat the cross-paper tension table as the shortlist for contradiction review, boundary conditions, and hypothesis refinement.',
+        '- Treat the cross-paper tension table as a shortlist for contradiction review and boundary-condition checking, not as adjudicated truth.',
         '- Treat the core atlas candidates as the safest papers to promote into deeper synthesis and contradiction review.',
         '- Treat the caution table as a do-not-overinterpret list until those papers get a deeper pass, better full text, or artifact repair.',
         '',

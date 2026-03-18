@@ -41,7 +41,7 @@ To convert the current Drive extraction corpus into QA and aggregation artifacts
   - canonical mechanism aggregation
   - atlas-layer aggregation
   - biomarker aggregation
-  - contradiction aggregation
+  - contradiction aggregation (tension cues only; not adjudicated truth)
   - investigation-ready claim export
   - investigation-ready edge export
   - TBI investigation brief
@@ -50,7 +50,7 @@ This workflow is the current investigation layer. It is where the repo now turns
 - source-quality tiering
 - quality buckets and caution lists
 - cross-paper mechanism rollups
-- contradiction/tension review
+- contradiction/tension review shortlist
 - first-pass atlas inputs
 
 ### Ongoing Staging Cycle
