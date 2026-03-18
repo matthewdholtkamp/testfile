@@ -72,9 +72,22 @@ def parse_list_field(value):
     return [normalize_spaces(part) for part in parts if normalize_spaces(part)]
 
 
-def load_snapshot(paper_qa_csv, action_queue_csv):
+def build_claim_mechanism_map(claims_csv):
+    if not claims_csv:
+        return {}
+    grouped = defaultdict(set)
+    for row in read_csv(claims_csv):
+        pmid = normalize_pmid(row.get('pmid', ''))
+        mechanism = normalize_spaces(row.get('canonical_mechanism', ''))
+        if pmid and mechanism:
+            grouped[pmid].add(mechanism)
+    return {pmid: sorted(values) for pmid, values in grouped.items()}
+
+
+def load_snapshot(paper_qa_csv, action_queue_csv, claims_csv=''):
     paper_rows = read_csv(paper_qa_csv)
     queue_rows = read_csv(action_queue_csv) if action_queue_csv else []
+    claim_mechanism_map = build_claim_mechanism_map(claims_csv)
 
     paper_map = {}
     for row in paper_rows:
@@ -93,8 +106,10 @@ def load_snapshot(paper_qa_csv, action_queue_csv):
         'paper_map': paper_map,
         'queue_rows': queue_rows,
         'queue_map': queue_map,
+        'claim_mechanism_map': claim_mechanism_map,
         'paper_path': paper_qa_csv,
         'queue_path': action_queue_csv,
+        'claims_path': claims_csv,
     }
 
 
@@ -124,12 +139,14 @@ def choose_title(before_row, after_row):
     )
 
 
-def extract_starter_mechanisms(row):
-    if not row:
+def extract_starter_mechanisms(row, claim_mechanisms=None):
+    if not row and not claim_mechanisms:
         return []
+    claim_mechanisms = claim_mechanisms or []
     raw_values = []
     for key in ('major_mechanisms', 'summary_major_mechanisms', 'claim_mechanisms'):
         raw_values.extend(parse_list_field(row.get(key, '')))
+    raw_values.extend(claim_mechanisms)
     hits = []
     seen = set()
     for value in raw_values:
@@ -140,11 +157,24 @@ def extract_starter_mechanisms(row):
     return hits
 
 
+def recommend_readiness(row):
+    full_text_like_after = row.get('full_text_like_after', 0)
+    claim_count_after = row.get('claim_count_after', 0)
+    queue_burden_after = row.get('queue_burden_after', 0)
+    paper_count_after = row.get('paper_count_after', 0)
+
+    if full_text_like_after >= 12 and claim_count_after >= 20 and queue_burden_after <= 3:
+        return 'promote_now', 'enough full-text signal with low remaining queue burden'
+    if full_text_like_after >= 8 and claim_count_after >= 12 and queue_burden_after <= 6 and paper_count_after >= 10:
+        return 'near_ready', 'strong enough to draft from, but still needs a bounded cleanup pass'
+    return 'hold', 'queue burden or evidence depth is still too uneven for stable drafting'
+
+
 def build_mechanism_summary(before_snapshot, after_snapshot):
     def aggregate(snapshot):
         grouped = defaultdict(list)
         for pmid, paper in snapshot['paper_map'].items():
-            mechanisms = extract_starter_mechanisms(paper)
+            mechanisms = extract_starter_mechanisms(paper, snapshot['claim_mechanism_map'].get(pmid, []))
             if not mechanisms:
                 continue
             for mechanism in mechanisms:
@@ -200,9 +230,16 @@ def build_mechanism_summary(before_snapshot, after_snapshot):
                 1 for row in before_queue
                 if row.get('action_lane') in {'manual_review', 'upgrade_then_second_pass', 'upgrade_source', 'deepen_extraction'}
             ),
+            'draft_readiness': '',
+            'draft_readiness_reason': '',
             'top_pmids_before': '; '.join(sorted(before_pmids)[:10]),
             'top_pmids_after': '; '.join(sorted(after_pmids)[:10]),
         })
+
+    for row in rows:
+        readiness, reason = recommend_readiness(row)
+        row['draft_readiness'] = readiness
+        row['draft_readiness_reason'] = reason
 
     return rows
 
@@ -223,8 +260,8 @@ def build_paper_delta_rows(before_snapshot, after_snapshot):
         before_depth = normalize_float(before_paper.get('avg_mechanistic_depth_score'))
         after_depth = normalize_float(after_paper.get('avg_mechanistic_depth_score'))
 
-        starter_before = set(extract_starter_mechanisms(before_paper))
-        starter_after = set(extract_starter_mechanisms(after_paper))
+        starter_before = set(extract_starter_mechanisms(before_paper, before_snapshot['claim_mechanism_map'].get(pmid, [])))
+        starter_after = set(extract_starter_mechanisms(after_paper, after_snapshot['claim_mechanism_map'].get(pmid, [])))
 
         rows.append({
             'pmid': pmid,
@@ -298,6 +335,7 @@ def build_summary(before_snapshot, after_snapshot, paper_rows, mechanism_rows):
         'edge_delta_total': sum(row['edge_count_delta'] for row in paper_rows),
         'depth_delta_total': round(sum(row['avg_mechanistic_depth_score_delta'] for row in paper_rows if isinstance(row['avg_mechanistic_depth_score_delta'], (int, float))), 3),
         'mechanism_rows': mechanism_rows,
+        'readiness_counts': Counter(row['draft_readiness'] for row in mechanism_rows if row.get('draft_readiness')),
     }
 
 
@@ -312,6 +350,10 @@ def render_markdown(summary, paper_rows, mechanism_rows, before_snapshot, after_
         f"- Before paper QA: `{before_snapshot['paper_path']}`",
         f"- After paper QA: `{after_snapshot['paper_path']}`",
     ]
+    if before_snapshot.get('claims_path'):
+        lines.append(f"- Before claims: `{before_snapshot['claims_path']}`")
+    if after_snapshot.get('claims_path'):
+        lines.append(f"- After claims: `{after_snapshot['claims_path']}`")
     if before_snapshot['queue_path']:
         lines.append(f"- Before queue: `{before_snapshot['queue_path']}`")
     if after_snapshot['queue_path']:
@@ -366,6 +408,23 @@ def render_markdown(summary, paper_rows, mechanism_rows, before_snapshot, after_
 
     lines.extend([
         '',
+        '## Starter Mechanism Draft Readiness',
+        '',
+        '| Mechanism | Recommendation | Reason | Queue Burden After | Full-text-like After | Claim Count After |',
+        '| --- | --- | --- | --- | --- | --- |',
+    ])
+    if mechanism_rows:
+        for row in mechanism_rows:
+            lines.append(
+                f"| {md_cell(row['canonical_mechanism'])} | {md_cell(row['draft_readiness'])} | "
+                f"{md_cell(row['draft_readiness_reason'])} | {row['queue_burden_after']} | "
+                f"{row['full_text_like_after']} | {row['claim_count_after']} |"
+            )
+    else:
+        lines.append('| none | hold | No starter-mechanism rows found | 0 | 0 | 0 |')
+
+    lines.extend([
+        '',
         '## Top Paper Deltas',
         '',
         '| PMID | Lane Transition | Claim Delta | Edge Delta | Depth Delta | Source Tier | Quality Bucket | Starter Mechanisms Gained | Starter Mechanisms Lost |',
@@ -411,6 +470,8 @@ def render_markdown(summary, paper_rows, mechanism_rows, before_snapshot, after_
             f"- Papers after: `{row['paper_count_after']}`",
             f"- Queue burden before: `{row['queue_burden_before']}`",
             f"- Queue burden after: `{row['queue_burden_after']}`",
+            f"- Draft recommendation: `{row['draft_readiness']}`",
+            f"- Recommendation reason: {row['draft_readiness_reason']}",
             f"- Top PMIDs before: `{md_cell(row['top_pmids_before'])}`",
             f"- Top PMIDs after: `{md_cell(row['top_pmids_after'])}`",
             '',
@@ -425,6 +486,8 @@ def main():
     parser.add_argument('--after-paper-qa-csv', default='', help='Path to the after post_extraction_paper_qa CSV.')
     parser.add_argument('--before-action-queue-csv', default='', help='Path to the before investigation_action_queue CSV.')
     parser.add_argument('--after-action-queue-csv', default='', help='Path to the after investigation_action_queue CSV.')
+    parser.add_argument('--before-claims-csv', default='', help='Optional path to the before investigation_claims CSV.')
+    parser.add_argument('--after-claims-csv', default='', help='Optional path to the after investigation_claims CSV.')
     parser.add_argument('--output-dir', default='reports/action_queue_impact', help='Directory for output artifacts.')
     args = parser.parse_args()
 
@@ -439,8 +502,8 @@ def main():
         'investigation_action_queue_*.csv',
     )
 
-    before_snapshot = load_snapshot(before_paper_qa_csv, before_action_queue_csv)
-    after_snapshot = load_snapshot(after_paper_qa_csv, after_action_queue_csv)
+    before_snapshot = load_snapshot(before_paper_qa_csv, before_action_queue_csv, args.before_claims_csv)
+    after_snapshot = load_snapshot(after_paper_qa_csv, after_action_queue_csv, args.after_claims_csv)
     paper_rows = build_paper_delta_rows(before_snapshot, after_snapshot)
     mechanism_rows = build_mechanism_summary(before_snapshot, after_snapshot)
     summary = build_summary(before_snapshot, after_snapshot, paper_rows, mechanism_rows)
@@ -474,6 +537,8 @@ def main():
     print(f'Action queue impact Markdown written: {md_path}')
     print(f'Before paper QA: {before_paper_qa_csv}')
     print(f'After paper QA: {after_paper_qa_csv}')
+    print(f'Before claims: {args.before_claims_csv}')
+    print(f'After claims: {args.after_claims_csv}')
     print(f'Before queue: {before_action_queue_csv}')
     print(f'After queue: {after_action_queue_csv}')
 

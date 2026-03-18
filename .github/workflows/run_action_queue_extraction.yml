@@ -54,11 +54,13 @@ jobs:
           python scripts/drive_inventory.py --recursive --download-metadata
           latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
           python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+          latest_claims=$(ls -1t reports/investigation_claims_*.csv | head -n1)
           latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
           python scripts/build_investigation_action_queue.py \
             --paper-qa-csv "$latest_paper_qa" \
             --output-dir reports/investigation_queue
           latest_action_queue=$(ls -1t reports/investigation_queue/investigation_action_queue_*.csv | head -n1)
+          cp "$latest_claims" outputs/state/before_investigation_claims.csv
           cp "$latest_paper_qa" outputs/state/before_post_extraction_paper_qa.csv
           cp "$latest_action_queue" outputs/state/before_investigation_action_queue.csv
           python scripts/build_action_allowlist.py \
@@ -87,6 +89,7 @@ jobs:
           python scripts/drive_inventory.py --recursive --download-metadata
           latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
           python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+          latest_claims=$(ls -1t reports/investigation_claims_*.csv | head -n1)
           latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
           python scripts/build_investigation_action_queue.py \
             --paper-qa-csv "$latest_paper_qa" \
@@ -95,6 +98,8 @@ jobs:
           python scripts/build_action_queue_impact_report.py \
             --before-paper-qa-csv outputs/state/before_post_extraction_paper_qa.csv \
             --after-paper-qa-csv "$latest_paper_qa" \
+            --before-claims-csv outputs/state/before_investigation_claims.csv \
+            --after-claims-csv "$latest_claims" \
             --before-action-queue-csv outputs/state/before_investigation_action_queue.csv \
             --after-action-queue-csv "$latest_action_queue" \
             --output-dir reports/action_queue_impact
