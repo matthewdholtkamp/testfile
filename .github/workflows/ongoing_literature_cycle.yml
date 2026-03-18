@@ -69,9 +69,12 @@ jobs:
           python scripts/finish_extraction_phase.py --max-passes "$EXTRACT_PASSES" --batch-size 0 --ready-only
           latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
           python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+          latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
+          python scripts/build_investigation_action_queue.py \
+            --paper-qa-csv "$latest_paper_qa" \
+            --output-dir reports/investigation_queue
           latest_claims=$(ls -1t reports/investigation_claims_*.csv | head -n1)
           latest_edges=$(ls -1t reports/investigation_edges_*.csv | head -n1)
-          latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
           python scripts/build_atlas_backbone.py \
             --claims-csv "$latest_claims" \
             --paper-qa-csv "$latest_paper_qa" \

@@ -89,19 +89,20 @@ It produces:
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.
+- `extraction_model`: The exact Gemini model string used by the extraction pipeline.
+- `max_papers_per_run`: A hard cap on the number of papers attempted per run.
+- `inter_paper_delay_seconds`: A pause (in seconds) applied after each processed paper to reduce rate-limit risk.
 
 ### Ongoing weekly staged cycle
 The scheduled `Ongoing Literature Cycle` workflow now does more than retrieval and extraction staging. Each weekly run:
 - pulls new literature into the staging corpus
 - upgrades and extracts what it can
 - refreshes post-extraction investigation outputs
+- emits an investigation action queue for deeper review or source upgrading
 - emits atlas backbone artifacts
 - emits default atlas slices for the current starter mechanisms
 
 That keeps the staging lane moving toward a usable investigation engine without auto-promoting raw outputs into a final atlas by hand.
-- `extraction_model`: The exact Gemini model string used by the extraction pipeline.
-- `max_papers_per_run`: A hard cap on the number of papers attempted per run.
-- `inter_paper_delay_seconds`: A pause (in seconds) applied after each processed paper to reduce rate-limit risk.
 
 Extraction outputs are routed to an `extraction_outputs` folder tree (separate from the source paper markdown files) based on the routing paths in `config/config.yaml`.
 **Note:** The extraction process relies on `scripts/run_extraction.py` and does not change `run_pipeline.py` or the current retrieval behavior.

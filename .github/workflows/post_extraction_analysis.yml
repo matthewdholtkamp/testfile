@@ -51,6 +51,10 @@ jobs:
             ARGS="$ARGS --include-off-topic"
           fi
           python scripts/post_extraction_analysis.py $ARGS
+          latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
+          python scripts/build_investigation_action_queue.py \
+            --paper-qa-csv "$latest_paper_qa" \
+            --output-dir reports/investigation_queue
 
       - name: Upload post-extraction artifacts
         if: always()

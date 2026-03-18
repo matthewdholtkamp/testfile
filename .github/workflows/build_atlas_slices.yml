@@ -46,6 +46,10 @@ jobs:
         run: |
           latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
           python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+          latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
+          python scripts/build_investigation_action_queue.py \
+            --paper-qa-csv "$latest_paper_qa" \
+            --output-dir reports/investigation_queue
 
       - name: Build atlas slices
         run: |
