@@ -61,6 +61,7 @@ GitHub Actions must not depend on Claude Desktop or MCP connector availability i
 - `scripts/build_connector_candidate_manifest.py`
 - `scripts/merge_connector_enrichment.py`
 - `scripts/build_mechanism_dossiers.py`
+- `scripts/run_connector_sidecar.py`
 
 ### Reports
 - `reports/connector_candidate_manifest/`
@@ -91,6 +92,20 @@ python scripts/merge_connector_enrichment.py \
 python scripts/build_mechanism_dossiers.py \
   --output-dir reports/mechanism_dossiers
 ```
+
+### One-command local orchestration
+If you want the local operator lane in one command:
+
+```bash
+python scripts/run_connector_sidecar.py \
+  --enrichment-input-dir local_connector_inputs
+```
+
+That will:
+- build the latest connector candidate manifest
+- normalize any connector CSVs found in `local_connector_inputs`
+- rebuild mechanism dossiers with enrichment if present
+- otherwise rebuild dossiers from core atlas artifacts only
 
 ## 10x Genomics Lane
 

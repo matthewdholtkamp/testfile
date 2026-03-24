@@ -132,6 +132,7 @@ Core files:
 - `scripts/build_connector_candidate_manifest.py`
 - `scripts/merge_connector_enrichment.py`
 - `scripts/build_mechanism_dossiers.py`
+- `scripts/run_connector_sidecar.py`
 
 Connector scope in v1:
 - `open_targets`
@@ -159,6 +160,12 @@ Typical sidecar flow:
    ```bash
    python scripts/build_mechanism_dossiers.py \
      --output-dir reports/mechanism_dossiers
+   ```
+
+For the local operator lane in one command:
+   ```bash
+   python scripts/run_connector_sidecar.py \
+     --enrichment-input-dir local_connector_inputs
    ```
 
 That flow gives you:
