@@ -173,6 +173,68 @@ def map_row(source, row, source_filename):
     return base
 
 
+def merge_text_values(values):
+    ordered = []
+    seen = set()
+    for value in values:
+        cleaned = normalize_spaces(value)
+        if not cleaned or cleaned in seen:
+            continue
+        seen.add(cleaned)
+        ordered.append(cleaned)
+    return '; '.join(ordered)
+
+
+def merge_score_values(values):
+    numeric = []
+    fallback = ''
+    for value in values:
+        cleaned = normalize_spaces(value)
+        if not cleaned:
+            continue
+        parsed = normalize_float(cleaned)
+        if parsed is not None:
+            numeric.append(parsed)
+        elif not fallback:
+            fallback = cleaned
+    if numeric:
+        return str(max(numeric))
+    return fallback
+
+
+def dedupe_records(records):
+    grouped = defaultdict(list)
+    for row in records:
+        key = (
+            row['canonical_mechanism'],
+            row['connector_source'],
+            row['preset_name'],
+            row['evidence_tier'],
+            row['entity_type'],
+            row['entity_id'] or row['entity_label'],
+            row['entity_label'],
+            row['relation'],
+            row['value'],
+            row['status'],
+        )
+        grouped[key].append(row)
+
+    collapsed = []
+    for key, rows in grouped.items():
+        base = dict(rows[0])
+        base['pmid'] = merge_text_values(row.get('pmid', '') for row in rows)
+        base['title'] = merge_text_values(row.get('title', '') for row in rows)
+        base['provenance_ref'] = merge_text_values(row.get('provenance_ref', '') for row in rows)
+        base['query_seed'] = merge_text_values(row.get('query_seed', '') for row in rows)
+        base['retrieved_at'] = merge_text_values(row.get('retrieved_at', '') for row in rows)
+        base['source_filename'] = merge_text_values(row.get('source_filename', '') for row in rows)
+        base['score'] = merge_score_values(row.get('score', '') for row in rows)
+        collapsed.append(base)
+
+    collapsed.sort(key=lambda row: (row['canonical_mechanism'], row['connector_source'], row['entity_type'], row['entity_label']))
+    return collapsed
+
+
 def render_summary(records, errors):
     by_source = Counter(row['connector_source'] for row in records)
     by_tier = Counter(row['evidence_tier'] for row in records)
@@ -242,7 +304,7 @@ def main():
                 continue
             records.append(record)
 
-    records.sort(key=lambda row: (row['canonical_mechanism'], row['connector_source'], row['entity_type'], row['entity_label']))
+    records = dedupe_records(records)
 
     ts = datetime.now().strftime('%Y-%m-%d_%H%M%S')
     csv_path = os.path.join(args.output_dir, f'connector_enrichment_records_{ts}.csv')

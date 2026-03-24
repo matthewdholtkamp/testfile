@@ -134,6 +134,7 @@ Core files:
 - `scripts/merge_connector_enrichment.py`
 - `scripts/build_mechanism_dossiers.py`
 - `scripts/run_connector_sidecar.py`
+- `scripts/build_atlas_chapter_from_dossiers.py`
 
 Connector scope in v1:
 - `open_targets`
@@ -181,6 +182,19 @@ That flow gives you:
 - mechanism -> biomarker -> target -> compound -> trial bridge rows
 - figure-planning seeds for future BioRender work
 - optional 10x/genomics sections when those imports exist
+
+### First Atlas Writing Artifact
+Once the dossiers exist, build the first dossier-driven atlas writing draft:
+   ```bash
+   python scripts/build_atlas_chapter_from_dossiers.py \
+     --dossier-dir reports/mechanism_dossiers \
+     --output-dir reports/atlas_chapter_draft
+   ```
+
+This produces:
+- a starter atlas chapter draft
+- a lead-mechanism recommendation for the first chapter
+- section scaffolding for BBB dysfunction, mitochondrial dysfunction, and neuroinflammation
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.

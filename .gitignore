@@ -4,3 +4,4 @@ __pycache__/
 output/
 .env
 reports/
+local_connector_inputs/

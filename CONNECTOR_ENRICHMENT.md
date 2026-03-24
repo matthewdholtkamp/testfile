@@ -63,6 +63,7 @@ GitHub Actions must not depend on Claude Desktop or MCP connector availability i
 - `scripts/merge_connector_enrichment.py`
 - `scripts/build_mechanism_dossiers.py`
 - `scripts/run_connector_sidecar.py`
+- `scripts/build_atlas_chapter_from_dossiers.py`
 
 ### Reports
 - `reports/connector_candidate_manifest/`
@@ -126,6 +127,17 @@ Important:
 - `chembl` still needs richer target/compound seeds before it is trustworthy enough for automatic first-pass fetching
 - `tenx_genomics` remains an import lane for real project exports
 - any manually collected CSVs placed in `local_connector_inputs` will be merged together with the fetched public rows
+
+### Dossier-to-chapter step
+After the dossiers are rebuilt, use them to produce the first atlas-writing artifact:
+
+```bash
+python scripts/build_atlas_chapter_from_dossiers.py \
+  --dossier-dir reports/mechanism_dossiers \
+  --output-dir reports/atlas_chapter_draft
+```
+
+This is the handoff from investigation engine to actual atlas drafting.
 
 ## 10x Genomics Lane
 

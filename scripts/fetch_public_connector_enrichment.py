@@ -17,6 +17,7 @@ STOPWORDS = {
     'injury', 'brain', 'traumatic', 'mild', 'moderate', 'severe', 'paper', 'study',
 }
 TIMEOUT = 30
+WARNINGS = []
 
 
 def latest_report_path(pattern):
@@ -74,6 +75,10 @@ def unique_rows(rows):
     return unique
 
 
+def log_warning(message):
+    WARNINGS.append(message)
+
+
 def fetch_open_targets(rows, max_hits):
     output = []
     query = '''
@@ -100,12 +105,16 @@ def fetch_open_targets(rows, max_hits):
         preset_name = normalize_spaces(row.get('preset_name', ''))
         if preset_name != 'biomarker_to_target' and not is_gene_like(seed):
             continue
-        response = session.post(
-            OPEN_TARGETS_URL,
-            json={'query': query, 'variables': {'queryString': seed, 'size': max_hits}},
-            timeout=TIMEOUT,
-        )
-        response.raise_for_status()
+        try:
+            response = session.post(
+                OPEN_TARGETS_URL,
+                json={'query': query, 'variables': {'queryString': seed, 'size': max_hits}},
+                timeout=TIMEOUT,
+            )
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            log_warning(f'open_targets: skipped seed "{seed}" due to {exc.__class__.__name__}')
+            continue
         hits = response.json().get('data', {}).get('search', {}).get('hits', [])[:max_hits]
         if is_gene_like(seed):
             seed_key = normalize_symbol(seed)
@@ -146,12 +155,16 @@ def fetch_clinical_trials(rows, max_hits):
         lowered = seed.lower()
         if 'traumatic brain injury' not in lowered and 'tbi' not in lowered:
             effective_seed = f'traumatic brain injury {seed}'
-        response = session.get(
-            CLINICAL_TRIALS_URL,
-            params={'query.term': effective_seed, 'pageSize': str(max_hits), 'format': 'json'},
-            timeout=TIMEOUT,
-        )
-        response.raise_for_status()
+        try:
+            response = session.get(
+                CLINICAL_TRIALS_URL,
+                params={'query.term': effective_seed, 'pageSize': str(max_hits), 'format': 'json'},
+                timeout=TIMEOUT,
+            )
+            response.raise_for_status()
+        except requests.RequestException as exc:
+            log_warning(f'clinicaltrials_gov: skipped seed "{effective_seed}" due to {exc.__class__.__name__}')
+            continue
         studies = response.json().get('studies', [])[:max_hits]
         now = datetime.utcnow().isoformat(timespec='seconds') + 'Z'
         for study in studies:
@@ -229,11 +242,15 @@ def fetch_biorxiv(rows, max_hits, days_back, pages_per_server):
         for server in ('biorxiv', 'medrxiv'):
             for page in range(pages_per_server):
                 cursor = page * 100
-                response = session.get(
-                    BIORXIV_API_URL.format(server=server, start=start, end=end, cursor=cursor),
-                    timeout=TIMEOUT,
-                )
-                response.raise_for_status()
+                try:
+                    response = session.get(
+                        BIORXIV_API_URL.format(server=server, start=start, end=end, cursor=cursor),
+                        timeout=TIMEOUT,
+                    )
+                    response.raise_for_status()
+                except requests.RequestException as exc:
+                    log_warning(f'{server}: skipped seed "{seed}" cursor {cursor} due to {exc.__class__.__name__}')
+                    break
                 payload = response.json()
                 collection = payload.get('collection', []) or []
                 if not collection:
@@ -325,6 +342,10 @@ def main():
     skipped = [name for name in ('chembl', 'tenx_genomics') if name in connectors]
     if skipped:
         print('Skipped connectors that still require richer/manual seeds:', ', '.join(skipped))
+    if WARNINGS:
+        print('Warnings:')
+        for warning in WARNINGS:
+            print(f'- {warning}')
     print(f'Public connector fetch complete. Output dir: {args.output_dir}')
 
 

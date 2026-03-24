@@ -84,6 +84,7 @@ For the connector-enrichment sidecar:
   - mechanism dossiers still build cleanly with no enrichment present
   - mechanism dossiers pick up target, compound, trial, preprint, and 10x/genomics rows when enrichment is present
   - the one-command sidecar runner can build the manifest, fetch public rows, merge manual rows, and rebuild dossiers
+  - dossier outputs can now feed a first atlas chapter draft
 
 ## Current Architecture
 
@@ -148,6 +149,7 @@ The most important additions are:
 - public connector fetch lane
 - connector enrichment normalizer
 - mechanism dossiers
+- dossier-driven atlas chapter draft
 - translational bridge table
 - figure-planning artifact
 - optional 10x/genomics import lane
