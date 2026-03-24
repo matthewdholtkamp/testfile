@@ -74,11 +74,16 @@ For the connector-enrichment sidecar:
   - bioRxiv / medRxiv
   - optional 10x Genomics imports
 - the sidecar is intentionally read-only and separate from retrieval / extraction
+- a first-pass public fetch lane now exists for:
+  - Open Targets
+  - ClinicalTrials.gov
+  - bioRxiv / medRxiv
 - local validation proved that:
   - candidate manifests build from current atlas-ready artifacts
   - connector normalization works across all five starter connectors
   - mechanism dossiers still build cleanly with no enrichment present
   - mechanism dossiers pick up target, compound, trial, preprint, and 10x/genomics rows when enrichment is present
+  - the one-command sidecar runner can build the manifest, fetch public rows, merge manual rows, and rebuild dossiers
 
 ## Current Architecture
 
@@ -140,6 +145,7 @@ The most important additions are:
 - connector registry
 - enrichment preset library
 - connector candidate manifest
+- public connector fetch lane
 - connector enrichment normalizer
 - mechanism dossiers
 - translational bridge table
