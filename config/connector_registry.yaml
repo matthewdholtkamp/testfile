@@ -1,0 +1,102 @@
+version: 1
+connectors:
+  biorxiv_medrxiv:
+    enabled: true
+    purpose: Preprint surveillance for emerging TBI mechanisms, biomarkers, and therapies.
+    auth_type: none_or_operator_session
+    trust_tier: frontier_preprint
+    cadence: weekly_or_on_demand
+    output_evidence_tier: preprint_only
+    input_types:
+      - canonical_mechanism
+      - tbi_query_seed
+      - biomarker_family
+    execution_lane: local_operator
+    notes: Read-only enrichment. Results should stay out of the core atlas until reviewed.
+
+  open_targets:
+    enabled: true
+    purpose: Target-disease associations for biomarkers, genes, and canonical mechanisms.
+    auth_type: api_or_mcp
+    trust_tier: curated_target_association
+    cadence: on_demand
+    output_evidence_tier: target_association
+    input_types:
+      - biomarker_family
+      - canonical_mechanism
+      - gene_symbol
+    execution_lane: local_operator
+    notes: Primary translational bridge from biomarker/mechanism evidence to target prioritization.
+
+  chembl:
+    enabled: true
+    purpose: Compound, mechanism-of-action, bioactivity, and druggability enrichment.
+    auth_type: api_or_mcp
+    trust_tier: curated_compound_database
+    cadence: on_demand
+    output_evidence_tier: compound_mechanism
+    input_types:
+      - canonical_mechanism
+      - target_id
+      - target_name
+      - biomarker_family
+    execution_lane: local_operator
+    notes: Used after Open Targets or direct target hypotheses.
+
+  clinicaltrials_gov:
+    enabled: true
+    purpose: Trial landscape enrichment for targets, compounds, and mechanism-linked interventions.
+    auth_type: none_or_api
+    trust_tier: registered_trial
+    cadence: weekly_or_on_demand
+    output_evidence_tier: trial_landscape
+    input_types:
+      - canonical_mechanism
+      - target_name
+      - compound_name
+      - biomarker_family
+    execution_lane: local_operator
+    notes: Trial results inform translational maturity, not mechanistic truth.
+
+  tenx_genomics:
+    enabled: true
+    purpose: Optional research-data lane for single-cell and spatial transcriptomics outputs.
+    auth_type: operator_cloud_account
+    trust_tier: project_specific_research_data
+    cadence: project_driven
+    output_evidence_tier: genomics_expression
+    input_types:
+      - canonical_mechanism
+      - analysis_export
+      - cell_type
+      - gene_symbol
+      - pathway_hit
+    execution_lane: local_operator
+    notes: Not a GitHub Action dependency. Use local imported analysis exports only.
+
+  biorender:
+    enabled: false
+    purpose: Figure-planning and visual template support for mature atlas dossiers.
+    auth_type: operator_web_session
+    trust_tier: presentation_support
+    cadence: on_demand
+    output_evidence_tier: figure_planning
+    input_types:
+      - canonical_mechanism
+      - dossier_summary
+      - atlas_layer
+    execution_lane: local_operator
+    notes: Deferred until mechanism dossiers are stable.
+
+  consensus:
+    enabled: false
+    purpose: Optional semantic literature scan and sanity-check layer.
+    auth_type: operator_session
+    trust_tier: semantic_search
+    cadence: on_demand
+    output_evidence_tier: secondary_literature_context
+    input_types:
+      - natural_language_question
+      - canonical_mechanism
+    execution_lane: local_operator
+    notes: Optional. Not required for v1 enrichment.

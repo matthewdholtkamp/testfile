@@ -55,6 +55,21 @@ jobs:
           python scripts/build_investigation_action_queue.py \
             --paper-qa-csv "$latest_paper_qa" \
             --output-dir reports/investigation_queue
+          latest_claims=$(ls -1t reports/investigation_claims_*.csv | head -n1)
+          latest_action_queue=$(ls -1t reports/investigation_queue/investigation_action_queue_*.csv | head -n1)
+          python scripts/build_atlas_backbone.py \
+            --claims-csv "$latest_claims" \
+            --paper-qa-csv "$latest_paper_qa" \
+            --output-dir reports/atlas_backbone
+          latest_backbone=$(ls -1t reports/atlas_backbone/atlas_backbone_matrix_*.csv | head -n1)
+          latest_anchors=$(ls -1t reports/atlas_backbone/atlas_backbone_anchors_*.csv | head -n1)
+          python scripts/build_connector_candidate_manifest.py \
+            --claims-csv "$latest_claims" \
+            --paper-qa-csv "$latest_paper_qa" \
+            --action-queue-csv "$latest_action_queue" \
+            --backbone-csv "$latest_backbone" \
+            --anchors-csv "$latest_anchors" \
+            --output-dir reports/connector_candidate_manifest
 
       - name: Upload post-extraction artifacts
         if: always()

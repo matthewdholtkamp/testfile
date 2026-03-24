@@ -1,0 +1,88 @@
+version: 1
+presets:
+  starter_mechanism_deep_dive:
+    description: Atlas-focused deepening workflow for the three starter mechanisms.
+    inputs:
+      - canonical_mechanism
+      - anchor_pmid
+      - atlas_layer
+      - biomarker_family
+    connector_chain:
+      - open_targets
+      - chembl
+      - clinicaltrials_gov
+      - biorxiv_medrxiv
+    outputs:
+      - mechanism_dossier
+      - translational_bridge_rows
+      - figure_planning_rows
+
+  biomarker_to_target:
+    description: Translate biomarker families from investigation claims into target and intervention context.
+    inputs:
+      - canonical_mechanism
+      - biomarker_family
+      - anchor_pmid
+    connector_chain:
+      - open_targets
+      - chembl
+      - clinicaltrials_gov
+    outputs:
+      - target_association_rows
+      - compound_mechanism_rows
+      - trial_landscape_rows
+
+  mechanism_to_therapeutic:
+    description: Map canonical mechanisms to druggable targets, compounds, and trial activity.
+    inputs:
+      - canonical_mechanism
+      - anchor_pmid
+      - representative_claim
+    connector_chain:
+      - open_targets
+      - chembl
+      - clinicaltrials_gov
+    outputs:
+      - target_association_rows
+      - compound_mechanism_rows
+      - trial_landscape_rows
+
+  preprint_surveillance:
+    description: Track frontier preprints for starter mechanisms and TBI-specific seeds.
+    inputs:
+      - canonical_mechanism
+      - tbi_query_seed
+    connector_chain:
+      - biorxiv_medrxiv
+    outputs:
+      - preprint_watchlist_rows
+
+  atlas_figure_pack:
+    description: Produce figure-planning seeds for later BioRender use.
+    inputs:
+      - canonical_mechanism
+      - atlas_layer
+      - dossier_summary
+    connector_chain:
+      - biorender
+    outputs:
+      - figure_planning_rows
+
+  single_cell_mechanism_deep_dive:
+    description: Optional local genomics lane that imports 10x outputs and links them to targets and compounds.
+    inputs:
+      - canonical_mechanism
+      - analysis_export
+      - gene_symbol
+      - cell_type
+      - pathway_hit
+    connector_chain:
+      - tenx_genomics
+      - open_targets
+      - chembl
+      - clinicaltrials_gov
+    outputs:
+      - genomics_expression_rows
+      - target_association_rows
+      - compound_mechanism_rows
+      - trial_landscape_rows

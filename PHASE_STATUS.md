@@ -1,4 +1,4 @@
-# Phase Status: Investigation Layer + Atlas Backbone Live
+# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live
 
 This file is the current handoff for the TBI scientific intelligence system after finishing extraction coverage for the original on-topic corpus and moving into the quality-gated investigation / atlas-construction phase.
 
@@ -8,6 +8,7 @@ Turn the extracted TBI corpus into a trustworthy mechanistic investigation layer
 - keeps source quality visible
 - separates atlas-ready papers from papers needing more work
 - supports first atlas construction for the starter mechanisms
+- supports connector-driven enrichment without destabilizing the core staging lane
 - keeps ongoing literature ingestion running in a staging lane
 
 ## Verified Current State
@@ -65,14 +66,29 @@ For the atlas layer:
   - anchor papers
   - remaining work queue
 
+For the connector-enrichment sidecar:
+- a connector registry and preset library now exist for:
+  - Open Targets
+  - ChEMBL
+  - ClinicalTrials.gov
+  - bioRxiv / medRxiv
+  - optional 10x Genomics imports
+- the sidecar is intentionally read-only and separate from retrieval / extraction
+- local validation proved that:
+  - candidate manifests build from current atlas-ready artifacts
+  - connector normalization works across all five starter connectors
+  - mechanism dossiers still build cleanly with no enrichment present
+  - mechanism dossiers pick up target, compound, trial, preprint, and 10x/genomics rows when enrichment is present
+
 ## Current Architecture
 
-The repo now has four distinct layers:
+The repo now has five distinct layers:
 
 1. retrieval and source-paper normalization into Drive
 2. structured extraction coverage for the on-topic corpus
 3. post-extraction investigation outputs for QA, weighting, and triage
 4. atlas assembly artifacts for the starter mechanisms
+5. connector-enrichment sidecar artifacts for translational and genomics context
 
 At `HEAD`, the workflow split is:
 - `Ongoing Literature Cycle`:
@@ -94,10 +110,17 @@ At `HEAD`, the workflow split is:
   - atlas slices
   - atlas backbone
   - starter atlas packet
+  - connector candidate manifest
+  - mechanism dossiers
+- local connector sidecar:
+  - normalize connector results from Open Targets / ChEMBL / ClinicalTrials.gov / bioRxiv-medRxiv / optional 10x imports
+  - rebuild enriched mechanism dossiers
+  - emit translational bridge and figure-planning artifacts
 
 That split is intentional:
 - the weekly lane stays stable and machine-oriented
 - the manual atlas lane carries the more opinionated human-facing slice and packet outputs
+- the connector lane stays local/operator-driven until the interfaces are fully proven
 
 ## What Changed In This Phase
 
@@ -114,6 +137,14 @@ The most important additions are:
 - starter atlas packet
 - mechanism evidence table
 - first atlas narrative draft
+- connector registry
+- enrichment preset library
+- connector candidate manifest
+- connector enrichment normalizer
+- mechanism dossiers
+- translational bridge table
+- figure-planning artifact
+- optional 10x/genomics import lane
 - a clearer rule that contradiction outputs are tension cues only
 
 ## What This Means
@@ -125,8 +156,8 @@ Before:
 
 Now:
 - the main risk is not coverage
-- the main risk is whether the extracted corpus is sorted into the right action lanes and synthesized into a trustworthy mechanistic backbone
-- the system now has enough structure to support real atlas construction for the starter mechanisms
+- the main risk is whether the extracted corpus is sorted into the right action lanes, deepened where needed, and synthesized into a trustworthy mechanistic backbone
+- the system now has enough structure to support real atlas construction for the starter mechanisms plus external enrichment
 
 Important interpretation:
 - full-text-like evidence should still be weighted more heavily than abstract-only evidence
@@ -135,20 +166,21 @@ Important interpretation:
 
 ## Recommended Next Step
 
-Move from backbone-building into targeted deepening and first atlas synthesis.
+Move from backbone-building into enriched starter-mechanism dossiers and first atlas synthesis.
 
 Recommended immediate focus:
-1. validate the fresh GitHub runs on the latest head (`post-analysis`, `atlas build`, `ongoing cycle`)
-2. use the action queue to drive a smaller second-pass/deeper extraction lane instead of reopening broad extraction coverage
-3. keep growing the starter atlas packet for:
+1. validate the fresh GitHub runs on the latest head (`post-analysis` and `atlas build`) now that the connector sidecar hooks are present
+2. use the action queue to drive deeper extraction only for starter-mechanism papers that still look shallow or ambiguous
+3. begin collecting real enrichment rows for:
    - blood-brain barrier dysfunction
    - mitochondrial dysfunction
    - neuroinflammation
-4. begin drafting the first mechanistic atlas narrative from the starter packet + anchor papers
+4. rebuild enriched mechanism dossiers and use them as the working packet for first atlas drafting
+5. add 10x outputs as soon as real analysis exports are available, without blocking the rest of the enrichment system
 
 Practical priority:
 - do not reopen broad extraction as the central task
 - treat the action queue as the backlog
-- use the starter-mechanism deepen lane when the goal is atlas-building rather than generic queue cleanup
 - treat the atlas backbone as the synthesis map
-- treat the starter atlas packet as the first human-usable investigation artifact
+- treat the mechanism dossiers as the new human-usable bridge between literature evidence and atlas writing
+- keep 10x as an optional enrichment lane that becomes active once real genomics outputs exist

@@ -18,6 +18,7 @@ The project includes several manual and scheduled GitHub Actions workflows:
 5. **Ongoing Literature Cycle:** Weekly/manual staging cycle that runs retrieval, clears the extraction backlog, and refreshes the post-extraction investigation artifacts.
 6. **Build Atlas Slices:** Runs the investigation layer and emits first-pass mechanism-specific atlas slice briefs.
 7. **Action Queue Extraction:** Uses the investigation action queue to rerun extraction only on papers assigned to specific work lanes such as `deepen_extraction`.
+8. **Connector Enrichment Sidecar:** A local/operator lane that starts from the connector candidate manifest, normalizes Open Targets / ChEMBL / ClinicalTrials.gov / bioRxiv-medRxiv / optional 10x results, and rebuilds mechanism dossiers without changing the core staging workflows.
 
 ### Running the Extraction Pipeline
 To run a real extraction test, navigate to **Actions** > **Manual PubMed Extraction Pipeline**, click **Run workflow**, and ensure the following exact settings:
@@ -53,6 +54,11 @@ This workflow is the current investigation layer. It is where the repo now turns
 - cross-paper mechanism rollups
 - contradiction/tension review shortlist
 - first-pass atlas inputs
+- connector candidate manifests for downstream enrichment
+
+It now also emits:
+- atlas backbone matrix and anchor rows
+- connector candidate manifest plus per-connector CSV templates
 
 ### Running Action Queue Extraction
 To rerun extraction on a specific work lane instead of reopening the whole corpus:
@@ -112,6 +118,54 @@ It produces:
 - first atlas narrative outline
 - mechanism evidence table
 - first atlas narrative draft
+- mechanism dossiers
+- translational bridge table
+- figure-planning artifact
+
+### Connector Enrichment Sidecar
+The connector lane is intentionally separate from the GitHub staging lane. It uses the repo as the system of record and adds read-only enrichment after post-analysis.
+
+Core files:
+- `config/connector_registry.yaml`
+- `config/enrichment_presets.yaml`
+- `CONNECTOR_ENRICHMENT.md`
+- `scripts/build_connector_candidate_manifest.py`
+- `scripts/merge_connector_enrichment.py`
+- `scripts/build_mechanism_dossiers.py`
+
+Connector scope in v1:
+- `open_targets`
+- `chembl`
+- `clinicaltrials_gov`
+- `biorxiv_medrxiv`
+- `tenx_genomics` as an optional local research-data lane
+
+Important boundaries:
+- live connector calls do **not** run inside `run_pipeline.py`
+- live connector calls do **not** run inside `run_extraction.py`
+- weekly GitHub staging stays stable even if connector enrichment is never run
+- 10x is built in now as an optional import lane, but it is only useful when you have real analysis exports to normalize
+
+Typical sidecar flow:
+1. Run **Post-Extraction Analysis** or **Build Atlas Slices**
+2. Download the `connector_candidate_manifest` artifact and fill the generated import templates in a local connector-capable environment
+3. Normalize local connector outputs:
+   ```bash
+   python scripts/merge_connector_enrichment.py \
+     --input-dir local_connector_inputs \
+     --output-dir reports/connector_enrichment
+   ```
+4. Rebuild mechanism dossiers:
+   ```bash
+   python scripts/build_mechanism_dossiers.py \
+     --output-dir reports/mechanism_dossiers
+   ```
+
+That flow gives you:
+- enriched mechanism dossiers
+- mechanism -> biomarker -> target -> compound -> trial bridge rows
+- figure-planning seeds for future BioRender work
+- optional 10x/genomics sections when those imports exist
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.

@@ -94,12 +94,42 @@ jobs:
             --paper-qa-csv "$latest_paper_qa" \
             --action-queue-csv "$latest_action_queue" \
             --output-dir reports/mechanism_evidence_table
+          python scripts/build_connector_candidate_manifest.py \
+            --claims-csv "$latest_claims" \
+            --paper-qa-csv "$latest_paper_qa" \
+            --action-queue-csv "$latest_action_queue" \
+            --backbone-csv "$latest_backbone" \
+            --anchors-csv "$latest_anchors" \
+            --output-dir reports/connector_candidate_manifest
           latest_outline=$(ls -1t reports/atlas_narrative_outline/atlas_narrative_outline_*.md | head -n1)
           python scripts/build_atlas_narrative_draft.py \
             --packet-json "$latest_packet" \
             --backbone-csv "$latest_backbone" \
             --outline-md "$latest_outline" \
             --output-dir reports/atlas_narrative_draft
+          latest_enrichment=$(find reports -type f -name 'connector_enrichment_records_*.csv' | sort | tail -n1)
+          if [ -n "$latest_enrichment" ]; then
+            python scripts/build_mechanism_dossiers.py \
+              --packet-json "$latest_packet" \
+              --claims-csv "$latest_claims" \
+              --edges-csv "$latest_edges" \
+              --paper-qa-csv "$latest_paper_qa" \
+              --backbone-csv "$latest_backbone" \
+              --anchors-csv "$latest_anchors" \
+              --action-queue-csv "$latest_action_queue" \
+              --enrichment-csv "$latest_enrichment" \
+              --output-dir reports/mechanism_dossiers
+          else
+            python scripts/build_mechanism_dossiers.py \
+              --packet-json "$latest_packet" \
+              --claims-csv "$latest_claims" \
+              --edges-csv "$latest_edges" \
+              --paper-qa-csv "$latest_paper_qa" \
+              --backbone-csv "$latest_backbone" \
+              --anchors-csv "$latest_anchors" \
+              --action-queue-csv "$latest_action_queue" \
+              --output-dir reports/mechanism_dossiers
+          fi
 
       - name: Upload atlas artifacts
         if: always()
