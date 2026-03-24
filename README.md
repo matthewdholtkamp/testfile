@@ -130,6 +130,7 @@ Core files:
 - `config/enrichment_presets.yaml`
 - `CONNECTOR_ENRICHMENT.md`
 - `scripts/build_connector_candidate_manifest.py`
+- `scripts/fetch_public_connector_enrichment.py`
 - `scripts/merge_connector_enrichment.py`
 - `scripts/build_mechanism_dossiers.py`
 - `scripts/run_connector_sidecar.py`
@@ -165,6 +166,13 @@ Typical sidecar flow:
 For the local operator lane in one command:
    ```bash
    python scripts/run_connector_sidecar.py \
+     --enrichment-input-dir local_connector_inputs
+   ```
+
+For a first-pass public fetch + merge + dossier rebuild:
+   ```bash
+   python scripts/run_connector_sidecar.py \
+     --fetch-public-connectors \
      --enrichment-input-dir local_connector_inputs
    ```
 

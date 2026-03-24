@@ -59,6 +59,7 @@ GitHub Actions must not depend on Claude Desktop or MCP connector availability i
 
 ### Scripts
 - `scripts/build_connector_candidate_manifest.py`
+- `scripts/fetch_public_connector_enrichment.py`
 - `scripts/merge_connector_enrichment.py`
 - `scripts/build_mechanism_dossiers.py`
 - `scripts/run_connector_sidecar.py`
@@ -106,6 +107,25 @@ That will:
 - normalize any connector CSVs found in `local_connector_inputs`
 - rebuild mechanism dossiers with enrichment if present
 - otherwise rebuild dossiers from core atlas artifacts only
+
+### First-pass public fetch lane
+For the connectors that are reasonably public and scriptable now:
+
+```bash
+python scripts/run_connector_sidecar.py \
+  --fetch-public-connectors \
+  --enrichment-input-dir local_connector_inputs
+```
+
+That currently supports:
+- `open_targets`
+- `clinicaltrials_gov`
+- `biorxiv_medrxiv`
+
+Important:
+- `chembl` still needs richer target/compound seeds before it is trustworthy enough for automatic first-pass fetching
+- `tenx_genomics` remains an import lane for real project exports
+- any manually collected CSVs placed in `local_connector_inputs` will be merged together with the fetched public rows
 
 ## 10x Genomics Lane
 

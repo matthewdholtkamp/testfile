@@ -16,6 +16,11 @@ def latest_optional_report_path(pattern):
     return candidates[-1] if candidates else ''
 
 
+def latest_csv_in_dir(path, pattern='*.csv'):
+    candidates = sorted(glob(os.path.join(path, pattern)))
+    return candidates[-1] if candidates else ''
+
+
 def run_cmd(args):
     subprocess.run(args, check=True, cwd=REPO_ROOT)
 
@@ -31,8 +36,8 @@ def main():
     )
     parser.add_argument(
         '--enrichment-input-dir',
-        default='',
-        help='Optional directory containing connector CSV files to normalize before dossier rebuild.',
+        default='local_connector_inputs',
+        help='Directory containing connector CSV files to normalize before dossier rebuild.',
     )
     parser.add_argument(
         '--enrichment-output-dir',
@@ -54,8 +59,19 @@ def main():
         default='',
         help='Optional comma-separated canonical mechanisms to forward to the dossier builder.',
     )
+    parser.add_argument(
+        '--fetch-public-connectors',
+        action='store_true',
+        help='Fetch first-pass Open Targets / ClinicalTrials.gov / bioRxiv-medRxiv CSVs into the enrichment input dir before normalization.',
+    )
+    parser.add_argument(
+        '--public-connectors',
+        default='open_targets,clinicaltrials_gov,biorxiv_medrxiv',
+        help='Comma-separated public connectors for --fetch-public-connectors.',
+    )
     args = parser.parse_args()
 
+    manifest_csv = ''
     if not args.skip_manifest:
         run_cmd([
             'python3',
@@ -63,8 +79,24 @@ def main():
             '--output-dir',
             args.manifest_output_dir,
         ])
+        manifest_csv = latest_csv_in_dir(args.manifest_output_dir, 'connector_candidate_manifest_*.csv')
+    else:
+        manifest_csv = latest_optional_report_path('connector_candidate_manifest_*.csv')
 
     enrichment_csv = ''
+    if args.fetch_public_connectors:
+        os.makedirs(args.enrichment_input_dir, exist_ok=True)
+        run_cmd([
+            'python3',
+            'scripts/fetch_public_connector_enrichment.py',
+            '--manifest-csv',
+            manifest_csv,
+            '--connectors',
+            args.public_connectors,
+            '--output-dir',
+            args.enrichment_input_dir,
+        ])
+
     if has_csvs(args.enrichment_input_dir):
         run_cmd([
             'python3',
