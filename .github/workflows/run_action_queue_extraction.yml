@@ -25,6 +25,11 @@ on:
         required: false
         type: boolean
         default: true
+      starter_mechanisms_only:
+        description: "Limit selected queue rows to starter mechanisms (BBB, mitochondrial dysfunction, neuroinflammation)"
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   action-queue-extraction:
@@ -63,13 +68,18 @@ jobs:
           cp "$latest_claims" outputs/state/before_investigation_claims.csv
           cp "$latest_paper_qa" outputs/state/before_post_extraction_paper_qa.csv
           cp "$latest_action_queue" outputs/state/before_investigation_action_queue.csv
-          python scripts/build_action_allowlist.py \
-            --action-queue "$latest_action_queue" \
-            --output outputs/state/action_queue_allowlist.txt \
-            --manifest outputs/state/action_queue_batch.csv \
-            --lanes "${{ inputs.lanes }}" \
-            --batch-size "${{ inputs.batch_size }}" \
+          ALLOWLIST_ARGS=(
+            --action-queue "$latest_action_queue"
+            --output outputs/state/action_queue_allowlist.txt
+            --manifest outputs/state/action_queue_batch.csv
+            --lanes "${{ inputs.lanes }}"
+            --batch-size "${{ inputs.batch_size }}"
             --offset "${{ inputs.offset }}"
+          )
+          if [ "${{ inputs.starter_mechanisms_only }}" = "true" ]; then
+            ALLOWLIST_ARGS+=(--starter-mechanisms-only)
+          fi
+          python scripts/build_action_allowlist.py "${ALLOWLIST_ARGS[@]}"
           ARGS="--allowlist outputs/state/action_queue_allowlist.txt --max-papers ${{ inputs.batch_size }}"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             ARGS="$ARGS --dry-run"

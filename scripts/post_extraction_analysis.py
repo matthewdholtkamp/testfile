@@ -317,6 +317,21 @@ def build_paper_rows(service, source_map, output_index, on_topic_only):
 
         normalized_claim_mechanisms = [normalize_label(value) for value in claim_mechanisms if normalize_label(value)]
         normalized_raw_mechanisms = [normalize_label(value) for value in raw_mechanisms if normalize_label(value)]
+        canonical_claim_mechanisms = []
+        for claim in claims_json:
+            if not isinstance(claim, dict):
+                continue
+            claim_mechanism = normalize_label(claim.get('mechanism', ''))
+            claim_mechanism_normalization = normalize_mechanism(
+                claim_mechanism,
+                normalized_claim=claim.get('normalized_claim', ''),
+                atlas_layer=claim.get('atlas_layer', ''),
+                confidence_score=claim.get('confidence_score'),
+                mechanistic_depth_score=claim.get('mechanistic_depth_score'),
+            )
+            canonical_mechanism = normalize_label(claim_mechanism_normalization.get('canonical_mechanism', ''))
+            if canonical_mechanism:
+                canonical_claim_mechanisms.append(canonical_mechanism)
         biomarker_families = [canonicalize_biomarker(value) for value in raw_biomarkers]
 
         source_tier = source_quality_tier(source_row)
@@ -345,6 +360,8 @@ def build_paper_rows(service, source_map, output_index, on_topic_only):
             'major_mechanisms': join_sorted(normalized_raw_mechanisms),
             'claim_mechanisms': join_sorted(normalized_claim_mechanisms),
             'summary_major_mechanisms': join_sorted(summary_mechanisms),
+            'major_canonical_mechanisms': join_sorted(canonical_claim_mechanisms),
+            'canonical_mechanism_rollup': join_sorted(canonical_claim_mechanisms),
             'biomarker_count': len({value for value in raw_biomarkers if normalize_label(value)}),
             'biomarker_families': join_sorted(biomarker_families),
             'intervention_count': len({value for value in interventions if normalize_label(value)}),
@@ -1028,6 +1045,7 @@ def main():
             'source_quality_tier', 'claim_count', 'edge_count', 'contradiction_edge_count', 'avg_confidence_score',
             'avg_mechanistic_depth_score', 'avg_translational_relevance_score', 'dominant_atlas_layers',
             'major_mechanisms', 'claim_mechanisms', 'summary_major_mechanisms',
+            'major_canonical_mechanisms', 'canonical_mechanism_rollup',
             'biomarker_count', 'biomarker_families',
             'intervention_count', 'outcome_measure_count',
             'include_in_core_atlas', 'whether_human_relevant', 'whether_mechanistically_informative',

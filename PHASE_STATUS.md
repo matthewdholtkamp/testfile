@@ -107,6 +107,7 @@ The most important additions are:
 - canonical mechanism aggregation
 - investigation action queue
 - action queue impact report
+- starter-mechanism-targeted deepen-extraction selection
 - atlas backbone matrix
 - atlas backbone anchor list
 - atlas backbone summary
@@ -148,5 +149,6 @@ Recommended immediate focus:
 Practical priority:
 - do not reopen broad extraction as the central task
 - treat the action queue as the backlog
+- use the starter-mechanism deepen lane when the goal is atlas-building rather than generic queue cleanup
 - treat the atlas backbone as the synthesis map
 - treat the starter atlas packet as the first human-usable investigation artifact

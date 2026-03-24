@@ -17,6 +17,17 @@ ACTION_ORDER = {
     'atlas_ready': 5,
 }
 
+CANONICAL_MECHANISM_ROLLUP_FIELDS = (
+    'major_canonical_mechanisms',
+    'summary_major_canonical_mechanisms',
+    'canonical_mechanism_rollup',
+)
+
+MECHANISM_FALLBACK_FIELDS = (
+    'summary_major_mechanisms',
+    'major_mechanisms',
+)
+
 
 def latest_report_path(pattern):
     candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
@@ -61,6 +72,26 @@ def normalize_spaces(value):
     return ' '.join((value or '').split()).strip()
 
 
+def build_canonical_mechanism_rollup(row):
+    values = []
+    source_fields = []
+
+    for field in CANONICAL_MECHANISM_ROLLUP_FIELDS:
+        value = normalize_spaces(row.get(field, ''))
+        if value:
+            values.append(value)
+            source_fields.append(field)
+
+    if not values:
+        for field in MECHANISM_FALLBACK_FIELDS:
+            value = normalize_spaces(row.get(field, ''))
+            if value:
+                values.append(value)
+                source_fields.append(field)
+
+    return '; '.join(dict.fromkeys(values)), '; '.join(dict.fromkeys(source_fields))
+
+
 def classify_action(row):
     tier = row.get('source_quality_tier', '')
     quality = row.get('quality_bucket', '') or row.get('science_quality_bucket', '')
@@ -93,6 +124,7 @@ def build_action_rows(paper_rows):
     for row in paper_rows:
         action_lane, action_reason = classify_action(row)
         artifact_error_count = normalize_int(row.get('artifact_error_count'))
+        major_canonical_mechanisms, major_canonical_mechanisms_source_fields = build_canonical_mechanism_rollup(row)
         rows.append({
             'pmid': row.get('pmid', ''),
             'title': row.get('title', ''),
@@ -104,6 +136,8 @@ def build_action_rows(paper_rows):
             'edge_count': normalize_int(row.get('edge_count')),
             'avg_confidence_score': row.get('avg_confidence_score', ''),
             'avg_mechanistic_depth_score': row.get('avg_mechanistic_depth_score', ''),
+            'major_canonical_mechanisms': major_canonical_mechanisms,
+            'major_canonical_mechanisms_source_fields': major_canonical_mechanisms_source_fields,
             'major_mechanisms': normalize_spaces(row.get('major_mechanisms', '')),
             'dominant_atlas_layers': normalize_spaces(row.get('dominant_atlas_layers', '')),
             'include_in_core_atlas': row.get('include_in_core_atlas', ''),
@@ -154,13 +188,14 @@ def render_markdown(summary, rows):
         '',
         '## Highest Priority Papers',
         '',
-        '| Action Lane | PMID | Source Quality | Quality Bucket | Depth | Claims | Edges | Reason |',
-        '| --- | --- | --- | --- | --- | --- | --- | --- |',
+        '| Action Lane | PMID | Source Quality | Quality Bucket | Depth | Claims | Edges | Canonical Mechanism Rollup | Reason |',
+        '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
     ])
     for row in rows[:40]:
         lines.append(
             f"| {row['action_lane']} | {row['pmid']} | {row['source_quality_tier']} | {row['quality_bucket']} | "
-            f"{row['avg_mechanistic_depth_score']} | {row['claim_count']} | {row['edge_count']} | {row['action_reason']} |"
+            f"{row['avg_mechanistic_depth_score']} | {row['claim_count']} | {row['edge_count']} | "
+            f"{normalize_spaces(row.get('major_canonical_mechanisms', ''))} | {row['action_reason']} |"
         )
 
     return '\n'.join(lines) + '\n'
@@ -184,6 +219,7 @@ def main():
     write_csv(csv_path, rows, list(rows[0].keys()) if rows else [
         'pmid', 'title', 'topic_anchor', 'source_quality_tier', 'quality_bucket', 'investigation_priority',
         'claim_count', 'edge_count', 'avg_confidence_score', 'avg_mechanistic_depth_score',
+        'major_canonical_mechanisms', 'major_canonical_mechanisms_source_fields',
         'major_mechanisms', 'dominant_atlas_layers', 'include_in_core_atlas', 'artifact_error_count',
         'action_lane', 'action_reason',
     ])

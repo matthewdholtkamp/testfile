@@ -59,6 +59,10 @@ To rerun extraction on a specific work lane instead of reopening the whole corpu
 - Open **Actions** > **Action Queue Extraction**
 - Leave `lanes` as `deepen_extraction` for the default deeper-pass lane
 - Use `batch_size` and `offset` to walk the queue in controlled slices
+- Turn on `starter_mechanisms_only` when you want the deeper-pass lane restricted to the starter atlas mechanisms:
+  - blood-brain barrier dysfunction
+  - mitochondrial dysfunction
+  - neuroinflammation / microglial activation
 - Leave `dry_run` on only when you want to preview the queue batch and allowlist without calling Gemini
 - Leave `include_needs_review` on if you want the lane to be allowed to revisit prior review-needed papers
 
@@ -66,6 +70,7 @@ This workflow:
 - rebuilds the current investigation layer
 - refreshes the action queue
 - selects only the requested action lanes
+- can optionally narrow the queue to starter-mechanism papers with explicit TBI title context
 - reruns extraction on that subset
 - refreshes the queue again so you can see whether the lane improved the backlog
 - emits an action-queue impact report that compares the before/after paper QA and lane transitions for that run
