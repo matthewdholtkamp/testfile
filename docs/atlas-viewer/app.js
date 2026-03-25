@@ -843,8 +843,14 @@
   function renderSources() {
     const root = document.getElementById("dataSources");
     const paths = data.metadata.generated_from;
-    root.textContent =
-      `Built from ${paths.index}, ${paths.chapter_synthesis || paths.chapter}, ${paths.ledger}, ${paths.workpack}, and ${paths.bridge}.`;
+    const sourceList = [
+      paths.index,
+      paths.chapter_synthesis || paths.chapter,
+      paths.ledger,
+      paths.workpack,
+      paths.bridge,
+    ].filter(Boolean);
+    root.textContent = `Built from ${sourceList.join(", ")}.`;
   }
 
   function bindControls() {

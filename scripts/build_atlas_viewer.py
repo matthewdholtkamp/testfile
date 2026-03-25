@@ -27,6 +27,11 @@ def latest_file(pattern):
     return candidates[-1]
 
 
+def latest_optional_file(pattern):
+    candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
+    return candidates[-1] if candidates else ''
+
+
 def latest_file_prefer_curated(curated_pattern, fallback_pattern):
     curated = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', curated_pattern), recursive=True))
     if curated:
@@ -190,6 +195,15 @@ def parse_chapter(path):
 
 
 def parse_workpack(path):
+    if not path:
+        return {
+            'why_now': ['Manual enrichment workpack has not been generated in this run yet.'],
+            'top_priorities': [],
+            'fill_targets': ['Run the manual enrichment cycle to produce the next BBB / mitochondrial fill targets.'],
+            'fill_order': ['Generate the manual workpack after the curated enrichment pass.'],
+            'next_move': ['Use the atlas build for synthesis review, then run the manual enrichment cycle when human curation is ready.'],
+            'raw_markdown': '',
+        }
     text = read_text(path)
     sections = parse_markdown_sections(text)
     return {
@@ -225,7 +239,7 @@ def make_viewer_data():
     chapter_path = latest_file_prefer_curated('atlas_chapter_draft_curated/starter_atlas_chapter_draft_*.md', 'atlas_chapter_draft/starter_atlas_chapter_draft_*.md')
     chapter_synthesis_path = latest_file_prefer_curated('atlas_chapter_synthesis_draft_curated/starter_atlas_chapter_synthesis_draft_*.md', 'atlas_chapter_synthesis_draft/starter_atlas_chapter_synthesis_draft_*.md')
     ledger_path = latest_file_prefer_curated('atlas_chapter_ledger_curated/starter_atlas_chapter_evidence_ledger_*.csv', 'atlas_chapter_ledger/starter_atlas_chapter_evidence_ledger_*.csv')
-    workpack_path = latest_file('manual_enrichment_workpack/manual_enrichment_workpack_*.md')
+    workpack_path = latest_optional_file('manual_enrichment_workpack/manual_enrichment_workpack_*.md')
     bridge_path = latest_file_prefer_curated('mechanism_dossiers_curated/translational_bridge_*.csv', 'mechanism_dossiers/translational_bridge_*.csv')
 
     index_rows = parse_mechanism_index(index_path)
@@ -253,7 +267,7 @@ def make_viewer_data():
                 'chapter': os.path.relpath(chapter_path, REPO_ROOT),
                 'chapter_synthesis': os.path.relpath(chapter_synthesis_path, REPO_ROOT) if chapter_synthesis_path else '',
                 'ledger': os.path.relpath(ledger_path, REPO_ROOT),
-                'workpack': os.path.relpath(workpack_path, REPO_ROOT),
+                'workpack': os.path.relpath(workpack_path, REPO_ROOT) if workpack_path else '',
                 'bridge': os.path.relpath(bridge_path, REPO_ROOT),
             }
         },
