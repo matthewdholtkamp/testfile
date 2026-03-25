@@ -56,6 +56,11 @@ def main():
         help='Directory for the manual enrichment workpack.',
     )
     parser.add_argument(
+        '--viewer-output-dir',
+        default='docs/atlas-viewer',
+        help='Directory for the static atlas viewer bundle.',
+    )
+    parser.add_argument(
         '--claims-csv',
         default='',
         help='Optional investigation_claims CSV for seed-pack generation.',
@@ -174,13 +179,21 @@ def main():
         '--output-dir',
         args.workpack_output_dir,
     ])
+    run_cmd([
+        'python3',
+        'scripts/build_atlas_viewer.py',
+        '--output-dir',
+        args.viewer_output_dir,
+    ])
 
     chapter_md = latest_csv_in_dir(args.chapter_output_dir, 'starter_atlas_chapter_draft_*.md')
     ledger_md = latest_csv_in_dir(args.ledger_output_dir, 'starter_atlas_chapter_evidence_ledger_*.md')
     workpack_md = latest_csv_in_dir(args.workpack_output_dir, 'manual_enrichment_workpack_*.md')
+    viewer_path = os.path.join(args.viewer_output_dir, 'index.html')
     print(f'Manual enrichment cycle complete. Latest chapter draft: {chapter_md}')
     print(f'Latest evidence ledger: {ledger_md}')
     print(f'Latest manual workpack: {workpack_md}')
+    print(f'Latest atlas viewer: {viewer_path}')
 
 
 if __name__ == '__main__':

@@ -69,6 +69,7 @@ GitHub Actions must not depend on Claude Desktop or MCP connector availability i
 - `scripts/build_atlas_chapter_from_dossiers.py`
 - `scripts/build_atlas_chapter_evidence_ledger.py`
 - `scripts/build_manual_enrichment_workpack.py`
+- `scripts/build_atlas_viewer.py`
 
 ### Reports
 - `reports/connector_candidate_manifest/`

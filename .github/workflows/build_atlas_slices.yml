@@ -136,6 +136,8 @@ jobs:
           python scripts/build_atlas_chapter_evidence_ledger.py \
             --dossier-dir reports/mechanism_dossiers \
             --output-dir reports/atlas_chapter_ledger
+          python scripts/build_atlas_viewer.py \
+            --output-dir docs/atlas-viewer
 
       - name: Upload atlas artifacts
         if: always()
@@ -144,4 +146,5 @@ jobs:
           name: atlas_slice_outputs
           path: |
             reports/
+            docs/
           retention-days: 7

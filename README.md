@@ -141,6 +141,7 @@ Core files:
 - `scripts/build_atlas_chapter_from_dossiers.py`
 - `scripts/build_atlas_chapter_evidence_ledger.py`
 - `scripts/build_manual_enrichment_workpack.py`
+- `scripts/build_atlas_viewer.py`
 
 Connector scope in v1:
 - `open_targets`
@@ -210,6 +211,7 @@ That will:
 - rebuild a curated chapter draft
 - rebuild a curated chapter evidence ledger
 - rebuild a short manual enrichment workpack for the next BBB / mitochondrial pass
+- rebuild a static atlas viewer under `docs/atlas-viewer`
 
 Use this when you want to tighten BBB / mitochondrial enrichment before writing atlas prose.
 
@@ -245,6 +247,20 @@ This produces a per-section ledger with:
 - promotion note
 
 The `Build Atlas Slices` workflow now emits this ledger automatically, and the manual enrichment cycle rebuilds it after curation.
+
+### Atlas Viewer
+To build a product-style static viewer from the latest curated atlas artifacts:
+
+```bash
+python scripts/build_atlas_viewer.py \
+  --output-dir docs/atlas-viewer
+```
+
+Then open:
+- `docs/index.html`
+- or `docs/atlas-viewer/index.html`
+
+The manual enrichment cycle now rebuilds the viewer automatically, and the `Build Atlas Slices` workflow includes the viewer bundle in its artifact.
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.

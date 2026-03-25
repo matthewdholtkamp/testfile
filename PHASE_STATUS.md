@@ -155,6 +155,7 @@ The most important additions are:
 - dossier-driven atlas chapter draft
 - chapter evidence ledger
 - manual enrichment workpack
+- static atlas viewer bundle
 - translational bridge table
 - figure-planning artifact
 - optional 10x/genomics import lane

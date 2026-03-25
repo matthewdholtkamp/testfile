@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TBI Atlas Viewer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">TA</div>
+          <div>
+            <div class="brand-title">TBI Atlas</div>
+            <div class="brand-subtitle">Investigation Viewer</div>
+          </div>
+        </div>
+
+        <div class="sidebar-block">
+          <div class="eyebrow">Lead</div>
+          <div id="leadMechanism" class="lead-text"></div>
+          <div id="leadHint" class="muted"></div>
+        </div>
+
+        <div class="sidebar-block">
+          <div class="eyebrow">Mechanisms</div>
+          <div id="mechanismNav" class="nav-stack"></div>
+        </div>
+
+        <div class="sidebar-block">
+          <div class="eyebrow">View</div>
+          <div class="nav-stack section-nav">
+            <a href="#overview">Overview</a>
+            <a href="#chapter">Chapter</a>
+            <a href="#deep-dive">Deep Dive</a>
+            <a href="#evidence">Evidence</a>
+            <a href="#actions">Next Actions</a>
+            <a href="#bridge">Translational Bridge</a>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="hero">
+          <div>
+            <div class="eyebrow">Product Snapshot</div>
+            <h1>TBI Atlas Viewer</h1>
+            <p id="heroSummary" class="hero-copy"></p>
+          </div>
+          <div class="hero-note">
+            <div class="note-label">Current product mode</div>
+            <div class="note-value">Starter atlas synthesis</div>
+          </div>
+        </header>
+
+        <section id="overview" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Overview</div>
+              <h2>Atlas Readiness</h2>
+            </div>
+          </div>
+          <div id="summaryCards" class="summary-grid"></div>
+          <div id="mechanismCards" class="card-stack"></div>
+        </section>
+
+        <section id="chapter" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Chapter</div>
+              <h2>Lead Narrative</h2>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-grid two">
+              <div>
+                <h3>Lead Recommendation</h3>
+                <ul id="leadRecommendation" class="bullet-list"></ul>
+              </div>
+              <div>
+                <h3>Chapter Framing</h3>
+                <ul id="chapterFraming" class="bullet-list"></ul>
+              </div>
+            </div>
+            <div class="panel-grid two">
+              <div>
+                <h3>Writing Priority</h3>
+                <ol id="writingPriority" class="ordered-list"></ol>
+              </div>
+              <div>
+                <h3>Immediate Follow-On</h3>
+                <ul id="chapterFollowOn" class="bullet-list"></ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="deep-dive" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Deep Dive</div>
+              <h2 id="selectedMechanismTitle"></h2>
+            </div>
+          </div>
+          <div id="mechanismDetail" class="card-stack"></div>
+        </section>
+
+        <section id="evidence" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Evidence</div>
+              <h2>Chapter Evidence Ledger</h2>
+            </div>
+          </div>
+          <div class="panel">
+            <div id="ledgerBadges" class="badge-row"></div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Atlas Layer</th>
+                    <th>Claim</th>
+                    <th>PMIDs</th>
+                    <th>Quality Mix</th>
+                    <th>Confidence</th>
+                    <th>Promotion Note</th>
+                  </tr>
+                </thead>
+                <tbody id="ledgerTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="actions" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Next Actions</div>
+              <h2>Manual Enrichment Workpack</h2>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-grid two">
+              <div>
+                <h3>Why These Targets Now</h3>
+                <ul id="workpackWhy" class="bullet-list"></ul>
+              </div>
+              <div>
+                <h3>Recommended Fill Order</h3>
+                <ol id="workpackOrder" class="ordered-list"></ol>
+              </div>
+            </div>
+            <div>
+              <h3>Top Priorities</h3>
+              <div id="workpackPriorities" class="priority-list"></div>
+            </div>
+            <div class="panel-grid two">
+              <div>
+                <h3>Fill Targets</h3>
+                <ul id="fillTargets" class="bullet-list"></ul>
+              </div>
+              <div>
+                <h3>Practical Next Move</h3>
+                <ul id="nextMove" class="bullet-list"></ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="bridge" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Translational Bridge</div>
+              <h2>Mechanism to Target / Trial</h2>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Mechanism</th>
+                    <th>Biomarker Seed</th>
+                    <th>Target</th>
+                    <th>Compound</th>
+                    <th>Trial</th>
+                    <th>Evidence</th>
+                  </tr>
+                </thead>
+                <tbody id="bridgeTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <div id="dataSources" class="muted"></div>
+        </footer>
+      </main>
+    </div>
+
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
