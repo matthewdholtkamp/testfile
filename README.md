@@ -306,6 +306,16 @@ This emits:
 - a polished atlas HTML file
 - a publishable HTML site in `docs/atlas-book`
 
+### Publish the refreshed atlas site from GitHub
+
+The `Build Atlas Slices` workflow now supports a `publish_docs` input. When set to `true`, the workflow will:
+- rebuild the atlas artifacts
+- refresh `docs/atlas-viewer`
+- refresh `docs/atlas-book`
+- commit the updated `docs/` snapshot back to `main`
+
+Use this when you want the latest atlas snapshot to become the new published Pages version from the same build run.
+
 ### Generate a 10x import template
 
 When you have real 10x outputs or want to prepare the genomics lane:
