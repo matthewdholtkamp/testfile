@@ -68,6 +68,7 @@ GitHub Actions must not depend on Claude Desktop or MCP connector availability i
 - `scripts/run_manual_enrichment_cycle.py`
 - `scripts/build_atlas_chapter_from_dossiers.py`
 - `scripts/build_atlas_chapter_evidence_ledger.py`
+- `scripts/build_manual_enrichment_workpack.py`
 
 ### Reports
 - `reports/connector_candidate_manifest/`
@@ -116,6 +117,7 @@ This emits:
 - curated mechanism dossiers
 - a curated starter atlas chapter draft
 - a curated chapter evidence ledger
+- a short manual enrichment workpack
 
 The intended use is:
 1. review `public_enrichment_review_*.csv`

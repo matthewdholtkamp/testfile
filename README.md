@@ -140,6 +140,7 @@ Core files:
 - `scripts/run_manual_enrichment_cycle.py`
 - `scripts/build_atlas_chapter_from_dossiers.py`
 - `scripts/build_atlas_chapter_evidence_ledger.py`
+- `scripts/build_manual_enrichment_workpack.py`
 
 Connector scope in v1:
 - `open_targets`
@@ -208,6 +209,7 @@ That will:
 - rebuild curated mechanism dossiers
 - rebuild a curated chapter draft
 - rebuild a curated chapter evidence ledger
+- rebuild a short manual enrichment workpack for the next BBB / mitochondrial pass
 
 Use this when you want to tighten BBB / mitochondrial enrichment before writing atlas prose.
 

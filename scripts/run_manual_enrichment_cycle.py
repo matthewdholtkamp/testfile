@@ -51,6 +51,11 @@ def main():
         help='Directory for the curated chapter evidence ledger.',
     )
     parser.add_argument(
+        '--workpack-output-dir',
+        default='reports/manual_enrichment_workpack',
+        help='Directory for the manual enrichment workpack.',
+    )
+    parser.add_argument(
         '--claims-csv',
         default='',
         help='Optional investigation_claims CSV for seed-pack generation.',
@@ -155,11 +160,27 @@ def main():
         '--output-dir',
         args.ledger_output_dir,
     ])
+    run_cmd([
+        'python3',
+        'scripts/build_manual_enrichment_workpack.py',
+        '--seed-pack-csv',
+        latest_csv_in_dir(args.seed_pack_output_dir, 'target_seed_pack_*.csv'),
+        '--ledger-csv',
+        latest_csv_in_dir(args.ledger_output_dir, 'starter_atlas_chapter_evidence_ledger_*.csv'),
+        '--chembl-template-csv',
+        latest_csv_in_dir(args.seed_pack_output_dir, 'chembl_manual_fill_template_*.csv'),
+        '--open-targets-template-csv',
+        latest_csv_in_dir(args.seed_pack_output_dir, 'open_targets_manual_fill_template_*.csv'),
+        '--output-dir',
+        args.workpack_output_dir,
+    ])
 
     chapter_md = latest_csv_in_dir(args.chapter_output_dir, 'starter_atlas_chapter_draft_*.md')
     ledger_md = latest_csv_in_dir(args.ledger_output_dir, 'starter_atlas_chapter_evidence_ledger_*.md')
+    workpack_md = latest_csv_in_dir(args.workpack_output_dir, 'manual_enrichment_workpack_*.md')
     print(f'Manual enrichment cycle complete. Latest chapter draft: {chapter_md}')
     print(f'Latest evidence ledger: {ledger_md}')
+    print(f'Latest manual workpack: {workpack_md}')
 
 
 if __name__ == '__main__':
