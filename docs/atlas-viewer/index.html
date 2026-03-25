@@ -29,6 +29,13 @@
         </div>
 
         <div class="sidebar-block">
+          <div class="eyebrow">Review Focus</div>
+          <label class="control-label" for="sidebarSearch">Search claims / PMIDs</label>
+          <input id="sidebarSearch" class="control-input" type="search" placeholder="OCLN, 41446731, BBB..." />
+          <div id="sidebarFocusSummary" class="muted compact-note"></div>
+        </div>
+
+        <div class="sidebar-block">
           <div class="eyebrow">View</div>
           <div class="nav-stack section-nav">
             <a href="#overview">Overview</a>
@@ -48,9 +55,15 @@
             <h1>TBI Atlas Viewer</h1>
             <p id="heroSummary" class="hero-copy"></p>
           </div>
-          <div class="hero-note">
-            <div class="note-label">Current product mode</div>
-            <div class="note-value">Starter atlas synthesis</div>
+          <div class="hero-note-stack">
+            <div class="hero-note">
+              <div class="note-label">Current product mode</div>
+              <div class="note-value">Starter atlas synthesis</div>
+            </div>
+            <div class="hero-note">
+              <div class="note-label">Data freshness</div>
+              <div id="freshnessNote" class="note-value note-value-small"></div>
+            </div>
           </div>
         </header>
 
@@ -93,15 +106,24 @@
                 <ul id="chapterFollowOn" class="bullet-list"></ul>
               </div>
             </div>
+            <div class="chapter-preview-block">
+              <div class="section-subhead">
+                <h3>Draft Preview</h3>
+                <div class="muted">Rendered directly from the latest chapter artifact.</div>
+              </div>
+              <div id="chapterPreview" class="markdown-preview"></div>
+            </div>
           </div>
         </section>
 
         <section id="deep-dive" class="section">
-          <div class="section-header">
+          <div class="section-header wide-section-header">
             <div>
               <div class="eyebrow">Deep Dive</div>
               <h2 id="selectedMechanismTitle"></h2>
+              <div id="selectedMechanismSubtitle" class="muted"></div>
             </div>
+            <div id="mechanismTabs" class="tab-row" role="tablist" aria-label="Mechanism detail tabs"></div>
           </div>
           <div id="mechanismDetail" class="card-stack"></div>
         </section>
@@ -114,17 +136,46 @@
             </div>
           </div>
           <div class="panel">
+            <div class="panel-grid evidence-toolbar">
+              <div>
+                <label class="control-label" for="evidenceSearch">Search within selected mechanism</label>
+                <input id="evidenceSearch" class="control-input" type="search" placeholder="tight junction, 41446731, claudin-5..." />
+              </div>
+              <div>
+                <label class="control-label" for="evidenceConfidenceFilter">Confidence</label>
+                <select id="evidenceConfidenceFilter" class="control-input">
+                  <option value="all">All confidence</option>
+                  <option value="stable">Stable</option>
+                  <option value="provisional">Provisional</option>
+                  <option value="hold">Hold</option>
+                </select>
+              </div>
+              <div>
+                <label class="control-label" for="evidencePromotionFilter">Promotion note</label>
+                <select id="evidencePromotionFilter" class="control-input">
+                  <option value="all">All statuses</option>
+                </select>
+              </div>
+              <div>
+                <label class="control-label" for="evidenceLayerFilter">Atlas layer</label>
+                <select id="evidenceLayerFilter" class="control-input">
+                  <option value="all">All layers</option>
+                </select>
+              </div>
+            </div>
+            <div id="evidenceSummary" class="evidence-summary"></div>
             <div id="ledgerBadges" class="badge-row"></div>
-            <div class="table-wrap">
+            <div class="table-wrap sticky-head">
               <table>
                 <thead>
                   <tr>
                     <th>Atlas Layer</th>
                     <th>Claim</th>
+                    <th>Best Anchor</th>
                     <th>PMIDs</th>
                     <th>Quality Mix</th>
                     <th>Confidence</th>
-                    <th>Promotion Note</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody id="ledgerTable"></tbody>
@@ -141,6 +192,13 @@
             </div>
           </div>
           <div class="panel">
+            <div class="section-subhead">
+              <div>
+                <h3>Selected Mechanism Queue</h3>
+                <div id="workpackMechanismHint" class="muted"></div>
+              </div>
+              <button id="toggleWorkpackScope" class="ghost-button" type="button">Show all priorities</button>
+            </div>
             <div class="panel-grid two">
               <div>
                 <h3>Why These Targets Now</h3>
@@ -176,7 +234,8 @@
             </div>
           </div>
           <div class="panel">
-            <div class="table-wrap">
+            <div id="bridgeSummary" class="evidence-summary"></div>
+            <div class="table-wrap sticky-head">
               <table>
                 <thead>
                   <tr>

@@ -136,6 +136,16 @@ jobs:
           python scripts/build_atlas_chapter_evidence_ledger.py \
             --dossier-dir reports/mechanism_dossiers \
             --output-dir reports/atlas_chapter_ledger
+          latest_ledger=$(ls -1t reports/atlas_chapter_ledger/starter_atlas_chapter_evidence_ledger_*.csv | head -n1)
+          latest_bridge=$(ls -1t reports/mechanism_dossiers/translational_bridge_*.csv | head -n1)
+          python scripts/build_mechanistic_synthesis.py \
+            --ledger-csv "$latest_ledger" \
+            --bridge-csv "$latest_bridge" \
+            --output-dir reports/mechanistic_synthesis
+          latest_synthesis=$(ls -1t reports/mechanistic_synthesis/mechanistic_synthesis_blocks_*.csv | head -n1)
+          python scripts/build_atlas_chapter_from_synthesis.py \
+            --synthesis-csv "$latest_synthesis" \
+            --output-dir reports/atlas_chapter_synthesis_draft
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
 

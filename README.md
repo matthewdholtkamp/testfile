@@ -210,6 +210,8 @@ That will:
 - rebuild curated mechanism dossiers
 - rebuild a curated chapter draft
 - rebuild a curated chapter evidence ledger
+- rebuild a mechanistic synthesis packet from the chapter evidence ledger
+- rebuild a synthesis-driven atlas chapter draft
 - rebuild a short manual enrichment workpack for the next BBB / mitochondrial pass
 - rebuild a static atlas viewer under `docs/atlas-viewer`
 
@@ -248,6 +250,39 @@ This produces a per-section ledger with:
 
 The `Build Atlas Slices` workflow now emits this ledger automatically, and the manual enrichment cycle rebuilds it after curation.
 
+### Mechanistic Synthesis Packet
+To convert the chapter ledger into writing-grade mechanism blocks:
+
+```bash
+python scripts/build_mechanistic_synthesis.py \
+  --ledger-csv reports/atlas_chapter_ledger_curated/starter_atlas_chapter_evidence_ledger_<timestamp>.csv \
+  --bridge-csv reports/mechanism_dossiers_curated/translational_bridge_<timestamp>.csv \
+  --output-dir reports/mechanistic_synthesis_curated
+```
+
+This produces:
+- `mechanistic_synthesis_blocks_*.csv`
+- `mechanistic_synthesis_blocks_*.json`
+- `mechanistic_synthesis_index_*.md`
+- one per-mechanism synthesis markdown file for BBB, mitochondrial dysfunction, and neuroinflammation
+
+The synthesis packet is the new evidence-first layer between the chapter ledger and final atlas prose.
+
+### Synthesis-Driven Chapter Draft
+To turn the synthesis packet into a chapter-ready atlas draft:
+
+```bash
+python scripts/build_atlas_chapter_from_synthesis.py \
+  --synthesis-csv reports/mechanistic_synthesis_curated/mechanistic_synthesis_blocks_<timestamp>.csv \
+  --output-dir reports/atlas_chapter_synthesis_draft_curated
+```
+
+This produces a writing-oriented draft that:
+- keeps BBB as the lead chapter path
+- separates `ready`, `caution`, and `hold` statements
+- includes cross-mechanism bridge statements
+- keeps caveats and next actions explicit
+
 ### Atlas Viewer
 To build a product-style static viewer from the latest curated atlas artifacts:
 
@@ -261,6 +296,13 @@ Then open:
 - or `docs/atlas-viewer/index.html`
 
 The manual enrichment cycle now rebuilds the viewer automatically, and the `Build Atlas Slices` workflow includes the viewer bundle in its artifact.
+
+### GitHub Pages Deployment
+To publish the static Atlas Viewer from committed `docs/` content, use the standalone workflow:
+
+- `.github/workflows/deploy_atlas_viewer.yml`
+
+It is intentionally separate from the atlas build workflow so viewer publishing does not depend on the full Drive/Gemini-backed atlas regeneration path.
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.

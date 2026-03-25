@@ -65,6 +65,17 @@ For the atlas layer:
   - backbone rows
   - anchor papers
   - remaining work queue
+- the ledger-driven mechanistic synthesis packet is now live and emits:
+  - mechanism thesis blocks
+  - causal-sequence blocks
+  - cross-mechanism bridge blocks
+  - evidence-boundary blocks
+  - translational-hook blocks
+  - next-action blocks
+- the synthesis-driven chapter draft is now live and keeps:
+  - BBB as the lead writing section
+  - mitochondrial dysfunction as the comparative intracellular section
+  - neuroinflammation as the integrating downstream section
 
 For the connector-enrichment sidecar:
 - a connector registry and preset library now exist for:
@@ -85,6 +96,9 @@ For the connector-enrichment sidecar:
   - mechanism dossiers pick up target, compound, trial, preprint, and 10x/genomics rows when enrichment is present
   - the one-command sidecar runner can build the manifest, fetch public rows, merge manual rows, and rebuild dossiers
   - dossier outputs can now feed a first atlas chapter draft
+  - the chapter evidence ledger can now feed a ledger-driven mechanistic synthesis packet
+  - the mechanistic synthesis packet can now feed a synthesis-driven chapter draft
+  - the static atlas viewer can now preview the synthesis-driven draft instead of only the older dossier-driven chapter outline
 
 ## Current Architecture
 
@@ -95,6 +109,10 @@ The repo now has five distinct layers:
 3. post-extraction investigation outputs for QA, weighting, and triage
 4. atlas assembly artifacts for the starter mechanisms
 5. connector-enrichment sidecar artifacts for translational and genomics context
+
+On top of those five layers, the atlas-writing lane now has two explicit synthesis outputs:
+- chapter evidence ledger
+- ledger-driven mechanistic synthesis packet and synthesis-driven chapter draft
 
 At `HEAD`, the workflow split is:
 - `Ongoing Literature Cycle`:
@@ -154,6 +172,8 @@ The most important additions are:
 - mechanism dossiers
 - dossier-driven atlas chapter draft
 - chapter evidence ledger
+- mechanistic synthesis packet
+- synthesis-driven atlas chapter draft
 - manual enrichment workpack
 - static atlas viewer bundle
 - translational bridge table
@@ -180,24 +200,21 @@ Important interpretation:
 
 ## Recommended Next Step
 
-Move from backbone-building into enriched starter-mechanism dossiers and first atlas synthesis.
+Move from first synthesis into atlas-quality writing and enrichment hardening.
 
 Recommended immediate focus:
-1. validate the fresh GitHub runs on the latest head (`post-analysis` and `atlas build`) now that the connector sidecar hooks are present
-2. use the action queue to drive deeper extraction only for starter-mechanism papers that still look shallow or ambiguous
-3. use the manual enrichment cycle to clean weak public trial/target matches and prepare manual fill templates
-4. begin collecting real enrichment rows for:
-   - blood-brain barrier dysfunction
-   - mitochondrial dysfunction
-   - neuroinflammation
-5. rebuild curated mechanism dossiers and use them as the working packet for first atlas drafting
+1. validate the fresh GitHub atlas build on the latest head now that mechanistic synthesis and Pages deployment hooks are present
+2. keep the manual enrichment cycle focused on BBB and mitochondrial dysfunction until the lead and comparative sections have stronger target / compound coverage
+3. use the synthesis-driven chapter draft as the main writing packet instead of relying on the older dossier-driven chapter alone
+4. refine the BBB -> neuroinflammation bridge and add stronger mitochondrial bridge rows before expanding scope
+5. publish the static Atlas Viewer through the standalone Pages workflow once the current `docs/` snapshot is committed
 6. add 10x outputs as soon as real analysis exports are available, without blocking the rest of the enrichment system
 
 Practical priority:
 - do not reopen broad extraction as the central task
 - treat the action queue as the backlog
-- treat the atlas backbone as the synthesis map
-- treat the mechanism dossiers as the new human-usable bridge between literature evidence and atlas writing
-- treat the manual enrichment cycle as the quality-control loop for public connector noise before chapter-writing
-- treat the chapter evidence ledger as the write/adjudicate boundary for atlas prose
+- treat the chapter evidence ledger as the adjudication boundary
+- treat the mechanistic synthesis packet as the new bridge between evidence and prose
+- treat the synthesis-driven chapter draft as the working atlas-writing artifact
+- treat the manual enrichment cycle as the quality-control loop for public connector noise before locking atlas text
 - keep 10x as an optional enrichment lane that becomes active once real genomics outputs exist

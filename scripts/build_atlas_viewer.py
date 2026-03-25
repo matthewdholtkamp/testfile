@@ -223,6 +223,7 @@ def build_summary(index_rows, ledger_rows, chapter, workpack):
 def make_viewer_data():
     index_path = latest_file_prefer_curated('mechanism_dossiers_curated/mechanism_dossier_index_*.md', 'mechanism_dossiers/mechanism_dossier_index_*.md')
     chapter_path = latest_file_prefer_curated('atlas_chapter_draft_curated/starter_atlas_chapter_draft_*.md', 'atlas_chapter_draft/starter_atlas_chapter_draft_*.md')
+    chapter_synthesis_path = latest_file_prefer_curated('atlas_chapter_synthesis_draft_curated/starter_atlas_chapter_synthesis_draft_*.md', 'atlas_chapter_synthesis_draft/starter_atlas_chapter_synthesis_draft_*.md')
     ledger_path = latest_file_prefer_curated('atlas_chapter_ledger_curated/starter_atlas_chapter_evidence_ledger_*.csv', 'atlas_chapter_ledger/starter_atlas_chapter_evidence_ledger_*.csv')
     workpack_path = latest_file('manual_enrichment_workpack/manual_enrichment_workpack_*.md')
     bridge_path = latest_file_prefer_curated('mechanism_dossiers_curated/translational_bridge_*.csv', 'mechanism_dossiers/translational_bridge_*.csv')
@@ -240,6 +241,7 @@ def make_viewer_data():
 
     ledger_rows = read_csv(ledger_path)
     chapter = parse_chapter(chapter_path)
+    chapter['preview_markdown'] = read_text(chapter_synthesis_path) if chapter_synthesis_path else chapter['raw_markdown']
     workpack = parse_workpack(workpack_path)
     bridge_rows = read_csv(bridge_path)
     bridge_rows = [row for row in bridge_rows if any(normalize_spaces(row.get(key, '')) for key in ['target_entity', 'compound_entity', 'trial_entity', 'preprint_entity', 'genomics_entity'])]
@@ -249,6 +251,7 @@ def make_viewer_data():
             'generated_from': {
                 'index': os.path.relpath(index_path, REPO_ROOT),
                 'chapter': os.path.relpath(chapter_path, REPO_ROOT),
+                'chapter_synthesis': os.path.relpath(chapter_synthesis_path, REPO_ROOT) if chapter_synthesis_path else '',
                 'ledger': os.path.relpath(ledger_path, REPO_ROOT),
                 'workpack': os.path.relpath(workpack_path, REPO_ROOT),
                 'bridge': os.path.relpath(bridge_path, REPO_ROOT),

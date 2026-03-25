@@ -46,9 +46,19 @@ def main():
         help='Directory for the curated atlas chapter draft.',
     )
     parser.add_argument(
+        '--chapter-synthesis-output-dir',
+        default='reports/atlas_chapter_synthesis_draft_curated',
+        help='Directory for the synthesis-driven atlas chapter draft.',
+    )
+    parser.add_argument(
         '--ledger-output-dir',
         default='reports/atlas_chapter_ledger_curated',
         help='Directory for the curated chapter evidence ledger.',
+    )
+    parser.add_argument(
+        '--synthesis-output-dir',
+        default='reports/mechanistic_synthesis_curated',
+        help='Directory for the ledger-driven mechanistic synthesis packet.',
     )
     parser.add_argument(
         '--workpack-output-dir',
@@ -167,6 +177,24 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_mechanistic_synthesis.py',
+        '--ledger-csv',
+        latest_csv_in_dir(args.ledger_output_dir, 'starter_atlas_chapter_evidence_ledger_*.csv'),
+        '--bridge-csv',
+        latest_csv_in_dir(args.dossier_output_dir, 'translational_bridge_*.csv'),
+        '--output-dir',
+        args.synthesis_output_dir,
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_atlas_chapter_from_synthesis.py',
+        '--synthesis-csv',
+        latest_csv_in_dir(args.synthesis_output_dir, 'mechanistic_synthesis_blocks_*.csv'),
+        '--output-dir',
+        args.chapter_synthesis_output_dir,
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_manual_enrichment_workpack.py',
         '--seed-pack-csv',
         latest_csv_in_dir(args.seed_pack_output_dir, 'target_seed_pack_*.csv'),
@@ -187,11 +215,15 @@ def main():
     ])
 
     chapter_md = latest_csv_in_dir(args.chapter_output_dir, 'starter_atlas_chapter_draft_*.md')
+    chapter_synthesis_md = latest_csv_in_dir(args.chapter_synthesis_output_dir, 'starter_atlas_chapter_synthesis_draft_*.md')
     ledger_md = latest_csv_in_dir(args.ledger_output_dir, 'starter_atlas_chapter_evidence_ledger_*.md')
+    synthesis_md = latest_csv_in_dir(args.synthesis_output_dir, 'mechanistic_synthesis_index_*.md')
     workpack_md = latest_csv_in_dir(args.workpack_output_dir, 'manual_enrichment_workpack_*.md')
     viewer_path = os.path.join(args.viewer_output_dir, 'index.html')
     print(f'Manual enrichment cycle complete. Latest chapter draft: {chapter_md}')
+    print(f'Latest chapter synthesis draft: {chapter_synthesis_md}')
     print(f'Latest evidence ledger: {ledger_md}')
+    print(f'Latest mechanistic synthesis index: {synthesis_md}')
     print(f'Latest manual workpack: {workpack_md}')
     print(f'Latest atlas viewer: {viewer_path}')
 
