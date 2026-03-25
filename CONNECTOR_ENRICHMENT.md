@@ -66,10 +66,12 @@ GitHub Actions must not depend on Claude Desktop or MCP connector availability i
 - `scripts/build_manual_enrichment_seed_pack.py`
 - `scripts/apply_enrichment_review.py`
 - `scripts/run_manual_enrichment_cycle.py`
+- `scripts/build_tenx_import_template.py`
 - `scripts/build_atlas_chapter_from_dossiers.py`
 - `scripts/build_atlas_chapter_evidence_ledger.py`
 - `scripts/build_manual_enrichment_workpack.py`
 - `scripts/build_atlas_viewer.py`
+- `scripts/build_tbi_atlas_book.py`
 
 ### Reports
 - `reports/connector_candidate_manifest/`
@@ -140,6 +142,20 @@ That will:
 - rebuild mechanism dossiers with enrichment if present
 - otherwise rebuild dossiers from core atlas artifacts only
 
+### Atlas book build
+Once the chapter, ledger, and synthesis artifacts exist, the repo can also compile them into a single atlas package:
+
+```bash
+python scripts/build_tbi_atlas_book.py \
+  --output-dir reports/starter_tbi_atlas \
+  --site-dir docs/atlas-book
+```
+
+This emits:
+- a consolidated atlas markdown file
+- a polished atlas HTML file
+- a publishable site bundle in `docs/atlas-book`
+
 ### First-pass public fetch lane
 For the connectors that are reasonably public and scriptable now:
 
@@ -201,6 +217,24 @@ The normalization script supports a `tenx_genomics` import format that can carry
 - `retrieved_at`
 
 These imports normalize to evidence tier `genomics_expression`.
+
+### Pre-seeded 10x template
+To generate a seeded import template from the latest connector candidate manifest:
+
+```bash
+python scripts/run_connector_sidecar.py \
+  --build-tenx-template \
+  --skip-manifest
+```
+
+Or, if you want the sidecar to rebuild the manifest first:
+
+```bash
+python scripts/run_connector_sidecar.py \
+  --build-tenx-template
+```
+
+This writes a starter CSV and short operator note into `local_connector_inputs/templates/`.
 
 ## Connector Health Check
 

@@ -71,6 +71,16 @@ def main():
         help='Directory for the static atlas viewer bundle.',
     )
     parser.add_argument(
+        '--atlas-output-dir',
+        default='reports/starter_tbi_atlas',
+        help='Directory for the consolidated atlas markdown/html outputs.',
+    )
+    parser.add_argument(
+        '--atlas-site-dir',
+        default='docs/atlas-book',
+        help='Directory for the published atlas HTML site bundle.',
+    )
+    parser.add_argument(
         '--claims-csv',
         default='',
         help='Optional investigation_claims CSV for seed-pack generation.',
@@ -213,6 +223,14 @@ def main():
         '--output-dir',
         args.viewer_output_dir,
     ])
+    run_cmd([
+        'python3',
+        'scripts/build_tbi_atlas_book.py',
+        '--output-dir',
+        args.atlas_output_dir,
+        '--site-dir',
+        args.atlas_site_dir,
+    ])
 
     chapter_md = latest_csv_in_dir(args.chapter_output_dir, 'starter_atlas_chapter_draft_*.md')
     chapter_synthesis_md = latest_csv_in_dir(args.chapter_synthesis_output_dir, 'starter_atlas_chapter_synthesis_draft_*.md')
@@ -220,12 +238,14 @@ def main():
     synthesis_md = latest_csv_in_dir(args.synthesis_output_dir, 'mechanistic_synthesis_index_*.md')
     workpack_md = latest_csv_in_dir(args.workpack_output_dir, 'manual_enrichment_workpack_*.md')
     viewer_path = os.path.join(args.viewer_output_dir, 'index.html')
+    atlas_path = latest_csv_in_dir(args.atlas_output_dir, 'starter_tbi_atlas_*.html')
     print(f'Manual enrichment cycle complete. Latest chapter draft: {chapter_md}')
     print(f'Latest chapter synthesis draft: {chapter_synthesis_md}')
     print(f'Latest evidence ledger: {ledger_md}')
     print(f'Latest mechanistic synthesis index: {synthesis_md}')
     print(f'Latest manual workpack: {workpack_md}')
     print(f'Latest atlas viewer: {viewer_path}')
+    print(f'Latest atlas book: {atlas_path}')
 
 
 if __name__ == '__main__':

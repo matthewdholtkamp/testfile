@@ -2,11 +2,97 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0; url=./atlas-viewer/index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TBI Atlas Viewer</title>
+    <title>TBI Atlas Portal</title>
+    <style>
+      :root {
+        --bg: #0f1514;
+        --panel: #182220;
+        --panel-soft: #1f2b29;
+        --ink: #eef6f2;
+        --muted: #aabbb4;
+        --accent: #9ce2cf;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(156,226,207,0.12), transparent 30%),
+          linear-gradient(180deg, #0d1413 0%, var(--bg) 100%);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      .shell {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 24px 72px;
+      }
+      .hero {
+        max-width: 720px;
+        margin-bottom: 32px;
+      }
+      .hero p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+      .card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid rgba(156,226,207,0.14);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 24px 40px rgba(0,0,0,0.2);
+      }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+      h1 { margin: 0 0 16px; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 0.96; }
+      h2 { margin: 0 0 10px; font-size: 1.5rem; }
+      .card p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .cta {
+        margin-top: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        font-weight: 700;
+      }
+    </style>
   </head>
   <body>
-    <p>Redirecting to <a href="./atlas-viewer/index.html">TBI Atlas Viewer</a>…</p>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">TBI investigation engine</p>
+        <h1>Atlas Portal</h1>
+        <p>This portal gives us two lenses on the same project: the review console for adjudication and the atlas book for coherent chapter-level synthesis.</p>
+      </section>
+      <section class="cards">
+        <a class="card" href="./atlas-viewer/index.html">
+          <p class="eyebrow">Review console</p>
+          <h2>TBI Atlas Viewer</h2>
+          <p>Use the evidence-first viewer to inspect readiness, ledger rows, bridge statements, and the manual-enrichment queue.</p>
+          <span class="cta">Open viewer →</span>
+        </a>
+        <a class="card" href="./atlas-book/index.html">
+          <p class="eyebrow">Atlas package</p>
+          <h2>Starter TBI Atlas</h2>
+          <p>Read the current chapter-grade atlas draft with BBB, mitochondrial, and neuroinflammation sections packaged into one deliverable.</p>
+          <span class="cta">Open atlas →</span>
+        </a>
+      </section>
+    </main>
   </body>
 </html>

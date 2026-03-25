@@ -1,12 +1,12 @@
 {
   "metadata": {
     "generated_from": {
-      "index": "reports/mechanism_dossiers_curated/mechanism_dossier_index_2026-03-24_204622.md",
-      "chapter": "reports/atlas_chapter_draft_curated/starter_atlas_chapter_draft_2026-03-24_204622.md",
-      "chapter_synthesis": "reports/atlas_chapter_synthesis_draft_curated/starter_atlas_chapter_synthesis_draft_2026-03-24_204706.md",
-      "ledger": "reports/atlas_chapter_ledger_curated/starter_atlas_chapter_evidence_ledger_2026-03-24_204622.csv",
-      "workpack": "reports/manual_enrichment_workpack/manual_enrichment_workpack_2026-03-24_204622.md",
-      "bridge": "reports/mechanism_dossiers_curated/translational_bridge_2026-03-24_204622.csv"
+      "index": "reports/mechanism_dossiers_curated/mechanism_dossier_index_2026-03-24_210353.md",
+      "chapter": "reports/atlas_chapter_draft_curated/starter_atlas_chapter_draft_2026-03-24_210353.md",
+      "chapter_synthesis": "reports/atlas_chapter_synthesis_draft_curated/starter_atlas_chapter_synthesis_draft_2026-03-24_210353.md",
+      "ledger": "reports/atlas_chapter_ledger_curated/starter_atlas_chapter_evidence_ledger_2026-03-24_210353.csv",
+      "workpack": "reports/manual_enrichment_workpack/manual_enrichment_workpack_2026-03-24_210353.md",
+      "bridge": "reports/mechanism_dossiers_curated/translational_bridge_2026-03-24_210353.csv"
     }
   },
   "summary": {
@@ -774,8 +774,8 @@
       }
     ],
     "fill_targets": [
-      "Open Targets manual template: `reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-24_204622.csv`",
-      "ChEMBL manual template: `reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-24_204622.csv`"
+      "Open Targets manual template: `reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-24_210353.csv`",
+      "ChEMBL manual template: `reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-24_210353.csv`"
     ],
     "fill_order": [
       "BBB tight-junction and barrier-maintenance targets first.",
@@ -785,7 +785,7 @@
     "next_move": [
       "Fill the ChEMBL template for the top 5 targets above, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`."
     ],
-    "raw_markdown": "# Manual Enrichment Workpack\n\nThis workpack is the next manual connector pass for the starter atlas. It focuses on the mechanisms that are closest to writing-grade status.\n\n## Why These Targets Now\n\n- Blood-Brain Barrier Dysfunction: stable ledger rows `2`, provisional ledger rows `1`\n- Mitochondrial Dysfunction: stable ledger rows `1`, provisional ledger rows `2`\n\n## Top 5 Manual Enrichment Priorities\n\n1. Blood-Brain Barrier Dysfunction -> `OCLN`\n   Priority: `high` | full-text-like hits `5` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41532955; 41673382; 41752185\n2. Blood-Brain Barrier Dysfunction -> `CLDN5`\n   Priority: `high` | full-text-like hits `4` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41446731; 41532955; 41752185\n3. Blood-Brain Barrier Dysfunction -> `TJP1`\n   Priority: `high` | full-text-like hits `4` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41446731; 41532955; 41752185\n4. Blood-Brain Barrier Dysfunction -> `MMP9`\n   Priority: `high` | full-text-like hits `3` | high-signal hits `0`\n   Example claim: MMP-9 activity drives blood-brain barrier disruption.\n   Supporting PMIDs: 41465583; 41752185; 41801080\n5. Blood-Brain Barrier Dysfunction -> `AQP4`\n   Priority: `medium` | full-text-like hits `1` | high-signal hits `0`\n   Example claim: Trigonelline reduces MMP-9 and AQP4 expression to preserve BBB integrity.\n   Supporting PMIDs: 41801080\n\n## Fill Targets\n\n- Open Targets manual template: `reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-24_204622.csv`\n- ChEMBL manual template: `reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-24_204622.csv`\n\n## Recommended Fill Order\n\n1. BBB tight-junction and barrier-maintenance targets first.\n2. BBB permeability / inflammatory mediators second.\n3. Mitochondrial rescue / oxidative stress targets third.\n\n## Practical Next Move\n\n- Fill the ChEMBL template for the top 5 targets above, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`.\n\n"
+    "raw_markdown": "# Manual Enrichment Workpack\n\nThis workpack is the next manual connector pass for the starter atlas. It focuses on the mechanisms that are closest to writing-grade status.\n\n## Why These Targets Now\n\n- Blood-Brain Barrier Dysfunction: stable ledger rows `2`, provisional ledger rows `1`\n- Mitochondrial Dysfunction: stable ledger rows `1`, provisional ledger rows `2`\n\n## Top 5 Manual Enrichment Priorities\n\n1. Blood-Brain Barrier Dysfunction -> `OCLN`\n   Priority: `high` | full-text-like hits `5` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41532955; 41673382; 41752185\n2. Blood-Brain Barrier Dysfunction -> `CLDN5`\n   Priority: `high` | full-text-like hits `4` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41446731; 41532955; 41752185\n3. Blood-Brain Barrier Dysfunction -> `TJP1`\n   Priority: `high` | full-text-like hits `4` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41446731; 41532955; 41752185\n4. Blood-Brain Barrier Dysfunction -> `MMP9`\n   Priority: `high` | full-text-like hits `3` | high-signal hits `0`\n   Example claim: MMP-9 activity drives blood-brain barrier disruption.\n   Supporting PMIDs: 41465583; 41752185; 41801080\n5. Blood-Brain Barrier Dysfunction -> `AQP4`\n   Priority: `medium` | full-text-like hits `1` | high-signal hits `0`\n   Example claim: Trigonelline reduces MMP-9 and AQP4 expression to preserve BBB integrity.\n   Supporting PMIDs: 41801080\n\n## Fill Targets\n\n- Open Targets manual template: `reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-24_210353.csv`\n- ChEMBL manual template: `reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-24_210353.csv`\n\n## Recommended Fill Order\n\n1. BBB tight-junction and barrier-maintenance targets first.\n2. BBB permeability / inflammatory mediators second.\n3. Mitochondrial rescue / oxidative stress targets third.\n\n## Practical Next Move\n\n- Fill the ChEMBL template for the top 5 targets above, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`.\n\n"
   },
   "bridge_rows": [
     {

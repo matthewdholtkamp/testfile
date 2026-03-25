@@ -148,6 +148,9 @@ jobs:
             --output-dir reports/atlas_chapter_synthesis_draft
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
+          python scripts/build_tbi_atlas_book.py \
+            --output-dir reports/starter_tbi_atlas \
+            --site-dir docs/atlas-book
 
       - name: Upload atlas artifacts
         if: always()

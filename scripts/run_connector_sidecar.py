@@ -89,6 +89,16 @@ def main():
         action='store_true',
         help='When applying review decisions, use auto_recommendation if review_status is blank.',
     )
+    parser.add_argument(
+        '--build-tenx-template',
+        action='store_true',
+        help='Emit a pre-seeded 10x import template from the latest connector candidate manifest.',
+    )
+    parser.add_argument(
+        '--tenx-template-output-dir',
+        default='local_connector_inputs/templates',
+        help='Directory for 10x template outputs when --build-tenx-template is used.',
+    )
     args = parser.parse_args()
 
     manifest_csv = ''
@@ -115,6 +125,18 @@ def main():
             args.public_connectors,
             '--output-dir',
             args.enrichment_input_dir,
+        ])
+
+    if args.build_tenx_template:
+        if not manifest_csv:
+            raise FileNotFoundError('No connector candidate manifest found for --build-tenx-template.')
+        run_cmd([
+            'python3',
+            'scripts/build_tenx_import_template.py',
+            '--candidate-manifest-csv',
+            manifest_csv,
+            '--output-dir',
+            args.tenx_template_output_dir,
         ])
 
     if has_csvs(args.enrichment_input_dir):

@@ -291,6 +291,32 @@ python scripts/build_atlas_viewer.py \
   --output-dir docs/atlas-viewer
 ```
 
+### Build the atlas package
+
+To compile the current curated chapter, synthesis packet, dossiers, evidence ledger, and workpack into one atlas deliverable:
+
+```bash
+python scripts/build_tbi_atlas_book.py \
+  --output-dir reports/starter_tbi_atlas \
+  --site-dir docs/atlas-book
+```
+
+This emits:
+- a consolidated atlas markdown file
+- a polished atlas HTML file
+- a publishable HTML site in `docs/atlas-book`
+
+### Generate a 10x import template
+
+When you have real 10x outputs or want to prepare the genomics lane:
+
+```bash
+python scripts/run_connector_sidecar.py \
+  --build-tenx-template
+```
+
+This seeds a `tenx_genomics_import_template_*.csv` in `local_connector_inputs/templates/`.
+
 Then open:
 - `docs/index.html`
 - or `docs/atlas-viewer/index.html`

@@ -98,7 +98,15 @@ For the connector-enrichment sidecar:
   - dossier outputs can now feed a first atlas chapter draft
   - the chapter evidence ledger can now feed a ledger-driven mechanistic synthesis packet
   - the mechanistic synthesis packet can now feed a synthesis-driven chapter draft
-  - the static atlas viewer can now preview the synthesis-driven draft instead of only the older dossier-driven chapter outline
+- the static atlas viewer can now preview the synthesis-driven draft instead of only the older dossier-driven chapter outline
+- the repo can now compile those same artifacts into a single starter atlas package:
+  - consolidated atlas markdown
+  - polished atlas HTML
+  - publishable `docs/atlas-book` site output
+- the `docs/` portal now exposes:
+  - the evidence-first Atlas Viewer
+  - the chapter-grade Starter TBI Atlas
+- the optional 10x lane now has a seeded import-template builder so the genomics path is ready as soon as real exports exist
 
 ## Current Architecture
 
@@ -110,9 +118,10 @@ The repo now has five distinct layers:
 4. atlas assembly artifacts for the starter mechanisms
 5. connector-enrichment sidecar artifacts for translational and genomics context
 
-On top of those five layers, the atlas-writing lane now has two explicit synthesis outputs:
+On top of those five layers, the atlas-writing lane now has three explicit synthesis outputs:
 - chapter evidence ledger
 - ledger-driven mechanistic synthesis packet and synthesis-driven chapter draft
+- consolidated starter atlas package / atlas-book site output
 
 At `HEAD`, the workflow split is:
 - `Ongoing Literature Cycle`:
@@ -176,9 +185,11 @@ The most important additions are:
 - synthesis-driven atlas chapter draft
 - manual enrichment workpack
 - static atlas viewer bundle
+- starter atlas book bundle
 - translational bridge table
 - figure-planning artifact
 - optional 10x/genomics import lane
+- seeded 10x import-template builder
 - a clearer rule that contradiction outputs are tension cues only
 
 ## What This Means
@@ -207,8 +218,9 @@ Recommended immediate focus:
 2. keep the manual enrichment cycle focused on BBB and mitochondrial dysfunction until the lead and comparative sections have stronger target / compound coverage
 3. use the synthesis-driven chapter draft as the main writing packet instead of relying on the older dossier-driven chapter alone
 4. refine the BBB -> neuroinflammation bridge and add stronger mitochondrial bridge rows before expanding scope
-5. publish the static Atlas Viewer through the standalone Pages workflow once the current `docs/` snapshot is committed
+5. publish the atlas portal and atlas book through the standalone Pages workflow once the current `docs/` snapshot is committed
 6. add 10x outputs as soon as real analysis exports are available, without blocking the rest of the enrichment system
+7. use the seeded 10x template lane rather than inventing ad hoc genomics CSVs later
 
 Practical priority:
 - do not reopen broad extraction as the central task
@@ -216,5 +228,6 @@ Practical priority:
 - treat the chapter evidence ledger as the adjudication boundary
 - treat the mechanistic synthesis packet as the new bridge between evidence and prose
 - treat the synthesis-driven chapter draft as the working atlas-writing artifact
+- treat the starter atlas book as the current product-grade handoff for review
 - treat the manual enrichment cycle as the quality-control loop for public connector noise before locking atlas text
 - keep 10x as an optional enrichment lane that becomes active once real genomics outputs exist
