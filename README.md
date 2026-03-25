@@ -372,6 +372,10 @@ python scripts/build_program_status_report.py \
   --output-dir reports/program_status
 ```
 
+For a concise repo-level answer to "what is already automated vs still manual?", see:
+
+- `AUTOMATION_STATUS.md`
+
 ### Generate a 10x import template
 
 When you have real 10x outputs or want to prepare the genomics lane:
