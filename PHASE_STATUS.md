@@ -148,8 +148,12 @@ The most important additions are:
 - connector candidate manifest
 - public connector fetch lane
 - connector enrichment normalizer
+- manual enrichment seed pack
+- enrichment review application
+- curated dossier/chapter rebuild loop
 - mechanism dossiers
 - dossier-driven atlas chapter draft
+- chapter evidence ledger
 - translational bridge table
 - figure-planning artifact
 - optional 10x/genomics import lane
@@ -179,16 +183,19 @@ Move from backbone-building into enriched starter-mechanism dossiers and first a
 Recommended immediate focus:
 1. validate the fresh GitHub runs on the latest head (`post-analysis` and `atlas build`) now that the connector sidecar hooks are present
 2. use the action queue to drive deeper extraction only for starter-mechanism papers that still look shallow or ambiguous
-3. begin collecting real enrichment rows for:
+3. use the manual enrichment cycle to clean weak public trial/target matches and prepare manual fill templates
+4. begin collecting real enrichment rows for:
    - blood-brain barrier dysfunction
    - mitochondrial dysfunction
    - neuroinflammation
-4. rebuild enriched mechanism dossiers and use them as the working packet for first atlas drafting
-5. add 10x outputs as soon as real analysis exports are available, without blocking the rest of the enrichment system
+5. rebuild curated mechanism dossiers and use them as the working packet for first atlas drafting
+6. add 10x outputs as soon as real analysis exports are available, without blocking the rest of the enrichment system
 
 Practical priority:
 - do not reopen broad extraction as the central task
 - treat the action queue as the backlog
 - treat the atlas backbone as the synthesis map
 - treat the mechanism dossiers as the new human-usable bridge between literature evidence and atlas writing
+- treat the manual enrichment cycle as the quality-control loop for public connector noise before chapter-writing
+- treat the chapter evidence ledger as the write/adjudicate boundary for atlas prose
 - keep 10x as an optional enrichment lane that becomes active once real genomics outputs exist

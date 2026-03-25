@@ -1,0 +1,65 @@
+version: 1
+starter_mechanism_aliases:
+  blood_brain_barrier_disruption:
+    CLDN5:
+      - claudin-5
+      - cldn5
+    OCLN:
+      - occludin
+      - ocln
+    TJP1:
+      - zo-1
+      - tight junction protein 1
+      - tjp1
+    MMP9:
+      - mmp-9
+      - mmp9
+    IL1R1:
+      - il-1r1
+      - il1r1
+    AQP4:
+      - aqp4
+      - aqp-4
+  mitochondrial_bioenergetic_dysfunction:
+    PRKN:
+      - parkin
+      - prkn
+    KNG1:
+      - kng1
+    CAT:
+      - catalase
+    SOD1:
+      - sod1
+    CYBB:
+      - nox2
+      - cybb
+    MFN2:
+      - mfn2
+    DNM1L:
+      - drp1
+      - dnm1l
+  neuroinflammation_microglial_activation:
+    GFAP:
+      - gfap
+    IL10:
+      - il-10
+      - il10
+    IL6:
+      - il-6
+      - il6
+    TREM2:
+      - trem2
+    NLRP3:
+      - nlrp3
+    AGER:
+      - rage
+      - ager
+    S100B:
+      - s100b
+    C3:
+      - c3
+    GAS6:
+      - gas6
+    AQP4:
+      - aqp4
+      - aqp-4

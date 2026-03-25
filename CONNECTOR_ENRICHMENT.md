@@ -63,7 +63,11 @@ GitHub Actions must not depend on Claude Desktop or MCP connector availability i
 - `scripts/merge_connector_enrichment.py`
 - `scripts/build_mechanism_dossiers.py`
 - `scripts/run_connector_sidecar.py`
+- `scripts/build_manual_enrichment_seed_pack.py`
+- `scripts/apply_enrichment_review.py`
+- `scripts/run_manual_enrichment_cycle.py`
 - `scripts/build_atlas_chapter_from_dossiers.py`
+- `scripts/build_atlas_chapter_evidence_ledger.py`
 
 ### Reports
 - `reports/connector_candidate_manifest/`
@@ -94,6 +98,30 @@ python scripts/merge_connector_enrichment.py \
 python scripts/build_mechanism_dossiers.py \
   --output-dir reports/mechanism_dossiers
 ```
+
+### Manual curation loop
+Once first-pass public rows exist, use the curation loop to prepare manual target / ChEMBL fills and drop weak generic public rows:
+
+```bash
+python scripts/run_manual_enrichment_cycle.py \
+  --default-to-auto
+```
+
+This emits:
+- a seed pack for manual target review
+- a ChEMBL seed pack
+- a public enrichment review sheet
+- Open Targets and ChEMBL manual-fill templates
+- curated enrichment CSVs
+- curated mechanism dossiers
+- a curated starter atlas chapter draft
+- a curated chapter evidence ledger
+
+The intended use is:
+1. review `public_enrichment_review_*.csv`
+2. fill `*_manual_fill_template_*.csv` for the highest-value BBB / mitochondrial rows
+3. place any finished manual connector CSVs in `local_connector_inputs/`
+4. rerun the sidecar or the manual enrichment cycle
 
 ### One-command local orchestration
 If you want the local operator lane in one command:

@@ -50,6 +50,11 @@ def main():
         help='Directory for mechanism dossier outputs.',
     )
     parser.add_argument(
+        '--curated-enrichment-output-dir',
+        default='reports/connector_enrichment_curated',
+        help='Directory for curated enrichment outputs when review decisions are applied.',
+    )
+    parser.add_argument(
         '--skip-manifest',
         action='store_true',
         help='Skip manifest generation and only normalize connector inputs / rebuild dossiers.',
@@ -68,6 +73,21 @@ def main():
         '--public-connectors',
         default='open_targets,clinicaltrials_gov,biorxiv_medrxiv',
         help='Comma-separated public connectors for --fetch-public-connectors.',
+    )
+    parser.add_argument(
+        '--review-csv',
+        default='',
+        help='Optional public_enrichment_review CSV to apply after normalization.',
+    )
+    parser.add_argument(
+        '--apply-review',
+        action='store_true',
+        help='Apply the latest review sheet after normalization so curated enrichment becomes the dossier input.',
+    )
+    parser.add_argument(
+        '--default-to-auto',
+        action='store_true',
+        help='When applying review decisions, use auto_recommendation if review_status is blank.',
     )
     args = parser.parse_args()
 
@@ -107,6 +127,26 @@ def main():
             args.enrichment_output_dir,
         ])
         enrichment_csv = latest_optional_report_path('connector_enrichment_records_*.csv')
+        if args.apply_review or args.review_csv:
+            review_csv = args.review_csv or latest_optional_report_path('public_enrichment_review_*.csv')
+            if not review_csv:
+                raise FileNotFoundError('No review CSV found for --apply-review. Provide --review-csv or generate a review sheet first.')
+            review_cmd = [
+                'python3',
+                'scripts/apply_enrichment_review.py',
+                '--enrichment-csv',
+                enrichment_csv,
+                '--review-csv',
+                review_csv,
+                '--output-dir',
+                args.curated_enrichment_output_dir,
+            ]
+            if args.default_to_auto:
+                review_cmd.append('--default-to-auto')
+            run_cmd(review_cmd)
+            enrichment_csv = latest_optional_report_path('connector_enrichment_curated_*.csv')
+    else:
+        enrichment_csv = latest_optional_report_path('connector_enrichment_curated_*.csv') or latest_optional_report_path('connector_enrichment_records_*.csv')
 
     cmd = [
         'python3',

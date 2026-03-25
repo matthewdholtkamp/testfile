@@ -128,13 +128,18 @@ The connector lane is intentionally separate from the GitHub staging lane. It us
 Core files:
 - `config/connector_registry.yaml`
 - `config/enrichment_presets.yaml`
+- `config/manual_target_aliases.yaml`
 - `CONNECTOR_ENRICHMENT.md`
 - `scripts/build_connector_candidate_manifest.py`
 - `scripts/fetch_public_connector_enrichment.py`
 - `scripts/merge_connector_enrichment.py`
 - `scripts/build_mechanism_dossiers.py`
 - `scripts/run_connector_sidecar.py`
+- `scripts/build_manual_enrichment_seed_pack.py`
+- `scripts/apply_enrichment_review.py`
+- `scripts/run_manual_enrichment_cycle.py`
 - `scripts/build_atlas_chapter_from_dossiers.py`
+- `scripts/build_atlas_chapter_evidence_ledger.py`
 
 Connector scope in v1:
 - `open_targets`
@@ -183,6 +188,29 @@ That flow gives you:
 - figure-planning seeds for future BioRender work
 - optional 10x/genomics sections when those imports exist
 
+### Manual Enrichment Curation Loop
+Once you have a first-pass public enrichment file, use the local curation loop to clean weak generic matches and prepare manual target / ChEMBL fills:
+
+```bash
+python scripts/run_manual_enrichment_cycle.py \
+  --default-to-auto
+```
+
+That will:
+- build a manual seed pack from the latest investigation claims + enrichment rows
+- emit:
+  - `target_seed_pack_*.csv`
+  - `chembl_seed_pack_*.csv`
+  - `public_enrichment_review_*.csv`
+  - `open_targets_manual_fill_template_*.csv`
+  - `chembl_manual_fill_template_*.csv`
+- apply manual or auto review decisions to the current enrichment rows
+- rebuild curated mechanism dossiers
+- rebuild a curated chapter draft
+- rebuild a curated chapter evidence ledger
+
+Use this when you want to tighten BBB / mitochondrial enrichment before writing atlas prose.
+
 ### First Atlas Writing Artifact
 Once the dossiers exist, build the first dossier-driven atlas writing draft:
    ```bash
@@ -195,6 +223,26 @@ This produces:
 - a starter atlas chapter draft
 - a lead-mechanism recommendation for the first chapter
 - section scaffolding for BBB dysfunction, mitochondrial dysfunction, and neuroinflammation
+
+### Chapter Evidence Ledger
+To bridge chapter sentences back to evidence and blockers:
+
+```bash
+python scripts/build_atlas_chapter_evidence_ledger.py \
+  --dossier-dir reports/mechanism_dossiers_curated \
+  --output-dir reports/atlas_chapter_ledger_curated
+```
+
+This produces a per-section ledger with:
+- proposed narrative claim
+- supporting PMIDs
+- source-quality mix
+- contradiction signal
+- action blockers
+- confidence bucket
+- promotion note
+
+The `Build Atlas Slices` workflow now emits this ledger automatically, and the manual enrichment cycle rebuilds it after curation.
 
 ### Extraction throttling and model settings
 The pipeline's model and rate-limiting behavior can be tuned in `config/config.yaml`. The extraction process explicitly does not alter retrieval behavior or Drive routing.

@@ -130,6 +130,12 @@ jobs:
               --action-queue-csv "$latest_action_queue" \
               --output-dir reports/mechanism_dossiers
           fi
+          python scripts/build_atlas_chapter_from_dossiers.py \
+            --dossier-dir reports/mechanism_dossiers \
+            --output-dir reports/atlas_chapter_draft
+          python scripts/build_atlas_chapter_evidence_ledger.py \
+            --dossier-dir reports/mechanism_dossiers \
+            --output-dir reports/atlas_chapter_ledger
 
       - name: Upload atlas artifacts
         if: always()

@@ -20,6 +20,11 @@ def latest_file(pattern):
     return candidates[-1]
 
 
+def latest_file_in_dir(path, pattern):
+    candidates = sorted(glob(os.path.join(path, pattern)))
+    return candidates[-1] if candidates else ''
+
+
 def read_text(path):
     with open(path, 'r', encoding='utf-8') as handle:
         return handle.read()
@@ -193,7 +198,7 @@ def main():
     parser.add_argument('--output-dir', default='reports/atlas_chapter_draft', help='Directory for chapter drafts.')
     args = parser.parse_args()
 
-    index_md = args.index_md or latest_file('mechanism_dossier_index_*.md')
+    index_md = args.index_md or latest_file_in_dir(args.dossier_dir, 'mechanism_dossier_index_*.md') or latest_file('mechanism_dossier_index_*.md')
     rows = parse_index_rows(index_md)
     lead = infer_lead(rows)
 
