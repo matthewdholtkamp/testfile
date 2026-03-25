@@ -66,6 +66,26 @@ def main():
         help='Directory for the manual enrichment workpack.',
     )
     parser.add_argument(
+        '--quality-gate-output-dir',
+        default='reports/atlas_quality_gate',
+        help='Directory for atlas quality-gate outputs.',
+    )
+    parser.add_argument(
+        '--review-packet-output-dir',
+        default='reports/mechanism_review_packets',
+        help='Directory for mechanism review packet outputs.',
+    )
+    parser.add_argument(
+        '--target-packet-output-dir',
+        default='reports/target_enrichment_packets',
+        help='Directory for target enrichment packet outputs.',
+    )
+    parser.add_argument(
+        '--program-status-output-dir',
+        default='reports/program_status',
+        help='Directory for program-status outputs.',
+    )
+    parser.add_argument(
         '--viewer-output-dir',
         default='docs/atlas-viewer',
         help='Directory for the static atlas viewer bundle.',
@@ -205,6 +225,24 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_atlas_quality_gate.py',
+        '--output-dir',
+        args.quality_gate_output_dir,
+        '--synthesis-csv',
+        latest_csv_in_dir(args.synthesis_output_dir, 'mechanistic_synthesis_blocks_*.csv'),
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_mechanism_review_packets.py',
+        '--output-dir',
+        args.review_packet_output_dir,
+        '--quality-gate-csv',
+        latest_csv_in_dir(args.quality_gate_output_dir, 'atlas_quality_gate_*.csv'),
+        '--synthesis-csv',
+        latest_csv_in_dir(args.synthesis_output_dir, 'mechanistic_synthesis_blocks_*.csv'),
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_manual_enrichment_workpack.py',
         '--seed-pack-csv',
         latest_csv_in_dir(args.seed_pack_output_dir, 'target_seed_pack_*.csv'),
@@ -216,6 +254,18 @@ def main():
         latest_csv_in_dir(args.seed_pack_output_dir, 'open_targets_manual_fill_template_*.csv'),
         '--output-dir',
         args.workpack_output_dir,
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_target_enrichment_packets.py',
+        '--output-dir',
+        args.target_packet_output_dir,
+        '--target-seed-csv',
+        latest_csv_in_dir(args.seed_pack_output_dir, 'target_seed_pack_*.csv'),
+        '--open-targets-template-csv',
+        latest_csv_in_dir(args.seed_pack_output_dir, 'open_targets_manual_fill_template_*.csv'),
+        '--chembl-template-csv',
+        latest_csv_in_dir(args.seed_pack_output_dir, 'chembl_manual_fill_template_*.csv'),
     ])
     run_cmd([
         'python3',
@@ -231,21 +281,41 @@ def main():
         '--site-dir',
         args.atlas_site_dir,
     ])
+    run_cmd([
+        'python3',
+        'scripts/build_program_status_report.py',
+        '--output-dir',
+        args.program_status_output_dir,
+        '--quality-gate-csv',
+        latest_csv_in_dir(args.quality_gate_output_dir, 'atlas_quality_gate_*.csv'),
+        '--review-packet-index-md',
+        latest_csv_in_dir(args.review_packet_output_dir, 'mechanism_review_packet_index_*.md'),
+        '--target-packet-index-md',
+        latest_csv_in_dir(args.target_packet_output_dir, 'target_enrichment_packet_index_*.md'),
+    ])
 
     chapter_md = latest_csv_in_dir(args.chapter_output_dir, 'starter_atlas_chapter_draft_*.md')
     chapter_synthesis_md = latest_csv_in_dir(args.chapter_synthesis_output_dir, 'starter_atlas_chapter_synthesis_draft_*.md')
     ledger_md = latest_csv_in_dir(args.ledger_output_dir, 'starter_atlas_chapter_evidence_ledger_*.md')
     synthesis_md = latest_csv_in_dir(args.synthesis_output_dir, 'mechanistic_synthesis_index_*.md')
     workpack_md = latest_csv_in_dir(args.workpack_output_dir, 'manual_enrichment_workpack_*.md')
+    quality_gate_md = latest_csv_in_dir(args.quality_gate_output_dir, 'atlas_quality_gate_*.md')
+    review_packet_md = latest_csv_in_dir(args.review_packet_output_dir, 'mechanism_review_packet_index_*.md')
+    target_packet_md = latest_csv_in_dir(args.target_packet_output_dir, 'target_enrichment_packet_index_*.md')
+    program_status_md = latest_csv_in_dir(args.program_status_output_dir, 'program_status_report_*.md')
     viewer_path = os.path.join(args.viewer_output_dir, 'index.html')
     atlas_path = latest_csv_in_dir(args.atlas_output_dir, 'starter_tbi_atlas_*.html')
     print(f'Manual enrichment cycle complete. Latest chapter draft: {chapter_md}')
     print(f'Latest chapter synthesis draft: {chapter_synthesis_md}')
     print(f'Latest evidence ledger: {ledger_md}')
     print(f'Latest mechanistic synthesis index: {synthesis_md}')
+    print(f'Latest atlas quality gate: {quality_gate_md}')
+    print(f'Latest mechanism review packets: {review_packet_md}')
     print(f'Latest manual workpack: {workpack_md}')
+    print(f'Latest target enrichment packets: {target_packet_md}')
     print(f'Latest atlas viewer: {viewer_path}')
     print(f'Latest atlas book: {atlas_path}')
+    print(f'Latest program status report: {program_status_md}')
 
 
 if __name__ == '__main__':

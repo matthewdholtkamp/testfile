@@ -316,6 +316,62 @@ The `Build Atlas Slices` workflow now supports a `publish_docs` input. When set 
 
 Use this when you want the latest atlas snapshot to become the new published Pages version from the same build run.
 
+### Automatic atlas refresh after the weekly cycle
+
+The repo now also has a downstream workflow:
+
+- `.github/workflows/refresh_atlas_from_ongoing_cycle.yml`
+
+It is designed to:
+- trigger after a successful `Ongoing Literature Cycle`
+- download the staged cycle artifacts
+- rebuild the atlas-only lane from those artifacts
+- refresh `docs/atlas-viewer` and `docs/atlas-book`
+- publish the refreshed docs snapshot
+
+This keeps weekly staging and atlas publication separate, which is safer than folding site-build logic directly into retrieval/extraction.
+
+### Atlas quality gate and review packets
+
+The atlas lane now emits:
+
+```bash
+python scripts/build_atlas_quality_gate.py \
+  --output-dir reports/atlas_quality_gate
+
+python scripts/build_mechanism_review_packets.py \
+  --output-dir reports/mechanism_review_packets
+```
+
+These outputs are intended to answer:
+- which mechanism is actually closest to writing grade
+- which mechanism should stay bounded or held
+- what the next move is for each section
+
+### Faster manual enrichment prep
+
+The manual cycle now also emits per-target packets for the highest-value BBB / mitochondrial targets:
+
+```bash
+python scripts/build_target_enrichment_packets.py \
+  --output-dir reports/target_enrichment_packets
+```
+
+These packets are designed to speed up Open Targets / ChEMBL filling by packaging:
+- the target
+- why it matters
+- seeded PMIDs
+- the exact manual-fill rows to complete
+
+### Program status report
+
+To generate one operator-facing snapshot of where the project stands:
+
+```bash
+python scripts/build_program_status_report.py \
+  --output-dir reports/program_status
+```
+
 ### Generate a 10x import template
 
 When you have real 10x outputs or want to prepare the genomics lane:

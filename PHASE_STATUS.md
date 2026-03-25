@@ -107,6 +107,11 @@ For the connector-enrichment sidecar:
   - the evidence-first Atlas Viewer
   - the chapter-grade Starter TBI Atlas
 - the optional 10x lane now has a seeded import-template builder so the genomics path is ready as soon as real exports exist
+- the atlas lane now has an explicit quality-gate output with mechanism-level readiness scoring
+- the atlas lane now emits mechanism review packets for BBB, mitochondrial dysfunction, and neuroinflammation
+- the manual enrichment lane now emits target packets for the highest-value Open Targets / ChEMBL fill targets
+- the repo now emits a single program-status report so operators can see current atlas state without digging through multiple artifact folders
+- the repo now has a dedicated downstream auto-refresh workflow for atlas publication after a successful weekly literature cycle
 
 ## Current Architecture
 
@@ -190,6 +195,10 @@ The most important additions are:
 - figure-planning artifact
 - optional 10x/genomics import lane
 - seeded 10x import-template builder
+- atlas quality gate
+- mechanism review packets
+- target enrichment packets
+- program status report
 - a clearer rule that contradiction outputs are tension cues only
 
 ## What This Means
@@ -221,6 +230,7 @@ Recommended immediate focus:
 5. publish the atlas portal and atlas book through the standalone Pages workflow once the current `docs/` snapshot is committed
 6. add 10x outputs as soon as real analysis exports are available, without blocking the rest of the enrichment system
 7. use the seeded 10x template lane rather than inventing ad hoc genomics CSVs later
+8. use the dedicated post-cycle atlas refresh workflow so weekly staging and publication stay decoupled
 
 Practical priority:
 - do not reopen broad extraction as the central task
@@ -229,5 +239,8 @@ Practical priority:
 - treat the mechanistic synthesis packet as the new bridge between evidence and prose
 - treat the synthesis-driven chapter draft as the working atlas-writing artifact
 - treat the starter atlas book as the current product-grade handoff for review
+- treat the quality gate as the writing checkpoint before promoting a mechanism section
+- treat the mechanism review packets as the section-level adjudication packet
+- treat the target enrichment packets as the fastest route to filling BBB / mitochondrial manual connector rows
 - treat the manual enrichment cycle as the quality-control loop for public connector noise before locking atlas text
 - keep 10x as an optional enrichment lane that becomes active once real genomics outputs exist
