@@ -75,6 +75,7 @@ def render_markdown(status):
         '## Latest Key Artifacts',
         '',
         f"- Quality gate: `{status['quality_gate_path']}`",
+        f"- Idea generation gate: `{status['idea_gate_path']}`",
         f"- Release manifest: `{status['release_manifest_path']}`",
         f"- Mechanism review packets: `{status['review_packet_index_path']}`",
         f"- Target enrichment packets: `{status['target_packet_index_path']}`",
@@ -87,6 +88,15 @@ def render_markdown(status):
     for row in status['gate_rows']:
         lines.append(
             f"- **{row['display_name']}**: `{row['gate_status']}` | score `{row['readiness_score']}` | next move `{row['recommended_next_move']}`"
+        )
+    lines.extend([
+        '',
+        '## Idea Generation Summary',
+        '',
+    ])
+    for row in status['idea_rows']:
+        lines.append(
+            f"- **{row['display_name']}**: idea `{row['idea_generation_status']}` | breakthrough `{row['breakthrough_status']}` | missing `{row['missing_for_idea_generation'] or 'none'}`"
         )
     lines.extend([
         '',
@@ -104,6 +114,7 @@ def main():
     parser = argparse.ArgumentParser(description='Build a consolidated program-status report for the TBI atlas pipeline.')
     parser.add_argument('--output-dir', default='reports/program_status', help='Directory for program-status outputs.')
     parser.add_argument('--quality-gate-csv', default='', help='Optional atlas_quality_gate CSV path.')
+    parser.add_argument('--idea-gate-csv', default='', help='Optional idea_generation_gate CSV path.')
     parser.add_argument('--release-manifest-md', default='', help='Optional atlas release-manifest markdown path.')
     parser.add_argument('--review-packet-index-md', default='', help='Optional mechanism review packet index path.')
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
@@ -112,6 +123,8 @@ def main():
     viewer = make_viewer_data()
     quality_gate_path = args.quality_gate_csv or latest_report('atlas_quality_gate_*.csv')
     quality_rows = read_csv(quality_gate_path) if quality_gate_path else []
+    idea_gate_path = args.idea_gate_csv or latest_report('idea_generation_gate_*.csv')
+    idea_rows = read_csv(idea_gate_path) if idea_gate_path else []
     release_manifest_path = args.release_manifest_md or latest_report('atlas_release_manifest_*.md')
     review_packet_index = args.review_packet_index_md or latest_report('mechanism_review_packet_index_*.md')
     target_packet_index = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
@@ -129,12 +142,14 @@ def main():
         'viewer_path': os.path.join('docs', 'atlas-viewer', 'index.html'),
         'atlas_book_path': atlas_book_path,
         'quality_gate_path': quality_gate_path,
+        'idea_gate_path': idea_gate_path,
         'release_manifest_path': release_manifest_path,
         'review_packet_index_path': review_packet_index,
         'target_packet_index_path': target_packet_index,
         'workpack_path': workpack_path,
         'chapter_synthesis_path': chapter_synthesis_path,
         'gate_rows': quality_rows,
+        'idea_rows': idea_rows,
     }
 
     os.makedirs(args.output_dir, exist_ok=True)

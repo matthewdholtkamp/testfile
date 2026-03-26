@@ -115,6 +115,8 @@ def render_markdown(packet):
         f"- Stable rows: `{packet['stable_rows']}`",
         f"- Provisional rows: `{packet['provisional_rows']}`",
         f"- Blocked rows: `{packet['blocked_rows']}`",
+        f"- Idea-ready mechanisms now: `{packet['idea_summary'].get('idea_ready_now', 0)}` / `{packet['idea_summary'].get('mechanism_count', 0)}`",
+        f"- Breakthrough-ready mechanisms now: `{packet['idea_summary'].get('breakthrough_ready_now', 0)}` / `{packet['idea_summary'].get('mechanism_count', 0)}`",
         '',
         '## What I Need From You This Week',
         '',
@@ -132,6 +134,18 @@ def render_markdown(packet):
 
     lines.extend([
         '## Key State',
+        '',
+        '## Idea Generation State',
+        '',
+        '| Mechanism | Idea Status | Breakthrough Status | Missing |',
+        '| --- | --- | --- | --- |',
+    ])
+    for row in packet['idea_rows']:
+        lines.append(
+            f"| {row.get('display_name', '')} | {row.get('idea_generation_status', '')} | {row.get('breakthrough_status', '')} | {row.get('missing_for_idea_generation', '') or 'none'} |"
+        )
+
+    lines.extend([
         '',
         '## Release State',
         '',
@@ -186,13 +200,16 @@ def main():
     parser.add_argument('--release-manifest-json', default='', help='Optional atlas release-manifest JSON path.')
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
     parser.add_argument('--program-status-md', default='', help='Optional program status report path.')
+    parser.add_argument('--idea-gate-json', default='', help='Optional idea-generation gate JSON path.')
     args = parser.parse_args()
 
     viewer = make_viewer_data()
     release_manifest_path = args.release_manifest_json or latest_report('atlas_release_manifest_*.json')
     target_packet_index_path = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
     program_status_path = args.program_status_md or latest_report('program_status_report_*.md')
+    idea_gate_path = args.idea_gate_json or latest_report('idea_generation_gate_*.json')
     release_manifest = read_json(release_manifest_path) if release_manifest_path else {}
+    idea_gate = read_json(idea_gate_path) if idea_gate_path else {}
     target_rows = parse_markdown_table(target_packet_index_path)
 
     packet = {
@@ -202,6 +219,8 @@ def main():
         'stable_rows': viewer.get('summary', {}).get('stable_rows', 0),
         'provisional_rows': viewer.get('summary', {}).get('provisional_rows', 0),
         'blocked_rows': viewer.get('summary', {}).get('blocked_rows', 0),
+        'idea_summary': idea_gate.get('summary', {}) if isinstance(idea_gate, dict) else {},
+        'idea_rows': idea_gate.get('rows', []) if isinstance(idea_gate, dict) else [],
         'release_summary': release_manifest.get('summary', {}) if isinstance(release_manifest, dict) else {},
         'release_rows': release_manifest.get('rows', []) if isinstance(release_manifest, dict) else [],
         'target_priorities': target_rows,

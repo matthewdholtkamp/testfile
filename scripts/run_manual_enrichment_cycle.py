@@ -76,6 +76,11 @@ def main():
         help='Directory for mechanism review packet outputs.',
     )
     parser.add_argument(
+        '--idea-gate-output-dir',
+        default='reports/idea_generation_gate',
+        help='Directory for idea-generation gate outputs.',
+    )
+    parser.add_argument(
         '--target-packet-output-dir',
         default='reports/target_enrichment_packets',
         help='Directory for target enrichment packet outputs.',
@@ -256,6 +261,14 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_idea_generation_gate.py',
+        '--output-dir',
+        args.idea_gate_output_dir,
+        '--release-manifest-csv',
+        latest_csv_in_dir(args.release_manifest_output_dir, 'atlas_release_manifest_*.csv'),
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_manual_enrichment_workpack.py',
         '--seed-pack-csv',
         latest_csv_in_dir(args.seed_pack_output_dir, 'target_seed_pack_*.csv'),
@@ -301,6 +314,8 @@ def main():
         args.program_status_output_dir,
         '--quality-gate-csv',
         latest_csv_in_dir(args.quality_gate_output_dir, 'atlas_quality_gate_*.csv'),
+        '--idea-gate-csv',
+        latest_csv_in_dir(args.idea_gate_output_dir, 'idea_generation_gate_*.csv'),
         '--review-packet-index-md',
         latest_csv_in_dir(args.review_packet_output_dir, 'mechanism_review_packet_index_*.md'),
         '--target-packet-index-md',
@@ -313,6 +328,7 @@ def main():
     synthesis_md = latest_csv_in_dir(args.synthesis_output_dir, 'mechanistic_synthesis_index_*.md')
     workpack_md = latest_csv_in_dir(args.workpack_output_dir, 'manual_enrichment_workpack_*.md')
     quality_gate_md = latest_csv_in_dir(args.quality_gate_output_dir, 'atlas_quality_gate_*.md')
+    idea_gate_md = latest_csv_in_dir(args.idea_gate_output_dir, 'idea_generation_gate_*.md')
     review_packet_md = latest_csv_in_dir(args.review_packet_output_dir, 'mechanism_review_packet_index_*.md')
     target_packet_md = latest_csv_in_dir(args.target_packet_output_dir, 'target_enrichment_packet_index_*.md')
     program_status_md = latest_csv_in_dir(args.program_status_output_dir, 'program_status_report_*.md')
@@ -323,6 +339,7 @@ def main():
     print(f'Latest evidence ledger: {ledger_md}')
     print(f'Latest mechanistic synthesis index: {synthesis_md}')
     print(f'Latest atlas quality gate: {quality_gate_md}')
+    print(f'Latest idea generation gate: {idea_gate_md}')
     print(f'Latest mechanism review packets: {review_packet_md}')
     print(f'Latest manual workpack: {workpack_md}')
     print(f'Latest target enrichment packets: {target_packet_md}')
