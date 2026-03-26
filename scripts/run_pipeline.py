@@ -3,6 +3,7 @@ import sys
 import yaml
 import json
 import re
+import time
 import requests
 from datetime import datetime
 from bs4 import BeautifulSoup
@@ -21,6 +22,46 @@ except ModuleNotFoundError:
     import drive_corpus_utils as dcu
 
 DEFAULT_HTTP_TIMEOUT = 30
+RETRIABLE_STATUS_CODES = {408, 425, 429, 500, 502, 503, 504}
+
+
+def get_with_retries(url, *, params=None, headers=None, timeout=DEFAULT_HTTP_TIMEOUT,
+                     allow_redirects=True, max_attempts=3, backoff_seconds=5,
+                     context="HTTP request"):
+    last_error = None
+    for attempt in range(1, max_attempts + 1):
+        try:
+            response = requests.get(
+                url,
+                params=params,
+                headers=headers,
+                timeout=timeout,
+                allow_redirects=allow_redirects
+            )
+            if response.status_code in RETRIABLE_STATUS_CODES and attempt < max_attempts:
+                delay = backoff_seconds * attempt
+                print(
+                    f"{context}: HTTP {response.status_code} on attempt "
+                    f"{attempt}/{max_attempts}; retrying in {delay}s..."
+                )
+                time.sleep(delay)
+                continue
+
+            response.raise_for_status()
+            return response
+        except requests.exceptions.RequestException as exc:
+            last_error = exc
+            if attempt >= max_attempts:
+                break
+
+            delay = backoff_seconds * attempt
+            print(
+                f"{context}: request failed on attempt {attempt}/{max_attempts} "
+                f"with {exc}. Retrying in {delay}s..."
+            )
+            time.sleep(delay)
+
+    raise last_error
 
 def load_config():
     with open('config/config.yaml', 'r') as f:
@@ -275,8 +316,14 @@ def search_pubmed(query, max_results, api_key):
     if api_key:
         params['api_key'] = api_key
 
-    response = requests.get(url, params=params, timeout=DEFAULT_HTTP_TIMEOUT)
-    response.raise_for_status()
+    response = get_with_retries(
+        url,
+        params=params,
+        timeout=DEFAULT_HTTP_TIMEOUT,
+        max_attempts=3,
+        backoff_seconds=10,
+        context="PubMed search"
+    )
     data = response.json()
     return data.get('esearchresult', {}).get('idlist', [])
 
@@ -293,8 +340,14 @@ def fetch_metadata(pmids, api_key):
     if api_key:
         params['api_key'] = api_key
 
-    response = requests.get(url, params=params, timeout=DEFAULT_HTTP_TIMEOUT)
-    response.raise_for_status()
+    response = get_with_retries(
+        url,
+        params=params,
+        timeout=DEFAULT_HTTP_TIMEOUT,
+        max_attempts=3,
+        backoff_seconds=10,
+        context="PubMed metadata fetch"
+    )
 
     soup = BeautifulSoup(response.content, 'xml')
     articles_data = {}
@@ -1104,8 +1157,13 @@ def main():
             print(f"Found {len(pmids)} candidate articles.")
         except Exception as e:
             print(f"Error searching PubMed: {e}")
-            stats['fatal_errors'] += 1
-            sys.exit(1)
+            if phase_idx == 0 and total_attempted_across_phases == 0 and full_text_success_count == 0:
+                stats['fatal_errors'] += 1
+                sys.exit(1)
+
+            stats['nonfatal_warnings'] += 1
+            print("Skipping remaining expansion phases after search failure in a later phase.")
+            break
 
         if not pmids:
             print("No articles found in this phase.")
