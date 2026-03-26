@@ -331,6 +331,21 @@ It is designed to:
 
 This keeps weekly staging and atlas publication separate, which is safer than folding site-build logic directly into retrieval/extraction.
 
+### Automatic public-enrichment refresh after atlas rebuild
+
+The repo now also has a second downstream workflow:
+
+- `.github/workflows/refresh_public_enrichment.yml`
+
+It is designed to:
+- trigger after a successful atlas refresh/build
+- download the latest atlas artifacts
+- fetch first-pass public enrichment from Open Targets, ClinicalTrials.gov, and bioRxiv/medRxiv
+- rebuild dossiers, chapter artifacts, the quality gate, the release manifest, the viewer, and the atlas book
+- publish the refreshed docs snapshot
+
+This keeps safe public enrichment in the automated lane while leaving ChEMBL-grade curation and 10x imports as explicit science/operator steps.
+
 ### Atlas quality gate and review packets
 
 The atlas lane now emits:
@@ -347,6 +362,20 @@ These outputs are intended to answer:
 - which mechanism is actually closest to writing grade
 - which mechanism should stay bounded or held
 - what the next move is for each section
+
+### Atlas release manifest
+
+The atlas lane now also emits:
+
+```bash
+python scripts/build_atlas_release_manifest.py \
+  --output-dir reports/atlas_release_manifest
+```
+
+This manifest is the explicit promotion/governance layer for the atlas. It separates:
+- what is safe to treat as part of the standing atlas
+- what is close enough to keep promoting
+- what should remain visible but not over-claimed yet
 
 ### Faster manual enrichment prep
 

@@ -161,6 +161,9 @@ jobs:
             --output-dir reports/mechanism_review_packets \
             --quality-gate-csv "$latest_quality_gate" \
             --synthesis-csv "$latest_synthesis"
+          python scripts/build_atlas_release_manifest.py \
+            --output-dir reports/atlas_release_manifest \
+            --quality-gate-csv "$latest_quality_gate"
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_tbi_atlas_book.py \
@@ -169,6 +172,7 @@ jobs:
           python scripts/build_program_status_report.py \
             --output-dir reports/program_status \
             --quality-gate-csv "$latest_quality_gate" \
+            --release-manifest-md "$(ls -1t reports/atlas_release_manifest/atlas_release_manifest_*.md | head -n1)" \
             --review-packet-index-md "$(ls -1t reports/mechanism_review_packets/mechanism_review_packet_index_*.md | head -n1)"
 
       - name: Publish docs snapshot

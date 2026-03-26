@@ -67,12 +67,14 @@ def render_markdown(status):
         '- Weekly literature staging: active via `ongoing_literature_cycle.yml` every Monday morning',
         '- Atlas validation build: active via `build_atlas_slices.yml`',
         '- Automatic atlas refresh after weekly staging: active via `refresh_atlas_from_ongoing_cycle.yml`',
+        '- Automatic public-enrichment refresh: active via `refresh_public_enrichment.yml`',
         '- Atlas docs publish: optional via `publish_docs=true` on manual atlas build, automatic in the post-cycle refresh lane',
         '- Local enrichment lane: operator-driven via `run_connector_sidecar.py` and `run_manual_enrichment_cycle.py`',
         '',
         '## Latest Key Artifacts',
         '',
         f"- Quality gate: `{status['quality_gate_path']}`",
+        f"- Release manifest: `{status['release_manifest_path']}`",
         f"- Mechanism review packets: `{status['review_packet_index_path']}`",
         f"- Target enrichment packets: `{status['target_packet_index_path']}`",
         f"- Workpack: `{status['workpack_path']}`",
@@ -101,6 +103,7 @@ def main():
     parser = argparse.ArgumentParser(description='Build a consolidated program-status report for the TBI atlas pipeline.')
     parser.add_argument('--output-dir', default='reports/program_status', help='Directory for program-status outputs.')
     parser.add_argument('--quality-gate-csv', default='', help='Optional atlas_quality_gate CSV path.')
+    parser.add_argument('--release-manifest-md', default='', help='Optional atlas release-manifest markdown path.')
     parser.add_argument('--review-packet-index-md', default='', help='Optional mechanism review packet index path.')
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
     args = parser.parse_args()
@@ -108,6 +111,7 @@ def main():
     viewer = make_viewer_data()
     quality_gate_path = args.quality_gate_csv or latest_report('atlas_quality_gate_*.csv')
     quality_rows = read_csv(quality_gate_path) if quality_gate_path else []
+    release_manifest_path = args.release_manifest_md or latest_report('atlas_release_manifest_*.md')
     review_packet_index = args.review_packet_index_md or latest_report('mechanism_review_packet_index_*.md')
     target_packet_index = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
     atlas_book_path = latest_report('starter_tbi_atlas_*.html')
@@ -124,6 +128,7 @@ def main():
         'viewer_path': os.path.join('docs', 'atlas-viewer', 'index.html'),
         'atlas_book_path': atlas_book_path,
         'quality_gate_path': quality_gate_path,
+        'release_manifest_path': release_manifest_path,
         'review_packet_index_path': review_packet_index,
         'target_packet_index_path': target_packet_index,
         'workpack_path': workpack_path,

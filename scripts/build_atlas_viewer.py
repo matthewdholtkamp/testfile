@@ -241,6 +241,7 @@ def make_viewer_data():
     ledger_path = latest_file_prefer_curated('atlas_chapter_ledger_curated/starter_atlas_chapter_evidence_ledger_*.csv', 'atlas_chapter_ledger/starter_atlas_chapter_evidence_ledger_*.csv')
     workpack_path = latest_optional_file('manual_enrichment_workpack/manual_enrichment_workpack_*.md')
     bridge_path = latest_file_prefer_curated('mechanism_dossiers_curated/translational_bridge_*.csv', 'mechanism_dossiers/translational_bridge_*.csv')
+    release_manifest_path = latest_optional_file('atlas_release_manifest_*.json')
 
     index_rows = parse_mechanism_index(index_path)
     dossier_dir = os.path.dirname(index_path)
@@ -259,6 +260,7 @@ def make_viewer_data():
     workpack = parse_workpack(workpack_path)
     bridge_rows = read_csv(bridge_path)
     bridge_rows = [row for row in bridge_rows if any(normalize_spaces(row.get(key, '')) for key in ['target_entity', 'compound_entity', 'trial_entity', 'preprint_entity', 'genomics_entity'])]
+    release_manifest = json.loads(read_text(release_manifest_path)) if release_manifest_path else {}
 
     data = {
         'metadata': {
@@ -269,6 +271,7 @@ def make_viewer_data():
                 'ledger': os.path.relpath(ledger_path, REPO_ROOT),
                 'workpack': os.path.relpath(workpack_path, REPO_ROOT) if workpack_path else '',
                 'bridge': os.path.relpath(bridge_path, REPO_ROOT),
+                'release_manifest': os.path.relpath(release_manifest_path, REPO_ROOT) if release_manifest_path else '',
             }
         },
         'summary': build_summary(index_rows, ledger_rows, chapter, workpack),
@@ -277,6 +280,7 @@ def make_viewer_data():
         'ledger': ledger_rows,
         'workpack': workpack,
         'bridge_rows': bridge_rows[:50],
+        'release_manifest': release_manifest,
     }
     return data
 

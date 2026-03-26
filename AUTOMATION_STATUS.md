@@ -20,6 +20,11 @@ This file is the current reality check for what parts of the TBI investigation e
   - Triggered after a successful ongoing literature cycle
   - Downloads staged artifacts, rebuilds the atlas-facing lane, refreshes `docs/atlas-viewer` and `docs/atlas-book`, and publishes the updated docs snapshot
 
+- **Automatic public-enrichment refresh after atlas rebuild**
+  - Workflow: `.github/workflows/refresh_public_enrichment.yml`
+  - Triggered after a successful atlas refresh/build
+  - Fetches safe public enrichment (Open Targets, ClinicalTrials.gov, bioRxiv/medRxiv), rebuilds dossiers and downstream atlas artifacts, and republishes the docs snapshot
+
 - **Published product surface**
   - Pages deployment updates from committed `docs/`
   - Current product surfaces:
@@ -54,7 +59,7 @@ This file is the current reality check for what parts of the TBI investigation e
 - **Narrative-quality atlas writing**
   - The repo can now produce chapter drafts and evidence ledgers, but a polished white-paper-grade narrative still needs human synthesis
 
-## The 5 Big Moves Now In Place
+## The Operating-State Moves Now In Place
 
 1. **Atlas quality gate**
    - Mechanism readiness scoring now exists and is emitted as a report
@@ -70,6 +75,9 @@ This file is the current reality check for what parts of the TBI investigation e
 
 5. **Program-level operator snapshot**
    - A single status report now summarizes lead mechanism, gate state, artifacts, and immediate next steps
+
+6. **Explicit atlas release manifest**
+   - Promotion/governance is now emitted as a concrete artifact instead of staying implicit
 
 ## How Soon Until This Is Automated?
 

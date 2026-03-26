@@ -108,10 +108,12 @@ For the connector-enrichment sidecar:
   - the chapter-grade Starter TBI Atlas
 - the optional 10x lane now has a seeded import-template builder so the genomics path is ready as soon as real exports exist
 - the atlas lane now has an explicit quality-gate output with mechanism-level readiness scoring
+- the atlas lane now has an explicit release manifest so atlas promotion/governance is no longer implicit
 - the atlas lane now emits mechanism review packets for BBB, mitochondrial dysfunction, and neuroinflammation
 - the manual enrichment lane now emits target packets for the highest-value Open Targets / ChEMBL fill targets
 - the repo now emits a single program-status report so operators can see current atlas state without digging through multiple artifact folders
 - the repo now has a dedicated downstream auto-refresh workflow for atlas publication after a successful weekly literature cycle
+- the repo now has a dedicated downstream public-enrichment refresh workflow after successful atlas rebuilds
 
 ## Current Architecture
 

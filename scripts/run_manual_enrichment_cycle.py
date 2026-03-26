@@ -86,6 +86,11 @@ def main():
         help='Directory for program-status outputs.',
     )
     parser.add_argument(
+        '--release-manifest-output-dir',
+        default='reports/atlas_release_manifest',
+        help='Directory for atlas release-manifest outputs.',
+    )
+    parser.add_argument(
         '--viewer-output-dir',
         default='docs/atlas-viewer',
         help='Directory for the static atlas viewer bundle.',
@@ -240,6 +245,14 @@ def main():
         latest_csv_in_dir(args.quality_gate_output_dir, 'atlas_quality_gate_*.csv'),
         '--synthesis-csv',
         latest_csv_in_dir(args.synthesis_output_dir, 'mechanistic_synthesis_blocks_*.csv'),
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_atlas_release_manifest.py',
+        '--output-dir',
+        args.release_manifest_output_dir,
+        '--quality-gate-csv',
+        latest_csv_in_dir(args.quality_gate_output_dir, 'atlas_quality_gate_*.csv'),
     ])
     run_cmd([
         'python3',

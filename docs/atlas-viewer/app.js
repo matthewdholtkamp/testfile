@@ -355,13 +355,15 @@
   }
 
   function renderSummary() {
+    const releaseSummary = data.release_manifest?.summary || {};
     document.getElementById("leadMechanism").textContent = data.summary.lead_mechanism;
     document.getElementById("leadHint").textContent = data.summary.top_priority
       ? `Next manual priority: ${data.summary.top_priority}`
       : "Starter atlas synthesis";
     document.getElementById("heroSummary").textContent =
       `${data.summary.lead_mechanism} is the current lead chapter. ` +
-      `${data.summary.stable_rows} ledger rows are stable, ${data.summary.provisional_rows} are provisional, and ${data.summary.blocked_rows} rows still need cleanup before they are fully writing-grade.`;
+      `${data.summary.stable_rows} ledger rows are stable, ${data.summary.provisional_rows} are provisional, and ${data.summary.blocked_rows} rows still need cleanup before they are fully writing-grade. ` +
+      `${releaseSummary.core_atlas_now || 0} mechanism(s) are core atlas now, and ${releaseSummary.core_atlas_candidates || 0} are close enough to keep actively promoting.`;
     document.getElementById("freshnessNote").textContent = metadataTimestamp();
 
     const sidebarQuery = state.sidebarSearch.trim();
@@ -374,6 +376,8 @@
       ["Stable Ledger Rows", String(data.summary.stable_rows)],
       ["Provisional Rows", String(data.summary.provisional_rows)],
       ["Blocked Rows", String(data.summary.blocked_rows)],
+      ["Core Atlas Now", String(releaseSummary.core_atlas_now || 0)],
+      ["Atlas Candidates", String(releaseSummary.core_atlas_candidates || 0)],
       ["Mechanisms In Scope", String(data.summary.mechanism_count)],
     ];
 

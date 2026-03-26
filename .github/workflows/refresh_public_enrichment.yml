@@ -1,0 +1,150 @@
+name: Refresh Public Enrichment
+
+on:
+  workflow_run:
+    workflows: ["Refresh Atlas From Ongoing Cycle", "Build Atlas Slices"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "Optional source atlas run id (blank = latest successful Build Atlas Slices or Refresh Atlas From Ongoing Cycle run)"
+        required: false
+        default: ""
+      publish_docs:
+        description: "Commit and publish refreshed docs snapshot"
+        required: false
+        default: "true"
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: refresh-public-enrichment
+  cancel-in-progress: true
+
+jobs:
+  refresh-public-enrichment:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Resolve source run id
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          INPUT_RUN_ID: ${{ inputs.source_run_id }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id }}
+          EVENT_WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_run" ]; then
+            RUN_ID="$EVENT_RUN_ID"
+          elif [ -n "$INPUT_RUN_ID" ]; then
+            RUN_ID="$INPUT_RUN_ID"
+          else
+            RUN_ID=$(gh run list -R "$REPO" -L 30 --json databaseId,conclusion,status,workflowName | python3 -c 'import json, sys; runs=json.load(sys.stdin); allowed={"Build Atlas Slices","Refresh Atlas From Ongoing Cycle"}; print(next((str(run["databaseId"]) for run in runs if run.get("workflowName") in allowed and run.get("status")=="completed" and run.get("conclusion")=="success"), ""))')
+          fi
+          if [ -z "$RUN_ID" ]; then
+            echo "Could not resolve source run id" >&2
+            exit 1
+          fi
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Download atlas artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ steps.resolve.outputs.run_id }}
+        run: |
+          rm -rf imported_atlas
+          mkdir -p imported_atlas reports docs fetched_connector_inputs
+          if gh run download "$RUN_ID" -R "$REPO" -n refreshed_atlas_outputs -D imported_atlas; then
+            echo "Downloaded refreshed_atlas_outputs"
+          else
+            gh run download "$RUN_ID" -R "$REPO" -n atlas_slice_outputs -D imported_atlas
+          fi
+          cp -R imported_atlas/reports/. reports/ || true
+          cp -R imported_atlas/docs/. docs/ || true
+
+      - name: Refresh public enrichment and rebuild atlas product
+        run: |
+          python scripts/run_connector_sidecar.py \
+            --skip-manifest \
+            --fetch-public-connectors \
+            --enrichment-input-dir fetched_connector_inputs \
+            --enrichment-output-dir reports/connector_enrichment \
+            --dossier-output-dir reports/mechanism_dossiers
+          python scripts/build_atlas_chapter_from_dossiers.py \
+            --dossier-dir reports/mechanism_dossiers \
+            --output-dir reports/atlas_chapter_draft
+          python scripts/build_atlas_chapter_evidence_ledger.py \
+            --dossier-dir reports/mechanism_dossiers \
+            --output-dir reports/atlas_chapter_ledger
+          latest_ledger=$(ls -1t reports/atlas_chapter_ledger/starter_atlas_chapter_evidence_ledger_*.csv | head -n1)
+          latest_bridge=$(ls -1t reports/mechanism_dossiers/translational_bridge_*.csv | head -n1)
+          python scripts/build_mechanistic_synthesis.py \
+            --ledger-csv "$latest_ledger" \
+            --bridge-csv "$latest_bridge" \
+            --output-dir reports/mechanistic_synthesis
+          latest_synthesis=$(ls -1t reports/mechanistic_synthesis/mechanistic_synthesis_blocks_*.csv | head -n1)
+          python scripts/build_atlas_chapter_from_synthesis.py \
+            --synthesis-csv "$latest_synthesis" \
+            --output-dir reports/atlas_chapter_synthesis_draft
+          python scripts/build_atlas_quality_gate.py \
+            --output-dir reports/atlas_quality_gate \
+            --synthesis-csv "$latest_synthesis"
+          latest_quality_gate=$(ls -1t reports/atlas_quality_gate/atlas_quality_gate_*.csv | head -n1)
+          python scripts/build_mechanism_review_packets.py \
+            --output-dir reports/mechanism_review_packets \
+            --quality-gate-csv "$latest_quality_gate" \
+            --synthesis-csv "$latest_synthesis"
+          python scripts/build_atlas_release_manifest.py \
+            --output-dir reports/atlas_release_manifest \
+            --quality-gate-csv "$latest_quality_gate"
+          python scripts/build_atlas_viewer.py \
+            --output-dir docs/atlas-viewer
+          python scripts/build_tbi_atlas_book.py \
+            --output-dir reports/starter_tbi_atlas \
+            --site-dir docs/atlas-book
+          python scripts/build_program_status_report.py \
+            --output-dir reports/program_status \
+            --quality-gate-csv "$latest_quality_gate" \
+            --release-manifest-md "$(ls -1t reports/atlas_release_manifest/atlas_release_manifest_*.md | head -n1)" \
+            --review-packet-index-md "$(ls -1t reports/mechanism_review_packets/mechanism_review_packet_index_*.md | head -n1)"
+
+      - name: Publish docs snapshot
+        if: ${{ github.event_name == 'workflow_run' || inputs.publish_docs == 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --cached --quiet; then
+            echo "No docs changes to publish."
+            exit 0
+          fi
+          git commit -m "Refresh public enrichment snapshot"
+          git push origin HEAD:main
+
+      - name: Upload public-enrichment artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: refreshed_public_enrichment_outputs
+          path: |
+            reports/
+            docs/
