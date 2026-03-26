@@ -20,7 +20,7 @@ on:
         required: false
         default: "5"
   schedule:
-    - cron: "0 13 * * 1"
+    - cron: "0 13 * * *"
 
 concurrency:
   group: ongoing-literature-cycle

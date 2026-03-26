@@ -1,14 +1,14 @@
 # Automation Status
 
-This file is the current reality check for what parts of the TBI investigation engine are already automated, what still needs an operator, and how close the project is to a mostly hands-off weekly loop.
+This file is the current reality check for what parts of the TBI investigation engine are already automated, what still needs an operator, and how close the project is to a mostly hands-off daily loop with a weekly human review cadence.
 
 ## Current State
 
 ### Already automated
 
-- **Weekly literature staging**
+- **Daily literature staging**
   - Workflow: `.github/workflows/ongoing_literature_cycle.yml`
-  - Runs every Monday morning
+  - Runs every day in the morning window
   - Pulls new literature, upgrades source quality where possible, runs extraction, refreshes post-extraction analysis, builds the investigation queue, and refreshes atlas backbone artifacts
 
 - **Manual/hosted atlas build**
@@ -31,6 +31,11 @@ This file is the current reality check for what parts of the TBI investigation e
     - `docs/index.html`
     - `docs/atlas-viewer/index.html`
     - `docs/atlas-book/index.html`
+
+- **Weekly human review packet**
+  - Workflow: `.github/workflows/weekly_human_review_packet.yml`
+  - Runs once a week after the daily machine lanes have had time to move
+  - Produces one bounded review packet for the human-in-the-loop science pass
 
 ### Semi-automated
 
@@ -83,14 +88,14 @@ This file is the current reality check for what parts of the TBI investigation e
 
 ### Answer
 
-- **Baseline weekly engine:** already automated
-- **Atlas refresh after weekly intake:** already automated
+- **Baseline daily engine:** already automated
+- **Atlas refresh after daily intake:** already automated
 - **Mostly automated atlas upkeep:** very close
 - **Fully unattended, high-trust scientific atlas updates:** not yet, because ChEMBL-grade enrichment and chapter promotion still need judgment
 
 ### Practical estimate
 
-- **Now:** the literature -> extraction -> investigation -> atlas refresh loop is automated
+- **Now:** the literature -> extraction -> investigation -> atlas refresh loop is automated daily
 - **1-2 focused working sessions:** enough to tighten the operator-side enrichment loop into a low-friction routine
 - **Longer horizon:** fully unattended scientific promotion should wait until the enrichment and writing gates are trustworthy
 

@@ -1,0 +1,86 @@
+name: Weekly Human Review Packet
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "Optional source run id (blank = latest successful public-enrichment or atlas-refresh run)"
+        required: false
+        default: ""
+  schedule:
+    - cron: "30 14 * * 1"
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: weekly-human-review-packet
+  cancel-in-progress: true
+
+jobs:
+  weekly-review-packet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Resolve source run id
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          INPUT_RUN_ID: ${{ inputs.source_run_id }}
+        run: |
+          if [ -n "$INPUT_RUN_ID" ]; then
+            RUN_ID="$INPUT_RUN_ID"
+          else
+            RUN_ID=$(gh run list -R "$REPO" -L 40 --json databaseId,conclusion,status,workflowName | python3 -c 'import json, sys; runs=json.load(sys.stdin); preferred=("Refresh Public Enrichment","Refresh Atlas From Ongoing Cycle","Build Atlas Slices"); print(next((str(run["databaseId"]) for wf in preferred for run in runs if run.get("workflowName")==wf and run.get("status")=="completed" and run.get("conclusion")=="success"), ""))')
+          fi
+          if [ -z "$RUN_ID" ]; then
+            echo "Could not resolve source run id" >&2
+            exit 1
+          fi
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Download latest atlas/public-enrichment artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ steps.resolve.outputs.run_id }}
+        run: |
+          rm -rf imported_review
+          mkdir -p imported_review reports docs
+          if gh run download "$RUN_ID" -R "$REPO" -n refreshed_public_enrichment_outputs -D imported_review; then
+            echo "Downloaded refreshed_public_enrichment_outputs"
+          elif gh run download "$RUN_ID" -R "$REPO" -n refreshed_atlas_outputs -D imported_review; then
+            echo "Downloaded refreshed_atlas_outputs"
+          else
+            gh run download "$RUN_ID" -R "$REPO" -n atlas_slice_outputs -D imported_review
+          fi
+          cp -R imported_review/reports/. reports/ || true
+          cp -R imported_review/docs/. docs/ || true
+
+      - name: Build weekly human review packet
+        run: |
+          python scripts/build_weekly_human_review_packet.py \
+            --output-dir reports/weekly_human_review_packet
+
+      - name: Upload weekly review artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly_human_review_packet
+          path: |
+            reports/weekly_human_review_packet/
+            reports/program_status/
+            reports/atlas_release_manifest/

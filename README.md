@@ -316,7 +316,7 @@ The `Build Atlas Slices` workflow now supports a `publish_docs` input. When set 
 
 Use this when you want the latest atlas snapshot to become the new published Pages version from the same build run.
 
-### Automatic atlas refresh after the weekly cycle
+### Automatic atlas refresh after the daily cycle
 
 The repo now also has a downstream workflow:
 
@@ -329,7 +329,7 @@ It is designed to:
 - refresh `docs/atlas-viewer` and `docs/atlas-book`
 - publish the refreshed docs snapshot
 
-This keeps weekly staging and atlas publication separate, which is safer than folding site-build logic directly into retrieval/extraction.
+This keeps daily staging and atlas publication separate, which is safer than folding site-build logic directly into retrieval/extraction.
 
 ### Automatic public-enrichment refresh after atlas rebuild
 
@@ -345,6 +345,20 @@ It is designed to:
 - publish the refreshed docs snapshot
 
 This keeps safe public enrichment in the automated lane while leaving ChEMBL-grade curation and 10x imports as explicit science/operator steps.
+
+### Weekly human review packet
+
+The repo also has a dedicated weekly review workflow:
+
+- `.github/workflows/weekly_human_review_packet.yml`
+
+It is designed to:
+- run once a week
+- download the latest successful enriched atlas/public-enrichment artifact
+- build a bounded weekly human-review packet
+- upload that packet as a workflow artifact
+
+This gives the project a daily machine cadence and a weekly human decision cadence.
 
 ### Atlas quality gate and review packets
 
@@ -436,7 +450,7 @@ The pipeline's model and rate-limiting behavior can be tuned in `config/config.y
 - `inter_paper_delay_seconds`: A pause (in seconds) applied after each processed paper to reduce rate-limit risk.
 
 ### Ongoing weekly staged cycle
-The scheduled `Ongoing Literature Cycle` workflow now does more than retrieval and extraction staging. Each weekly run:
+The scheduled `Ongoing Literature Cycle` workflow now does more than retrieval and extraction staging. Each daily run:
 - pulls new literature into the staging corpus
 - upgrades and extracts what it can
 - refreshes post-extraction investigation outputs
