@@ -40,6 +40,15 @@ def normalize(value):
     return ' '.join((value or '').split()).strip()
 
 
+def lower_first(value):
+    value = normalize(value)
+    if not value:
+        return value
+    if len(value) > 1 and value[:2].isupper():
+        return value
+    return value[0].lower() + value[1:]
+
+
 def split_multi(value):
     return [item for item in (normalize(value).split(';')) if item]
 
@@ -80,6 +89,75 @@ def write_tag(row):
     return 'caution'
 
 
+def role_rows(rows, role):
+    return [row for row in rows if normalize(row.get('synthesis_role')) == role]
+
+
+def first_sentence(text):
+    value = normalize(text)
+    if not value:
+        return ''
+    parts = value.split('. ')
+    return parts[0].rstrip('.') + '.'
+
+
+def strip_terminal_period(value):
+    return normalize(value).rstrip('.')
+
+
+def bounded_clause(rows):
+    caution = [row for row in rows if normalize(row.get('write_status')) == 'write_with_caution']
+    if not caution:
+        return 'The current write-now blocks are strong enough to carry the core chapter without heavy hedging.'
+    blocked = [row for row in caution if normalize(row.get('action_blockers'))]
+    if blocked:
+        return 'The bridge and downstream language should stay bounded until the remaining upgrade and deepening items are cleared.'
+    return 'Some rows still read as bounded support rather than fully assertive atlas prose.'
+
+
+def demo_paragraphs(mechanism, rows):
+    thesis_rows = role_rows(rows, 'thesis')
+    causal = role_rows(rows, 'causal_step')
+    bridges = role_rows(rows, 'bridge')
+    translational = role_rows(rows, 'translational_hook')
+    if not thesis_rows or not causal:
+        return []
+
+    thesis = normalize(thesis_rows[0].get('statement_text'))
+    early = normalize(causal[0].get('statement_text')) if len(causal) >= 1 else ''
+    cellular = normalize(causal[1].get('statement_text')) if len(causal) >= 2 else ''
+    tissue = normalize(causal[2].get('statement_text')) if len(causal) >= 3 else ''
+    bridge = normalize(bridges[0].get('statement_text')) if bridges else ''
+    translational_items = ', '.join(
+        strip_terminal_period(first_sentence(row.get('statement_text', '')).replace('Translational hook: ', ''))
+        for row in translational[:3]
+        if normalize(row.get('statement_text'))
+    )
+
+    sequence_parts = [early] if early else []
+    if cellular:
+        sequence_parts.append(
+            f"This sequence then extends into a downstream cellular-response lane in which {lower_first(cellular)}"
+        )
+    if tissue:
+        sequence_parts.append(
+            f"It remains visible at the tissue/network level because {lower_first(tissue)}"
+        )
+
+    paragraphs = [
+        thesis,
+        ' '.join(part for part in sequence_parts if part),
+    ]
+    if bridge:
+        bridge_text = f"{bridge} {bounded_clause(rows)}"
+        paragraphs.append(bridge_text)
+    if translational_items:
+        paragraphs.append(
+            f"The current translational lane is still early, but the atlas already points to {translational_items} as the most actionable targets for the first proof-of-concept pass."
+        )
+    return [normalize(paragraph) for paragraph in paragraphs if normalize(paragraph)]
+
+
 def render_mechanism_section(mechanism, rows):
     display_name = DISPLAY_NAMES[mechanism]
     thesis = select_rows(rows, 'thesis')
@@ -96,6 +174,14 @@ def render_mechanism_section(mechanism, rows):
     if thesis:
         lines.append(thesis[0]['statement_text'])
         lines.append('')
+
+    if mechanism == 'blood_brain_barrier_disruption':
+        demo_pars = demo_paragraphs(mechanism, rows)
+        if demo_pars:
+            lines.extend(['### Canonical Demo Narrative', ''])
+            for paragraph in demo_pars:
+                lines.append(paragraph)
+                lines.append('')
 
     lines.extend(['### Causal Sequence', ''])
     for row in causal:
@@ -127,6 +213,36 @@ def render_mechanism_section(mechanism, rows):
     for row in next_actions:
         lines.append(f"- {row['statement_text']}")
     lines.append('')
+    return '\n'.join(lines)
+
+
+def render_demo_chapter(mechanism, grouped):
+    rows = grouped.get(mechanism, [])
+    display_name = DISPLAY_NAMES[mechanism]
+    paragraphs = demo_paragraphs(mechanism, rows)
+    lines = [
+        '## Canonical Demo Chapter',
+        '',
+        f'The first proof-of-concept chapter should be **{display_name}**.',
+        '',
+    ]
+    if paragraphs:
+        for idx, paragraph in enumerate(paragraphs, start=1):
+            lines.append(f'### Demo Paragraph {idx}')
+            lines.append('')
+            lines.append(paragraph)
+            lines.append('')
+    else:
+        lines.append('No demo-ready paragraphs were generated yet.')
+        lines.append('')
+    lines.extend([
+        '### Why This Mechanism First',
+        '',
+        '- It has the cleanest early-to-downstream causal structure in the current atlas.',
+        '- It already carries an explicit bridge into neuroinflammatory amplification.',
+        '- Its remaining uncertainty is bounded enough to support a strong proof-of-concept chapter now.',
+        '',
+    ])
     return '\n'.join(lines)
 
 
@@ -193,6 +309,8 @@ def main():
         '- Scope: blood-brain barrier dysfunction, mitochondrial dysfunction, and neuroinflammation / microglial activation.',
         '',
     ]
+
+    lines.append(render_demo_chapter(lead, grouped))
 
     for mechanism in MECHANISM_ORDER:
         lines.append(render_mechanism_section(mechanism, grouped.get(mechanism, [])))

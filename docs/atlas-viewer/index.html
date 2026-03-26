@@ -39,6 +39,7 @@
           <div class="eyebrow">View</div>
           <div class="nav-stack section-nav">
             <a href="#decision-brief">Decision Brief</a>
+            <a href="#control-surface">Action Center</a>
             <a href="#overview">Overview</a>
             <a href="#chapter">Chapter</a>
             <a href="#deep-dive">Deep Dive</a>
@@ -98,6 +99,57 @@
               <div>
                 <h3>Release Snapshot</h3>
                 <div id="releaseSnapshot" class="tag-cloud"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="control-surface" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Action Center</div>
+              <h2>Release, Packets, and Workflow Links</h2>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-grid control-top-grid">
+              <div>
+                <div class="section-subhead compact-subhead">
+                  <div>
+                    <h3>Promotion / Release Lanes</h3>
+                    <div class="muted">Current promotion state, blockers, and next move for each starter mechanism.</div>
+                  </div>
+                </div>
+                <div id="releaseLaneCards" class="release-grid"></div>
+              </div>
+              <div>
+                <div class="section-subhead compact-subhead">
+                  <div>
+                    <h3>Open Core Artifacts</h3>
+                    <div class="muted">Jump directly to the reports that drive weekly review, writing, and release.</div>
+                  </div>
+                </div>
+                <div id="artifactCards" class="artifact-grid"></div>
+              </div>
+            </div>
+            <div class="panel-grid two top-gap">
+              <div>
+                <div class="section-subhead compact-subhead">
+                  <div>
+                    <h3>Target Packets + Templates</h3>
+                    <div class="muted">Current manual-fill and connector templates for enrichment work.</div>
+                  </div>
+                </div>
+                <div id="templateCards" class="artifact-grid"></div>
+              </div>
+              <div>
+                <div class="section-subhead compact-subhead">
+                  <div>
+                    <h3>Workflow Entry Points</h3>
+                    <div class="muted">Open the exact GitHub workflow pages that drive the atlas loop.</div>
+                  </div>
+                </div>
+                <div id="workflowCards" class="artifact-grid"></div>
               </div>
             </div>
           </div>
@@ -280,6 +332,10 @@
                 <h3>Practical Next Move</h3>
                 <ul id="nextMove" class="bullet-list"></ul>
               </div>
+            </div>
+            <div>
+              <h3>Quick Actions</h3>
+              <div id="workpackQuickLinks" class="action-row"></div>
             </div>
           </div>
         </section>

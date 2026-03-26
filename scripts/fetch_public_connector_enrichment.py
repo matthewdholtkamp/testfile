@@ -79,6 +79,10 @@ def log_warning(message):
     WARNINGS.append(message)
 
 
+def split_policy(value):
+    return {normalize_spaces(part).upper() for part in (value or '').split(';') if normalize_spaces(part)}
+
+
 def fetch_open_targets(rows, max_hits):
     output = []
     query = '''
@@ -151,6 +155,8 @@ def fetch_clinical_trials(rows, max_hits):
         seed = normalize_spaces(row.get('query_seed', ''))
         if not seed:
             continue
+        allowed_statuses = split_policy(row.get('policy_trial_statuses', ''))
+        allowed_phases = split_policy(row.get('policy_trial_phases', ''))
         effective_seed = seed
         lowered = seed.lower()
         if 'traumatic brain injury' not in lowered and 'tbi' not in lowered:
@@ -180,9 +186,15 @@ def fetch_clinical_trials(rows, max_hits):
                 intervention_name = normalize_spaces(interventions[0].get('name', ''))
             phase_list = design.get('phases', []) or []
             phase = '; '.join(phase_list) if phase_list else ''
+            phase_upper = {normalize_spaces(item).upper() for item in phase_list if normalize_spaces(item)}
             trial_title = ident.get('briefTitle', '') or ident.get('officialTitle', '')
             conditions = '; '.join(conditions_mod.get('conditions', []) or [])
             if score_trial(effective_seed, trial_title, conditions) <= 0:
+                continue
+            overall_status = normalize_spaces(status_mod.get('overallStatus', '')).upper()
+            if allowed_statuses and overall_status not in allowed_statuses:
+                continue
+            if allowed_phases and phase_upper and not phase_upper.intersection(allowed_phases):
                 continue
             output.append({
                 'canonical_mechanism': row.get('canonical_mechanism', ''),
@@ -230,14 +242,19 @@ def score_trial(seed, title, conditions):
 
 def fetch_biorxiv(rows, max_hits, days_back, pages_per_server):
     output = []
-    start = (date.today() - timedelta(days=days_back)).isoformat()
-    end = date.today().isoformat()
     session = requests.Session()
 
     for row in rows:
         seed = normalize_spaces(row.get('query_seed', ''))
         if not seed:
             continue
+        row_days_back = days_back
+        try:
+            row_days_back = int(row.get('policy_preprint_window_days') or days_back)
+        except ValueError:
+            row_days_back = days_back
+        start = (date.today() - timedelta(days=row_days_back)).isoformat()
+        end = date.today().isoformat()
         candidates = []
         for server in ('biorxiv', 'medrxiv'):
             for page in range(pages_per_server):

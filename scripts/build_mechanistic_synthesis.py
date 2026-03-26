@@ -6,6 +6,12 @@ from collections import Counter, defaultdict
 from datetime import datetime
 from glob import glob
 
+from neuroinflammation_subtracks import (
+    NEUROINFLAMMATION_MECHANISM,
+    NEUROINFLAMMATION_SUBTRACK_ORDER,
+    neuroinflammation_subtrack_display_name,
+)
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MECHANISM_ORDER = [
@@ -83,6 +89,24 @@ def write_status(row):
 
 
 def build_thesis(mechanism, rows):
+    if mechanism == NEUROINFLAMMATION_MECHANISM:
+        present_subtracks = [
+            code for code in NEUROINFLAMMATION_SUBTRACK_ORDER
+            if any(normalize(row.get('mechanism_subtrack')) == code for row in rows)
+        ]
+        if present_subtracks:
+            lane_names = [neuroinflammation_subtrack_display_name(code) for code in present_subtracks]
+            thesis = 'Neuroinflammation is better handled as narrower starter lanes than as one broad block: ' + ', '.join(lane_names) + '.'
+            first_row = next((row for row in rows if normalize(row.get('mechanism_subtrack')) == present_subtracks[0]), None)
+            if first_row:
+                thesis += f" The current strongest lane indicates that {lower_first(first_row.get('proposed_narrative_claim', ''))}"
+            second_row = None
+            if len(present_subtracks) > 1:
+                second_row = next((row for row in rows if normalize(row.get('mechanism_subtrack')) == present_subtracks[1]), None)
+            if second_row:
+                thesis += f" A second lane captures that {lower_first(second_row.get('proposed_narrative_claim', ''))}"
+            return thesis
+
     stable_rows = [row for row in rows if normalize(row.get('confidence_bucket')) == 'stable']
     base_rows = stable_rows or rows
     if not base_rows:
@@ -180,17 +204,74 @@ def translational_hook_rows(bridge_rows):
     return hooks[:3]
 
 
+def build_neuro_subtracks(ordered_rows, bridge_rows):
+    if not ordered_rows:
+        return []
+
+    aqp4_bridge = next(
+        (row for row in bridge_rows if normalize(row.get('target_entity')) == 'AQP4' or 'aqp4' in normalize(row.get('biomarker_seed', '')).lower()),
+        {},
+    )
+
+    subtracks = []
+    for code in NEUROINFLAMMATION_SUBTRACK_ORDER:
+        row = next((item for item in ordered_rows if normalize(item.get('mechanism_subtrack')) == code), {})
+        if not row and code != 'aqp4_glymphatic_astroglial_lane':
+            continue
+        statement_text = normalize(row.get('proposed_narrative_claim'))
+        if not statement_text and code == 'aqp4_glymphatic_astroglial_lane':
+            statement_text = 'AQP4-linked glymphatic and astroglial responses should be treated as a separate neuroinflammatory lane rather than being merged into the broader cytokine bucket.'
+        if not statement_text:
+            continue
+        subtracks.append({
+            'subtrack_name': neuroinflammation_subtrack_display_name(code),
+            'statement_text': statement_text,
+            'supporting_pmids': row.get('supporting_pmids', '') or aqp4_bridge.get('provenance_ref', '') if code == 'aqp4_glymphatic_astroglial_lane' else row.get('supporting_pmids', ''),
+            'confidence_bucket': normalize(row.get('confidence_bucket')) or ('provisional' if code == 'aqp4_glymphatic_astroglial_lane' else 'stable'),
+            'write_status': write_status(row) if row else 'write_with_caution',
+            'action_blockers': row.get('action_blockers', ''),
+            'mechanism_subtrack': code,
+            'mechanism_subtrack_display_name': neuroinflammation_subtrack_display_name(code),
+        })
+    return subtracks
+
+
 def mechanism_block_rows(mechanism, display_name, rows, all_rows, bridge_rows):
     blocks = []
     ordered_rows = sorted(rows, key=sort_key)
+    if mechanism == NEUROINFLAMMATION_MECHANISM:
+        ordered_rows = sorted(
+            rows,
+            key=lambda row: (
+                normalize(row.get('row_kind')) != 'mechanism_subtrack_focus',
+                NEUROINFLAMMATION_SUBTRACK_ORDER.index(normalize(row.get('mechanism_subtrack')))
+                if normalize(row.get('mechanism_subtrack')) in NEUROINFLAMMATION_SUBTRACK_ORDER else 99,
+                sort_key(row),
+            ),
+        )
+        deduped_rows = []
+        seen_subtrack_claims = set()
+        for row in ordered_rows:
+            subtrack = normalize(row.get('mechanism_subtrack'))
+            claim_key = normalize(row.get('proposed_narrative_claim'))
+            if subtrack and claim_key:
+                key = (subtrack, claim_key)
+                if key in seen_subtrack_claims:
+                    continue
+                seen_subtrack_claims.add(key)
+            deduped_rows.append(row)
+        ordered_rows = deduped_rows
     thesis_text = build_thesis(mechanism, ordered_rows)
     if thesis_text:
         thesis_row = ordered_rows[0]
         blocks.append({
             'canonical_mechanism': mechanism,
             'mechanism_display_name': display_name,
+            'row_kind': 'mechanism_thesis',
             'atlas_layer': 'mechanism_thesis',
             'synthesis_role': 'thesis',
+            'mechanism_subtrack': normalize(thesis_row.get('mechanism_subtrack')),
+            'mechanism_subtrack_display_name': normalize(thesis_row.get('mechanism_subtrack_display_name')),
             'confidence_bucket': normalize(thesis_row.get('confidence_bucket')),
             'write_status': write_status(thesis_row),
             'statement_text': thesis_text,
@@ -206,8 +287,11 @@ def mechanism_block_rows(mechanism, display_name, rows, all_rows, bridge_rows):
         blocks.append({
             'canonical_mechanism': mechanism,
             'mechanism_display_name': display_name,
+            'row_kind': normalize(row.get('row_kind')),
             'atlas_layer': normalize(row.get('atlas_layer')),
             'synthesis_role': 'causal_step',
+            'mechanism_subtrack': normalize(row.get('mechanism_subtrack')),
+            'mechanism_subtrack_display_name': normalize(row.get('mechanism_subtrack_display_name')),
             'confidence_bucket': normalize(row.get('confidence_bucket')),
             'write_status': write_status(row),
             'statement_text': normalize(row.get('proposed_narrative_claim')),
@@ -224,8 +308,11 @@ def mechanism_block_rows(mechanism, display_name, rows, all_rows, bridge_rows):
         blocks.append({
             'canonical_mechanism': mechanism,
             'mechanism_display_name': display_name,
+            'row_kind': 'cross_mechanism_bridge',
             'atlas_layer': 'cross_mechanism_bridge',
             'synthesis_role': 'bridge',
+            'mechanism_subtrack': '',
+            'mechanism_subtrack_display_name': '',
             'confidence_bucket': bridge['confidence_bucket'],
             'write_status': bridge['write_status'],
             'statement_text': bridge['statement_text'],
@@ -242,8 +329,11 @@ def mechanism_block_rows(mechanism, display_name, rows, all_rows, bridge_rows):
         blocks.append({
             'canonical_mechanism': mechanism,
             'mechanism_display_name': display_name,
+            'row_kind': 'evidence_boundary',
             'atlas_layer': 'evidence_boundary',
             'synthesis_role': 'caveat',
+            'mechanism_subtrack': '',
+            'mechanism_subtrack_display_name': '',
             'confidence_bucket': 'provisional',
             'write_status': 'write_with_caution',
             'statement_text': caveat_text,
@@ -259,8 +349,11 @@ def mechanism_block_rows(mechanism, display_name, rows, all_rows, bridge_rows):
         blocks.append({
             'canonical_mechanism': mechanism,
             'mechanism_display_name': display_name,
+            'row_kind': 'translational_hook',
             'atlas_layer': 'translational_hook',
             'synthesis_role': 'translational_hook',
+            'mechanism_subtrack': '',
+            'mechanism_subtrack_display_name': '',
             'confidence_bucket': hook['confidence_bucket'],
             'write_status': hook['write_status'],
             'statement_text': hook['statement_text'],
@@ -276,8 +369,11 @@ def mechanism_block_rows(mechanism, display_name, rows, all_rows, bridge_rows):
         blocks.append({
             'canonical_mechanism': mechanism,
             'mechanism_display_name': display_name,
+            'row_kind': 'next_action',
             'atlas_layer': 'next_action',
             'synthesis_role': 'next_action',
+            'mechanism_subtrack': '',
+            'mechanism_subtrack_display_name': '',
             'confidence_bucket': 'provisional',
             'write_status': 'write_with_caution',
             'statement_text': action,
@@ -288,6 +384,28 @@ def mechanism_block_rows(mechanism, display_name, rows, all_rows, bridge_rows):
             'related_mechanisms': '',
             'priority_order': idx,
         })
+
+    if mechanism == 'neuroinflammation_microglial_activation':
+        for idx, subtrack in enumerate(build_neuro_subtracks(ordered_rows, bridge_rows), start=500):
+            blocks.append({
+                'canonical_mechanism': mechanism,
+                'mechanism_display_name': display_name,
+                'row_kind': 'narrower_subtrack',
+                'atlas_layer': 'subtrack',
+                'synthesis_role': 'subtrack',
+                'mechanism_subtrack': subtrack.get('mechanism_subtrack', ''),
+                'mechanism_subtrack_display_name': subtrack.get('mechanism_subtrack_display_name', ''),
+                'confidence_bucket': subtrack['confidence_bucket'],
+                'write_status': subtrack['write_status'],
+                'statement_text': subtrack['statement_text'],
+                'supporting_pmids': subtrack['supporting_pmids'],
+                'source_quality_mix': '',
+                'contradiction_signal': 'none_detected',
+                'action_blockers': subtrack['action_blockers'],
+                'related_mechanisms': '',
+                'priority_order': idx,
+                'subtrack_name': subtrack['subtrack_name'],
+            })
     return blocks
 
 
@@ -300,9 +418,30 @@ def render_mechanism_markdown(display_name, blocks):
     if thesis:
         lines.extend(['## Mechanism Thesis', '', f"- {thesis[0]['statement_text']}", ''])
 
+    neuro_subtracks = [
+        code for code in NEUROINFLAMMATION_SUBTRACK_ORDER
+        if any(
+            row['synthesis_role'] == 'causal_step' and normalize(row.get('mechanism_subtrack')) == code
+            for row in blocks
+        )
+    ]
+    if neuro_subtracks:
+        lines.extend(['## Neuroinflammation Subtracks', ''])
+        for code in neuro_subtracks:
+            lines.extend(['', f"### {neuroinflammation_subtrack_display_name(code)}", ''])
+            lane_rows = [
+                row for row in blocks
+                if row['synthesis_role'] == 'causal_step' and normalize(row.get('mechanism_subtrack')) == code
+            ]
+            for row in lane_rows:
+                lines.append(f"- `{row['atlas_layer']}` | `{row['write_status']}` | {row['statement_text']} | PMIDs: {row['supporting_pmids'] or 'none'}")
+        lines.append('')
+
     lines.extend(['## Causal Sequence', ''])
     for row in [item for item in blocks if item['synthesis_role'] == 'causal_step']:
-        lines.append(f"- `{row['atlas_layer']}` | `{row['write_status']}` | {row['statement_text']} | PMIDs: {row['supporting_pmids'] or 'none'}")
+        label = normalize(row.get('mechanism_subtrack_display_name'))
+        prefix = f'[{label}] ' if label else ''
+        lines.append(f"- `{row['atlas_layer']}` | `{row['write_status']}` | {prefix}{row['statement_text']} | PMIDs: {row['supporting_pmids'] or 'none'}")
 
     bridge_rows = [row for row in blocks if row['synthesis_role'] == 'bridge']
     lines.extend(['', '## Cross-Mechanism Bridges', ''])
@@ -316,6 +455,15 @@ def render_mechanism_markdown(display_name, blocks):
     lines.extend(['', '## Evidence Boundaries', ''])
     for row in [item for item in blocks if item['synthesis_role'] == 'caveat']:
         lines.append(f"- {row['statement_text']}")
+
+    subtracks = [row for row in blocks if row['synthesis_role'] == 'subtrack']
+    lines.extend(['', '## Narrower Subtracks', ''])
+    if subtracks:
+        for row in subtracks:
+            label = row.get('subtrack_name') or 'Subtrack'
+            lines.append(f"- **{label}**: {row['statement_text']} | PMIDs: {row['supporting_pmids'] or 'none'}")
+    else:
+        lines.append('- No narrower subtracks were generated for this mechanism.')
 
     lines.extend(['', '## Translational Hooks', ''])
     translational = [row for row in blocks if row['synthesis_role'] == 'translational_hook']
@@ -348,11 +496,12 @@ def render_index_md(blocks_by_mechanism):
         ready_blocks = sum(1 for row in blocks if row['write_status'] == 'ready_to_write')
         caution_blocks = sum(1 for row in blocks if row['write_status'] == 'write_with_caution')
         bridge_blocks = sum(1 for row in blocks if row['synthesis_role'] == 'bridge')
+        subtrack_blocks = sum(1 for row in blocks if row['synthesis_role'] == 'subtrack')
         translational = sum(1 for row in blocks if row['synthesis_role'] == 'translational_hook')
         next_actions = sum(1 for row in blocks if row['synthesis_role'] == 'next_action')
         thesis_status = thesis['write_status'] if thesis else 'hold'
         lines.append(
-            f'| {display_name} | {thesis_status} | {ready_blocks} | {caution_blocks} | {bridge_blocks} | {translational} | {next_actions} |'
+            f'| {display_name} | {thesis_status} | {ready_blocks} | {caution_blocks} | {bridge_blocks + subtrack_blocks} | {translational} | {next_actions} |'
         )
 
     lines.extend([
@@ -361,7 +510,7 @@ def render_index_md(blocks_by_mechanism):
         '',
         '- Lead mechanism remains **Blood-Brain Barrier Dysfunction** until the mitochondrial and neuroinflammation bridge rows deepen further.',
         '- Use mitochondrial dysfunction as the comparative intracellular injury section.',
-        '- Keep neuroinflammation as the integrating downstream section, especially where BBB-linked inflammatory amplification is explicit.',
+        '- Keep neuroinflammation as the integrating downstream section, but write it through the narrower NLRP3/cytokine, state-transition, and AQP4/glymphatic lanes rather than as one broad block.',
         '',
     ])
     return '\n'.join(lines)
@@ -413,8 +562,12 @@ def main():
     fieldnames = [
         'canonical_mechanism',
         'mechanism_display_name',
+        'row_kind',
         'atlas_layer',
         'synthesis_role',
+        'mechanism_subtrack',
+        'mechanism_subtrack_display_name',
+        'subtrack_name',
         'confidence_bucket',
         'write_status',
         'statement_text',
@@ -424,6 +577,7 @@ def main():
         'action_blockers',
         'related_mechanisms',
         'priority_order',
+        'subtrack_name',
     ]
     write_csv(csv_path, blocks, fieldnames)
     write_text(json_path, json.dumps(blocks, indent=2) + '\n')

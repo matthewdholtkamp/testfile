@@ -6,6 +6,13 @@ from collections import Counter, defaultdict
 from datetime import datetime
 from glob import glob
 
+from neuroinflammation_subtracks import (
+    NEUROINFLAMMATION_MECHANISM,
+    NEUROINFLAMMATION_SUBTRACK_ORDER,
+    infer_neuroinflammation_subtracks,
+    neuroinflammation_subtrack_display_name,
+)
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STARTER_MECHANISMS = [
@@ -164,6 +171,19 @@ def rank_anchor_rows(rows):
     )
 
 
+def rank_claim_rows(rows):
+    return sorted(
+        rows,
+        key=lambda row: (
+            normalize_spaces(row.get('source_quality_tier', '')) != 'full_text_like',
+            not parse_bool(row.get('whether_mechanistically_informative')),
+            -(normalize_float(row.get('mechanistic_depth_score')) or 0.0),
+            -(normalize_float(row.get('confidence_score')) or 0.0),
+            row.get('pmid', ''),
+        ),
+    )
+
+
 def build_enrichment_index(rows):
     grouped = defaultdict(list)
     for row in rows:
@@ -312,8 +332,55 @@ def render_enrichment_list(rows, fallback):
     return lines
 
 
+def build_neuroinflammation_subtrack_rows(claim_rows, work_queue_rows):
+    subtrack_claims = defaultdict(list)
+    work_queue_pmids = {normalize_spaces(row.get('pmid', '')) for row in work_queue_rows if normalize_spaces(row.get('pmid', ''))}
+    for row in claim_rows:
+        matches = infer_neuroinflammation_subtracks(
+            row.get('normalized_claim', ''),
+            row.get('claim_text', ''),
+            row.get('biomarker_families', ''),
+            row.get('biomarkers', ''),
+            row.get('cell_type', ''),
+            row.get('anatomy', ''),
+        )
+        for code in matches:
+            subtrack_claims[code].append(row)
+
+    summary_rows = []
+    for code in NEUROINFLAMMATION_SUBTRACK_ORDER:
+        rows = subtrack_claims.get(code, [])
+        if not rows:
+            continue
+        ranked_rows = rank_claim_rows(rows)
+        pmid_order = []
+        source_tiers = {}
+        biomarker_counter = Counter()
+        for row in ranked_rows:
+            pmid = normalize_spaces(row.get('pmid', ''))
+            if pmid and pmid not in pmid_order:
+                pmid_order.append(pmid)
+                source_tiers[pmid] = normalize_spaces(row.get('source_quality_tier', ''))
+            for biomarker in split_multi(row.get('biomarker_families') or row.get('biomarkers')):
+                biomarker_counter[biomarker] += 1
+        best_row = ranked_rows[0]
+        summary_rows.append({
+            'subtrack_code': code,
+            'subtrack_display_name': neuroinflammation_subtrack_display_name(code),
+            'paper_count': len(pmid_order),
+            'full_text_like_count': sum(1 for pmid in pmid_order if source_tiers.get(pmid) == 'full_text_like'),
+            'abstract_only_count': sum(1 for pmid in pmid_order if source_tiers.get(pmid) == 'abstract_only'),
+            'example_signal': normalize_spaces(best_row.get('normalized_claim', '') or best_row.get('claim_text', '')),
+            'biomarker_focus': '; '.join(label for label, _ in biomarker_counter.most_common(4)) or 'none',
+            'queue_burden': sum(1 for pmid in pmid_order if pmid in work_queue_pmids),
+            'anchor_pmids': '; '.join(pmid_order[:4]),
+        })
+    return summary_rows
+
+
 def render_dossier(section, mechanism, display_name, backbone_rows, anchor_rows, work_queue_rows, contradiction_rows,
                   biomarker_terms, target_rows, compound_rows, trial_rows, preprint_rows, genomics_rows,
+                  neuro_subtrack_rows,
                   promotion_status, promotion_reason, open_questions):
     lines = [
         f'# Mechanism Dossier: {display_name}',
@@ -354,6 +421,23 @@ def render_dossier(section, mechanism, display_name, backbone_rows, anchor_rows,
         )
     if not backbone_rows:
         lines.append('| None | 0 | 0 | 0 | 0 |  |')
+
+    if mechanism == NEUROINFLAMMATION_MECHANISM:
+        lines.extend([
+            '',
+            '## Neuroinflammation Subtracks',
+            '',
+            '| Subtrack | Papers | Full-text-like | Abstract-only | Example Signal | Biomarker Focus | Queue Burden | Anchor PMIDs |',
+            '| --- | --- | --- | --- | --- | --- | --- | --- |',
+        ])
+        if neuro_subtrack_rows:
+            for row in neuro_subtrack_rows:
+                lines.append(
+                    f"| {row['subtrack_display_name']} | {row['paper_count']} | {row['full_text_like_count']} | {row['abstract_only_count']} | "
+                    f"{md_cell(shorten(row['example_signal'], 120))} | {md_cell(shorten(row['biomarker_focus'], 80))} | {row['queue_burden']} | {md_cell(row['anchor_pmids'])} |"
+                )
+        else:
+            lines.append('| None | 0 | 0 | 0 | No neuroinflammation subtrack rows were found. |  | 0 |  |')
 
     lines.extend([
         '',
@@ -521,6 +605,7 @@ def main():
             for biomarker in split_multi(row.get('biomarker_families') or row.get('biomarkers')):
                 biomarker_counter[biomarker] += 1
         biomarker_terms = top_counter_items(biomarker_counter)
+        neuro_subtrack_rows = build_neuroinflammation_subtrack_rows(mechanism_claims, mechanism_work_queue) if mechanism == NEUROINFLAMMATION_MECHANISM else []
 
         mechanism_enrichment = enrichment_by_mechanism.get(mechanism, [])
         target_rows = summarize_enrichment(mechanism_enrichment, {'target_association'}, {'target'})
@@ -549,6 +634,7 @@ def main():
             trial_rows,
             preprint_rows,
             genomics_rows,
+            neuro_subtrack_rows,
             promotion_status,
             promotion_reason,
             open_questions,

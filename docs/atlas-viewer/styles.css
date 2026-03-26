@@ -239,6 +239,62 @@ a {
   gap: 16px;
 }
 
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.action-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(110, 208, 215, 0.28);
+  background: rgba(110, 208, 215, 0.08);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: 180ms ease;
+}
+
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(110, 208, 215, 0.28);
+  background: rgba(110, 208, 215, 0.08);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 180ms ease;
+}
+
+.action-link:hover,
+.action-button:hover {
+  border-color: rgba(144, 240, 207, 0.55);
+  background: rgba(144, 240, 207, 0.14);
+  transform: translateY(-1px);
+}
+
+.action-button.secondary {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.action-link.workflow {
+  border-color: rgba(111, 140, 255, 0.35);
+  background: rgba(111, 140, 255, 0.12);
+}
+
 .summary-card-value {
   font-size: 2rem;
   font-weight: 800;
@@ -455,6 +511,14 @@ tr:last-child td {
   margin-bottom: 16px;
 }
 
+.compact-subhead {
+  margin-bottom: 14px;
+}
+
+.control-top-grid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
 .chapter-preview-block {
   margin-top: 24px;
   padding-top: 22px;
@@ -493,6 +557,65 @@ tr:last-child td {
 .mechanism-card-button:hover {
   transform: translateY(-1px);
   border-color: rgba(110, 208, 215, 0.35);
+}
+
+.card-callout,
+.path-code {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.path-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.release-grid,
+.artifact-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.release-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.artifact-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.release-card,
+.artifact-card {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 18px;
+}
+
+.artifact-card.compact {
+  min-height: 100%;
+}
+
+.artifact-card h3,
+.release-card h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.artifact-eyebrow {
+  margin-bottom: 8px;
+}
+
+.release-note-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 14px;
 }
 
 .card-preview,
@@ -764,8 +887,12 @@ tr:last-child td {
 @media (max-width: 1200px) {
   .summary-grid,
   .panel-grid.two,
+  .control-top-grid,
+  .release-grid,
+  .artifact-grid,
   .mechanism-meta,
   .brief-grid,
+  .release-note-grid,
   .decision-detail-grid,
   .idea-detail-grid,
   .execution-detail-grid,
@@ -813,8 +940,12 @@ tr:last-child td {
 
   .summary-grid,
   .panel-grid.two,
+  .control-top-grid,
+  .release-grid,
+  .artifact-grid,
   .mechanism-meta,
   .brief-grid,
+  .release-note-grid,
   .decision-detail-grid,
   .idea-detail-grid,
   .execution-detail-grid,

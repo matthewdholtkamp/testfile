@@ -102,9 +102,9 @@ def render_markdown(status):
         '',
         '## Immediate Next Moves',
         '',
-        '1. Fill BBB ChEMBL targets first (`OCLN`, `CLDN5`, `TJP1`, `MMP9`, `AQP4`).',
-        '2. Rerun the manual enrichment cycle to refresh the atlas book and quality gate.',
-        '3. Add real 10x exports when available using the seeded template lane.',
+        '1. Fill the top mitochondrial ChEMBL targets first using the seeded query terms and assay keywords from the manual seed pack.',
+        '2. Reuse those same mitochondrial target symbols for the compound and trial follow-on pass before widening back to BBB.',
+        '3. Rerun the manual enrichment cycle to refresh the atlas book and quality gate.',
         '',
     ])
     return '\n'.join(lines)

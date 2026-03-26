@@ -50,12 +50,14 @@ A connector-capable local environment is responsible for:
 - rerunning atlas dossier build with the latest enrichment file
 
 GitHub Actions must not depend on Claude Desktop or MCP connector availability in v1.
+The public connector lane now uses conservative query defaults and explicit sanctioned overrides so trial/preprint fetches stay bounded unless an operator intentionally widens scope.
 
 ## Files Added By This Layer
 
 ### Config
 - `config/connector_registry.yaml`
 - `config/enrichment_presets.yaml`
+- `config/query_policy_defaults.yaml`
 
 ### Scripts
 - `scripts/build_connector_candidate_manifest.py`
@@ -116,6 +118,7 @@ This emits:
 - a ChEMBL seed pack
 - a public enrichment review sheet
 - Open Targets and ChEMBL manual-fill templates
+- mitochondrial-first target packets with seeded ChEMBL query terms, assay keywords, and trial-query suggestions
 - curated enrichment CSVs
 - curated mechanism dossiers
 - a curated starter atlas chapter draft
@@ -124,7 +127,7 @@ This emits:
 
 The intended use is:
 1. review `public_enrichment_review_*.csv`
-2. fill `*_manual_fill_template_*.csv` for the highest-value BBB / mitochondrial rows
+2. start with the mitochondrial rows and use the seeded ChEMBL query terms / assay keywords before broad mechanism searches
 3. place any finished manual connector CSVs in `local_connector_inputs/`
 4. rerun the sidecar or the manual enrichment cycle
 
@@ -171,7 +174,7 @@ That currently supports:
 - `biorxiv_medrxiv`
 
 Important:
-- `chembl` still needs richer target/compound seeds before it is trustworthy enough for automatic first-pass fetching
+- `chembl` now has richer seeded target/compound guidance in the manifest and manual seed pack, but it still remains an operator-reviewed lane rather than a blind automatic fetch
 - `tenx_genomics` remains an import lane for real project exports
 - any manually collected CSVs placed in `local_connector_inputs` will be merged together with the fetched public rows
 

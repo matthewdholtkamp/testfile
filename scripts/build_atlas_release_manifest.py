@@ -80,6 +80,35 @@ def recommended_action(row):
     return next_move or 'hold_for_cleanup'
 
 
+def demo_status(row, lead_name):
+    display = normalize(row.get('display_name'))
+    if display != normalize(lead_name):
+        return 'supporting_section'
+
+    gate_status = normalize(row.get('gate_status'))
+    stable = int(row.get('stable_rows') or 0)
+    bridges = int(row.get('bridge_rows') or 0)
+    queue = int(row.get('queue_burden') or 0)
+    score = int(row.get('readiness_score') or 0)
+
+    if gate_status in {'promote_now', 'near_ready'} and stable >= 2 and bridges >= 1 and queue <= 6 and score >= 40:
+        return 'canonical_demo_ready'
+    if gate_status in {'near_ready', 'write_with_caution'} and stable >= 2 and bridges >= 1:
+        return 'bounded_demo_ready'
+    return 'not_demo_ready'
+
+
+def demo_reason(row):
+    status = row.get('demo_status', '')
+    if status == 'canonical_demo_ready':
+        return 'lead mechanism has enough stable structure and bridge support to anchor the proof-of-concept chapter now'
+    if status == 'bounded_demo_ready':
+        return 'lead mechanism can support the proof-of-concept chapter, but key bridge or cleanup burdens still need bounded language'
+    if status == 'supporting_section':
+        return 'mechanism is better used as a supporting or follow-on section than the primary demo chapter'
+    return 'mechanism still needs more structure before it should anchor the proof-of-concept chapter'
+
+
 def render_markdown(summary, rows):
     lines = [
         '# Atlas Release Manifest',
@@ -87,22 +116,26 @@ def render_markdown(summary, rows):
         'This manifest is the explicit promotion/governance layer for the atlas. It separates what can anchor the standing atlas product now from what should stay visible but not over-promoted yet.',
         '',
         f"- Lead chapter candidate: **{summary['lead_chapter_candidate']}**",
+        f"- Canonical demo ready: `{summary['canonical_demo_ready']}`",
+        f"- Bounded demo ready: `{summary['bounded_demo_ready']}`",
         f"- Core atlas now: `{summary['core_atlas_now']}`",
         f"- Core atlas candidates: `{summary['core_atlas_candidates']}`",
         f"- Review track: `{summary['review_track']}`",
         f"- Hold: `{summary['hold']}`",
         '',
-        '| Mechanism | Gate | Release Bucket | Chapter Role | Score | Recommended Action |',
-        '| --- | --- | --- | --- | ---: | --- |',
+        '| Mechanism | Gate | Release Bucket | Demo Status | Chapter Role | Score | Recommended Action |',
+        '| --- | --- | --- | --- | --- | ---: | --- |',
     ]
     for row in rows:
         lines.append(
-            f"| {row['display_name']} | {row['gate_status']} | {row['release_bucket']} | {row['chapter_role']} | {row['readiness_score']} | {row['recommended_action']} |"
+            f"| {row['display_name']} | {row['gate_status']} | {row['release_bucket']} | {row['demo_status']} | {row['chapter_role']} | {row['readiness_score']} | {row['recommended_action']} |"
         )
     lines.extend([
         '',
         '## Governance Notes',
         '',
+        '- `canonical_demo_ready`: safe to use as the proof-of-concept chapter anchor now.',
+        '- `bounded_demo_ready`: usable as the proof-of-concept chapter if the prose explicitly bounds uncertainty.',
         '- `core_atlas`: safe to treat as part of the standing atlas product.',
         '- `core_atlas_candidate`: close enough to keep actively promoting toward atlas inclusion.',
         '- `review_track`: useful and visible, but should not be over-claimed yet.',
@@ -111,7 +144,7 @@ def render_markdown(summary, rows):
     ])
     for row in rows:
         lines.append(
-            f"- **{row['display_name']}** -> `{row['release_bucket']}` | blockers `{row['blocker_summary']}` | next `{row['recommended_action']}`"
+            f"- **{row['display_name']}** -> `{row['release_bucket']}` / `{row['demo_status']}` | blockers `{row['blocker_summary']}` | next `{row['recommended_action']}` | why `{row['demo_reason']}`"
         )
     lines.append('')
     return '\n'.join(lines)
@@ -135,11 +168,15 @@ def main():
         enriched['release_bucket'] = release_bucket(row)
         enriched['chapter_role'] = chapter_role(row, lead_name)
         enriched['recommended_action'] = recommended_action(row)
+        enriched['demo_status'] = demo_status(enriched, lead_name)
+        enriched['demo_reason'] = demo_reason(enriched)
         rows.append(enriched)
 
     rows.sort(key=lambda item: (-int(item.get('readiness_score') or 0), item.get('display_name', '')))
     summary = {
         'lead_chapter_candidate': rows[0]['display_name'],
+        'canonical_demo_ready': sum(1 for row in rows if row['demo_status'] == 'canonical_demo_ready'),
+        'bounded_demo_ready': sum(1 for row in rows if row['demo_status'] == 'bounded_demo_ready'),
         'core_atlas_now': sum(1 for row in rows if row['release_bucket'] == 'core_atlas'),
         'core_atlas_candidates': sum(1 for row in rows if row['release_bucket'] == 'core_atlas_candidate'),
         'review_track': sum(1 for row in rows if row['release_bucket'] == 'review_track'),

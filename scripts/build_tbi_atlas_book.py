@@ -247,9 +247,16 @@ def render_mechanism_markdown(mechanism, ledger_rows, bridge_rows, synthesis_row
 
 def render_markdown(viewer_data, tenx_template, synthesis_by_mechanism):
     mechanisms_by_id = {item['canonical_mechanism']: item for item in viewer_data['mechanisms']}
+    release_rows = viewer_data.get('release_manifest', {}).get('rows', []) if isinstance(viewer_data.get('release_manifest'), dict) else viewer_data.get('release_manifest', [])
+    release_by_mechanism = {
+        normalize(item.get('canonical_mechanism')): item
+        for item in release_rows
+        if isinstance(item, dict)
+    }
     summary = viewer_data['summary']
     chapter = viewer_data['chapter']
     workpack = viewer_data['workpack']
+    lead_release = release_by_mechanism.get('blood_brain_barrier_disruption', {})
 
     lines = [
         '# Starter TBI Mechanistic Atlas',
@@ -269,6 +276,15 @@ def render_markdown(viewer_data, tenx_template, synthesis_by_mechanism):
     ]
     for bullet in chapter.get('lead_recommendation', []):
         lines.append(f'- {bullet}')
+    if lead_release:
+        lines.extend([
+            '',
+            '### Canonical Demo Chapter',
+            '',
+            f"- Demo status: `{lead_release.get('demo_status', 'not_demo_ready')}`",
+            f"- Release bucket: `{lead_release.get('release_bucket', 'hold')}`",
+            f"- Demo reason: {lead_release.get('demo_reason', 'not specified')}",
+        ])
     if chapter.get('immediate_follow_on'):
         lines.extend(['', '### Immediate Follow-On', ''])
         for bullet in chapter['immediate_follow_on']:
@@ -278,13 +294,14 @@ def render_markdown(viewer_data, tenx_template, synthesis_by_mechanism):
         '',
         '## Atlas Readiness Board',
         '',
-        '| Mechanism | Status | Papers | Queue | Targets | Trials | 10x |',
-        '| --- | --- | ---: | ---: | ---: | ---: | ---: |',
+        '| Mechanism | Promotion | Release | Demo | Papers | Queue | Targets | Trials | 10x |',
+        '| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |',
     ])
     for canonical in MECHANISM_ORDER:
         mechanism = mechanisms_by_id[canonical]
+        release_row = release_by_mechanism.get(canonical, {})
         lines.append(
-            f"| {mechanism['display_name']} | {mechanism['promotion_status']} | {mechanism['papers']} | {mechanism['queue_burden']} | "
+            f"| {mechanism['display_name']} | {mechanism['promotion_status']} | {release_row.get('release_bucket', 'hold')} | {release_row.get('demo_status', 'supporting_section')} | {mechanism['papers']} | {mechanism['queue_burden']} | "
             f"{mechanism['target_rows']} | {mechanism['trial_rows']} | {mechanism['genomics_rows']} |"
         )
 
@@ -469,6 +486,12 @@ def render_mechanism_html(mechanism, ledger_rows, synthesis_rows):
 def render_html(viewer_data, markdown_text, tenx_template, synthesis_by_mechanism):
     summary = viewer_data['summary']
     mechanisms = {item['canonical_mechanism']: item for item in viewer_data['mechanisms']}
+    release_rows = viewer_data.get('release_manifest', {}).get('rows', []) if isinstance(viewer_data.get('release_manifest'), dict) else viewer_data.get('release_manifest', [])
+    release_by_mechanism = {
+        normalize(item.get('canonical_mechanism')): item
+        for item in release_rows
+        if isinstance(item, dict)
+    }
     generated_at = datetime.now().strftime('%Y-%m-%d %H:%M')
     sections_html = ''.join(
         render_mechanism_html(
@@ -479,7 +502,7 @@ def render_html(viewer_data, markdown_text, tenx_template, synthesis_by_mechanis
         for canonical in MECHANISM_ORDER
     )
     readiness_rows = ''.join(
-        f"<tr><td>{html.escape(mechanisms[canonical]['display_name'])}</td><td>{html.escape(mechanisms[canonical]['promotion_status'])}</td><td>{mechanisms[canonical]['papers']}</td><td>{mechanisms[canonical]['queue_burden']}</td><td>{mechanisms[canonical]['target_rows']}</td><td>{mechanisms[canonical]['trial_rows']}</td><td>{mechanisms[canonical]['genomics_rows']}</td></tr>"
+        f"<tr><td>{html.escape(mechanisms[canonical]['display_name'])}</td><td>{html.escape(mechanisms[canonical]['promotion_status'])}</td><td>{html.escape(release_by_mechanism.get(canonical, {}).get('release_bucket', 'hold'))}</td><td>{html.escape(release_by_mechanism.get(canonical, {}).get('demo_status', 'supporting_section'))}</td><td>{mechanisms[canonical]['papers']}</td><td>{mechanisms[canonical]['queue_burden']}</td><td>{mechanisms[canonical]['target_rows']}</td><td>{mechanisms[canonical]['trial_rows']}</td><td>{mechanisms[canonical]['genomics_rows']}</td></tr>"
         for canonical in MECHANISM_ORDER
     )
     def render_workpack_item(item):
@@ -499,6 +522,25 @@ def render_html(viewer_data, markdown_text, tenx_template, synthesis_by_mechanis
         '<p>No 10x template has been generated yet.</p>'
     )
     chapter_preview = html.escape(viewer_data['chapter'].get('preview_markdown', ''))
+    lead_release = release_by_mechanism.get('blood_brain_barrier_disruption', {})
+    demo_html = ''
+    if lead_release:
+        demo_html = f"""
+        <section class="atlas-section" id="canonical-demo-chapter">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Proof-of-concept chapter</p>
+              <h2>Canonical Demo Chapter</h2>
+            </div>
+            <div class="status-pill">{html.escape(lead_release.get('demo_status', 'not_demo_ready'))}</div>
+          </div>
+          <article class="panel">
+            <p><strong>Lead:</strong> Blood-Brain Barrier Dysfunction</p>
+            <p>{html.escape(lead_release.get('demo_reason', ''))}</p>
+            <p><strong>Release bucket:</strong> {html.escape(lead_release.get('release_bucket', 'hold'))}</p>
+          </article>
+        </section>
+        """
 
     return f"""<!doctype html>
 <html lang="en">
@@ -697,6 +739,8 @@ def render_html(viewer_data, markdown_text, tenx_template, synthesis_by_mechanis
         </div>
       </section>
 
+      {demo_html}
+
       <section class="atlas-section" id="readiness-board">
         <div class="section-header">
           <div>
@@ -705,7 +749,7 @@ def render_html(viewer_data, markdown_text, tenx_template, synthesis_by_mechanis
           </div>
         </div>
         <table>
-          <thead><tr><th>Mechanism</th><th>Status</th><th>Papers</th><th>Queue</th><th>Targets</th><th>Trials</th><th>10x</th></tr></thead>
+          <thead><tr><th>Mechanism</th><th>Promotion</th><th>Release</th><th>Demo</th><th>Papers</th><th>Queue</th><th>Targets</th><th>Trials</th><th>10x</th></tr></thead>
           <tbody>{readiness_rows}</tbody>
         </table>
       </section>

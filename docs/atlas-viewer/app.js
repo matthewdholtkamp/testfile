@@ -118,6 +118,91 @@
     return `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
   }
 
+  function repoPathHref(path) {
+    const normalized = normalize(path).replace(/\\/g, "/");
+    return normalized ? `../../${normalized}` : "";
+  }
+
+  function repoBlobLink(path) {
+    const normalized = normalize(path).replace(/\\/g, "/");
+    const base = data.metadata?.repo?.blob_base_url || "";
+    return normalized && base ? `${base}/${normalized}` : "";
+  }
+
+  function preferredHref(path, explicitHref) {
+    const repoHref = repoPathHref(path);
+    if (window.location.protocol === "file:" && repoHref) return repoHref;
+    return explicitHref || repoBlobLink(path) || repoHref;
+  }
+
+  function resolveActionHref(href) {
+    const normalized = normalize(href);
+    if (!normalized) return "";
+    if (normalized.startsWith("http") || normalized.startsWith("#")) return normalized;
+    if (window.location.protocol === "file:") return normalized;
+    const repoPath = normalized.replace(/^\.\.\/\.\.\//, "");
+    return repoBlobLink(repoPath) || normalized;
+  }
+
+  function releaseTone(value) {
+    const normalized = normalize(value);
+    if (["near_ready", "core_atlas_candidate", "ready_to_write", "core_atlas", "promote_now", "canonical_demo_ready"].includes(normalized)) return "stable";
+    if (["write_with_caution", "review_track", "provisional", "bounded_demo_ready", "supporting_section"].includes(normalized)) return "provisional";
+    return "hold";
+  }
+
+  function releaseRowForMechanism(mechanism) {
+    return (data.release_manifest?.rows || []).find((row) => row.canonical_mechanism === mechanism.canonical_mechanism) || null;
+  }
+
+  function makeActionLink(label, href, variant = "primary") {
+    if (!href) return null;
+    const link = el("a", `action-button ${variant === "secondary" ? "secondary" : ""}`, label);
+    link.href = href;
+    if (!href.startsWith("#")) {
+      link.target = "_blank";
+      link.rel = "noreferrer";
+    }
+    return link;
+  }
+
+  function makeCopyButton(label, text) {
+    if (!normalize(text)) return null;
+    const button = el("button", "action-button secondary", label);
+    button.type = "button";
+    button.addEventListener("click", async () => {
+      const fallback = () => {
+        const area = document.createElement("textarea");
+        area.value = text;
+        document.body.append(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+      };
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          fallback();
+        }
+        button.textContent = "Copied";
+      } catch (error) {
+        fallback();
+        button.textContent = "Copied";
+      }
+      setTimeout(() => {
+        button.textContent = label;
+      }, 1400);
+    });
+    return button;
+  }
+
+  function actionRow(items) {
+    const row = el("div", "action-row");
+    items.filter(Boolean).forEach((item) => row.append(item));
+    return row;
+  }
+
   function metadataTimestamp() {
     const allPaths = Object.values(data.metadata.generated_from || {});
     const match = allPaths
@@ -397,6 +482,7 @@
     data.mechanisms.forEach((mechanism) => {
       const stats = mechanismDerivedStats(mechanism);
       const ideaRow = mechanismIdeaGate(mechanism.id);
+      const releaseRow = releaseRowForMechanism(mechanism);
       const card = el("button", "card mechanism-card-button");
       card.type = "button";
       card.addEventListener("click", () => setMechanism(mechanism.id, "deep-dive"));
@@ -407,6 +493,8 @@
       titleBlock.append(el("div", "muted", `${mechanism.queue_burden} open queue items · ${mechanism.papers} papers`));
       const pillWrap = el("div", "tag-cloud");
       pillWrap.append(statusPill(mechanism.promotion_status));
+      if (releaseRow?.gate_status) pillWrap.append(el("span", `micro-pill ${releaseTone(releaseRow.gate_status)}`, `Gate ${formatPromo(releaseRow.gate_status)}`));
+      if (releaseRow?.release_bucket) pillWrap.append(el("span", `micro-pill ${releaseTone(releaseRow.release_bucket)}`, `Release ${formatPromo(releaseRow.release_bucket)}`));
       if (ideaRow) pillWrap.append(el("span", `micro-pill ${normalize(ideaRow.idea_generation_status) === 'ready_now' ? 'stable' : 'provisional'}`, `Idea ${formatPromo(ideaRow.idea_generation_status)}`));
       header.append(titleBlock, pillWrap);
       card.append(header);
@@ -427,6 +515,15 @@
 
       if (mechanism.top_bullets?.length) {
         card.append(el("p", "card-preview", mechanism.top_bullets[0]));
+      }
+      if (releaseRow?.blocker_summary || releaseRow?.recommended_next_move) {
+        const releaseCallout = el("div", "card-callout");
+        releaseCallout.append(el("div", "detail-label", "Current release blocker"));
+        releaseCallout.append(el("div", "detail-value", releaseRow.blocker_summary || "None"));
+        if (releaseRow.recommended_next_move) {
+          releaseCallout.append(el("div", "muted compact-note", `Next move: ${formatPromo(releaseRow.recommended_next_move)}`));
+        }
+        card.append(releaseCallout);
       }
       mechanismCards.append(card);
     });
@@ -498,6 +595,121 @@
     ].forEach((item) => release.append(el("span", "micro-pill", item)));
   }
 
+  function renderControlSurface() {
+    const releaseRoot = document.getElementById("releaseLaneCards");
+    const artifactRoot = document.getElementById("artifactCards");
+    const templateRoot = document.getElementById("templateCards");
+    const workflowRoot = document.getElementById("workflowCards");
+    [releaseRoot, artifactRoot, templateRoot, workflowRoot].forEach(clear);
+
+    data.mechanisms.forEach((mechanism) => {
+      const releaseRow = releaseRowForMechanism(mechanism) || {};
+      const card = el("div", "release-card");
+      const header = el("div", "mechanism-card-header");
+      const titleBlock = el("div");
+      titleBlock.append(el("h3", "", mechanism.display_name));
+      titleBlock.append(el("p", "card-preview", `${safeNumber(releaseRow.readiness_score || 0)} readiness · ${safeNumber(releaseRow.queue_burden || mechanism.queue_burden)} queue burden`));
+      const pills = el("div", "tag-cloud");
+      pills.append(el("span", `micro-pill ${releaseTone(releaseRow.gate_status || mechanism.promotion_status)}`, `Gate ${formatPromo(releaseRow.gate_status || mechanism.promotion_status)}`));
+      if (releaseRow.release_bucket) pills.append(el("span", `micro-pill ${releaseTone(releaseRow.release_bucket)}`, `Release ${formatPromo(releaseRow.release_bucket)}`));
+      if (releaseRow.chapter_role) pills.append(el("span", "micro-pill", `Role ${formatPromo(releaseRow.chapter_role)}`));
+      header.append(titleBlock, pills);
+      card.append(header);
+
+      card.append(renderStatGrid([
+        ["Stable", safeNumber(releaseRow.stable_rows || mechanism.release_stable_rows)],
+        ["Provisional", safeNumber(releaseRow.provisional_rows || mechanism.release_provisional_rows)],
+        ["Blocked", safeNumber(releaseRow.blocked_rows || mechanism.release_blocked_rows)],
+        ["Targets", safeNumber(releaseRow.target_rows || mechanism.target_rows)],
+        ["Trials", safeNumber(releaseRow.trial_rows || mechanism.trial_rows)],
+      ]));
+
+      const noteGrid = el("div", "release-note-grid");
+      [["Blocker", releaseRow.blocker_summary || "None listed"], ["Next move", formatPromo(releaseRow.recommended_next_move || "review atlas state")]].forEach(([label, value]) => {
+        const block = el("div", "meta-block");
+        block.append(el("div", "detail-label", label));
+        block.append(el("div", "detail-value", value));
+        noteGrid.append(block);
+      });
+      card.append(noteGrid);
+
+      const openDossierHref = preferredHref(mechanism.source_path, mechanism.source_github_url);
+      const reviewLedgerButton = el("button", "action-button", "Review ledger");
+      reviewLedgerButton.type = "button";
+      reviewLedgerButton.addEventListener("click", () => setMechanism(mechanism.id, "evidence"));
+      const nextActionsButton = el("button", "action-button secondary", "Open queue");
+      nextActionsButton.type = "button";
+      nextActionsButton.addEventListener("click", () => setMechanism(mechanism.id, "actions"));
+      card.append(actionRow([
+        reviewLedgerButton,
+        makeActionLink("Open dossier", openDossierHref, "secondary"),
+        nextActionsButton,
+      ]));
+
+      releaseRoot.append(card);
+    });
+
+    const paths = data.metadata.generated_from || {};
+    const artifacts = [
+      ["Weekly review packet", "Bounded human packet for weekly review decisions.", paths.decision_brief],
+      ["Release manifest", "Promotion, gate, and release bucket state.", paths.release_manifest],
+      ["Program status report", "Top-level status and next moves across the product.", paths.program_status],
+      ["Target packet index", "Entry point into target-specific enrichment packets.", paths.target_packet_index],
+      ["Chapter synthesis draft", "Current curated cross-mechanism synthesis draft.", paths.chapter_synthesis || paths.chapter],
+      ["Chapter evidence ledger", "Structured row-level support for chapter writing.", paths.ledger],
+      ["Manual enrichment workpack", "Current human queue for enrichment work.", paths.workpack],
+      ["Mechanism dossier index", "Starter mechanism status index.", paths.index],
+    ].filter(([, , path]) => normalize(path));
+
+    artifacts.forEach(([label, description, path]) => {
+      const card = el("div", "artifact-card");
+      card.append(el("div", "eyebrow artifact-eyebrow", "Artifact"));
+      card.append(el("h3", "", label));
+      card.append(el("p", "card-preview", description));
+      card.append(el("div", "path-code", path));
+      card.append(actionRow([
+        makeActionLink("Open", preferredHref(path), "primary"),
+        makeCopyButton("Copy path", path),
+      ]));
+      artifactRoot.append(card);
+    });
+
+    const templates = [
+      ["Open Targets manual fill", "Human-fill target template for current atlas priorities.", paths.open_targets_template],
+      ["ChEMBL manual fill", "Human-fill compound template for current atlas priorities.", paths.chembl_template],
+      ["ClinicalTrials.gov import", "Connector-sidecar trial import template.", paths.clinicaltrials_template],
+      ["bioRxiv / medRxiv import", "Connector-sidecar preprint import template.", paths.preprint_template],
+      ["10x genomics import", "Optional genomics template for connector enrichment.", paths.tenx_template],
+    ].filter(([, , path]) => normalize(path));
+
+    templates.forEach(([label, description, path]) => {
+      const card = el("div", "artifact-card compact");
+      card.append(el("div", "eyebrow artifact-eyebrow", "Template"));
+      card.append(el("h3", "", label));
+      card.append(el("p", "card-preview", description));
+      card.append(el("div", "path-code", path));
+      card.append(actionRow([
+        makeActionLink("Open", preferredHref(path), "primary"),
+        makeCopyButton("Copy path", path),
+      ]));
+      templateRoot.append(card);
+    });
+
+    (data.execution_map || []).forEach((item) => {
+      const card = el("div", "artifact-card compact");
+      card.append(el("div", "eyebrow artifact-eyebrow", "Workflow"));
+      card.append(el("h3", "", item.title));
+      card.append(el("p", "card-preview", item.workflow_or_command || item.trigger));
+      const buttons = [];
+      (item.actions || []).forEach((action) => {
+        buttons.push(makeActionLink(action.label, resolveActionHref(action.href), buttons.length ? "secondary" : "primary"));
+      });
+      buttons.push(makeCopyButton("Copy command", item.workflow_or_command));
+      card.append(actionRow(buttons));
+      workflowRoot.append(card);
+    });
+  }
+
   function renderChapter() {
     const leadRoot = document.getElementById("leadRecommendation");
     const framingRoot = document.getElementById("chapterFraming");
@@ -530,9 +742,10 @@
   function renderMechanismDetail() {
     const mechanism = mechanismById(state.selectedMechanism);
     const stats = mechanismDerivedStats(mechanism);
+    const releaseRow = releaseRowForMechanism(mechanism);
     document.getElementById("selectedMechanismTitle").textContent = mechanism.display_name;
     document.getElementById("selectedMechanismSubtitle").textContent =
-      `${formatPromo(mechanism.promotion_status)} · ${stats.stable} stable rows · ${stats.provisional} provisional rows · ${stats.blocked} blocked rows`;
+      `${formatPromo(mechanism.promotion_status)} · gate ${formatPromo(releaseRow?.gate_status || mechanism.promotion_status)} · release ${formatPromo(releaseRow?.release_bucket || "unassigned")} · ${stats.stable} stable rows · ${stats.provisional} provisional rows · ${stats.blocked} blocked rows`;
     renderMechanismTabs();
 
     const root = document.getElementById("mechanismDetail");
@@ -743,7 +956,21 @@
     nextBlock.append(el("div", "detail-label", "Execution Trigger"));
     nextBlock.append(el("div", "detail-value", chain.next_action || "No next action is attached yet."));
 
-    callouts.append(bridgeBlock, translationalBlock, caveatBlock, nextBlock);
+    const subtrackBlock = el("div", "meta-block");
+    subtrackBlock.append(el("div", "detail-label", "Narrower Subtracks"));
+    if (chain.subtracks?.length) {
+      chain.subtracks.forEach((subtrack) => {
+        subtrackBlock.append(el("div", "detail-value", `${subtrack.name}: ${subtrack.statement}`));
+        const row = el("div", "tag-cloud");
+        row.append(strengthPill(subtrack.strength_tag));
+        if (normalize(subtrack.supporting_pmids)) row.append(pmidChips(subtrack.supporting_pmids));
+        subtrackBlock.append(row);
+      });
+    } else {
+      subtrackBlock.append(el("div", "detail-value", "No narrower subtracks are attached yet."));
+    }
+
+    callouts.append(bridgeBlock, translationalBlock, caveatBlock, nextBlock, subtrackBlock);
     card.append(callouts);
     root.append(card);
   }
@@ -926,8 +1153,9 @@
     const priorityRoot = document.getElementById("workpackPriorities");
     const fillRoot = document.getElementById("fillTargets");
     const nextRoot = document.getElementById("nextMove");
+    const linksRoot = document.getElementById("workpackQuickLinks");
     const hintRoot = document.getElementById("workpackMechanismHint");
-    [whyRoot, orderRoot, priorityRoot, fillRoot, nextRoot].forEach(clear);
+    [whyRoot, orderRoot, priorityRoot, fillRoot, nextRoot, linksRoot].forEach(clear);
 
     const scopedPriorities = data.workpack.top_priorities.filter((item) => item.title.toLowerCase().startsWith(mechanism.display_name.toLowerCase()));
     const priorities = state.showAllWorkpack || !scopedPriorities.length ? data.workpack.top_priorities : scopedPriorities;
@@ -951,6 +1179,25 @@
 
     if (!priorities.length) {
       priorityRoot.append(createEmptyState("No workpack priorities match the current mechanism."));
+    }
+
+    const quickLinks = [
+      ["Open target packet index", data.metadata.generated_from.target_packet_index ? `../../${data.metadata.generated_from.target_packet_index}` : ""],
+      ["Open ChEMBL template", data.metadata.generated_from.chembl_template ? `../../${data.metadata.generated_from.chembl_template}` : ""],
+      ["Open Open Targets template", data.metadata.generated_from.open_targets_template ? `../../${data.metadata.generated_from.open_targets_template}` : ""],
+    ].filter(([, href]) => href);
+    if (!quickLinks.length) {
+      linksRoot.append(createEmptyState("Quick actions will appear after the latest seed packs are generated."));
+    } else {
+      quickLinks.forEach(([label, href]) => {
+        const link = el("a", "action-link", label);
+        link.href = resolveActionHref(href);
+        if (link.href.startsWith("http")) {
+          link.target = "_blank";
+          link.rel = "noreferrer";
+        }
+        linksRoot.append(link);
+      });
     }
   }
 
@@ -1009,6 +1256,19 @@
         grid.append(block);
       });
       card.append(grid);
+      if (item.actions?.length) {
+        const actionRow = el("div", "action-row");
+        item.actions.filter((action) => action.href).forEach((action) => {
+          const link = el("a", `action-link ${action.kind || "local"}`, action.label);
+          link.href = resolveActionHref(action.href);
+          if (link.href.startsWith("http")) {
+            link.target = "_blank";
+            link.rel = "noreferrer";
+          }
+          actionRow.append(link);
+        });
+        if (actionRow.childNodes.length) card.append(actionRow);
+      }
       root.append(card);
     });
   }
@@ -1016,6 +1276,7 @@
   function renderSources() {
     const root = document.getElementById("dataSources");
     const paths = data.metadata.generated_from;
+    const repo = data.metadata.repo || {};
     const sourceList = [
       paths.index,
       paths.chapter_synthesis || paths.chapter,
@@ -1024,7 +1285,14 @@
       paths.bridge,
       paths.hypothesis_candidates,
     ].filter(Boolean);
-    root.textContent = `Built from ${sourceList.join(", ")}.`;
+    clear(root);
+    root.append(el("span", "", `Built from ${sourceList.join(", ")}.`));
+    const footerActions = actionRow([
+      makeActionLink("Repo", repo.repo_url, "secondary"),
+      makeActionLink("Actions", repo.actions_url, "secondary"),
+      makeActionLink("Open release manifest", preferredHref(paths.release_manifest), "secondary"),
+    ]);
+    root.append(footerActions);
   }
 
   function setMechanism(id, sectionId) {
@@ -1105,6 +1373,7 @@
     document.getElementById("evidenceConfidenceFilter").value = state.evidenceConfidence;
     renderSummary();
     renderDecisionBrief();
+    renderControlSurface();
     renderChapter();
     renderMechanismDetail();
     renderCausalChains();

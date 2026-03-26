@@ -3,6 +3,7 @@ import csv
 import json
 import os
 import re
+import subprocess
 from collections import Counter, defaultdict
 from glob import glob
 
@@ -19,6 +20,30 @@ DISPLAY_TO_CANONICAL = {
     'Neuroinflammation / Microglial Activation': 'neuroinflammation_microglial_activation',
 }
 CANONICAL_TO_DISPLAY = {value: key for key, value in DISPLAY_TO_CANONICAL.items()}
+VIEWER_DIR = os.path.join(REPO_ROOT, 'docs', 'atlas-viewer')
+
+
+def resolve_github_repo_base():
+    try:
+        remote = subprocess.check_output(
+            ['git', '-C', REPO_ROOT, 'config', '--get', 'remote.origin.url'],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        remote = ''
+    if remote.startswith('git@github.com:'):
+        remote = remote.replace('git@github.com:', 'https://github.com/')
+    if remote.endswith('.git'):
+        remote = remote[:-4]
+    if remote.startswith('https://github.com/'):
+        return remote
+    return 'https://github.com/matthewdholtkamp/testfile'
+
+
+GITHUB_REPO_BASE = resolve_github_repo_base()
+GITHUB_BLOB_BASE = f'{GITHUB_REPO_BASE}/blob/main'
+GITHUB_WORKFLOW_BASE = f'{GITHUB_REPO_BASE}/actions/workflows'
 
 
 def latest_file(pattern):
@@ -82,6 +107,18 @@ def safe_float(value):
         return float(value)
     except (TypeError, ValueError):
         return 0.0
+
+
+def to_viewer_rel(path):
+    if not path:
+        return ''
+    return os.path.relpath(path, VIEWER_DIR)
+
+
+def to_repo_rel(path):
+    if not path:
+        return ''
+    return os.path.relpath(path, REPO_ROOT)
 
 
 def parse_markdown_sections(text):
@@ -325,6 +362,7 @@ def build_causal_chains(synthesis_rows):
         causal_steps = [row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'causal_step']
         bridges = [row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'bridge']
         translational_hooks = [row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'translational_hook']
+        subtracks = [row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'subtrack']
         caveat = next((row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'caveat'), {})
         next_action = next((row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'next_action'), {})
 
@@ -364,6 +402,15 @@ def build_causal_chains(synthesis_rows):
                     'strength_tag': writing_strength_from_fields(row.get('confidence_bucket', ''), row.get('write_status', ''), row.get('action_blockers', '')),
                 }
                 for row in translational_hooks
+            ],
+            'subtracks': [
+                {
+                    'name': normalize_spaces(row.get('subtrack_name', '')) or 'Subtrack',
+                    'statement': normalize_spaces(row.get('statement_text', '')),
+                    'supporting_pmids': normalize_spaces(row.get('supporting_pmids', '')),
+                    'strength_tag': writing_strength_from_fields(row.get('confidence_bucket', ''), row.get('write_status', ''), row.get('action_blockers', '')),
+                }
+                for row in subtracks
             ],
             'caveat': {
                 'statement': normalize_spaces(caveat.get('statement_text', '')),
@@ -406,7 +453,7 @@ def parse_decision_brief(payload):
     }
 
 
-def build_execution_map(decision_brief, workpack, release_manifest, idea_gate):
+def build_execution_map(decision_brief, workpack, release_manifest, idea_gate, local_paths):
     lead = decision_brief.get('lead_mechanism') or 'Blood-Brain Barrier Dysfunction'
     top_targets = []
     for row in decision_brief.get('target_priorities', []):
@@ -434,6 +481,11 @@ def build_execution_map(decision_brief, workpack, release_manifest, idea_gate):
             'operator_decision': 'No weekly decision required unless the Saturday brief shows a blocker spike or topic drift.',
             'workflow_or_command': 'GitHub workflows: ongoing_literature_cycle.yml -> refresh_atlas_from_ongoing_cycle.yml -> refresh_public_enrichment.yml',
             'unlocks': 'Fresh corpus, fresh extraction, fresh atlas, fresh dashboard snapshot.',
+            'actions': [
+                {'label': 'Open daily workflow', 'href': f'{GITHUB_WORKFLOW_BASE}/ongoing_literature_cycle.yml', 'kind': 'workflow'},
+                {'label': 'Open atlas refresh workflow', 'href': f'{GITHUB_WORKFLOW_BASE}/refresh_atlas_from_ongoing_cycle.yml', 'kind': 'workflow'},
+                {'label': 'Open public enrichment workflow', 'href': f'{GITHUB_WORKFLOW_BASE}/refresh_public_enrichment.yml', 'kind': 'workflow'},
+            ],
         },
         {
             'id': 'saturday-control-surface',
@@ -443,6 +495,10 @@ def build_execution_map(decision_brief, workpack, release_manifest, idea_gate):
             'operator_decision': f'Choose whether to keep {lead} as the lead mechanism and approve the next curation queue.',
             'workflow_or_command': 'GitHub workflow: weekly_human_review_packet.yml',
             'unlocks': 'Keeps the weekly human pass bounded to 1-2 pages of decisions instead of full-report review.',
+            'actions': [
+                {'label': 'Open Saturday workflow', 'href': f'{GITHUB_WORKFLOW_BASE}/weekly_human_review_packet.yml', 'kind': 'workflow'},
+                {'label': 'Open atlas book', 'href': '../atlas-book/index.html', 'kind': 'view'},
+            ],
         },
         {
             'id': 'manual-enrichment-cycle',
@@ -452,6 +508,11 @@ def build_execution_map(decision_brief, workpack, release_manifest, idea_gate):
             'operator_decision': 'Accept the target queue and fill the ChEMBL/Open Targets rows for the chosen targets.',
             'workflow_or_command': 'Local command: python3 scripts/run_manual_enrichment_cycle.py --default-to-auto',
             'unlocks': f'Stronger release readiness for BBB and mitochondrial chapters. Current BBB release bucket: {normalize_spaces(bbb_row.get("release_bucket", "review_track")) or "review_track"}.',
+            'actions': [
+                {'label': 'Open target packet index', 'href': local_paths.get('target_packet_index', ''), 'kind': 'local'},
+                {'label': 'Open ChEMBL template', 'href': local_paths.get('chembl_template', ''), 'kind': 'local'},
+                {'label': 'Open Open Targets template', 'href': local_paths.get('open_targets_template', ''), 'kind': 'local'},
+            ],
         },
         {
             'id': 'idea-generation-pass',
@@ -461,6 +522,10 @@ def build_execution_map(decision_brief, workpack, release_manifest, idea_gate):
             'operator_decision': 'Decide which candidate ideas deserve immediate writing, enrichment, or narrowing.',
             'workflow_or_command': 'Generated artifact + dashboard section: reports/hypothesis_candidates + Atlas Viewer > Candidate Ideas',
             'unlocks': 'Moves the atlas from structured synthesis into explicit hypothesis lanes.',
+            'actions': [
+                {'label': 'Open hypothesis candidates', 'href': local_paths.get('hypothesis_candidates', ''), 'kind': 'local'},
+                {'label': 'Open chapter synthesis draft', 'href': local_paths.get('chapter_synthesis', ''), 'kind': 'local'},
+            ],
         },
         {
             'id': 'neuro-narrowing-pass',
@@ -470,6 +535,10 @@ def build_execution_map(decision_brief, workpack, release_manifest, idea_gate):
             'operator_decision': 'Approve tighter subtracks instead of adding more broad neuro papers.',
             'workflow_or_command': 'Targeted action: treat NLRP3, TREM2/GAS6, and AQP4/glymphatic response as separate subtracks in the next atlas pass.',
             'unlocks': 'Makes neuroinflammation more hypothesis-generative and less diffuse.',
+            'actions': [
+                {'label': 'Open review packets', 'href': local_paths.get('review_packets', ''), 'kind': 'local'},
+                {'label': 'Open target packet index', 'href': local_paths.get('target_packet_index', ''), 'kind': 'local'},
+            ],
         },
         {
             'id': 'tenx-import-lane',
@@ -479,6 +548,10 @@ def build_execution_map(decision_brief, workpack, release_manifest, idea_gate):
             'operator_decision': 'Decide whether real genomics exports are ready to import.',
             'workflow_or_command': 'Local sidecar path: drop 10x exports into local_connector_inputs and rerun python3 scripts/run_connector_sidecar.py --build-tenx-template',
             'unlocks': f'Adds cell-type and pathway evidence without blocking the core atlas. Current mitochondrial release bucket: {normalize_spaces(mito_row.get("release_bucket", "hold")) or "hold"}.',
+            'actions': [
+                {'label': 'Open 10x template', 'href': local_paths.get('tenx_template', ''), 'kind': 'local'},
+                {'label': 'Open connector guide', 'href': local_paths.get('connector_guide', ''), 'kind': 'local'},
+            ],
         },
     ]
 
@@ -495,6 +568,14 @@ def make_viewer_data():
     idea_gate_path = latest_optional_file('idea_generation_gate_*.json')
     hypothesis_path = latest_optional_file('hypothesis_candidates_*.json')
     synthesis_path = latest_file_prefer_curated('mechanistic_synthesis_curated/mechanistic_synthesis_blocks_*.csv', 'mechanistic_synthesis_blocks_*.csv')
+    review_packet_index_path = latest_optional_file('mechanism_review_packet_index_*.md')
+    target_packet_index_path = latest_optional_file('target_enrichment_packet_index_*.md')
+    program_status_path = latest_optional_file('program_status/program_status_report_*.md')
+    chembl_template_path = latest_optional_file('chembl_manual_fill_template_*.csv')
+    open_targets_template_path = latest_optional_file('open_targets_manual_fill_template_*.csv')
+    clinicaltrials_template_path = latest_optional_file('clinicaltrials_gov_import_template_*.csv')
+    preprint_template_path = latest_optional_file('biorxiv_medrxiv_import_template_*.csv')
+    tenx_template_path = latest_optional_file('tenx_genomics_import_template_*.csv')
 
     index_rows = parse_mechanism_index(index_path)
     dossier_dir = os.path.dirname(index_path)
@@ -505,6 +586,9 @@ def make_viewer_data():
         if matches:
             dossier = parse_dossier(matches[-1])
             dossier.update(row)
+            dossier['source_path'] = to_repo_rel(matches[-1])
+            dossier['source_href'] = to_viewer_rel(matches[-1])
+            dossier['source_github_url'] = f"{GITHUB_BLOB_BASE}/{dossier['source_path']}"
             dossiers.append(dossier)
 
     ledger_rows = enrich_ledger_rows(read_csv(ledger_path))
@@ -519,10 +603,29 @@ def make_viewer_data():
     hypothesis_candidates = parse_hypothesis_candidates(hypothesis_path) if hypothesis_path else {'rows': [], 'by_mechanism': {}}
     synthesis_rows = read_csv(synthesis_path)
     causal_chains = build_causal_chains(synthesis_rows)
-    execution_map = build_execution_map(decision_brief, workpack, release_manifest, idea_gate)
+    local_paths = {
+        'chapter_synthesis': to_viewer_rel(chapter_synthesis_path),
+        'hypothesis_candidates': to_viewer_rel(hypothesis_path),
+        'review_packets': to_viewer_rel(review_packet_index_path),
+        'target_packet_index': to_viewer_rel(target_packet_index_path),
+        'program_status': to_viewer_rel(program_status_path),
+        'chembl_template': to_viewer_rel(chembl_template_path),
+        'open_targets_template': to_viewer_rel(open_targets_template_path),
+        'clinicaltrials_template': to_viewer_rel(clinicaltrials_template_path),
+        'preprint_template': to_viewer_rel(preprint_template_path),
+        'tenx_template': to_viewer_rel(tenx_template_path),
+        'connector_guide': to_viewer_rel(os.path.join(REPO_ROOT, 'CONNECTOR_ENRICHMENT.md')),
+    }
+    execution_map = build_execution_map(decision_brief, workpack, release_manifest, idea_gate, local_paths)
 
     data = {
         'metadata': {
+            'repo': {
+                'repo_url': GITHUB_REPO_BASE,
+                'blob_base_url': GITHUB_BLOB_BASE,
+                'workflow_base_url': GITHUB_WORKFLOW_BASE,
+                'actions_url': f'{GITHUB_REPO_BASE}/actions',
+            },
             'generated_from': {
                 'index': os.path.relpath(index_path, REPO_ROOT),
                 'chapter': os.path.relpath(chapter_path, REPO_ROOT),
@@ -535,6 +638,14 @@ def make_viewer_data():
                 'idea_gate': os.path.relpath(idea_gate_path, REPO_ROOT) if idea_gate_path else '',
                 'hypothesis_candidates': os.path.relpath(hypothesis_path, REPO_ROOT) if hypothesis_path else '',
                 'synthesis': os.path.relpath(synthesis_path, REPO_ROOT),
+                'review_packet_index': os.path.relpath(review_packet_index_path, REPO_ROOT) if review_packet_index_path else '',
+                'target_packet_index': os.path.relpath(target_packet_index_path, REPO_ROOT) if target_packet_index_path else '',
+                'program_status': os.path.relpath(program_status_path, REPO_ROOT) if program_status_path else '',
+                'chembl_template': os.path.relpath(chembl_template_path, REPO_ROOT) if chembl_template_path else '',
+                'open_targets_template': os.path.relpath(open_targets_template_path, REPO_ROOT) if open_targets_template_path else '',
+                'clinicaltrials_template': os.path.relpath(clinicaltrials_template_path, REPO_ROOT) if clinicaltrials_template_path else '',
+                'preprint_template': os.path.relpath(preprint_template_path, REPO_ROOT) if preprint_template_path else '',
+                'tenx_template': os.path.relpath(tenx_template_path, REPO_ROOT) if tenx_template_path else '',
             }
         },
         'summary': build_summary(index_rows, ledger_rows, chapter, workpack, idea_gate),

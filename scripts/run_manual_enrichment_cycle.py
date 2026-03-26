@@ -23,7 +23,7 @@ def run_cmd(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Run the local atlas curation loop: build manual seed packs, apply review decisions, rebuild curated dossiers, and emit a chapter draft.'
+        description='Run the local atlas curation loop: build assisted manual seed packs, apply review decisions, rebuild curated dossiers, and emit atlas-facing outputs.'
     )
     parser.add_argument(
         '--seed-pack-output-dir',
@@ -145,6 +145,18 @@ def main():
         action='store_true',
         help='Apply auto_recommendation when review_status is blank.',
     )
+    parser.add_argument(
+        '--priority-mode',
+        choices=['default', 'mitochondrial_first'],
+        default='mitochondrial_first',
+        help='Priority mode for manual seed packs and target packets.',
+    )
+    parser.add_argument(
+        '--target-packet-top-n',
+        type=int,
+        default=10,
+        help='Maximum number of target enrichment packets to emit.',
+    )
     args = parser.parse_args()
 
     enrichment_csv = args.enrichment_csv or latest_optional_report_path('connector_enrichment_records_*.csv')
@@ -155,6 +167,8 @@ def main():
             'scripts/build_manual_enrichment_seed_pack.py',
             '--output-dir',
             args.seed_pack_output_dir,
+            '--priority-mode',
+            args.priority_mode,
         ]
         if args.claims_csv:
             cmd.extend(['--claims-csv', args.claims_csv])
@@ -298,6 +312,10 @@ def main():
         latest_csv_in_dir(args.seed_pack_output_dir, 'open_targets_manual_fill_template_*.csv'),
         '--chembl-template-csv',
         latest_csv_in_dir(args.seed_pack_output_dir, 'chembl_manual_fill_template_*.csv'),
+        '--priority-mode',
+        args.priority_mode,
+        '--top-n',
+        str(args.target_packet_top_n),
     ])
     run_cmd([
         'python3',

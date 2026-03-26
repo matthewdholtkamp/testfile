@@ -128,8 +128,10 @@ The connector lane is intentionally separate from the GitHub staging lane. It us
 Core files:
 - `config/connector_registry.yaml`
 - `config/enrichment_presets.yaml`
+- `config/query_policy_defaults.yaml`
 - `config/manual_target_aliases.yaml`
 - `CONNECTOR_ENRICHMENT.md`
+- `ATLAS_WORKFLOW_TEMPLATES.md`
 - `scripts/build_connector_candidate_manifest.py`
 - `scripts/fetch_public_connector_enrichment.py`
 - `scripts/merge_connector_enrichment.py`
@@ -155,10 +157,11 @@ Important boundaries:
 - live connector calls do **not** run inside `run_extraction.py`
 - weekly GitHub staging stays stable even if connector enrichment is never run
 - 10x is built in now as an optional import lane, but it is only useful when you have real analysis exports to normalize
+- connector fetches now use conservative default query policies with explicit override lanes rather than widening scope silently
 
 Typical sidecar flow:
 1. Run **Post-Extraction Analysis** or **Build Atlas Slices**
-2. Download the `connector_candidate_manifest` artifact and fill the generated import templates in a local connector-capable environment
+2. Download the `connector_candidate_manifest` artifact and use the seeded import templates in a local connector-capable environment
 3. Normalize local connector outputs:
    ```bash
    python scripts/merge_connector_enrichment.py \
@@ -189,6 +192,7 @@ That flow gives you:
 - mechanism -> biomarker -> target -> compound -> trial bridge rows
 - figure-planning seeds for future BioRender work
 - optional 10x/genomics sections when those imports exist
+- mitochondrial-first target / compound / trial seeds with assisted ChEMBL query terms in the manifest templates
 
 ### Manual Enrichment Curation Loop
 Once you have a first-pass public enrichment file, use the local curation loop to clean weak generic matches and prepare manual target / ChEMBL fills:
@@ -213,9 +217,10 @@ That will:
 - rebuild a mechanistic synthesis packet from the chapter evidence ledger
 - rebuild a synthesis-driven atlas chapter draft
 - rebuild a short manual enrichment workpack for the next BBB / mitochondrial pass
+- emit mitochondrial-first target packets with seeded ChEMBL query terms, assay keywords, and trial query suggestions
 - rebuild a static atlas viewer under `docs/atlas-viewer`
 
-Use this when you want to tighten BBB / mitochondrial enrichment before writing atlas prose.
+Use this when you want a mitochondrial-first assisted ChEMBL pass before widening back to BBB and the rest of the atlas prose.
 
 ### First Atlas Writing Artifact
 Once the dossiers exist, build the first dossier-driven atlas writing draft:

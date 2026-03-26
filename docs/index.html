@@ -41,6 +41,9 @@
         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         gap: 20px;
       }
+      .cards + .cards {
+        margin-top: 20px;
+      }
       .card {
         display: block;
         text-decoration: none;
@@ -70,6 +73,9 @@
         color: var(--accent);
         font-weight: 700;
       }
+      .card.small h2 {
+        font-size: 1.1rem;
+      }
     </style>
   </head>
   <body>
@@ -81,9 +87,9 @@
       </section>
       <section class="cards">
         <a class="card" href="./atlas-viewer/index.html">
-          <p class="eyebrow">Review console</p>
+          <p class="eyebrow">Review + control</p>
           <h2>TBI Atlas Viewer</h2>
-          <p>Use the evidence-first viewer to inspect readiness, ledger rows, bridge statements, and the manual-enrichment queue.</p>
+          <p>Use the dashboard control surface to inspect readiness, open packets and templates, review the evidence ledger, and jump to workflow entry points.</p>
           <span class="cta">Open viewer →</span>
         </a>
         <a class="card" href="./atlas-book/index.html">
@@ -91,6 +97,20 @@
           <h2>Starter TBI Atlas</h2>
           <p>Read the current chapter-grade atlas draft with BBB, mitochondrial, and neuroinflammation sections packaged into one deliverable.</p>
           <span class="cta">Open atlas →</span>
+        </a>
+      </section>
+      <section class="cards">
+        <a class="card small" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">
+          <p class="eyebrow">Execution</p>
+          <h2>GitHub Actions</h2>
+          <p>Open the workflow run surface for the ongoing literature cycle, review packet, atlas refresh, and release jobs.</p>
+          <span class="cta">Open actions →</span>
+        </a>
+        <a class="card small" href="https://github.com/matthewdholtkamp/testfile" target="_blank" rel="noreferrer">
+          <p class="eyebrow">Source</p>
+          <h2>Project Repo</h2>
+          <p>Open the repo directly when you need raw reports, workflow YAML files, or code-level investigation context.</p>
+          <span class="cta">Open repo →</span>
         </a>
       </section>
     </main>

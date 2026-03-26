@@ -1,26 +1,40 @@
 window.ATLAS_VIEWER_DATA = {
   "metadata": {
+    "repo": {
+      "repo_url": "https://github.com/matthewdholtkamp/testfile",
+      "blob_base_url": "https://github.com/matthewdholtkamp/testfile/blob/main",
+      "workflow_base_url": "https://github.com/matthewdholtkamp/testfile/actions/workflows",
+      "actions_url": "https://github.com/matthewdholtkamp/testfile/actions"
+    },
     "generated_from": {
-      "index": "reports/mechanism_dossiers_curated/mechanism_dossier_index_2026-03-25_204557.md",
-      "chapter": "reports/atlas_chapter_draft_curated/starter_atlas_chapter_draft_2026-03-25_204557.md",
-      "chapter_synthesis": "reports/atlas_chapter_synthesis_draft_curated/starter_atlas_chapter_synthesis_draft_2026-03-25_204558.md",
-      "ledger": "reports/atlas_chapter_ledger_curated/starter_atlas_chapter_evidence_ledger_2026-03-25_204558.csv",
-      "workpack": "reports/manual_enrichment_workpack/manual_enrichment_workpack_2026-03-25_204602.md",
-      "bridge": "reports/mechanism_dossiers_curated/translational_bridge_2026-03-25_204557.csv",
-      "release_manifest": "reports/atlas_release_manifest/atlas_release_manifest_2026-03-25_204600.json",
+      "index": "reports/mechanism_dossiers_curated/mechanism_dossier_index_2026-03-25_211757.md",
+      "chapter": "reports/atlas_chapter_draft_curated/starter_atlas_chapter_draft_2026-03-25_211757.md",
+      "chapter_synthesis": "reports/atlas_chapter_synthesis_draft_curated/starter_atlas_chapter_synthesis_draft_2026-03-25_211758.md",
+      "ledger": "reports/atlas_chapter_ledger_curated/starter_atlas_chapter_evidence_ledger_2026-03-25_211758.csv",
+      "workpack": "reports/manual_enrichment_workpack/manual_enrichment_workpack_2026-03-25_211801.md",
+      "bridge": "reports/mechanism_dossiers_curated/translational_bridge_2026-03-25_211757.csv",
+      "release_manifest": "reports/atlas_release_manifest/atlas_release_manifest_2026-03-25_211800.json",
       "decision_brief": "reports/weekly_human_review_packet/weekly_human_review_packet_2026-03-25_204722.json",
-      "idea_gate": "reports/idea_generation_gate/idea_generation_gate_2026-03-25_204601.json",
-      "hypothesis_candidates": "reports/hypothesis_candidates/hypothesis_candidates_2026-03-25_204721.json",
-      "synthesis": "reports/mechanistic_synthesis_curated/mechanistic_synthesis_blocks_2026-03-25_204558.csv"
+      "idea_gate": "reports/idea_generation_gate/idea_generation_gate_2026-03-25_211800.json",
+      "hypothesis_candidates": "reports/hypothesis_candidates/hypothesis_candidates_2026-03-25_211801.json",
+      "synthesis": "reports/mechanistic_synthesis_curated/mechanistic_synthesis_blocks_2026-03-25_211758.csv",
+      "review_packet_index": "reports/mechanism_review_packets/mechanism_review_packet_index_2026-03-25_211800.md",
+      "target_packet_index": "reports/target_enrichment_packets/target_enrichment_packet_index_2026-03-25_211801.md",
+      "program_status": "reports/program_status/program_status_report_2026-03-25_210750.md",
+      "chembl_template": "reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-25_211757.csv",
+      "open_targets_template": "reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-25_211757.csv",
+      "clinicaltrials_template": "reports/connector_candidate_manifest/templates/clinicaltrials_gov_import_template_2026-03-25_211517.csv",
+      "preprint_template": "reports/connector_candidate_manifest/templates/biorxiv_medrxiv_import_template_2026-03-25_211517.csv",
+      "tenx_template": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-03-25_211517.csv"
     }
   },
   "summary": {
     "lead_mechanism": "Blood-Brain Barrier Dysfunction",
     "stable_rows": 5,
-    "provisional_rows": 4,
-    "blocked_rows": 2,
+    "provisional_rows": 6,
+    "blocked_rows": 5,
     "mechanism_count": 3,
-    "top_priority": "Blood-Brain Barrier Dysfunction -> `OCLN`",
+    "top_priority": "Mitochondrial Dysfunction -> `PRKN`",
     "idea_ready_now": 3,
     "breakthrough_ready_now": 0,
     "idea_almost_ready": 0
@@ -210,7 +224,10 @@ window.ATLAS_VIEWER_DATA = {
       "compound_rows": 0,
       "trial_rows": 0,
       "preprint_rows": 0,
-      "genomics_rows": 0
+      "genomics_rows": 0,
+      "source_path": "reports/mechanism_dossiers_curated/blood_brain_barrier_disruption_dossier_2026-03-25_211757.md",
+      "source_href": "../../reports/mechanism_dossiers_curated/blood_brain_barrier_disruption_dossier_2026-03-25_211757.md",
+      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers_curated/blood_brain_barrier_disruption_dossier_2026-03-25_211757.md"
     },
     {
       "id": "mitochondrial-dysfunction",
@@ -378,7 +395,10 @@ window.ATLAS_VIEWER_DATA = {
       "compound_rows": 0,
       "trial_rows": 0,
       "preprint_rows": 0,
-      "genomics_rows": 0
+      "genomics_rows": 0,
+      "source_path": "reports/mechanism_dossiers_curated/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-25_211757.md",
+      "source_href": "../../reports/mechanism_dossiers_curated/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-25_211757.md",
+      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers_curated/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-25_211757.md"
     },
     {
       "id": "neuroinflammation-microglial-activation",
@@ -551,7 +571,7 @@ window.ATLAS_VIEWER_DATA = {
         "upgrade_source: PMID 41700019 | abstract_only | abstract-only source limits mechanistic confidence",
         "upgrade_source: PMID 41702482 | abstract_only | abstract-only source limits mechanistic confidence"
       ],
-      "raw_markdown": "# Mechanism Dossier: Neuroinflammation / Microglial Activation\n\n- Canonical mechanism: `neuroinflammation_microglial_activation`\n- Promotion status: `hold`\n- Promotion reason: mechanism still needs more deepening, cleanup, or translational context\n\n## Overview\n\n- Papers in packet: `60`\n- Claim rows: `84`\n- Source quality mix: `full_text_like` 48, `abstract_only` 12\n- Action lanes: `core_atlas_candidate` 44, `upgrade_source` 11, `deepen_extraction` 4, `manual_review` 1\n\n## Weighted Anchor Papers\n\n| PMID | Source Quality | Quality Bucket | Avg Depth | Example Claim |\n| --- | --- | --- | --- | --- |\n| 41612383 | full_text_like | high_signal | 5.0 | GAS6 in 3D-sEVs drives M1 to M2 microglial polarization. |\n| 41737534 | full_text_like | high_signal | 5.0 | TREM2 activation enhances microglial phagocytic clearance of pathological aggregates. |\n| 41737534 | full_text_like | high_signal | 5.0 | Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. |\n| 41179995 | full_text_like | high_signal | 5.0 | Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting... |\n| 41622228 | full_text_like | high_signal | 5.0 | Neuronal IFN-beta activates microglial IFNAR-STAT1 axis. |\n| 41683989 | full_text_like | high_signal | 5.0 | NLRP3 inflammasome activation mediates TBI-induced tau pathology. |\n| 41327381 | full_text_like | high_signal | 4.0 | mTBI induces axonal degeneration and glial activation in tracts orthogonal to the rotation axis. |\n| 41622228 | full_text_like | high_signal | 4.0 | NK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery. |\n| 41642456 | full_text_like | high_signal | 4.0 | Mechanical stretch induces dose-dependent astrocyte dysfunction. |\n| 41648326 | full_text_like | high_signal | 4.0 | TBI triggers astrocyte-to-neuron mitochondrial transfer. |\n\n## Strongest Atlas-Layer Rows\n\n| Atlas Layer | Papers | Full-text-like | Abstract-only | Avg Depth | Anchor PMIDs |\n| --- | --- | --- | --- | --- | --- |\n| cellular_response | 41 | 32 | 9 | 3.721 | 41612383; 41737534; 41327381; 41642456; 41648326 |\n| early_molecular_cascade | 25 | 23 | 2 | 3.839 | 41737534; 41179995; 41622228; 41683989; 41642456 |\n| tissue_network_consequence | 8 | 6 | 2 | 3.5 | 41622228; 41648607; 41792174; 41612383; 41511466 |\n| clinical_chronic_phenotype | 2 | 2 | 0 | 4.0 | 41734021; 41756282 |\n\n## Contradiction / Tension Shortlist\n\n- NLRP3 inflammasome -> drives -> IL-1\u03b2 release | support_only | PMIDs: 41712436; 41737534\n\n## Biomarker Summary\n\n- GFAP: `8` claim mentions\n- IL-10: `2` claim mentions\n- IL-6: `2` claim mentions\n- IL-1\u03b2: `2` claim mentions\n- C3: `2` claim mentions\n- pro-inflammatory cytokines (IL-1\u03b2, IL-6, TNF-\u03b1): `1` claim mentions\n- RAGE: `1` claim mentions\n- S100B (blood): `1` claim mentions\n\n## Target Summary\n\n- C3 via open_targets\n- GFAP via open_targets\n- IL10 via open_targets\n- IL6 via open_targets\n- NLRP3 via open_targets\n\n## Therapeutic / Compound Summary\n\n- Compound/mechanism enrichment not yet populated.\n\n## Active Trial Summary\n\n- Trial landscape not yet populated.\n\n## Preprint Watchlist\n\n- Preprint watchlist not yet populated.\n\n## 10x / Genomics Expression Signals\n\n- 10x or other genomics-expression enrichment not yet populated.\n\n## Open Questions / Evidence Gaps\n\n- Primary remaining queue pressure is `upgrade_source` with 11 paper(s).\n- No compound/mechanism enrichment has been added yet.\n- No active trial landscape has been added yet.\n- No preprint watchlist has been added yet.\n- No 10x or other genomics-expression enrichment has been added yet.\n\n## Remaining Work Queue\n\n- upgrade_source: PMID 41135688 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41173520 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41617128 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41622461 | abstract_only | abstract-only source limits mechanistic confidence\n- manual_review: PMID 41643638 | abstract_only | needs review or has extraction/artifact uncertainty\n- deepen_extraction: PMID 41675431 | full_text_like | full-text paper is captured but still shallow for investigation use\n- deepen_extraction: PMID 41675841 | full_text_like | full-text paper is captured but still shallow for investigation use\n- upgrade_source: PMID 41690666 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41700019 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41702482 | abstract_only | abstract-only source limits mechanistic confidence\n",
+      "raw_markdown": "# Mechanism Dossier: Neuroinflammation / Microglial Activation\n\n- Canonical mechanism: `neuroinflammation_microglial_activation`\n- Promotion status: `hold`\n- Promotion reason: mechanism still needs more deepening, cleanup, or translational context\n\n## Overview\n\n- Papers in packet: `60`\n- Claim rows: `84`\n- Source quality mix: `full_text_like` 48, `abstract_only` 12\n- Action lanes: `core_atlas_candidate` 44, `upgrade_source` 11, `deepen_extraction` 4, `manual_review` 1\n\n## Weighted Anchor Papers\n\n| PMID | Source Quality | Quality Bucket | Avg Depth | Example Claim |\n| --- | --- | --- | --- | --- |\n| 41612383 | full_text_like | high_signal | 5.0 | GAS6 in 3D-sEVs drives M1 to M2 microglial polarization. |\n| 41737534 | full_text_like | high_signal | 5.0 | TREM2 activation enhances microglial phagocytic clearance of pathological aggregates. |\n| 41737534 | full_text_like | high_signal | 5.0 | Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. |\n| 41179995 | full_text_like | high_signal | 5.0 | Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting... |\n| 41622228 | full_text_like | high_signal | 5.0 | Neuronal IFN-beta activates microglial IFNAR-STAT1 axis. |\n| 41683989 | full_text_like | high_signal | 5.0 | NLRP3 inflammasome activation mediates TBI-induced tau pathology. |\n| 41327381 | full_text_like | high_signal | 4.0 | mTBI induces axonal degeneration and glial activation in tracts orthogonal to the rotation axis. |\n| 41622228 | full_text_like | high_signal | 4.0 | NK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery. |\n| 41642456 | full_text_like | high_signal | 4.0 | Mechanical stretch induces dose-dependent astrocyte dysfunction. |\n| 41648326 | full_text_like | high_signal | 4.0 | TBI triggers astrocyte-to-neuron mitochondrial transfer. |\n\n## Strongest Atlas-Layer Rows\n\n| Atlas Layer | Papers | Full-text-like | Abstract-only | Avg Depth | Anchor PMIDs |\n| --- | --- | --- | --- | --- | --- |\n| cellular_response | 41 | 32 | 9 | 3.721 | 41612383; 41737534; 41327381; 41642456; 41648326 |\n| early_molecular_cascade | 25 | 23 | 2 | 3.839 | 41737534; 41179995; 41622228; 41683989; 41642456 |\n| tissue_network_consequence | 8 | 6 | 2 | 3.5 | 41622228; 41648607; 41792174; 41612383; 41511466 |\n| clinical_chronic_phenotype | 2 | 2 | 0 | 4.0 | 41734021; 41756282 |\n\n## Neuroinflammation Subtracks\n\n| Subtrack | Papers | Full-text-like | Abstract-only | Example Signal | Biomarker Focus | Queue Burden | Anchor PMIDs |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| NLRP3 / Cytokine lane | 26 | 22 | 4 | Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. | IL-1\u03b2; IL-10; IL-6; C3 | 7 | 41737534; 41683989; 41734021; 41824127 |\n| Microglial state-transition lane | 17 | 15 | 2 | GAS6 in 3D-sEVs drives M1 to M2 microglial polarization. | C3; GFAP; S100A10; AQP-4 polarization | 3 | 41612383; 41737534; 41824127; 41618372 |\n| AQP4 / Glymphatic / Astroglial lane | 25 | 19 | 6 | Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting... | GFAP; C3; NSE; S100\u03b2 | 7 | 41179995; 41642456; 41648326; 41824127 |\n\n## Contradiction / Tension Shortlist\n\n- NLRP3 inflammasome -> drives -> IL-1\u03b2 release | support_only | PMIDs: 41712436; 41737534\n\n## Biomarker Summary\n\n- GFAP: `8` claim mentions\n- IL-10: `2` claim mentions\n- IL-6: `2` claim mentions\n- IL-1\u03b2: `2` claim mentions\n- C3: `2` claim mentions\n- pro-inflammatory cytokines (IL-1\u03b2, IL-6, TNF-\u03b1): `1` claim mentions\n- RAGE: `1` claim mentions\n- S100B (blood): `1` claim mentions\n\n## Target Summary\n\n- C3 via open_targets\n- GFAP via open_targets\n- IL10 via open_targets\n- IL6 via open_targets\n- NLRP3 via open_targets\n\n## Therapeutic / Compound Summary\n\n- Compound/mechanism enrichment not yet populated.\n\n## Active Trial Summary\n\n- Trial landscape not yet populated.\n\n## Preprint Watchlist\n\n- Preprint watchlist not yet populated.\n\n## 10x / Genomics Expression Signals\n\n- 10x or other genomics-expression enrichment not yet populated.\n\n## Open Questions / Evidence Gaps\n\n- Primary remaining queue pressure is `upgrade_source` with 11 paper(s).\n- No compound/mechanism enrichment has been added yet.\n- No active trial landscape has been added yet.\n- No preprint watchlist has been added yet.\n- No 10x or other genomics-expression enrichment has been added yet.\n\n## Remaining Work Queue\n\n- upgrade_source: PMID 41135688 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41173520 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41617128 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41622461 | abstract_only | abstract-only source limits mechanistic confidence\n- manual_review: PMID 41643638 | abstract_only | needs review or has extraction/artifact uncertainty\n- deepen_extraction: PMID 41675431 | full_text_like | full-text paper is captured but still shallow for investigation use\n- deepen_extraction: PMID 41675841 | full_text_like | full-text paper is captured but still shallow for investigation use\n- upgrade_source: PMID 41690666 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41700019 | abstract_only | abstract-only source limits mechanistic confidence\n- upgrade_source: PMID 41702482 | abstract_only | abstract-only source limits mechanistic confidence\n",
       "canonical_mechanism": "neuroinflammation_microglial_activation",
       "promotion_status": "hold",
       "papers": 60,
@@ -560,7 +580,10 @@ window.ATLAS_VIEWER_DATA = {
       "compound_rows": 0,
       "trial_rows": 0,
       "preprint_rows": 0,
-      "genomics_rows": 0
+      "genomics_rows": 0,
+      "source_path": "reports/mechanism_dossiers_curated/neuroinflammation_microglial_activation_dossier_2026-03-25_211757.md",
+      "source_href": "../../reports/mechanism_dossiers_curated/neuroinflammation_microglial_activation_dossier_2026-03-25_211757.md",
+      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers_curated/neuroinflammation_microglial_activation_dossier_2026-03-25_211757.md"
     }
   ],
   "chapter": {
@@ -578,22 +601,25 @@ window.ATLAS_VIEWER_DATA = {
     "writing_priority": [
       "Draft the lead mechanism section in full.",
       "Use the second `near_ready` mechanism as the comparative chapter section.",
-      "Treat neuroinflammation as the larger integrating mechanism but keep it partially scaffolded until queue burden falls."
+      "Treat neuroinflammation as the integrating response layer, but write it through the narrower starter lanes instead of one broad inflammatory block."
     ],
     "immediate_follow_on": [
       "Add manual ChEMBL rows for the lead mechanism.",
       "Add targeted public-trial review for the lead mechanism to remove generic or weak trial matches.",
       "If 10x outputs become available, append them into the same dossier before locking the chapter narrative."
     ],
-    "raw_markdown": "# Starter Atlas Chapter Draft\n\nThis draft is dossier-driven. It is meant to be the first real writing artifact assembled from the investigation engine, not from manually rereading the whole corpus.\n\n## Lead Recommendation\n\n- Lead mechanism for the first chapter: **Blood-Brain Barrier Dysfunction**\n- Why now: status `near_ready`, queue burden `6`, target rows `5`, trial rows `0`.\n- Interpretation: start the first chapter where the atlas backbone is coherent and the cleanup burden is still bounded.\n\n## Chapter Framing\n\n- Chapter objective: explain how the starter mechanisms organize early injury biology, downstream network consequences, and translational hooks in TBI.\n- Writing rule: treat full-text-like anchors as primary evidence and abstract-only rows as provisional support only.\n- Current scope: blood-brain barrier dysfunction, mitochondrial dysfunction, and neuroinflammation / microglial activation.\n\n## Blood-Brain Barrier Dysfunction\n\n- Promotion status: `near_ready`\n- Readout: atlas backbone is usable but still needs bounded cleanup or enrichment\n\n### Current State\n\n- Papers in packet: `22`\n- Claim rows: `26`\n- Source quality mix: `full_text_like` 17, `abstract_only` 5\n- Action lanes: `core_atlas_candidate` 16, `upgrade_source` 5, `deepen_extraction` 1\n\n### Anchor Signals\n\n- | 41683989 | full_text_like | high_signal | 4.0 | TBI-induced BBB breakdown promotes neuroinflammation. |\n- | 41446731 | full_text_like | high_signal | 4.0 | rmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. |\n- | 41532955 | full_text_like | high_signal | 4.0 | Neutrophil-derived exosomes disrupt BBB integrity. |\n\n### Backbone Rows\n\n- | early_molecular_cascade | 11 | 9 | 2 | 3.545 | 41446731; 41660351; 41752185; 41756282; 41039850 |\n- | tissue_network_consequence | 7 | 6 | 1 | 3.714 | 41532955; 41748851; 41752185; 41039850; 41626582 |\n- | cellular_response | 4 | 2 | 2 | 3.4 | 41683989; 41673382; 41765742; 41786390 |\n\n### Translational / Enrichment Readout\n\n- Target: AQP4 via open_targets\n- Target: CLDN5 via open_targets\n- Target: MMP9 via open_targets\n\n### Remaining Gaps\n\n- Primary remaining queue pressure is `upgrade_source` with 5 paper(s).\n- No compound/mechanism enrichment has been added yet.\n- No active trial landscape has been added yet.\n- No preprint watchlist has been added yet.\n- No 10x or other genomics-expression enrichment has been added yet.\n- Work queue snapshot:\n  - upgrade_source: PMID 41173520 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41622481 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41740873 | abstract_only | abstract-only source limits mechanistic confidence\n  - deepen_extraction: PMID 41762323 | full_text_like | full-text paper is captured but still shallow for investigation use\n\n## Mitochondrial Dysfunction\n\n- Promotion status: `near_ready`\n- Readout: atlas backbone is usable but still needs bounded cleanup or enrichment\n\n### Current State\n\n- Papers in packet: `18`\n- Claim rows: `24`\n- Source quality mix: `full_text_like` 13, `abstract_only` 5\n- Action lanes: `core_atlas_candidate` 13, `upgrade_source` 5\n\n### Anchor Signals\n\n- | 41480492 | full_text_like | high_signal | 5.0 | MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis. |\n- | 41651694 | full_text_like | high_signal | 4.0 | Parkin overexpression alleviates TNI-induced neurotoxicity, apoptosis, and mitochondrial dysfunction. |\n- | 41651694 | full_text_like | high_signal | 4.0 | Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits. |\n\n### Backbone Rows\n\n- | early_molecular_cascade | 10 | 7 | 3 | 3.5 | 41651694; 41737534; 41623705; 41267966; 41752761 |\n- | cellular_response | 7 | 6 | 1 | 4.0 | 41480492; 41648326; 41651694; 41735605; 41737251 |\n- | tissue_network_consequence | 5 | 4 | 1 | 3.8 | 41651694; 41648607; 41735605; 41737534; 41709427 |\n\n### Translational / Enrichment Readout\n\n- Target: CAT via open_targets\n- Target: CYBB via open_targets\n- Target: KNG1 via open_targets\n\n### Remaining Gaps\n\n- Primary remaining queue pressure is `upgrade_source` with 5 paper(s).\n- No compound/mechanism enrichment has been added yet.\n- No active trial landscape has been added yet.\n- No preprint watchlist has been added yet.\n- No 10x or other genomics-expression enrichment has been added yet.\n- Work queue snapshot:\n  - upgrade_source: PMID 41636499 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41642156 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41709427 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41773418 | abstract_only | abstract-only source limits mechanistic confidence\n\n## Neuroinflammation / Microglial Activation\n\n- Promotion status: `hold`\n- Readout: mechanism still needs more deepening, cleanup, or translational context\n\n### Current State\n\n- Papers in packet: `60`\n- Claim rows: `84`\n- Source quality mix: `full_text_like` 48, `abstract_only` 12\n- Action lanes: `core_atlas_candidate` 44, `upgrade_source` 11, `deepen_extraction` 4, `manual_review` 1\n\n### Anchor Signals\n\n- | 41612383 | full_text_like | high_signal | 5.0 | GAS6 in 3D-sEVs drives M1 to M2 microglial polarization. |\n- | 41737534 | full_text_like | high_signal | 5.0 | TREM2 activation enhances microglial phagocytic clearance of pathological aggregates. |\n- | 41737534 | full_text_like | high_signal | 5.0 | Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. |\n\n### Backbone Rows\n\n- | cellular_response | 41 | 32 | 9 | 3.721 | 41612383; 41737534; 41327381; 41642456; 41648326 |\n- | early_molecular_cascade | 25 | 23 | 2 | 3.839 | 41737534; 41179995; 41622228; 41683989; 41642456 |\n- | tissue_network_consequence | 8 | 6 | 2 | 3.5 | 41622228; 41648607; 41792174; 41612383; 41511466 |\n\n### Translational / Enrichment Readout\n\n- Target: C3 via open_targets\n- Target: GFAP via open_targets\n- Target: IL10 via open_targets\n\n### Remaining Gaps\n\n- Primary remaining queue pressure is `upgrade_source` with 11 paper(s).\n- No compound/mechanism enrichment has been added yet.\n- No active trial landscape has been added yet.\n- No preprint watchlist has been added yet.\n- No 10x or other genomics-expression enrichment has been added yet.\n- Work queue snapshot:\n  - upgrade_source: PMID 41135688 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41173520 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41617128 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41622461 | abstract_only | abstract-only source limits mechanistic confidence\n\n## Writing Priority\n\n1. Draft the lead mechanism section in full.\n2. Use the second `near_ready` mechanism as the comparative chapter section.\n3. Treat neuroinflammation as the larger integrating mechanism but keep it partially scaffolded until queue burden falls.\n\n## Immediate Follow-on\n\n- Add manual ChEMBL rows for the lead mechanism.\n- Add targeted public-trial review for the lead mechanism to remove generic or weak trial matches.\n- If 10x outputs become available, append them into the same dossier before locking the chapter narrative.\n\n",
-    "preview_markdown": "# Starter Atlas Chapter Synthesis Draft\n\nThis draft is evidence-first. It is built from the mechanistic synthesis packet, which itself is derived from the chapter evidence ledger rather than from dossier recap alone.\n\n## Lead Recommendation\n\n- Lead chapter mechanism: **Blood-Brain Barrier Dysfunction**\n- Writing rule: use `ready` rows as assertive prose, `caution` rows as bounded interpretation, and `hold` rows only as unresolved context.\n- Scope: blood-brain barrier dysfunction, mitochondrial dysfunction, and neuroinflammation / microglial activation.\n\n## Blood-Brain Barrier Dysfunction\n\nrmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. This is reinforced by evidence that neutrophil-derived exosomes disrupt BBB integrity. The current atlas also places BBB disruption upstream of at least part of the inflammatory response.\n\n### Causal Sequence\n\n- `early_molecular_cascade` | `ready` | rmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. | PMIDs: 41446731; 41660351; 41752185; 41756282; 41039850\n- `cellular_response` | `caution` | TBI-induced BBB breakdown promotes neuroinflammation. | PMIDs: 41683989; 41673382; 41765742; 41786390\n- `tissue_network_consequence` | `ready` | Neutrophil-derived exosomes disrupt BBB integrity. | PMIDs: 41532955; 41748851; 41752185; 41039850; 41626582\n\n### Cross-Mechanism Links\n\n- Current BBB rows explicitly support a bridge into neuroinflammation, so BBB should be written as an upstream amplifier of inflammatory injury after TBI. Related mechanism: Neuroinflammation / Microglial Activation. PMIDs: 41683989; 41673382; 41765742; 41786390\n\n### Evidence Boundaries\n\n- Open blockers: needs source upgrade 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.\n\n### Translational Hooks\n\n- Translational hook: AQP4 (target_association)\n- Translational hook: CLDN5 (target_association)\n- Translational hook: MMP9 (target_association)\n\n### Immediate Next Actions\n\n- Upgrade the abstract-only support rows before locking final prose.\n\n## Mitochondrial Dysfunction\n\nMAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis.\n\n### Causal Sequence\n\n- `early_molecular_cascade` | `caution` | Parkin promotes mitochondrial biogenesis and fission while inhibiting mitochondrial fusion post-TBI. | PMIDs: 41651694; 41737534; 41623705; 41267966; 41752761\n- `cellular_response` | `ready` | MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis. | PMIDs: 41480492; 41648326; 41651694; 41735605; 41737251\n- `tissue_network_consequence` | `caution` | Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits. | PMIDs: 41651694; 41648607; 41735605; 41737534; 41709427\n\n### Cross-Mechanism Links\n\n- No mechanism bridge has reached writing-grade support yet.\n\n### Evidence Boundaries\n\n- Open blockers: needs source upgrade 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.\n\n### Translational Hooks\n\n- Translational hook: CAT (target_association)\n- Translational hook: CYBB (target_association)\n- Translational hook: KNG1 (target_association)\n\n### Immediate Next Actions\n\n- Upgrade the abstract-only support rows before locking final prose.\n\n## Neuroinflammation / Microglial Activation\n\nMicroglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. This is reinforced by evidence that NK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery.\n\n### Causal Sequence\n\n- `early_molecular_cascade` | `ready` | Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. | PMIDs: 41737534; 41179995; 41622228; 41683989; 41642456\n- `cellular_response` | `caution` | GAS6 in 3D-sEVs drives M1 to M2 microglial polarization. | PMIDs: 41612383; 41737534; 41327381; 41642456; 41648326\n- `tissue_network_consequence` | `ready` | NK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery. | PMIDs: 41622228; 41648607; 41792174; 41612383; 41511466\n\n### Cross-Mechanism Links\n\n- The inflammatory chapter should acknowledge that part of the immune signal likely sits downstream of BBB breakdown rather than being treated as a fully isolated mechanism. Related mechanism: Blood-Brain Barrier Dysfunction. PMIDs: 41683989; 41673382; 41765742; 41786390\n\n### Evidence Boundaries\n\n- Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.\n\n### Translational Hooks\n\n- Translational hook: C3 (target_association)\n- Translational hook: GFAP (target_association)\n- Translational hook: IL10 (target_association)\n\n### Immediate Next Actions\n\n- Use the stable blocks as the first atlas-writing paragraph set and keep provisional rows as bounded support.\n\n## Cross-Mechanism Synthesis\n\n- The current atlas is strongest when it treats BBB dysfunction as an early vascular gate that can feed forward into later inflammatory biology.\n- Mitochondrial dysfunction remains the best comparative intracellular injury program, but it still needs a denser bridge into the broader inflammatory layer.\n- Neuroinflammation is better handled as an integrating response layer than as the lead chapter until more bridge rows and cleanup reduce its burden.\n\n### Explicit Bridge Statements\n\n- Current BBB rows explicitly support a bridge into neuroinflammation, so BBB should be written as an upstream amplifier of inflammatory injury after TBI. | PMIDs: 41683989; 41673382; 41765742; 41786390\n- The inflammatory chapter should acknowledge that part of the immune signal likely sits downstream of BBB breakdown rather than being treated as a fully isolated mechanism. | PMIDs: 41683989; 41673382; 41765742; 41786390\n\n## Practical Follow-On\n\n- Keep the BBB section as the lead writing section.\n- Use mitochondrial dysfunction as the second section and keep its provisional rows clearly marked.\n- Treat neuroinflammation as the integrating downstream section rather than the opening chapter.\n- Finish the remaining BBB source upgrades before declaring the section locked.\n- Expand mitochondrial translational rows so the second section has a clearer intervention bridge.\n"
+    "raw_markdown": "# Starter Atlas Chapter Draft\n\nThis draft is dossier-driven. It is meant to be the first real writing artifact assembled from the investigation engine, not from manually rereading the whole corpus.\n\n## Lead Recommendation\n\n- Lead mechanism for the first chapter: **Blood-Brain Barrier Dysfunction**\n- Why now: status `near_ready`, queue burden `6`, target rows `5`, trial rows `0`.\n- Interpretation: start the first chapter where the atlas backbone is coherent and the cleanup burden is still bounded.\n\n## Chapter Framing\n\n- Chapter objective: explain how the starter mechanisms organize early injury biology, downstream network consequences, and translational hooks in TBI.\n- Writing rule: treat full-text-like anchors as primary evidence and abstract-only rows as provisional support only.\n- Current scope: blood-brain barrier dysfunction, mitochondrial dysfunction, and neuroinflammation / microglial activation.\n\n## Blood-Brain Barrier Dysfunction\n\n- Promotion status: `near_ready`\n- Readout: atlas backbone is usable but still needs bounded cleanup or enrichment\n\n### Current State\n\n- Papers in packet: `22`\n- Claim rows: `26`\n- Source quality mix: `full_text_like` 17, `abstract_only` 5\n- Action lanes: `core_atlas_candidate` 16, `upgrade_source` 5, `deepen_extraction` 1\n\n### Anchor Signals\n\n- | 41683989 | full_text_like | high_signal | 4.0 | TBI-induced BBB breakdown promotes neuroinflammation. |\n- | 41446731 | full_text_like | high_signal | 4.0 | rmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. |\n- | 41532955 | full_text_like | high_signal | 4.0 | Neutrophil-derived exosomes disrupt BBB integrity. |\n\n### Backbone Rows\n\n- | early_molecular_cascade | 11 | 9 | 2 | 3.545 | 41446731; 41660351; 41752185; 41756282; 41039850 |\n- | tissue_network_consequence | 7 | 6 | 1 | 3.714 | 41532955; 41748851; 41752185; 41039850; 41626582 |\n- | cellular_response | 4 | 2 | 2 | 3.4 | 41683989; 41673382; 41765742; 41786390 |\n\n### Translational / Enrichment Readout\n\n- Target: AQP4 via open_targets\n- Target: CLDN5 via open_targets\n- Target: MMP9 via open_targets\n\n### Remaining Gaps\n\n- Primary remaining queue pressure is `upgrade_source` with 5 paper(s).\n- No compound/mechanism enrichment has been added yet.\n- No active trial landscape has been added yet.\n- No preprint watchlist has been added yet.\n- No 10x or other genomics-expression enrichment has been added yet.\n- Work queue snapshot:\n  - upgrade_source: PMID 41173520 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41622481 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41740873 | abstract_only | abstract-only source limits mechanistic confidence\n  - deepen_extraction: PMID 41762323 | full_text_like | full-text paper is captured but still shallow for investigation use\n\n## Mitochondrial Dysfunction\n\n- Promotion status: `near_ready`\n- Readout: atlas backbone is usable but still needs bounded cleanup or enrichment\n\n### Current State\n\n- Papers in packet: `18`\n- Claim rows: `24`\n- Source quality mix: `full_text_like` 13, `abstract_only` 5\n- Action lanes: `core_atlas_candidate` 13, `upgrade_source` 5\n\n### Anchor Signals\n\n- | 41480492 | full_text_like | high_signal | 5.0 | MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis. |\n- | 41651694 | full_text_like | high_signal | 4.0 | Parkin overexpression alleviates TNI-induced neurotoxicity, apoptosis, and mitochondrial dysfunction. |\n- | 41651694 | full_text_like | high_signal | 4.0 | Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits. |\n\n### Backbone Rows\n\n- | early_molecular_cascade | 10 | 7 | 3 | 3.5 | 41651694; 41737534; 41623705; 41267966; 41752761 |\n- | cellular_response | 7 | 6 | 1 | 4.0 | 41480492; 41648326; 41651694; 41735605; 41737251 |\n- | tissue_network_consequence | 5 | 4 | 1 | 3.8 | 41651694; 41648607; 41735605; 41737534; 41709427 |\n\n### Translational / Enrichment Readout\n\n- Target: CAT via open_targets\n- Target: CYBB via open_targets\n- Target: KNG1 via open_targets\n\n### Remaining Gaps\n\n- Primary remaining queue pressure is `upgrade_source` with 5 paper(s).\n- No compound/mechanism enrichment has been added yet.\n- No active trial landscape has been added yet.\n- No preprint watchlist has been added yet.\n- No 10x or other genomics-expression enrichment has been added yet.\n- Work queue snapshot:\n  - upgrade_source: PMID 41636499 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41642156 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41709427 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41773418 | abstract_only | abstract-only source limits mechanistic confidence\n\n## Neuroinflammation / Microglial Activation\n\n- Promotion status: `hold`\n- Readout: mechanism still needs more deepening, cleanup, or translational context\n\n### Current State\n\n- Papers in packet: `60`\n- Claim rows: `84`\n- Source quality mix: `full_text_like` 48, `abstract_only` 12\n- Action lanes: `core_atlas_candidate` 44, `upgrade_source` 11, `deepen_extraction` 4, `manual_review` 1\n\n### Anchor Signals\n\n- | 41612383 | full_text_like | high_signal | 5.0 | GAS6 in 3D-sEVs drives M1 to M2 microglial polarization. |\n- | 41737534 | full_text_like | high_signal | 5.0 | TREM2 activation enhances microglial phagocytic clearance of pathological aggregates. |\n- | 41737534 | full_text_like | high_signal | 5.0 | Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. |\n\n### Backbone Rows\n\n- | cellular_response | 41 | 32 | 9 | 3.721 | 41612383; 41737534; 41327381; 41642456; 41648326 |\n- | early_molecular_cascade | 25 | 23 | 2 | 3.839 | 41737534; 41179995; 41622228; 41683989; 41642456 |\n- | tissue_network_consequence | 8 | 6 | 2 | 3.5 | 41622228; 41648607; 41792174; 41612383; 41511466 |\n\n### Narrower Neuroinflammation Lanes\n\n- NLRP3 / Cytokine lane: papers `26`, full-text-like `22`, abstract-only `4`, queue burden `7`. Example signal: Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release.. Biomarker focus: IL-1\u03b2; IL-10; IL-6; C3. Anchor PMIDs: 41737534; 41683989; 41734021; 41824127.\n- Microglial state-transition lane: papers `17`, full-text-like `15`, abstract-only `2`, queue burden `3`. Example signal: GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.. Biomarker focus: C3; GFAP; S100A10; AQP-4 polarization. Anchor PMIDs: 41612383; 41737534; 41824127; 41618372.\n- AQP4 / Glymphatic / Astroglial lane: papers `25`, full-text-like `19`, abstract-only `6`, queue burden `7`. Example signal: Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting.... Biomarker focus: GFAP; C3; NSE; S100\u03b2. Anchor PMIDs: 41179995; 41642456; 41648326; 41824127.\n\n### Translational / Enrichment Readout\n\n- Target: C3 via open_targets\n- Target: GFAP via open_targets\n- Target: IL10 via open_targets\n\n### Remaining Gaps\n\n- Primary remaining queue pressure is `upgrade_source` with 11 paper(s).\n- No compound/mechanism enrichment has been added yet.\n- No active trial landscape has been added yet.\n- No preprint watchlist has been added yet.\n- No 10x or other genomics-expression enrichment has been added yet.\n- Work queue snapshot:\n  - upgrade_source: PMID 41135688 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41173520 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41617128 | abstract_only | abstract-only source limits mechanistic confidence\n  - upgrade_source: PMID 41622461 | abstract_only | abstract-only source limits mechanistic confidence\n\n## Writing Priority\n\n1. Draft the lead mechanism section in full.\n2. Use the second `near_ready` mechanism as the comparative chapter section.\n3. Treat neuroinflammation as the integrating response layer, but write it through the narrower starter lanes instead of one broad inflammatory block.\n\n## Immediate Follow-on\n\n- Add manual ChEMBL rows for the lead mechanism.\n- Add targeted public-trial review for the lead mechanism to remove generic or weak trial matches.\n- If 10x outputs become available, append them into the same dossier before locking the chapter narrative.\n\n",
+    "preview_markdown": "# Starter Atlas Chapter Synthesis Draft\n\nThis draft is evidence-first. It is built from the mechanistic synthesis packet, which itself is derived from the chapter evidence ledger rather than from dossier recap alone.\n\n## Lead Recommendation\n\n- Lead chapter mechanism: **Blood-Brain Barrier Dysfunction**\n- Writing rule: use `ready` rows as assertive prose, `caution` rows as bounded interpretation, and `hold` rows only as unresolved context.\n- Scope: blood-brain barrier dysfunction, mitochondrial dysfunction, and neuroinflammation / microglial activation.\n\n## Canonical Demo Chapter\n\nThe first proof-of-concept chapter should be **Blood-Brain Barrier Dysfunction**.\n\n### Demo Paragraph 1\n\nrmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. This is reinforced by evidence that neutrophil-derived exosomes disrupt BBB integrity. The current atlas also places BBB disruption upstream of at least part of the inflammatory response.\n\n### Demo Paragraph 2\n\nrmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. This sequence then extends into a downstream cellular-response lane in which TBI-induced BBB breakdown promotes neuroinflammation. It remains visible at the tissue/network level because neutrophil-derived exosomes disrupt BBB integrity.\n\n### Demo Paragraph 3\n\nCurrent BBB rows explicitly support a bridge into neuroinflammation, so BBB should be written as an upstream amplifier of inflammatory injury after TBI. The bridge and downstream language should stay bounded until the remaining upgrade and deepening items are cleared.\n\n### Demo Paragraph 4\n\nThe current translational lane is still early, but the atlas already points to AQP4, CLDN5, MMP9 as the most actionable targets for the first proof-of-concept pass.\n\n### Why This Mechanism First\n\n- It has the cleanest early-to-downstream causal structure in the current atlas.\n- It already carries an explicit bridge into neuroinflammatory amplification.\n- Its remaining uncertainty is bounded enough to support a strong proof-of-concept chapter now.\n\n## Blood-Brain Barrier Dysfunction\n\nrmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. This is reinforced by evidence that neutrophil-derived exosomes disrupt BBB integrity. The current atlas also places BBB disruption upstream of at least part of the inflammatory response.\n\n### Canonical Demo Narrative\n\nrmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. This is reinforced by evidence that neutrophil-derived exosomes disrupt BBB integrity. The current atlas also places BBB disruption upstream of at least part of the inflammatory response.\n\nrmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. This sequence then extends into a downstream cellular-response lane in which TBI-induced BBB breakdown promotes neuroinflammation. It remains visible at the tissue/network level because neutrophil-derived exosomes disrupt BBB integrity.\n\nCurrent BBB rows explicitly support a bridge into neuroinflammation, so BBB should be written as an upstream amplifier of inflammatory injury after TBI. The bridge and downstream language should stay bounded until the remaining upgrade and deepening items are cleared.\n\nThe current translational lane is still early, but the atlas already points to AQP4, CLDN5, MMP9 as the most actionable targets for the first proof-of-concept pass.\n\n### Causal Sequence\n\n- `early_molecular_cascade` | `ready` | rmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. | PMIDs: 41446731; 41660351; 41752185; 41756282; 41039850\n- `cellular_response` | `caution` | TBI-induced BBB breakdown promotes neuroinflammation. | PMIDs: 41683989; 41673382; 41765742; 41786390\n- `tissue_network_consequence` | `ready` | Neutrophil-derived exosomes disrupt BBB integrity. | PMIDs: 41532955; 41748851; 41752185; 41039850; 41626582\n\n### Cross-Mechanism Links\n\n- Current BBB rows explicitly support a bridge into neuroinflammation, so BBB should be written as an upstream amplifier of inflammatory injury after TBI. Related mechanism: Neuroinflammation / Microglial Activation. PMIDs: 41683989; 41673382; 41765742; 41786390\n\n### Evidence Boundaries\n\n- Open blockers: needs source upgrade 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.\n\n### Translational Hooks\n\n- Translational hook: AQP4 (target_association)\n- Translational hook: CLDN5 (target_association)\n- Translational hook: MMP9 (target_association)\n\n### Immediate Next Actions\n\n- Upgrade the abstract-only support rows before locking final prose.\n\n## Mitochondrial Dysfunction\n\nMAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis.\n\n### Causal Sequence\n\n- `early_molecular_cascade` | `caution` | Parkin promotes mitochondrial biogenesis and fission while inhibiting mitochondrial fusion post-TBI. | PMIDs: 41651694; 41737534; 41623705; 41267966; 41752761\n- `cellular_response` | `ready` | MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis. | PMIDs: 41480492; 41648326; 41651694; 41735605; 41737251\n- `tissue_network_consequence` | `caution` | Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits. | PMIDs: 41651694; 41648607; 41735605; 41737534; 41709427\n\n### Cross-Mechanism Links\n\n- No mechanism bridge has reached writing-grade support yet.\n\n### Evidence Boundaries\n\n- Open blockers: needs source upgrade 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.\n\n### Translational Hooks\n\n- Translational hook: CAT (target_association)\n- Translational hook: CYBB (target_association)\n- Translational hook: KNG1 (target_association)\n\n### Immediate Next Actions\n\n- Upgrade the abstract-only support rows before locking final prose.\n\n## Neuroinflammation / Microglial Activation\n\nNeuroinflammation is better handled as narrower starter lanes than as one broad block: NLRP3 / Cytokine lane, Microglial state-transition lane, AQP4 / Glymphatic / Astroglial lane. The current strongest lane indicates that microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. A second lane captures that GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.\n\n### Causal Sequence\n\n- `early_molecular_cascade` | `caution` | Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. | PMIDs: 41737534; 41683989; 41734021; 41103638; 41480492\n- `cellular_response` | `caution` | GAS6 in 3D-sEVs drives M1 to M2 microglial polarization. | PMIDs: 41612383; 41737534; 41824127; 41618372; 41625091\n- `early_molecular_cascade` | `hold` | Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100\u03b2, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration. | PMIDs: 41179995; 41642456; 41648326; 41103638; 41508250\n- `tissue_network_consequence` | `ready` | NK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery. | PMIDs: 41622228; 41648607; 41792174; 41612383; 41511466\n\n### Cross-Mechanism Links\n\n- The inflammatory chapter should acknowledge that part of the immune signal likely sits downstream of BBB breakdown rather than being treated as a fully isolated mechanism. Related mechanism: Blood-Brain Barrier Dysfunction. PMIDs: 41683989; 41673382; 41765742; 41786390\n\n### Evidence Boundaries\n\n- Open blockers: needs deeper extraction 1, needs source upgrade 1, needs adjudication 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.\n\n### Translational Hooks\n\n- Translational hook: C3 (target_association)\n- Translational hook: GFAP (target_association)\n- Translational hook: IL10 (target_association)\n\n### Immediate Next Actions\n\n- Upgrade the abstract-only support rows before locking final prose.\n- Deepen the shallow full-text rows so the mechanism sequence is more explicit.\n\n## Cross-Mechanism Synthesis\n\n- The current atlas is strongest when it treats BBB dysfunction as an early vascular gate that can feed forward into later inflammatory biology.\n- Mitochondrial dysfunction remains the best comparative intracellular injury program, but it still needs a denser bridge into the broader inflammatory layer.\n- Neuroinflammation is better handled as an integrating response layer than as the lead chapter until more bridge rows and cleanup reduce its burden.\n\n### Explicit Bridge Statements\n\n- Current BBB rows explicitly support a bridge into neuroinflammation, so BBB should be written as an upstream amplifier of inflammatory injury after TBI. | PMIDs: 41683989; 41673382; 41765742; 41786390\n- The inflammatory chapter should acknowledge that part of the immune signal likely sits downstream of BBB breakdown rather than being treated as a fully isolated mechanism. | PMIDs: 41683989; 41673382; 41765742; 41786390\n\n## Practical Follow-On\n\n- Keep the BBB section as the lead writing section.\n- Use mitochondrial dysfunction as the second section and keep its provisional rows clearly marked.\n- Treat neuroinflammation as the integrating downstream section rather than the opening chapter.\n- Finish the remaining BBB source upgrades before declaring the section locked.\n- Expand mitochondrial translational rows so the second section has a clearer intervention bridge.\n"
   },
   "ledger": [
     {
       "canonical_mechanism": "blood_brain_barrier_disruption",
       "mechanism_display_name": "Blood-Brain Barrier Dysfunction",
       "mechanism_promotion_status": "near_ready",
+      "row_kind": "atlas_layer_backbone",
       "atlas_layer": "early_molecular_cascade",
+      "mechanism_subtrack": "",
+      "mechanism_subtrack_display_name": "",
       "paper_count": "11",
       "supporting_pmids": "41446731; 41660351; 41752185; 41756282; 41039850",
       "proposed_narrative_claim": "rmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5.",
@@ -621,7 +647,10 @@ window.ATLAS_VIEWER_DATA = {
       "canonical_mechanism": "blood_brain_barrier_disruption",
       "mechanism_display_name": "Blood-Brain Barrier Dysfunction",
       "mechanism_promotion_status": "near_ready",
+      "row_kind": "atlas_layer_backbone",
       "atlas_layer": "tissue_network_consequence",
+      "mechanism_subtrack": "",
+      "mechanism_subtrack_display_name": "",
       "paper_count": "7",
       "supporting_pmids": "41532955; 41748851; 41752185; 41039850; 41626582",
       "proposed_narrative_claim": "Neutrophil-derived exosomes disrupt BBB integrity.",
@@ -649,7 +678,10 @@ window.ATLAS_VIEWER_DATA = {
       "canonical_mechanism": "blood_brain_barrier_disruption",
       "mechanism_display_name": "Blood-Brain Barrier Dysfunction",
       "mechanism_promotion_status": "near_ready",
+      "row_kind": "atlas_layer_backbone",
       "atlas_layer": "cellular_response",
+      "mechanism_subtrack": "",
+      "mechanism_subtrack_display_name": "",
       "paper_count": "4",
       "supporting_pmids": "41683989; 41673382; 41765742; 41786390",
       "proposed_narrative_claim": "TBI-induced BBB breakdown promotes neuroinflammation.",
@@ -677,7 +709,10 @@ window.ATLAS_VIEWER_DATA = {
       "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
       "mechanism_display_name": "Mitochondrial Dysfunction",
       "mechanism_promotion_status": "near_ready",
+      "row_kind": "atlas_layer_backbone",
       "atlas_layer": "cellular_response",
+      "mechanism_subtrack": "",
+      "mechanism_subtrack_display_name": "",
       "paper_count": "7",
       "supporting_pmids": "41480492; 41648326; 41651694; 41735605; 41737251",
       "proposed_narrative_claim": "MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis.",
@@ -705,7 +740,10 @@ window.ATLAS_VIEWER_DATA = {
       "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
       "mechanism_display_name": "Mitochondrial Dysfunction",
       "mechanism_promotion_status": "near_ready",
+      "row_kind": "atlas_layer_backbone",
       "atlas_layer": "early_molecular_cascade",
+      "mechanism_subtrack": "",
+      "mechanism_subtrack_display_name": "",
       "paper_count": "10",
       "supporting_pmids": "41651694; 41737534; 41623705; 41267966; 41752761",
       "proposed_narrative_claim": "Parkin promotes mitochondrial biogenesis and fission while inhibiting mitochondrial fusion post-TBI.",
@@ -733,7 +771,10 @@ window.ATLAS_VIEWER_DATA = {
       "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
       "mechanism_display_name": "Mitochondrial Dysfunction",
       "mechanism_promotion_status": "near_ready",
+      "row_kind": "atlas_layer_backbone",
       "atlas_layer": "tissue_network_consequence",
+      "mechanism_subtrack": "",
+      "mechanism_subtrack_display_name": "",
       "paper_count": "5",
       "supporting_pmids": "41651694; 41648607; 41735605; 41737534; 41709427",
       "proposed_narrative_claim": "Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits.",
@@ -761,35 +802,10 @@ window.ATLAS_VIEWER_DATA = {
       "canonical_mechanism": "neuroinflammation_microglial_activation",
       "mechanism_display_name": "Neuroinflammation / Microglial Activation",
       "mechanism_promotion_status": "hold",
-      "atlas_layer": "early_molecular_cascade",
-      "paper_count": "25",
-      "supporting_pmids": "41737534; 41179995; 41622228; 41683989; 41642456",
-      "proposed_narrative_claim": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release.",
-      "best_anchor_claim_text": "NLRP3 inflammasome activation in microglia drives caspase-1-mediated maturation of IL-1\u03b2 and IL-18, exacerbating neuroinflammation in AD and TBI.",
-      "best_anchor_pmid": "41737534",
-      "source_quality_mix": "full_text_like:23; abstract_only:2",
-      "quality_mix": "high_signal:5",
-      "contradiction_signal": "none_detected",
-      "action_blockers": "none",
-      "confidence_bucket": "stable",
-      "promotion_note": "ready to write",
-      "strength_tag": "speculative",
-      "source_quality_breakdown": [
-        {
-          "label": "full_text_like",
-          "count": 23
-        },
-        {
-          "label": "abstract_only",
-          "count": 2
-        }
-      ]
-    },
-    {
-      "canonical_mechanism": "neuroinflammation_microglial_activation",
-      "mechanism_display_name": "Neuroinflammation / Microglial Activation",
-      "mechanism_promotion_status": "hold",
+      "row_kind": "atlas_layer_backbone",
       "atlas_layer": "tissue_network_consequence",
+      "mechanism_subtrack": "",
+      "mechanism_subtrack_display_name": "",
       "paper_count": "8",
       "supporting_pmids": "41622228; 41648607; 41792174; 41612383; 41511466",
       "proposed_narrative_claim": "NK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery.",
@@ -817,7 +833,41 @@ window.ATLAS_VIEWER_DATA = {
       "canonical_mechanism": "neuroinflammation_microglial_activation",
       "mechanism_display_name": "Neuroinflammation / Microglial Activation",
       "mechanism_promotion_status": "hold",
+      "row_kind": "atlas_layer_backbone",
+      "atlas_layer": "early_molecular_cascade",
+      "mechanism_subtrack": "nlrp3_cytokine_lane",
+      "mechanism_subtrack_display_name": "NLRP3 / Cytokine lane",
+      "paper_count": "25",
+      "supporting_pmids": "41737534; 41179995; 41622228; 41683989; 41642456",
+      "proposed_narrative_claim": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release.",
+      "best_anchor_claim_text": "NLRP3 inflammasome activation in microglia drives caspase-1-mediated maturation of IL-1\u03b2 and IL-18, exacerbating neuroinflammation in AD and TBI.",
+      "best_anchor_pmid": "41737534",
+      "source_quality_mix": "full_text_like:23; abstract_only:2",
+      "quality_mix": "high_signal:5",
+      "contradiction_signal": "none_detected",
+      "action_blockers": "none",
+      "confidence_bucket": "stable",
+      "promotion_note": "ready to write",
+      "strength_tag": "speculative",
+      "source_quality_breakdown": [
+        {
+          "label": "full_text_like",
+          "count": 23
+        },
+        {
+          "label": "abstract_only",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "canonical_mechanism": "neuroinflammation_microglial_activation",
+      "mechanism_display_name": "Neuroinflammation / Microglial Activation",
+      "mechanism_promotion_status": "hold",
+      "row_kind": "atlas_layer_backbone",
       "atlas_layer": "cellular_response",
+      "mechanism_subtrack": "microglial_state_transition_lane",
+      "mechanism_subtrack_display_name": "Microglial state-transition lane",
       "paper_count": "41",
       "supporting_pmids": "41612383; 41737534; 41327381; 41642456; 41648326",
       "proposed_narrative_claim": "GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.",
@@ -840,14 +890,131 @@ window.ATLAS_VIEWER_DATA = {
           "count": 9
         }
       ]
+    },
+    {
+      "canonical_mechanism": "neuroinflammation_microglial_activation",
+      "mechanism_display_name": "Neuroinflammation / Microglial Activation",
+      "mechanism_promotion_status": "hold",
+      "row_kind": "mechanism_subtrack_focus",
+      "atlas_layer": "cellular_response",
+      "mechanism_subtrack": "microglial_state_transition_lane",
+      "mechanism_subtrack_display_name": "Microglial state-transition lane",
+      "paper_count": "13",
+      "supporting_pmids": "41612383; 41737534; 41824127; 41618372; 41625091",
+      "proposed_narrative_claim": "GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.",
+      "best_anchor_claim_text": "3D-sEVs promote M1 to M2 microglial polarization via GAS6 delivery.",
+      "best_anchor_pmid": "41612383",
+      "source_quality_mix": "full_text_like:11; abstract_only:2",
+      "quality_mix": "high_signal:10; usable:3",
+      "contradiction_signal": "none_detected",
+      "action_blockers": "upgrade_source:2",
+      "confidence_bucket": "provisional",
+      "promotion_note": "needs source upgrade",
+      "strength_tag": "speculative",
+      "source_quality_breakdown": [
+        {
+          "label": "full_text_like",
+          "count": 11
+        },
+        {
+          "label": "abstract_only",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "canonical_mechanism": "neuroinflammation_microglial_activation",
+      "mechanism_display_name": "Neuroinflammation / Microglial Activation",
+      "mechanism_promotion_status": "hold",
+      "row_kind": "mechanism_subtrack_focus",
+      "atlas_layer": "early_molecular_cascade",
+      "mechanism_subtrack": "nlrp3_cytokine_lane",
+      "mechanism_subtrack_display_name": "NLRP3 / Cytokine lane",
+      "paper_count": "25",
+      "supporting_pmids": "41737534; 41683989; 41734021; 41103638; 41480492",
+      "proposed_narrative_claim": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release.",
+      "best_anchor_claim_text": "NLRP3 inflammasome activation in microglia drives caspase-1-mediated maturation of IL-1\u03b2 and IL-18, exacerbating neuroinflammation in AD and TBI.",
+      "best_anchor_pmid": "41737534",
+      "source_quality_mix": "full_text_like:21; abstract_only:4",
+      "quality_mix": "high_signal:20; usable:5",
+      "contradiction_signal": "none_detected",
+      "action_blockers": "upgrade_source:4; deepen_extraction:3",
+      "confidence_bucket": "provisional",
+      "promotion_note": "needs deeper extraction",
+      "strength_tag": "speculative",
+      "source_quality_breakdown": [
+        {
+          "label": "full_text_like",
+          "count": 21
+        },
+        {
+          "label": "abstract_only",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "canonical_mechanism": "neuroinflammation_microglial_activation",
+      "mechanism_display_name": "Neuroinflammation / Microglial Activation",
+      "mechanism_promotion_status": "hold",
+      "row_kind": "mechanism_subtrack_focus",
+      "atlas_layer": "early_molecular_cascade",
+      "mechanism_subtrack": "aqp4_glymphatic_astroglial_lane",
+      "mechanism_subtrack_display_name": "AQP4 / Glymphatic / Astroglial lane",
+      "paper_count": "20",
+      "supporting_pmids": "41179995; 41642456; 41648326; 41103638; 41508250",
+      "proposed_narrative_claim": "Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100\u03b2, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration.",
+      "best_anchor_claim_text": "Genetic knock-out of AQP-4 aggravates post-TBI glymphatic dysfunction, leading to accumulation of tau protein, S100\u03b2, GFAP, and NSE, promoting neurofibrillary pathology, neuroinflammation, and neurodegeneration.",
+      "best_anchor_pmid": "41179995",
+      "source_quality_mix": "full_text_like:16; abstract_only:4",
+      "quality_mix": "high_signal:17; usable:2; review_needed:1",
+      "contradiction_signal": "none_detected",
+      "action_blockers": "upgrade_source:3; deepen_extraction:1; manual_review:1",
+      "confidence_bucket": "hold",
+      "promotion_note": "needs adjudication",
+      "strength_tag": "speculative",
+      "source_quality_breakdown": [
+        {
+          "label": "full_text_like",
+          "count": 16
+        },
+        {
+          "label": "abstract_only",
+          "count": 4
+        }
+      ]
     }
   ],
   "workpack": {
     "why_now": [
-      "Blood-Brain Barrier Dysfunction: stable ledger rows `2`, provisional ledger rows `1`",
-      "Mitochondrial Dysfunction: stable ledger rows `1`, provisional ledger rows `2`"
+      "Mitochondrial Dysfunction: stable ledger rows `1`, provisional ledger rows `2`",
+      "Blood-Brain Barrier Dysfunction: stable ledger rows `2`, provisional ledger rows `1`"
     ],
     "top_priorities": [
+      {
+        "title": "Mitochondrial Dysfunction -> `PRKN`",
+        "details": [
+          "Priority: `high` | full-text-like hits `3` | high-signal hits `0`",
+          "Example claim: Parkin overexpression alleviates TNI-induced neurotoxicity, apoptosis, and mitochondrial dysfunction.",
+          "Supporting PMIDs: 41651694"
+        ]
+      },
+      {
+        "title": "Mitochondrial Dysfunction -> `CYBB`",
+        "details": [
+          "Priority: `high` | full-text-like hits `1` | high-signal hits `0`",
+          "Example claim: NOX2 inhibition is neuroprotective in TBI.",
+          "Supporting PMIDs: 41737534"
+        ]
+      },
+      {
+        "title": "Mitochondrial Dysfunction -> `KNG1`",
+        "details": [
+          "Priority: `high` | full-text-like hits `1` | high-signal hits `0`",
+          "Example claim: KNG1 knockdown attenuates oxidative stress.",
+          "Supporting PMIDs: 41737251"
+        ]
+      },
       {
         "title": "Blood-Brain Barrier Dysfunction -> `OCLN`",
         "details": [
@@ -863,45 +1030,21 @@ window.ATLAS_VIEWER_DATA = {
           "Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.",
           "Supporting PMIDs: 41039850; 41446731; 41532955; 41752185"
         ]
-      },
-      {
-        "title": "Blood-Brain Barrier Dysfunction -> `TJP1`",
-        "details": [
-          "Priority: `high` | full-text-like hits `4` | high-signal hits `0`",
-          "Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.",
-          "Supporting PMIDs: 41039850; 41446731; 41532955; 41752185"
-        ]
-      },
-      {
-        "title": "Blood-Brain Barrier Dysfunction -> `MMP9`",
-        "details": [
-          "Priority: `high` | full-text-like hits `3` | high-signal hits `0`",
-          "Example claim: MMP-9 activity drives blood-brain barrier disruption.",
-          "Supporting PMIDs: 41465583; 41752185; 41801080"
-        ]
-      },
-      {
-        "title": "Blood-Brain Barrier Dysfunction -> `AQP4`",
-        "details": [
-          "Priority: `medium` | full-text-like hits `1` | high-signal hits `0`",
-          "Example claim: Trigonelline reduces MMP-9 and AQP4 expression to preserve BBB integrity.",
-          "Supporting PMIDs: 41801080"
-        ]
       }
     ],
     "fill_targets": [
-      "Open Targets manual template: `reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-25_204556.csv`",
-      "ChEMBL manual template: `reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-25_204556.csv`"
+      "Open Targets manual template: `reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-25_211757.csv`",
+      "ChEMBL manual template: `reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-25_211757.csv`"
     ],
     "fill_order": [
-      "BBB tight-junction and barrier-maintenance targets first.",
-      "BBB permeability / inflammatory mediators second.",
-      "Mitochondrial rescue / oxidative stress targets third."
+      "Mitochondrial rescue / oxidative stress targets first.",
+      "Mitochondrial target-linked ChEMBL compounds and trial searches second.",
+      "BBB barrier-maintenance targets third."
     ],
     "next_move": [
-      "Fill the ChEMBL template for the top 5 targets above, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`."
+      "Fill the ChEMBL template for the top mitochondrial targets above using the seeded query terms and assay keywords, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`."
     ],
-    "raw_markdown": "# Manual Enrichment Workpack\n\nThis workpack is the next manual connector pass for the starter atlas. It focuses on the mechanisms that are closest to writing-grade status.\n\n## Why These Targets Now\n\n- Blood-Brain Barrier Dysfunction: stable ledger rows `2`, provisional ledger rows `1`\n- Mitochondrial Dysfunction: stable ledger rows `1`, provisional ledger rows `2`\n\n## Top 5 Manual Enrichment Priorities\n\n1. Blood-Brain Barrier Dysfunction -> `OCLN`\n   Priority: `high` | full-text-like hits `5` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41532955; 41673382; 41752185\n2. Blood-Brain Barrier Dysfunction -> `CLDN5`\n   Priority: `high` | full-text-like hits `4` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41446731; 41532955; 41752185\n3. Blood-Brain Barrier Dysfunction -> `TJP1`\n   Priority: `high` | full-text-like hits `4` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41446731; 41532955; 41752185\n4. Blood-Brain Barrier Dysfunction -> `MMP9`\n   Priority: `high` | full-text-like hits `3` | high-signal hits `0`\n   Example claim: MMP-9 activity drives blood-brain barrier disruption.\n   Supporting PMIDs: 41465583; 41752185; 41801080\n5. Blood-Brain Barrier Dysfunction -> `AQP4`\n   Priority: `medium` | full-text-like hits `1` | high-signal hits `0`\n   Example claim: Trigonelline reduces MMP-9 and AQP4 expression to preserve BBB integrity.\n   Supporting PMIDs: 41801080\n\n## Fill Targets\n\n- Open Targets manual template: `reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-25_204556.csv`\n- ChEMBL manual template: `reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-25_204556.csv`\n\n## Recommended Fill Order\n\n1. BBB tight-junction and barrier-maintenance targets first.\n2. BBB permeability / inflammatory mediators second.\n3. Mitochondrial rescue / oxidative stress targets third.\n\n## Practical Next Move\n\n- Fill the ChEMBL template for the top 5 targets above, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`.\n\n"
+    "raw_markdown": "# Manual Enrichment Workpack\n\nThis workpack is the next manual connector pass for the starter atlas. It now uses a mitochondrial-first ranking so target, compound, and trial follow-up stay aligned.\n\n## Why These Targets Now\n\n- Mitochondrial Dysfunction: stable ledger rows `1`, provisional ledger rows `2`\n- Blood-Brain Barrier Dysfunction: stable ledger rows `2`, provisional ledger rows `1`\n\n## Top 5 Manual Enrichment Priorities\n\n1. Mitochondrial Dysfunction -> `PRKN`\n   Priority: `high` | full-text-like hits `3` | high-signal hits `0`\n   Example claim: Parkin overexpression alleviates TNI-induced neurotoxicity, apoptosis, and mitochondrial dysfunction.\n   Supporting PMIDs: 41651694\n2. Mitochondrial Dysfunction -> `CYBB`\n   Priority: `high` | full-text-like hits `1` | high-signal hits `0`\n   Example claim: NOX2 inhibition is neuroprotective in TBI.\n   Supporting PMIDs: 41737534\n3. Mitochondrial Dysfunction -> `KNG1`\n   Priority: `high` | full-text-like hits `1` | high-signal hits `0`\n   Example claim: KNG1 knockdown attenuates oxidative stress.\n   Supporting PMIDs: 41737251\n4. Blood-Brain Barrier Dysfunction -> `OCLN`\n   Priority: `high` | full-text-like hits `5` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41532955; 41673382; 41752185\n5. Blood-Brain Barrier Dysfunction -> `CLDN5`\n   Priority: `high` | full-text-like hits `4` | high-signal hits `0`\n   Example claim: PBCA-mNGF repairs TBI-disrupted BBB structure and function.\n   Supporting PMIDs: 41039850; 41446731; 41532955; 41752185\n\n## Fill Targets\n\n- Open Targets manual template: `reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-25_211757.csv`\n- ChEMBL manual template: `reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-25_211757.csv`\n\n## Recommended Fill Order\n\n1. Mitochondrial rescue / oxidative stress targets first.\n2. Mitochondrial target-linked ChEMBL compounds and trial searches second.\n3. BBB barrier-maintenance targets third.\n\n## Practical Next Move\n\n- Fill the ChEMBL template for the top mitochondrial targets above using the seeded query terms and assay keywords, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`.\n\n"
   },
   "bridge_rows": [
     {
@@ -1090,6 +1233,8 @@ window.ATLAS_VIEWER_DATA = {
   "release_manifest": {
     "summary": {
       "lead_chapter_candidate": "Blood-Brain Barrier Dysfunction",
+      "canonical_demo_ready": 1,
+      "bounded_demo_ready": 0,
       "core_atlas_now": 0,
       "core_atlas_candidates": 1,
       "review_track": 0,
@@ -1117,30 +1262,9 @@ window.ATLAS_VIEWER_DATA = {
         "recommended_next_move": "upgrade_remaining_abstract_support",
         "release_bucket": "core_atlas_candidate",
         "chapter_role": "lead_section",
-        "recommended_action": "close_last_gaps_then_write"
-      },
-      {
-        "canonical_mechanism": "neuroinflammation_microglial_activation",
-        "display_name": "Neuroinflammation / Microglial Activation",
-        "promotion_status": "hold",
-        "readiness_score": "9",
-        "gate_status": "hold",
-        "stable_rows": "2",
-        "provisional_rows": "1",
-        "blocked_rows": "0",
-        "bridge_rows": "1",
-        "translational_hook_rows": "3",
-        "queue_burden": "16",
-        "target_rows": "5",
-        "compound_rows": "0",
-        "trial_rows": "0",
-        "preprint_rows": "0",
-        "genomics_rows": "0",
-        "blocker_summary": "none",
-        "recommended_next_move": "add_target_and_compound_enrichment",
-        "release_bucket": "hold",
-        "chapter_role": "hold",
-        "recommended_action": "add_target_and_compound_enrichment"
+        "recommended_action": "close_last_gaps_then_write",
+        "demo_status": "canonical_demo_ready",
+        "demo_reason": "lead mechanism has enough stable structure and bridge support to anchor the proof-of-concept chapter now"
       },
       {
         "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
@@ -1163,10 +1287,37 @@ window.ATLAS_VIEWER_DATA = {
         "recommended_next_move": "upgrade_remaining_abstract_support",
         "release_bucket": "hold",
         "chapter_role": "hold",
-        "recommended_action": "upgrade_remaining_abstract_support"
+        "recommended_action": "upgrade_remaining_abstract_support",
+        "demo_status": "supporting_section",
+        "demo_reason": "mechanism is better used as a supporting or follow-on section than the primary demo chapter"
+      },
+      {
+        "canonical_mechanism": "neuroinflammation_microglial_activation",
+        "display_name": "Neuroinflammation / Microglial Activation",
+        "promotion_status": "hold",
+        "readiness_score": "0",
+        "gate_status": "hold",
+        "stable_rows": "2",
+        "provisional_rows": "3",
+        "blocked_rows": "3",
+        "bridge_rows": "1",
+        "translational_hook_rows": "3",
+        "queue_burden": "16",
+        "target_rows": "5",
+        "compound_rows": "0",
+        "trial_rows": "0",
+        "preprint_rows": "0",
+        "genomics_rows": "0",
+        "blocker_summary": "needs adjudication; needs deeper extraction; needs source upgrade",
+        "recommended_next_move": "upgrade_remaining_abstract_support",
+        "release_bucket": "hold",
+        "chapter_role": "hold",
+        "recommended_action": "upgrade_remaining_abstract_support",
+        "demo_status": "supporting_section",
+        "demo_reason": "mechanism is better used as a supporting or follow-on section than the primary demo chapter"
       }
     ],
-    "quality_gate_csv": "reports/atlas_quality_gate/atlas_quality_gate_2026-03-25_204559.csv"
+    "quality_gate_csv": "reports/atlas_quality_gate/atlas_quality_gate_2026-03-25_211759.csv"
   },
   "decision_brief": {
     "review_date": "Wednesday, March 25, 2026",
@@ -1358,8 +1509,8 @@ window.ATLAS_VIEWER_DATA = {
         "full_text_like": 48,
         "abstract_only": 12,
         "stable_rows": 2,
-        "provisional_rows": 1,
-        "blocked_rows": 0,
+        "provisional_rows": 3,
+        "blocked_rows": 3,
         "signal_rows": 9,
         "queue_burden": 16,
         "chapter_gate_status": "hold",
@@ -1425,7 +1576,7 @@ window.ATLAS_VIEWER_DATA = {
         "max_queue_burden": 12
       }
     },
-    "release_manifest_csv": "reports/atlas_release_manifest/atlas_release_manifest_2026-03-25_204600.csv"
+    "release_manifest_csv": "reports/atlas_release_manifest/atlas_release_manifest_2026-03-25_211800.csv"
   },
   "hypothesis_candidates": {
     "rows": [
@@ -1506,12 +1657,12 @@ window.ATLAS_VIEWER_DATA = {
         "display_name": "Neuroinflammation / Microglial Activation",
         "hypothesis_type": "mechanistic_driver",
         "title": "Neuroinflammation / Microglial Activation driver hypothesis",
-        "statement": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. This may propagate through gAS6 in 3D-sEVs drives M1 to M2 microglial polarization. and culminate in nK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery..",
-        "strength_tag": "assertive",
+        "statement": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. This may propagate through aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100\u03b2, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration. and culminate in gAS6 in 3D-sEVs drives M1 to M2 microglial polarization..",
+        "strength_tag": "moderate",
         "why_now": "ready_now for idea generation with 60 papers and 16 queue items.",
-        "supporting_pmids": "41737534; 41179995; 41622228; 41683989; 41642456; 41737534; 41179995; 41622228; 41683989; 41642456; 41612383; 41737534; 41327381; 41642456; 41648326",
+        "supporting_pmids": "41737534; 41683989; 41734021; 41103638; 41480492; 41737534; 41683989; 41734021; 41103638; 41480492; 41179995; 41642456; 41648326; 41103638; 41508250",
         "next_test": "Pressure-test the chain against the best full-text anchors and see whether the same ordering survives after blocker cleanup.",
-        "blockers": "Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation."
+        "blockers": "Open blockers: needs deeper extraction 1, needs source upgrade 1, needs adjudication 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation."
       },
       {
         "canonical_mechanism": "neuroinflammation_microglial_activation",
@@ -1521,7 +1672,7 @@ window.ATLAS_VIEWER_DATA = {
         "statement": "The neuroinflammation bucket is likely hiding multiple distinct idea lanes: inflammasome/cytokine signaling, microglial state transition, and glymphatic/astroglial response should be evaluated separately rather than as one monolith.",
         "strength_tag": "moderate",
         "why_now": "This mechanism has 60 papers, so narrowing scope is more useful than adding more volume.",
-        "supporting_pmids": "41737534; 41179995; 41622228; 41683989; 41642456; 41612383; 41737534; 41327381; 41642456; 41648326",
+        "supporting_pmids": "41737534; 41683989; 41734021; 41103638; 41480492; 41179995; 41642456; 41648326; 41103638; 41508250",
         "next_test": "Split the next atlas pass into explicit NLRP3, TREM2/GAS6, and AQP4/glymphatic subtracks.",
         "blockers": "queue_burden"
       },
@@ -1621,12 +1772,12 @@ window.ATLAS_VIEWER_DATA = {
           "display_name": "Neuroinflammation / Microglial Activation",
           "hypothesis_type": "mechanistic_driver",
           "title": "Neuroinflammation / Microglial Activation driver hypothesis",
-          "statement": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. This may propagate through gAS6 in 3D-sEVs drives M1 to M2 microglial polarization. and culminate in nK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery..",
-          "strength_tag": "assertive",
+          "statement": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. This may propagate through aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100\u03b2, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration. and culminate in gAS6 in 3D-sEVs drives M1 to M2 microglial polarization..",
+          "strength_tag": "moderate",
           "why_now": "ready_now for idea generation with 60 papers and 16 queue items.",
-          "supporting_pmids": "41737534; 41179995; 41622228; 41683989; 41642456; 41737534; 41179995; 41622228; 41683989; 41642456; 41612383; 41737534; 41327381; 41642456; 41648326",
+          "supporting_pmids": "41737534; 41683989; 41734021; 41103638; 41480492; 41737534; 41683989; 41734021; 41103638; 41480492; 41179995; 41642456; 41648326; 41103638; 41508250",
           "next_test": "Pressure-test the chain against the best full-text anchors and see whether the same ordering survives after blocker cleanup.",
-          "blockers": "Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation."
+          "blockers": "Open blockers: needs deeper extraction 1, needs source upgrade 1, needs adjudication 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation."
         },
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
@@ -1636,7 +1787,7 @@ window.ATLAS_VIEWER_DATA = {
           "statement": "The neuroinflammation bucket is likely hiding multiple distinct idea lanes: inflammasome/cytokine signaling, microglial state transition, and glymphatic/astroglial response should be evaluated separately rather than as one monolith.",
           "strength_tag": "moderate",
           "why_now": "This mechanism has 60 papers, so narrowing scope is more useful than adding more volume.",
-          "supporting_pmids": "41737534; 41179995; 41622228; 41683989; 41642456; 41612383; 41737534; 41327381; 41642456; 41648326",
+          "supporting_pmids": "41737534; 41683989; 41734021; 41103638; 41480492; 41179995; 41642456; 41648326; 41103638; 41508250",
           "next_test": "Split the next atlas pass into explicit NLRP3, TREM2/GAS6, and AQP4/glymphatic subtracks.",
           "blockers": "queue_burden"
         },
@@ -1716,6 +1867,7 @@ window.ATLAS_VIEWER_DATA = {
           "strength_tag": "moderate"
         }
       ],
+      "subtracks": [],
       "caveat": {
         "statement": "Open blockers: needs source upgrade 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.",
         "strength_tag": "moderate"
@@ -1774,6 +1926,7 @@ window.ATLAS_VIEWER_DATA = {
           "strength_tag": "moderate"
         }
       ],
+      "subtracks": [],
       "caveat": {
         "statement": "Open blockers: needs source upgrade 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.",
         "strength_tag": "moderate"
@@ -1784,26 +1937,34 @@ window.ATLAS_VIEWER_DATA = {
       "canonical_mechanism": "neuroinflammation_microglial_activation",
       "display_name": "Neuroinflammation / Microglial Activation",
       "thesis": {
-        "statement": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. This is reinforced by evidence that NK cell depletion reduces neuroinflammation and improves sensorimotor/cognitive recovery.",
-        "supporting_pmids": "41737534; 41179995; 41622228; 41683989; 41642456",
-        "strength_tag": "assertive"
+        "statement": "Neuroinflammation is better handled as narrower starter lanes than as one broad block: NLRP3 / Cytokine lane, Microglial state-transition lane, AQP4 / Glymphatic / Astroglial lane. The current strongest lane indicates that microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. A second lane captures that GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.",
+        "supporting_pmids": "41737534; 41683989; 41734021; 41103638; 41480492",
+        "strength_tag": "moderate"
       },
       "steps": [
         {
           "atlas_layer": "early_molecular_cascade",
           "statement": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release.",
-          "supporting_pmids": "41737534; 41179995; 41622228; 41683989; 41642456",
-          "strength_tag": "assertive",
-          "confidence_bucket": "stable",
-          "write_status": "ready_to_write"
+          "supporting_pmids": "41737534; 41683989; 41734021; 41103638; 41480492",
+          "strength_tag": "moderate",
+          "confidence_bucket": "provisional",
+          "write_status": "write_with_caution"
         },
         {
           "atlas_layer": "cellular_response",
           "statement": "GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.",
-          "supporting_pmids": "41612383; 41737534; 41327381; 41642456; 41648326",
+          "supporting_pmids": "41612383; 41737534; 41824127; 41618372; 41625091",
           "strength_tag": "moderate",
           "confidence_bucket": "provisional",
           "write_status": "write_with_caution"
+        },
+        {
+          "atlas_layer": "early_molecular_cascade",
+          "statement": "Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100\u03b2, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration.",
+          "supporting_pmids": "41179995; 41642456; 41648326; 41103638; 41508250",
+          "strength_tag": "speculative",
+          "confidence_bucket": "hold",
+          "write_status": "hold"
         },
         {
           "atlas_layer": "tissue_network_consequence",
@@ -1840,11 +2001,31 @@ window.ATLAS_VIEWER_DATA = {
           "strength_tag": "moderate"
         }
       ],
+      "subtracks": [
+        {
+          "name": "NLRP3 / Cytokine lane",
+          "statement": "Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release.",
+          "supporting_pmids": "41737534; 41683989; 41734021; 41103638; 41480492",
+          "strength_tag": "moderate"
+        },
+        {
+          "name": "Microglial state-transition lane",
+          "statement": "GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.",
+          "supporting_pmids": "41612383; 41737534; 41824127; 41618372; 41625091",
+          "strength_tag": "moderate"
+        },
+        {
+          "name": "AQP4 / Glymphatic / Astroglial lane",
+          "statement": "Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100\u03b2, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration.",
+          "supporting_pmids": "41179995; 41642456; 41648326; 41103638; 41508250",
+          "strength_tag": "speculative"
+        }
+      ],
       "caveat": {
-        "statement": "Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.",
+        "statement": "Open blockers: needs deeper extraction 1, needs source upgrade 1, needs adjudication 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.",
         "strength_tag": "moderate"
       },
-      "next_action": "Use the stable blocks as the first atlas-writing paragraph set and keep provisional rows as bounded support."
+      "next_action": "Upgrade the abstract-only support rows before locking final prose."
     }
   },
   "execution_map": [
@@ -1855,7 +2036,24 @@ window.ATLAS_VIEWER_DATA = {
       "trigger": "Runs automatically on GitHub Actions.",
       "operator_decision": "No weekly decision required unless the Saturday brief shows a blocker spike or topic drift.",
       "workflow_or_command": "GitHub workflows: ongoing_literature_cycle.yml -> refresh_atlas_from_ongoing_cycle.yml -> refresh_public_enrichment.yml",
-      "unlocks": "Fresh corpus, fresh extraction, fresh atlas, fresh dashboard snapshot."
+      "unlocks": "Fresh corpus, fresh extraction, fresh atlas, fresh dashboard snapshot.",
+      "actions": [
+        {
+          "label": "Open daily workflow",
+          "href": "https://github.com/matthewdholtkamp/testfile/actions/workflows/ongoing_literature_cycle.yml",
+          "kind": "workflow"
+        },
+        {
+          "label": "Open atlas refresh workflow",
+          "href": "https://github.com/matthewdholtkamp/testfile/actions/workflows/refresh_atlas_from_ongoing_cycle.yml",
+          "kind": "workflow"
+        },
+        {
+          "label": "Open public enrichment workflow",
+          "href": "https://github.com/matthewdholtkamp/testfile/actions/workflows/refresh_public_enrichment.yml",
+          "kind": "workflow"
+        }
+      ]
     },
     {
       "id": "saturday-control-surface",
@@ -1864,7 +2062,19 @@ window.ATLAS_VIEWER_DATA = {
       "trigger": "Read the Decision Brief at the top of the Atlas Viewer.",
       "operator_decision": "Choose whether to keep Blood-Brain Barrier Dysfunction as the lead mechanism and approve the next curation queue.",
       "workflow_or_command": "GitHub workflow: weekly_human_review_packet.yml",
-      "unlocks": "Keeps the weekly human pass bounded to 1-2 pages of decisions instead of full-report review."
+      "unlocks": "Keeps the weekly human pass bounded to 1-2 pages of decisions instead of full-report review.",
+      "actions": [
+        {
+          "label": "Open Saturday workflow",
+          "href": "https://github.com/matthewdholtkamp/testfile/actions/workflows/weekly_human_review_packet.yml",
+          "kind": "workflow"
+        },
+        {
+          "label": "Open atlas book",
+          "href": "../atlas-book/index.html",
+          "kind": "view"
+        }
+      ]
     },
     {
       "id": "manual-enrichment-cycle",
@@ -1873,7 +2083,24 @@ window.ATLAS_VIEWER_DATA = {
       "trigger": "Use this after approving OCLN, CLDN5, TJP1, MMP9, PRKN.",
       "operator_decision": "Accept the target queue and fill the ChEMBL/Open Targets rows for the chosen targets.",
       "workflow_or_command": "Local command: python3 scripts/run_manual_enrichment_cycle.py --default-to-auto",
-      "unlocks": "Stronger release readiness for BBB and mitochondrial chapters. Current BBB release bucket: core_atlas_candidate."
+      "unlocks": "Stronger release readiness for BBB and mitochondrial chapters. Current BBB release bucket: core_atlas_candidate.",
+      "actions": [
+        {
+          "label": "Open target packet index",
+          "href": "../../reports/target_enrichment_packets/target_enrichment_packet_index_2026-03-25_211801.md",
+          "kind": "local"
+        },
+        {
+          "label": "Open ChEMBL template",
+          "href": "../../reports/manual_enrichment_seed_pack/chembl_manual_fill_template_2026-03-25_211757.csv",
+          "kind": "local"
+        },
+        {
+          "label": "Open Open Targets template",
+          "href": "../../reports/manual_enrichment_seed_pack/open_targets_manual_fill_template_2026-03-25_211757.csv",
+          "kind": "local"
+        }
+      ]
     },
     {
       "id": "idea-generation-pass",
@@ -1882,7 +2109,19 @@ window.ATLAS_VIEWER_DATA = {
       "trigger": "Current readiness: 3 mechanism(s) idea-ready.",
       "operator_decision": "Decide which candidate ideas deserve immediate writing, enrichment, or narrowing.",
       "workflow_or_command": "Generated artifact + dashboard section: reports/hypothesis_candidates + Atlas Viewer > Candidate Ideas",
-      "unlocks": "Moves the atlas from structured synthesis into explicit hypothesis lanes."
+      "unlocks": "Moves the atlas from structured synthesis into explicit hypothesis lanes.",
+      "actions": [
+        {
+          "label": "Open hypothesis candidates",
+          "href": "../../reports/hypothesis_candidates/hypothesis_candidates_2026-03-25_211801.json",
+          "kind": "local"
+        },
+        {
+          "label": "Open chapter synthesis draft",
+          "href": "../../reports/atlas_chapter_synthesis_draft_curated/starter_atlas_chapter_synthesis_draft_2026-03-25_211758.md",
+          "kind": "local"
+        }
+      ]
     },
     {
       "id": "neuro-narrowing-pass",
@@ -1891,7 +2130,19 @@ window.ATLAS_VIEWER_DATA = {
       "trigger": "Use this when neuroinflammation remains broad with queue burden 16.",
       "operator_decision": "Approve tighter subtracks instead of adding more broad neuro papers.",
       "workflow_or_command": "Targeted action: treat NLRP3, TREM2/GAS6, and AQP4/glymphatic response as separate subtracks in the next atlas pass.",
-      "unlocks": "Makes neuroinflammation more hypothesis-generative and less diffuse."
+      "unlocks": "Makes neuroinflammation more hypothesis-generative and less diffuse.",
+      "actions": [
+        {
+          "label": "Open review packets",
+          "href": "../../reports/mechanism_review_packets/mechanism_review_packet_index_2026-03-25_211800.md",
+          "kind": "local"
+        },
+        {
+          "label": "Open target packet index",
+          "href": "../../reports/target_enrichment_packets/target_enrichment_packet_index_2026-03-25_211801.md",
+          "kind": "local"
+        }
+      ]
     },
     {
       "id": "tenx-import-lane",
@@ -1900,7 +2151,19 @@ window.ATLAS_VIEWER_DATA = {
       "trigger": "Use once actual 10x exports are available this week.",
       "operator_decision": "Decide whether real genomics exports are ready to import.",
       "workflow_or_command": "Local sidecar path: drop 10x exports into local_connector_inputs and rerun python3 scripts/run_connector_sidecar.py --build-tenx-template",
-      "unlocks": "Adds cell-type and pathway evidence without blocking the core atlas. Current mitochondrial release bucket: hold."
+      "unlocks": "Adds cell-type and pathway evidence without blocking the core atlas. Current mitochondrial release bucket: hold.",
+      "actions": [
+        {
+          "label": "Open 10x template",
+          "href": "../../reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-03-25_211517.csv",
+          "kind": "local"
+        },
+        {
+          "label": "Open connector guide",
+          "href": "../../CONNECTOR_ENRICHMENT.md",
+          "kind": "local"
+        }
+      ]
     }
   ]
 };

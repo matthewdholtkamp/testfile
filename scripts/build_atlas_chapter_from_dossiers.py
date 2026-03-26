@@ -83,6 +83,10 @@ def extract_table_rows(text, heading, limit=5):
     return rows
 
 
+def parse_markdown_table_row(row):
+    return [normalize_spaces(part) for part in row.strip().strip('|').split('|')]
+
+
 def parse_index_rows(path):
     text = read_text(path)
     rows = []
@@ -126,6 +130,7 @@ def build_section(display_name, dossier_text):
     overview = extract_section_bullets(dossier_text, 'Overview')
     anchors = extract_table_rows(dossier_text, 'Weighted Anchor Papers', limit=3)
     atlas_rows = extract_table_rows(dossier_text, 'Strongest Atlas-Layer Rows', limit=3)
+    neuro_subtracks = extract_table_rows(dossier_text, 'Neuroinflammation Subtracks', limit=6)
     targets = extract_section_bullets(dossier_text, 'Target Summary')
     trials = extract_section_bullets(dossier_text, 'Active Trial Summary')
     preprints = extract_section_bullets(dossier_text, 'Preprint Watchlist')
@@ -158,6 +163,21 @@ def build_section(display_name, dossier_text):
             lines.append(f'- {row}')
     else:
         lines.append('- No backbone rows found.')
+
+    if 'Neuroinflammation' in display_name:
+        lines.extend(['', '### Narrower Neuroinflammation Lanes', ''])
+        if neuro_subtracks:
+            for row in neuro_subtracks:
+                parts = parse_markdown_table_row(row)
+                if len(parts) >= 8:
+                    lines.append(
+                        f"- {parts[0]}: papers `{parts[1]}`, full-text-like `{parts[2]}`, abstract-only `{parts[3]}`, "
+                        f"queue burden `{parts[6]}`. Example signal: {parts[4]}. Biomarker focus: {parts[5]}. Anchor PMIDs: {parts[7] or 'none'}."
+                    )
+                else:
+                    lines.append(f'- {row}')
+        else:
+            lines.append('- Neuroinflammation has not yet been decomposed into narrower starter lanes in this dossier.')
 
     lines.extend(['', '### Translational / Enrichment Readout', ''])
     if targets and not (len(targets) == 1 and 'not yet populated' in targets[0].lower()):
@@ -247,7 +267,7 @@ def main():
         '',
         '1. Draft the lead mechanism section in full.',
         '2. Use the second `near_ready` mechanism as the comparative chapter section.',
-        '3. Treat neuroinflammation as the larger integrating mechanism but keep it partially scaffolded until queue burden falls.',
+        '3. Treat neuroinflammation as the integrating response layer, but write it through the narrower starter lanes instead of one broad inflammatory block.',
         '',
         '## Immediate Follow-on',
         '',

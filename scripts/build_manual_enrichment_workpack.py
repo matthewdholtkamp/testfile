@@ -8,8 +8,8 @@ from glob import glob
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MECHANISM_ORDER = [
-    'blood_brain_barrier_disruption',
     'mitochondrial_bioenergetic_dysfunction',
+    'blood_brain_barrier_disruption',
     'neuroinflammation_microglial_activation',
 ]
 DISPLAY_NAMES = {
@@ -47,6 +47,8 @@ def mechanism_sort_key(row):
     mechanism = normalize_spaces(row.get('canonical_mechanism', ''))
     return (
         MECHANISM_ORDER.index(mechanism) if mechanism in MECHANISM_ORDER else 99,
+        normalize_spaces(row.get('focus_track', '')) != 'mitochondrial_focus',
+        -normalize_int(row.get('priority_score')),
         PRIORITY_ORDER.get(normalize_spaces(row.get('priority', '')).lower(), 99),
         -normalize_int(row.get('full_text_like_hits')),
         -normalize_int(row.get('high_signal_hits')),
@@ -71,7 +73,7 @@ def render_workpack(seed_rows, ledger_rows, chembl_template_path, open_targets_t
     lines = [
         '# Manual Enrichment Workpack',
         '',
-        'This workpack is the next manual connector pass for the starter atlas. It focuses on the mechanisms that are closest to writing-grade status.',
+        'This workpack is the next manual connector pass for the starter atlas. It now uses a mitochondrial-first ranking so target, compound, and trial follow-up stay aligned.',
         '',
         '## Why These Targets Now',
         '',
@@ -103,13 +105,13 @@ def render_workpack(seed_rows, ledger_rows, chembl_template_path, open_targets_t
         '',
         '## Recommended Fill Order',
         '',
-        '1. BBB tight-junction and barrier-maintenance targets first.',
-        '2. BBB permeability / inflammatory mediators second.',
-        '3. Mitochondrial rescue / oxidative stress targets third.',
+        '1. Mitochondrial rescue / oxidative stress targets first.',
+        '2. Mitochondrial target-linked ChEMBL compounds and trial searches second.',
+        '3. BBB barrier-maintenance targets third.',
         '',
         '## Practical Next Move',
         '',
-        '- Fill the ChEMBL template for the top 5 targets above, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`.',
+        '- Fill the ChEMBL template for the top mitochondrial targets above using the seeded query terms and assay keywords, then rerun `python scripts/run_manual_enrichment_cycle.py --default-to-auto`.',
         '',
     ])
     return '\n'.join(lines) + '\n'

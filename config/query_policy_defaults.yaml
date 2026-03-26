@@ -1,0 +1,52 @@
+version: 1
+
+defaults:
+  species_scope: human_preferred
+  literature_window_years: 3
+  sanctioned_overrides:
+    - widen_literature_window
+    - include_completed_trials
+    - include_experimental_compounds
+    - include_nonhuman_support
+
+connectors:
+  chembl:
+    compound_scope: approved_then_clinical
+    sanctioned_overrides:
+      - include_experimental_compounds
+  clinicaltrials_gov:
+    trial_statuses:
+      - RECRUITING
+      - NOT_YET_RECRUITING
+      - ACTIVE_NOT_RECRUITING
+    trial_phases:
+      - PHASE2
+      - PHASE3
+    sanctioned_overrides:
+      - include_completed_trials
+      - include_phase1_trials
+  biorxiv_medrxiv:
+    preprint_window_days: 90
+    sanctioned_overrides:
+      - widen_preprint_window
+
+presets:
+  starter_mechanism_deep_dive:
+    literature_window_years: 5
+  biomarker_to_target:
+    species_scope: human_only
+    compound_scope: approved_then_clinical
+  mechanism_to_therapeutic:
+    species_scope: human_only
+    compound_scope: approved_then_clinical
+    trial_statuses:
+      - RECRUITING
+      - ACTIVE_NOT_RECRUITING
+    trial_phases:
+      - PHASE2
+      - PHASE3
+  preprint_surveillance:
+    preprint_window_days: 60
+  single_cell_mechanism_deep_dive:
+    species_scope: human_preferred
+    literature_window_years: 5

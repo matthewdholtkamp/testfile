@@ -5,6 +5,13 @@ from collections import Counter, defaultdict
 from datetime import datetime
 from glob import glob
 
+from neuroinflammation_subtracks import (
+    NEUROINFLAMMATION_MECHANISM,
+    NEUROINFLAMMATION_SUBTRACK_ORDER,
+    neuroinflammation_subtrack_display_name,
+    primary_neuroinflammation_subtrack,
+)
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STARTER_MECHANISMS = [
@@ -166,10 +173,12 @@ def render_summary(rows):
         lines.append(f'- {label}: `{count}`')
     lines.extend(['', '## Rows', ''])
     for row in rows:
+        subtrack = row.get('mechanism_subtrack_display_name', '')
         lines.extend([
             f"### {row['mechanism_display_name']} / {row['atlas_layer']}",
             '',
             f"- Promotion status: `{row['mechanism_promotion_status']}`",
+            *( [f"- Neuroinflammation subtrack: `{subtrack}`"] if subtrack else [] ),
             f"- Confidence bucket: `{row['confidence_bucket']}`",
             f"- Promotion note: `{row['promotion_note']}`",
             f"- Proposed narrative claim: {row['proposed_narrative_claim']}",
@@ -212,9 +221,12 @@ def main():
     action_lookup = {normalize_spaces(row.get('pmid', '')): row for row in action_rows if normalize_spaces(row.get('pmid', ''))}
 
     claims_by_bucket = defaultdict(list)
+    claims_by_mechanism = defaultdict(list)
     for row in claim_rows:
         mechanism = normalize_spaces(row.get('canonical_mechanism', ''))
         atlas_layer = normalize_spaces(row.get('atlas_layer', ''))
+        if mechanism in STARTER_MECHANISMS:
+            claims_by_mechanism[mechanism].append(row)
         if mechanism in STARTER_MECHANISMS and atlas_layer:
             claims_by_bucket[(mechanism, atlas_layer)].append(row)
 
@@ -264,12 +276,27 @@ def main():
             full_text_count = normalize_int(backbone_row.get('full_text_like_papers'))
             abstract_count = normalize_int(backbone_row.get('abstract_only_papers'))
             confidence_bucket = classify_confidence(full_text_count, abstract_count, contradiction_hits, blocker_rows)
+            mechanism_subtrack = ''
+            mechanism_subtrack_display_name = ''
+            if mechanism == NEUROINFLAMMATION_MECHANISM:
+                mechanism_subtrack = primary_neuroinflammation_subtrack(
+                    best_claim.get('normalized_claim', ''),
+                    best_claim.get('claim_text', ''),
+                    best_claim.get('biomarker_families', ''),
+                    best_claim.get('biomarkers', ''),
+                    best_claim.get('cell_type', ''),
+                    best_claim.get('anatomy', ''),
+                )
+                mechanism_subtrack_display_name = neuroinflammation_subtrack_display_name(mechanism_subtrack)
 
             ledger_rows.append({
                 'canonical_mechanism': mechanism,
                 'mechanism_display_name': display_name,
                 'mechanism_promotion_status': status_row.get('promotion_status', ''),
+                'row_kind': 'atlas_layer_backbone',
                 'atlas_layer': atlas_layer,
+                'mechanism_subtrack': mechanism_subtrack,
+                'mechanism_subtrack_display_name': mechanism_subtrack_display_name,
                 'paper_count': normalize_int(backbone_row.get('paper_count')),
                 'supporting_pmids': '; '.join(anchor_pmids[:5]),
                 'proposed_narrative_claim': normalize_spaces(best_claim.get('normalized_claim', '') or best_claim.get('claim_text', '') or backbone_row.get('representative_claims', '').split(' || ')[0]),
@@ -283,9 +310,75 @@ def main():
                 'promotion_note': promotion_note(contradiction_hits, blocker_rows),
             })
 
+        if mechanism == NEUROINFLAMMATION_MECHANISM:
+            for subtrack in NEUROINFLAMMATION_SUBTRACK_ORDER:
+                matching_claims = [
+                    row for row in claims_by_mechanism.get(mechanism, [])
+                    if primary_neuroinflammation_subtrack(
+                        row.get('normalized_claim', ''),
+                        row.get('claim_text', ''),
+                        row.get('biomarker_families', ''),
+                        row.get('biomarkers', ''),
+                        row.get('cell_type', ''),
+                        row.get('anatomy', ''),
+                    ) == subtrack
+                ]
+                if not matching_claims:
+                    continue
+
+                ranked_claims = rank_claim_rows(matching_claims, paper_lookup, [])
+                best_claim = ranked_claims[0]
+                subtrack_pmids = []
+                for row in ranked_claims:
+                    pmid = normalize_spaces(row.get('pmid', ''))
+                    if pmid and pmid not in subtrack_pmids:
+                        subtrack_pmids.append(pmid)
+                blocker_rows = []
+                seen_pmids = set()
+                for pmid in subtrack_pmids:
+                    action_row = action_lookup.get(pmid)
+                    if action_row and normalize_spaces(action_row.get('action_lane', '')) not in {'', 'core_atlas_candidate'} and pmid not in seen_pmids:
+                        blocker_rows.append(action_row)
+                        seen_pmids.add(pmid)
+                contradiction_hits = []
+                seen_keys = set()
+                for pmid in subtrack_pmids:
+                    for row in contradiction_by_pmid.get(pmid, []):
+                        key = normalize_spaces(row.get('edge_key', ''))
+                        if key and key not in seen_keys:
+                            contradiction_hits.append(row)
+                            seen_keys.add(key)
+                pmid_rows = [paper_lookup.get(pmid, {}) for pmid in subtrack_pmids if paper_lookup.get(pmid, {})]
+                full_text_count = sum(1 for row in pmid_rows if normalize_spaces(row.get('source_quality_tier', '')) == 'full_text_like')
+                abstract_count = sum(1 for row in pmid_rows if normalize_spaces(row.get('source_quality_tier', '')) == 'abstract_only')
+                confidence_bucket = classify_confidence(full_text_count, abstract_count, contradiction_hits, blocker_rows)
+
+                ledger_rows.append({
+                    'canonical_mechanism': mechanism,
+                    'mechanism_display_name': display_name,
+                    'mechanism_promotion_status': status_row.get('promotion_status', ''),
+                    'row_kind': 'mechanism_subtrack_focus',
+                    'atlas_layer': normalize_spaces(best_claim.get('atlas_layer', '')) or 'subtrack_focus',
+                    'mechanism_subtrack': subtrack,
+                    'mechanism_subtrack_display_name': neuroinflammation_subtrack_display_name(subtrack),
+                    'paper_count': len(subtrack_pmids),
+                    'supporting_pmids': '; '.join(subtrack_pmids[:5]),
+                    'proposed_narrative_claim': normalize_spaces(best_claim.get('normalized_claim', '') or best_claim.get('claim_text', '')),
+                    'best_anchor_claim_text': normalize_spaces(best_claim.get('claim_text', '') or best_claim.get('normalized_claim', '')),
+                    'best_anchor_pmid': normalize_spaces(best_claim.get('pmid', '') or (subtrack_pmids[0] if subtrack_pmids else '')),
+                    'source_quality_mix': f"full_text_like:{full_text_count}; abstract_only:{abstract_count}",
+                    'quality_mix': summarize_quality_mix(pmid_rows),
+                    'contradiction_signal': summarize_contradictions(contradiction_hits),
+                    'action_blockers': summarize_blockers(blocker_rows),
+                    'confidence_bucket': confidence_bucket,
+                    'promotion_note': promotion_note(contradiction_hits, blocker_rows),
+                })
+
     ledger_rows.sort(key=lambda row: (
         STARTER_MECHANISMS.index(row['canonical_mechanism']),
+        {'atlas_layer_backbone': 0, 'mechanism_subtrack_focus': 1}.get(row.get('row_kind', ''), 9),
         {'stable': 0, 'provisional': 1, 'hold': 2}.get(row['confidence_bucket'], 9),
+        row.get('mechanism_subtrack_display_name', ''),
         row['atlas_layer'],
     ))
 
@@ -294,7 +387,8 @@ def main():
     csv_path = os.path.join(args.output_dir, f'starter_atlas_chapter_evidence_ledger_{ts}.csv')
     md_path = os.path.join(args.output_dir, f'starter_atlas_chapter_evidence_ledger_{ts}.md')
     write_csv(csv_path, ledger_rows, [
-        'canonical_mechanism', 'mechanism_display_name', 'mechanism_promotion_status', 'atlas_layer', 'paper_count',
+        'canonical_mechanism', 'mechanism_display_name', 'mechanism_promotion_status', 'row_kind', 'atlas_layer',
+        'mechanism_subtrack', 'mechanism_subtrack_display_name', 'paper_count',
         'supporting_pmids', 'proposed_narrative_claim', 'best_anchor_claim_text', 'best_anchor_pmid',
         'source_quality_mix', 'quality_mix', 'contradiction_signal', 'action_blockers',
         'confidence_bucket', 'promotion_note',
