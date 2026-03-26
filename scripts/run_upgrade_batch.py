@@ -12,7 +12,10 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
 
 import scripts.run_pipeline as rp
-import scripts.drive_corpus_utils as dcu
+try:
+    import scripts.drive_corpus_utils as dcu
+except ModuleNotFoundError:
+    import drive_corpus_utils as dcu
 
 CORE_TBI_TERMS = [
     "traumatic brain injury",

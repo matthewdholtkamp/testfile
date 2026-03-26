@@ -31,7 +31,10 @@ except ImportError:
 
 import jsonschema
 
-import scripts.drive_corpus_utils as dcu
+try:
+    import scripts.drive_corpus_utils as dcu
+except ModuleNotFoundError:
+    import drive_corpus_utils as dcu
 
 
 def load_config():

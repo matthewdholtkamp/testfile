@@ -1,7 +1,9 @@
-import os
 from collections import defaultdict, deque
 
-from scripts.topic_utils import classify_markdown_topic
+try:
+    from scripts.topic_utils import classify_markdown_topic
+except ModuleNotFoundError:
+    from topic_utils import classify_markdown_topic
 
 FOLDER_MIME_TYPE = 'application/vnd.google-apps.folder'
 SKIP_PREFIXES = (

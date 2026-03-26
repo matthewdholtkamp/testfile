@@ -15,7 +15,10 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-import scripts.drive_corpus_utils as dcu
+try:
+    import scripts.drive_corpus_utils as dcu
+except ModuleNotFoundError:
+    import drive_corpus_utils as dcu
 
 DEFAULT_HTTP_TIMEOUT = 30
 
