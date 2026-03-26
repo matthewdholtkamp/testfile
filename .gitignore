@@ -5,5 +5,6 @@ output/
 .env
 reports/
 local_connector_inputs/
+fetched_connector_inputs/
 .DS_Store
 *.swp

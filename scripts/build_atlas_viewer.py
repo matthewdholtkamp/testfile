@@ -3,7 +3,7 @@ import csv
 import json
 import os
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from glob import glob
 
 
@@ -18,6 +18,7 @@ DISPLAY_TO_CANONICAL = {
     'Mitochondrial Dysfunction': 'mitochondrial_bioenergetic_dysfunction',
     'Neuroinflammation / Microglial Activation': 'neuroinflammation_microglial_activation',
 }
+CANONICAL_TO_DISPLAY = {value: key for key, value in DISPLAY_TO_CANONICAL.items()}
 
 
 def latest_file(pattern):
@@ -49,6 +50,10 @@ def read_csv(path):
         return list(csv.DictReader(handle))
 
 
+def read_json(path):
+    return json.loads(read_text(path))
+
+
 def write_text(path, text):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as handle:
@@ -63,6 +68,20 @@ def slugify(value):
     value = normalize_spaces(value).lower()
     value = re.sub(r'[^a-z0-9]+', '-', value).strip('-')
     return value
+
+
+def safe_int(value):
+    try:
+        return int(float(value))
+    except (TypeError, ValueError):
+        return 0
+
+
+def safe_float(value):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
 
 
 def parse_markdown_sections(text):
@@ -134,14 +153,16 @@ def parse_mechanism_index(path):
             'canonical_mechanism': DISPLAY_TO_CANONICAL.get(display_name, slugify(display_name).replace('-', '_')),
             'display_name': display_name,
             'promotion_status': parts[1],
-            'papers': int(parts[2] or 0),
-            'queue_burden': int(parts[3] or 0),
-            'target_rows': int(parts[4] or 0),
-            'compound_rows': int(parts[5] or 0),
-            'trial_rows': int(parts[6] or 0),
-            'preprint_rows': int(parts[7] or 0),
-            'genomics_rows': int(parts[8] or 0),
+            'papers': safe_int(parts[2]),
+            'queue_burden': safe_int(parts[3]),
+            'target_rows': safe_int(parts[4]),
+            'compound_rows': safe_int(parts[5]),
+            'trial_rows': safe_int(parts[6]),
+            'preprint_rows': safe_int(parts[7]),
+            'genomics_rows': safe_int(parts[8]),
         })
+    order = {canonical: idx for idx, canonical in enumerate(MECHANISM_ORDER)}
+    rows.sort(key=lambda row: order.get(row['canonical_mechanism'], 99))
     return rows
 
 
@@ -150,7 +171,7 @@ def parse_dossier(path):
     first_line = next((line for line in text.splitlines() if line.startswith('# Mechanism Dossier: ')), '')
     display_name = normalize_spaces(first_line.replace('# Mechanism Dossier: ', ''))
     top_bullets = []
-    for line in text.splitlines()[1:6]:
+    for line in text.splitlines()[1:7]:
         if line.startswith('- '):
             top_bullets.append(normalize_spaces(line[2:]))
     sections = parse_markdown_sections(text)
@@ -216,7 +237,28 @@ def parse_workpack(path):
     }
 
 
-def build_summary(index_rows, ledger_rows, chapter, workpack):
+def parse_counts_string(value):
+    items = []
+    for entry in normalize_spaces(value).split(';'):
+        if ':' not in entry:
+            continue
+        label, count = entry.split(':', 1)
+        items.append({'label': normalize_spaces(label), 'count': safe_int(count)})
+    return items
+
+
+def writing_strength_from_fields(confidence_bucket, write_status, blockers=''):
+    confidence = normalize_spaces(confidence_bucket)
+    status = normalize_spaces(write_status)
+    blockers = normalize_spaces(blockers).lower()
+    if confidence == 'stable' and status == 'ready_to_write' and blockers in {'', 'none'}:
+        return 'assertive'
+    if confidence in {'stable', 'provisional'} and status in {'ready_to_write', 'write_with_caution'}:
+        return 'moderate'
+    return 'speculative'
+
+
+def build_summary(index_rows, ledger_rows, chapter, workpack, idea_gate):
     confidence_counts = Counter(row['confidence_bucket'] for row in ledger_rows)
     note_counts = Counter(row['promotion_note'] for row in ledger_rows)
     stable = confidence_counts.get('stable', 0)
@@ -224,6 +266,7 @@ def build_summary(index_rows, ledger_rows, chapter, workpack):
     blocked = note_counts.get('needs source upgrade', 0) + note_counts.get('needs deeper extraction', 0) + note_counts.get('needs adjudication', 0)
     lead = chapter.get('lead_mechanism') or (index_rows[0]['display_name'] if index_rows else '')
     top_priority = workpack['top_priorities'][0]['title'] if workpack['top_priorities'] else ''
+    idea_summary = idea_gate.get('summary', {}) if isinstance(idea_gate, dict) else {}
     return {
         'lead_mechanism': lead,
         'stable_rows': stable,
@@ -231,7 +274,213 @@ def build_summary(index_rows, ledger_rows, chapter, workpack):
         'blocked_rows': blocked,
         'mechanism_count': len(index_rows),
         'top_priority': top_priority,
+        'idea_ready_now': safe_int(idea_summary.get('idea_ready_now')),
+        'breakthrough_ready_now': safe_int(idea_summary.get('breakthrough_ready_now')),
+        'idea_almost_ready': safe_int(idea_summary.get('idea_almost_ready')),
     }
+
+
+def enrich_ledger_rows(rows):
+    enriched = []
+    for row in rows:
+        clone = dict(row)
+        clone['strength_tag'] = writing_strength_from_fields(
+            clone.get('confidence_bucket', ''),
+            clone.get('write_status', ''),
+            clone.get('action_blockers', ''),
+        )
+        clone['source_quality_breakdown'] = parse_counts_string(clone.get('source_quality_mix', ''))
+        enriched.append(clone)
+    return enriched
+
+
+def enrich_bridge_rows(rows):
+    enriched = []
+    for row in rows:
+        clone = dict(row)
+        evidence = [normalize_spaces(value) for value in [
+            clone.get('evidence_tiers', ''),
+            clone.get('connector_source', ''),
+            clone.get('supporting_pmids', ''),
+        ] if normalize_spaces(value)]
+        clone['evidence_summary'] = ' | '.join(evidence)
+        enriched.append(clone)
+    return enriched
+
+
+def build_causal_chains(synthesis_rows):
+    by_mechanism = defaultdict(list)
+    for row in synthesis_rows:
+        canonical = normalize_spaces(row.get('canonical_mechanism', ''))
+        if canonical:
+            by_mechanism[canonical].append(row)
+
+    chains = {}
+    for canonical in MECHANISM_ORDER:
+        rows = by_mechanism.get(canonical, [])
+        if not rows:
+            continue
+        rows.sort(key=lambda row: (safe_int(row.get('priority_order')), row.get('synthesis_role', '')))
+        thesis = next((row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'thesis'), {})
+        causal_steps = [row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'causal_step']
+        bridges = [row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'bridge']
+        translational_hooks = [row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'translational_hook']
+        caveat = next((row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'caveat'), {})
+        next_action = next((row for row in rows if normalize_spaces(row.get('synthesis_role')) == 'next_action'), {})
+
+        chains[canonical] = {
+            'canonical_mechanism': canonical,
+            'display_name': CANONICAL_TO_DISPLAY.get(canonical, canonical.replace('_', ' ').title()),
+            'thesis': {
+                'statement': normalize_spaces(thesis.get('statement_text', '')),
+                'supporting_pmids': normalize_spaces(thesis.get('supporting_pmids', '')),
+                'strength_tag': writing_strength_from_fields(thesis.get('confidence_bucket', ''), thesis.get('write_status', ''), thesis.get('action_blockers', '')),
+            },
+            'steps': [
+                {
+                    'atlas_layer': normalize_spaces(row.get('atlas_layer', '')),
+                    'statement': normalize_spaces(row.get('statement_text', '')),
+                    'supporting_pmids': normalize_spaces(row.get('supporting_pmids', '')),
+                    'strength_tag': writing_strength_from_fields(row.get('confidence_bucket', ''), row.get('write_status', ''), row.get('action_blockers', '')),
+                    'confidence_bucket': normalize_spaces(row.get('confidence_bucket', '')),
+                    'write_status': normalize_spaces(row.get('write_status', '')),
+                }
+                for row in causal_steps
+            ],
+            'bridges': [
+                {
+                    'statement': normalize_spaces(row.get('statement_text', '')),
+                    'related_mechanisms': normalize_spaces(row.get('related_mechanisms', '')),
+                    'related_display_name': CANONICAL_TO_DISPLAY.get(normalize_spaces(row.get('related_mechanisms', '')), normalize_spaces(row.get('related_mechanisms', '')).replace('_', ' ').title()),
+                    'supporting_pmids': normalize_spaces(row.get('supporting_pmids', '')),
+                    'strength_tag': writing_strength_from_fields(row.get('confidence_bucket', ''), row.get('write_status', ''), row.get('action_blockers', '')),
+                }
+                for row in bridges
+            ],
+            'translational_hooks': [
+                {
+                    'statement': normalize_spaces(row.get('statement_text', '')),
+                    'supporting_pmids': normalize_spaces(row.get('supporting_pmids', '')),
+                    'strength_tag': writing_strength_from_fields(row.get('confidence_bucket', ''), row.get('write_status', ''), row.get('action_blockers', '')),
+                }
+                for row in translational_hooks
+            ],
+            'caveat': {
+                'statement': normalize_spaces(caveat.get('statement_text', '')),
+                'strength_tag': writing_strength_from_fields(caveat.get('confidence_bucket', ''), caveat.get('write_status', ''), caveat.get('action_blockers', '')),
+            },
+            'next_action': normalize_spaces(next_action.get('statement_text', '')),
+        }
+    return chains
+
+
+def parse_hypothesis_candidates(path):
+    if not path:
+        return {'rows': [], 'by_mechanism': {}}
+    payload = read_json(path)
+    rows = payload.get('rows', [])
+    rows.sort(key=lambda row: (MECHANISM_ORDER.index(row['canonical_mechanism']) if row['canonical_mechanism'] in MECHANISM_ORDER else 99, row.get('hypothesis_type', ''), row.get('title', '')))
+    by_mechanism = defaultdict(list)
+    for row in rows:
+        by_mechanism[row['canonical_mechanism']].append(row)
+    payload['rows'] = rows
+    payload['by_mechanism'] = by_mechanism
+    return payload
+
+
+def parse_decision_brief(payload):
+    if not isinstance(payload, dict):
+        return {}
+    return {
+        'review_date': payload.get('review_date', ''),
+        'lead_mechanism': payload.get('lead_mechanism', ''),
+        'stable_rows': safe_int(payload.get('stable_rows')),
+        'provisional_rows': safe_int(payload.get('provisional_rows')),
+        'blocked_rows': safe_int(payload.get('blocked_rows')),
+        'idea_summary': payload.get('idea_summary', {}),
+        'human_actions': payload.get('human_actions', []),
+        'decisions': payload.get('decisions', []),
+        'release_summary': payload.get('release_summary', {}),
+        'idea_rows': payload.get('idea_rows', []),
+        'target_priorities': payload.get('target_priorities', []),
+    }
+
+
+def build_execution_map(decision_brief, workpack, release_manifest, idea_gate):
+    lead = decision_brief.get('lead_mechanism') or 'Blood-Brain Barrier Dysfunction'
+    top_targets = []
+    for row in decision_brief.get('target_priorities', []):
+        if normalize_spaces(row.get('Mechanism', '')).startswith('blood_brain_barrier') or normalize_spaces(row.get('Mechanism', '')).startswith('mitochondrial'):
+            top_targets.append(normalize_spaces(row.get('Target', '')))
+    if not top_targets:
+        for item in workpack.get('top_priorities', [])[:5]:
+            match = re.search(r'->\s*`([^`]+)`', item.get('title', ''))
+            if match:
+                top_targets.append(normalize_spaces(match.group(1)))
+    top_targets = [item for item in top_targets if item][:5]
+    target_label = ', '.join(top_targets) if top_targets else 'top BBB and mitochondrial targets'
+    release_rows = {normalize_spaces(row.get('canonical_mechanism', '')): row for row in release_manifest.get('rows', [])} if isinstance(release_manifest, dict) else {}
+    bbb_row = release_rows.get('blood_brain_barrier_disruption', {})
+    mito_row = release_rows.get('mitochondrial_bioenergetic_dysfunction', {})
+    neuro_row = release_rows.get('neuroinflammation_microglial_activation', {})
+    idea_summary = idea_gate.get('summary', {}) if isinstance(idea_gate, dict) else {}
+
+    return [
+        {
+            'id': 'daily-machine-loop',
+            'title': 'Daily machine refresh',
+            'cadence': 'Daily at 8:00 AM Central',
+            'trigger': 'Runs automatically on GitHub Actions.',
+            'operator_decision': 'No weekly decision required unless the Saturday brief shows a blocker spike or topic drift.',
+            'workflow_or_command': 'GitHub workflows: ongoing_literature_cycle.yml -> refresh_atlas_from_ongoing_cycle.yml -> refresh_public_enrichment.yml',
+            'unlocks': 'Fresh corpus, fresh extraction, fresh atlas, fresh dashboard snapshot.',
+        },
+        {
+            'id': 'saturday-control-surface',
+            'title': 'Saturday decision brief',
+            'cadence': 'Weekly on Saturday',
+            'trigger': 'Read the Decision Brief at the top of the Atlas Viewer.',
+            'operator_decision': f'Choose whether to keep {lead} as the lead mechanism and approve the next curation queue.',
+            'workflow_or_command': 'GitHub workflow: weekly_human_review_packet.yml',
+            'unlocks': 'Keeps the weekly human pass bounded to 1-2 pages of decisions instead of full-report review.',
+        },
+        {
+            'id': 'manual-enrichment-cycle',
+            'title': 'Manual enrichment pass',
+            'cadence': 'When BBB / mitochondrial targets need stronger translational support',
+            'trigger': f'Use this after approving {target_label}.',
+            'operator_decision': 'Accept the target queue and fill the ChEMBL/Open Targets rows for the chosen targets.',
+            'workflow_or_command': 'Local command: python3 scripts/run_manual_enrichment_cycle.py --default-to-auto',
+            'unlocks': f'Stronger release readiness for BBB and mitochondrial chapters. Current BBB release bucket: {normalize_spaces(bbb_row.get("release_bucket", "review_track")) or "review_track"}.',
+        },
+        {
+            'id': 'idea-generation-pass',
+            'title': 'Idea-generation pass',
+            'cadence': 'Any time all starter mechanisms remain idea-ready',
+            'trigger': f"Current readiness: {safe_int(idea_summary.get('idea_ready_now'))} mechanism(s) idea-ready.",
+            'operator_decision': 'Decide which candidate ideas deserve immediate writing, enrichment, or narrowing.',
+            'workflow_or_command': 'Generated artifact + dashboard section: reports/hypothesis_candidates + Atlas Viewer > Candidate Ideas',
+            'unlocks': 'Moves the atlas from structured synthesis into explicit hypothesis lanes.',
+        },
+        {
+            'id': 'neuro-narrowing-pass',
+            'title': 'Neuroinflammation narrowing',
+            'cadence': 'When breadth is limiting clarity',
+            'trigger': f"Use this when neuroinflammation remains broad with queue burden {safe_int(neuro_row.get('queue_burden'))}.",
+            'operator_decision': 'Approve tighter subtracks instead of adding more broad neuro papers.',
+            'workflow_or_command': 'Targeted action: treat NLRP3, TREM2/GAS6, and AQP4/glymphatic response as separate subtracks in the next atlas pass.',
+            'unlocks': 'Makes neuroinflammation more hypothesis-generative and less diffuse.',
+        },
+        {
+            'id': 'tenx-import-lane',
+            'title': 'Optional 10x import lane',
+            'cadence': 'Only when real 10x outputs exist',
+            'trigger': 'Use once actual 10x exports are available this week.',
+            'operator_decision': 'Decide whether real genomics exports are ready to import.',
+            'workflow_or_command': 'Local sidecar path: drop 10x exports into local_connector_inputs and rerun python3 scripts/run_connector_sidecar.py --build-tenx-template',
+            'unlocks': f'Adds cell-type and pathway evidence without blocking the core atlas. Current mitochondrial release bucket: {normalize_spaces(mito_row.get("release_bucket", "hold")) or "hold"}.',
+        },
+    ]
 
 
 def make_viewer_data():
@@ -243,6 +492,9 @@ def make_viewer_data():
     bridge_path = latest_file_prefer_curated('mechanism_dossiers_curated/translational_bridge_*.csv', 'mechanism_dossiers/translational_bridge_*.csv')
     release_manifest_path = latest_optional_file('atlas_release_manifest_*.json')
     decision_brief_path = latest_optional_file('weekly_human_review_packet_*.json')
+    idea_gate_path = latest_optional_file('idea_generation_gate_*.json')
+    hypothesis_path = latest_optional_file('hypothesis_candidates_*.json')
+    synthesis_path = latest_file_prefer_curated('mechanistic_synthesis_curated/mechanistic_synthesis_blocks_*.csv', 'mechanistic_synthesis_blocks_*.csv')
 
     index_rows = parse_mechanism_index(index_path)
     dossier_dir = os.path.dirname(index_path)
@@ -255,14 +507,19 @@ def make_viewer_data():
             dossier.update(row)
             dossiers.append(dossier)
 
-    ledger_rows = read_csv(ledger_path)
+    ledger_rows = enrich_ledger_rows(read_csv(ledger_path))
     chapter = parse_chapter(chapter_path)
     chapter['preview_markdown'] = read_text(chapter_synthesis_path) if chapter_synthesis_path else chapter['raw_markdown']
     workpack = parse_workpack(workpack_path)
-    bridge_rows = read_csv(bridge_path)
+    bridge_rows = enrich_bridge_rows(read_csv(bridge_path))
     bridge_rows = [row for row in bridge_rows if any(normalize_spaces(row.get(key, '')) for key in ['target_entity', 'compound_entity', 'trial_entity', 'preprint_entity', 'genomics_entity'])]
-    release_manifest = json.loads(read_text(release_manifest_path)) if release_manifest_path else {}
-    decision_brief = json.loads(read_text(decision_brief_path)) if decision_brief_path else {}
+    release_manifest = read_json(release_manifest_path) if release_manifest_path else {}
+    decision_brief = parse_decision_brief(read_json(decision_brief_path)) if decision_brief_path else {}
+    idea_gate = read_json(idea_gate_path) if idea_gate_path else {}
+    hypothesis_candidates = parse_hypothesis_candidates(hypothesis_path) if hypothesis_path else {'rows': [], 'by_mechanism': {}}
+    synthesis_rows = read_csv(synthesis_path)
+    causal_chains = build_causal_chains(synthesis_rows)
+    execution_map = build_execution_map(decision_brief, workpack, release_manifest, idea_gate)
 
     data = {
         'metadata': {
@@ -275,16 +532,26 @@ def make_viewer_data():
                 'bridge': os.path.relpath(bridge_path, REPO_ROOT),
                 'release_manifest': os.path.relpath(release_manifest_path, REPO_ROOT) if release_manifest_path else '',
                 'decision_brief': os.path.relpath(decision_brief_path, REPO_ROOT) if decision_brief_path else '',
+                'idea_gate': os.path.relpath(idea_gate_path, REPO_ROOT) if idea_gate_path else '',
+                'hypothesis_candidates': os.path.relpath(hypothesis_path, REPO_ROOT) if hypothesis_path else '',
+                'synthesis': os.path.relpath(synthesis_path, REPO_ROOT),
             }
         },
-        'summary': build_summary(index_rows, ledger_rows, chapter, workpack),
+        'summary': build_summary(index_rows, ledger_rows, chapter, workpack, idea_gate),
         'mechanisms': dossiers,
         'chapter': chapter,
         'ledger': ledger_rows,
         'workpack': workpack,
-        'bridge_rows': bridge_rows[:50],
+        'bridge_rows': bridge_rows[:100],
         'release_manifest': release_manifest,
         'decision_brief': decision_brief,
+        'idea_gate': idea_gate,
+        'hypothesis_candidates': {
+            'rows': hypothesis_candidates.get('rows', []),
+            'by_mechanism': hypothesis_candidates.get('by_mechanism', {}),
+        },
+        'causal_chains': causal_chains,
+        'execution_map': execution_map,
     }
     return data
 

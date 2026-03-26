@@ -41,13 +41,6 @@
     return (value || "").toString().trim();
   }
 
-  function slugify(value) {
-    return normalize(value)
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
-  }
-
   function titleCase(value) {
     return normalize(value)
       .replace(/_/g, " ")
@@ -65,6 +58,10 @@
     return Number.isFinite(parsed) ? parsed : 0;
   }
 
+  function formatPromo(value) {
+    return sentenceCase(normalize(value).replace(/_/g, " "));
+  }
+
   function mechanismById(id) {
     return data.mechanisms.find((item) => item.id === id);
   }
@@ -79,25 +76,34 @@
     return data.bridge_rows.filter((row) => row.canonical_mechanism === mechanism.canonical_mechanism);
   }
 
+  function mechanismChain(id) {
+    const mechanism = mechanismById(id);
+    return data.causal_chains[mechanism.canonical_mechanism] || null;
+  }
+
+  function mechanismIdeas(id) {
+    const mechanism = mechanismById(id);
+    return data.hypothesis_candidates.by_mechanism[mechanism.canonical_mechanism] || [];
+  }
+
+  function mechanismIdeaGate(id) {
+    const mechanism = mechanismById(id);
+    return (data.idea_gate.rows || []).find((row) => row.canonical_mechanism === mechanism.canonical_mechanism) || null;
+  }
+
   function ledgerKey(row) {
     return [row.mechanism_display_name, row.atlas_layer, row.best_anchor_pmid, row.proposed_narrative_claim].join("|");
   }
 
-  function formatPromo(value) {
-    return sentenceCase(normalize(value).replace(/_/g, " "));
-  }
-
   function parseCounts(value) {
+    if (Array.isArray(value)) return value;
     return normalize(value)
       .split(";")
       .map((entry) => entry.trim())
       .filter(Boolean)
       .map((entry) => {
         const [label, count] = entry.split(":");
-        return {
-          label: normalize(label),
-          count: safeNumber(count),
-        };
+        return { label: normalize(label), count: safeNumber(count) };
       });
   }
 
@@ -110,6 +116,30 @@
 
   function pubmedLink(pmid) {
     return `https://pubmed.ncbi.nlm.nih.gov/${pmid}/`;
+  }
+
+  function metadataTimestamp() {
+    const allPaths = Object.values(data.metadata.generated_from || {});
+    const match = allPaths
+      .map((path) => normalize(path).match(/(\d{4}-\d{2}-\d{2})_(\d{6})/))
+      .find(Boolean);
+    if (!match) return "Latest curated atlas snapshot";
+    const [, day, time] = match;
+    return `${day} ${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(4, 6)}`;
+  }
+
+  function mechanismDerivedStats(mechanism) {
+    const rows = mechanismLedgerRows(mechanism.id);
+    const stable = rows.filter((row) => row.confidence_bucket === "stable").length;
+    const provisional = rows.filter((row) => row.confidence_bucket === "provisional").length;
+    const blocked = rows.filter((row) => normalize(row.promotion_note) !== "ready to write").length;
+    return { stable, provisional, blocked, total: rows.length };
+  }
+
+  function createEmptyState(message) {
+    const card = el("div", "empty-state");
+    card.append(el("div", "muted", message));
+    return card;
   }
 
   function pmidChips(value) {
@@ -128,34 +158,12 @@
     return wrap;
   }
 
-  function metadataTimestamp() {
-    const allPaths = Object.values(data.metadata.generated_from || {});
-    const match = allPaths
-      .map((path) => path.match(/(\d{4}-\d{2}-\d{2})_(\d{6})/))
-      .find(Boolean);
-    if (!match) return "Latest curated atlas snapshot";
-    const [, day, time] = match;
-    return `${day} ${time.slice(0, 2)}:${time.slice(2, 4)}:${time.slice(4, 6)}`;
+  function strengthPill(tag) {
+    return el("span", `strength-pill ${normalize(tag) || "speculative"}`, titleCase(tag || "speculative"));
   }
 
-  function mechanismDerivedStats(mechanism) {
-    const rows = mechanismLedgerRows(mechanism.id);
-    const stable = rows.filter((row) => row.confidence_bucket === "stable").length;
-    const provisional = rows.filter((row) => row.confidence_bucket === "provisional").length;
-    const blocked = rows.filter((row) => normalize(row.promotion_note) !== "ready to write").length;
-    return { stable, provisional, blocked, total: rows.length };
-  }
-
-  function scrollToSection(id) {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  function setMechanism(id, sectionId) {
-    state.selectedMechanism = id;
-    if (sectionId) {
-      requestAnimationFrame(() => scrollToSection(sectionId));
-    }
-    renderAll();
+  function statusPill(value) {
+    return el("span", `status-pill ${normalize(value)}`, formatPromo(value));
   }
 
   function renderMarkdownLite(root, text) {
@@ -210,10 +218,15 @@
     });
   }
 
-  function createEmptyState(message) {
-    const card = el("div", "empty-state");
-    card.append(el("div", "muted", message));
-    return card;
+  function renderStatGrid(stats) {
+    const grid = el("div", "mechanism-meta");
+    stats.forEach(([label, value]) => {
+      const block = el("div", "meta-block");
+      block.append(el("div", "meta-label", label));
+      block.append(el("div", "meta-value", String(value)));
+      grid.append(block);
+    });
+    return grid;
   }
 
   function renderRichList(title, items, emptyMessage) {
@@ -224,20 +237,9 @@
       return section;
     }
     const wrap = el("div", "tag-cloud");
-    items.forEach((item) => wrap.append(el("span", "tag-pill", item)));
+    items.forEach((item) => wrap.append(el("span", "micro-pill", item)));
     section.append(wrap);
     return section;
-  }
-
-  function renderStatGrid(stats) {
-    const grid = el("div", "mechanism-meta");
-    stats.forEach(([label, value]) => {
-      const block = el("div", "meta-block");
-      block.append(el("div", "meta-label", label));
-      block.append(el("div", "meta-value", String(value)));
-      grid.append(block);
-    });
-    return grid;
   }
 
   function renderAnchorTable(rows) {
@@ -310,16 +312,11 @@
   function fillSelect(selectId, values, selected) {
     const select = document.getElementById(selectId);
     const current = selected || "all";
-    const firstOption = select.querySelector('option[value="all"]');
     clear(select);
-    if (firstOption) {
-      select.append(firstOption);
-    } else {
-      const option = document.createElement("option");
-      option.value = "all";
-      option.textContent = "All";
-      select.append(option);
-    }
+    const allOption = document.createElement("option");
+    allOption.value = "all";
+    allOption.textContent = "All";
+    select.append(allOption);
     values.forEach((value) => {
       const option = document.createElement("option");
       option.value = value;
@@ -342,10 +339,7 @@
         row.promotion_note,
         row.action_blockers,
         row.contradiction_signal,
-      ]
-        .join(" ")
-        .toLowerCase();
-
+      ].join(" ").toLowerCase();
       if (query && !haystack.includes(query)) return false;
       if (state.evidenceConfidence !== "all" && row.confidence_bucket !== state.evidenceConfidence) return false;
       if (state.evidencePromotion !== "all" && row.promotion_note !== state.evidencePromotion) return false;
@@ -372,9 +366,9 @@
     const summaryCards = [
       ["Lead Mechanism", data.summary.lead_mechanism],
       ["Stable Ledger Rows", String(data.summary.stable_rows)],
-      ["Provisional Rows", String(data.summary.provisional_rows)],
+      ["Idea-Ready Mechanisms", String(data.summary.idea_ready_now || 0)],
+      ["Breakthrough-Ready Mechanisms", String(data.summary.breakthrough_ready_now || 0)],
       ["Blocked Rows", String(data.summary.blocked_rows)],
-      ["Mechanisms In Scope", String(data.summary.mechanism_count)],
     ];
 
     const summaryRoot = document.getElementById("summaryCards");
@@ -393,13 +387,7 @@
       const button = el("button", state.selectedMechanism === mechanism.id ? "is-active" : "");
       button.type = "button";
       button.append(el("div", "nav-title", mechanism.display_name));
-      button.append(
-        el(
-          "div",
-          "muted nav-subtitle",
-          `${formatPromo(mechanism.promotion_status)} · ${stats.stable} stable · ${stats.blocked} blocked`
-        )
-      );
+      button.append(el("div", "muted nav-subtitle", `${formatPromo(mechanism.promotion_status)} · ${stats.stable} stable · ${stats.blocked} blocked`));
       button.addEventListener("click", () => setMechanism(mechanism.id, "deep-dive"));
       nav.append(button);
     });
@@ -408,6 +396,7 @@
     clear(mechanismCards);
     data.mechanisms.forEach((mechanism) => {
       const stats = mechanismDerivedStats(mechanism);
+      const ideaRow = mechanismIdeaGate(mechanism.id);
       const card = el("button", "card mechanism-card-button");
       card.type = "button";
       card.addEventListener("click", () => setMechanism(mechanism.id, "deep-dive"));
@@ -416,36 +405,97 @@
       const titleBlock = el("div");
       titleBlock.append(el("h3", "", mechanism.display_name));
       titleBlock.append(el("div", "muted", `${mechanism.queue_burden} open queue items · ${mechanism.papers} papers`));
-      const pill = el("span", `status-pill ${mechanism.promotion_status}`, formatPromo(mechanism.promotion_status));
-      header.append(titleBlock, pill);
+      const pillWrap = el("div", "tag-cloud");
+      pillWrap.append(statusPill(mechanism.promotion_status));
+      if (ideaRow) pillWrap.append(el("span", `micro-pill ${normalize(ideaRow.idea_generation_status) === 'ready_now' ? 'stable' : 'provisional'}`, `Idea ${formatPromo(ideaRow.idea_generation_status)}`));
+      header.append(titleBlock, pillWrap);
       card.append(header);
 
       const readiness = el("div", "readiness-strip");
-      [
-        ["stable", stats.stable],
-        ["provisional", stats.provisional],
-        ["blocked", stats.blocked],
-      ].forEach(([label, count]) => {
-        const chip = el("span", `micro-pill ${label}`, `${titleCase(label)} ${count}`);
-        readiness.append(chip);
+      [["stable", stats.stable], ["provisional", stats.provisional], ["blocked", stats.blocked]].forEach(([label, count]) => {
+        readiness.append(el("span", `micro-pill ${label}`, `${titleCase(label)} ${count}`));
       });
       card.append(readiness);
 
-      card.append(
-        renderStatGrid([
-          ["Papers", mechanism.papers],
-          ["Queue", mechanism.queue_burden],
-          ["Targets", mechanism.target_rows],
-          ["Trials", mechanism.trial_rows],
-          ["10x", mechanism.genomics_rows],
-        ])
-      );
+      card.append(renderStatGrid([
+        ["Papers", mechanism.papers],
+        ["Queue", mechanism.queue_burden],
+        ["Targets", mechanism.target_rows],
+        ["Trials", mechanism.trial_rows],
+        ["10x", mechanism.genomics_rows],
+      ]));
 
-      if (mechanism.top_bullets && mechanism.top_bullets.length) {
+      if (mechanism.top_bullets?.length) {
         card.append(el("p", "card-preview", mechanism.top_bullets[0]));
       }
       mechanismCards.append(card);
     });
+  }
+
+  function renderDecisionBrief() {
+    const brief = data.decision_brief || {};
+    document.getElementById("decisionDateHeading").textContent = brief.review_date || "This Week";
+    document.getElementById("decisionIntro").textContent =
+      `This brief is the bounded weekly control surface. It shows the smallest set of decisions needed to keep the atlas moving toward a publishable TBI investigation product.`;
+
+    const summaryRoot = document.getElementById("decisionSummaryCards");
+    clear(summaryRoot);
+    const items = [
+      ["Lead mechanism", brief.lead_mechanism || data.summary.lead_mechanism],
+      ["Stable rows", String(brief.stable_rows || data.summary.stable_rows)],
+      ["Idea-ready now", String(brief.idea_summary?.idea_ready_now || data.summary.idea_ready_now || 0)],
+      ["Breakthrough-ready now", String(brief.idea_summary?.breakthrough_ready_now || 0)],
+    ];
+    items.forEach(([label, value]) => {
+      const card = el("div", "brief-card");
+      card.append(el("div", "brief-card-value", value));
+      card.append(el("div", "brief-card-label", label));
+      summaryRoot.append(card);
+    });
+
+    const decisionsRoot = document.getElementById("decisionCards");
+    clear(decisionsRoot);
+    const decisions = brief.decisions || [];
+    if (!decisions.length) {
+      decisionsRoot.append(createEmptyState("The weekly brief has not been generated yet."));
+    } else {
+      decisions.forEach((item) => {
+        const card = el("div", "decision-card");
+        const header = el("div", "decision-card-header");
+        const titleBlock = el("div");
+        titleBlock.append(el("h3", "", item.title));
+        titleBlock.append(el("p", "decision-text", item.why));
+        header.append(titleBlock, el("span", "execution-pill manual", item.recommended_decision || "Decision"));
+        card.append(header);
+
+        const grid = el("div", "decision-detail-grid");
+        [["What I need from you", item.what_i_need_from_you], ["If yes", item.if_yes]].forEach(([label, value]) => {
+          const block = el("div", "meta-block");
+          block.append(el("div", "detail-label", label));
+          block.append(el("div", "detail-value", value || "—"));
+          grid.append(block);
+        });
+        card.append(grid);
+        decisionsRoot.append(card);
+      });
+    }
+
+    const humanActions = document.getElementById("humanActions");
+    clear(humanActions);
+    (brief.human_actions || []).forEach((item) => humanActions.append(el("li", "", item)));
+    if (!brief.human_actions?.length) {
+      humanActions.append(el("li", "", "No explicit human actions are listed yet."));
+    }
+
+    const release = document.getElementById("releaseSnapshot");
+    clear(release);
+    const releaseSummary = brief.release_summary || {};
+    [
+      `Lead chapter candidate: ${releaseSummary.lead_chapter_candidate || data.summary.lead_mechanism}`,
+      `Review track: ${releaseSummary.review_track || 0}`,
+      `Hold: ${releaseSummary.hold || 0}`,
+      `Core atlas now: ${releaseSummary.core_atlas_now || 0}`,
+    ].forEach((item) => release.append(el("span", "micro-pill", item)));
   }
 
   function renderChapter() {
@@ -460,10 +510,7 @@
     data.chapter.writing_priority.forEach((item) => priorityRoot.append(el("li", "", item)));
     data.chapter.immediate_follow_on.forEach((item) => followRoot.append(el("li", "", item)));
 
-    renderMarkdownLite(
-      document.getElementById("chapterPreview"),
-      data.chapter.preview_markdown || data.chapter.raw_markdown || ""
-    );
+    renderMarkdownLite(document.getElementById("chapterPreview"), data.chapter.preview_markdown || data.chapter.raw_markdown || "");
   }
 
   function renderMechanismTabs() {
@@ -472,8 +519,6 @@
     DETAIL_TABS.forEach((tab) => {
       const button = el("button", tab.id === state.selectedDetailTab ? "tab-button is-active" : "tab-button", tab.label);
       button.type = "button";
-      button.setAttribute("role", "tab");
-      button.setAttribute("aria-selected", String(tab.id === state.selectedDetailTab));
       button.addEventListener("click", () => {
         state.selectedDetailTab = tab.id;
         renderMechanismDetail();
@@ -495,15 +540,13 @@
 
     if (state.selectedDetailTab === "overview") {
       const panel = el("div", "panel");
-      panel.append(
-        renderStatGrid([
-          ["Papers", mechanism.papers],
-          ["Queue burden", mechanism.queue_burden],
-          ["Targets", mechanism.target_rows],
-          ["Trials", mechanism.trial_rows],
-          ["Preprints", mechanism.preprint_rows],
-        ])
-      );
+      panel.append(renderStatGrid([
+        ["Papers", mechanism.papers],
+        ["Queue burden", mechanism.queue_burden],
+        ["Targets", mechanism.target_rows],
+        ["Trials", mechanism.trial_rows],
+        ["Preprints", mechanism.preprint_rows],
+      ]));
       const grid = el("div", "panel-grid two");
       const overview = el("div", "detail-section");
       overview.append(el("h3", "", "Mechanism Overview"));
@@ -570,7 +613,7 @@
         const tbody = document.createElement("tbody");
         bridgeRows.forEach((row) => {
           const tr = document.createElement("tr");
-          [row.biomarker_seed, row.target_entity, row.compound_entity, row.trial_entity, row.evidence_tiers].forEach((value) => {
+          [row.biomarker_seed, row.target_entity, row.compound_entity, row.trial_entity, row.evidence_summary].forEach((value) => {
             const td = document.createElement("td");
             td.textContent = value || "—";
             tr.append(td);
@@ -619,19 +662,152 @@
     root.append(panel);
   }
 
+  function renderCausalChains() {
+    const mechanism = mechanismById(state.selectedMechanism);
+    const chain = mechanismChain(state.selectedMechanism);
+    const summaryRoot = document.getElementById("causalSummary");
+    const root = document.getElementById("causalChains");
+    clear(summaryRoot);
+    clear(root);
+
+    if (!chain) {
+      summaryRoot.append(createEmptyState("No causal chain data is available for this mechanism yet."));
+      return;
+    }
+
+    const summary = el("div", "summary-inline-card");
+    summary.append(el("div", "summary-inline-title", `${mechanism.display_name} causal chain`));
+    summary.append(el("div", "muted", `This view makes the implied mechanism logic explicit so we can write and test it as a chain rather than as disconnected rows.`));
+    summaryRoot.append(summary);
+
+    const card = el("div", "chain-card");
+    const header = el("div", "chain-card-header");
+    const titleBlock = el("div");
+    titleBlock.append(el("h3", "", `${mechanism.display_name} chain`));
+    titleBlock.append(el("p", "chain-text", chain.thesis.statement || "No thesis statement is available."));
+    header.append(titleBlock, strengthPill(chain.thesis.strength_tag));
+    card.append(header);
+
+    const stepList = el("div", "chain-step-list");
+    chain.steps.forEach((step, idx) => {
+      const item = el("div", "chain-step");
+      const top = el("div", "chain-step-top");
+      const left = el("div");
+      left.append(el("div", "chain-layer", `Step ${idx + 1} · ${titleCase(step.atlas_layer)}`));
+      left.append(el("p", "chain-text", step.statement));
+      top.append(left, strengthPill(step.strength_tag));
+      item.append(top);
+      const footer = el("div", "chain-footer");
+      footer.append(pmidChips(step.supporting_pmids));
+      footer.append(el("span", "micro-pill", formatPromo(step.write_status)));
+      item.append(footer);
+      stepList.append(item);
+    });
+    if (!chain.steps.length) {
+      stepList.append(createEmptyState("No explicit causal steps are available yet."));
+    }
+    card.append(stepList);
+
+    const callouts = el("div", "chain-callout-grid");
+    const bridgeBlock = el("div", "meta-block");
+    bridgeBlock.append(el("div", "detail-label", "Cross-Mechanism Bridge"));
+    if (chain.bridges.length) {
+      chain.bridges.forEach((bridge) => {
+        bridgeBlock.append(el("div", "detail-value", bridge.statement));
+        const row = el("div", "tag-cloud");
+        row.append(strengthPill(bridge.strength_tag));
+        row.append(el("span", "micro-pill", bridge.related_display_name || "Bridge"));
+        bridgeBlock.append(row);
+      });
+    } else {
+      bridgeBlock.append(el("div", "detail-value", "No explicit cross-mechanism bridge is attached yet."));
+    }
+
+    const translationalBlock = el("div", "meta-block");
+    translationalBlock.append(el("div", "detail-label", "Translational Hook"));
+    if (chain.translational_hooks.length) {
+      chain.translational_hooks.forEach((hook) => {
+        translationalBlock.append(el("div", "detail-value", hook.statement));
+        translationalBlock.append(strengthPill(hook.strength_tag));
+      });
+    } else {
+      translationalBlock.append(el("div", "detail-value", "No translational hook is attached yet."));
+    }
+
+    const caveatBlock = el("div", "meta-block");
+    caveatBlock.append(el("div", "detail-label", "Writing Boundary"));
+    caveatBlock.append(el("div", "detail-value", chain.caveat.statement || "No explicit writing boundary is attached yet."));
+    if (chain.caveat.strength_tag) caveatBlock.append(strengthPill(chain.caveat.strength_tag));
+
+    const nextBlock = el("div", "meta-block");
+    nextBlock.append(el("div", "detail-label", "Execution Trigger"));
+    nextBlock.append(el("div", "detail-value", chain.next_action || "No next action is attached yet."));
+
+    callouts.append(bridgeBlock, translationalBlock, caveatBlock, nextBlock);
+    card.append(callouts);
+    root.append(card);
+  }
+
+  function renderIdeas() {
+    const mechanism = mechanismById(state.selectedMechanism);
+    const ideaRow = mechanismIdeaGate(state.selectedMechanism);
+    const ideas = mechanismIdeas(state.selectedMechanism);
+    const summaryRoot = document.getElementById("ideaSummary");
+    const root = document.getElementById("ideaCards");
+    clear(summaryRoot);
+    clear(root);
+
+    const summary = el("div", "summary-inline-card");
+    const title = ideaRow
+      ? `${mechanism.display_name}: ${formatPromo(ideaRow.idea_generation_status)} for idea generation`
+      : `${mechanism.display_name}: candidate ideas`;
+    summary.append(el("div", "summary-inline-title", title));
+    const detail = ideaRow
+      ? `${ideaRow.papers} papers · ${ideaRow.full_text_like} full-text-like · ${ideaRow.signal_rows} signal rows · breakthrough status ${formatPromo(ideaRow.breakthrough_status)}`
+      : "Candidate ideas generated from the current atlas synthesis state.";
+    summary.append(el("div", "muted", detail));
+    summaryRoot.append(summary);
+
+    if (!ideas.length) {
+      root.append(createEmptyState("No candidate ideas are available for this mechanism yet."));
+      return;
+    }
+
+    ideas.forEach((idea) => {
+      const card = el("div", "idea-card");
+      const header = el("div", "idea-card-header");
+      const titleBlock = el("div");
+      titleBlock.append(el("h3", "", idea.title));
+      titleBlock.append(el("p", "idea-text", idea.statement));
+      header.append(titleBlock, strengthPill(idea.strength_tag));
+      card.append(header);
+
+      const grid = el("div", "idea-detail-grid");
+      [
+        ["Why now", idea.why_now],
+        ["Next test", idea.next_test],
+        ["Current blocker", idea.blockers || "None listed"],
+        ["Supporting PMIDs", idea.supporting_pmids || "none listed"],
+      ].forEach(([label, value]) => {
+        const block = el("div", "meta-block");
+        block.append(el("div", "detail-label", label));
+        if (label === "Supporting PMIDs") {
+          block.append(pmidChips(value));
+        } else {
+          block.append(el("div", "detail-value", value));
+        }
+        grid.append(block);
+      });
+      card.append(grid);
+      root.append(card);
+    });
+  }
+
   function renderEvidence() {
     const mechanism = mechanismById(state.selectedMechanism);
     const allRows = mechanismLedgerRows(state.selectedMechanism);
-    fillSelect(
-      "evidencePromotionFilter",
-      Array.from(new Set(allRows.map((row) => row.promotion_note).filter(Boolean))).sort(),
-      state.evidencePromotion
-    );
-    fillSelect(
-      "evidenceLayerFilter",
-      Array.from(new Set(allRows.map((row) => row.atlas_layer).filter(Boolean))).sort(),
-      state.evidenceLayer
-    );
+    fillSelect("evidencePromotionFilter", Array.from(new Set(allRows.map((row) => row.promotion_note).filter(Boolean))).sort(), state.evidencePromotion);
+    fillSelect("evidenceLayerFilter", Array.from(new Set(allRows.map((row) => row.atlas_layer).filter(Boolean))).sort(), state.evidenceLayer);
 
     const rows = filteredLedgerRows();
     const badgeRoot = document.getElementById("ledgerBadges");
@@ -646,22 +822,11 @@
     const blocked = rows.filter((row) => normalize(row.promotion_note) !== "ready to write").length;
     const summaryCard = el("div", "summary-inline-card");
     summaryCard.append(el("div", "summary-inline-title", `${mechanism.display_name} evidence review`));
-    summaryCard.append(
-      el(
-        "div",
-        "muted",
-        `${rows.length} row(s) after filters · ${stable} stable · ${provisional} provisional · ${blocked} blocked`
-      )
-    );
+    summaryCard.append(el("div", "muted", `${rows.length} row(s) after filters · ${stable} stable · ${provisional} provisional · ${blocked} blocked`));
     summaryRoot.append(summaryCard);
 
-    [
-      ["stable", stable],
-      ["provisional", provisional],
-      ["blocked", blocked],
-    ].forEach(([label, count]) => {
-      const badge = el("span", `badge ${label === "blocked" ? "hold" : label}`, `${titleCase(label)} · ${count}`);
-      badgeRoot.append(badge);
+    [["stable", stable], ["provisional", provisional], ["blocked", blocked]].forEach(([label, count]) => {
+      badgeRoot.append(el("span", `badge ${label === "blocked" ? "hold" : label}`, `${titleCase(label)} · ${count}`));
     });
 
     if (!rows.length) {
@@ -707,7 +872,7 @@
       tr.append(pmidTd);
 
       const mixTd = document.createElement("td");
-      const mixes = parseCounts(row.source_quality_mix);
+      const mixes = parseCounts(row.source_quality_breakdown || row.source_quality_mix);
       if (!mixes.length) {
         mixTd.textContent = "—";
       } else {
@@ -717,9 +882,9 @@
       }
       tr.append(mixTd);
 
-      const confTd = document.createElement("td");
-      confTd.append(el("span", `badge ${row.confidence_bucket}`, formatPromo(row.confidence_bucket)));
-      tr.append(confTd);
+      const strengthTd = document.createElement("td");
+      strengthTd.append(strengthPill(row.strength_tag));
+      tr.append(strengthTd);
 
       const promoTd = document.createElement("td");
       promoTd.append(el("span", `micro-pill ${normalize(row.promotion_note) === "ready to write" ? "stable" : "blocked"}`, formatPromo(row.promotion_note)));
@@ -728,7 +893,6 @@
 
       if (state.expandedLedgerKey === key) {
         const detailTr = document.createElement("tr");
-        detailTr.className = "detail-row";
         const detailTd = document.createElement("td");
         detailTd.colSpan = 7;
         const detailWrap = el("div", "detail-drawer");
@@ -740,6 +904,7 @@
         right.append(el("h3", "", "Review Notes"));
         const notes = el("ul", "bullet-list");
         [
+          `Writing strength: ${formatPromo(row.strength_tag)}`,
           `Contradiction signal: ${formatPromo(row.contradiction_signal)}`,
           `Action blockers: ${formatPromo(row.action_blockers || "none")}`,
           `Promotion note: ${formatPromo(row.promotion_note)}`,
@@ -764,13 +929,11 @@
     const hintRoot = document.getElementById("workpackMechanismHint");
     [whyRoot, orderRoot, priorityRoot, fillRoot, nextRoot].forEach(clear);
 
-    const scopedPriorities = data.workpack.top_priorities.filter((item) =>
-      item.title.toLowerCase().startsWith(mechanism.display_name.toLowerCase())
-    );
+    const scopedPriorities = data.workpack.top_priorities.filter((item) => item.title.toLowerCase().startsWith(mechanism.display_name.toLowerCase()));
     const priorities = state.showAllWorkpack || !scopedPriorities.length ? data.workpack.top_priorities : scopedPriorities;
 
     hintRoot.textContent = state.showAllWorkpack || !scopedPriorities.length
-      ? `Showing the full workpack. ${mechanism.display_name} stays selected in Deep Dive and Evidence.`
+      ? `Showing the full workpack. ${mechanism.display_name} stays selected in the other sections.`
       : `Showing priorities filtered to ${mechanism.display_name}.`;
     document.getElementById("toggleWorkpackScope").textContent = state.showAllWorkpack ? "Show selected mechanism" : "Show all priorities";
 
@@ -782,10 +945,7 @@
     priorities.forEach((item) => {
       const card = el("div", "priority-item");
       card.append(el("h4", "", item.title));
-      item.details.forEach((detail, idx) => {
-        const cls = idx === 0 ? "priority-meta" : "muted";
-        card.append(el("div", cls, detail));
-      });
+      item.details.forEach((detail, idx) => card.append(el("div", idx === 0 ? "priority-meta" : "muted", detail)));
       priorityRoot.append(card);
     });
 
@@ -802,15 +962,10 @@
     clear(root);
     clear(summaryRoot);
 
-    summaryRoot.append(
-      el(
-        "div",
-        "summary-inline-card",
-        rows.length
-          ? `${mechanism.display_name}: ${rows.length} translational bridge row(s) currently attached.`
-          : `${mechanism.display_name}: no translational bridge rows are attached yet.`
-      )
-    );
+    const summary = el("div", "summary-inline-card");
+    summary.append(el("div", "summary-inline-title", `${mechanism.display_name} translational bridge`));
+    summary.append(el("div", "muted", rows.length ? `${rows.length} bridge row(s) currently attached. We still need stronger compound/trial depth for the most compelling mechanism lanes.` : `No translational bridge rows are attached yet.`));
+    summaryRoot.append(summary);
 
     if (!rows.length) {
       const tr = document.createElement("tr");
@@ -824,19 +979,37 @@
 
     rows.forEach((row) => {
       const tr = document.createElement("tr");
-      [
-        mechanism.display_name,
-        row.biomarker_seed,
-        row.target_entity,
-        row.compound_entity,
-        row.trial_entity,
-        row.evidence_tiers,
-      ].forEach((value) => {
+      [mechanism.display_name, row.biomarker_seed, row.target_entity, row.compound_entity, row.trial_entity, row.evidence_summary].forEach((value) => {
         const td = document.createElement("td");
         td.textContent = value || "—";
         tr.append(td);
       });
       root.append(tr);
+    });
+  }
+
+  function renderExecutionMap() {
+    const root = document.getElementById("executionCards");
+    clear(root);
+    (data.execution_map || []).forEach((item) => {
+      const card = el("div", "execution-card");
+      const header = el("div", "execution-card-header");
+      const titleBlock = el("div");
+      titleBlock.append(el("h3", "", item.title));
+      titleBlock.append(el("p", "execution-text", item.trigger));
+      const mode = item.id.includes("daily") ? "automated" : item.id.includes("tenx") ? "optional" : "manual";
+      header.append(titleBlock, el("span", `execution-pill ${mode}`, item.cadence));
+      card.append(header);
+
+      const grid = el("div", "execution-grid");
+      [["Decision needed", item.operator_decision], ["Workflow / command", item.workflow_or_command], ["Unlocks", item.unlocks]].forEach(([label, value]) => {
+        const block = el("div", "meta-block");
+        block.append(el("div", "detail-label", label));
+        block.append(el("div", "detail-value", value));
+        grid.append(block);
+      });
+      card.append(grid);
+      root.append(card);
     });
   }
 
@@ -849,8 +1022,17 @@
       paths.ledger,
       paths.workpack,
       paths.bridge,
+      paths.hypothesis_candidates,
     ].filter(Boolean);
     root.textContent = `Built from ${sourceList.join(", ")}.`;
+  }
+
+  function setMechanism(id, sectionId) {
+    state.selectedMechanism = id;
+    if (sectionId) {
+      requestAnimationFrame(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    }
+    renderAll();
   }
 
   function bindControls() {
@@ -863,10 +1045,9 @@
 
     if (!sidebarSearch.dataset.bound) {
       sidebarSearch.addEventListener("input", (event) => {
-        const value = event.target.value;
-        state.sidebarSearch = value;
-        state.evidenceSearch = value;
-        document.getElementById("evidenceSearch").value = value;
+        state.sidebarSearch = event.target.value;
+        state.evidenceSearch = event.target.value;
+        document.getElementById("evidenceSearch").value = event.target.value;
         renderSummary();
         renderEvidence();
       });
@@ -923,11 +1104,15 @@
     document.getElementById("evidenceSearch").value = state.evidenceSearch;
     document.getElementById("evidenceConfidenceFilter").value = state.evidenceConfidence;
     renderSummary();
+    renderDecisionBrief();
     renderChapter();
     renderMechanismDetail();
+    renderCausalChains();
+    renderIdeas();
     renderEvidence();
     renderWorkpack();
     renderBridge();
+    renderExecutionMap();
     renderSources();
   }
 

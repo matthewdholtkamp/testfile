@@ -38,12 +38,16 @@
         <div class="sidebar-block">
           <div class="eyebrow">View</div>
           <div class="nav-stack section-nav">
+            <a href="#decision-brief">Decision Brief</a>
             <a href="#overview">Overview</a>
             <a href="#chapter">Chapter</a>
             <a href="#deep-dive">Deep Dive</a>
+            <a href="#causal">Causal Chains</a>
+            <a href="#ideas">Candidate Ideas</a>
             <a href="#evidence">Evidence</a>
             <a href="#actions">Next Actions</a>
             <a href="#bridge">Translational Bridge</a>
+            <a href="#execution">Execution Map</a>
           </div>
         </div>
       </aside>
@@ -66,6 +70,38 @@
             </div>
           </div>
         </header>
+
+        <section id="decision-brief" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Decision Brief</div>
+              <h2>Weekly Control Surface</h2>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-grid two">
+              <div>
+                <h3 id="decisionDateHeading">This Week</h3>
+                <div id="decisionIntro" class="muted"></div>
+                <div id="decisionSummaryCards" class="brief-grid"></div>
+              </div>
+              <div>
+                <h3>What You Need To Decide</h3>
+                <div id="decisionCards" class="decision-list"></div>
+              </div>
+            </div>
+            <div class="panel-grid two top-gap">
+              <div>
+                <h3>Human Actions</h3>
+                <ul id="humanActions" class="bullet-list"></ul>
+              </div>
+              <div>
+                <h3>Release Snapshot</h3>
+                <div id="releaseSnapshot" class="tag-cloud"></div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section id="overview" class="section">
           <div class="section-header">
@@ -128,6 +164,28 @@
           <div id="mechanismDetail" class="card-stack"></div>
         </section>
 
+        <section id="causal" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Causal Chains</div>
+              <h2>Mechanism-to-Mechanism Logic</h2>
+            </div>
+          </div>
+          <div id="causalSummary" class="evidence-summary"></div>
+          <div id="causalChains" class="card-stack"></div>
+        </section>
+
+        <section id="ideas" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Candidate Ideas</div>
+              <h2>Idea-Generation Lanes</h2>
+            </div>
+          </div>
+          <div id="ideaSummary" class="evidence-summary"></div>
+          <div id="ideaCards" class="card-stack"></div>
+        </section>
+
         <section id="evidence" class="section">
           <div class="section-header">
             <div>
@@ -174,7 +232,7 @@
                     <th>Best Anchor</th>
                     <th>PMIDs</th>
                     <th>Quality Mix</th>
-                    <th>Confidence</th>
+                    <th>Strength</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -251,6 +309,16 @@
               </table>
             </div>
           </div>
+        </section>
+
+        <section id="execution" class="section">
+          <div class="section-header">
+            <div>
+              <div class="eyebrow">Execution Map</div>
+              <h2>Decision to Pipeline Action</h2>
+            </div>
+          </div>
+          <div id="executionCards" class="card-stack"></div>
         </section>
 
         <footer class="footer">

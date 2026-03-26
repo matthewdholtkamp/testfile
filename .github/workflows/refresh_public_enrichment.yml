@@ -120,6 +120,8 @@ jobs:
           python scripts/build_idea_generation_gate.py \
             --output-dir reports/idea_generation_gate \
             --release-manifest-csv "$latest_release_manifest"
+          python scripts/build_hypothesis_candidates.py \
+            --output-dir reports/hypothesis_candidates
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_tbi_atlas_book.py \

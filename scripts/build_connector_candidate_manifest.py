@@ -23,6 +23,7 @@ GOOD_BUCKETS = {'high_signal', 'usable'}
 EXCLUDED_LANES = {'manual_review'}
 TOP_BIOMARKERS_PER_MECHANISM = 3
 TOP_ANCHORS_PER_MECHANISM = 3
+TOP_EXACT_TARGETS_PER_MECHANISM = 5
 
 TEMPLATE_SCHEMAS = {
     'open_targets': [
@@ -99,9 +100,28 @@ def slugify(value):
     return normalize_spaces(value).lower().replace(' ', '_').replace('/', '_')
 
 
+def normalize_text(value):
+    value = normalize_spaces(value).lower()
+    value = value.replace('-', ' ')
+    return ' '.join(value.split())
+
+
 def load_yaml(path):
     with open(path, 'r', encoding='utf-8') as handle:
         return yaml.safe_load(handle) or {}
+
+
+def load_alias_map(path):
+    payload = load_yaml(path)
+    starter = payload.get('starter_mechanism_aliases', {})
+    alias_map = {}
+    for mechanism, targets in starter.items():
+        alias_map[mechanism] = {}
+        for symbol, aliases in (targets or {}).items():
+            normalized_aliases = {normalize_text(symbol)}
+            normalized_aliases.update(normalize_text(alias) for alias in (aliases or []))
+            alias_map[mechanism][symbol] = normalized_aliases
+    return alias_map
 
 
 def rank_anchor_rows(rows):
@@ -147,7 +167,52 @@ def top_biomarker_rows(claim_rows, limit):
     return items
 
 
-def build_rows(claim_rows, paper_rows, action_rows, backbone_rows, anchor_rows):
+def exact_target_seed_rows(mechanism, claim_rows, alias_map, paper_lookup, limit):
+    mechanism_aliases = alias_map.get(mechanism, {})
+    if not mechanism_aliases:
+        return []
+
+    candidates = []
+    for symbol, aliases in mechanism_aliases.items():
+        matched_rows = []
+        for row in claim_rows:
+            haystack = normalize_text(' '.join([
+                row.get('normalized_claim', ''),
+                row.get('claim_text', ''),
+                row.get('biomarker_families', ''),
+                row.get('biomarkers', ''),
+                row.get('anatomy_context', ''),
+            ]))
+            if not haystack:
+                continue
+            if any(alias and alias in haystack for alias in aliases):
+                matched_rows.append(row)
+        if not matched_rows:
+            continue
+        matched_rows.sort(
+            key=lambda row: (
+                paper_lookup.get(normalize_spaces(row.get('pmid', '')), {}).get('source_quality_tier') != 'full_text_like',
+                paper_lookup.get(normalize_spaces(row.get('pmid', '')), {}).get('quality_bucket') != 'high_signal',
+                -(normalize_float(row.get('mechanistic_depth_score')) or 0.0),
+                -(normalize_float(row.get('confidence_score')) or 0.0),
+                row.get('pmid', ''),
+            )
+        )
+        top_row = matched_rows[0]
+        candidates.append({
+            'symbol': symbol,
+            'match_count': len(matched_rows),
+            'pmid': normalize_spaces(top_row.get('pmid', '')),
+            'title': top_row.get('title', ''),
+            'atlas_layer': top_row.get('atlas_layer', ''),
+            'top_claim_example': top_row.get('normalized_claim') or top_row.get('claim_text', ''),
+        })
+
+    candidates.sort(key=lambda item: (-item['match_count'], item['symbol']))
+    return candidates[:limit]
+
+
+def build_rows(claim_rows, paper_rows, action_rows, backbone_rows, anchor_rows, alias_map):
     paper_lookup = {normalize_spaces(row.get('pmid', '')): row for row in paper_rows if normalize_spaces(row.get('pmid', ''))}
     action_lookup = {normalize_spaces(row.get('pmid', '')): row for row in action_rows if normalize_spaces(row.get('pmid', ''))}
     anchors_by_mechanism = defaultdict(list)
@@ -205,6 +270,7 @@ def build_rows(claim_rows, paper_rows, action_rows, backbone_rows, anchor_rows):
         top_anchor_quality = top_anchor.get('quality_bucket', '')
         top_claim_example = top_anchor.get('example_claim', '')
         top_biomarkers = top_biomarker_rows(mechanism_claims, TOP_BIOMARKERS_PER_MECHANISM)
+        exact_targets = exact_target_seed_rows(mechanism, mechanism_claims, alias_map, paper_lookup, TOP_EXACT_TARGETS_PER_MECHANISM)
         biomarker_summary = '; '.join(item['biomarker_family'] for item in top_biomarkers)
 
         rows.extend([
@@ -314,6 +380,36 @@ def build_rows(claim_rows, paper_rows, action_rows, backbone_rows, anchor_rows):
                 'notes': f"Top biomarker family for {display_name}; seed target lookup from biomarker context.",
             })
 
+        for idx, target_row in enumerate(exact_targets, start=1):
+            rows.append({
+                'canonical_mechanism': mechanism,
+                'pmid': target_row['pmid'],
+                'title': target_row['title'],
+                'source_quality_tier': paper_lookup.get(target_row['pmid'], {}).get('source_quality_tier', ''),
+                'quality_bucket': paper_lookup.get(target_row['pmid'], {}).get('quality_bucket', ''),
+                'atlas_layer': target_row['atlas_layer'],
+                'anchor_priority': 'primary' if idx == 1 else 'secondary',
+                'biomarker_families': target_row['symbol'],
+                'top_claim_example': target_row['top_claim_example'],
+                'requested_connector': 'open_targets',
+                'preset_name': 'biomarker_to_target',
+                'query_seed': target_row['symbol'],
+                'evidence_tier_target': 'target_association',
+                'provenance_source': 'investigation_claims+manual_target_aliases',
+                'notes': f"Exact target symbol matched in starter-mechanism claims for {display_name}; prioritize precise target lookup for {target_row['symbol']}.",
+            })
+
+    deduped = {}
+    for row in rows:
+        key = (
+            row['canonical_mechanism'],
+            row['requested_connector'],
+            normalize_spaces(row['query_seed']).lower(),
+            normalize_spaces(row['pmid']),
+        )
+        deduped.setdefault(key, row)
+
+    rows = list(deduped.values())
     rows.sort(key=lambda row: (row['canonical_mechanism'], row['requested_connector'], row['anchor_priority'], row['query_seed']))
     return rows
 
@@ -364,6 +460,7 @@ def main():
     parser.add_argument('--action-queue-csv', default='', help='Path to investigation_action_queue CSV. Defaults to latest report.')
     parser.add_argument('--backbone-csv', default='', help='Path to atlas_backbone_matrix CSV. Defaults to latest report if available.')
     parser.add_argument('--anchors-csv', default='', help='Path to atlas_backbone_anchors CSV. Defaults to latest report if available.')
+    parser.add_argument('--alias-yaml', default='config/manual_target_aliases.yaml', help='Path to manual target alias YAML.')
     parser.add_argument('--output-dir', default='reports/connector_candidate_manifest', help='Directory for output artifacts.')
     args = parser.parse_args()
 
@@ -375,6 +472,7 @@ def main():
 
     registry = load_yaml(os.path.join(REPO_ROOT, 'config', 'connector_registry.yaml'))
     presets = load_yaml(os.path.join(REPO_ROOT, 'config', 'enrichment_presets.yaml'))
+    alias_map = load_alias_map(os.path.join(REPO_ROOT, args.alias_yaml))
     _ = registry, presets
 
     rows = build_rows(
@@ -383,6 +481,7 @@ def main():
         read_csv(action_queue_csv),
         read_csv(backbone_csv) if backbone_csv else [],
         read_csv(anchors_csv) if anchors_csv else [],
+        alias_map,
     )
 
     ts = datetime.now().strftime('%Y-%m-%d_%H%M%S')

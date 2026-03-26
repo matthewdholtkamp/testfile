@@ -269,6 +269,12 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_hypothesis_candidates.py',
+        '--output-dir',
+        'reports/hypothesis_candidates',
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_manual_enrichment_workpack.py',
         '--seed-pack-csv',
         latest_csv_in_dir(args.seed_pack_output_dir, 'target_seed_pack_*.csv'),
