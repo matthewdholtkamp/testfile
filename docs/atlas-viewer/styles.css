@@ -189,22 +189,6 @@ a {
   margin-top: 28px;
 }
 
-.decision-brief-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.decision-card h3 {
-  margin: 4px 0 10px;
-}
-
-.decision-recommendation {
-  margin-bottom: 12px;
-}
-
 .section-header {
   margin-bottom: 14px;
 }
