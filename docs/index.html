@@ -12,6 +12,7 @@
         --ink: #eef6f2;
         --muted: #aabbb4;
         --accent: #9ce2cf;
+        --line: rgba(156,226,207,0.14);
       }
       * { box-sizing: border-box; }
       body {
@@ -23,37 +24,24 @@
           linear-gradient(180deg, #0d1413 0%, var(--bg) 100%);
         font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
       }
-      .shell {
-        max-width: 1120px;
-        margin: 0 auto;
-        padding: 48px 24px 72px;
-      }
-      .hero {
-        max-width: 720px;
-        margin-bottom: 32px;
-      }
-      .hero p {
-        color: var(--muted);
-        line-height: 1.6;
-      }
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 20px;
-      }
-      .cards + .cards {
-        margin-top: 20px;
-      }
-      .card {
-        display: block;
-        text-decoration: none;
+      .shell { max-width: 1180px; margin: 0 auto; padding: 48px 24px 72px; }
+      .hero { max-width: 780px; margin-bottom: 28px; }
+      .hero p { color: var(--muted); line-height: 1.6; }
+      .spotlight-grid, .cards { display:grid; gap:20px; }
+      .spotlight-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 28px; }
+      .cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+      .cards + .cards { margin-top: 20px; }
+      .card, .spotlight-card {
+        display:block;
+        text-decoration:none;
         color: inherit;
         background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
-        border: 1px solid rgba(156,226,207,0.14);
+        border: 1px solid var(--line);
         border-radius: 24px;
         padding: 24px;
         box-shadow: 0 24px 40px rgba(0,0,0,0.2);
       }
+      .spotlight-card h3, .card h2 { margin: 0 0 10px; }
       .eyebrow {
         margin: 0 0 10px;
         color: var(--accent);
@@ -63,19 +51,18 @@
         font-weight: 700;
       }
       h1 { margin: 0 0 16px; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 0.96; }
-      h2 { margin: 0 0 10px; font-size: 1.5rem; }
-      .card p { margin: 0; color: var(--muted); line-height: 1.6; }
-      .cta {
-        margin-top: 18px;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--accent);
-        font-weight: 700;
-      }
-      .card.small h2 {
-        font-size: 1.1rem;
-      }
+      h2 { font-size: 1.5rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .cta { margin-top: 18px; display:inline-flex; gap:8px; color: var(--accent); font-weight: 700; }
+      .meta-row { display:flex; gap:8px; flex-wrap:wrap; margin-top: 14px; }
+      .pill { display:inline-flex; align-items:center; border-radius:999px; padding:6px 12px; font-size:0.76rem; font-weight:700; }
+      .pill.decision { background: rgba(255,255,255,0.08); color: var(--ink); }
+      .pill.strength.assertive { background: rgba(108, 210, 168, 0.18); color: #a7f2cc; }
+      .pill.strength.moderate { background: rgba(255, 209, 102, 0.18); color: #ffe1a3; }
+      .pill.strength.speculative { background: rgba(255, 128, 128, 0.16); color: #ffc1c1; }
+      .snapshot { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:16px; margin: 24px 0 32px; }
+      .snap { padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.05); }
+      .snap strong { display:block; margin-top: 6px; font-size: 1.8rem; }
     </style>
   </head>
   <body>
@@ -83,9 +70,55 @@
       <section class="hero">
         <p class="eyebrow">TBI investigation engine</p>
         <h1>Atlas Portal</h1>
-        <p>This portal gives us two lenses on the same project: the review console for adjudication and the atlas book for coherent chapter-level synthesis.</p>
+        <p>This portal now has three working surfaces: the review console, the atlas book, and the idea briefs page. The current lead mechanism is <strong>Blood-Brain Barrier Dysfunction</strong>, with 5 stable rows supporting the live atlas.</p>
+      </section>
+      <section class="snapshot">
+        <div class="snap"><span class="eyebrow">Lead</span><strong>Blood-Brain Barrier Dysfunction</strong></div>
+        <div class="snap"><span class="eyebrow">Stable</span><strong>5</strong></div>
+        <div class="snap"><span class="eyebrow">Provisional</span><strong>6</strong></div>
+        <div class="snap"><span class="eyebrow">Ideas</span><strong>9</strong></div>
+      </section>
+      <section>
+        <p class="eyebrow">Hypothesis spotlight</p>
+        <div class="spotlight-grid">
+            <article class="spotlight-card">
+              <div class="eyebrow">Blood-Brain Barrier Dysfunction</div>
+              <h3>Blood-Brain Barrier Dysfunction driver hypothesis</h3>
+              <p>rmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. TBI-induced BBB breakdown promotes neuroinflammation. Neutrophil-derived exosomes disrupt BBB integrity.</p>
+              <div class="meta-row">
+                <span class="pill decision">Write now</span>
+                <span class="pill strength assertive">assertive</span>
+              </div>
+            </article>
+            
+            <article class="spotlight-card">
+              <div class="eyebrow">Mitochondrial Dysfunction</div>
+              <h3>Mitochondrial Dysfunction driver hypothesis</h3>
+              <p>Parkin promotes mitochondrial biogenesis and fission while inhibiting mitochondrial fusion post-TBI. MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis. Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits.</p>
+              <div class="meta-row">
+                <span class="pill decision">Needs adjudication</span>
+                <span class="pill strength moderate">moderate</span>
+              </div>
+            </article>
+            
+            <article class="spotlight-card">
+              <div class="eyebrow">Neuroinflammation / Microglial Activation</div>
+              <h3>Neuroinflammation / Microglial Activation driver hypothesis</h3>
+              <p>Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100β, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration. GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.</p>
+              <div class="meta-row">
+                <span class="pill decision">Needs adjudication</span>
+                <span class="pill strength moderate">moderate</span>
+              </div>
+            </article>
+            </div>
       </section>
       <section class="cards">
+        <a class="card" href="./idea-briefs/index.html">
+          <p class="eyebrow">Idea lanes</p>
+          <h2>Idea Briefs</h2>
+          <p>Review the current hypothesis set in a cleaner decision format: what the idea is, why it matters now, what it unlocks, and what decision comes next.</p>
+          <span class="cta">Open ideas →</span>
+        </a>
         <a class="card" href="./atlas-viewer/index.html">
           <p class="eyebrow">Review + control</p>
           <h2>TBI Atlas Viewer</h2>
@@ -100,13 +133,13 @@
         </a>
       </section>
       <section class="cards">
-        <a class="card small" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">
+        <a class="card" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">
           <p class="eyebrow">Execution</p>
           <h2>GitHub Actions</h2>
           <p>Open the workflow run surface for the ongoing literature cycle, review packet, atlas refresh, and release jobs.</p>
           <span class="cta">Open actions →</span>
         </a>
-        <a class="card small" href="https://github.com/matthewdholtkamp/testfile" target="_blank" rel="noreferrer">
+        <a class="card" href="https://github.com/matthewdholtkamp/testfile" target="_blank" rel="noreferrer">
           <p class="eyebrow">Source</p>
           <h2>Project Repo</h2>
           <p>Open the repo directly when you need raw reports, workflow YAML files, or code-level investigation context.</p>

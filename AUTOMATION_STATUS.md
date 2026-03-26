@@ -18,7 +18,7 @@ This file is the current reality check for what parts of the TBI investigation e
 - **Automatic atlas refresh after staging**
   - Workflow: `.github/workflows/refresh_atlas_from_ongoing_cycle.yml`
   - Triggered after a successful ongoing literature cycle
-  - Downloads staged artifacts, rebuilds the atlas-facing lane, refreshes `docs/atlas-viewer` and `docs/atlas-book`, and publishes the updated docs snapshot
+  - Downloads staged artifacts, rebuilds the atlas-facing lane, refreshes `docs/idea-briefs`, `docs/atlas-viewer`, and `docs/atlas-book`, and publishes the updated docs snapshot
 
 - **Automatic public-enrichment refresh after atlas rebuild**
   - Workflow: `.github/workflows/refresh_public_enrichment.yml`
@@ -29,6 +29,7 @@ This file is the current reality check for what parts of the TBI investigation e
   - Pages deployment updates from committed `docs/`
   - Current product surfaces:
     - `docs/index.html`
+    - `docs/idea-briefs/index.html`
     - `docs/atlas-viewer/index.html`
     - `docs/atlas-book/index.html`
 

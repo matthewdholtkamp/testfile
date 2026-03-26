@@ -170,11 +170,16 @@ jobs:
             --release-manifest-csv "$latest_release_manifest"
           python scripts/build_hypothesis_candidates.py \
             --output-dir reports/hypothesis_candidates
+          python scripts/build_idea_briefs.py \
+            --output-dir reports/idea_briefs \
+            --site-dir docs/idea-briefs
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_tbi_atlas_book.py \
             --output-dir reports/starter_tbi_atlas \
             --site-dir docs/atlas-book
+          python scripts/build_portal_page.py \
+            --output-path docs/index.html
           python scripts/build_program_status_report.py \
             --output-dir reports/program_status \
             --quality-gate-csv "$latest_quality_gate" \

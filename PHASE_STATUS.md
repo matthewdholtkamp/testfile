@@ -104,6 +104,7 @@ For the connector-enrichment sidecar:
   - polished atlas HTML
   - publishable `docs/atlas-book` site output
 - the `docs/` portal now exposes:
+  - the operator-facing Idea Briefs page
   - the evidence-first Atlas Viewer
   - the chapter-grade Starter TBI Atlas
 - the optional 10x lane now has a seeded import-template builder so the genomics path is ready as soon as real exports exist

@@ -1012,6 +1012,8 @@
       const grid = el("div", "idea-detail-grid");
       [
         ["Why now", idea.why_now],
+        ["Operator decision", idea.operator_decision || "Unassigned"],
+        ["What it unlocks", idea.unlocks || "Not specified"],
         ["Next test", idea.next_test],
         ["Current blocker", idea.blockers || "None listed"],
         ["Supporting PMIDs", idea.supporting_pmids || "none listed"],

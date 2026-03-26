@@ -219,6 +219,7 @@ That will:
 - rebuild a short manual enrichment workpack for the next BBB / mitochondrial pass
 - emit mitochondrial-first target packets with seeded ChEMBL query terms, assay keywords, and trial query suggestions
 - rebuild a static atlas viewer under `docs/atlas-viewer`
+- rebuild a static idea-briefs surface under `docs/idea-briefs`
 
 Use this when you want a mitochondrial-first assisted ChEMBL pass before widening back to BBB and the rest of the atlas prose.
 
@@ -296,6 +297,15 @@ python scripts/build_atlas_viewer.py \
   --output-dir docs/atlas-viewer
 ```
 
+### Idea Briefs
+To publish the current hypothesis lanes in a simpler operator-facing format:
+
+```bash
+python scripts/build_idea_briefs.py \
+  --output-dir reports/idea_briefs \
+  --site-dir docs/idea-briefs
+```
+
 ### Build the atlas package
 
 To compile the current curated chapter, synthesis packet, dossiers, evidence ledger, and workpack into one atlas deliverable:
@@ -315,6 +325,7 @@ This emits:
 
 The `Build Atlas Slices` workflow now supports a `publish_docs` input. When set to `true`, the workflow will:
 - rebuild the atlas artifacts
+- refresh `docs/idea-briefs`
 - refresh `docs/atlas-viewer`
 - refresh `docs/atlas-book`
 - commit the updated `docs/` snapshot back to `main`
@@ -331,6 +342,7 @@ It is designed to:
 - trigger after a successful `Ongoing Literature Cycle`
 - download the staged cycle artifacts
 - rebuild the atlas-only lane from those artifacts
+- refresh `docs/idea-briefs`
 - refresh `docs/atlas-viewer` and `docs/atlas-book`
 - publish the refreshed docs snapshot
 

@@ -56,11 +56,43 @@ def normalize(value):
     return ' '.join((value or '').split()).strip()
 
 
+def ensure_sentence(value):
+    text = normalize(value)
+    if not text:
+        return ''
+    text = re.sub(r'\.\s+and\b', '. ', text, flags=re.I)
+    text = re.sub(r'\s+\.', '.', text)
+    text = re.sub(r'\.{2,}', '.', text)
+    if text[-1] not in '.!?':
+        text += '.'
+    return text
+
+
 def lower_first(value):
     value = normalize(value)
     if not value:
         return value
     return value[0].lower() + value[1:]
+
+
+def join_sentences(values, limit=None):
+    sentences = [ensure_sentence(value) for value in values if ensure_sentence(value)]
+    if limit is not None:
+        sentences = sentences[:limit]
+    return ' '.join(sentences)
+
+
+def unique_pmids(*values):
+    seen = set()
+    ordered = []
+    for value in values:
+        for pmid in normalize(value).split(';'):
+            pmid = normalize(pmid)
+            if not pmid or pmid in seen:
+                continue
+            seen.add(pmid)
+            ordered.append(pmid)
+    return '; '.join(ordered)
 
 
 def parse_target_from_workpack_title(title):
@@ -115,6 +147,44 @@ def top_dossier_targets(mechanism):
     return targets[:5]
 
 
+def idea_decision(hypothesis_type, strength_tag):
+    if hypothesis_type == 'mechanistic_driver':
+        if strength_tag == 'assertive':
+            return (
+                'Write now',
+                'This is strong enough to anchor prose now.',
+                'Advance the mechanism into the chapter draft and keep the blocker notes attached.',
+            )
+        return (
+            'Needs adjudication',
+            'The driver story is usable, but the narrative still needs a bounded scientific pass.',
+            'Pressure-test the strongest anchors and decide what language stays assertive versus cautionary.',
+        )
+    if hypothesis_type == 'cross_mechanism_bridge':
+        return (
+            'Needs adjudication',
+            'This bridge shapes the atlas architecture, so it needs explicit confirmation.',
+            'Use full-text anchors to confirm whether the upstream/downstream framing should hold.',
+        )
+    if hypothesis_type == 'translational_probe':
+        return (
+            'Needs enrichment',
+            'The mechanism is interesting, but the translational layer is still too thin.',
+            'Fill target, compound, and trial support before promoting this beyond a probe idea.',
+        )
+    if hypothesis_type == 'subtrack_narrowing':
+        return (
+            'Needs adjudication',
+            'This is the right narrowing move, but it still needs an explicit operator choice.',
+            'Split the next pass into subtracks and evaluate each as its own hypothesis lane.',
+        )
+    return (
+        'Watch only',
+        'Keep this in the queue until stronger evidence or cleaner scope emerges.',
+        'Do not promote it yet.',
+    )
+
+
 def candidate_rows_for_mechanism(mechanism, synthesis_rows, idea_row, workpack):
     display_name = mechanism['display_name']
     canonical = mechanism['canonical_mechanism']
@@ -128,12 +198,10 @@ def candidate_rows_for_mechanism(mechanism, synthesis_rows, idea_row, workpack):
     rows = []
 
     if thesis:
-        statement = normalize(thesis.get('statement_text'))
-        if len(causal_steps) >= 2:
-            statement = f"{normalize(causal_steps[0].get('statement_text'))} This may propagate through {lower_first(causal_steps[1].get('statement_text'))}"
-            if len(causal_steps) >= 3:
-                statement += f" and culminate in {lower_first(causal_steps[2].get('statement_text'))}"
-            statement += '.'
+        statement = ensure_sentence(thesis.get('statement_text'))
+        if causal_steps:
+            statement = join_sentences([row.get('statement_text') for row in causal_steps], limit=3)
+        decision, rationale, unlocks = idea_decision('mechanistic_driver', writing_strength(causal_steps[0] if causal_steps else thesis))
         rows.append({
             'canonical_mechanism': canonical,
             'display_name': display_name,
@@ -142,29 +210,37 @@ def candidate_rows_for_mechanism(mechanism, synthesis_rows, idea_row, workpack):
             'statement': statement,
             'strength_tag': writing_strength(causal_steps[0] if causal_steps else thesis),
             'why_now': f"{idea_row.get('idea_generation_status', 'ready_now')} for idea generation with {mechanism.get('papers', 0)} papers and {mechanism.get('queue_burden', 0)} queue items.",
-            'supporting_pmids': '; '.join(filter(None, [thesis.get('supporting_pmids', ''), *(row.get('supporting_pmids', '') for row in causal_steps[:2])])),
+            'supporting_pmids': unique_pmids(thesis.get('supporting_pmids', ''), *(row.get('supporting_pmids', '') for row in causal_steps[:3])),
             'next_test': 'Pressure-test the chain against the best full-text anchors and see whether the same ordering survives after blocker cleanup.',
             'blockers': normalize(caveat.get('statement_text')) or normalize(idea_row.get('missing_for_breakthrough')),
+            'operator_decision': decision,
+            'decision_rationale': rationale,
+            'unlocks': unlocks,
         })
 
     if bridges:
         bridge = bridges[0]
         related = DISPLAY_NAMES.get(normalize(bridge.get('related_mechanisms')), normalize(bridge.get('related_mechanisms')).replace('_', ' ').title())
+        decision, rationale, unlocks = idea_decision('cross_mechanism_bridge', writing_strength(bridge))
         rows.append({
             'canonical_mechanism': canonical,
             'display_name': display_name,
             'hypothesis_type': 'cross_mechanism_bridge',
             'title': f'{display_name} → {related} bridge hypothesis',
-            'statement': normalize(bridge.get('statement_text')),
+            'statement': ensure_sentence(bridge.get('statement_text')),
             'strength_tag': writing_strength(bridge),
             'why_now': 'This bridge is already explicit in the synthesis packet, so it is ready to be used as a causal demo path.',
-            'supporting_pmids': bridge.get('supporting_pmids', ''),
+            'supporting_pmids': unique_pmids(bridge.get('supporting_pmids', '')),
             'next_test': f'Use the cross-mechanism chain to test whether {display_name} should be framed as upstream of {related}.',
             'blockers': normalize(bridge.get('action_blockers')) or normalize(caveat.get('statement_text')),
+            'operator_decision': decision,
+            'decision_rationale': rationale,
+            'unlocks': unlocks,
         })
 
     if top_targets or translational:
         target_label = ', '.join(top_targets[:3]) if top_targets else normalize(translational[0].get('statement_text')).replace('Translational hook: ', '')
+        decision, rationale, unlocks = idea_decision('translational_probe', 'moderate' if top_targets else writing_strength(translational[0]))
         rows.append({
             'canonical_mechanism': canonical,
             'display_name': display_name,
@@ -173,12 +249,16 @@ def candidate_rows_for_mechanism(mechanism, synthesis_rows, idea_row, workpack):
             'statement': f"Modulating {target_label} may be the fastest translational probe for {display_name.lower()} in this atlas version.",
             'strength_tag': 'moderate' if top_targets else writing_strength(translational[0]),
             'why_now': 'These are the most actionable targets/entities currently attached to this mechanism.',
-            'supporting_pmids': translational[0].get('supporting_pmids', '') if translational else '',
+            'supporting_pmids': unique_pmids(translational[0].get('supporting_pmids', '') if translational else ''),
             'next_test': f"Prioritize enrichment and literature checks for {target_label} before expanding to a wider target set.",
             'blockers': 'compound/trial depth is still limited' if not mechanism.get('compound_rows') else normalize(caveat.get('statement_text')),
+            'operator_decision': decision,
+            'decision_rationale': rationale,
+            'unlocks': unlocks,
         })
 
     if canonical == 'neuroinflammation_microglial_activation':
+        decision, rationale, unlocks = idea_decision('subtrack_narrowing', 'moderate')
         rows.append({
             'canonical_mechanism': canonical,
             'display_name': display_name,
@@ -187,9 +267,12 @@ def candidate_rows_for_mechanism(mechanism, synthesis_rows, idea_row, workpack):
             'statement': 'The neuroinflammation bucket is likely hiding multiple distinct idea lanes: inflammasome/cytokine signaling, microglial state transition, and glymphatic/astroglial response should be evaluated separately rather than as one monolith.',
             'strength_tag': 'moderate',
             'why_now': f"This mechanism has {mechanism.get('papers', 0)} papers, so narrowing scope is more useful than adding more volume.",
-            'supporting_pmids': '; '.join(row.get('supporting_pmids', '') for row in causal_steps[:2]),
+            'supporting_pmids': unique_pmids(*(row.get('supporting_pmids', '') for row in causal_steps[:2])),
             'next_test': 'Split the next atlas pass into explicit NLRP3, TREM2/GAS6, and AQP4/glymphatic subtracks.',
             'blockers': normalize(idea_row.get('missing_for_breakthrough')) or 'topic breadth is still limiting breakthrough-level synthesis',
+            'operator_decision': decision,
+            'decision_rationale': rationale,
+            'unlocks': unlocks,
         })
 
     return rows[:4]
@@ -213,6 +296,9 @@ def render_markdown(rows_by_mechanism):
                 f"- Why now: {row['why_now']}",
                 f"- Supporting PMIDs: {row['supporting_pmids'] or 'none listed' }",
                 f"- Next test: {row['next_test']}",
+                f"- Operator decision: {row['operator_decision']}",
+                f"- Why that decision: {row['decision_rationale']}",
+                f"- What it unlocks: {row['unlocks']}",
                 f"- Current blocker: {row['blockers'] or 'none'}",
                 '',
             ])

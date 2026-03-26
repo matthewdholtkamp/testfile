@@ -289,6 +289,14 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_idea_briefs.py',
+        '--output-dir',
+        'reports/idea_briefs',
+        '--site-dir',
+        'docs/idea-briefs',
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_manual_enrichment_workpack.py',
         '--seed-pack-csv',
         latest_csv_in_dir(args.seed_pack_output_dir, 'target_seed_pack_*.csv'),
@@ -330,6 +338,12 @@ def main():
         args.atlas_output_dir,
         '--site-dir',
         args.atlas_site_dir,
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_portal_page.py',
+        '--output-path',
+        'docs/index.html',
     ])
     run_cmd([
         'python3',
