@@ -12,6 +12,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
 
 import scripts.run_pipeline as rp
+import scripts.drive_corpus_utils as dcu
 
 CORE_TBI_TERMS = [
     "traumatic brain injury",
@@ -211,19 +212,25 @@ def determine_action(best_existing_file, extraction_rank, md_content):
     return False, "skipped_lower_rank", existing_rank, mapped_existing_rank, new_content_length
 
 
-def upload_markdown(drive_service, drive_folder_id, local_filepath, filename, best_existing_file, action):
+def upload_markdown(drive_service, target_folder_id, local_filepath, filename, best_existing_file, action):
     media = MediaFileUpload(local_filepath, mimetype='text/markdown', resumable=True)
 
     if action == "replace_upgraded" and best_existing_file:
-        drive_service.files().update(
-            fileId=best_existing_file['file']['id'],
-            body={'name': filename},
-            media_body=media
-        ).execute()
+        existing_parent_ids = best_existing_file['file'].get('parents', [])
+        update_kwargs = {
+            'fileId': best_existing_file['file']['id'],
+            'body': {'name': filename},
+            'media_body': media,
+        }
+        if target_folder_id not in existing_parent_ids:
+            update_kwargs['addParents'] = target_folder_id
+            if existing_parent_ids:
+                update_kwargs['removeParents'] = ','.join(existing_parent_ids)
+        drive_service.files().update(**update_kwargs).execute()
         return "replaced"
 
     drive_service.files().create(
-        body={'name': filename, 'parents': [drive_folder_id]},
+        body={'name': filename, 'parents': [target_folder_id]},
         media_body=media,
         fields='id'
     ).execute()
@@ -328,6 +335,7 @@ def main():
         raise SystemExit("Missing DRIVE_FOLDER_ID.")
 
     drive_service = rp.get_google_drive_service()
+    source_file_index = dcu.build_source_file_index(drive_service, drive_folder_id)
     pipeline_state = rp.download_state_file(drive_service, drive_folder_id)
     blocked_domains = pipeline_state.get('blocked_domains', {})
 
@@ -372,7 +380,7 @@ def main():
             })
             continue
 
-        existing_files = rp.find_files_by_pmid(drive_service, drive_folder_id, pmid)
+        existing_files = rp.find_files_by_pmid(drive_service, drive_folder_id, pmid, source_file_index)
         best_existing_file, inferior_files = rp.resolve_existing_files(drive_service, existing_files)
         existing_rank = ''
         mapped_existing_rank = ''
@@ -415,12 +423,19 @@ def main():
 
         notes = ''
         if should_upload:
-            upload_result = upload_markdown(drive_service, drive_folder_id, local_filepath, filename, best_existing_file, action)
+            target_folder_id, target_folder_path = dcu.resolve_source_folder(
+                drive_service,
+                drive_folder_id,
+                md_content,
+                filename,
+                extraction_rank,
+            )
+            upload_result = upload_markdown(drive_service, target_folder_id, local_filepath, filename, best_existing_file, action)
             if upload_result == 'replaced':
                 stats['upgraded'] += 1
             else:
                 stats['created'] += 1
-            print(f"[{pmid}] Upload action completed: {upload_result}")
+            print(f"[{pmid}] Upload action completed: {upload_result} in {target_folder_path}")
         else:
             stats['skipped'] += 1
             notes = 'No better result than current source file.'

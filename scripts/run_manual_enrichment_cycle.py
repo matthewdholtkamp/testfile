@@ -347,6 +347,12 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_run_center_page.py',
+        '--output-path',
+        'docs/run-center/index.html',
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_program_status_report.py',
         '--output-dir',
         args.program_status_output_dir,

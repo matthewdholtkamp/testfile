@@ -31,6 +31,8 @@ except ImportError:
 
 import jsonschema
 
+import scripts.drive_corpus_utils as dcu
+
 
 def load_config():
     with open('config/config.yaml', 'r') as f:
@@ -303,50 +305,34 @@ def update_manifest_list(manifest_list, paper_id, filename, checksum, file_id, s
         manifest_list.append(manifest_row)
 
 def find_eligible_papers(service, folder_id, state_dict, include_needs_review, allowlist_paper_ids=None):
-    """Finds all .md files in the configured folder and filters them based on state."""
-    query = f"mimeType='text/markdown' and '{folder_id}' in parents and trashed=false"
+    """Finds all source-paper markdown files in the Drive corpus and filters them based on state."""
     allowlist_set = set(allowlist_paper_ids or [])
     allowlist_order = {paper_id: idx for idx, paper_id in enumerate(allowlist_paper_ids or [])}
 
     eligible = []
-    page_token = None
 
-    while True:
-        results = service.files().list(q=query, spaces='drive', fields='nextPageToken, files(id, name, modifiedTime)', pageSize=1000, pageToken=page_token).execute()
-        items = results.get('files', [])
+    for item in dcu.iter_source_markdown_files(service, folder_id):
+        paper_id = extract_paper_id_from_filename(item['name'])
 
-        for item in items:
-            # Check if it looks like a paper markdown file
-            if not item['name'].endswith('.md'):
-                continue
+        if allowlist_set and paper_id not in allowlist_set:
+            continue
 
-            paper_id = extract_paper_id_from_filename(item['name'])
+        paper_state = state_dict.get(paper_id, {})
+        status = paper_state.get('extraction_status', 'new')
 
-            if allowlist_set and paper_id not in allowlist_set:
-                continue
+        if status == 'completed':
+            continue
 
-            # Check state
-            paper_state = state_dict.get(paper_id, {})
-            status = paper_state.get('extraction_status', 'new')
+        if status == 'needs_review' and not include_needs_review:
+            continue
 
-            if status == 'completed':
-                continue
-
-            if status == 'needs_review' and not include_needs_review:
-                continue
-
-            # Ensure we only process new, failed, or needs_review (if included)
-            if status in ['new', 'failed', 'needs_review']:
-                eligible.append({
-                    'paper_id': paper_id,
-                    'drive_file_id': item['id'],
-                    'filename': item['name'],
-                    'status': status
-                })
-
-        page_token = results.get('nextPageToken')
-        if not page_token:
-            break
+        if status in ['new', 'failed', 'needs_review']:
+            eligible.append({
+                'paper_id': paper_id,
+                'drive_file_id': item['id'],
+                'filename': item['name'],
+                'status': status
+            })
 
     if allowlist_order:
         eligible.sort(key=lambda item: allowlist_order.get(item['paper_id'], len(allowlist_order)))

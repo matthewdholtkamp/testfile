@@ -132,6 +132,8 @@ jobs:
             --site-dir docs/atlas-book
           python scripts/build_portal_page.py \
             --output-path docs/index.html
+          python scripts/build_run_center_page.py \
+            --output-path docs/run-center/index.html
           python scripts/build_program_status_report.py \
             --output-dir reports/program_status \
             --quality-gate-csv "$latest_quality_gate" \

@@ -29,7 +29,7 @@ def normalize(value):
     return ' '.join((value or '').split()).strip()
 
 
-def spotlight_cards(ideas):
+def spotlight_cards(ideas, limit=3):
     seen = {}
     for row in ideas:
         key = normalize(row.get('display_name'))
@@ -58,7 +58,7 @@ def spotlight_cards(ideas):
         ),
     )
     cards = []
-    for row in ideas[:3]:
+    for row in ideas[:limit]:
         cards.append(
             f"""
             <article class="spotlight-card">
@@ -78,7 +78,7 @@ def spotlight_cards(ideas):
 def render_html(viewer, ideas_payload):
     summary = viewer.get('summary', {})
     ideas = ideas_payload.get('rows', [])
-    spotlight = spotlight_cards(ideas)
+    spotlight_html = spotlight_cards(ideas, limit=1)
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -106,11 +106,9 @@ def render_html(viewer, ideas_payload):
         font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
       }}
       .shell {{ max-width: 1180px; margin: 0 auto; padding: 48px 24px 72px; }}
-      .hero {{ max-width: 780px; margin-bottom: 28px; }}
+      .hero {{ max-width: 760px; margin-bottom: 24px; }}
       .hero p {{ color: var(--muted); line-height: 1.6; }}
-      .spotlight-grid, .cards {{ display:grid; gap:20px; }}
-      .spotlight-grid {{ grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 28px; }}
-      .cards {{ grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }}
+      .cards {{ display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }}
       .cards + .cards {{ margin-top: 20px; }}
       .card, .spotlight-card {{
         display:block;
@@ -144,6 +142,7 @@ def render_html(viewer, ideas_payload):
       .snapshot {{ display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:16px; margin: 24px 0 32px; }}
       .snap {{ padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.05); }}
       .snap strong {{ display:block; margin-top: 6px; font-size: 1.8rem; }}
+      .today {{ margin: 0 0 30px; }}
     </style>
   </head>
   <body>
@@ -151,7 +150,7 @@ def render_html(viewer, ideas_payload):
       <section class="hero">
         <p class="eyebrow">TBI investigation engine</p>
         <h1>Atlas Portal</h1>
-        <p>This portal now has three working surfaces: the review console, the atlas book, and the idea briefs page. The current lead mechanism is <strong>{summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')}</strong>, with {summary.get('stable_rows', 0)} stable rows supporting the live atlas.</p>
+        <p>This is the simplest working surface for the project: run the machine, review the ideas, and read the atlas. The current lead mechanism is <strong>{summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')}</strong>, with {summary.get('stable_rows', 0)} stable rows supporting the live atlas.</p>
       </section>
       <section class="snapshot">
         <div class="snap"><span class="eyebrow">Lead</span><strong>{summary.get('lead_mechanism', '—')}</strong></div>
@@ -159,22 +158,18 @@ def render_html(viewer, ideas_payload):
         <div class="snap"><span class="eyebrow">Provisional</span><strong>{summary.get('provisional_rows', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Ideas</span><strong>{len(ideas)}</strong></div>
       </section>
-      <section>
-        <p class="eyebrow">Hypothesis spotlight</p>
-        <div class="spotlight-grid">{spotlight}</div>
-      </section>
       <section class="cards">
-        <a class="card" href="./idea-briefs/index.html">
-          <p class="eyebrow">Idea lanes</p>
-          <h2>Idea Briefs</h2>
-          <p>Review the current hypothesis set in a cleaner decision format: what the idea is, why it matters now, what it unlocks, and what decision comes next.</p>
-          <span class="cta">Open ideas →</span>
+        <a class="card" href="./run-center/index.html">
+          <p class="eyebrow">Start here</p>
+          <h2>Run Center</h2>
+          <p>Launch the full daily pipeline, see the newest workflow runs, and use one page as the execution surface for the machine.</p>
+          <span class="cta">Open run center →</span>
         </a>
-        <a class="card" href="./atlas-viewer/index.html">
-          <p class="eyebrow">Review + control</p>
-          <h2>TBI Atlas Viewer</h2>
-          <p>Use the dashboard control surface to inspect readiness, open packets and templates, review the evidence ledger, and jump to workflow entry points.</p>
-          <span class="cta">Open viewer →</span>
+        <a class="card" href="./idea-briefs/index.html">
+          <p class="eyebrow">Weekly decisions</p>
+          <h2>Idea Briefs</h2>
+          <p>Review the current hypothesis set in a simpler decision format: what the idea is, why it matters, and what choice moves it forward.</p>
+          <span class="cta">Open ideas →</span>
         </a>
         <a class="card" href="./atlas-book/index.html">
           <p class="eyebrow">Atlas package</p>
@@ -183,11 +178,21 @@ def render_html(viewer, ideas_payload):
           <span class="cta">Open atlas →</span>
         </a>
       </section>
+      <section class="today">
+        <p class="eyebrow">Today’s lead idea</p>
+        {spotlight_html}
+      </section>
       <section class="cards">
+        <a class="card" href="./atlas-viewer/index.html">
+          <p class="eyebrow">Deep review</p>
+          <h2>TBI Atlas Viewer</h2>
+          <p>Open the full review console when you want the evidence ledger, action queue, workflow links, and detailed mechanism state.</p>
+          <span class="cta">Open viewer →</span>
+        </a>
         <a class="card" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">
-          <p class="eyebrow">Execution</p>
+          <p class="eyebrow">Automation</p>
           <h2>GitHub Actions</h2>
-          <p>Open the workflow run surface for the ongoing literature cycle, review packet, atlas refresh, and release jobs.</p>
+          <p>Open the workflow run surface directly when you want the raw run logs behind the machine.</p>
           <span class="cta">Open actions →</span>
         </a>
         <a class="card" href="https://github.com/matthewdholtkamp/testfile" target="_blank" rel="noreferrer">

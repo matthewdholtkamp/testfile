@@ -15,6 +15,8 @@ from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
+import scripts.drive_corpus_utils as dcu
+
 DEFAULT_HTTP_TIMEOUT = 30
 
 def load_config():
@@ -144,11 +146,11 @@ def check_file_exists(service, folder_id, filename):
     items = results.get('files', [])
     return len(items) > 0
 
-def find_files_by_pmid(service, folder_id, pmid):
-    """Searches for any file containing '_PMID<pmid>.md' in its name."""
-    query = f"name contains '_PMID{pmid}.md' and '{folder_id}' in parents and trashed=false"
-    results = service.files().list(q=query, spaces='drive', fields='files(id, name, modifiedTime)').execute()
-    return results.get('files', [])
+def find_files_by_pmid(service, folder_id, pmid, source_index=None):
+    """Searches for any source-paper file containing '_PMID<pmid>.md' in its name."""
+    if source_index is None:
+        source_index = dcu.build_source_file_index(service, folder_id)
+    return dcu.find_files_by_pmid_from_index(source_index, pmid)
 
 def download_file_content(service, file_id):
     """Downloads the content of a Google Drive file."""
@@ -983,6 +985,13 @@ def main():
         print(f"Error authenticating to Google Drive: {e}")
         sys.exit(1)
 
+    try:
+        source_file_index = dcu.build_source_file_index(drive_service, drive_folder_id)
+        print(f"Indexed {len(source_file_index['all_items'])} source-paper files across the Drive corpus.")
+    except Exception as e:
+        print(f"Warning: Failed to build source-paper index. Falling back to empty index. Error: {e}")
+        source_file_index = {'all_items': [], 'by_pmid': {}}
+
     os.makedirs('output', exist_ok=True)
 
     stats = {
@@ -1193,7 +1202,7 @@ def main():
             # Find existing files by PMID
             existing_files = []
             try:
-                existing_files = find_files_by_pmid(drive_service, drive_folder_id, pmid)
+                existing_files = find_files_by_pmid(drive_service, drive_folder_id, pmid, source_file_index)
             except Exception as e:
                 print(f"[{pmid}] Error checking Drive for existing files: {e}")
                 stats['nonfatal_warnings'] += 1
@@ -1408,23 +1417,38 @@ def main():
             if should_upload:
                 print(f"[{pmid}] Uploading {filename} to Drive...")
                 try:
+                    target_folder_id, target_folder_path = dcu.resolve_source_folder(
+                        drive_service,
+                        drive_folder_id,
+                        md_content,
+                        filename,
+                        extraction_rank,
+                    )
                     media = MediaFileUpload(local_filepath, mimetype='text/markdown', resumable=True)
 
                     if action == "replace_upgraded" and best_existing_file:
                         # Update existing file metadata and content
                         file_metadata = {'name': filename} # Rename it if necessary
+                        existing_parent_ids = best_existing_file['file'].get('parents', [])
+                        update_kwargs = {
+                            'fileId': best_existing_file['file']['id'],
+                            'body': file_metadata,
+                            'media_body': media,
+                        }
+                        if target_folder_id not in existing_parent_ids:
+                            update_kwargs['addParents'] = target_folder_id
+                            if existing_parent_ids:
+                                update_kwargs['removeParents'] = ','.join(existing_parent_ids)
                         drive_service.files().update(
-                            fileId=best_existing_file['file']['id'],
-                            body=file_metadata,
-                            media_body=media
+                            **update_kwargs
                         ).execute()
                         stats['replaced_upgraded_count'] += 1
-                        print(f"[{pmid}] Successfully replaced/updated existing file.")
+                        print(f"[{pmid}] Successfully replaced/updated existing file in {target_folder_path}.")
                     else:
                         # Create new file
                         file_metadata = {
                             'name': filename,
-                            'parents': [drive_folder_id]
+                            'parents': [target_folder_id]
                         }
                         drive_service.files().create(
                             body=file_metadata,
@@ -1432,6 +1456,15 @@ def main():
                             fields='id'
                         ).execute()
                         stats['uploaded_new_count'] += 1
+                        print(f"[{pmid}] Uploaded new file into {target_folder_path}.")
+
+                    source_file_index['by_pmid'].setdefault(str(pmid), []).append({
+                        'id': best_existing_file['file']['id'] if action == "replace_upgraded" and best_existing_file else '',
+                        'name': filename,
+                        'modifiedTime': datetime.utcnow().isoformat() + 'Z',
+                        'parents': [target_folder_id],
+                        '_full_path': f"{target_folder_path}/{filename}",
+                    })
 
                     # If we successfully uploaded a full-text document, increment the success count
                     if extraction_rank > 1:
@@ -1584,9 +1617,10 @@ def main():
 
             print(f"Uploading manifest {manifest_filename} to Drive...")
             media = MediaFileUpload(manifest_filepath, mimetype='text/csv', resumable=True)
+            manifest_folder_id = dcu.ensure_folder_path(drive_service, drive_folder_id, ['manifests'])
             file_metadata = {
                 'name': manifest_filename,
-                'parents': [drive_folder_id]
+                'parents': [manifest_folder_id]
             }
             drive_service.files().create(
                 body=file_metadata,

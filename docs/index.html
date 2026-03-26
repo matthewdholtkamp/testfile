@@ -25,11 +25,9 @@
         font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
       }
       .shell { max-width: 1180px; margin: 0 auto; padding: 48px 24px 72px; }
-      .hero { max-width: 780px; margin-bottom: 28px; }
+      .hero { max-width: 760px; margin-bottom: 24px; }
       .hero p { color: var(--muted); line-height: 1.6; }
-      .spotlight-grid, .cards { display:grid; gap:20px; }
-      .spotlight-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 28px; }
-      .cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+      .cards { display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
       .cards + .cards { margin-top: 20px; }
       .card, .spotlight-card {
         display:block;
@@ -63,6 +61,7 @@
       .snapshot { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:16px; margin: 24px 0 32px; }
       .snap { padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.05); }
       .snap strong { display:block; margin-top: 6px; font-size: 1.8rem; }
+      .today { margin: 0 0 30px; }
     </style>
   </head>
   <body>
@@ -70,7 +69,7 @@
       <section class="hero">
         <p class="eyebrow">TBI investigation engine</p>
         <h1>Atlas Portal</h1>
-        <p>This portal now has three working surfaces: the review console, the atlas book, and the idea briefs page. The current lead mechanism is <strong>Blood-Brain Barrier Dysfunction</strong>, with 5 stable rows supporting the live atlas.</p>
+        <p>This is the simplest working surface for the project: run the machine, review the ideas, and read the atlas. The current lead mechanism is <strong>Blood-Brain Barrier Dysfunction</strong>, with 5 stable rows supporting the live atlas.</p>
       </section>
       <section class="snapshot">
         <div class="snap"><span class="eyebrow">Lead</span><strong>Blood-Brain Barrier Dysfunction</strong></div>
@@ -78,52 +77,18 @@
         <div class="snap"><span class="eyebrow">Provisional</span><strong>6</strong></div>
         <div class="snap"><span class="eyebrow">Ideas</span><strong>9</strong></div>
       </section>
-      <section>
-        <p class="eyebrow">Hypothesis spotlight</p>
-        <div class="spotlight-grid">
-            <article class="spotlight-card">
-              <div class="eyebrow">Blood-Brain Barrier Dysfunction</div>
-              <h3>Blood-Brain Barrier Dysfunction driver hypothesis</h3>
-              <p>SCFAs cross the BBB and inhibit HDACs to promote neuroprotection. TBI-induced BBB breakdown promotes neuroinflammation. Neutrophil-derived exosomes disrupt BBB integrity.</p>
-              <div class="meta-row">
-                <span class="pill decision">Write now</span>
-                <span class="pill strength assertive">assertive</span>
-              </div>
-            </article>
-            
-            <article class="spotlight-card">
-              <div class="eyebrow">Mitochondrial Dysfunction</div>
-              <h3>Mitochondrial Dysfunction driver hypothesis</h3>
-              <p>Parkin promotes mitochondrial biogenesis and fission while inhibiting mitochondrial fusion post-TBI. MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis. Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits.</p>
-              <div class="meta-row">
-                <span class="pill decision">Needs adjudication</span>
-                <span class="pill strength moderate">moderate</span>
-              </div>
-            </article>
-            
-            <article class="spotlight-card">
-              <div class="eyebrow">Neuroinflammation / Microglial Activation</div>
-              <h3>Neuroinflammation / Microglial Activation driver hypothesis</h3>
-              <p>Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100β, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration. GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.</p>
-              <div class="meta-row">
-                <span class="pill decision">Needs adjudication</span>
-                <span class="pill strength moderate">moderate</span>
-              </div>
-            </article>
-            </div>
-      </section>
       <section class="cards">
-        <a class="card" href="./idea-briefs/index.html">
-          <p class="eyebrow">Idea lanes</p>
-          <h2>Idea Briefs</h2>
-          <p>Review the current hypothesis set in a cleaner decision format: what the idea is, why it matters now, what it unlocks, and what decision comes next.</p>
-          <span class="cta">Open ideas →</span>
+        <a class="card" href="./run-center/index.html">
+          <p class="eyebrow">Start here</p>
+          <h2>Run Center</h2>
+          <p>Launch the full daily pipeline, see the newest workflow runs, and use one page as the execution surface for the machine.</p>
+          <span class="cta">Open run center →</span>
         </a>
-        <a class="card" href="./atlas-viewer/index.html">
-          <p class="eyebrow">Review + control</p>
-          <h2>TBI Atlas Viewer</h2>
-          <p>Use the dashboard control surface to inspect readiness, open packets and templates, review the evidence ledger, and jump to workflow entry points.</p>
-          <span class="cta">Open viewer →</span>
+        <a class="card" href="./idea-briefs/index.html">
+          <p class="eyebrow">Weekly decisions</p>
+          <h2>Idea Briefs</h2>
+          <p>Review the current hypothesis set in a simpler decision format: what the idea is, why it matters, and what choice moves it forward.</p>
+          <span class="cta">Open ideas →</span>
         </a>
         <a class="card" href="./atlas-book/index.html">
           <p class="eyebrow">Atlas package</p>
@@ -132,11 +97,31 @@
           <span class="cta">Open atlas →</span>
         </a>
       </section>
+      <section class="today">
+        <p class="eyebrow">Today’s lead idea</p>
+        
+            <article class="spotlight-card">
+              <div class="eyebrow">Blood-Brain Barrier Dysfunction</div>
+              <h3>Blood-Brain Barrier Dysfunction driver hypothesis</h3>
+              <p>rmTBI causes acute BBB disruption via downregulation of ZO-1 and claudin-5. TBI-induced BBB breakdown promotes neuroinflammation. Neutrophil-derived exosomes disrupt BBB integrity.</p>
+              <div class="meta-row">
+                <span class="pill decision">Write now</span>
+                <span class="pill strength assertive">assertive</span>
+              </div>
+            </article>
+            
+      </section>
       <section class="cards">
+        <a class="card" href="./atlas-viewer/index.html">
+          <p class="eyebrow">Deep review</p>
+          <h2>TBI Atlas Viewer</h2>
+          <p>Open the full review console when you want the evidence ledger, action queue, workflow links, and detailed mechanism state.</p>
+          <span class="cta">Open viewer →</span>
+        </a>
         <a class="card" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">
-          <p class="eyebrow">Execution</p>
+          <p class="eyebrow">Automation</p>
           <h2>GitHub Actions</h2>
-          <p>Open the workflow run surface for the ongoing literature cycle, review packet, atlas refresh, and release jobs.</p>
+          <p>Open the workflow run surface directly when you want the raw run logs behind the machine.</p>
           <span class="cta">Open actions →</span>
         </a>
         <a class="card" href="https://github.com/matthewdholtkamp/testfile" target="_blank" rel="noreferrer">
