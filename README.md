@@ -353,9 +353,10 @@ The repo also has a dedicated weekly review workflow:
 - `.github/workflows/weekly_human_review_packet.yml`
 
 It is designed to:
-- run once a week
+- run every Saturday
 - download the latest successful enriched atlas/public-enrichment artifact
 - build a bounded weekly human-review packet
+- refresh the dashboard with the latest decision brief
 - upload that packet as a workflow artifact
 
 This gives the project a daily machine cadence and a weekly human decision cadence.

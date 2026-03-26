@@ -34,7 +34,7 @@ This file is the current reality check for what parts of the TBI investigation e
 
 - **Weekly human review packet**
   - Workflow: `.github/workflows/weekly_human_review_packet.yml`
-  - Runs once a week after the daily machine lanes have had time to move
+  - Runs every Saturday after the daily machine lanes have had time to move
   - Produces one bounded review packet for the human-in-the-loop science pass
 
 ### Semi-automated

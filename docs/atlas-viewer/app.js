@@ -448,6 +448,52 @@
     });
   }
 
+  function renderDecisionBrief() {
+    const brief = data.decision_brief || {};
+    const decisions = brief.decisions || [];
+    const actionRoot = document.getElementById("decisionBriefActions");
+    const stateRoot = document.getElementById("decisionBriefState");
+    const cardsRoot = document.getElementById("decisionBriefCards");
+    [actionRoot, stateRoot, cardsRoot].forEach(clear);
+
+    document.getElementById("decisionBriefDate").textContent = brief.review_date || "Latest decision brief";
+    document.getElementById("decisionBriefIntro").textContent =
+      "This is the short weekly review. If you only read one thing before making decisions, read this block.";
+
+    const releaseRows = (data.release_manifest && data.release_manifest.rows) || [];
+    const leadRow = releaseRows[0] || {};
+    const badge = document.getElementById("decisionBriefLeadBadge");
+    badge.className = `status-pill ${leadRow.gate_status || "near_ready"}`;
+    badge.textContent = `${brief.lead_mechanism || data.summary.lead_mechanism} · ${formatPromo(leadRow.release_bucket || "review_track")}`;
+
+    decisions.forEach((decision, index) => {
+      const card = el("div", "card decision-card");
+      card.append(el("div", "eyebrow", `Decision ${index + 1}`));
+      card.append(el("h3", "", decision.title || "Decision"));
+      const rec = el("div", "decision-recommendation");
+      rec.append(el("span", "micro-pill stable", `Recommended: ${decision.recommended_decision || "—"}`));
+      card.append(rec);
+      const bullets = el("ul", "bullet-list");
+      [
+        `Why this matters: ${decision.why || "—"}`,
+        `What I need from you: ${decision.what_i_need_from_you || "—"}`,
+        `If you say yes: ${decision.if_yes || "—"}`,
+      ].forEach((item) => bullets.append(el("li", "", item)));
+      card.append(bullets);
+      cardsRoot.append(card);
+    });
+
+    (brief.human_actions || []).forEach((item) => actionRoot.append(el("li", "", item)));
+    [
+      `Lead mechanism: ${brief.lead_mechanism || data.summary.lead_mechanism}`,
+      `Stable rows: ${brief.stable_rows ?? data.summary.stable_rows}`,
+      `Provisional rows: ${brief.provisional_rows ?? data.summary.provisional_rows}`,
+      `Blocked rows: ${brief.blocked_rows ?? data.summary.blocked_rows}`,
+      `Core atlas now: ${(brief.release_summary || {}).core_atlas_now ?? 0}`,
+      `Review track: ${(brief.release_summary || {}).review_track ?? 0}`,
+    ].forEach((item) => stateRoot.append(el("li", "", item)));
+  }
+
   function renderChapter() {
     const leadRoot = document.getElementById("leadRecommendation");
     const framingRoot = document.getElementById("chapterFraming");
@@ -922,6 +968,7 @@
     document.getElementById("sidebarSearch").value = state.sidebarSearch;
     document.getElementById("evidenceSearch").value = state.evidenceSearch;
     document.getElementById("evidenceConfidenceFilter").value = state.evidenceConfidence;
+    renderDecisionBrief();
     renderSummary();
     renderChapter();
     renderMechanismDetail();

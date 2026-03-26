@@ -70,17 +70,68 @@ def build_human_actions(viewer, release_manifest, target_rows):
     return actions
 
 
+def build_decisions(viewer, release_manifest, target_rows):
+    lead = normalize(viewer.get('summary', {}).get('lead_mechanism'))
+    release_rows = release_manifest.get('rows', []) if isinstance(release_manifest, dict) else []
+    lead_row = next((row for row in release_rows if normalize(row.get('display_name')) == lead), {})
+    decisions = [
+        {
+            'title': f'Keep {lead} as the lead proof-of-concept chapter',
+            'recommended_decision': 'Yes',
+            'why': f'{lead} remains the strongest mechanism in scope, but it is still in `{lead_row.get("release_bucket", "review_track")}` because some support still needs cleanup.',
+            'what_i_need_from_you': 'Confirm that we should keep investing the next manual science pass in BBB rather than shifting to a different lead mechanism.',
+            'if_yes': 'We keep the atlas centered on BBB and use the next human pass to strengthen the evidence needed for promotion.',
+        }
+    ]
+    if target_rows:
+        first = target_rows[0]
+        top_targets = ', '.join(row.get('Target', '') for row in target_rows[:5] if row.get('Target'))
+        decisions.append({
+            'title': 'Approve the next target-curation queue',
+            'recommended_decision': f"Yes: {top_targets}",
+            'why': 'These targets are the fastest path to stronger translational support for the lead chapter.',
+            'what_i_need_from_you': f"Approve that we should work the next manual fill pass in this order, starting with {first.get('Target', '')}.",
+            'if_yes': 'The next curated pass will focus on these targets before expanding scope.',
+        })
+    decisions.append({
+        'title': 'Decide whether there is real 10x data to import this week',
+        'recommended_decision': 'No unless real exports are available',
+        'why': 'The 10x lane is valuable, but only when it is backed by real exported analysis results.',
+        'what_i_need_from_you': 'Tell us whether you have actual 10x outputs ready. If not, we keep moving without blocking the atlas.',
+        'if_yes': 'We import the 10x results and rerun the atlas enrichment loop.',
+    })
+    return decisions[:3]
+
+
 def render_markdown(packet):
     lines = [
-        '# Weekly Human Review Packet',
+        '# Saturday Decision Brief',
         '',
-        'This packet is the once-per-week human review layer for the TBI investigation engine. The machine lanes run daily; this packet tells the reviewer what deserves judgment this week.',
+        'This is the once-per-week human decision layer for the TBI investigation engine. The machine lanes run daily; this brief is meant to be read quickly and should fit roughly one to two pages.',
         '',
         f"- Generated: `{packet['generated_at']}`",
+        f"- Review date: `{packet['review_date']}`",
         f"- Lead mechanism: **{packet['lead_mechanism']}**",
         f"- Stable rows: `{packet['stable_rows']}`",
         f"- Provisional rows: `{packet['provisional_rows']}`",
         f"- Blocked rows: `{packet['blocked_rows']}`",
+        '',
+        '## What I Need From You This Week',
+        '',
+    ]
+    for idx, decision in enumerate(packet['decisions'], start=1):
+        lines.extend([
+            f"### Decision {idx}: {decision['title']}",
+            '',
+            f"- Recommended decision: **{decision['recommended_decision']}**",
+            f"- Why this matters: {decision['why']}",
+            f"- What I need from you: {decision['what_i_need_from_you']}",
+            f"- If you say yes: {decision['if_yes']}",
+            '',
+        ])
+
+    lines.extend([
+        '## Key State',
         '',
         '## Release State',
         '',
@@ -91,7 +142,7 @@ def render_markdown(packet):
         '',
         '| Mechanism | Release Bucket | Chapter Role | Recommended Action |',
         '| --- | --- | --- | --- |',
-    ]
+    ])
     for row in packet['release_rows']:
         lines.append(
             f"| {row.get('display_name', '')} | {row.get('release_bucket', '')} | {row.get('chapter_role', '')} | {row.get('recommended_action', '')} |"
@@ -111,7 +162,7 @@ def render_markdown(packet):
 
     lines.extend([
         '',
-        '## Human Decisions This Week',
+        '## Instructions',
         '',
     ])
     for idx, action in enumerate(packet['human_actions'], start=1):
@@ -146,6 +197,7 @@ def main():
 
     packet = {
         'generated_at': datetime.now().isoformat(timespec='seconds'),
+        'review_date': datetime.now().strftime('%A, %B %d, %Y'),
         'lead_mechanism': viewer.get('summary', {}).get('lead_mechanism', ''),
         'stable_rows': viewer.get('summary', {}).get('stable_rows', 0),
         'provisional_rows': viewer.get('summary', {}).get('provisional_rows', 0),
@@ -154,6 +206,7 @@ def main():
         'release_rows': release_manifest.get('rows', []) if isinstance(release_manifest, dict) else [],
         'target_priorities': target_rows,
         'human_actions': build_human_actions(viewer, release_manifest, target_rows),
+        'decisions': build_decisions(viewer, release_manifest, target_rows),
         'release_manifest_path': release_manifest_path,
         'target_packet_index_path': target_packet_index_path,
         'program_status_path': program_status_path,
