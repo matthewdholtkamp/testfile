@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TBI Progression Objects</title>
+    <style>
+      :root {
+        --bg: #10131a;
+        --panel: #171d27;
+        --panel-soft: #1d2430;
+        --ink: #eef3fb;
+        --muted: #afbbcf;
+        --accent: #98c5ff;
+        --line: rgba(152, 197, 255, 0.14);
+        --supported: #93f0c4;
+        --provisional: #ffe29a;
+        --weak: #ffc1c1;
+        --seeded: #ffc1c1;
+        --bounded: #ffe29a;
+        --stable: #93f0c4;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(152, 197, 255, 0.14), transparent 28%),
+          linear-gradient(180deg, #0b1016 0%, var(--bg) 100%);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      .shell { max-width: 1280px; margin: 0 auto; padding: 44px 22px 72px; }
+      .hero { max-width: 760px; margin-bottom: 24px; }
+      .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.76rem; font-weight: 700; margin: 0 0 12px; }
+      h1 { margin: 0 0 14px; font-size: clamp(2.3rem, 5vw, 4.8rem); line-height: 0.96; }
+      h2 { margin: 0 0 10px; font-size: 1.45rem; }
+      h3 { margin: 0 0 12px; font-size: 1rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .summary-grid, .nav-grid, .detail-grid { display:grid; gap:16px; }
+      .summary-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-bottom: 26px; }
+      .nav-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 26px; }
+      .detail-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 16px; }
+      .summary-card, .nav-card, .meta-card, .detail-card, .warning-block {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 18px;
+        box-shadow: 0 20px 36px rgba(0,0,0,0.18);
+      }
+      .summary-card strong { display:block; margin-top:8px; font-size:1.9rem; }
+      .nav-card { text-decoration:none; color:inherit; }
+      .nav-card span { color: var(--accent); font-weight:700; display:inline-block; margin-top:10px; }
+      .warning-block { margin-bottom: 26px; }
+      .warning-block ul { margin: 0; padding-left: 18px; color: var(--muted); }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        box-shadow: 0 20px 36px rgba(0,0,0,0.18);
+        margin-bottom: 24px;
+      }
+      table { width: 100%; border-collapse: collapse; min-width: 980px; }
+      th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+      td a { color: var(--ink); text-decoration: none; }
+      .subtle { color: var(--muted); font-size: 0.86rem; margin-top: 4px; }
+      .pill-row, .chip-row { display:flex; gap:8px; flex-wrap:wrap; }
+      .pill, .chip {
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:7px 11px;
+        border-radius:999px;
+        background: rgba(255,255,255,0.07);
+        color: var(--ink);
+        font-size:0.78rem;
+      }
+      .pill.supported, .pill.stable, .pill.clear, .pill.established-in-corpus { color: var(--supported); }
+      .pill.provisional, .pill.bounded, .pill.emergent-from-tbi-corpus { color: var(--provisional); }
+      .pill.weak, .pill.seeded, .pill.flagged, .pill.cross-disciplinary-hypothesis { color: var(--weak); }
+      .detail-card { margin: 0 0 20px; }
+      .detail-head { display:flex; gap:18px; justify-content:space-between; flex-wrap:wrap; align-items:flex-start; }
+      .accent-card { border-color: rgba(152, 197, 255, 0.32); }
+      ul { margin: 0; padding-left: 18px; color: var(--muted); }
+      @media (max-width: 720px) {
+        .shell { padding: 32px 16px 52px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Phase 3 progression layer</p>
+        <h1>Neurodegenerative Progression Objects</h1>
+        <p>This page tracks recurring progression objects across the TBI process engine. Each object is tied back to process lanes and causal transitions, while staying honest about maturity, contradiction risk, and what question is most worth asking next.</p>
+      </section>
+      <section class="summary-grid">
+    <article class="summary-card">
+      <span class="eyebrow">Objects</span>
+      <strong>7</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Supported</span>
+      <strong>2</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Provisional</span>
+      <strong>5</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Seeded maturity</span>
+      <strong>1</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Lane coverage</span>
+      <strong>6 / 6</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Transition coverage</span>
+      <strong>6 / 6</strong>
+      
+    </article>
+    </section>
+      <section class="nav-grid">
+        <a class="nav-card" href="../index.html">
+          <p class="eyebrow">Portal</p>
+          <h2>Back to Atlas Portal</h2>
+          <p>Use the portal as the simpler entry point for the project.</p>
+          <span>Open portal →</span>
+        </a>
+        <a class="nav-card" href="../process-engine/index.html">
+          <p class="eyebrow">Phase 1</p>
+          <h2>Process Lanes</h2>
+          <p>Review the six longitudinal lanes that feed these objects.</p>
+          <span>Open process engine →</span>
+        </a>
+        <a class="nav-card" href="../process-model/index.html">
+          <p class="eyebrow">Phase 2</p>
+          <h2>Causal Transitions</h2>
+          <p>Review the explicit upstream-to-downstream transitions behind the object layer.</p>
+          <span>Open process model →</span>
+        </a>
+      </section>
+      
+        <section class="warning-block">
+          <p class="eyebrow">Validation warnings</p>
+          <h2>Bounded interpretation still matters</h2>
+          <ul><li>neurovascular_uncoupling remains seeded and should stay bounded in downstream interpretation</li></ul>
+        </section>
+        
+      <section>
+        <p class="eyebrow">Coverage board</p>
+        <h2>Object Board</h2>
+        <p>Each row shows whether the object is usable now, how mature it is, how broadly it is parented, and whether contradiction handling is already needed.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Object</th>
+                <th>Support</th>
+                <th>Maturity</th>
+                <th>Coverage</th>
+                <th>Biomarkers</th>
+                <th>Likely targets</th>
+                <th>Contradictions</th>
+                <th>Next-question value</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+    <tr>
+      <td>
+        <a href="#microglial_chronic_activation"><strong>Microglial Chronic Activation</strong></a>
+        <div class="subtle">state object</div>
+      </td>
+      <td><span class="pill supported">supported</span></td>
+      <td><span class="pill bounded">bounded</span></td>
+      <td>2 lanes / 2 transitions / 4 mechanisms</td>
+      <td>IL-1 (91), TNF (53), IL-6 (50) +3 more</td>
+      <td>NLRP3, IL1B, GFAP +2 more</td>
+      <td><span class="pill clear">clear</span></td>
+      <td>high</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#tauopathy_progression"><strong>Tauopathy Progression</strong></a>
+        <div class="subtle">pathology object</div>
+      </td>
+      <td><span class="pill supported">supported</span></td>
+      <td><span class="pill bounded">bounded</span></td>
+      <td>3 lanes / 2 transitions / 4 mechanisms</td>
+      <td>tau (71), Tau (25), GFAP (15) +3 more</td>
+      <td>NLRP3, IL1B, GFAP +2 more</td>
+      <td><span class="pill clear">clear</span></td>
+      <td>high</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#cognitive_decline_phenotype"><strong>Cognitive Decline Phenotype</strong></a>
+        <div class="subtle">outcome object</div>
+      </td>
+      <td><span class="pill provisional">provisional</span></td>
+      <td><span class="pill bounded">bounded</span></td>
+      <td>3 lanes / 2 transitions / 3 mechanisms</td>
+      <td>fa (14), FA (11), nfl (5) +3 more</td>
+      <td>NLRP3, IL1B, GFAP +2 more</td>
+      <td><span class="pill flagged">flagged</span></td>
+      <td>high</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#persistent_metabolic_dysfunction"><strong>Persistent Metabolic Dysfunction</strong></a>
+        <div class="subtle">state object</div>
+      </td>
+      <td><span class="pill provisional">provisional</span></td>
+      <td><span class="pill bounded">bounded</span></td>
+      <td>2 lanes / 1 transitions / 4 mechanisms</td>
+      <td>ros (134), ROS (21), ATP (19) +1 more</td>
+      <td>PRKN, CYBB, KNG1 +1 more</td>
+      <td><span class="pill flagged">flagged</span></td>
+      <td>high</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#synaptic_loss"><strong>Synaptic Loss</strong></a>
+        <div class="subtle">pathology object</div>
+      </td>
+      <td><span class="pill provisional">provisional</span></td>
+      <td><span class="pill bounded">bounded</span></td>
+      <td>3 lanes / 2 transitions / 4 mechanisms</td>
+      <td>nfl (6), PSD-95 (2), GFAP (2) +1 more</td>
+      <td>PRKN, CYBB, KNG1 +1 more</td>
+      <td><span class="pill clear">clear</span></td>
+      <td>high</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#white_matter_degeneration"><strong>White Matter Degeneration</strong></a>
+        <div class="subtle">pathology object</div>
+      </td>
+      <td><span class="pill provisional">provisional</span></td>
+      <td><span class="pill bounded">bounded</span></td>
+      <td>2 lanes / 1 transitions / 4 mechanisms</td>
+      <td>FA (167), fa (52), MD (51) +3 more</td>
+      <td>PRKN, CYBB, KNG1 +1 more</td>
+      <td><span class="pill flagged">flagged</span></td>
+      <td>medium</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#neurovascular_uncoupling"><strong>Neurovascular Uncoupling</strong></a>
+        <div class="subtle">state object</div>
+      </td>
+      <td><span class="pill provisional">provisional</span></td>
+      <td><span class="pill seeded">seeded</span></td>
+      <td>3 lanes / 2 transitions / 4 mechanisms</td>
+      <td>CBF (14), AQP4 (5)</td>
+      <td>OCLN, CLDN5, TJP1 +2 more</td>
+      <td><span class="pill clear">clear</span></td>
+      <td>medium</td>
+    </tr>
+    
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <p class="eyebrow">Object details</p>
+        <h2>Decision-ready packets</h2>
+        <p>These detail sections are meant to keep the layer useful: what the object is, what feeds it, how strong it is, and the next question that would sharpen it fastest.</p>
+        
+    <article class="detail-card" id="microglial_chronic_activation">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">state object</p>
+          <h2>Microglial Chronic Activation</h2>
+          <p>Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported">Support: supported</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill established_in_corpus">Hypothesis: established_in_corpus</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Coverage</h3>
+          <ul>
+            <li>Supporting papers: <strong>97</strong></li>
+            <li>Anchor PMIDs: <strong>41039850; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731</strong></li>
+            <li>Source mix: <strong>full_text_like:214; abstract_only:84</strong></li>
+            <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Parents</h3>
+          <p><strong>Lanes:</strong> neuroinflammation_microglial_state_change || blood_brain_barrier_failure</p>
+          <p><strong>Transitions:</strong> bbb_permeability_increase_to_peripheral_immune_infiltration || mitochondrial_ros_to_inflammasome_activation</p>
+          <p><strong>Mechanisms:</strong> neuroinflammation_microglial_activation || axonal_white_matter_injury || blood_brain_barrier_disruption || synaptic_network_remodeling</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Biomarkers</h3>
+          <div class="chip-row"><span class="chip">IL-1 (91)</span><span class="chip">TNF (53)</span><span class="chip">IL-6 (50)</span><span class="chip">NLRP3 (38)</span><span class="chip">GFAP (22)</span><span class="chip">HMGB1 (17)</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Likely therapeutic targets</h3>
+          <div class="chip-row"><span class="chip">NLRP3</span><span class="chip">IL1B</span><span class="chip">GFAP</span><span class="chip">TNF</span><span class="chip">IL6</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Brain-region cues</h3>
+          <div class="chip-row"><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">unspecified</span><span class="chip">hippocampus</span><span class="chip">white_matter</span><span class="chip">BBB</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Cell-state cues</h3>
+          <div class="chip-row"><span class="chip">microglia</span><span class="chip">mixed / unspecified</span><span class="chip">astrocyte</span><span class="chip">neuron</span><span class="chip">leukocyte</span><span class="chip">macrophage</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Contradictions</h3>
+          <p>none_detected</p>
+        </article>
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <p>Some supporting rows are abstract-only and should be weighted cautiously.</p>
+        </article>
+      </div>
+      <article class="meta-card accent-card">
+        <h3>Best next question</h3>
+        <p>Which upstream pressure is most reproducibly feeding chronic microglial activation here: vascular leak, mitochondrial stress, or both?</p>
+      </article>
+    </article>
+    
+    <article class="detail-card" id="tauopathy_progression">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">pathology object</p>
+          <h2>Tauopathy Progression</h2>
+          <p>Tauopathy progression is one of the clearest bridges from repeated injury biology into chronic neurodegenerative trajectory risk.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported">Support: supported</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill established_in_corpus">Hypothesis: established_in_corpus</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Coverage</h3>
+          <ul>
+            <li>Supporting papers: <strong>18</strong></li>
+            <li>Anchor PMIDs: <strong>41179995; 41328339; 41496386; 41594797; 41651695; 41665901; 41683989; 41700070</strong></li>
+            <li>Source mix: <strong>full_text_like:40; abstract_only:6</strong></li>
+            <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Parents</h3>
+          <p><strong>Lanes:</strong> tau_proteinopathy_progression || glymphatic_astroglial_clearance_failure || neuroinflammation_microglial_state_change</p>
+          <p><strong>Transitions:</strong> glymphatic_failure_to_tau_protein_accumulation || neuroinflammation_to_tau_proteinopathy_progression</p>
+          <p><strong>Mechanisms:</strong> axonal_white_matter_injury || neuroinflammation_microglial_activation || glymphatic_clearance_impairment || synaptic_network_remodeling</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Biomarkers</h3>
+          <div class="chip-row"><span class="chip">tau (71)</span><span class="chip">Tau (25)</span><span class="chip">GFAP (15)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span><span class="chip">p-tau (6)</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Likely therapeutic targets</h3>
+          <div class="chip-row"><span class="chip">NLRP3</span><span class="chip">IL1B</span><span class="chip">GFAP</span><span class="chip">TNF</span><span class="chip">IL6</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Brain-region cues</h3>
+          <div class="chip-row"><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">white_matter</span><span class="chip">unspecified</span><span class="chip">BBB</span><span class="chip">brainstem</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Cell-state cues</h3>
+          <div class="chip-row"><span class="chip">neuron</span><span class="chip">mixed / unspecified</span><span class="chip">axon</span><span class="chip">microglia</span><span class="chip">astrocyte</span><span class="chip">endothelial_cell</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Contradictions</h3>
+          <p>none_detected</p>
+        </article>
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <p>Some supporting rows are abstract-only and should be weighted cautiously.</p>
+        </article>
+      </div>
+      <article class="meta-card accent-card">
+        <h3>Best next question</h3>
+        <p>Which upstream route is strongest in this corpus: glymphatic failure, inflammatory amplification, or axonal injury?</p>
+      </article>
+    </article>
+    
+    <article class="detail-card" id="cognitive_decline_phenotype">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">outcome object</p>
+          <h2>Cognitive Decline Phenotype</h2>
+          <p>Cognitive decline is the downstream phenotype that makes the rest of the process engine clinically meaningful rather than merely mechanistic.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill emergent_from_tbi_corpus">Hypothesis: emergent_from_tbi_corpus</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Coverage</h3>
+          <ul>
+            <li>Supporting papers: <strong>39</strong></li>
+            <li>Anchor PMIDs: <strong>41132417; 41157272; 41234125; 41300163; 41513584; 41564671; 41669533; 41709584</strong></li>
+            <li>Source mix: <strong>full_text_like:52; abstract_only:19</strong></li>
+            <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Parents</h3>
+          <p><strong>Lanes:</strong> axonal_degeneration || tau_proteinopathy_progression || neuroinflammation_microglial_state_change</p>
+          <p><strong>Transitions:</strong> axonal_degeneration_to_chronic_network_dysfunction || tau_proteinopathy_progression_to_chronic_network_dysfunction</p>
+          <p><strong>Mechanisms:</strong> axonal_white_matter_injury || neuroinflammation_microglial_activation || mitochondrial_bioenergetic_dysfunction</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Biomarkers</h3>
+          <div class="chip-row"><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">tau (4)</span><span class="chip">rd (2)</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Likely therapeutic targets</h3>
+          <div class="chip-row"><span class="chip">NLRP3</span><span class="chip">IL1B</span><span class="chip">GFAP</span><span class="chip">TNF</span><span class="chip">IL6</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Brain-region cues</h3>
+          <div class="chip-row"><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">white_matter</span><span class="chip">unspecified</span><span class="chip">hippocampus</span><span class="chip">amygdala</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Cell-state cues</h3>
+          <div class="chip-row"><span class="chip">mixed / unspecified</span><span class="chip">neuron</span><span class="chip">axon</span><span class="chip">oligodendrocyte</span><span class="chip">microglia</span><span class="chip">T_cell</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Contradictions</h3>
+          <p>After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury.</p>
+        </article>
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <p>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</p>
+        </article>
+      </div>
+      <article class="meta-card accent-card">
+        <h3>Best next question</h3>
+        <p>Which upstream objects or transitions are most consistently associated with chronic cognitive decline in the current corpus?</p>
+      </article>
+    </article>
+    
+    <article class="detail-card" id="persistent_metabolic_dysfunction">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">state object</p>
+          <h2>Persistent Metabolic Dysfunction</h2>
+          <p>Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill emergent_from_tbi_corpus">Hypothesis: emergent_from_tbi_corpus</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Coverage</h3>
+          <ul>
+            <li>Supporting papers: <strong>97</strong></li>
+            <li>Anchor PMIDs: <strong>41069428; 41103638; 41110648; 41129987; 41153827; 41157305; 41175081; 41179995</strong></li>
+            <li>Source mix: <strong>full_text_like:185; abstract_only:59; unknown:4</strong></li>
+            <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Parents</h3>
+          <p><strong>Lanes:</strong> mitochondrial_bioenergetic_collapse || neuroinflammation_microglial_state_change</p>
+          <p><strong>Transitions:</strong> mitochondrial_ros_to_inflammasome_activation</p>
+          <p><strong>Mechanisms:</strong> mitochondrial_bioenergetic_dysfunction || axonal_white_matter_injury || neuroinflammation_microglial_activation || blood_brain_barrier_disruption</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Biomarkers</h3>
+          <div class="chip-row"><span class="chip">ros (134)</span><span class="chip">ROS (21)</span><span class="chip">ATP (19)</span><span class="chip">PINK1 (1)</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Likely therapeutic targets</h3>
+          <div class="chip-row"><span class="chip">PRKN</span><span class="chip">CYBB</span><span class="chip">KNG1</span><span class="chip">CAT</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Brain-region cues</h3>
+          <div class="chip-row"><span class="chip">diffuse / multisite</span><span class="chip">cortex</span><span class="chip">white_matter</span><span class="chip">unspecified</span><span class="chip">hippocampus</span><span class="chip">neurovascular_unit</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Cell-state cues</h3>
+          <div class="chip-row"><span class="chip">mixed / unspecified</span><span class="chip">axon</span><span class="chip">neuron</span><span class="chip">astrocyte</span><span class="chip">microglia</span><span class="chip">myelinated_axon</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Contradictions</h3>
+          <p>Study found no significant correlation, contradicting the hypothesis of cumulative damage.</p>
+        </article>
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <p>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</p>
+        </article>
+      </div>
+      <article class="meta-card accent-card">
+        <h3>Best next question</h3>
+        <p>Is the current evidence dense enough to separate persistent metabolic dysfunction from generic mitochondrial injury rhetoric?</p>
+      </article>
+    </article>
+    
+    <article class="detail-card" id="synaptic_loss">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">pathology object</p>
+          <h2>Synaptic Loss</h2>
+          <p>Synaptic loss is a plausible convergence point where structural, metabolic, and proteinopathy stress start becoming functionally costly.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill emergent_from_tbi_corpus">Hypothesis: emergent_from_tbi_corpus</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Coverage</h3>
+          <ul>
+            <li>Supporting papers: <strong>25</strong></li>
+            <li>Anchor PMIDs: <strong>41394307; 41618372; 41622461; 41667502; 41675841; 41700019; 41785317; 41826372</strong></li>
+            <li>Source mix: <strong>full_text_like:38; abstract_only:10</strong></li>
+            <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Parents</h3>
+          <p><strong>Lanes:</strong> axonal_degeneration || mitochondrial_bioenergetic_collapse || tau_proteinopathy_progression</p>
+          <p><strong>Transitions:</strong> axonal_degeneration_to_chronic_network_dysfunction || tau_proteinopathy_progression_to_chronic_network_dysfunction</p>
+          <p><strong>Mechanisms:</strong> synaptic_network_remodeling || neuroinflammation_microglial_activation || axonal_white_matter_injury || mitochondrial_bioenergetic_dysfunction</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Biomarkers</h3>
+          <div class="chip-row"><span class="chip">nfl (6)</span><span class="chip">PSD-95 (2)</span><span class="chip">GFAP (2)</span><span class="chip">PSD95 (2)</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Likely therapeutic targets</h3>
+          <div class="chip-row"><span class="chip">PRKN</span><span class="chip">CYBB</span><span class="chip">KNG1</span><span class="chip">CAT</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Brain-region cues</h3>
+          <div class="chip-row"><span class="chip">cortex</span><span class="chip">hippocampus</span><span class="chip">diffuse / multisite</span><span class="chip">unspecified</span><span class="chip">neurovascular_unit</span><span class="chip">brainstem</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Cell-state cues</h3>
+          <div class="chip-row"><span class="chip">neuron</span><span class="chip">astrocyte</span><span class="chip">axon</span><span class="chip">mixed / unspecified</span><span class="chip">microglia</span><span class="chip">oligodendrocyte</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Contradictions</h3>
+          <p>none_detected</p>
+        </article>
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <p>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously.</p>
+        </article>
+      </div>
+      <article class="meta-card accent-card">
+        <h3>Best next question</h3>
+        <p>Does the current corpus support synaptic loss as a separate recurring object, or is it still mostly riding on axonal and tau signals?</p>
+      </article>
+    </article>
+    
+    <article class="detail-card" id="white_matter_degeneration">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">pathology object</p>
+          <h2>White Matter Degeneration</h2>
+          <p>White matter degeneration is one of the most visible ways early structural injury propagates into chronic network vulnerability.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill emergent_from_tbi_corpus">Hypothesis: emergent_from_tbi_corpus</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Coverage</h3>
+          <ul>
+            <li>Supporting papers: <strong>92</strong></li>
+            <li>Anchor PMIDs: <strong>41032947; 41039850; 41069428; 41079361; 41098044; 41110648; 41110777; 41126936</strong></li>
+            <li>Source mix: <strong>full_text_like:221; abstract_only:84</strong></li>
+            <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Parents</h3>
+          <p><strong>Lanes:</strong> axonal_degeneration || mitochondrial_bioenergetic_collapse</p>
+          <p><strong>Transitions:</strong> axonal_degeneration_to_chronic_network_dysfunction</p>
+          <p><strong>Mechanisms:</strong> axonal_white_matter_injury || neuroinflammation_microglial_activation || mitochondrial_bioenergetic_dysfunction || excitotoxicity_ionic_dysregulation</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Biomarkers</h3>
+          <div class="chip-row"><span class="chip">FA (167)</span><span class="chip">fa (52)</span><span class="chip">MD (51)</span><span class="chip">RD (32)</span><span class="chip">FDC (24)</span><span class="chip">nfl (19)</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Likely therapeutic targets</h3>
+          <div class="chip-row"><span class="chip">PRKN</span><span class="chip">CYBB</span><span class="chip">KNG1</span><span class="chip">CAT</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Brain-region cues</h3>
+          <div class="chip-row"><span class="chip">white_matter</span><span class="chip">diffuse / multisite</span><span class="chip">corpus_callosum</span><span class="chip">cortex</span><span class="chip">unspecified</span><span class="chip">cingulum (ipsilateral)</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Cell-state cues</h3>
+          <div class="chip-row"><span class="chip">axon</span><span class="chip">mixed / unspecified</span><span class="chip">astrocyte</span><span class="chip">neuron</span><span class="chip">oligodendrocyte</span><span class="chip">myelinated_axon</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Contradictions</h3>
+          <p>Study found no significant correlation, contradicting the hypothesis of cumulative damage.</p>
+        </article>
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <p>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</p>
+        </article>
+      </div>
+      <article class="meta-card accent-card">
+        <h3>Best next question</h3>
+        <p>Can the current corpus distinguish white matter degeneration from acute axonal injury strongly enough to treat it as a recurring progression object?</p>
+      </article>
+    </article>
+    
+    <article class="detail-card" id="neurovascular_uncoupling">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">state object</p>
+          <h2>Neurovascular Uncoupling</h2>
+          <p>Neurovascular uncoupling is a candidate systems-level object that could connect vascular leak, impaired clearance, and later network fragility.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill seeded">Maturity: seeded</span>
+          <span class="pill emergent_from_tbi_corpus">Hypothesis: emergent_from_tbi_corpus</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Coverage</h3>
+          <ul>
+            <li>Supporting papers: <strong>68</strong></li>
+            <li>Anchor PMIDs: <strong>41039850; 41079361; 41103638; 41173520; 41177833; 41183617; 41267966; 41328339</strong></li>
+            <li>Source mix: <strong>full_text_like:138; abstract_only:31</strong></li>
+            <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Parents</h3>
+          <p><strong>Lanes:</strong> blood_brain_barrier_failure || glymphatic_astroglial_clearance_failure || neuroinflammation_microglial_state_change</p>
+          <p><strong>Transitions:</strong> bbb_permeability_increase_to_peripheral_immune_infiltration || glymphatic_failure_to_tau_protein_accumulation</p>
+          <p><strong>Mechanisms:</strong> blood_brain_barrier_disruption || neuroinflammation_microglial_activation || axonal_white_matter_injury || synaptic_network_remodeling</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Biomarkers</h3>
+          <div class="chip-row"><span class="chip">CBF (14)</span><span class="chip">AQP4 (5)</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Likely therapeutic targets</h3>
+          <div class="chip-row"><span class="chip">OCLN</span><span class="chip">CLDN5</span><span class="chip">TJP1</span><span class="chip">MMP9</span><span class="chip">AQP4</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Brain-region cues</h3>
+          <div class="chip-row"><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular_unit</span><span class="chip">diffuse / multisite</span><span class="chip">brain parenchyma</span><span class="chip">third_cranial_nerve</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Cell-state cues</h3>
+          <div class="chip-row"><span class="chip">endothelial_cell</span><span class="chip">mixed / unspecified</span><span class="chip">astrocyte</span><span class="chip">leukocyte</span><span class="chip">neuron</span><span class="chip">pericyte</span></div>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Contradictions</h3>
+          <p>none_detected</p>
+        </article>
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <p>Object still needs denser direct support before it should be treated as hardened. || Object remains seeded because parent coverage or direct evidence is still incomplete. || Some supporting rows are abstract-only and should be weighted cautiously.</p>
+        </article>
+      </div>
+      <article class="meta-card accent-card">
+        <h3>Best next question</h3>
+        <p>Does the corpus support neurovascular uncoupling as a recurring object, or is it still mostly implied by BBB and clearance disruption?</p>
+      </article>
+    </article>
+    
+      </section>
+    </main>
+  </body>
+</html>

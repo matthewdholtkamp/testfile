@@ -1,6 +1,49 @@
-# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-2 Complete
+# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-3 Complete
 
 This file is the current handoff for the TBI scientific intelligence system after finishing extraction coverage for the original on-topic corpus and moving into the quality-gated investigation / atlas-construction phase.
+
+## Phase 3 Progression-Object Status
+
+Phase 3 is now complete as the next downstream layer after the causal-transition process model.
+
+Current Phase 3 outputs:
+- seven explicit progression objects are now emitted:
+  - `tauopathy_progression`
+  - `synaptic_loss`
+  - `white_matter_degeneration`
+  - `microglial_chronic_activation`
+  - `persistent_metabolic_dysfunction`
+  - `neurovascular_uncoupling`
+  - `cognitive_decline_phenotype`
+- each progression object now carries:
+  - supporting papers
+  - source-quality mix
+  - mechanism parents
+  - lane parents
+  - transition parents
+  - biomarkers
+  - likely therapeutic targets
+  - contradiction notes
+  - evidence gaps
+  - why-it-matters context
+  - best-next-question guidance
+- the current progression-object summary is:
+  - `2` `supported`
+  - `5` `provisional`
+  - `0` `weak`
+  - `1` `seeded`
+  - `6` `bounded`
+  - `0` `stable`
+  - `6 / 6` Phase 1 lanes referenced upstream of at least one object
+  - `6 / 6` Phase 2 transitions referenced upstream of at least one object
+- the progression-object product page is now emitted to:
+  - [docs/progression-objects/index.html](/Users/matthewholtkamp/Documents/testfile/docs/progression-objects/index.html)
+- the progression-object build and validation steps are now wired into:
+  - [build_atlas_slices.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/build_atlas_slices.yml)
+  - [refresh_atlas_from_ongoing_cycle.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_atlas_from_ongoing_cycle.yml)
+  - [refresh_public_enrichment.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_public_enrichment.yml)
+  - [run_manual_enrichment_cycle.py](/Users/matthewholtkamp/Documents/testfile/scripts/run_manual_enrichment_cycle.py)
+- the weekly packet and program-status layer now surface progression-object state without rebuilding it independently
 
 ## Phase 2 Process-Model Status
 
@@ -40,7 +83,8 @@ Current Phase 2 outputs:
   - [build_atlas_slices.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/build_atlas_slices.yml)
   - [refresh_atlas_from_ongoing_cycle.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_atlas_from_ongoing_cycle.yml)
   - [refresh_public_enrichment.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_public_enrichment.yml)
-  - [weekly_human_review_packet.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/weekly_human_review_packet.yml)
+  - [run_manual_enrichment_cycle.py](/Users/matthewholtkamp/Documents/testfile/scripts/run_manual_enrichment_cycle.py)
+- the weekly packet and program-status layer now surface Phase 2 transition state without rebuilding it independently
 
 ## Phase 1 Process-Engine Status
 
@@ -72,7 +116,8 @@ Current Phase 1 outputs:
   - [build_atlas_slices.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/build_atlas_slices.yml)
   - [refresh_atlas_from_ongoing_cycle.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_atlas_from_ongoing_cycle.yml)
   - [refresh_public_enrichment.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_public_enrichment.yml)
-  - [weekly_human_review_packet.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/weekly_human_review_packet.yml)
+  - [run_manual_enrichment_cycle.py](/Users/matthewholtkamp/Documents/testfile/scripts/run_manual_enrichment_cycle.py)
+- the weekly packet and program-status layer now surface Phase 1 lane state without rebuilding it independently
 
 ## Current Phase Goal
 
@@ -181,6 +226,7 @@ For the connector-enrichment sidecar:
   - the chapter-grade Starter TBI Atlas
   - the longitudinal Process Engine page
   - the causal-transition Process Model page
+  - the progression-object page
 - the optional 10x lane now has a seeded import-template builder so the genomics path is ready as soon as real exports exist
 - the atlas lane now has an explicit quality-gate output with mechanism-level readiness scoring
 - the atlas lane now has an explicit release manifest so atlas promotion/governance is no longer implicit
@@ -192,14 +238,15 @@ For the connector-enrichment sidecar:
 
 ## Current Architecture
 
-The repo now has six distinct layers:
+The repo now has seven distinct layers:
 
 1. retrieval and source-paper normalization into Drive
 2. structured extraction coverage for the on-topic corpus
 3. post-extraction investigation outputs for QA, weighting, and triage
 4. atlas assembly artifacts for the starter mechanisms
 5. longitudinal process lanes and causal-transition process-model artifacts
-6. connector-enrichment sidecar artifacts for translational and genomics context
+6. progression-object artifacts for recurring neurodegenerative signatures
+7. connector-enrichment sidecar artifacts for translational and genomics context
 
 On top of those six layers, the atlas-writing lane now has three explicit synthesis outputs:
 - chapter evidence ledger

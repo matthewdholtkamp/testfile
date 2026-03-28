@@ -212,6 +212,17 @@ jobs:
           python scripts/build_process_model_page.py \
             --transition-json "$latest_transition_json" \
             --output-dir docs/process-model
+          python scripts/build_progression_objects.py \
+            --output-dir reports/progression_objects
+          latest_progression_json=$(ls -1t reports/progression_objects/progression_object_index_*.json | head -n1)
+          python scripts/build_progression_object_validation.py \
+            --object-json "$latest_progression_json" \
+            --process-json "$latest_process_json" \
+            --transition-json "$latest_transition_json" \
+            --output-dir reports/progression_object_validation
+          python scripts/build_progression_object_page.py \
+            --object-json "$latest_progression_json" \
+            --output-dir docs/progression-objects
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_tbi_atlas_book.py \

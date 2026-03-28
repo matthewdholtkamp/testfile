@@ -379,6 +379,33 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_progression_objects.py',
+        '--output-dir',
+        'reports/progression_objects',
+    ])
+    latest_progression_json = latest_csv_in_dir('reports/progression_objects', 'progression_object_index_*.json')
+    run_cmd([
+        'python3',
+        'scripts/build_progression_object_validation.py',
+        '--object-json',
+        latest_progression_json,
+        '--process-json',
+        latest_process_json,
+        '--transition-json',
+        latest_transition_json,
+        '--output-dir',
+        'reports/progression_object_validation',
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_progression_object_page.py',
+        '--object-json',
+        latest_progression_json,
+        '--output-dir',
+        'docs/progression-objects',
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_tbi_atlas_book.py',
         '--output-dir',
         args.atlas_output_dir,
@@ -425,6 +452,7 @@ def main():
     viewer_path = os.path.join(args.viewer_output_dir, 'index.html')
     process_engine_path = os.path.join('docs', 'process-engine', 'index.html')
     process_model_path = os.path.join('docs', 'process-model', 'index.html')
+    progression_object_path = os.path.join('docs', 'progression-objects', 'index.html')
     atlas_path = latest_csv_in_dir(args.atlas_output_dir, 'starter_tbi_atlas_*.html')
     print(f'Manual enrichment cycle complete. Latest chapter draft: {chapter_md}')
     print(f'Latest chapter synthesis draft: {chapter_synthesis_md}')
@@ -438,6 +466,7 @@ def main():
     print(f'Latest atlas viewer: {viewer_path}')
     print(f'Latest process engine page: {process_engine_path}')
     print(f'Latest process model page: {process_model_path}')
+    print(f'Latest progression object page: {progression_object_path}')
     print(f'Latest atlas book: {atlas_path}')
     print(f'Latest program status report: {program_status_md}')
 

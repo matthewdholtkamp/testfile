@@ -123,13 +123,16 @@ It produces:
 - process-lane validation
 - causal-transition index
 - causal-transition validation
+- progression-object index
+- progression-object validation
 - process-model site output
+- progression-object site output
 - mechanism dossiers
 - translational bridge table
 - figure-planning artifact
 
-### Process Engine And Process Model
-The repo now has two explicit downstream neurodegenerative layers after the atlas:
+### Process Engine, Process Model, And Progression Objects
+The repo now has three explicit downstream neurodegenerative layers after the atlas:
 
 1. **Phase 1 Process Engine**
    - six longitudinal lanes:
@@ -162,9 +165,33 @@ The repo now has two explicit downstream neurodegenerative layers after the atla
      - evidence gaps
    - the process-model payload also emits starter-lane coverage so the repo can verify that all 6 Phase 1 lanes are represented and that each lane owns at least one transition row
 
+3. **Phase 3 Progression Objects**
+   - seven recurring neurodegenerative objects:
+     - `tauopathy_progression`
+     - `synaptic_loss`
+     - `white_matter_degeneration`
+     - `microglial_chronic_activation`
+     - `persistent_metabolic_dysfunction`
+     - `neurovascular_uncoupling`
+     - `cognitive_decline_phenotype`
+   - each object carries:
+     - supporting papers
+     - source-quality mix
+     - mechanism parents
+     - lane parents
+     - transition parents
+     - biomarkers
+     - likely therapeutic targets
+     - contradiction notes
+     - evidence gaps
+     - why-it-matters context
+     - best-next-question guidance
+   - the progression-object payload also emits coverage against all 6 Phase 1 lanes and all 6 Phase 2 starter transitions so the layer cannot silently skip required objects
+
 Current product surfaces:
 - `docs/process-engine/index.html`
 - `docs/process-model/index.html`
+- `docs/progression-objects/index.html`
 
 ### Connector Enrichment Sidecar
 The connector lane is intentionally separate from the GitHub staging lane. It uses the repo as the system of record and adds read-only enrichment after post-analysis.

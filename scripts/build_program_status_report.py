@@ -68,6 +68,7 @@ def render_markdown(status):
         f"- Atlas Book: `{status['atlas_book_path']}`",
         f"- Process Engine: `{status['process_engine_path']}`",
         f"- Process Model: `{status['process_model_path']}`",
+        f"- Progression Objects: `{status['progression_object_page_path']}`",
         '',
         '## Automation State',
         '',
@@ -85,6 +86,7 @@ def render_markdown(status):
         f"- Idea generation gate: `{status['idea_gate_path']}`",
         f"- Process lane index: `{status['process_lanes_path']}`",
         f"- Causal transition index: `{status['causal_transition_path']}`",
+        f"- Progression object index: `{status['progression_object_path']}`",
         f"- Release manifest: `{status['release_manifest_path']}`",
         f"- Mechanism review packets: `{status['review_packet_index_path']}`",
         f"- Target enrichment packets: `{status['target_packet_index_path']}`",
@@ -150,6 +152,22 @@ def render_markdown(status):
             )
     lines.extend([
         '',
+        '## Progression Object Summary',
+        '',
+        f"- Objects: `{status['progression_summary'].get('object_count', 0)}`",
+        f"- Supported: `{status['progression_summary'].get('objects_by_support_status', {}).get('supported', 0)}`",
+        f"- Provisional: `{status['progression_summary'].get('objects_by_support_status', {}).get('provisional', 0)}`",
+        f"- Seeded maturity: `{status['progression_summary'].get('objects_by_maturity_status', {}).get('seeded', 0)}`",
+        f"- Covered Phase 1 lanes: `{status['progression_summary'].get('covered_phase1_lane_count', 0)}` / `6`",
+        f"- Covered Phase 2 transitions: `{status['progression_summary'].get('covered_phase2_transition_count', 0)}` / `6`",
+        '',
+    ])
+    for row in status['progression_rows']:
+        lines.append(
+            f"- **{row['display_name']}**: support `{row['support_status']}` | maturity `{row['maturity_status']}` | next question `{row['best_next_question']}`"
+        )
+    lines.extend([
+        '',
         '## Immediate Next Moves',
         '',
         '1. Fill the top mitochondrial ChEMBL targets first using the seeded query terms and assay keywords from the manual seed pack.',
@@ -167,6 +185,7 @@ def main():
     parser.add_argument('--idea-gate-csv', default='', help='Optional idea_generation_gate CSV path.')
     parser.add_argument('--process-lanes-json', default='', help='Optional process-lane JSON path.')
     parser.add_argument('--causal-transition-json', default='', help='Optional causal-transition JSON path.')
+    parser.add_argument('--progression-object-json', default='', help='Optional progression-object JSON path.')
     parser.add_argument('--release-manifest-md', default='', help='Optional atlas release-manifest markdown path.')
     parser.add_argument('--review-packet-index-md', default='', help='Optional mechanism review packet index path.')
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
@@ -181,6 +200,8 @@ def main():
     process_lanes = read_json(process_lanes_path) if process_lanes_path else {}
     causal_transition_path = args.causal_transition_json or latest_report('causal_transition_index_*.json')
     causal_transitions = read_json(causal_transition_path) if causal_transition_path else {}
+    progression_object_path = args.progression_object_json or latest_report('progression_object_index_*.json')
+    progression_objects = read_json(progression_object_path) if progression_object_path else {}
     release_manifest_path = args.release_manifest_md or latest_report('atlas_release_manifest_*.md')
     review_packet_index = args.review_packet_index_md or latest_report('mechanism_review_packet_index_*.md')
     target_packet_index = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
@@ -199,10 +220,12 @@ def main():
         'atlas_book_path': atlas_book_path,
         'process_engine_path': os.path.join('docs', 'process-engine', 'index.html'),
         'process_model_path': os.path.join('docs', 'process-model', 'index.html'),
+        'progression_object_page_path': os.path.join('docs', 'progression-objects', 'index.html'),
         'quality_gate_path': quality_gate_path,
         'idea_gate_path': idea_gate_path,
         'process_lanes_path': process_lanes_path,
         'causal_transition_path': causal_transition_path,
+        'progression_object_path': progression_object_path,
         'release_manifest_path': release_manifest_path,
         'review_packet_index_path': review_packet_index,
         'target_packet_index_path': target_packet_index,
@@ -214,6 +237,8 @@ def main():
         'process_rows': process_lanes.get('lanes', []) if isinstance(process_lanes, dict) else [],
         'transition_summary': causal_transitions.get('summary', {}) if isinstance(causal_transitions, dict) else {},
         'transition_rows': causal_transitions.get('rows', []) if isinstance(causal_transitions, dict) else [],
+        'progression_summary': progression_objects.get('summary', {}) if isinstance(progression_objects, dict) else {},
+        'progression_rows': progression_objects.get('rows', []) if isinstance(progression_objects, dict) else [],
     }
 
     os.makedirs(args.output_dir, exist_ok=True)

@@ -124,6 +124,9 @@ def render_markdown(packet):
         f"- Supported transitions: `{packet['transition_summary'].get('supported_transitions', 0)}`",
         f"- Covered starter lanes: `{packet['transition_summary'].get('covered_lane_count', 0)}` / `{packet['transition_summary'].get('starter_lane_count', 0)}`",
         f"- Lanes with owned transitions: `{packet['transition_summary'].get('lane_owned_transition_count', 0)}` / `{packet['transition_summary'].get('starter_lane_count', 0)}`",
+        f"- Progression objects built: `{packet['progression_summary'].get('object_count', 0)}`",
+        f"- Supported progression objects: `{packet['progression_summary'].get('objects_by_support_status', {}).get('supported', 0)}`",
+        f"- Seeded progression objects: `{packet['progression_summary'].get('objects_by_maturity_status', {}).get('seeded', 0)}`",
         '',
         '## What I Need From You This Week',
         '',
@@ -187,6 +190,18 @@ def render_markdown(packet):
             lines.append(
                 f"| {row.get('display_name', '')} | {row.get('coverage_role', '')} | {row.get('incoming_transition_count', 0)} | {row.get('outgoing_transition_count', 0)} | {row.get('within_lane_transition_count', 0)} | {row.get('has_lane_owned_transition', False)} |"
             )
+    lines.extend([
+        '',
+        '## Progression Object State',
+        '',
+        '| Object | Support | Maturity | Parents | Next Question Value |',
+        '| --- | --- | --- | --- | --- |',
+    ])
+    for row in packet['progression_rows']:
+        parent_count = sum(1 for item in [row.get('lane_parents'), row.get('transition_parents'), row.get('mechanism_parents')] if item and item != 'not_yet_mapped')
+        lines.append(
+            f"| {row.get('display_name', '')} | {row.get('support_status', '')} | {row.get('maturity_status', '')} | {parent_count} linked layers | {row.get('next_question_value', '')} |"
+        )
 
     lines.extend([
         '',
@@ -232,6 +247,7 @@ def render_markdown(packet):
         f"- Release manifest: `{packet['release_manifest_path']}`",
         f"- Process lanes: `{packet['process_lanes_path']}`",
         f"- Causal transitions: `{packet['causal_transition_path']}`",
+        f"- Progression objects: `{packet['progression_object_path']}`",
         f"- Target packet index: `{packet['target_packet_index_path']}`",
         f"- Program status: `{packet['program_status_path']}`",
         '',
@@ -248,6 +264,7 @@ def main():
     parser.add_argument('--idea-gate-json', default='', help='Optional idea-generation gate JSON path.')
     parser.add_argument('--process-lanes-json', default='', help='Optional process-lane JSON path.')
     parser.add_argument('--causal-transition-json', default='', help='Optional causal-transition JSON path.')
+    parser.add_argument('--progression-object-json', default='', help='Optional progression-object JSON path.')
     args = parser.parse_args()
 
     viewer = make_viewer_data()
@@ -257,10 +274,12 @@ def main():
     idea_gate_path = args.idea_gate_json or latest_report('idea_generation_gate_*.json')
     process_lanes_path = args.process_lanes_json or latest_report('process_lane_index_*.json')
     causal_transition_path = args.causal_transition_json or latest_report('causal_transition_index_*.json')
+    progression_object_path = args.progression_object_json or latest_report('progression_object_index_*.json')
     release_manifest = read_json(release_manifest_path) if release_manifest_path else {}
     idea_gate = read_json(idea_gate_path) if idea_gate_path else {}
     process_lanes = read_json(process_lanes_path) if process_lanes_path else {}
     causal_transitions = read_json(causal_transition_path) if causal_transition_path else {}
+    progression_objects = read_json(progression_object_path) if progression_object_path else {}
     target_rows = parse_markdown_table(target_packet_index_path)
 
     packet = {
@@ -276,6 +295,8 @@ def main():
         'process_rows': process_lanes.get('lanes', []) if isinstance(process_lanes, dict) else [],
         'transition_summary': causal_transitions.get('summary', {}) if isinstance(causal_transitions, dict) else {},
         'transition_rows': causal_transitions.get('rows', []) if isinstance(causal_transitions, dict) else [],
+        'progression_summary': progression_objects.get('summary', {}) if isinstance(progression_objects, dict) else {},
+        'progression_rows': progression_objects.get('rows', []) if isinstance(progression_objects, dict) else [],
         'release_summary': release_manifest.get('summary', {}) if isinstance(release_manifest, dict) else {},
         'release_rows': release_manifest.get('rows', []) if isinstance(release_manifest, dict) else [],
         'target_priorities': target_rows,
@@ -284,6 +305,7 @@ def main():
         'release_manifest_path': release_manifest_path,
         'process_lanes_path': process_lanes_path,
         'causal_transition_path': causal_transition_path,
+        'progression_object_path': progression_object_path,
         'target_packet_index_path': target_packet_index_path,
         'program_status_path': program_status_path,
     }
