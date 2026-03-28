@@ -119,9 +119,49 @@ It produces:
 - first atlas narrative outline
 - mechanism evidence table
 - first atlas narrative draft
+- process lanes
+- process-lane validation
+- causal-transition index
+- causal-transition validation
+- process-model site output
 - mechanism dossiers
 - translational bridge table
 - figure-planning artifact
+
+### Process Engine And Process Model
+The repo now has two explicit downstream neurodegenerative layers after the atlas:
+
+1. **Phase 1 Process Engine**
+   - six longitudinal lanes:
+     - blood-brain barrier failure
+     - mitochondrial / bioenergetic collapse
+     - neuroinflammation / microglial state change
+     - axonal degeneration
+     - glymphatic / astroglial clearance failure
+     - tau / proteinopathy progression
+   - each lane carries:
+     - `acute`
+     - `subacute`
+     - `chronic`
+
+2. **Phase 2 Process Model**
+   - explicit causal-transition rows such as:
+     - `BBB permeability increase -> peripheral immune infiltration`
+     - `mitochondrial ROS -> inflammasome activation`
+     - `glymphatic failure -> tau / protein accumulation`
+     - `axonal degeneration -> chronic network dysfunction`
+   - each transition carries:
+     - support status
+     - hypothesis status
+     - timing support
+     - anchor PMIDs
+     - source-quality mix
+     - biomarker cues
+     - evidence gaps
+
+Current product surfaces:
+- `docs/process-engine/index.html`
+- `docs/process-model/index.html`
 
 ### Connector Enrichment Sidecar
 The connector lane is intentionally separate from the GitHub staging lane. It uses the repo as the system of record and adds read-only enrichment after post-analysis.

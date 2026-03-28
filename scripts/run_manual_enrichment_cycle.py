@@ -356,6 +356,29 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_causal_transitions.py',
+        '--output-dir',
+        'reports/causal_transitions',
+    ])
+    latest_transition_json = latest_csv_in_dir('reports/causal_transitions', 'causal_transition_index_*.json')
+    run_cmd([
+        'python3',
+        'scripts/build_causal_transition_validation.py',
+        '--transition-json',
+        latest_transition_json,
+        '--output-dir',
+        'reports/causal_transition_validation',
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_process_model_page.py',
+        '--transition-json',
+        latest_transition_json,
+        '--output-dir',
+        'docs/process-model',
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_tbi_atlas_book.py',
         '--output-dir',
         args.atlas_output_dir,
@@ -401,6 +424,7 @@ def main():
     program_status_md = latest_csv_in_dir(args.program_status_output_dir, 'program_status_report_*.md')
     viewer_path = os.path.join(args.viewer_output_dir, 'index.html')
     process_engine_path = os.path.join('docs', 'process-engine', 'index.html')
+    process_model_path = os.path.join('docs', 'process-model', 'index.html')
     atlas_path = latest_csv_in_dir(args.atlas_output_dir, 'starter_tbi_atlas_*.html')
     print(f'Manual enrichment cycle complete. Latest chapter draft: {chapter_md}')
     print(f'Latest chapter synthesis draft: {chapter_synthesis_md}')
@@ -413,6 +437,7 @@ def main():
     print(f'Latest target enrichment packets: {target_packet_md}')
     print(f'Latest atlas viewer: {viewer_path}')
     print(f'Latest process engine page: {process_engine_path}')
+    print(f'Latest process model page: {process_model_path}')
     print(f'Latest atlas book: {atlas_path}')
     print(f'Latest program status report: {program_status_md}')
 

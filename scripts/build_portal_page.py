@@ -109,6 +109,9 @@ def render_html(viewer, ideas_payload, process_payload):
     ideas = ideas_payload.get('rows', [])
     spotlight_html = spotlight_cards(ideas, limit=1)
     process_summary = process_payload.get('summary', {}) if isinstance(process_payload, dict) else {}
+    transition_json_path = latest_optional_report('causal_transition_index_*.json')
+    transition_payload = read_json_if_exists(transition_json_path, default={})
+    transition_summary = transition_payload.get('summary', {}) if isinstance(transition_payload, dict) else {}
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -188,6 +191,7 @@ def render_html(viewer, ideas_payload, process_payload):
         <div class="snap"><span class="eyebrow">Provisional</span><strong>{summary.get('provisional_rows', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Ideas</span><strong>{len(ideas)}</strong></div>
         <div class="snap"><span class="eyebrow">Process Lanes</span><strong>{process_summary.get('lane_count', 0)}</strong></div>
+        <div class="snap"><span class="eyebrow">Transitions</span><strong>{transition_summary.get('transition_count', 0)}</strong></div>
       </section>
       <section class="cards">
         <a class="card" href="./run-center/index.html">
@@ -213,6 +217,12 @@ def render_html(viewer, ideas_payload, process_payload):
           <h2>Process Engine</h2>
           <p>Review the first-pass seeded longitudinal view: six lanes tracked across acute, subacute, and chronic support with provisional buckets shown honestly.</p>
           <span class="cta">Open process engine →</span>
+        </a>
+        <a class="card" href="./process-model/index.html">
+          <p class="eyebrow">Phase 2</p>
+          <h2>Process Model</h2>
+          <p>Review the explicit causal-transition layer: upstream-to-downstream process links with support strength, timing support, and hypothesis status.</p>
+          <span class="cta">Open process model →</span>
         </a>
       </section>
       <section class="today">

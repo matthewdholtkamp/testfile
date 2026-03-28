@@ -1,6 +1,41 @@
-# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1 Complete
+# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-2 Complete
 
 This file is the current handoff for the TBI scientific intelligence system after finishing extraction coverage for the original on-topic corpus and moving into the quality-gated investigation / atlas-construction phase.
+
+## Phase 2 Process-Model Status
+
+Phase 2 is now complete as the next downstream layer after the longitudinal process lanes.
+
+Current Phase 2 outputs:
+- four explicit causal-transition rows are now emitted:
+  - `BBB permeability increase -> peripheral immune infiltration`
+  - `mitochondrial ROS -> inflammasome activation`
+  - `glymphatic failure -> tau / protein accumulation`
+  - `axonal degeneration -> chronic network dysfunction`
+- each transition now carries:
+  - support status
+  - hypothesis status
+  - timing support
+  - weighted anchor PMIDs
+  - source-quality mix
+  - causal direction notes
+  - biomarker cues
+  - contradiction notes
+  - evidence gaps
+- the current transition summary is:
+  - `2` `supported`
+  - `2` `provisional`
+  - `0` `weak`
+  - `2` `established_in_corpus`
+  - `2` `emergent_from_tbi_corpus`
+  - `0` `cross_disciplinary_hypothesis`
+- the process-model product page is now emitted to:
+  - [docs/process-model/index.html](/Users/matthewholtkamp/Documents/testfile/docs/process-model/index.html)
+- the causal-transition build and validation steps are now wired into:
+  - [build_atlas_slices.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/build_atlas_slices.yml)
+  - [refresh_atlas_from_ongoing_cycle.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_atlas_from_ongoing_cycle.yml)
+  - [refresh_public_enrichment.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_public_enrichment.yml)
+  - [weekly_human_review_packet.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/weekly_human_review_packet.yml)
 
 ## Phase 1 Process-Engine Status
 
@@ -139,6 +174,8 @@ For the connector-enrichment sidecar:
   - the operator-facing Idea Briefs page
   - the evidence-first Atlas Viewer
   - the chapter-grade Starter TBI Atlas
+  - the longitudinal Process Engine page
+  - the causal-transition Process Model page
 - the optional 10x lane now has a seeded import-template builder so the genomics path is ready as soon as real exports exist
 - the atlas lane now has an explicit quality-gate output with mechanism-level readiness scoring
 - the atlas lane now has an explicit release manifest so atlas promotion/governance is no longer implicit
@@ -150,15 +187,16 @@ For the connector-enrichment sidecar:
 
 ## Current Architecture
 
-The repo now has five distinct layers:
+The repo now has six distinct layers:
 
 1. retrieval and source-paper normalization into Drive
 2. structured extraction coverage for the on-topic corpus
 3. post-extraction investigation outputs for QA, weighting, and triage
 4. atlas assembly artifacts for the starter mechanisms
-5. connector-enrichment sidecar artifacts for translational and genomics context
+5. longitudinal process lanes and causal-transition process-model artifacts
+6. connector-enrichment sidecar artifacts for translational and genomics context
 
-On top of those five layers, the atlas-writing lane now has three explicit synthesis outputs:
+On top of those six layers, the atlas-writing lane now has three explicit synthesis outputs:
 - chapter evidence ledger
 - ledger-driven mechanistic synthesis packet and synthesis-driven chapter draft
 - consolidated starter atlas package / atlas-book site output

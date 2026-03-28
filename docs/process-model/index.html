@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TBI Process Model</title>
+    <style>
+      :root {
+        --bg: #0d1218;
+        --panel: #162029;
+        --panel-soft: #1c2832;
+        --ink: #eef4fb;
+        --muted: #a7bac9;
+        --accent: #8fd7ff;
+        --line: rgba(143, 215, 255, 0.14);
+        --supported: #93f0c4;
+        --provisional: #ffe29a;
+        --weak: #ffc1c1;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(143, 215, 255, 0.14), transparent 28%),
+          linear-gradient(180deg, #091018 0%, var(--bg) 100%);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      .shell { max-width: 1220px; margin: 0 auto; padding: 44px 22px 72px; }
+      .hero { max-width: 760px; margin-bottom: 28px; }
+      .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.76rem; font-weight: 700; margin: 0 0 12px; }
+      h1 { margin: 0 0 14px; font-size: clamp(2.4rem, 5vw, 4.9rem); line-height: 0.96; }
+      h2 { margin: 0 0 10px; font-size: 1.55rem; }
+      h3 { margin: 0 0 12px; font-size: 1rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .summary-grid, .nav-grid, .meta-grid { display: grid; gap: 16px; }
+      .summary-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-bottom: 28px; }
+      .nav-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 28px; }
+      .meta-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 16px; }
+      .summary-card, .nav-card, .transition-card, .meta-card {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 18px;
+        box-shadow: 0 20px 36px rgba(0,0,0,0.18);
+      }
+      .summary-card strong { display:block; margin-top:8px; font-size:1.9rem; }
+      .nav-card { text-decoration:none; color:inherit; }
+      .nav-card span { color: var(--accent); font-weight:700; display:inline-block; margin-top:10px; }
+      .transition-card { margin: 0 0 20px; }
+      .card-head { display:flex; gap:18px; justify-content:space-between; flex-wrap:wrap; align-items:flex-start; }
+      .statement { margin-top: 8px; }
+      .pill-row { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+      .pill {
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        padding:7px 11px;
+        border-radius:999px;
+        background: rgba(255,255,255,0.07);
+        color: var(--ink);
+        font-size:0.78rem;
+      }
+      .pill.supported, .pill.established_in_corpus { color: var(--supported); }
+      .pill.provisional, .pill.emergent_from_tbi_corpus { color: var(--provisional); }
+      .pill.weak, .pill.cross_disciplinary_hypothesis { color: var(--weak); }
+      .lane-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 16px 0 0; }
+      .micro { font-weight:700; color: var(--ink); }
+      .arrow { color: var(--accent); font-size: 1.15rem; font-weight: 800; }
+      .chip-row { display:flex; gap:8px; flex-wrap:wrap; }
+      .chip { display:inline-flex; align-items:center; padding:7px 11px; border-radius:999px; background: rgba(255,255,255,0.06); color: var(--ink); font-size:0.78rem; }
+      .chip.muted { color: var(--muted); }
+      ul { margin: 0; padding-left: 18px; color: var(--muted); }
+      @media (max-width: 720px) {
+        .shell { padding: 32px 16px 52px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Phase 2 causal-transition layer</p>
+        <h1>TBI Process Model</h1>
+        <p>This page turns the process lanes into explicit transitions. It separates what is directly established in the TBI corpus from what is emergent or still hypothesis-level, so the model can generate new ideas without pretending they are already settled.</p>
+      </section>
+      <section class="summary-grid">
+        <article class="summary-card"><span class="eyebrow">Transitions</span><strong>4</strong></article>
+        <article class="summary-card"><span class="eyebrow">Supported</span><strong>2</strong></article>
+        <article class="summary-card"><span class="eyebrow">Provisional</span><strong>2</strong></article>
+        <article class="summary-card"><span class="eyebrow">Established</span><strong>2</strong></article>
+        <article class="summary-card"><span class="eyebrow">Emergent</span><strong>2</strong></article>
+        <article class="summary-card"><span class="eyebrow">Cross-disciplinary</span><strong>0</strong></article>
+      </section>
+      <section class="nav-grid">
+        <a class="nav-card" href="../index.html">
+          <p class="eyebrow">Portal</p>
+          <h3>Back to Atlas Portal</h3>
+          <p>Use the portal to move between the atlas, the process-engine lane view, and the new process-model transition layer.</p>
+          <span>Open portal →</span>
+        </a>
+        <a class="nav-card" href="../process-engine/index.html">
+          <p class="eyebrow">Phase 1</p>
+          <h3>Process Lanes</h3>
+          <p>Open the longitudinal lane layer when you want the acute, subacute, and chronic support buckets behind these transitions.</p>
+          <span>Open process lanes →</span>
+        </a>
+        <a class="nav-card" href="../atlas-viewer/index.html">
+          <p class="eyebrow">Evidence</p>
+          <h3>Atlas Viewer</h3>
+          <p>Use the evidence viewer when you want the underlying ledger, action queue, and mechanism-level review surface.</p>
+          <span>Open viewer →</span>
+        </a>
+      </section>
+      
+    <article class="transition-card supported">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow">cross mechanism</p>
+          <h2>BBB permeability increase -&gt; peripheral immune infiltration</h2>
+          <p class="statement">Current TBI evidence supports a directional transition in which BBB permeability increase facilitates peripheral immune infiltration.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported"><strong>Support:</strong> supported</span>
+          <span class="pill established_in_corpus"><strong>Hypothesis:</strong> established_in_corpus</span>
+          <span class="pill supported"><strong>Timing:</strong> supported</span>
+        </div>
+      </div>
+      <div class="lane-row">
+        <span class="micro">BBB permeability increase</span>
+        <span class="arrow">→</span>
+        <span class="micro">Peripheral immune infiltration</span>
+      </div>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Evidence</h3>
+          <p>Direct directional support is present in 2 causal edge-backed paper(s) and reinforced by 3 claim-backed paper(s).</p>
+          <ul>
+            <li>Papers: <strong>3</strong></li>
+            <li>Direct claims: <strong>3</strong></li>
+            <li>Direct edges: <strong>2</strong></li>
+            <li>Causal edges: <strong>2</strong></li>
+            <li>Synthesis supports: <strong>1</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Timing</h3>
+          <p>Expected: <strong>acute; subacute</strong></p>
+          <p>Observed: <strong>acute; subacute</strong></p>
+          <p>Anchors: <strong>41709060; 41740873; 41683989</strong></p>
+          <p>Source mix: <strong>full_text_like:3; abstract_only:2</strong></p>
+        </article>
+      </div>
+      <article class="meta-card">
+        <h3>Evidence examples</h3>
+        <ul><li>edge: PMID 41709060 BBB disruption drives peripheral immune cell infiltration</li><li>edge: PMID 41740873 BBB disruption drives Peripheral macrophage infiltration</li><li>claim: PMID 41683989 TBI-induced BBB breakdown promotes neuroinflammation.</li><li>claim: PMID 41709060 Increased BBB permeability allows peripheral leukocyte infiltration.</li></ul>
+      </article>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Causal direction notes</h3>
+          <ul><li>Upstream lane blood_brain_barrier_failure is currently treated as the initiating side of this transition.</li><li>Downstream lane neuroinflammation_microglial_state_change is currently treated as the receiving side of this transition.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker cues</h3>
+          <div class="chip-row"><span class="chip muted">None surfaced yet</span></div>
+        </article>
+      </div>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <ul><li>Some supporting rows are abstract-only and should be weighted cautiously.</li><li>Downstream lane is still seeded/provisional, so this transition should remain bounded.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Contradiction / tension</h3>
+          <ul><li>No contradiction notes are attached yet.</li></ul>
+        </article>
+      </div>
+    </article>
+    
+    <article class="transition-card supported">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow">cross mechanism</p>
+          <h2>Glymphatic failure -&gt; tau / protein accumulation</h2>
+          <p class="statement">Current TBI evidence supports a transition in which glymphatic failure contributes to tau or broader pathogenic protein accumulation.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported"><strong>Support:</strong> supported</span>
+          <span class="pill established_in_corpus"><strong>Hypothesis:</strong> established_in_corpus</span>
+          <span class="pill supported"><strong>Timing:</strong> supported</span>
+        </div>
+      </div>
+      <div class="lane-row">
+        <span class="micro">Glymphatic / astroglial clearance failure</span>
+        <span class="arrow">→</span>
+        <span class="micro">Tau / protein accumulation</span>
+      </div>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Evidence</h3>
+          <p>Direct directional support is present in 2 causal edge-backed paper(s) and reinforced by 2 claim-backed paper(s).</p>
+          <ul>
+            <li>Papers: <strong>3</strong></li>
+            <li>Direct claims: <strong>2</strong></li>
+            <li>Direct edges: <strong>2</strong></li>
+            <li>Causal edges: <strong>2</strong></li>
+            <li>Synthesis supports: <strong>0</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Timing</h3>
+          <p>Expected: <strong>subacute; chronic</strong></p>
+          <p>Observed: <strong>subacute; chronic</strong></p>
+          <p>Anchors: <strong>41179995; 41700070; 41747594</strong></p>
+          <p>Source mix: <strong>full_text_like:3; abstract_only:1</strong></p>
+        </article>
+      </div>
+      <article class="meta-card">
+        <h3>Evidence examples</h3>
+        <ul><li>edge: PMID 41179995 Glymphatic dysfunction increases Accumulation of metabolic waste (e.g., tau, S100β)</li><li>edge: PMID 41700070 Glymphatic dysfunction increases Hyperphosphorylated tau accumulation</li><li>claim: PMID 41700070 Glymphatic dysfunction leads to pathogenic protein accumulation.</li><li>claim: PMID 41747594 NAMPT-EVs improve glymphatic clearance of acetylated tau.</li></ul>
+      </article>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Causal direction notes</h3>
+          <ul><li>Upstream lane glymphatic_astroglial_clearance_failure is currently treated as the initiating side of this transition.</li><li>Downstream lane tau_proteinopathy_progression is currently treated as the receiving side of this transition.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker cues</h3>
+          <div class="chip-row"><span class="chip">tau (6)</span><span class="chip">AQP4 (1)</span></div>
+        </article>
+      </div>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <ul><li>Some supporting rows are abstract-only and should be weighted cautiously.</li><li>Downstream lane is still seeded/provisional, so this transition should remain bounded.</li><li>Upstream lane still needs stronger longitudinal support.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Contradiction / tension</h3>
+          <ul><li>No contradiction notes are attached yet.</li></ul>
+        </article>
+      </div>
+    </article>
+    
+    <article class="transition-card provisional">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow">within lane</p>
+          <h2>Axonal degeneration -&gt; chronic network dysfunction</h2>
+          <p class="statement">Current TBI evidence suggests that axonal degeneration and white-matter injury contribute to chronic network dysfunction and impaired recovery trajectories.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional"><strong>Support:</strong> provisional</span>
+          <span class="pill emergent_from_tbi_corpus"><strong>Hypothesis:</strong> emergent_from_tbi_corpus</span>
+          <span class="pill supported"><strong>Timing:</strong> supported</span>
+        </div>
+      </div>
+      <div class="lane-row">
+        <span class="micro">Axonal degeneration / white-matter injury</span>
+        <span class="arrow">→</span>
+        <span class="micro">Chronic network dysfunction</span>
+      </div>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Evidence</h3>
+          <p>Transition is presently carried more by directional claims or associative edges than by multiple direct causal edges, so it remains provisional.</p>
+          <ul>
+            <li>Papers: <strong>16</strong></li>
+            <li>Direct claims: <strong>15</strong></li>
+            <li>Direct edges: <strong>4</strong></li>
+            <li>Causal edges: <strong>0</strong></li>
+            <li>Synthesis supports: <strong>0</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Timing</h3>
+          <p>Expected: <strong>subacute; chronic</strong></p>
+          <p>Observed: <strong>subacute; chronic</strong></p>
+          <p>Anchors: <strong>41192919; 41577806; 41604614; 41740080; 41026543; 41142161; 41157305; 41173520</strong></p>
+          <p>Source mix: <strong>full_text_like:10; abstract_only:9</strong></p>
+        </article>
+      </div>
+      <article class="meta-card">
+        <h3>Evidence examples</h3>
+        <ul><li>edge: PMID 41192919 White matter FA (limbic-prefrontal) predicts Internalizing/Externalizing behavioral problems</li><li>edge: PMID 41577806 axonal_transport_disruption correlates_with cognitive_deficits</li><li>edge: PMID 41604614 diffuse_axonal_injury predicts unfavorable_recovery_trajectory</li><li>edge: PMID 41740080 Limbic White Matter Degradation correlates_with Cognitive Decline</li></ul>
+      </article>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Causal direction notes</h3>
+          <ul><li>Upstream lane axonal_degeneration is currently treated as the initiating side of this transition.</li><li>Downstream lane axonal_degeneration is currently treated as the receiving side of this transition.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker cues</h3>
+          <div class="chip-row"><span class="chip">FA (12)</span><span class="chip">FD (4)</span><span class="chip">fa (2)</span><span class="chip">MD (2)</span><span class="chip">FDC (2)</span></div>
+        </article>
+      </div>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <ul><li>Transition still needs denser direct support before it should be treated as hardened.</li><li>Some supporting rows are abstract-only and should be weighted cautiously.</li><li>Downstream lane is still seeded/provisional, so this transition should remain bounded.</li><li>Upstream lane still needs stronger longitudinal support.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Contradiction / tension</h3>
+          <ul><li>No contradiction notes are attached yet.</li></ul>
+        </article>
+      </div>
+    </article>
+    
+    <article class="transition-card provisional">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow">cross mechanism</p>
+          <h2>Mitochondrial ROS -&gt; inflammasome activation</h2>
+          <p class="statement">Current TBI evidence suggests that mitochondrial ROS or related mitochondrial stress signals amplify inflammasome activation.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional"><strong>Support:</strong> provisional</span>
+          <span class="pill emergent_from_tbi_corpus"><strong>Hypothesis:</strong> emergent_from_tbi_corpus</span>
+          <span class="pill provisional"><strong>Timing:</strong> provisional</span>
+        </div>
+      </div>
+      <div class="lane-row">
+        <span class="micro">Mitochondrial ROS / stress signaling</span>
+        <span class="arrow">→</span>
+        <span class="micro">Inflammasome activation</span>
+      </div>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Evidence</h3>
+          <p>Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.</p>
+          <ul>
+            <li>Papers: <strong>3</strong></li>
+            <li>Direct claims: <strong>3</strong></li>
+            <li>Direct edges: <strong>1</strong></li>
+            <li>Causal edges: <strong>1</strong></li>
+            <li>Synthesis supports: <strong>3</strong></li>
+          </ul>
+        </article>
+        <article class="meta-card">
+          <h3>Timing</h3>
+          <p>Expected: <strong>acute; subacute</strong></p>
+          <p>Observed: <strong>acute</strong></p>
+          <p>Anchors: <strong>41480492; 41103638; 41709060</strong></p>
+          <p>Source mix: <strong>full_text_like:4</strong></p>
+        </article>
+      </div>
+      <article class="meta-card">
+        <h3>Evidence examples</h3>
+        <ul><li>edge: PMID 41480492 mtROS increases NLRP3_inflammasome</li><li>claim: PMID 41103638 mtDAMPs drive neuroinflammation and cell death via TLR9, NLRP3, and cGAS-STING pathways.</li><li>claim: PMID 41480492 MAM-derived stress signals promote NLRP3 inflammasome assembly.</li><li>claim: PMID 41709060 NLRP3 inflammasome activation and mitochondrial dysfunction amplify neuroinflammatory signaling.</li></ul>
+      </article>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Causal direction notes</h3>
+          <ul><li>Upstream lane mitochondrial_bioenergetic_collapse is currently treated as the initiating side of this transition.</li><li>Downstream lane neuroinflammation_microglial_state_change is currently treated as the receiving side of this transition.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker cues</h3>
+          <div class="chip-row"><span class="chip">NLRP3 (7)</span><span class="chip">ROS (4)</span></div>
+        </article>
+      </div>
+      <div class="meta-grid">
+        <article class="meta-card">
+          <h3>Evidence gaps</h3>
+          <ul><li>Transition still needs denser direct support before it should be treated as hardened.</li><li>Timing support is incomplete or only partially aligned with the expected transition window.</li><li>Downstream lane is still seeded/provisional, so this transition should remain bounded.</li><li>Upstream lane still needs stronger longitudinal support.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Contradiction / tension</h3>
+          <ul><li>No contradiction notes are attached yet.</li></ul>
+        </article>
+      </div>
+    </article>
+    
+    </main>
+  </body>
+</html>

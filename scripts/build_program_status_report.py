@@ -67,6 +67,7 @@ def render_markdown(status):
         f"- Atlas Viewer: `{status['viewer_path']}`",
         f"- Atlas Book: `{status['atlas_book_path']}`",
         f"- Process Engine: `{status['process_engine_path']}`",
+        f"- Process Model: `{status['process_model_path']}`",
         '',
         '## Automation State',
         '',
@@ -83,6 +84,7 @@ def render_markdown(status):
         f"- Quality gate: `{status['quality_gate_path']}`",
         f"- Idea generation gate: `{status['idea_gate_path']}`",
         f"- Process lane index: `{status['process_lanes_path']}`",
+        f"- Causal transition index: `{status['causal_transition_path']}`",
         f"- Release manifest: `{status['release_manifest_path']}`",
         f"- Mechanism review packets: `{status['review_packet_index_path']}`",
         f"- Target enrichment packets: `{status['target_packet_index_path']}`",
@@ -121,6 +123,21 @@ def render_markdown(status):
         )
     lines.extend([
         '',
+        '## Causal Transition Summary',
+        '',
+        f"- Transitions: `{status['transition_summary'].get('transition_count', 0)}`",
+        f"- Supported: `{status['transition_summary'].get('supported_transitions', 0)}`",
+        f"- Provisional: `{status['transition_summary'].get('provisional_transitions', 0)}`",
+        f"- Established in corpus: `{status['transition_summary'].get('established_in_corpus', 0)}`",
+        f"- Emergent from TBI corpus: `{status['transition_summary'].get('emergent_from_tbi_corpus', 0)}`",
+        '',
+    ])
+    for row in status['transition_rows']:
+        lines.append(
+            f"- **{row['display_name']}**: support `{row['support_status']}` | hypothesis `{row['hypothesis_status']}` | timing `{row['timing_support']}`"
+        )
+    lines.extend([
+        '',
         '## Immediate Next Moves',
         '',
         '1. Fill the top mitochondrial ChEMBL targets first using the seeded query terms and assay keywords from the manual seed pack.',
@@ -137,6 +154,7 @@ def main():
     parser.add_argument('--quality-gate-csv', default='', help='Optional atlas_quality_gate CSV path.')
     parser.add_argument('--idea-gate-csv', default='', help='Optional idea_generation_gate CSV path.')
     parser.add_argument('--process-lanes-json', default='', help='Optional process-lane JSON path.')
+    parser.add_argument('--causal-transition-json', default='', help='Optional causal-transition JSON path.')
     parser.add_argument('--release-manifest-md', default='', help='Optional atlas release-manifest markdown path.')
     parser.add_argument('--review-packet-index-md', default='', help='Optional mechanism review packet index path.')
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
@@ -149,6 +167,8 @@ def main():
     idea_rows = read_csv(idea_gate_path) if idea_gate_path else []
     process_lanes_path = args.process_lanes_json or latest_report('process_lane_index_*.json')
     process_lanes = read_json(process_lanes_path) if process_lanes_path else {}
+    causal_transition_path = args.causal_transition_json or latest_report('causal_transition_index_*.json')
+    causal_transitions = read_json(causal_transition_path) if causal_transition_path else {}
     release_manifest_path = args.release_manifest_md or latest_report('atlas_release_manifest_*.md')
     review_packet_index = args.review_packet_index_md or latest_report('mechanism_review_packet_index_*.md')
     target_packet_index = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
@@ -166,9 +186,11 @@ def main():
         'viewer_path': os.path.join('docs', 'atlas-viewer', 'index.html'),
         'atlas_book_path': atlas_book_path,
         'process_engine_path': os.path.join('docs', 'process-engine', 'index.html'),
+        'process_model_path': os.path.join('docs', 'process-model', 'index.html'),
         'quality_gate_path': quality_gate_path,
         'idea_gate_path': idea_gate_path,
         'process_lanes_path': process_lanes_path,
+        'causal_transition_path': causal_transition_path,
         'release_manifest_path': release_manifest_path,
         'review_packet_index_path': review_packet_index,
         'target_packet_index_path': target_packet_index,
@@ -178,6 +200,8 @@ def main():
         'idea_rows': idea_rows,
         'process_summary': process_lanes.get('summary', {}) if isinstance(process_lanes, dict) else {},
         'process_rows': process_lanes.get('lanes', []) if isinstance(process_lanes, dict) else [],
+        'transition_summary': causal_transitions.get('summary', {}) if isinstance(causal_transitions, dict) else {},
+        'transition_rows': causal_transitions.get('rows', []) if isinstance(causal_transitions, dict) else [],
     }
 
     os.makedirs(args.output_dir, exist_ok=True)

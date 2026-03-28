@@ -77,8 +77,6 @@ jobs:
 
       - name: Build weekly human review packet
         run: |
-          python scripts/build_weekly_human_review_packet.py \
-            --output-dir reports/weekly_human_review_packet
           python scripts/build_process_lanes.py \
             --output-dir reports/process_lanes
           latest_process_json=$(ls -1t reports/process_lanes/process_lane_index_*.json | head -n1)
@@ -88,6 +86,20 @@ jobs:
           python scripts/build_process_engine_page.py \
             --process-json "$latest_process_json" \
             --output-dir docs/process-engine
+          python scripts/build_causal_transitions.py \
+            --process-json "$latest_process_json" \
+            --output-dir reports/causal_transitions
+          latest_transition_json=$(ls -1t reports/causal_transitions/causal_transition_index_*.json | head -n1)
+          python scripts/build_causal_transition_validation.py \
+            --transition-json "$latest_transition_json" \
+            --output-dir reports/causal_transition_validation
+          python scripts/build_process_model_page.py \
+            --transition-json "$latest_transition_json" \
+            --output-dir docs/process-model
+          python scripts/build_weekly_human_review_packet.py \
+            --output-dir reports/weekly_human_review_packet \
+            --process-lanes-json "$latest_process_json" \
+            --causal-transition-json "$latest_transition_json"
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_portal_page.py \

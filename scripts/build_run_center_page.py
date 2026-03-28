@@ -29,7 +29,7 @@ def write_text(path, text):
         handle.write(text)
 
 
-def render_html(summary, process_summary):
+def render_html(summary, process_summary, transition_summary):
     lead = summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')
     stable = summary.get('stable_rows', 0)
     provisional = summary.get('provisional_rows', 0)
@@ -37,6 +37,8 @@ def render_html(summary, process_summary):
     lane_count = process_summary.get('lane_count', 0)
     supported_lanes = process_summary.get('longitudinally_supported_lanes', 0)
     seeded_lanes = process_summary.get('longitudinally_seeded_lanes', 0)
+    transition_count = transition_summary.get('transition_count', 0)
+    supported_transitions = transition_summary.get('supported_transitions', 0)
     return f"""<!doctype html>
 <html lang=\"en\">
   <head>
@@ -95,6 +97,8 @@ def render_html(summary, process_summary):
         <div class=\"card\"><span class=\"eyebrow\">Blocked</span><strong>{blocked}</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Process Lanes</span><strong>{lane_count}</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Trajectory State</span><strong>{supported_lanes} supported / {seeded_lanes} seeded</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Transitions</span><strong>{transition_count}</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Process Model</span><strong>{supported_transitions} supported</strong></div>
       </section>
 
       <section class=\"stack\">
@@ -131,6 +135,19 @@ def render_html(summary, process_summary):
           </div>
           <div class=\"button-row\">
             <a class=\"link-button secondary\" href=\"../process-engine/index.html\">Open Process Engine</a>
+          </div>
+        </div>
+
+        <div class=\"panel\">
+          <p class=\"eyebrow\">Phase 2 process model</p>
+          <p>The daily machine can now refresh explicit causal transitions as a downstream product layer. This is where the system starts behaving like a process model instead of a chapter set.</p>
+          <div class=\"actions\">
+            <div>Transitions: <strong>{transition_count}</strong></div>
+            <div>Supported transitions: <strong>{supported_transitions}</strong></div>
+            <div>Emergent or hypothesis transitions stay visibly bounded in the product.</div>
+          </div>
+          <div class=\"button-row\">
+            <a class=\"link-button secondary\" href=\"../process-model/index.html\">Open Process Model</a>
           </div>
         </div>
 
@@ -227,7 +244,9 @@ def main():
     viewer = read_json(os.path.join(REPO_ROOT, 'docs', 'atlas-viewer', 'atlas_viewer.json'))
     process_json = latest_optional_report('process_lane_index_*.json')
     process_payload = read_json_if_exists(process_json, default={})
-    html = render_html(viewer.get('summary', {}), process_payload.get('summary', {}))
+    transition_json = latest_optional_report('causal_transition_index_*.json')
+    transition_payload = read_json_if_exists(transition_json, default={})
+    html = render_html(viewer.get('summary', {}), process_payload.get('summary', {}), transition_payload.get('summary', {}))
     write_text(os.path.join(REPO_ROOT, args.output_path), html)
     print(f'Run-center page written: {os.path.join(REPO_ROOT, args.output_path)}')
 
