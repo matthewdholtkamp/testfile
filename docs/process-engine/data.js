@@ -1,0 +1,2670 @@
+window.PROCESS_ENGINE_DATA = {
+  "metadata": {
+    "generated_at": "2026-03-28_114326",
+    "claims_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/investigation_claims_2026-03-18_141503.csv",
+    "edges_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/investigation_edges_2026-03-18_141503.csv",
+    "paper_qa_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/post_extraction_paper_qa_2026-03-18_141503.csv"
+  },
+  "summary": {
+    "lane_count": 6,
+    "supported_buckets": 5,
+    "provisional_buckets": 13,
+    "weak_buckets": 0,
+    "longitudinally_supported_lanes": 1,
+    "longitudinally_seeded_lanes": 5
+  },
+  "lanes": [
+    {
+      "lane_id": "blood_brain_barrier_failure",
+      "display_name": "Blood-Brain Barrier Failure",
+      "description": "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.",
+      "origin_status": "starter_atlas_promoted",
+      "lane_status": "longitudinally_supported",
+      "paper_count": 67,
+      "full_text_like_papers": 53,
+      "abstract_only_papers": 14,
+      "claim_mentions": 94,
+      "edge_mentions": 70,
+      "unbucketed_mentions": 22,
+      "supported_buckets": 3,
+      "provisional_buckets": 0,
+      "weak_buckets": 0,
+      "current_mechanism_overlap": [
+        {
+          "canonical_mechanism": "blood_brain_barrier_disruption",
+          "claim_mentions": 27
+        },
+        {
+          "canonical_mechanism": "neuroinflammation_microglial_activation",
+          "claim_mentions": 5
+        },
+        {
+          "canonical_mechanism": "axonal_white_matter_injury",
+          "claim_mentions": 3
+        },
+        {
+          "canonical_mechanism": "synaptic_network_remodeling",
+          "claim_mentions": 1
+        },
+        {
+          "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
+          "claim_mentions": 1
+        },
+        {
+          "canonical_mechanism": "glymphatic_clearance_impairment",
+          "claim_mentions": 1
+        }
+      ],
+      "top_biomarkers": [
+        {
+          "label": "GFAP",
+          "count": 4
+        },
+        {
+          "label": "Nf-L",
+          "count": 2
+        },
+        {
+          "label": "FITC-labeled mNGF fluorescence",
+          "count": 1
+        },
+        {
+          "label": "Optical density (OD) readings",
+          "count": 1
+        },
+        {
+          "label": "MBP protein expression",
+          "count": 1
+        },
+        {
+          "label": "NF-200 protein expression",
+          "count": 1
+        },
+        {
+          "label": "PSD-95 protein expression",
+          "count": 1
+        },
+        {
+          "label": "Cerebral blood flow (CBF)",
+          "count": 1
+        }
+      ],
+      "top_cell_states": [
+        {
+          "label": "endothelial cell",
+          "count": 64
+        },
+        {
+          "label": "astrocyte",
+          "count": 19
+        },
+        {
+          "label": "leukocyte",
+          "count": 12
+        },
+        {
+          "label": "neuron",
+          "count": 8
+        },
+        {
+          "label": "pericyte",
+          "count": 4
+        },
+        {
+          "label": "microglia",
+          "count": 3
+        },
+        {
+          "label": "axon",
+          "count": 2
+        },
+        {
+          "label": "neuron, axon, oligodendrocyte",
+          "count": 1
+        }
+      ],
+      "top_brain_regions": [
+        {
+          "label": "BBB",
+          "count": 104
+        },
+        {
+          "label": "cortex",
+          "count": 24
+        },
+        {
+          "label": "neurovascular unit",
+          "count": 10
+        },
+        {
+          "label": "diffuse / multisite",
+          "count": 5
+        },
+        {
+          "label": "brain parenchyma",
+          "count": 2
+        },
+        {
+          "label": "third cranial nerve",
+          "count": 1
+        },
+        {
+          "label": "septum pellucidum",
+          "count": 1
+        },
+        {
+          "label": "corpus callosum",
+          "count": 1
+        }
+      ],
+      "anchor_pmids": [
+        "41663365",
+        "41673382",
+        "41642456",
+        "41649131",
+        "41039850",
+        "41465583",
+        "41725719",
+        "41153827",
+        "41532955",
+        "41709060"
+      ],
+      "buckets": {
+        "acute": {
+          "status": "supported",
+          "paper_count": 43,
+          "full_text_like_papers": 37,
+          "abstract_only_papers": 6,
+          "claim_mentions": 58,
+          "edge_mentions": 45,
+          "anchor_pmids": [
+            "41663365",
+            "41642456",
+            "41673382",
+            "41465583",
+            "41532955",
+            "41725719",
+            "41750206",
+            "41801080"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41039850",
+              "text": "Nanoparticle encapsulation increases mNGF delivery to brain parenchyma."
+            },
+            {
+              "pmid": "41153827",
+              "text": "Diffuse TBI (RNR) causes an acute increase in serum GFAP levels at 1 hour, which then recovers by 1 day."
+            },
+            {
+              "pmid": "41173520",
+              "text": "rCHI severity correlates with BBB permeability."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "GFAP",
+              "count": 2
+            },
+            {
+              "label": "FITC-labeled mNGF fluorescence",
+              "count": 1
+            },
+            {
+              "label": "Optical density (OD) readings",
+              "count": 1
+            },
+            {
+              "label": "gadolinium leakage",
+              "count": 1
+            },
+            {
+              "label": "CSF/serum albumin ratio",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "endothelial cell",
+              "count": 43
+            },
+            {
+              "label": "astrocyte",
+              "count": 13
+            },
+            {
+              "label": "leukocyte",
+              "count": 10
+            },
+            {
+              "label": "neuron",
+              "count": 8
+            },
+            {
+              "label": "microglia",
+              "count": 2
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "BBB",
+              "count": 65
+            },
+            {
+              "label": "cortex",
+              "count": 16
+            },
+            {
+              "label": "neurovascular unit",
+              "count": 5
+            },
+            {
+              "label": "brain parenchyma",
+              "count": 2
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 2
+            }
+          ],
+          "notes": []
+        },
+        "subacute": {
+          "status": "supported",
+          "paper_count": 18,
+          "full_text_like_papers": 16,
+          "abstract_only_papers": 2,
+          "claim_mentions": 20,
+          "edge_mentions": 13,
+          "anchor_pmids": [
+            "41039850",
+            "41153827",
+            "41328339",
+            "41622772",
+            "41649131",
+            "41659975",
+            "41709060",
+            "41737534"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41039850",
+              "text": "PBCA-mNGF up-regulates myelin-related proteins (MBP, NF-200) and PSD-95, indicating enhanced neurogenesis and myelinogenesis."
+            },
+            {
+              "pmid": "41039850",
+              "text": "PBCA-mNGF repairs TBI-disrupted BBB structure and function."
+            },
+            {
+              "pmid": "41153827",
+              "text": "Focal TBI (CCI) causes a delayed increase in serum GFAP levels, becoming significant at 1 day post-injury."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "Nf-L",
+              "count": 2
+            },
+            {
+              "label": "MBP protein expression",
+              "count": 1
+            },
+            {
+              "label": "NF-200 protein expression",
+              "count": 1
+            },
+            {
+              "label": "PSD-95 protein expression",
+              "count": 1
+            },
+            {
+              "label": "Cerebral blood flow (CBF)",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "endothelial cell",
+              "count": 11
+            },
+            {
+              "label": "pericyte",
+              "count": 4
+            },
+            {
+              "label": "astrocyte",
+              "count": 2
+            },
+            {
+              "label": "axon",
+              "count": 2
+            },
+            {
+              "label": "leukocyte",
+              "count": 2
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "BBB",
+              "count": 23
+            },
+            {
+              "label": "cortex",
+              "count": 3
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 2
+            },
+            {
+              "label": "neurovascular unit",
+              "count": 1
+            }
+          ],
+          "notes": []
+        },
+        "chronic": {
+          "status": "supported",
+          "paper_count": 5,
+          "full_text_like_papers": 4,
+          "abstract_only_papers": 1,
+          "claim_mentions": 4,
+          "edge_mentions": 2,
+          "anchor_pmids": [
+            "41626582",
+            "41648607",
+            "41726930",
+            "41596245",
+            "41778729"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41626582",
+              "text": "Sub-symptomatic aerobic exercise improves autonomic nervous system regulation and cerebral blood flow autoregulation."
+            },
+            {
+              "pmid": "41648607",
+              "text": "rmTBI-induced skull secretome impairs microglial mitochondrial function."
+            },
+            {
+              "pmid": "41726930",
+              "text": "Inertial TBI is insufficient to trigger chronic T-cell infiltration."
+            }
+          ],
+          "biomarker_cues": [],
+          "cell_state_cues": [
+            {
+              "label": "astrocyte",
+              "count": 3
+            },
+            {
+              "label": "microglia",
+              "count": 1
+            },
+            {
+              "label": "T cell",
+              "count": 1
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "BBB",
+              "count": 3
+            },
+            {
+              "label": "neurovascular unit",
+              "count": 1
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 1
+            }
+          ],
+          "notes": []
+        }
+      },
+      "evidence_gaps": [
+        "All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling."
+      ]
+    },
+    {
+      "lane_id": "mitochondrial_bioenergetic_collapse",
+      "display_name": "Mitochondrial / Bioenergetic Collapse",
+      "description": "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.",
+      "origin_status": "starter_atlas_promoted",
+      "lane_status": "longitudinally_seeded",
+      "paper_count": 52,
+      "full_text_like_papers": 40,
+      "abstract_only_papers": 11,
+      "claim_mentions": 88,
+      "edge_mentions": 59,
+      "unbucketed_mentions": 30,
+      "supported_buckets": 0,
+      "provisional_buckets": 3,
+      "weak_buckets": 0,
+      "current_mechanism_overlap": [
+        {
+          "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
+          "claim_mentions": 25
+        },
+        {
+          "canonical_mechanism": "neuroinflammation_microglial_activation",
+          "claim_mentions": 10
+        },
+        {
+          "canonical_mechanism": "axonal_white_matter_injury",
+          "claim_mentions": 5
+        },
+        {
+          "canonical_mechanism": "synaptic_network_remodeling",
+          "claim_mentions": 1
+        }
+      ],
+      "top_biomarkers": [
+        {
+          "label": "Nf-L",
+          "count": 2
+        },
+        {
+          "label": "ATP",
+          "count": 2
+        },
+        {
+          "label": "Bcl-2 expression",
+          "count": 1
+        },
+        {
+          "label": "NeuN expression",
+          "count": 1
+        },
+        {
+          "label": "TUNEL+/NeuN+ cells",
+          "count": 1
+        },
+        {
+          "label": "Cerebral blood flow",
+          "count": 1
+        },
+        {
+          "label": "Cerebral oxygen saturation",
+          "count": 1
+        },
+        {
+          "label": "eATP",
+          "count": 1
+        }
+      ],
+      "top_cell_states": [
+        {
+          "label": "neuron",
+          "count": 53
+        },
+        {
+          "label": "axon",
+          "count": 9
+        },
+        {
+          "label": "microglia",
+          "count": 9
+        },
+        {
+          "label": "astrocyte",
+          "count": 8
+        },
+        {
+          "label": "endothelial cell",
+          "count": 2
+        },
+        {
+          "label": "macrophage",
+          "count": 2
+        },
+        {
+          "label": "neuron, glial cell, astrocyte",
+          "count": 1
+        },
+        {
+          "label": "macrophage, T cell",
+          "count": 1
+        }
+      ],
+      "top_brain_regions": [
+        {
+          "label": "cortex",
+          "count": 35
+        },
+        {
+          "label": "diffuse / multisite",
+          "count": 20
+        },
+        {
+          "label": "hippocampus",
+          "count": 16
+        },
+        {
+          "label": "neurovascular unit",
+          "count": 7
+        },
+        {
+          "label": "brainstem",
+          "count": 5
+        },
+        {
+          "label": "white matter",
+          "count": 3
+        },
+        {
+          "label": "BBB",
+          "count": 3
+        }
+      ],
+      "anchor_pmids": [
+        "41651694",
+        "41480492",
+        "41576094",
+        "41764101",
+        "41648326",
+        "41267966",
+        "41735605",
+        "41153827",
+        "41667502",
+        "41103638"
+      ],
+      "buckets": {
+        "acute": {
+          "status": "provisional",
+          "paper_count": 22,
+          "full_text_like_papers": 19,
+          "abstract_only_papers": 3,
+          "claim_mentions": 35,
+          "edge_mentions": 27,
+          "anchor_pmids": [
+            "41651694",
+            "41480492",
+            "41267966",
+            "41764101",
+            "41576094",
+            "41648326",
+            "41103638",
+            "41642456"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41079361",
+              "text": "Hemoglobin decrements in TBI patients reduce cerebral oxygen saturation and CBF, compromising brain tissue perfusion, which exacerbates secondary brain injury and impairs brain tissue respiration."
+            },
+            {
+              "pmid": "41103638",
+              "text": "eATP concentration dictates its role in TBI pathology."
+            },
+            {
+              "pmid": "41103638",
+              "text": "mtDAMPs drive neuroinflammation and cell death via TLR9, NLRP3, and cGAS-STING pathways."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "Cerebral blood flow",
+              "count": 1
+            },
+            {
+              "label": "Cerebral oxygen saturation",
+              "count": 1
+            },
+            {
+              "label": "eATP",
+              "count": 1
+            },
+            {
+              "label": "cardiolipin (blood)",
+              "count": 1
+            },
+            {
+              "label": "mtDNA",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "neuron",
+              "count": 27
+            },
+            {
+              "label": "microglia",
+              "count": 4
+            },
+            {
+              "label": "axon",
+              "count": 3
+            },
+            {
+              "label": "astrocyte",
+              "count": 2
+            },
+            {
+              "label": "neuron, glial cell, astrocyte",
+              "count": 1
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "diffuse / multisite",
+              "count": 12
+            },
+            {
+              "label": "cortex",
+              "count": 10
+            },
+            {
+              "label": "neurovascular unit",
+              "count": 5
+            },
+            {
+              "label": "hippocampus",
+              "count": 5
+            },
+            {
+              "label": "white matter",
+              "count": 3
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "subacute": {
+          "status": "provisional",
+          "paper_count": 22,
+          "full_text_like_papers": 19,
+          "abstract_only_papers": 3,
+          "claim_mentions": 30,
+          "edge_mentions": 12,
+          "anchor_pmids": [
+            "41576094",
+            "41648326",
+            "41764101",
+            "41644924",
+            "41810326",
+            "41153827",
+            "41752761",
+            "41651694"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41039850",
+              "text": "PBCA-mNGF attenuates TBI-induced neuronal apoptosis."
+            },
+            {
+              "pmid": "41153827",
+              "text": "Acute Cyclosporin A treatment (10 and 40 mg/kg/day) decreases serum Nf-L levels following diffuse TBI (RNR)."
+            },
+            {
+              "pmid": "41153827",
+              "text": "Acute Cyclosporin A treatment (40 mg/kg/day) attenuates the increase in serum Nf-L levels following focal TBI (CCI)."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "Nf-L",
+              "count": 2
+            },
+            {
+              "label": "Bcl-2 expression",
+              "count": 1
+            },
+            {
+              "label": "NeuN expression",
+              "count": 1
+            },
+            {
+              "label": "TUNEL+/NeuN+ cells",
+              "count": 1
+            },
+            {
+              "label": "DBSI-RF",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "neuron",
+              "count": 15
+            },
+            {
+              "label": "astrocyte",
+              "count": 4
+            },
+            {
+              "label": "axon",
+              "count": 3
+            },
+            {
+              "label": "microglia",
+              "count": 2
+            },
+            {
+              "label": "macrophage",
+              "count": 2
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "cortex",
+              "count": 18
+            },
+            {
+              "label": "hippocampus",
+              "count": 9
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 3
+            },
+            {
+              "label": "brainstem",
+              "count": 1
+            },
+            {
+              "label": "BBB",
+              "count": 1
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "chronic": {
+          "status": "provisional",
+          "paper_count": 7,
+          "full_text_like_papers": 4,
+          "abstract_only_papers": 2,
+          "claim_mentions": 10,
+          "edge_mentions": 3,
+          "anchor_pmids": [
+            "41648607",
+            "41198676",
+            "41522067",
+            "41650217",
+            "41779899",
+            "41664511",
+            "41709427"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41198676",
+              "text": "Axonal varicosities/beadings are a signature of TBI due to axonal transport disruption."
+            },
+            {
+              "pmid": "41522067",
+              "text": "Bilaminar cortex sign in Parkinson's disease is caused by iron-mediated T1 shortening."
+            },
+            {
+              "pmid": "41648607",
+              "text": "rmTBI-induced skull secretome impairs microglial mitochondrial function."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "ATP",
+              "count": 2
+            },
+            {
+              "label": "Axonal beadings",
+              "count": 1
+            },
+            {
+              "label": "Axonal varicosities",
+              "count": 1
+            },
+            {
+              "label": "T1 relaxation time",
+              "count": 1
+            },
+            {
+              "label": "iron",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "axon",
+              "count": 2
+            },
+            {
+              "label": "neuron",
+              "count": 2
+            },
+            {
+              "label": "microglia",
+              "count": 2
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "cortex",
+              "count": 3
+            },
+            {
+              "label": "brainstem",
+              "count": 3
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 1
+            },
+            {
+              "label": "BBB",
+              "count": 1
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        }
+      },
+      "evidence_gaps": [
+        "Acute bucket is only provisionally supported.",
+        "Subacute bucket is only provisionally supported.",
+        "Chronic bucket is only provisionally supported."
+      ]
+    },
+    {
+      "lane_id": "neuroinflammation_microglial_state_change",
+      "display_name": "Neuroinflammation / Microglial State Change",
+      "description": "Innate immune activation, cytokine signaling, and microglial state transitions following TBI.",
+      "origin_status": "starter_atlas_promoted",
+      "lane_status": "longitudinally_seeded",
+      "paper_count": 107,
+      "full_text_like_papers": 79,
+      "abstract_only_papers": 28,
+      "claim_mentions": 223,
+      "edge_mentions": 199,
+      "unbucketed_mentions": 75,
+      "supported_buckets": 0,
+      "provisional_buckets": 3,
+      "weak_buckets": 0,
+      "current_mechanism_overlap": [
+        {
+          "canonical_mechanism": "neuroinflammation_microglial_activation",
+          "claim_mentions": 84
+        },
+        {
+          "canonical_mechanism": "blood_brain_barrier_disruption",
+          "claim_mentions": 9
+        },
+        {
+          "canonical_mechanism": "axonal_white_matter_injury",
+          "claim_mentions": 4
+        },
+        {
+          "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
+          "claim_mentions": 4
+        },
+        {
+          "canonical_mechanism": "synaptic_network_remodeling",
+          "claim_mentions": 1
+        }
+      ],
+      "top_biomarkers": [
+        {
+          "label": "IL-6",
+          "count": 9
+        },
+        {
+          "label": "DBSI-RF",
+          "count": 8
+        },
+        {
+          "label": "GFAP",
+          "count": 8
+        },
+        {
+          "label": "TNF-\u03b1",
+          "count": 5
+        },
+        {
+          "label": "IL-1\u03b2",
+          "count": 4
+        },
+        {
+          "label": "CRP",
+          "count": 3
+        },
+        {
+          "label": "IL-10",
+          "count": 2
+        },
+        {
+          "label": "QuinA",
+          "count": 2
+        }
+      ],
+      "top_cell_states": [
+        {
+          "label": "microglia",
+          "count": 139
+        },
+        {
+          "label": "astrocyte",
+          "count": 46
+        },
+        {
+          "label": "neuron",
+          "count": 34
+        },
+        {
+          "label": "endothelial cell",
+          "count": 18
+        },
+        {
+          "label": "leukocyte",
+          "count": 17
+        },
+        {
+          "label": "macrophage",
+          "count": 10
+        },
+        {
+          "label": "axon",
+          "count": 7
+        },
+        {
+          "label": "T cell",
+          "count": 3
+        }
+      ],
+      "top_brain_regions": [
+        {
+          "label": "cortex",
+          "count": 124
+        },
+        {
+          "label": "diffuse / multisite",
+          "count": 50
+        },
+        {
+          "label": "hippocampus",
+          "count": 40
+        },
+        {
+          "label": "BBB",
+          "count": 28
+        },
+        {
+          "label": "white matter",
+          "count": 20
+        },
+        {
+          "label": "brainstem",
+          "count": 9
+        },
+        {
+          "label": "corpus callosum",
+          "count": 6
+        },
+        {
+          "label": "neurovascular unit",
+          "count": 4
+        }
+      ],
+      "anchor_pmids": [
+        "41157272",
+        "41103638",
+        "41663365",
+        "41734021",
+        "41752185",
+        "41756282",
+        "41824127",
+        "41612383",
+        "41803087",
+        "41511466"
+      ],
+      "buckets": {
+        "acute": {
+          "status": "provisional",
+          "paper_count": 53,
+          "full_text_like_papers": 43,
+          "abstract_only_papers": 10,
+          "claim_mentions": 83,
+          "edge_mentions": 74,
+          "anchor_pmids": [
+            "41103638",
+            "41663365",
+            "41752185",
+            "41756282",
+            "41803087",
+            "41795770",
+            "41726892",
+            "41622228"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41103638",
+              "text": "DAMP-PRR binding activates innate immune response and neuroinflammation."
+            },
+            {
+              "pmid": "41103638",
+              "text": "HMGB1 is a TBI biomarker and early pro-inflammatory factor."
+            },
+            {
+              "pmid": "41103638",
+              "text": "eATP concentration dictates its role in TBI pathology."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "GFAP",
+              "count": 5
+            },
+            {
+              "label": "IL-6",
+              "count": 3
+            },
+            {
+              "label": "IL-1\u03b2",
+              "count": 3
+            },
+            {
+              "label": "C3",
+              "count": 2
+            },
+            {
+              "label": "pro-inflammatory cytokines (IL-1\u03b2, IL-6, TNF-\u03b1)",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "microglia",
+              "count": 48
+            },
+            {
+              "label": "astrocyte",
+              "count": 14
+            },
+            {
+              "label": "leukocyte",
+              "count": 13
+            },
+            {
+              "label": "endothelial cell",
+              "count": 13
+            },
+            {
+              "label": "neuron",
+              "count": 10
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "cortex",
+              "count": 47
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 24
+            },
+            {
+              "label": "BBB",
+              "count": 17
+            },
+            {
+              "label": "white matter",
+              "count": 6
+            },
+            {
+              "label": "neurovascular unit",
+              "count": 4
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "subacute": {
+          "status": "provisional",
+          "paper_count": 58,
+          "full_text_like_papers": 46,
+          "abstract_only_papers": 12,
+          "claim_mentions": 78,
+          "edge_mentions": 69,
+          "anchor_pmids": [
+            "41734021",
+            "41618133",
+            "41741786",
+            "41157272",
+            "41511466",
+            "41622228",
+            "41752185",
+            "41617714"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41039850",
+              "text": "PBCA-mNGF dampens TBI-induced microglial activation."
+            },
+            {
+              "pmid": "41135688",
+              "text": "Diffuse TBI increases microglial density and phagocytic activity."
+            },
+            {
+              "pmid": "41157272",
+              "text": "Higher DBSI-RF predicts acute MS lesion evolution to chronic 'black holes'."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "DBSI-RF",
+              "count": 2
+            },
+            {
+              "label": "CD68 expression",
+              "count": 1
+            },
+            {
+              "label": "Iba-1 expression",
+              "count": 1
+            },
+            {
+              "label": "CD68",
+              "count": 1
+            },
+            {
+              "label": "T1-hypointense lesions",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "microglia",
+              "count": 63
+            },
+            {
+              "label": "astrocyte",
+              "count": 18
+            },
+            {
+              "label": "neuron",
+              "count": 11
+            },
+            {
+              "label": "leukocyte",
+              "count": 3
+            },
+            {
+              "label": "macrophage",
+              "count": 3
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "cortex",
+              "count": 58
+            },
+            {
+              "label": "hippocampus",
+              "count": 28
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 13
+            },
+            {
+              "label": "white matter",
+              "count": 9
+            },
+            {
+              "label": "BBB",
+              "count": 6
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "chronic": {
+          "status": "provisional",
+          "paper_count": 18,
+          "full_text_like_papers": 13,
+          "abstract_only_papers": 5,
+          "claim_mentions": 26,
+          "edge_mentions": 17,
+          "anchor_pmids": [
+            "41511466",
+            "41756282",
+            "41157272",
+            "41651695",
+            "41694230",
+            "41612383",
+            "41648607",
+            "41675841"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41157272",
+              "text": "DBSI-RF maps histological inflammation in human MS spinal cord lesions."
+            },
+            {
+              "pmid": "41157272",
+              "text": "Obesity is associated with increased DBSI-RF in white matter, indicating putative neuroinflammation."
+            },
+            {
+              "pmid": "41511466",
+              "text": "Chronic thalamic structural degradation persists up to 6 months post-TBI, characterized by increased MD and RD."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "IL-6",
+              "count": 4
+            },
+            {
+              "label": "TNF-\u03b1",
+              "count": 3
+            },
+            {
+              "label": "DBSI-RF",
+              "count": 2
+            },
+            {
+              "label": "immune-cell nuclei area",
+              "count": 1
+            },
+            {
+              "label": "BMI",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "neuron",
+              "count": 8
+            },
+            {
+              "label": "microglia",
+              "count": 7
+            },
+            {
+              "label": "astrocyte",
+              "count": 4
+            },
+            {
+              "label": "axon",
+              "count": 3
+            },
+            {
+              "label": "T cell",
+              "count": 3
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "hippocampus",
+              "count": 10
+            },
+            {
+              "label": "cortex",
+              "count": 8
+            },
+            {
+              "label": "white matter",
+              "count": 3
+            },
+            {
+              "label": "brainstem",
+              "count": 3
+            },
+            {
+              "label": "white matter, hippocampus, amygdala, hypothalamus, striatum",
+              "count": 2
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        }
+      },
+      "evidence_gaps": [
+        "Acute bucket is only provisionally supported.",
+        "Subacute bucket is only provisionally supported.",
+        "Chronic bucket is only provisionally supported."
+      ]
+    },
+    {
+      "lane_id": "axonal_degeneration",
+      "display_name": "Axonal Degeneration",
+      "description": "Diffuse axonal injury, white-matter tract disruption, and degenerative axonal consequences across time.",
+      "origin_status": "promoted_from_existing_signal",
+      "lane_status": "longitudinally_seeded",
+      "paper_count": 124,
+      "full_text_like_papers": 85,
+      "abstract_only_papers": 39,
+      "claim_mentions": 298,
+      "edge_mentions": 192,
+      "unbucketed_mentions": 107,
+      "supported_buckets": 2,
+      "provisional_buckets": 1,
+      "weak_buckets": 0,
+      "current_mechanism_overlap": [
+        {
+          "canonical_mechanism": "axonal_white_matter_injury",
+          "claim_mentions": 70
+        },
+        {
+          "canonical_mechanism": "neuroinflammation_microglial_activation",
+          "claim_mentions": 11
+        },
+        {
+          "canonical_mechanism": "synaptic_network_remodeling",
+          "claim_mentions": 2
+        },
+        {
+          "canonical_mechanism": "blood_brain_barrier_disruption",
+          "claim_mentions": 2
+        },
+        {
+          "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
+          "claim_mentions": 1
+        },
+        {
+          "canonical_mechanism": "excitotoxicity_ionic_dysregulation",
+          "claim_mentions": 1
+        }
+      ],
+      "top_biomarkers": [
+        {
+          "label": "Fractional Anisotropy (FA)",
+          "count": 25
+        },
+        {
+          "label": "GFAP",
+          "count": 13
+        },
+        {
+          "label": "Mean Diffusivity (MD)",
+          "count": 8
+        },
+        {
+          "label": "Radial Diffusivity (RD)",
+          "count": 6
+        },
+        {
+          "label": "UCH-L1",
+          "count": 6
+        },
+        {
+          "label": "FA",
+          "count": 6
+        },
+        {
+          "label": "NfL",
+          "count": 6
+        },
+        {
+          "label": "Tau",
+          "count": 5
+        }
+      ],
+      "top_cell_states": [
+        {
+          "label": "axon",
+          "count": 251
+        },
+        {
+          "label": "neuron",
+          "count": 34
+        },
+        {
+          "label": "astrocyte",
+          "count": 18
+        },
+        {
+          "label": "microglia",
+          "count": 12
+        },
+        {
+          "label": "endothelial cell",
+          "count": 8
+        },
+        {
+          "label": "myelinated axon",
+          "count": 6
+        },
+        {
+          "label": "oligodendrocyte",
+          "count": 4
+        },
+        {
+          "label": "T cell",
+          "count": 4
+        }
+      ],
+      "top_brain_regions": [
+        {
+          "label": "white matter",
+          "count": 161
+        },
+        {
+          "label": "diffuse / multisite",
+          "count": 121
+        },
+        {
+          "label": "cortex",
+          "count": 55
+        },
+        {
+          "label": "corpus callosum",
+          "count": 46
+        },
+        {
+          "label": "brainstem",
+          "count": 13
+        },
+        {
+          "label": "BBB",
+          "count": 10
+        },
+        {
+          "label": "hippocampus",
+          "count": 10
+        },
+        {
+          "label": "cingulum (ipsilateral)",
+          "count": 6
+        }
+      ],
+      "anchor_pmids": [
+        "41198676",
+        "41267966",
+        "41157305",
+        "41799860",
+        "41153827",
+        "41300163",
+        "41126936",
+        "41100047",
+        "41142161",
+        "41327381"
+      ],
+      "buckets": {
+        "acute": {
+          "status": "supported",
+          "paper_count": 45,
+          "full_text_like_papers": 35,
+          "abstract_only_papers": 10,
+          "claim_mentions": 74,
+          "edge_mentions": 57,
+          "anchor_pmids": [
+            "41267966",
+            "41100047",
+            "41836768",
+            "41828042",
+            "41737875",
+            "41496389",
+            "41594295",
+            "41650217"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41079361",
+              "text": "Diffuse axonal injury (DAI) increases hospital mortality in TBI patients at high altitude."
+            },
+            {
+              "pmid": "41100047",
+              "text": "Regional differences exist in grey and white matter mechanical properties within the brain."
+            },
+            {
+              "pmid": "41100047",
+              "text": "Corona radiata white matter shows unique shear property variance."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "GFAP",
+              "count": 6
+            },
+            {
+              "label": "Tau",
+              "count": 4
+            },
+            {
+              "label": "UCH-L1",
+              "count": 4
+            },
+            {
+              "label": "NfL",
+              "count": 4
+            },
+            {
+              "label": "S100B",
+              "count": 3
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "axon",
+              "count": 58
+            },
+            {
+              "label": "endothelial cell",
+              "count": 7
+            },
+            {
+              "label": "neuron",
+              "count": 5
+            },
+            {
+              "label": "astrocyte",
+              "count": 4
+            },
+            {
+              "label": "microglia",
+              "count": 2
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "diffuse / multisite",
+              "count": 47
+            },
+            {
+              "label": "white matter",
+              "count": 27
+            },
+            {
+              "label": "cortex",
+              "count": 11
+            },
+            {
+              "label": "corpus callosum",
+              "count": 10
+            },
+            {
+              "label": "BBB",
+              "count": 9
+            }
+          ],
+          "notes": []
+        },
+        "subacute": {
+          "status": "provisional",
+          "paper_count": 54,
+          "full_text_like_papers": 40,
+          "abstract_only_papers": 14,
+          "claim_mentions": 85,
+          "edge_mentions": 48,
+          "anchor_pmids": [
+            "41153827",
+            "41508250",
+            "41327381",
+            "41300163",
+            "41385040",
+            "41198676",
+            "41394307",
+            "41840260"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41039850",
+              "text": "PBCA-mNGF up-regulates myelin-related proteins (MBP, NF-200) and PSD-95, indicating enhanced neurogenesis and myelinogenesis."
+            },
+            {
+              "pmid": "41069428",
+              "text": "Diffuse axonal injury (DAI) is significantly associated with tracheostomy need in TBI patients."
+            },
+            {
+              "pmid": "41126936",
+              "text": "Acute SRC causes heterogeneous DTI changes in white matter."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "Nf-L",
+              "count": 4
+            },
+            {
+              "label": "GFAP",
+              "count": 3
+            },
+            {
+              "label": "Structural Asymmetry Index (SAI)",
+              "count": 3
+            },
+            {
+              "label": "Fractional Anisotropy (FA)",
+              "count": 2
+            },
+            {
+              "label": "DWI axial diffusivity",
+              "count": 2
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "axon",
+              "count": 69
+            },
+            {
+              "label": "neuron",
+              "count": 14
+            },
+            {
+              "label": "astrocyte",
+              "count": 9
+            },
+            {
+              "label": "microglia",
+              "count": 7
+            },
+            {
+              "label": "white matter",
+              "count": 3
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "white matter",
+              "count": 47
+            },
+            {
+              "label": "cortex",
+              "count": 27
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 19
+            },
+            {
+              "label": "corpus callosum",
+              "count": 19
+            },
+            {
+              "label": "hippocampus",
+              "count": 4
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "chronic": {
+          "status": "supported",
+          "paper_count": 36,
+          "full_text_like_papers": 27,
+          "abstract_only_papers": 9,
+          "claim_mentions": 72,
+          "edge_mentions": 47,
+          "anchor_pmids": [
+            "41157305",
+            "41799860",
+            "41198676",
+            "41142161",
+            "41175081",
+            "41126936",
+            "41739474",
+            "41511466"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41032947",
+              "text": "Decreased axonal integrity in cortico-subcortical white matter tracts (e.g., uncinate fasciculus) is associated with self-reported sleep disturbance after TBI."
+            },
+            {
+              "pmid": "41100047",
+              "text": "Recurrent concussions increase the risk of aggressive neurodegeneration."
+            },
+            {
+              "pmid": "41126936",
+              "text": "Chronic SRC consistently shows decreased FA and elevated MD in white matter."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "Fractional Anisotropy (FA)",
+              "count": 17
+            },
+            {
+              "label": "FA",
+              "count": 5
+            },
+            {
+              "label": "FDC",
+              "count": 4
+            },
+            {
+              "label": "Mean Diffusivity (MD)",
+              "count": 3
+            },
+            {
+              "label": "fibre density cross-section (FDC)",
+              "count": 3
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "axon",
+              "count": 75
+            },
+            {
+              "label": "myelinated axon",
+              "count": 6
+            },
+            {
+              "label": "neuron",
+              "count": 5
+            },
+            {
+              "label": "astrocyte",
+              "count": 2
+            },
+            {
+              "label": "T cell",
+              "count": 2
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "white matter",
+              "count": 37
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 32
+            },
+            {
+              "label": "corpus callosum",
+              "count": 15
+            },
+            {
+              "label": "cortex",
+              "count": 9
+            },
+            {
+              "label": "cingulum (ipsilateral)",
+              "count": 6
+            }
+          ],
+          "notes": []
+        }
+      },
+      "evidence_gaps": [
+        "Subacute bucket is only provisionally supported."
+      ]
+    },
+    {
+      "lane_id": "glymphatic_astroglial_clearance_failure",
+      "display_name": "Glymphatic / Astroglial Clearance Failure",
+      "description": "AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.",
+      "origin_status": "promoted_from_subtrack",
+      "lane_status": "longitudinally_seeded",
+      "paper_count": 67,
+      "full_text_like_papers": 47,
+      "abstract_only_papers": 19,
+      "claim_mentions": 117,
+      "edge_mentions": 102,
+      "unbucketed_mentions": 53,
+      "supported_buckets": 0,
+      "provisional_buckets": 3,
+      "weak_buckets": 0,
+      "current_mechanism_overlap": [
+        {
+          "canonical_mechanism": "neuroinflammation_microglial_activation",
+          "claim_mentions": 33
+        },
+        {
+          "canonical_mechanism": "glymphatic_clearance_impairment",
+          "claim_mentions": 9
+        },
+        {
+          "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
+          "claim_mentions": 5
+        },
+        {
+          "canonical_mechanism": "blood_brain_barrier_disruption",
+          "claim_mentions": 4
+        },
+        {
+          "canonical_mechanism": "axonal_white_matter_injury",
+          "claim_mentions": 3
+        },
+        {
+          "canonical_mechanism": "synaptic_network_remodeling",
+          "claim_mentions": 1
+        }
+      ],
+      "top_biomarkers": [
+        {
+          "label": "GFAP",
+          "count": 20
+        },
+        {
+          "label": "DTI-ALPS index",
+          "count": 3
+        },
+        {
+          "label": "UCH-L1",
+          "count": 3
+        },
+        {
+          "label": "DTI-ALPS",
+          "count": 3
+        },
+        {
+          "label": "C3",
+          "count": 2
+        },
+        {
+          "label": "MBP protein expression",
+          "count": 1
+        },
+        {
+          "label": "NF-200 protein expression",
+          "count": 1
+        },
+        {
+          "label": "PSD-95 protein expression",
+          "count": 1
+        }
+      ],
+      "top_cell_states": [
+        {
+          "label": "astrocyte",
+          "count": 123
+        },
+        {
+          "label": "neuron",
+          "count": 10
+        },
+        {
+          "label": "microglia",
+          "count": 7
+        },
+        {
+          "label": "endothelial cell",
+          "count": 2
+        },
+        {
+          "label": "neuron, axon, oligodendrocyte",
+          "count": 1
+        },
+        {
+          "label": "microglia, astrocyte, neuron",
+          "count": 1
+        },
+        {
+          "label": "neuron, glial cell, astrocyte",
+          "count": 1
+        },
+        {
+          "label": "astrocyte, neuron",
+          "count": 1
+        }
+      ],
+      "top_brain_regions": [
+        {
+          "label": "cortex",
+          "count": 59
+        },
+        {
+          "label": "diffuse / multisite",
+          "count": 43
+        },
+        {
+          "label": "white matter",
+          "count": 18
+        },
+        {
+          "label": "BBB",
+          "count": 11
+        },
+        {
+          "label": "hippocampus",
+          "count": 9
+        },
+        {
+          "label": "brainstem",
+          "count": 4
+        },
+        {
+          "label": "corpus callosum",
+          "count": 3
+        },
+        {
+          "label": "dentate gyrus",
+          "count": 2
+        }
+      ],
+      "anchor_pmids": [
+        "41179995",
+        "41039850",
+        "41648326",
+        "41700070",
+        "41824127",
+        "41153827",
+        "41795770",
+        "41827388",
+        "41642456",
+        "41667502"
+      ],
+      "buckets": {
+        "acute": {
+          "status": "provisional",
+          "paper_count": 23,
+          "full_text_like_papers": 19,
+          "abstract_only_papers": 3,
+          "claim_mentions": 38,
+          "edge_mentions": 24,
+          "anchor_pmids": [
+            "41795770",
+            "41827388",
+            "41103638",
+            "41642456",
+            "41648326",
+            "41737590",
+            "41801080",
+            "41179995"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41103638",
+              "text": "DAMP-PRR binding activates innate immune response and neuroinflammation."
+            },
+            {
+              "pmid": "41103638",
+              "text": "eATP concentration dictates its role in TBI pathology."
+            },
+            {
+              "pmid": "41103638",
+              "text": "S100B concentration dictates its neuroprotective or neuroinflammatory role via RAGE."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "GFAP",
+              "count": 12
+            },
+            {
+              "label": "UCH-L1",
+              "count": 3
+            },
+            {
+              "label": "C3",
+              "count": 2
+            },
+            {
+              "label": "pro-inflammatory cytokines (IL-1\u03b2, IL-6, TNF-\u03b1)",
+              "count": 1
+            },
+            {
+              "label": "eATP",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "astrocyte",
+              "count": 39
+            },
+            {
+              "label": "neuron",
+              "count": 4
+            },
+            {
+              "label": "microglia",
+              "count": 2
+            },
+            {
+              "label": "microglia, astrocyte, neuron",
+              "count": 1
+            },
+            {
+              "label": "neuron, glial cell, astrocyte",
+              "count": 1
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "cortex",
+              "count": 22
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 11
+            },
+            {
+              "label": "BBB",
+              "count": 5
+            },
+            {
+              "label": "brainstem",
+              "count": 4
+            },
+            {
+              "label": "neurovascular unit",
+              "count": 1
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "subacute": {
+          "status": "provisional",
+          "paper_count": 28,
+          "full_text_like_papers": 20,
+          "abstract_only_papers": 8,
+          "claim_mentions": 39,
+          "edge_mentions": 25,
+          "anchor_pmids": [
+            "41039850",
+            "41648326",
+            "41792174",
+            "41508250",
+            "41153827",
+            "41734021",
+            "41623705",
+            "41737534"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41039850",
+              "text": "PBCA-mNGF up-regulates myelin-related proteins (MBP, NF-200) and PSD-95, indicating enhanced neurogenesis and myelinogenesis."
+            },
+            {
+              "pmid": "41039850",
+              "text": "PBCA-mNGF restores TBI-impaired glymphatic inflow and outflow."
+            },
+            {
+              "pmid": "41039850",
+              "text": "PBCA-mNGF improves TBI outcomes by restoring AQP4 polarization and function."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "GFAP",
+              "count": 3
+            },
+            {
+              "label": "MBP protein expression",
+              "count": 1
+            },
+            {
+              "label": "NF-200 protein expression",
+              "count": 1
+            },
+            {
+              "label": "PSD-95 protein expression",
+              "count": 1
+            },
+            {
+              "label": "Fluorescent tracer efflux",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "astrocyte",
+              "count": 41
+            },
+            {
+              "label": "microglia",
+              "count": 5
+            },
+            {
+              "label": "neuron",
+              "count": 5
+            },
+            {
+              "label": "endothelial cell",
+              "count": 2
+            },
+            {
+              "label": "neuron, axon, oligodendrocyte",
+              "count": 1
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "cortex",
+              "count": 21
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 12
+            },
+            {
+              "label": "hippocampus",
+              "count": 6
+            },
+            {
+              "label": "white matter",
+              "count": 4
+            },
+            {
+              "label": "BBB",
+              "count": 4
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "chronic": {
+          "status": "provisional",
+          "paper_count": 14,
+          "full_text_like_papers": 8,
+          "abstract_only_papers": 5,
+          "claim_mentions": 20,
+          "edge_mentions": 20,
+          "anchor_pmids": [
+            "41700070",
+            "41179995",
+            "41809513",
+            "41651695",
+            "41739474",
+            "41511466",
+            "41756282",
+            "41799860"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41179995",
+              "text": "Post-traumatic brain injury (TBI) sleep deprivation decreases glymphatic flow and is linked to chronic glymphatic dysfunction and sleep-wake disruption in murine repetitive blast mild TBI models."
+            },
+            {
+              "pmid": "41179995",
+              "text": "In human military veterans and soldiers, the burden of enlarged perivascular spaces (PVS) is positively correlated with the number of mild traumatic brain injuries (mTBIs) sustained, and poor sleep exacerbates the effect of mTBI on PVS volume."
+            },
+            {
+              "pmid": "41342721",
+              "text": "TBI-induced disorders of consciousness are associated with impaired glymphatic function and structural changes in the choroid plexus."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "DTI-ALPS",
+              "count": 3
+            },
+            {
+              "label": "DTI-ALPS index",
+              "count": 2
+            },
+            {
+              "label": "GFAP",
+              "count": 2
+            },
+            {
+              "label": "ePVS (enlarged perivascular spaces)",
+              "count": 1
+            },
+            {
+              "label": "CPV",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "astrocyte",
+              "count": 14
+            },
+            {
+              "label": "neuron",
+              "count": 1
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "white matter",
+              "count": 12
+            },
+            {
+              "label": "cortex",
+              "count": 6
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 4
+            },
+            {
+              "label": "hippocampus",
+              "count": 3
+            },
+            {
+              "label": "dentate gyrus",
+              "count": 2
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        }
+      },
+      "evidence_gaps": [
+        "Acute bucket is only provisionally supported.",
+        "Subacute bucket is only provisionally supported.",
+        "Chronic bucket is only provisionally supported."
+      ]
+    },
+    {
+      "lane_id": "tau_proteinopathy_progression",
+      "display_name": "Tau / Proteinopathy Progression",
+      "description": "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.",
+      "origin_status": "promoted_from_cross_mechanism_signal",
+      "lane_status": "longitudinally_seeded",
+      "paper_count": 21,
+      "full_text_like_papers": 18,
+      "abstract_only_papers": 3,
+      "claim_mentions": 41,
+      "edge_mentions": 31,
+      "unbucketed_mentions": 4,
+      "supported_buckets": 0,
+      "provisional_buckets": 3,
+      "weak_buckets": 0,
+      "current_mechanism_overlap": [
+        {
+          "canonical_mechanism": "neuroinflammation_microglial_activation",
+          "claim_mentions": 4
+        },
+        {
+          "canonical_mechanism": "axonal_white_matter_injury",
+          "claim_mentions": 4
+        },
+        {
+          "canonical_mechanism": "glymphatic_clearance_impairment",
+          "claim_mentions": 2
+        },
+        {
+          "canonical_mechanism": "synaptic_network_remodeling",
+          "claim_mentions": 1
+        },
+        {
+          "canonical_mechanism": "blood_brain_barrier_disruption",
+          "claim_mentions": 1
+        }
+      ],
+      "top_biomarkers": [
+        {
+          "label": "GFAP",
+          "count": 7
+        },
+        {
+          "label": "Tau",
+          "count": 5
+        },
+        {
+          "label": "UCH-L1",
+          "count": 4
+        },
+        {
+          "label": "BD-tau",
+          "count": 3
+        },
+        {
+          "label": "t-tau",
+          "count": 3
+        },
+        {
+          "label": "NfL",
+          "count": 3
+        },
+        {
+          "label": "S100B",
+          "count": 3
+        },
+        {
+          "label": "AT8",
+          "count": 2
+        }
+      ],
+      "top_cell_states": [
+        {
+          "label": "neuron",
+          "count": 29
+        },
+        {
+          "label": "astrocyte",
+          "count": 5
+        },
+        {
+          "label": "microglia",
+          "count": 5
+        },
+        {
+          "label": "axon",
+          "count": 3
+        },
+        {
+          "label": "endothelial cell",
+          "count": 3
+        }
+      ],
+      "top_brain_regions": [
+        {
+          "label": "cortex",
+          "count": 24
+        },
+        {
+          "label": "diffuse / multisite",
+          "count": 14
+        },
+        {
+          "label": "brainstem",
+          "count": 8
+        },
+        {
+          "label": "BBB",
+          "count": 6
+        },
+        {
+          "label": "white matter",
+          "count": 4
+        },
+        {
+          "label": "hippocampus",
+          "count": 2
+        },
+        {
+          "label": "neurovascular unit",
+          "count": 1
+        }
+      ],
+      "anchor_pmids": [
+        "41651695",
+        "41508043",
+        "41665901",
+        "41496386",
+        "41683989",
+        "41179995",
+        "41809435",
+        "41328339",
+        "41594797",
+        "41700070"
+      ],
+      "buckets": {
+        "acute": {
+          "status": "provisional",
+          "paper_count": 7,
+          "full_text_like_papers": 7,
+          "abstract_only_papers": 0,
+          "claim_mentions": 10,
+          "edge_mentions": 4,
+          "anchor_pmids": [
+            "41665901",
+            "41809435",
+            "41594797",
+            "41496386",
+            "41683989",
+            "41725719",
+            "41737590"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41496386",
+              "text": "Acute GFAP, IL-10, H-FABP, and T-tau are elevated in CT-positive TBI."
+            },
+            {
+              "pmid": "41594797",
+              "text": "Female sex is associated with higher plasma tau levels in the acute phase post-mTBI."
+            },
+            {
+              "pmid": "41665901",
+              "text": "Multiple trauma induces acute elevation of circulating tau variants."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "GFAP",
+              "count": 4
+            },
+            {
+              "label": "Tau",
+              "count": 4
+            },
+            {
+              "label": "UCH-L1",
+              "count": 4
+            },
+            {
+              "label": "NfL",
+              "count": 3
+            },
+            {
+              "label": "S100B",
+              "count": 3
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "neuron",
+              "count": 4
+            },
+            {
+              "label": "axon",
+              "count": 1
+            },
+            {
+              "label": "astrocyte",
+              "count": 1
+            },
+            {
+              "label": "endothelial cell",
+              "count": 1
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "diffuse / multisite",
+              "count": 5
+            },
+            {
+              "label": "BBB",
+              "count": 3
+            },
+            {
+              "label": "white matter",
+              "count": 1
+            },
+            {
+              "label": "neurovascular unit",
+              "count": 1
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "subacute": {
+          "status": "provisional",
+          "paper_count": 9,
+          "full_text_like_papers": 7,
+          "abstract_only_papers": 2,
+          "claim_mentions": 15,
+          "edge_mentions": 11,
+          "anchor_pmids": [
+            "41508043",
+            "41496386",
+            "41665901",
+            "41328339",
+            "41683989",
+            "41734021",
+            "41809632",
+            "41747594"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41328339",
+              "text": "TBI impact force drives tauopathy and APP accumulation."
+            },
+            {
+              "pmid": "41496386",
+              "text": "Acute IL-10 and T-tau levels correlate negatively with post-acute white matter FA."
+            },
+            {
+              "pmid": "41496386",
+              "text": "Acute GFAP, IL-10, and T-tau levels correlate positively with post-acute white matter MD and RD."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "APP",
+              "count": 1
+            },
+            {
+              "label": "p-Tau",
+              "count": 1
+            },
+            {
+              "label": "AT8",
+              "count": 1
+            },
+            {
+              "label": "MAP2",
+              "count": 1
+            },
+            {
+              "label": "Tau-N",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "neuron",
+              "count": 15
+            },
+            {
+              "label": "microglia",
+              "count": 2
+            },
+            {
+              "label": "endothelial cell",
+              "count": 2
+            },
+            {
+              "label": "axon",
+              "count": 2
+            },
+            {
+              "label": "astrocyte",
+              "count": 1
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "cortex",
+              "count": 14
+            },
+            {
+              "label": "white matter",
+              "count": 3
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 3
+            },
+            {
+              "label": "hippocampus",
+              "count": 2
+            },
+            {
+              "label": "BBB",
+              "count": 2
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        },
+        "chronic": {
+          "status": "provisional",
+          "paper_count": 8,
+          "full_text_like_papers": 7,
+          "abstract_only_papers": 1,
+          "claim_mentions": 14,
+          "edge_mentions": 14,
+          "anchor_pmids": [
+            "41651695",
+            "41508043",
+            "41700070",
+            "41739474",
+            "41750206",
+            "41596245",
+            "41756282",
+            "41612558"
+          ],
+          "example_signals": [
+            {
+              "pmid": "41508043",
+              "text": "rmTBI induces chronic motor dysfunction."
+            },
+            {
+              "pmid": "41508043",
+              "text": "rmTBI accelerates tau fibril propagation."
+            },
+            {
+              "pmid": "41596245",
+              "text": "Repetitive low-level blast exposure is associated with a latent neuroinjury signature involving symptom burden and molecular markers of glial/axonal stress."
+            }
+          ],
+          "biomarker_cues": [
+            {
+              "label": "GFAP",
+              "count": 2
+            },
+            {
+              "label": "CSF A\u03b240",
+              "count": 2
+            },
+            {
+              "label": "CSF A\u03b242",
+              "count": 2
+            },
+            {
+              "label": "AT8",
+              "count": 1
+            },
+            {
+              "label": "BDNF",
+              "count": 1
+            }
+          ],
+          "cell_state_cues": [
+            {
+              "label": "neuron",
+              "count": 10
+            },
+            {
+              "label": "astrocyte",
+              "count": 3
+            },
+            {
+              "label": "microglia",
+              "count": 3
+            }
+          ],
+          "brain_region_cues": [
+            {
+              "label": "cortex",
+              "count": 10
+            },
+            {
+              "label": "brainstem",
+              "count": 8
+            },
+            {
+              "label": "diffuse / multisite",
+              "count": 3
+            }
+          ],
+          "notes": [
+            "Timing support is intentionally capped at provisional pending stronger time-explicit evidence."
+          ]
+        }
+      },
+      "evidence_gaps": [
+        "Acute bucket is only provisionally supported.",
+        "Subacute bucket is only provisionally supported.",
+        "Chronic bucket is only provisionally supported."
+      ]
+    }
+  ]
+};

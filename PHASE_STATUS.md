@@ -1,6 +1,34 @@
-# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live
+# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1 Process Lanes
 
 This file is the current handoff for the TBI scientific intelligence system after finishing extraction coverage for the original on-topic corpus and moving into the quality-gated investigation / atlas-construction phase.
+
+## Phase 1 Process-Engine Status
+
+The first process-engine layer is now live as a downstream extension of the atlas.
+
+Current Phase 1 outputs:
+- six explicit longitudinal lanes are now emitted:
+  - blood-brain barrier failure
+  - mitochondrial / bioenergetic collapse
+  - neuroinflammation / microglial state change
+  - axonal degeneration
+  - glymphatic / astroglial clearance failure
+  - tau / proteinopathy progression
+- each lane now carries explicit `acute`, `subacute`, and `chronic` buckets
+- the current lane summary is:
+  - `Blood-Brain Barrier Failure`: `longitudinally_supported`
+  - `Axonal Degeneration`: `longitudinally_seeded`
+  - `Mitochondrial / Bioenergetic Collapse`: `longitudinally_seeded`
+  - `Neuroinflammation / Microglial State Change`: `longitudinally_seeded`
+  - `Glymphatic / Astroglial Clearance Failure`: `longitudinally_seeded`
+  - `Tau / Proteinopathy Progression`: `longitudinally_seeded`
+- the process-engine product page is now emitted to:
+  - [docs/process-engine/index.html](/Users/matthewholtkamp/Documents/testfile/docs/process-engine/index.html)
+- the process-lane build and validation steps are now wired into:
+  - [build_atlas_slices.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/build_atlas_slices.yml)
+  - [refresh_atlas_from_ongoing_cycle.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_atlas_from_ongoing_cycle.yml)
+  - [refresh_public_enrichment.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_public_enrichment.yml)
+  - [weekly_human_review_packet.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/weekly_human_review_packet.yml)
 
 ## Current Phase Goal
 

@@ -173,6 +173,18 @@ jobs:
           python scripts/build_idea_briefs.py \
             --output-dir reports/idea_briefs \
             --site-dir docs/idea-briefs
+          python scripts/build_process_lanes.py \
+            --claims-csv "$latest_claims" \
+            --edges-csv "$latest_edges" \
+            --paper-qa-csv "$latest_paper_qa" \
+            --output-dir reports/process_lanes
+          latest_process_json=$(ls -1t reports/process_lanes/process_lane_index_*.json | head -n1)
+          python scripts/build_process_lane_validation.py \
+            --process-json "$latest_process_json" \
+            --output-dir reports/process_lane_validation
+          python scripts/build_process_engine_page.py \
+            --process-json "$latest_process_json" \
+            --output-dir docs/process-engine
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_tbi_atlas_book.py \

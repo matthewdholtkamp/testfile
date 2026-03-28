@@ -333,6 +333,29 @@ def main():
     ])
     run_cmd([
         'python3',
+        'scripts/build_process_lanes.py',
+        '--output-dir',
+        'reports/process_lanes',
+    ])
+    latest_process_json = latest_csv_in_dir('reports/process_lanes', 'process_lane_index_*.json')
+    run_cmd([
+        'python3',
+        'scripts/build_process_lane_validation.py',
+        '--process-json',
+        latest_process_json,
+        '--output-dir',
+        'reports/process_lane_validation',
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_process_engine_page.py',
+        '--process-json',
+        latest_process_json,
+        '--output-dir',
+        'docs/process-engine',
+    ])
+    run_cmd([
+        'python3',
         'scripts/build_tbi_atlas_book.py',
         '--output-dir',
         args.atlas_output_dir,
@@ -377,6 +400,7 @@ def main():
     target_packet_md = latest_csv_in_dir(args.target_packet_output_dir, 'target_enrichment_packet_index_*.md')
     program_status_md = latest_csv_in_dir(args.program_status_output_dir, 'program_status_report_*.md')
     viewer_path = os.path.join(args.viewer_output_dir, 'index.html')
+    process_engine_path = os.path.join('docs', 'process-engine', 'index.html')
     atlas_path = latest_csv_in_dir(args.atlas_output_dir, 'starter_tbi_atlas_*.html')
     print(f'Manual enrichment cycle complete. Latest chapter draft: {chapter_md}')
     print(f'Latest chapter synthesis draft: {chapter_synthesis_md}')
@@ -388,6 +412,7 @@ def main():
     print(f'Latest manual workpack: {workpack_md}')
     print(f'Latest target enrichment packets: {target_packet_md}')
     print(f'Latest atlas viewer: {viewer_path}')
+    print(f'Latest process engine page: {process_engine_path}')
     print(f'Latest atlas book: {atlas_path}')
     print(f'Latest program status report: {program_status_md}')
 

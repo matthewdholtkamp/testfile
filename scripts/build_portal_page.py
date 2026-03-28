@@ -14,6 +14,11 @@ def latest_report(pattern):
     return candidates[-1]
 
 
+def latest_optional_report(pattern):
+    candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
+    return candidates[-1] if candidates else ''
+
+
 def read_json(path):
     with open(path, 'r', encoding='utf-8') as handle:
         return json.load(handle)
@@ -75,10 +80,11 @@ def spotlight_cards(ideas, limit=3):
     return ''.join(cards)
 
 
-def render_html(viewer, ideas_payload):
+def render_html(viewer, ideas_payload, process_payload):
     summary = viewer.get('summary', {})
     ideas = ideas_payload.get('rows', [])
     spotlight_html = spotlight_cards(ideas, limit=1)
+    process_summary = process_payload.get('summary', {}) if isinstance(process_payload, dict) else {}
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -157,6 +163,7 @@ def render_html(viewer, ideas_payload):
         <div class="snap"><span class="eyebrow">Stable</span><strong>{summary.get('stable_rows', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Provisional</span><strong>{summary.get('provisional_rows', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Ideas</span><strong>{len(ideas)}</strong></div>
+        <div class="snap"><span class="eyebrow">Process Lanes</span><strong>{process_summary.get('lane_count', 0)}</strong></div>
       </section>
       <section class="cards">
         <a class="card" href="./run-center/index.html">
@@ -176,6 +183,12 @@ def render_html(viewer, ideas_payload):
           <h2>Starter TBI Atlas</h2>
           <p>Read the current chapter-grade atlas draft with BBB, mitochondrial, and neuroinflammation sections packaged into one deliverable.</p>
           <span class="cta">Open atlas →</span>
+        </a>
+        <a class="card" href="./process-engine/index.html">
+          <p class="eyebrow">Phase 1</p>
+          <h2>Process Engine</h2>
+          <p>Review the longitudinal process-lane view: six lanes organized across acute, subacute, and chronic support.</p>
+          <span class="cta">Open process engine →</span>
         </a>
       </section>
       <section class="today">
@@ -216,7 +229,9 @@ def main():
     viewer = read_json(os.path.join(REPO_ROOT, 'docs', 'atlas-viewer', 'atlas_viewer.json'))
     idea_briefs_path = latest_report('idea_briefs_*.json')
     ideas = read_json(idea_briefs_path)
-    write_text(os.path.join(REPO_ROOT, args.output_path), render_html(viewer, ideas))
+    process_json_path = latest_optional_report('process_lane_index_*.json')
+    process_payload = read_json(process_json_path) if process_json_path else {}
+    write_text(os.path.join(REPO_ROOT, args.output_path), render_html(viewer, ideas, process_payload))
     print(f'Atlas portal page written: {os.path.join(REPO_ROOT, args.output_path)}')
 
 
