@@ -87,6 +87,7 @@ def render_lane(lane):
     buckets = lane.get('buckets', {})
     gaps = ''.join(f'<li>{text(item)}</li>' for item in lane.get('evidence_gaps', []))
     lane_notes = ''.join(f'<li>{text(item)}</li>' for item in lane.get('lane_notes', []))
+    causal_notes = ''.join(f'<li>{text(item)}</li>' for item in lane.get('causal_direction_notes', []))
     canonical_chips = ''.join(f'<span class="chip">{text(item)}</span>' for item in lane.get('canonical_mechanisms', [])) or '<span class="chip muted">No single canonical anchor yet</span>'
     return f"""
     <section class=\"lane-section\" id=\"{css_token(lane.get('lane_id'))}\">
@@ -133,6 +134,10 @@ def render_lane(lane):
       <article class=\"meta-card notes\">
         <h3>Lane notes</h3>
         <ul>{lane_notes or '<li>No additional notes yet.</li>'}</ul>
+      </article>
+      <article class=\"meta-card notes\">
+        <h3>Causal direction notes</h3>
+        <ul>{causal_notes or '<li>No directional notes yet.</li>'}</ul>
       </article>
       <article class=\"meta-card gaps\">
         <h3>Evidence gaps</h3>

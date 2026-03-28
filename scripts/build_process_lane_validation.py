@@ -92,6 +92,8 @@ def main():
             warnings.append(f'{lane_id} has no evidence-gap notes')
         if not lane.get('lane_notes'):
             warnings.append(f'{lane_id} has no lane notes explaining provenance or current caution level')
+        if not lane.get('causal_direction_notes'):
+            warnings.append(f'{lane_id} has no causal-direction notes yet')
 
     metadata = payload.get('metadata', {})
     for field in ['claims_csv', 'edges_csv', 'paper_qa_csv']:

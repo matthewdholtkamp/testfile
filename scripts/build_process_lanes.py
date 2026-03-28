@@ -14,6 +14,10 @@ PROCESS_LANES = [
         'lane_id': 'blood_brain_barrier_failure',
         'display_name': 'Blood-Brain Barrier Failure',
         'description': 'Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.',
+        'causal_direction_notes': [
+            'Current read: this lane behaves as an upstream vascular amplifier and often precedes broader inflammatory escalation.',
+            'Use this lane as a likely bridge into peripheral immune infiltration and downstream neuroinflammation, but keep exact directionality evidence-bound in Phase 2.'
+        ],
         'origin_status': 'starter_atlas_promoted',
         'canonical_mechanisms': {'blood_brain_barrier_disruption'},
         'patterns': [
@@ -35,6 +39,10 @@ PROCESS_LANES = [
         'lane_id': 'mitochondrial_bioenergetic_collapse',
         'display_name': 'Mitochondrial / Bioenergetic Collapse',
         'description': 'Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.',
+        'causal_direction_notes': [
+            'Current read: this lane acts as an intracellular amplifier that can emerge early and then reinforce inflammatory stress.',
+            'Treat it as both a downstream consequence of primary injury and a possible feed-forward driver of chronic dysfunction.'
+        ],
         'origin_status': 'starter_atlas_promoted',
         'canonical_mechanisms': {'mitochondrial_bioenergetic_dysfunction'},
         'patterns': [
@@ -56,6 +64,10 @@ PROCESS_LANES = [
         'lane_id': 'neuroinflammation_microglial_state_change',
         'display_name': 'Neuroinflammation / Microglial State Change',
         'description': 'Innate immune activation, cytokine signaling, and microglial state transitions following TBI.',
+        'causal_direction_notes': [
+            'Current read: this lane is usually an integrating downstream response rather than the cleanest primary initiating event.',
+            'It likely consolidates upstream vascular and metabolic injury into chronic tissue-level damage, but specific transition edges belong in Phase 2.'
+        ],
         'origin_status': 'starter_atlas_promoted',
         'canonical_mechanisms': {'neuroinflammation_microglial_activation'},
         'patterns': [
@@ -77,6 +89,10 @@ PROCESS_LANES = [
         'lane_id': 'axonal_degeneration',
         'display_name': 'Axonal Degeneration',
         'description': 'Diffuse axonal injury, white-matter tract disruption, and degenerative axonal consequences across time.',
+        'causal_direction_notes': [
+            'Current read: this lane captures early structural injury that can persist into chronic degeneration and network dysfunction.',
+            'Treat it as a tissue-consequence lane that also interacts with inflammatory and metabolic stress rather than as a purely downstream endpoint.'
+        ],
         'origin_status': 'promoted_from_existing_signal',
         'canonical_mechanisms': {'axonal_white_matter_injury'},
         'patterns': [
@@ -97,6 +113,10 @@ PROCESS_LANES = [
         'lane_id': 'glymphatic_astroglial_clearance_failure',
         'display_name': 'Glymphatic / Astroglial Clearance Failure',
         'description': 'AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.',
+        'causal_direction_notes': [
+            'Current read: this lane is likely coupled to astroglial and vascular dysfunction and may mediate impaired clearance as injury persists.',
+            'Treat it as a plausible bridge from early structural/vascular disruption into chronic clearance failure and protein accumulation.'
+        ],
         'origin_status': 'promoted_from_subtrack',
         'canonical_mechanisms': {'glymphatic_clearance_impairment'},
         'patterns': [
@@ -118,6 +138,10 @@ PROCESS_LANES = [
         'lane_id': 'tau_proteinopathy_progression',
         'display_name': 'Tau / Proteinopathy Progression',
         'description': 'Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.',
+        'causal_direction_notes': [
+            'Current read: this lane is a late-stage seeded trajectory that likely sits downstream of repeated structural, inflammatory, and clearance failures.',
+            'Treat it as a provisional progression lane until stronger canonical evidence and explicit temporal anchors are added.'
+        ],
         'origin_status': 'promoted_from_cross_mechanism_signal',
         'canonical_mechanisms': set(),
         'patterns': [
@@ -451,6 +475,7 @@ def build_lane_summary(lane, lane_rows):
         'description': lane['description'],
         'origin_status': lane['origin_status'],
         'canonical_mechanisms': canonical_mechanisms,
+        'causal_direction_notes': lane.get('causal_direction_notes', []),
         'lane_status': lane_status,
         'paper_count': len(paper_rows),
         'full_text_like_papers': sum(1 for rows in paper_rows.values() if best_quality_for_rows(rows) == 'full_text_like'),
@@ -491,9 +516,16 @@ def build_markdown_packet(lane):
         '',
         lane['description'],
         '',
-        '## Current Mechanism Overlap',
+        '## Causal Direction Notes',
         '',
     ]
+    for note in lane['causal_direction_notes']:
+        lines.append(f'- {note}')
+    lines.extend([
+        '',
+        '## Current Mechanism Overlap',
+        '',
+    ])
     if lane['current_mechanism_overlap']:
         lines.append('| Canonical mechanism | Claim mentions |')
         lines.append('| --- | --- |')
