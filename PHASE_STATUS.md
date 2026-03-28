@@ -1,6 +1,63 @@
-# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-3 Complete
+# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-4 Complete
 
 This file is the current handoff for the TBI scientific intelligence system after finishing extraction coverage for the original on-topic corpus and moving into the quality-gated investigation / atlas-construction phase.
+
+## Phase 4 Translational-Perturbation Status
+
+Phase 4 is now complete as the next downstream layer after progression objects.
+
+Current Phase 4 outputs:
+- six explicit translational perturbation packets are now emitted, one per Phase 1 lane:
+  - `blood_brain_barrier_failure`
+  - `mitochondrial_bioenergetic_collapse`
+  - `neuroinflammation_microglial_state_change`
+  - `axonal_degeneration`
+  - `glymphatic_astroglial_clearance_failure`
+  - `tau_proteinopathy_progression`
+- each translational packet now carries:
+  - primary target
+  - challenger targets
+  - perturbation type
+  - target rationale
+  - intervention window
+  - expected readouts
+  - expected direction
+  - readout time horizon
+  - sample type
+  - biomarker panel
+  - compound support
+  - trial support
+  - genomics support status and detail
+  - comparative analog support
+  - support status
+  - translation maturity
+  - contradiction notes
+  - disconfirming evidence
+  - next decision
+  - best-next-experiment guidance
+  - anchor PMIDs
+  - source-quality mix
+  - parent transitions and parent objects
+- the current translational summary is:
+  - `6 / 6` required lanes covered
+  - `3` `supported`
+  - `3` `provisional`
+  - `0` `weak`
+  - `0` `actionable`
+  - `6` `bounded`
+  - `0` `seeded`
+  - `1` lane with compound support
+  - `1` lane with trial support
+  - `0` lanes with supportive genomics
+  - `6` lanes with explicit comparative analog tags
+- the translational product page is now emitted to:
+  - [docs/translational-logic/index.html](/Users/matthewholtkamp/Documents/testfile/docs/translational-logic/index.html)
+- the translational build and validation steps are now wired into:
+  - [build_atlas_slices.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/build_atlas_slices.yml)
+  - [refresh_atlas_from_ongoing_cycle.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_atlas_from_ongoing_cycle.yml)
+  - [refresh_public_enrichment.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_public_enrichment.yml)
+  - [run_manual_enrichment_cycle.py](/Users/matthewholtkamp/Documents/testfile/scripts/run_manual_enrichment_cycle.py)
+- the weekly packet and program-status layer now surface translational state without rebuilding it independently
 
 ## Phase 3 Progression-Object Status
 
@@ -227,6 +284,7 @@ For the connector-enrichment sidecar:
   - the longitudinal Process Engine page
   - the causal-transition Process Model page
   - the progression-object page
+  - the translational-logic page
 - the optional 10x lane now has a seeded import-template builder so the genomics path is ready as soon as real exports exist
 - the atlas lane now has an explicit quality-gate output with mechanism-level readiness scoring
 - the atlas lane now has an explicit release manifest so atlas promotion/governance is no longer implicit

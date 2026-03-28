@@ -104,12 +104,13 @@ def spotlight_cards(ideas, limit=3):
             """
 
 
-def render_html(viewer, ideas_payload, process_payload, progression_payload):
+def render_html(viewer, ideas_payload, process_payload, progression_payload, translational_payload):
     summary = viewer.get('summary', {})
     ideas = ideas_payload.get('rows', [])
     spotlight_html = spotlight_cards(ideas, limit=1)
     process_summary = process_payload.get('summary', {}) if isinstance(process_payload, dict) else {}
     progression_summary = progression_payload.get('summary', {}) if isinstance(progression_payload, dict) else {}
+    translational_summary = translational_payload.get('summary', {}) if isinstance(translational_payload, dict) else {}
     transition_json_path = latest_optional_report('causal_transition_index_*.json')
     transition_payload = read_json_if_exists(transition_json_path, default={})
     transition_summary = transition_payload.get('summary', {}) if isinstance(transition_payload, dict) else {}
@@ -194,6 +195,7 @@ def render_html(viewer, ideas_payload, process_payload, progression_payload):
         <div class="snap"><span class="eyebrow">Process Lanes</span><strong>{process_summary.get('lane_count', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Transitions</span><strong>{transition_summary.get('transition_count', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Progression Objects</span><strong>{progression_summary.get('object_count', 0)}</strong></div>
+        <div class="snap"><span class="eyebrow">Translational Lanes</span><strong>{translational_summary.get('covered_lane_count', 0)} / {translational_summary.get('required_lane_count', 0)}</strong></div>
       </section>
       <section class="cards">
         <a class="card" href="./run-center/index.html">
@@ -231,6 +233,12 @@ def render_html(viewer, ideas_payload, process_payload, progression_payload):
           <h2>Progression Objects</h2>
           <p>Review the recurring neurodegenerative objects that sit on top of the lanes and transitions, with biomarkers, likely targets, and contradiction notes.</p>
           <span class="cta">Open progression objects →</span>
+        </a>
+        <a class="card" href="./translational-logic/index.html">
+          <p class="eyebrow">Phase 4</p>
+          <h2>Translational Logic</h2>
+          <p>Review the perturbation layer: primary targets, challenger targets, expected readouts, and the current compound, trial, and genomics attachment state for each lane.</p>
+          <span class="cta">Open translational logic →</span>
         </a>
       </section>
       <section class="today">
@@ -275,7 +283,9 @@ def main():
     process_payload = read_json_if_exists(process_json_path, default={})
     progression_json_path = latest_optional_report('progression_object_index_*.json')
     progression_payload = read_json_if_exists(progression_json_path, default={})
-    write_text(os.path.join(REPO_ROOT, args.output_path), render_html(viewer, ideas, process_payload, progression_payload))
+    translational_json_path = latest_optional_report('translational_perturbation_index_*.json')
+    translational_payload = read_json_if_exists(translational_json_path, default={})
+    write_text(os.path.join(REPO_ROOT, args.output_path), render_html(viewer, ideas, process_payload, progression_payload, translational_payload))
     print(f'Atlas portal page written: {os.path.join(REPO_ROOT, args.output_path)}')
 
 
