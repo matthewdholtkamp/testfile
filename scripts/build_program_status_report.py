@@ -69,6 +69,7 @@ def render_markdown(status):
         f"- Process Engine: `{status['process_engine_path']}`",
         f"- Process Model: `{status['process_model_path']}`",
         f"- Progression Objects: `{status['progression_object_page_path']}`",
+        f"- Translational Logic: `{status['translational_logic_page_path']}`",
         '',
         '## Automation State',
         '',
@@ -87,6 +88,7 @@ def render_markdown(status):
         f"- Process lane index: `{status['process_lanes_path']}`",
         f"- Causal transition index: `{status['causal_transition_path']}`",
         f"- Progression object index: `{status['progression_object_path']}`",
+        f"- Translational perturbation index: `{status['translational_path']}`",
         f"- Release manifest: `{status['release_manifest_path']}`",
         f"- Mechanism review packets: `{status['review_packet_index_path']}`",
         f"- Target enrichment packets: `{status['target_packet_index_path']}`",
@@ -168,11 +170,28 @@ def render_markdown(status):
         )
     lines.extend([
         '',
+        '## Translational Perturbation Summary',
+        '',
+        f"- Packets: `{status['translational_summary'].get('packet_count', 0)}`",
+        f"- Covered lanes: `{status['translational_summary'].get('covered_lane_count', 0)}` / `{status['translational_summary'].get('required_lane_count', 0)}`",
+        f"- Actionable: `{status['translational_summary'].get('actionable_packet_count', 0)}`",
+        f"- Bounded: `{status['translational_summary'].get('packets_by_translation_maturity', {}).get('bounded', 0)}`",
+        f"- Seeded: `{status['translational_summary'].get('packets_by_translation_maturity', {}).get('seeded', 0)}`",
+        f"- With compound support: `{status['translational_summary'].get('packets_with_compound_attachment', 0)}`",
+        f"- With trial support: `{status['translational_summary'].get('packets_with_trial_attachment', 0)}`",
+        '',
+    ])
+    for row in status['translational_rows']:
+        lines.append(
+            f"- **{row['display_name']}**: primary `{row['primary_target']}` | support `{row['support_status']}` | maturity `{row['translation_maturity']}` | next decision `{row['next_decision']}`"
+        )
+    lines.extend([
+        '',
         '## Immediate Next Moves',
         '',
         '1. Fill the top mitochondrial ChEMBL targets first using the seeded query terms and assay keywords from the manual seed pack.',
-        '2. Reuse those same mitochondrial target symbols for the compound and trial follow-on pass before widening back to BBB.',
-        '3. Rerun the manual enrichment cycle to refresh the atlas book and quality gate.',
+        '2. Reuse those same mitochondrial target symbols for the compound and trial follow-on pass before widening back to BBB or neuroinflammation.',
+        '3. Use the new translational page to decide which lane deserves the first real attachment deepening pass.',
         '',
     ])
     return '\n'.join(lines)
@@ -186,6 +205,7 @@ def main():
     parser.add_argument('--process-lanes-json', default='', help='Optional process-lane JSON path.')
     parser.add_argument('--causal-transition-json', default='', help='Optional causal-transition JSON path.')
     parser.add_argument('--progression-object-json', default='', help='Optional progression-object JSON path.')
+    parser.add_argument('--translational-json', default='', help='Optional translational-perturbation JSON path.')
     parser.add_argument('--release-manifest-md', default='', help='Optional atlas release-manifest markdown path.')
     parser.add_argument('--review-packet-index-md', default='', help='Optional mechanism review packet index path.')
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
@@ -202,6 +222,8 @@ def main():
     causal_transitions = read_json(causal_transition_path) if causal_transition_path else {}
     progression_object_path = args.progression_object_json or latest_report('progression_object_index_*.json')
     progression_objects = read_json(progression_object_path) if progression_object_path else {}
+    translational_path = args.translational_json or latest_report('translational_perturbation_index_*.json')
+    translational_payload = read_json(translational_path) if translational_path else {}
     release_manifest_path = args.release_manifest_md or latest_report('atlas_release_manifest_*.md')
     review_packet_index = args.review_packet_index_md or latest_report('mechanism_review_packet_index_*.md')
     target_packet_index = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
@@ -221,11 +243,13 @@ def main():
         'process_engine_path': os.path.join('docs', 'process-engine', 'index.html'),
         'process_model_path': os.path.join('docs', 'process-model', 'index.html'),
         'progression_object_page_path': os.path.join('docs', 'progression-objects', 'index.html'),
+        'translational_logic_page_path': os.path.join('docs', 'translational-logic', 'index.html'),
         'quality_gate_path': quality_gate_path,
         'idea_gate_path': idea_gate_path,
         'process_lanes_path': process_lanes_path,
         'causal_transition_path': causal_transition_path,
         'progression_object_path': progression_object_path,
+        'translational_path': translational_path,
         'release_manifest_path': release_manifest_path,
         'review_packet_index_path': review_packet_index,
         'target_packet_index_path': target_packet_index,
@@ -239,6 +263,8 @@ def main():
         'transition_rows': causal_transitions.get('rows', []) if isinstance(causal_transitions, dict) else [],
         'progression_summary': progression_objects.get('summary', {}) if isinstance(progression_objects, dict) else {},
         'progression_rows': progression_objects.get('rows', []) if isinstance(progression_objects, dict) else [],
+        'translational_summary': translational_payload.get('summary', {}) if isinstance(translational_payload, dict) else {},
+        'translational_rows': translational_payload.get('rows', []) if isinstance(translational_payload, dict) else [],
     }
 
     os.makedirs(args.output_dir, exist_ok=True)

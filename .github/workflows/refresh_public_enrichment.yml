@@ -156,6 +156,22 @@ jobs:
           python scripts/build_progression_object_page.py \
             --object-json "$latest_progression_json" \
             --output-dir docs/progression-objects
+          python scripts/build_translational_perturbation_logic.py \
+            --process-json "$latest_process_json" \
+            --transition-json "$latest_transition_json" \
+            --object-json "$latest_progression_json" \
+            --output-dir reports/translational_perturbation
+          latest_translational_json=$(ls -1t reports/translational_perturbation/translational_perturbation_index_*.json | head -n1)
+          python scripts/build_translational_perturbation_validation.py \
+            --translational-json "$latest_translational_json" \
+            --process-json "$latest_process_json" \
+            --transition-json "$latest_transition_json" \
+            --object-json "$latest_progression_json" \
+            --output-dir reports/translational_perturbation_validation
+          python scripts/build_translational_perturbation_page.py \
+            --translational-json "$latest_translational_json" \
+            --validation-json "$(ls -1t reports/translational_perturbation_validation/translational_perturbation_validation_*.json | head -n1)" \
+            --output-dir docs/translational-logic
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_tbi_atlas_book.py \

@@ -125,14 +125,17 @@ It produces:
 - causal-transition validation
 - progression-object index
 - progression-object validation
+- translational-perturbation index
+- translational-perturbation validation
 - process-model site output
 - progression-object site output
+- translational-logic site output
 - mechanism dossiers
 - translational bridge table
 - figure-planning artifact
 
-### Process Engine, Process Model, And Progression Objects
-The repo now has three explicit downstream neurodegenerative layers after the atlas:
+### Process Engine, Process Model, Progression Objects, And Translational Logic
+The repo now has four explicit downstream neurodegenerative layers after the atlas:
 
 1. **Phase 1 Process Engine**
    - six longitudinal lanes:
@@ -188,10 +191,41 @@ The repo now has three explicit downstream neurodegenerative layers after the at
      - best-next-question guidance
    - the progression-object payload also emits coverage against all 6 Phase 1 lanes and all 6 Phase 2 starter transitions so the layer cannot silently skip required objects
 
+4. **Phase 4 Translational Logic**
+   - six lane-level translational packets, one for each Phase 1 lane
+   - each packet carries:
+     - primary target
+     - challenger targets
+     - perturbation type
+     - target rationale
+     - intervention window
+     - expected readouts
+     - expected direction
+     - readout time horizon
+     - sample type
+     - biomarker panel
+     - compound support
+     - trial support
+     - genomics support status and detail
+     - comparative analog support
+     - support status
+     - translation maturity
+     - contradiction notes
+     - disconfirming evidence
+     - next decision
+     - best-next-experiment guidance
+   - the translational payload also emits:
+     - `6 / 6` lane coverage
+     - attachment counts
+     - genomics availability counts
+     - Phase 2 and Phase 3 upstream coverage counts
+     - lane coverage rows so the layer cannot silently skip required lanes
+
 Current product surfaces:
 - `docs/process-engine/index.html`
 - `docs/process-model/index.html`
 - `docs/progression-objects/index.html`
+- `docs/translational-logic/index.html`
 
 ### Connector Enrichment Sidecar
 The connector lane is intentionally separate from the GitHub staging lane. It uses the repo as the system of record and adds read-only enrichment after post-analysis.

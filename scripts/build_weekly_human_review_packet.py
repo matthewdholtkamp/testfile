@@ -127,6 +127,9 @@ def render_markdown(packet):
         f"- Progression objects built: `{packet['progression_summary'].get('object_count', 0)}`",
         f"- Supported progression objects: `{packet['progression_summary'].get('objects_by_support_status', {}).get('supported', 0)}`",
         f"- Seeded progression objects: `{packet['progression_summary'].get('objects_by_maturity_status', {}).get('seeded', 0)}`",
+        f"- Translational packets built: `{packet['translational_summary'].get('packet_count', 0)}`",
+        f"- Covered translational lanes: `{packet['translational_summary'].get('covered_lane_count', 0)}` / `{packet['translational_summary'].get('required_lane_count', 0)}`",
+        f"- Actionable translational packets: `{packet['translational_summary'].get('actionable_packet_count', 0)}`",
         '',
         '## What I Need From You This Week',
         '',
@@ -202,6 +205,26 @@ def render_markdown(packet):
         lines.append(
             f"| {row.get('display_name', '')} | {row.get('support_status', '')} | {row.get('maturity_status', '')} | {parent_count} linked layers | {row.get('next_question_value', '')} |"
         )
+    lines.extend([
+        '',
+        '## Translational State',
+        '',
+        '| Lane | Primary Target | Maturity | Attachments | Next Decision |',
+        '| --- | --- | --- | --- | --- |',
+    ])
+    for row in packet['translational_rows']:
+        attachment_bits = []
+        compound = row.get('compound_support', {}) if isinstance(row.get('compound_support'), dict) else {}
+        trial = row.get('trial_support', {}) if isinstance(row.get('trial_support'), dict) else {}
+        if compound.get('status') in {'supported', 'provisional'}:
+            attachment_bits.append(f"compound:{compound.get('status')}")
+        if trial.get('status') in {'supported', 'provisional'}:
+            attachment_bits.append(f"trial:{trial.get('status')}")
+        if row.get('genomics_support_status') == 'supportive':
+            attachment_bits.append('genomics:supportive')
+        lines.append(
+            f"| {row.get('display_name', '')} | {row.get('primary_target', '')} | {row.get('translation_maturity', '')} | {', '.join(attachment_bits) or 'logic_only'} | {row.get('next_decision', '')} |"
+        )
 
     lines.extend([
         '',
@@ -248,6 +271,7 @@ def render_markdown(packet):
         f"- Process lanes: `{packet['process_lanes_path']}`",
         f"- Causal transitions: `{packet['causal_transition_path']}`",
         f"- Progression objects: `{packet['progression_object_path']}`",
+        f"- Translational perturbation: `{packet['translational_path']}`",
         f"- Target packet index: `{packet['target_packet_index_path']}`",
         f"- Program status: `{packet['program_status_path']}`",
         '',
@@ -265,6 +289,7 @@ def main():
     parser.add_argument('--process-lanes-json', default='', help='Optional process-lane JSON path.')
     parser.add_argument('--causal-transition-json', default='', help='Optional causal-transition JSON path.')
     parser.add_argument('--progression-object-json', default='', help='Optional progression-object JSON path.')
+    parser.add_argument('--translational-json', default='', help='Optional translational-perturbation JSON path.')
     args = parser.parse_args()
 
     viewer = make_viewer_data()
@@ -275,11 +300,13 @@ def main():
     process_lanes_path = args.process_lanes_json or latest_report('process_lane_index_*.json')
     causal_transition_path = args.causal_transition_json or latest_report('causal_transition_index_*.json')
     progression_object_path = args.progression_object_json or latest_report('progression_object_index_*.json')
+    translational_path = args.translational_json or latest_report('translational_perturbation_index_*.json')
     release_manifest = read_json(release_manifest_path) if release_manifest_path else {}
     idea_gate = read_json(idea_gate_path) if idea_gate_path else {}
     process_lanes = read_json(process_lanes_path) if process_lanes_path else {}
     causal_transitions = read_json(causal_transition_path) if causal_transition_path else {}
     progression_objects = read_json(progression_object_path) if progression_object_path else {}
+    translational_payload = read_json(translational_path) if translational_path else {}
     target_rows = parse_markdown_table(target_packet_index_path)
 
     packet = {
@@ -297,6 +324,8 @@ def main():
         'transition_rows': causal_transitions.get('rows', []) if isinstance(causal_transitions, dict) else [],
         'progression_summary': progression_objects.get('summary', {}) if isinstance(progression_objects, dict) else {},
         'progression_rows': progression_objects.get('rows', []) if isinstance(progression_objects, dict) else [],
+        'translational_summary': translational_payload.get('summary', {}) if isinstance(translational_payload, dict) else {},
+        'translational_rows': translational_payload.get('rows', []) if isinstance(translational_payload, dict) else [],
         'release_summary': release_manifest.get('summary', {}) if isinstance(release_manifest, dict) else {},
         'release_rows': release_manifest.get('rows', []) if isinstance(release_manifest, dict) else [],
         'target_priorities': target_rows,
@@ -306,6 +335,7 @@ def main():
         'process_lanes_path': process_lanes_path,
         'causal_transition_path': causal_transition_path,
         'progression_object_path': progression_object_path,
+        'translational_path': translational_path,
         'target_packet_index_path': target_packet_index_path,
         'program_status_path': program_status_path,
     }

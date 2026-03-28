@@ -29,7 +29,7 @@ def write_text(path, text):
         handle.write(text)
 
 
-def render_html(summary, process_summary, transition_summary, progression_summary):
+def render_html(summary, process_summary, transition_summary, progression_summary, translational_summary):
     lead = summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')
     stable = summary.get('stable_rows', 0)
     provisional = summary.get('provisional_rows', 0)
@@ -42,6 +42,9 @@ def render_html(summary, process_summary, transition_summary, progression_summar
     progression_count = progression_summary.get('object_count', 0)
     supported_objects = progression_summary.get('objects_by_support_status', {}).get('supported', 0)
     seeded_objects = progression_summary.get('objects_by_maturity_status', {}).get('seeded', 0)
+    translational_count = translational_summary.get('covered_lane_count', 0)
+    actionable_packets = translational_summary.get('actionable_packet_count', 0)
+    bounded_packets = translational_summary.get('packets_by_translation_maturity', {}).get('bounded', 0)
     return f"""<!doctype html>
 <html lang=\"en\">
   <head>
@@ -104,6 +107,8 @@ def render_html(summary, process_summary, transition_summary, progression_summar
         <div class=\"card\"><span class=\"eyebrow\">Process Model</span><strong>{supported_transitions} supported</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Progression Objects</span><strong>{progression_count}</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Object State</span><strong>{supported_objects} supported / {seeded_objects} seeded</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Translational Lanes</span><strong>{translational_count}</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Translational State</span><strong>{actionable_packets} actionable / {bounded_packets} bounded</strong></div>
       </section>
 
       <section class=\"stack\">
@@ -166,6 +171,19 @@ def render_html(summary, process_summary, transition_summary, progression_summar
           </div>
           <div class=\"button-row\">
             <a class=\"link-button secondary\" href=\"../progression-objects/index.html\">Open Progression Objects</a>
+          </div>
+        </div>
+
+        <div class=\"panel\">
+          <p class=\"eyebrow\">Phase 4 translational logic</p>
+          <p>The daily machine now also refreshes lane-level perturbation logic so we can compare primary targets, expected readouts, and whether compounds, trials, or genomics actually attach to each lane.</p>
+          <div class=\"actions\">
+            <div>Translational lanes: <strong>{translational_count}</strong></div>
+            <div>Actionable packets: <strong>{actionable_packets}</strong></div>
+            <div>Bounded packets: <strong>{bounded_packets}</strong></div>
+          </div>
+          <div class=\"button-row\">
+            <a class=\"link-button secondary\" href=\"../translational-logic/index.html\">Open Translational Logic</a>
           </div>
         </div>
 
@@ -266,11 +284,14 @@ def main():
     transition_payload = read_json_if_exists(transition_json, default={})
     progression_json = latest_optional_report('progression_object_index_*.json')
     progression_payload = read_json_if_exists(progression_json, default={})
+    translational_json = latest_optional_report('translational_perturbation_index_*.json')
+    translational_payload = read_json_if_exists(translational_json, default={})
     html = render_html(
         viewer.get('summary', {}),
         process_payload.get('summary', {}),
         transition_payload.get('summary', {}),
         progression_payload.get('summary', {}),
+        translational_payload.get('summary', {}),
     )
     write_text(os.path.join(REPO_ROOT, args.output_path), html)
     print(f'Run-center page written: {os.path.join(REPO_ROOT, args.output_path)}')
