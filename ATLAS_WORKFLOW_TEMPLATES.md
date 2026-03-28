@@ -96,3 +96,42 @@ They assume the default query guardrails in `config/query_policy_defaults.yaml` 
   - viewer Execution Map still points to live workflows and current local artifacts
 - Success condition:
   - connector outputs remain trustworthy enough for atlas use
+
+## 7. Target Validation Deep Dive
+
+- Goal: move a target from "interesting signal" to "actionable atlas target".
+- Use when: a target appears in the seed pack, dossier, or weekly decision brief and needs a translational readout.
+- Connector chain:
+  - Open Targets
+  - ChEMBL
+  - PubMed
+- Operator move:
+  - resolve the exact gene/target first
+  - capture target-disease association context
+  - pull known compounds, mechanisms, and bioactivity
+  - sanity-check the target against recent TBI literature
+- Best current fits:
+  - `OCLN`, `CLDN5`, `TJP1`, `MMP9`, `AQP4`
+  - `PRKN`, `PINK1`, `SARM1`, `NFE2L2`
+  - `NLRP3`, `IL1B`, `TNF`, `TREM2`, `GAS6`
+- Success condition:
+  - target has a cleaner mechanism-to-therapy bridge row
+  - atlas can explain why the target matters without overstating it
+
+## 8. TBI Pipeline Review
+
+- Goal: keep the translational lane focused on TBI-relevant compounds and trials instead of generic neuro hits.
+- Use when: a mechanism is idea-ready but the therapeutic layer is still thin.
+- Connector chain:
+  - ChEMBL
+  - ClinicalTrials.gov
+  - PubMed
+- Operator move:
+  - search approved and clinical-stage compounds first
+  - then widen only through sanctioned overrides
+  - keep trials bounded to TBI-relevant condition terms
+- Best current fits:
+  - BBB dysfunction
+  - mitochondrial dysfunction
+- Success condition:
+  - compound rows and trial rows become specific enough to support the atlas narrative

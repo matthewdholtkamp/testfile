@@ -20,6 +20,21 @@ starter_mechanism_aliases:
     AQP4:
       - aqp4
       - aqp-4
+    ICAM1:
+      - icam-1
+      - icam1
+      - intercellular adhesion molecule 1
+    VCAM1:
+      - vcam-1
+      - vcam1
+      - vascular cell adhesion molecule 1
+    CXCL10:
+      - cxcl10
+      - ip-10
+      - ip10
+    CDH5:
+      - cdh5
+      - ve-cadherin
   mitochondrial_bioenergetic_dysfunction:
     PRKN:
       - parkin
@@ -38,6 +53,25 @@ starter_mechanism_aliases:
     DNM1L:
       - drp1
       - dnm1l
+    PINK1:
+      - pink1
+      - pten induced kinase 1
+    SIRT3:
+      - sirt3
+      - sirtuin 3
+    OPA1:
+      - opa1
+      - optic atrophy 1
+    NFE2L2:
+      - nfe2l2
+      - nrf2
+      - nuclear factor erythroid 2 related factor 2
+    SARM1:
+      - sarm1
+      - sterile alpha and tir motif containing 1
+    PARP1:
+      - parp1
+      - poly adp ribose polymerase 1
   neuroinflammation_microglial_activation:
     GFAP:
       - gfap
@@ -63,3 +97,27 @@ starter_mechanism_aliases:
     AQP4:
       - aqp4
       - aqp-4
+    IL1B:
+      - il-1b
+      - il-1β
+      - il1b
+      - interleukin 1 beta
+    TNF:
+      - tnf
+      - tnf-a
+      - tnf-α
+      - tumor necrosis factor
+    IFNAR1:
+      - ifnar1
+      - interferon alpha beta receptor 1
+      - ifn-alpha receptor 1
+    STAT1:
+      - stat1
+      - signal transducer and activator of transcription 1
+    HMGB1:
+      - hmgb1
+      - high mobility group box 1
+    CCL2:
+      - ccl2
+      - mcp-1
+      - mcp1
