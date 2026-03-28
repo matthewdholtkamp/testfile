@@ -431,11 +431,26 @@ def build_lane_summary(lane, lane_rows):
             pmid,
         ),
     )[:10]
+    lane_notes = []
+    canonical_mechanisms = sorted(lane['canonical_mechanisms'])
+    if canonical_mechanisms:
+        lane_notes.append(
+            'Promoted from existing atlas mechanism coverage: '
+            + ', '.join(humanize_label(item) for item in canonical_mechanisms)
+            + '.'
+        )
+    else:
+        lane_notes.append(
+            'No single canonical atlas mechanism anchors this lane yet; it is currently seeded from cross-mechanism evidence and conservative keyword matching.'
+        )
+    if lane['origin_status'] == 'promoted_from_cross_mechanism_signal':
+        lane_notes.append('Treat this lane as a seeded trajectory lane until stronger canonical support or explicit normalization is added.')
     return {
         'lane_id': lane['lane_id'],
         'display_name': lane['display_name'],
         'description': lane['description'],
         'origin_status': lane['origin_status'],
+        'canonical_mechanisms': canonical_mechanisms,
         'lane_status': lane_status,
         'paper_count': len(paper_rows),
         'full_text_like_papers': sum(1 for rows in paper_rows.values() if best_quality_for_rows(rows) == 'full_text_like'),
@@ -455,6 +470,7 @@ def build_lane_summary(lane, lane_rows):
         'top_brain_regions': top_terms(all_claims + all_edges, 'anatomy', limit=8),
         'anchor_pmids': overall_anchor_pmids,
         'buckets': bucket_summaries,
+        'lane_notes': lane_notes,
         'evidence_gaps': gaps,
     }
 
@@ -466,6 +482,7 @@ def build_markdown_packet(lane):
         f"- Lane id: `{lane['lane_id']}`",
         f"- Lane status: `{lane['lane_status']}`",
         f"- Origin: `{lane['origin_status']}`",
+        f"- Canonical anchors: `{'; '.join(lane['canonical_mechanisms']) or 'none yet'}`",
         f"- Papers: `{lane['paper_count']}`",
         f"- Source quality mix: `full_text_like` {lane['full_text_like_papers']}, `abstract_only` {lane['abstract_only_papers']}",
         f"- Supported buckets: `{lane['supported_buckets']}` | Provisional buckets: `{lane['provisional_buckets']}` | Weak buckets: `{lane['weak_buckets']}`",
@@ -484,6 +501,9 @@ def build_markdown_packet(lane):
             lines.append(f"| `{markdown_cell(row['canonical_mechanism'])}` | {row['claim_mentions']} |")
     else:
         lines.append('- No existing canonical mechanism overlap detected.')
+    lines.extend(['', '## Lane Notes', ''])
+    for note in lane['lane_notes']:
+        lines.append(f'- {note}')
     lines.extend(['', '## Longitudinal Buckets', ''])
     lines.append('| Bucket | Status | Papers | Full-text-like | Abstract-only | Claim mentions | Edge mentions | Anchor PMIDs |')
     lines.append('| --- | --- | --- | --- | --- | --- | --- | --- |')

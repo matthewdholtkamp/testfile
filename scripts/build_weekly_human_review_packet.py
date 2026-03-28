@@ -117,6 +117,9 @@ def render_markdown(packet):
         f"- Blocked rows: `{packet['blocked_rows']}`",
         f"- Idea-ready mechanisms now: `{packet['idea_summary'].get('idea_ready_now', 0)}` / `{packet['idea_summary'].get('mechanism_count', 0)}`",
         f"- Breakthrough-ready mechanisms now: `{packet['idea_summary'].get('breakthrough_ready_now', 0)}` / `{packet['idea_summary'].get('mechanism_count', 0)}`",
+        f"- Process lanes built: `{packet['process_summary'].get('lane_count', 0)}`",
+        f"- Longitudinally supported lanes: `{packet['process_summary'].get('longitudinally_supported_lanes', 0)}`",
+        f"- Longitudinally seeded lanes: `{packet['process_summary'].get('longitudinally_seeded_lanes', 0)}`",
         '',
         '## What I Need From You This Week',
         '',
@@ -143,6 +146,19 @@ def render_markdown(packet):
     for row in packet['idea_rows']:
         lines.append(
             f"| {row.get('display_name', '')} | {row.get('idea_generation_status', '')} | {row.get('breakthrough_status', '')} | {row.get('missing_for_idea_generation', '') or 'none'} |"
+        )
+
+    lines.extend([
+        '',
+        '## Process Lane State',
+        '',
+        '| Lane | Lane Status | Acute | Subacute | Chronic |',
+        '| --- | --- | --- | --- | --- |',
+    ])
+    for row in packet['process_rows']:
+        buckets = row.get('buckets', {})
+        lines.append(
+            f"| {row.get('display_name', '')} | {row.get('lane_status', '')} | {buckets.get('acute', {}).get('status', '')} | {buckets.get('subacute', {}).get('status', '')} | {buckets.get('chronic', {}).get('status', '')} |"
         )
 
     lines.extend([
@@ -187,6 +203,7 @@ def render_markdown(packet):
         '## Reference Artifacts',
         '',
         f"- Release manifest: `{packet['release_manifest_path']}`",
+        f"- Process lanes: `{packet['process_lanes_path']}`",
         f"- Target packet index: `{packet['target_packet_index_path']}`",
         f"- Program status: `{packet['program_status_path']}`",
         '',
@@ -201,6 +218,7 @@ def main():
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
     parser.add_argument('--program-status-md', default='', help='Optional program status report path.')
     parser.add_argument('--idea-gate-json', default='', help='Optional idea-generation gate JSON path.')
+    parser.add_argument('--process-lanes-json', default='', help='Optional process-lane JSON path.')
     args = parser.parse_args()
 
     viewer = make_viewer_data()
@@ -208,8 +226,10 @@ def main():
     target_packet_index_path = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
     program_status_path = args.program_status_md or latest_report('program_status_report_*.md')
     idea_gate_path = args.idea_gate_json or latest_report('idea_generation_gate_*.json')
+    process_lanes_path = args.process_lanes_json or latest_report('process_lane_index_*.json')
     release_manifest = read_json(release_manifest_path) if release_manifest_path else {}
     idea_gate = read_json(idea_gate_path) if idea_gate_path else {}
+    process_lanes = read_json(process_lanes_path) if process_lanes_path else {}
     target_rows = parse_markdown_table(target_packet_index_path)
 
     packet = {
@@ -221,12 +241,15 @@ def main():
         'blocked_rows': viewer.get('summary', {}).get('blocked_rows', 0),
         'idea_summary': idea_gate.get('summary', {}) if isinstance(idea_gate, dict) else {},
         'idea_rows': idea_gate.get('rows', []) if isinstance(idea_gate, dict) else [],
+        'process_summary': process_lanes.get('summary', {}) if isinstance(process_lanes, dict) else {},
+        'process_rows': process_lanes.get('lanes', []) if isinstance(process_lanes, dict) else [],
         'release_summary': release_manifest.get('summary', {}) if isinstance(release_manifest, dict) else {},
         'release_rows': release_manifest.get('rows', []) if isinstance(release_manifest, dict) else [],
         'target_priorities': target_rows,
         'human_actions': build_human_actions(viewer, release_manifest, target_rows),
         'decisions': build_decisions(viewer, release_manifest, target_rows),
         'release_manifest_path': release_manifest_path,
+        'process_lanes_path': process_lanes_path,
         'target_packet_index_path': target_packet_index_path,
         'program_status_path': program_status_path,
     }

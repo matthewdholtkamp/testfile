@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+from glob import glob
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCAL_CONTROL_URL = 'http://127.0.0.1:8765'
@@ -11,17 +12,31 @@ def read_json(path):
         return json.load(handle)
 
 
+def read_json_if_exists(path, default=None):
+    if not path or not os.path.exists(path):
+        return {} if default is None else default
+    return read_json(path)
+
+
+def latest_optional_report(pattern):
+    candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
+    return candidates[-1] if candidates else ''
+
+
 def write_text(path, text):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as handle:
         handle.write(text)
 
 
-def render_html(summary):
+def render_html(summary, process_summary):
     lead = summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')
     stable = summary.get('stable_rows', 0)
     provisional = summary.get('provisional_rows', 0)
     blocked = summary.get('blocked_rows', 0)
+    lane_count = process_summary.get('lane_count', 0)
+    supported_lanes = process_summary.get('longitudinally_supported_lanes', 0)
+    seeded_lanes = process_summary.get('longitudinally_seeded_lanes', 0)
     return f"""<!doctype html>
 <html lang=\"en\">
   <head>
@@ -78,6 +93,8 @@ def render_html(summary):
         <div class=\"card\"><span class=\"eyebrow\">Stable</span><strong>{stable}</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Provisional</span><strong>{provisional}</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Blocked</span><strong>{blocked}</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Process Lanes</span><strong>{lane_count}</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Trajectory State</span><strong>{supported_lanes} supported / {seeded_lanes} seeded</strong></div>
       </section>
 
       <section class=\"stack\">
@@ -101,6 +118,19 @@ def render_html(summary):
             <div>4. Atlas rebuild</div>
             <div>5. Public enrichment refresh</div>
             <div>6. Docs publish</div>
+          </div>
+        </div>
+
+        <div class=\"panel\">
+          <p class=\"eyebrow\">Phase 1 process engine</p>
+          <p>The daily machine now also keeps the trajectory layer current. That means six process lanes stay synced with the atlas across acute, subacute, and chronic support.</p>
+          <div class=\"actions\">
+            <div>Supported lanes: <strong>{supported_lanes}</strong></div>
+            <div>Seeded lanes: <strong>{seeded_lanes}</strong></div>
+            <div>Total lanes: <strong>{lane_count}</strong></div>
+          </div>
+          <div class=\"button-row\">
+            <a class=\"link-button secondary\" href=\"../process-engine/index.html\">Open Process Engine</a>
           </div>
         </div>
 
@@ -195,7 +225,9 @@ def main():
     args = parser.parse_args()
 
     viewer = read_json(os.path.join(REPO_ROOT, 'docs', 'atlas-viewer', 'atlas_viewer.json'))
-    html = render_html(viewer.get('summary', {}))
+    process_json = latest_optional_report('process_lane_index_*.json')
+    process_payload = read_json_if_exists(process_json, default={})
+    html = render_html(viewer.get('summary', {}), process_payload.get('summary', {}))
     write_text(os.path.join(REPO_ROOT, args.output_path), html)
     print(f'Run-center page written: {os.path.join(REPO_ROOT, args.output_path)}')
 

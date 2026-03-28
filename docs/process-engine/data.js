@@ -1,6 +1,6 @@
 window.PROCESS_ENGINE_DATA = {
   "metadata": {
-    "generated_at": "2026-03-28_114326",
+    "generated_at": "2026-03-28_120616",
     "claims_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/investigation_claims_2026-03-18_141503.csv",
     "edges_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/investigation_edges_2026-03-18_141503.csv",
     "paper_qa_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/post_extraction_paper_qa_2026-03-18_141503.csv"
@@ -19,6 +19,9 @@ window.PROCESS_ENGINE_DATA = {
       "display_name": "Blood-Brain Barrier Failure",
       "description": "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.",
       "origin_status": "starter_atlas_promoted",
+      "canonical_mechanisms": [
+        "blood_brain_barrier_disruption"
+      ],
       "lane_status": "longitudinally_supported",
       "paper_count": 67,
       "full_text_like_papers": 53,
@@ -424,6 +427,9 @@ window.PROCESS_ENGINE_DATA = {
           "notes": []
         }
       },
+      "lane_notes": [
+        "Promoted from existing atlas mechanism coverage: blood brain barrier disruption."
+      ],
       "evidence_gaps": [
         "All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling."
       ]
@@ -433,6 +439,9 @@ window.PROCESS_ENGINE_DATA = {
       "display_name": "Mitochondrial / Bioenergetic Collapse",
       "description": "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.",
       "origin_status": "starter_atlas_promoted",
+      "canonical_mechanisms": [
+        "mitochondrial_bioenergetic_dysfunction"
+      ],
       "lane_status": "longitudinally_seeded",
       "paper_count": 52,
       "full_text_like_papers": 40,
@@ -863,6 +872,9 @@ window.PROCESS_ENGINE_DATA = {
           ]
         }
       },
+      "lane_notes": [
+        "Promoted from existing atlas mechanism coverage: mitochondrial bioenergetic dysfunction."
+      ],
       "evidence_gaps": [
         "Acute bucket is only provisionally supported.",
         "Subacute bucket is only provisionally supported.",
@@ -874,6 +886,9 @@ window.PROCESS_ENGINE_DATA = {
       "display_name": "Neuroinflammation / Microglial State Change",
       "description": "Innate immune activation, cytokine signaling, and microglial state transitions following TBI.",
       "origin_status": "starter_atlas_promoted",
+      "canonical_mechanisms": [
+        "neuroinflammation_microglial_activation"
+      ],
       "lane_status": "longitudinally_seeded",
       "paper_count": 107,
       "full_text_like_papers": 79,
@@ -1325,6 +1340,9 @@ window.PROCESS_ENGINE_DATA = {
           ]
         }
       },
+      "lane_notes": [
+        "Promoted from existing atlas mechanism coverage: neuroinflammation microglial activation."
+      ],
       "evidence_gaps": [
         "Acute bucket is only provisionally supported.",
         "Subacute bucket is only provisionally supported.",
@@ -1336,6 +1354,9 @@ window.PROCESS_ENGINE_DATA = {
       "display_name": "Axonal Degeneration",
       "description": "Diffuse axonal injury, white-matter tract disruption, and degenerative axonal consequences across time.",
       "origin_status": "promoted_from_existing_signal",
+      "canonical_mechanisms": [
+        "axonal_white_matter_injury"
+      ],
       "lane_status": "longitudinally_seeded",
       "paper_count": 124,
       "full_text_like_papers": 85,
@@ -1787,6 +1808,9 @@ window.PROCESS_ENGINE_DATA = {
           "notes": []
         }
       },
+      "lane_notes": [
+        "Promoted from existing atlas mechanism coverage: axonal white matter injury."
+      ],
       "evidence_gaps": [
         "Subacute bucket is only provisionally supported."
       ]
@@ -1796,6 +1820,9 @@ window.PROCESS_ENGINE_DATA = {
       "display_name": "Glymphatic / Astroglial Clearance Failure",
       "description": "AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.",
       "origin_status": "promoted_from_subtrack",
+      "canonical_mechanisms": [
+        "glymphatic_clearance_impairment"
+      ],
       "lane_status": "longitudinally_seeded",
       "paper_count": 67,
       "full_text_like_papers": 47,
@@ -2239,6 +2266,9 @@ window.PROCESS_ENGINE_DATA = {
           ]
         }
       },
+      "lane_notes": [
+        "Promoted from existing atlas mechanism coverage: glymphatic clearance impairment."
+      ],
       "evidence_gaps": [
         "Acute bucket is only provisionally supported.",
         "Subacute bucket is only provisionally supported.",
@@ -2250,6 +2280,7 @@ window.PROCESS_ENGINE_DATA = {
       "display_name": "Tau / Proteinopathy Progression",
       "description": "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.",
       "origin_status": "promoted_from_cross_mechanism_signal",
+      "canonical_mechanisms": [],
       "lane_status": "longitudinally_seeded",
       "paper_count": 21,
       "full_text_like_papers": 18,
@@ -2660,6 +2691,10 @@ window.PROCESS_ENGINE_DATA = {
           ]
         }
       },
+      "lane_notes": [
+        "No single canonical atlas mechanism anchors this lane yet; it is currently seeded from cross-mechanism evidence and conservative keyword matching.",
+        "Treat this lane as a seeded trajectory lane until stronger canonical support or explicit normalization is added."
+      ],
       "evidence_gaps": [
         "Acute bucket is only provisionally supported.",
         "Subacute bucket is only provisionally supported.",

@@ -1,6 +1,8 @@
 import argparse
+import html
 import json
 import os
+import re
 from glob import glob
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,17 +31,30 @@ def normalize(value):
     return ' '.join((value or '').split()).strip()
 
 
+def text(value):
+    return html.escape(normalize(value))
+
+
+def css_token(value):
+    token = normalize(value).lower().replace(' ', '-')
+    token = re.sub(r'[^a-z0-9_-]+', '-', token)
+    return token.strip('-') or 'unknown'
+
+
 def bucket_card(name, bucket):
-    anchors = ', '.join(bucket.get('anchor_pmids', [])[:4]) or 'No anchors yet'
+    anchors = html.escape(', '.join(bucket.get('anchor_pmids', [])[:4]) or 'No anchors yet')
     examples = bucket.get('example_signals', [])[:2]
     example_html = ''.join(
-        f"<li><strong>{normalize(item.get('pmid'))}</strong> {normalize(item.get('text'))}</li>" for item in examples
+        f"<li><strong>{text(item.get('pmid'))}</strong> {text(item.get('text'))}</li>" for item in examples
     ) or '<li>No direct timed signals yet.</li>'
+    note_html = ''.join(f'<li>{text(note)}</li>' for note in bucket.get('notes', []))
+    note_block = f'<div class="bucket-notes"><strong>Why this status:</strong><ul>{note_html}</ul></div>' if note_html else ''
+    status = css_token(bucket.get('status'))
     return f"""
-    <article class=\"bucket-card {normalize(bucket.get('status'))}\">
+    <article class=\"bucket-card {status}\">
       <div class=\"bucket-head\">
-        <span class=\"bucket-name\">{name}</span>
-        <span class=\"bucket-status {normalize(bucket.get('status'))}\">{normalize(bucket.get('status'))}</span>
+        <span class=\"bucket-name\">{html.escape(name)}</span>
+        <span class=\"bucket-status {status}\">{text(bucket.get('status'))}</span>
       </div>
       <div class=\"bucket-metrics\">
         <span>Papers <strong>{bucket.get('paper_count', 0)}</strong></span>
@@ -48,6 +63,7 @@ def bucket_card(name, bucket):
       </div>
       <p class=\"bucket-anchors\"><strong>Anchors:</strong> {anchors}</p>
       <ul class=\"bucket-signals\">{example_html}</ul>
+      {note_block}
     </article>
     """
 
@@ -55,31 +71,33 @@ def bucket_card(name, bucket):
 def chip_list(items):
     if not items:
         return '<span class="chip muted">None yet</span>'
-    return ''.join(f'<span class="chip">{normalize(row.get("label"))} <strong>{row.get("count", 0)}</strong></span>' for row in items)
+    return ''.join(f'<span class="chip">{text(row.get("label"))} <strong>{row.get("count", 0)}</strong></span>' for row in items)
 
 
 def overlap_list(items):
     if not items:
         return '<span class="chip muted">No overlap mapped</span>'
     return ''.join(
-        f'<span class="chip">{normalize(row.get("canonical_mechanism"))} <strong>{row.get("claim_mentions", 0)}</strong></span>'
+        f'<span class="chip">{text(row.get("canonical_mechanism"))} <strong>{row.get("claim_mentions", 0)}</strong></span>'
         for row in items
     )
 
 
 def render_lane(lane):
     buckets = lane.get('buckets', {})
-    gaps = ''.join(f'<li>{normalize(item)}</li>' for item in lane.get('evidence_gaps', []))
+    gaps = ''.join(f'<li>{text(item)}</li>' for item in lane.get('evidence_gaps', []))
+    lane_notes = ''.join(f'<li>{text(item)}</li>' for item in lane.get('lane_notes', []))
+    canonical_chips = ''.join(f'<span class="chip">{text(item)}</span>' for item in lane.get('canonical_mechanisms', [])) or '<span class="chip muted">No single canonical anchor yet</span>'
     return f"""
-    <section class=\"lane-section\" id=\"{normalize(lane.get('lane_id'))}\">
+    <section class=\"lane-section\" id=\"{css_token(lane.get('lane_id'))}\">
       <div class=\"lane-header\">
         <div>
-          <p class=\"eyebrow\">{normalize(lane.get('origin_status')).replace('_', ' ')}</p>
-          <h2>{normalize(lane.get('display_name'))}</h2>
-          <p class=\"lane-description\">{normalize(lane.get('description'))}</p>
+          <p class=\"eyebrow\">{text(normalize(lane.get('origin_status')).replace('_', ' '))}</p>
+          <h2>{text(lane.get('display_name'))}</h2>
+          <p class=\"lane-description\">{text(lane.get('description'))}</p>
         </div>
         <div class=\"lane-summary\">
-          <span class=\"pill status\">{normalize(lane.get('lane_status')).replace('_', ' ')}</span>
+          <span class=\"pill status\">{text(normalize(lane.get('lane_status')).replace('_', ' '))}</span>
           <span class=\"pill\">Papers {lane.get('paper_count', 0)}</span>
           <span class=\"pill\">Full text {lane.get('full_text_like_papers', 0)}</span>
           <span class=\"pill\">Abstract {lane.get('abstract_only_papers', 0)}</span>
@@ -91,6 +109,10 @@ def render_lane(lane):
         {bucket_card('Chronic', buckets.get('chronic', {}))}
       </div>
       <div class=\"lane-meta-grid\">
+        <article class=\"meta-card\">
+          <h3>Canonical anchors</h3>
+          <div class=\"chip-row\">{canonical_chips}</div>
+        </article>
         <article class=\"meta-card\">
           <h3>Current overlap</h3>
           <div class=\"chip-row\">{overlap_list(lane.get('current_mechanism_overlap', []))}</div>
@@ -108,6 +130,10 @@ def render_lane(lane):
           <div class=\"chip-row\">{chip_list(lane.get('top_brain_regions', []))}</div>
         </article>
       </div>
+      <article class=\"meta-card notes\">
+        <h3>Lane notes</h3>
+        <ul>{lane_notes or '<li>No additional notes yet.</li>'}</ul>
+      </article>
       <article class=\"meta-card gaps\">
         <h3>Evidence gaps</h3>
         <ul>{gaps}</ul>
@@ -182,6 +208,8 @@ def render_html(data):
       .bucket-metrics {{ display:flex; gap:12px; flex-wrap:wrap; color: var(--muted); font-size: 0.92rem; margin-bottom: 10px; }}
       .bucket-anchors {{ margin-bottom: 10px; }}
       .bucket-signals {{ margin: 0; padding-left: 18px; color: var(--muted); }}
+      .bucket-notes {{ margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); color: var(--muted); }}
+      .bucket-notes ul {{ margin-top: 8px; }}
       .lane-meta-grid {{ display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 16px; }}
       .chip-row {{ display:flex; gap:8px; flex-wrap:wrap; }}
       .chip {{ display:inline-flex; align-items:center; gap:6px; padding: 7px 11px; border-radius: 999px; background: rgba(255,255,255,0.06); color: var(--ink); font-size: 0.78rem; }}
@@ -197,8 +225,8 @@ def render_html(data):
     <main class=\"shell\">
       <section class=\"hero\">
         <p class=\"eyebrow\">Phase 1 process engine</p>
-        <h1>Neurodegenerative Process Lanes</h1>
-        <p>This page reorganizes the TBI atlas by time and trajectory rather than by chapter alone. Each lane shows whether we have usable acute, subacute, and chronic support grounded in the current evidence base.</p>
+        <h1>Phase 1 TBI Process Lanes</h1>
+        <p>This page is the first process-engine layer on top of the atlas. It reorganizes the current TBI evidence by time and trajectory, while keeping unsupported or seeded lanes visibly provisional until Phase 2 causal-transition work hardens them.</p>
       </section>
       <section class=\"summary-grid\">
         <article class=\"summary-card\"><span class=\"eyebrow\">Lanes</span><strong>{summary.get('lane_count', 0)}</strong></article>

@@ -65,6 +65,11 @@ def main():
             errors.append(f'Missing required lane: {lane_id}')
 
     for lane_id, lane in lane_map.items():
+        canonical_mechanisms = lane.get('canonical_mechanisms', [])
+        if not canonical_mechanisms:
+            warnings.append(f'{lane_id} has no canonical atlas mechanism anchor yet; treat as seeded and monitor for drift')
+            if int(lane.get('supported_buckets', 0) or 0) == 0:
+                warnings.append(f'{lane_id} is regex/cross-signal seeded with zero supported buckets; do not treat it as a hardened longitudinal lane yet')
         buckets = lane.get('buckets', {})
         for bucket in REQUIRED_BUCKETS:
             if bucket not in buckets:
@@ -85,6 +90,8 @@ def main():
             warnings.append(f'{lane_id} has no mapped overlap with current atlas mechanisms')
         if not lane.get('evidence_gaps'):
             warnings.append(f'{lane_id} has no evidence-gap notes')
+        if not lane.get('lane_notes'):
+            warnings.append(f'{lane_id} has no lane notes explaining provenance or current caution level')
 
     metadata = payload.get('metadata', {})
     for field in ['claims_csv', 'edges_csv', 'paper_qa_csv']:

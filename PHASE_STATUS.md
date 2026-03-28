@@ -1,10 +1,10 @@
-# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1 Process Lanes
+# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1 Complete
 
 This file is the current handoff for the TBI scientific intelligence system after finishing extraction coverage for the original on-topic corpus and moving into the quality-gated investigation / atlas-construction phase.
 
 ## Phase 1 Process-Engine Status
 
-The first process-engine layer is now live as a downstream extension of the atlas.
+Phase 1 is now complete as a downstream extension of the atlas.
 
 Current Phase 1 outputs:
 - six explicit longitudinal lanes are now emitted:
@@ -22,6 +22,10 @@ Current Phase 1 outputs:
   - `Neuroinflammation / Microglial State Change`: `longitudinally_seeded`
   - `Glymphatic / Astroglial Clearance Failure`: `longitudinally_seeded`
   - `Tau / Proteinopathy Progression`: `longitudinally_seeded`
+- Phase 1 should currently be read as:
+  - `1` longitudinally supported lane
+  - `5` seeded/provisional lanes
+  - `tau / proteinopathy progression` is still a seeded cross-mechanism lane and should not be treated as fully hardened yet
 - the process-engine product page is now emitted to:
   - [docs/process-engine/index.html](/Users/matthewholtkamp/Documents/testfile/docs/process-engine/index.html)
 - the process-lane build and validation steps are now wired into:

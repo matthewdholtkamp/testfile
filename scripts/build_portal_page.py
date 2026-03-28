@@ -1,6 +1,8 @@
 import argparse
+import html
 import json
 import os
+import re
 from glob import glob
 
 
@@ -24,6 +26,12 @@ def read_json(path):
         return json.load(handle)
 
 
+def read_json_if_exists(path, default=None):
+    if not path or not os.path.exists(path):
+        return {} if default is None else default
+    return read_json(path)
+
+
 def write_text(path, text):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as handle:
@@ -32,6 +40,16 @@ def write_text(path, text):
 
 def normalize(value):
     return ' '.join((value or '').split()).strip()
+
+
+def text(value):
+    return html.escape(normalize(value))
+
+
+def css_token(value):
+    token = normalize(value).lower().replace(' ', '-')
+    token = re.sub(r'[^a-z0-9_-]+', '-', token)
+    return token.strip('-') or 'unknown'
 
 
 def spotlight_cards(ideas, limit=3):
@@ -67,17 +85,23 @@ def spotlight_cards(ideas, limit=3):
         cards.append(
             f"""
             <article class="spotlight-card">
-              <div class="eyebrow">{normalize(row.get('display_name'))}</div>
-              <h3>{normalize(row.get('title'))}</h3>
-              <p>{normalize(row.get('statement'))}</p>
+              <div class="eyebrow">{text(row.get('display_name'))}</div>
+              <h3>{text(row.get('title'))}</h3>
+              <p>{text(row.get('statement'))}</p>
               <div class="meta-row">
-                <span class="pill decision">{normalize(row.get('operator_decision'))}</span>
-                <span class="pill strength {normalize(row.get('strength_tag'))}">{normalize(row.get('strength_tag'))}</span>
+                <span class="pill decision">{text(row.get('operator_decision'))}</span>
+                <span class="pill strength {css_token(row.get('strength_tag'))}">{text(row.get('strength_tag'))}</span>
               </div>
             </article>
             """
         )
-    return ''.join(cards)
+    return ''.join(cards) or """
+            <article class="spotlight-card">
+              <div class="eyebrow">Idea pipeline</div>
+              <h3>No idea briefs generated yet</h3>
+              <p>The atlas can still be used, but the idea brief surface has not been rebuilt in this snapshot yet.</p>
+            </article>
+            """
 
 
 def render_html(viewer, ideas_payload, process_payload):
@@ -156,10 +180,10 @@ def render_html(viewer, ideas_payload, process_payload):
       <section class="hero">
         <p class="eyebrow">TBI investigation engine</p>
         <h1>Atlas Portal</h1>
-        <p>This is the simplest working surface for the project: run the machine, review the ideas, and read the atlas. The current lead mechanism is <strong>{summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')}</strong>, with {summary.get('stable_rows', 0)} stable rows supporting the live atlas.</p>
+        <p>This is the simplest working surface for the project: run the machine, review the ideas, and read the atlas. The current lead mechanism is <strong>{text(summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction'))}</strong>, with {summary.get('stable_rows', 0)} stable rows supporting the live atlas.</p>
       </section>
       <section class="snapshot">
-        <div class="snap"><span class="eyebrow">Lead</span><strong>{summary.get('lead_mechanism', '—')}</strong></div>
+        <div class="snap"><span class="eyebrow">Lead</span><strong>{text(summary.get('lead_mechanism', '—'))}</strong></div>
         <div class="snap"><span class="eyebrow">Stable</span><strong>{summary.get('stable_rows', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Provisional</span><strong>{summary.get('provisional_rows', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Ideas</span><strong>{len(ideas)}</strong></div>
@@ -187,7 +211,7 @@ def render_html(viewer, ideas_payload, process_payload):
         <a class="card" href="./process-engine/index.html">
           <p class="eyebrow">Phase 1</p>
           <h2>Process Engine</h2>
-          <p>Review the longitudinal process-lane view: six lanes organized across acute, subacute, and chronic support.</p>
+          <p>Review the first-pass seeded longitudinal view: six lanes tracked across acute, subacute, and chronic support with provisional buckets shown honestly.</p>
           <span class="cta">Open process engine →</span>
         </a>
       </section>
@@ -227,10 +251,10 @@ def main():
     args = parser.parse_args()
 
     viewer = read_json(os.path.join(REPO_ROOT, 'docs', 'atlas-viewer', 'atlas_viewer.json'))
-    idea_briefs_path = latest_report('idea_briefs_*.json')
-    ideas = read_json(idea_briefs_path)
+    idea_briefs_path = latest_optional_report('idea_briefs_*.json')
+    ideas = read_json_if_exists(idea_briefs_path, default={'rows': []})
     process_json_path = latest_optional_report('process_lane_index_*.json')
-    process_payload = read_json(process_json_path) if process_json_path else {}
+    process_payload = read_json_if_exists(process_json_path, default={})
     write_text(os.path.join(REPO_ROOT, args.output_path), render_html(viewer, ideas, process_payload))
     print(f'Atlas portal page written: {os.path.join(REPO_ROOT, args.output_path)}')
 

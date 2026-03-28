@@ -60,6 +60,8 @@
       .bucket-metrics { display:flex; gap:12px; flex-wrap:wrap; color: var(--muted); font-size: 0.92rem; margin-bottom: 10px; }
       .bucket-anchors { margin-bottom: 10px; }
       .bucket-signals { margin: 0; padding-left: 18px; color: var(--muted); }
+      .bucket-notes { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); color: var(--muted); }
+      .bucket-notes ul { margin-top: 8px; }
       .lane-meta-grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 16px; }
       .chip-row { display:flex; gap:8px; flex-wrap:wrap; }
       .chip { display:inline-flex; align-items:center; gap:6px; padding: 7px 11px; border-radius: 999px; background: rgba(255,255,255,0.06); color: var(--ink); font-size: 0.78rem; }
@@ -75,8 +77,8 @@
     <main class="shell">
       <section class="hero">
         <p class="eyebrow">Phase 1 process engine</p>
-        <h1>Neurodegenerative Process Lanes</h1>
-        <p>This page reorganizes the TBI atlas by time and trajectory rather than by chapter alone. Each lane shows whether we have usable acute, subacute, and chronic support grounded in the current evidence base.</p>
+        <h1>Phase 1 TBI Process Lanes</h1>
+        <p>This page is the first process-engine layer on top of the atlas. It reorganizes the current TBI evidence by time and trajectory, while keeping unsupported or seeded lanes visibly provisional until Phase 2 causal-transition work hardens them.</p>
       </section>
       <section class="summary-grid">
         <article class="summary-card"><span class="eyebrow">Lanes</span><strong>6</strong></article>
@@ -133,6 +135,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41663365, 41642456, 41673382, 41465583</p>
       <ul class="bucket-signals"><li><strong>41039850</strong> Nanoparticle encapsulation increases mNGF delivery to brain parenchyma.</li><li><strong>41153827</strong> Diffuse TBI (RNR) causes an acute increase in serum GFAP levels at 1 hour, which then recovers by 1 day.</li></ul>
+      
     </article>
     
         
@@ -148,6 +151,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41039850, 41153827, 41328339, 41622772</p>
       <ul class="bucket-signals"><li><strong>41039850</strong> PBCA-mNGF up-regulates myelin-related proteins (MBP, NF-200) and PSD-95, indicating enhanced neurogenesis and myelinogenesis.</li><li><strong>41039850</strong> PBCA-mNGF repairs TBI-disrupted BBB structure and function.</li></ul>
+      
     </article>
     
         
@@ -163,10 +167,15 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41626582, 41648607, 41726930, 41596245</p>
       <ul class="bucket-signals"><li><strong>41626582</strong> Sub-symptomatic aerobic exercise improves autonomic nervous system regulation and cerebral blood flow autoregulation.</li><li><strong>41648607</strong> rmTBI-induced skull secretome impairs microglial mitochondrial function.</li></ul>
+      
     </article>
     
       </div>
       <div class="lane-meta-grid">
+        <article class="meta-card">
+          <h3>Canonical anchors</h3>
+          <div class="chip-row"><span class="chip">blood_brain_barrier_disruption</span></div>
+        </article>
         <article class="meta-card">
           <h3>Current overlap</h3>
           <div class="chip-row"><span class="chip">blood_brain_barrier_disruption <strong>27</strong></span><span class="chip">neuroinflammation_microglial_activation <strong>5</strong></span><span class="chip">axonal_white_matter_injury <strong>3</strong></span><span class="chip">synaptic_network_remodeling <strong>1</strong></span><span class="chip">mitochondrial_bioenergetic_dysfunction <strong>1</strong></span><span class="chip">glymphatic_clearance_impairment <strong>1</strong></span></div>
@@ -184,6 +193,10 @@
           <div class="chip-row"><span class="chip">BBB <strong>104</strong></span><span class="chip">cortex <strong>24</strong></span><span class="chip">neurovascular unit <strong>10</strong></span><span class="chip">diffuse / multisite <strong>5</strong></span><span class="chip">brain parenchyma <strong>2</strong></span><span class="chip">third cranial nerve <strong>1</strong></span><span class="chip">septum pellucidum <strong>1</strong></span><span class="chip">corpus callosum <strong>1</strong></span></div>
         </article>
       </div>
+      <article class="meta-card notes">
+        <h3>Lane notes</h3>
+        <ul><li>Promoted from existing atlas mechanism coverage: blood brain barrier disruption.</li></ul>
+      </article>
       <article class="meta-card gaps">
         <h3>Evidence gaps</h3>
         <ul><li>All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.</li></ul>
@@ -218,6 +231,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41651694, 41480492, 41267966, 41764101</p>
       <ul class="bucket-signals"><li><strong>41079361</strong> Hemoglobin decrements in TBI patients reduce cerebral oxygen saturation and CBF, compromising brain tissue perfusion, which exacerbates secondary brain injury and impairs brain tissue respiration.</li><li><strong>41103638</strong> eATP concentration dictates its role in TBI pathology.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -233,6 +247,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41576094, 41648326, 41764101, 41644924</p>
       <ul class="bucket-signals"><li><strong>41039850</strong> PBCA-mNGF attenuates TBI-induced neuronal apoptosis.</li><li><strong>41153827</strong> Acute Cyclosporin A treatment (10 and 40 mg/kg/day) decreases serum Nf-L levels following diffuse TBI (RNR).</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -247,11 +262,16 @@
         <span>Abstract <strong>2</strong></span>
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41648607, 41198676, 41522067, 41650217</p>
-      <ul class="bucket-signals"><li><strong>41198676</strong> Axonal varicosities/beadings are a signature of TBI due to axonal transport disruption.</li><li><strong>41522067</strong> Bilaminar cortex sign in Parkinson's disease is caused by iron-mediated T1 shortening.</li></ul>
+      <ul class="bucket-signals"><li><strong>41198676</strong> Axonal varicosities/beadings are a signature of TBI due to axonal transport disruption.</li><li><strong>41522067</strong> Bilaminar cortex sign in Parkinson&#x27;s disease is caused by iron-mediated T1 shortening.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
       </div>
       <div class="lane-meta-grid">
+        <article class="meta-card">
+          <h3>Canonical anchors</h3>
+          <div class="chip-row"><span class="chip">mitochondrial_bioenergetic_dysfunction</span></div>
+        </article>
         <article class="meta-card">
           <h3>Current overlap</h3>
           <div class="chip-row"><span class="chip">mitochondrial_bioenergetic_dysfunction <strong>25</strong></span><span class="chip">neuroinflammation_microglial_activation <strong>10</strong></span><span class="chip">axonal_white_matter_injury <strong>5</strong></span><span class="chip">synaptic_network_remodeling <strong>1</strong></span></div>
@@ -269,6 +289,10 @@
           <div class="chip-row"><span class="chip">cortex <strong>35</strong></span><span class="chip">diffuse / multisite <strong>20</strong></span><span class="chip">hippocampus <strong>16</strong></span><span class="chip">neurovascular unit <strong>7</strong></span><span class="chip">brainstem <strong>5</strong></span><span class="chip">white matter <strong>3</strong></span><span class="chip">BBB <strong>3</strong></span></div>
         </article>
       </div>
+      <article class="meta-card notes">
+        <h3>Lane notes</h3>
+        <ul><li>Promoted from existing atlas mechanism coverage: mitochondrial bioenergetic dysfunction.</li></ul>
+      </article>
       <article class="meta-card gaps">
         <h3>Evidence gaps</h3>
         <ul><li>Acute bucket is only provisionally supported.</li><li>Subacute bucket is only provisionally supported.</li><li>Chronic bucket is only provisionally supported.</li></ul>
@@ -303,6 +327,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41103638, 41663365, 41752185, 41756282</p>
       <ul class="bucket-signals"><li><strong>41103638</strong> DAMP-PRR binding activates innate immune response and neuroinflammation.</li><li><strong>41103638</strong> HMGB1 is a TBI biomarker and early pro-inflammatory factor.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -318,6 +343,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41734021, 41618133, 41741786, 41157272</p>
       <ul class="bucket-signals"><li><strong>41039850</strong> PBCA-mNGF dampens TBI-induced microglial activation.</li><li><strong>41135688</strong> Diffuse TBI increases microglial density and phagocytic activity.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -333,10 +359,15 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41511466, 41756282, 41157272, 41651695</p>
       <ul class="bucket-signals"><li><strong>41157272</strong> DBSI-RF maps histological inflammation in human MS spinal cord lesions.</li><li><strong>41157272</strong> Obesity is associated with increased DBSI-RF in white matter, indicating putative neuroinflammation.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
       </div>
       <div class="lane-meta-grid">
+        <article class="meta-card">
+          <h3>Canonical anchors</h3>
+          <div class="chip-row"><span class="chip">neuroinflammation_microglial_activation</span></div>
+        </article>
         <article class="meta-card">
           <h3>Current overlap</h3>
           <div class="chip-row"><span class="chip">neuroinflammation_microglial_activation <strong>84</strong></span><span class="chip">blood_brain_barrier_disruption <strong>9</strong></span><span class="chip">axonal_white_matter_injury <strong>4</strong></span><span class="chip">mitochondrial_bioenergetic_dysfunction <strong>4</strong></span><span class="chip">synaptic_network_remodeling <strong>1</strong></span></div>
@@ -354,6 +385,10 @@
           <div class="chip-row"><span class="chip">cortex <strong>124</strong></span><span class="chip">diffuse / multisite <strong>50</strong></span><span class="chip">hippocampus <strong>40</strong></span><span class="chip">BBB <strong>28</strong></span><span class="chip">white matter <strong>20</strong></span><span class="chip">brainstem <strong>9</strong></span><span class="chip">corpus callosum <strong>6</strong></span><span class="chip">neurovascular unit <strong>4</strong></span></div>
         </article>
       </div>
+      <article class="meta-card notes">
+        <h3>Lane notes</h3>
+        <ul><li>Promoted from existing atlas mechanism coverage: neuroinflammation microglial activation.</li></ul>
+      </article>
       <article class="meta-card gaps">
         <h3>Evidence gaps</h3>
         <ul><li>Acute bucket is only provisionally supported.</li><li>Subacute bucket is only provisionally supported.</li><li>Chronic bucket is only provisionally supported.</li></ul>
@@ -388,6 +423,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41267966, 41100047, 41836768, 41828042</p>
       <ul class="bucket-signals"><li><strong>41079361</strong> Diffuse axonal injury (DAI) increases hospital mortality in TBI patients at high altitude.</li><li><strong>41100047</strong> Regional differences exist in grey and white matter mechanical properties within the brain.</li></ul>
+      
     </article>
     
         
@@ -403,6 +439,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41153827, 41508250, 41327381, 41300163</p>
       <ul class="bucket-signals"><li><strong>41039850</strong> PBCA-mNGF up-regulates myelin-related proteins (MBP, NF-200) and PSD-95, indicating enhanced neurogenesis and myelinogenesis.</li><li><strong>41069428</strong> Diffuse axonal injury (DAI) is significantly associated with tracheostomy need in TBI patients.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -418,10 +455,15 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41157305, 41799860, 41198676, 41142161</p>
       <ul class="bucket-signals"><li><strong>41032947</strong> Decreased axonal integrity in cortico-subcortical white matter tracts (e.g., uncinate fasciculus) is associated with self-reported sleep disturbance after TBI.</li><li><strong>41100047</strong> Recurrent concussions increase the risk of aggressive neurodegeneration.</li></ul>
+      
     </article>
     
       </div>
       <div class="lane-meta-grid">
+        <article class="meta-card">
+          <h3>Canonical anchors</h3>
+          <div class="chip-row"><span class="chip">axonal_white_matter_injury</span></div>
+        </article>
         <article class="meta-card">
           <h3>Current overlap</h3>
           <div class="chip-row"><span class="chip">axonal_white_matter_injury <strong>70</strong></span><span class="chip">neuroinflammation_microglial_activation <strong>11</strong></span><span class="chip">synaptic_network_remodeling <strong>2</strong></span><span class="chip">blood_brain_barrier_disruption <strong>2</strong></span><span class="chip">mitochondrial_bioenergetic_dysfunction <strong>1</strong></span><span class="chip">excitotoxicity_ionic_dysregulation <strong>1</strong></span></div>
@@ -439,6 +481,10 @@
           <div class="chip-row"><span class="chip">white matter <strong>161</strong></span><span class="chip">diffuse / multisite <strong>121</strong></span><span class="chip">cortex <strong>55</strong></span><span class="chip">corpus callosum <strong>46</strong></span><span class="chip">brainstem <strong>13</strong></span><span class="chip">BBB <strong>10</strong></span><span class="chip">hippocampus <strong>10</strong></span><span class="chip">cingulum (ipsilateral) <strong>6</strong></span></div>
         </article>
       </div>
+      <article class="meta-card notes">
+        <h3>Lane notes</h3>
+        <ul><li>Promoted from existing atlas mechanism coverage: axonal white matter injury.</li></ul>
+      </article>
       <article class="meta-card gaps">
         <h3>Evidence gaps</h3>
         <ul><li>Subacute bucket is only provisionally supported.</li></ul>
@@ -473,6 +519,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41795770, 41827388, 41103638, 41642456</p>
       <ul class="bucket-signals"><li><strong>41103638</strong> DAMP-PRR binding activates innate immune response and neuroinflammation.</li><li><strong>41103638</strong> eATP concentration dictates its role in TBI pathology.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -488,6 +535,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41039850, 41648326, 41792174, 41508250</p>
       <ul class="bucket-signals"><li><strong>41039850</strong> PBCA-mNGF up-regulates myelin-related proteins (MBP, NF-200) and PSD-95, indicating enhanced neurogenesis and myelinogenesis.</li><li><strong>41039850</strong> PBCA-mNGF restores TBI-impaired glymphatic inflow and outflow.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -503,10 +551,15 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41700070, 41179995, 41809513, 41651695</p>
       <ul class="bucket-signals"><li><strong>41179995</strong> Post-traumatic brain injury (TBI) sleep deprivation decreases glymphatic flow and is linked to chronic glymphatic dysfunction and sleep-wake disruption in murine repetitive blast mild TBI models.</li><li><strong>41179995</strong> In human military veterans and soldiers, the burden of enlarged perivascular spaces (PVS) is positively correlated with the number of mild traumatic brain injuries (mTBIs) sustained, and poor sleep exacerbates the effect of mTBI on PVS volume.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
       </div>
       <div class="lane-meta-grid">
+        <article class="meta-card">
+          <h3>Canonical anchors</h3>
+          <div class="chip-row"><span class="chip">glymphatic_clearance_impairment</span></div>
+        </article>
         <article class="meta-card">
           <h3>Current overlap</h3>
           <div class="chip-row"><span class="chip">neuroinflammation_microglial_activation <strong>33</strong></span><span class="chip">glymphatic_clearance_impairment <strong>9</strong></span><span class="chip">mitochondrial_bioenergetic_dysfunction <strong>5</strong></span><span class="chip">blood_brain_barrier_disruption <strong>4</strong></span><span class="chip">axonal_white_matter_injury <strong>3</strong></span><span class="chip">synaptic_network_remodeling <strong>1</strong></span></div>
@@ -524,6 +577,10 @@
           <div class="chip-row"><span class="chip">cortex <strong>59</strong></span><span class="chip">diffuse / multisite <strong>43</strong></span><span class="chip">white matter <strong>18</strong></span><span class="chip">BBB <strong>11</strong></span><span class="chip">hippocampus <strong>9</strong></span><span class="chip">brainstem <strong>4</strong></span><span class="chip">corpus callosum <strong>3</strong></span><span class="chip">dentate gyrus <strong>2</strong></span></div>
         </article>
       </div>
+      <article class="meta-card notes">
+        <h3>Lane notes</h3>
+        <ul><li>Promoted from existing atlas mechanism coverage: glymphatic clearance impairment.</li></ul>
+      </article>
       <article class="meta-card gaps">
         <h3>Evidence gaps</h3>
         <ul><li>Acute bucket is only provisionally supported.</li><li>Subacute bucket is only provisionally supported.</li><li>Chronic bucket is only provisionally supported.</li></ul>
@@ -558,6 +615,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41665901, 41809435, 41594797, 41496386</p>
       <ul class="bucket-signals"><li><strong>41496386</strong> Acute GFAP, IL-10, H-FABP, and T-tau are elevated in CT-positive TBI.</li><li><strong>41594797</strong> Female sex is associated with higher plasma tau levels in the acute phase post-mTBI.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -573,6 +631,7 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41508043, 41496386, 41665901, 41328339</p>
       <ul class="bucket-signals"><li><strong>41328339</strong> TBI impact force drives tauopathy and APP accumulation.</li><li><strong>41496386</strong> Acute IL-10 and T-tau levels correlate negatively with post-acute white matter FA.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
         
@@ -588,10 +647,15 @@
       </div>
       <p class="bucket-anchors"><strong>Anchors:</strong> 41651695, 41508043, 41700070, 41739474</p>
       <ul class="bucket-signals"><li><strong>41508043</strong> rmTBI induces chronic motor dysfunction.</li><li><strong>41508043</strong> rmTBI accelerates tau fibril propagation.</li></ul>
+      <div class="bucket-notes"><strong>Why this status:</strong><ul><li>Timing support is intentionally capped at provisional pending stronger time-explicit evidence.</li></ul></div>
     </article>
     
       </div>
       <div class="lane-meta-grid">
+        <article class="meta-card">
+          <h3>Canonical anchors</h3>
+          <div class="chip-row"><span class="chip muted">No single canonical anchor yet</span></div>
+        </article>
         <article class="meta-card">
           <h3>Current overlap</h3>
           <div class="chip-row"><span class="chip">neuroinflammation_microglial_activation <strong>4</strong></span><span class="chip">axonal_white_matter_injury <strong>4</strong></span><span class="chip">glymphatic_clearance_impairment <strong>2</strong></span><span class="chip">synaptic_network_remodeling <strong>1</strong></span><span class="chip">blood_brain_barrier_disruption <strong>1</strong></span></div>
@@ -609,6 +673,10 @@
           <div class="chip-row"><span class="chip">cortex <strong>24</strong></span><span class="chip">diffuse / multisite <strong>14</strong></span><span class="chip">brainstem <strong>8</strong></span><span class="chip">BBB <strong>6</strong></span><span class="chip">white matter <strong>4</strong></span><span class="chip">hippocampus <strong>2</strong></span><span class="chip">neurovascular unit <strong>1</strong></span></div>
         </article>
       </div>
+      <article class="meta-card notes">
+        <h3>Lane notes</h3>
+        <ul><li>No single canonical atlas mechanism anchors this lane yet; it is currently seeded from cross-mechanism evidence and conservative keyword matching.</li><li>Treat this lane as a seeded trajectory lane until stronger canonical support or explicit normalization is added.</li></ul>
+      </article>
       <article class="meta-card gaps">
         <h3>Evidence gaps</h3>
         <ul><li>Acute bucket is only provisionally supported.</li><li>Subacute bucket is only provisionally supported.</li><li>Chronic bucket is only provisionally supported.</li></ul>

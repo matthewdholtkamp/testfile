@@ -22,6 +22,11 @@ def read_csv(path):
         return list(csv.DictReader(handle))
 
 
+def read_json(path):
+    with open(path, 'r', encoding='utf-8') as handle:
+        return json.load(handle)
+
+
 def write_text(path, text):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as handle:
@@ -61,6 +66,7 @@ def render_markdown(status):
         f"- Portal: `{status['portal_path']}`",
         f"- Atlas Viewer: `{status['viewer_path']}`",
         f"- Atlas Book: `{status['atlas_book_path']}`",
+        f"- Process Engine: `{status['process_engine_path']}`",
         '',
         '## Automation State',
         '',
@@ -76,6 +82,7 @@ def render_markdown(status):
         '',
         f"- Quality gate: `{status['quality_gate_path']}`",
         f"- Idea generation gate: `{status['idea_gate_path']}`",
+        f"- Process lane index: `{status['process_lanes_path']}`",
         f"- Release manifest: `{status['release_manifest_path']}`",
         f"- Mechanism review packets: `{status['review_packet_index_path']}`",
         f"- Target enrichment packets: `{status['target_packet_index_path']}`",
@@ -100,6 +107,20 @@ def render_markdown(status):
         )
     lines.extend([
         '',
+        '## Process Engine Summary',
+        '',
+        f"- Lanes: `{status['process_summary'].get('lane_count', 0)}`",
+        f"- Longitudinally supported lanes: `{status['process_summary'].get('longitudinally_supported_lanes', 0)}`",
+        f"- Longitudinally seeded lanes: `{status['process_summary'].get('longitudinally_seeded_lanes', 0)}`",
+        '',
+    ])
+    for row in status['process_rows']:
+        buckets = row.get('buckets', {})
+        lines.append(
+            f"- **{row['display_name']}**: `{row['lane_status']}` | acute `{buckets.get('acute', {}).get('status', '')}` | subacute `{buckets.get('subacute', {}).get('status', '')}` | chronic `{buckets.get('chronic', {}).get('status', '')}`"
+        )
+    lines.extend([
+        '',
         '## Immediate Next Moves',
         '',
         '1. Fill the top mitochondrial ChEMBL targets first using the seeded query terms and assay keywords from the manual seed pack.',
@@ -115,6 +136,7 @@ def main():
     parser.add_argument('--output-dir', default='reports/program_status', help='Directory for program-status outputs.')
     parser.add_argument('--quality-gate-csv', default='', help='Optional atlas_quality_gate CSV path.')
     parser.add_argument('--idea-gate-csv', default='', help='Optional idea_generation_gate CSV path.')
+    parser.add_argument('--process-lanes-json', default='', help='Optional process-lane JSON path.')
     parser.add_argument('--release-manifest-md', default='', help='Optional atlas release-manifest markdown path.')
     parser.add_argument('--review-packet-index-md', default='', help='Optional mechanism review packet index path.')
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
@@ -125,6 +147,8 @@ def main():
     quality_rows = read_csv(quality_gate_path) if quality_gate_path else []
     idea_gate_path = args.idea_gate_csv or latest_report('idea_generation_gate_*.csv')
     idea_rows = read_csv(idea_gate_path) if idea_gate_path else []
+    process_lanes_path = args.process_lanes_json or latest_report('process_lane_index_*.json')
+    process_lanes = read_json(process_lanes_path) if process_lanes_path else {}
     release_manifest_path = args.release_manifest_md or latest_report('atlas_release_manifest_*.md')
     review_packet_index = args.review_packet_index_md or latest_report('mechanism_review_packet_index_*.md')
     target_packet_index = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
@@ -141,8 +165,10 @@ def main():
         'portal_path': os.path.join('docs', 'index.html'),
         'viewer_path': os.path.join('docs', 'atlas-viewer', 'index.html'),
         'atlas_book_path': atlas_book_path,
+        'process_engine_path': os.path.join('docs', 'process-engine', 'index.html'),
         'quality_gate_path': quality_gate_path,
         'idea_gate_path': idea_gate_path,
+        'process_lanes_path': process_lanes_path,
         'release_manifest_path': release_manifest_path,
         'review_packet_index_path': review_packet_index,
         'target_packet_index_path': target_packet_index,
@@ -150,6 +176,8 @@ def main():
         'chapter_synthesis_path': chapter_synthesis_path,
         'gate_rows': quality_rows,
         'idea_rows': idea_rows,
+        'process_summary': process_lanes.get('summary', {}) if isinstance(process_lanes, dict) else {},
+        'process_rows': process_lanes.get('lanes', []) if isinstance(process_lanes, dict) else [],
     }
 
     os.makedirs(args.output_dir, exist_ok=True)
