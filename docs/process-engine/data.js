@@ -1,6 +1,6 @@
 window.PROCESS_ENGINE_DATA = {
   "metadata": {
-    "generated_at": "2026-03-28_202914",
+    "generated_at": "2026-03-28_210616",
     "claims_csv": "reports/investigation_claims_2026-03-28_184843.csv",
     "edges_csv": "reports/investigation_edges_2026-03-28_184843.csv",
     "paper_qa_csv": "reports/post_extraction_paper_qa_2026-03-28_184843.csv"

@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TBI Translational Logic</title>
+    <style>
+      :root {
+        --bg: #0f1419;
+        --panel: #171f29;
+        --panel-soft: #1d2734;
+        --ink: #eff5fb;
+        --muted: #afbecf;
+        --accent: #9fd2ff;
+        --line: rgba(159, 210, 255, 0.14);
+        --supported: #92edc2;
+        --provisional: #ffe29a;
+        --weak: #ffc1c1;
+        --seeded: #ffc1c1;
+        --bounded: #ffe29a;
+        --actionable: #92edc2;
+        --supportive: #92edc2;
+        --conflicting: #ffc1c1;
+        --not-available: #c9d4e3;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(159, 210, 255, 0.15), transparent 28%),
+          linear-gradient(180deg, #0b1016 0%, var(--bg) 100%);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      .shell { max-width: 1280px; margin: 0 auto; padding: 44px 22px 72px; }
+      .hero { max-width: 800px; margin-bottom: 24px; }
+      .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.76rem; font-weight: 700; margin: 0 0 12px; }
+      h1 { margin: 0 0 14px; font-size: clamp(2.4rem, 5vw, 4.9rem); line-height: 0.96; }
+      h2 { margin: 0 0 10px; font-size: 1.45rem; }
+      h3 { margin: 0 0 12px; font-size: 1rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .summary-grid, .nav-grid, .detail-grid { display: grid; gap: 16px; }
+      .summary-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-bottom: 26px; }
+      .nav-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 26px; }
+      .detail-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 16px; }
+      .summary-card, .nav-card, .meta-card, .detail-card, .warning-block {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 18px;
+        box-shadow: 0 20px 36px rgba(0,0,0,0.18);
+      }
+      .summary-card strong { display: block; margin-top: 8px; font-size: 1.9rem; }
+      .nav-card { text-decoration: none; color: inherit; }
+      .nav-card span { color: var(--accent); font-weight: 700; display: inline-block; margin-top: 10px; }
+      .warning-block { margin-bottom: 26px; }
+      .warning-block ul { margin: 0; padding-left: 18px; color: var(--muted); }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        box-shadow: 0 20px 36px rgba(0,0,0,0.18);
+        margin-bottom: 24px;
+      }
+      table { width: 100%; border-collapse: collapse; min-width: 1020px; }
+      th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      th { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+      td a { color: var(--ink); text-decoration: none; }
+      .subtle, .note { color: var(--muted); font-size: 0.92rem; }
+      .detail-card { margin-bottom: 18px; }
+      .detail-head { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+      .pill-row, .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+      .pill, .chip { display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 12px; font-size: 0.76rem; font-weight: 700; }
+      .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
+      .chip.muted { color: var(--muted); }
+      .pill.supported, .pill.actionable, .pill.supportive { background: rgba(146, 237, 194, 0.16); color: var(--supported); }
+      .pill.provisional, .pill.bounded { background: rgba(255, 226, 154, 0.16); color: var(--provisional); }
+      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 193, 193, 0.16); color: var(--weak); }
+      .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
+      .pill.stroke-analog, .pill.dementia-analog, .pill.mixed-neurodegeneration-analog { background: rgba(159, 210, 255, 0.16); color: var(--accent); }
+      .readout-list { margin: 0; padding-left: 18px; color: var(--muted); display: grid; gap: 8px; }
+      .accent-card { border-color: rgba(159, 210, 255, 0.26); }
+      @media (max-width: 720px) {
+        .shell { padding: 28px 16px 56px; }
+        table { min-width: 840px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Phase 4 translational logic</p>
+        <h1>Translational Perturbation Layer</h1>
+        <p>This layer stays TBI-core while making the engine intervention-aware: for each process lane, it shows the current primary perturbation target, challenger targets, the readouts that should move if we are right, and the current attachment state for compounds, trials, and genomics. Comparative analogs are visible, but they do not upgrade core support or maturity.</p>
+      </section>
+
+      <section class="summary-grid">
+    <article class="summary-card">
+      <span class="eyebrow">Lanes Covered</span>
+      <strong>6 / 6</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Actionable</span>
+      <strong></strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Bounded</span>
+      <strong>6</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Seeded</span>
+      <strong></strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">With Compound Support</span>
+      <strong>1</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">With Trial Support</span>
+      <strong></strong>
+      
+    </article>
+    </section>
+
+      <section class="nav-grid">
+        <a class="nav-card" href="../index.html"><p class="eyebrow">Portal</p><h2>Back To Portal</h2><p>Return to the main operator surface.</p><span>Open portal →</span></a>
+        <a class="nav-card" href="../process-engine/index.html"><p class="eyebrow">Phase 1</p><h2>Process Engine</h2><p>Review lane timing and longitudinal support.</p><span>Open lanes →</span></a>
+        <a class="nav-card" href="../process-model/index.html"><p class="eyebrow">Phase 2</p><h2>Process Model</h2><p>Review the causal-transition layer feeding these packets.</p><span>Open transitions →</span></a>
+        <a class="nav-card" href="../progression-objects/index.html"><p class="eyebrow">Phase 3</p><h2>Progression Objects</h2><p>Review recurring degenerative objects upstream of intervention logic.</p><span>Open objects →</span></a>
+      </section>
+
+      
+        <section class="warning-block">
+          <p class="eyebrow">Validation warnings</p>
+          <h2>Bounded interpretation still matters</h2>
+          <ul><li>Blood-Brain Barrier Failure has no exported genomics support in this build</li><li>Blood-Brain Barrier Failure remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Mitochondrial / Bioenergetic Collapse has no exported genomics support in this build</li><li>Mitochondrial / Bioenergetic Collapse remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Neuroinflammation / Microglial State Change has no exported genomics support in this build</li><li>Neuroinflammation / Microglial State Change remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Axonal Degeneration has no exported genomics support in this build</li><li>Axonal Degeneration remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Glymphatic / Astroglial Clearance Failure has no exported genomics support in this build</li><li>Glymphatic / Astroglial Clearance Failure remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Tau / Proteinopathy Progression has no exported genomics support in this build</li></ul>
+        </section>
+        
+
+      <section class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Lane / Primary Target</th>
+              <th>Readout To Watch</th>
+              <th>Attachment Layer</th>
+              <th>Genomics</th>
+              <th>State</th>
+              <th>Next Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+    <tr>
+      <td>
+        <a href="#blood_brain_barrier_failure"><strong>Blood-Brain Barrier Failure</strong></a>
+        <div class="subtle">OCLN</div>
+      </td>
+      <td>Barrier leakage +3 more</td>
+      <td>logic-only</td>
+      <td><span class="pill not_available">not_available</span></td>
+      <td>
+        <span class="pill supported">supported</span>
+        <span class="pill bounded">bounded</span>
+      </td>
+      <td>Decide whether OCLN should stay primary over MMP9 once the first barrier-module attachment pass is complete.</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#mitochondrial_bioenergetic_collapse"><strong>Mitochondrial / Bioenergetic Collapse</strong></a>
+        <div class="subtle">PRKN</div>
+      </td>
+      <td>ATP / bioenergetic rescue +3 more</td>
+      <td>logic-only</td>
+      <td><span class="pill not_available">not_available</span></td>
+      <td>
+        <span class="pill supported">supported</span>
+        <span class="pill bounded">bounded</span>
+      </td>
+      <td>Decide whether PRKN should stay primary over CYBB once the first attachment pass shows whether the better perturbation is mitochondrial rescue or ROS suppression.</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#neuroinflammation_microglial_state_change"><strong>Neuroinflammation / Microglial State Change</strong></a>
+        <div class="subtle">NLRP3</div>
+      </td>
+      <td>IL-1beta / IL-6 / TNF-alpha network +3 more</td>
+      <td>logic-only</td>
+      <td><span class="pill not_available">not_available</span></td>
+      <td>
+        <span class="pill supported">supported</span>
+        <span class="pill bounded">bounded</span>
+      </td>
+      <td>Decide whether NLRP3 should stay primary over IL1B or TNF once the first inflammatory attachment pass clarifies whether the cleaner perturbation is the inflammasome itself or a downstream cytokine axis.</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#axonal_degeneration"><strong>Axonal Degeneration</strong></a>
+        <div class="subtle">SARM1</div>
+      </td>
+      <td>White-matter preservation +3 more</td>
+      <td>logic-only</td>
+      <td><span class="pill not_available">not_available</span></td>
+      <td>
+        <span class="pill provisional">provisional</span>
+        <span class="pill bounded">bounded</span>
+      </td>
+      <td>Decide whether SARM1 should remain a program-level primary target or whether this lane should stay readout-led until stronger direct perturbation evidence accumulates.</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#glymphatic_astroglial_clearance_failure"><strong>Glymphatic / Astroglial Clearance Failure</strong></a>
+        <div class="subtle">AQP4</div>
+      </td>
+      <td>DTI-ALPS / clearance-flow signal +3 more</td>
+      <td>logic-only</td>
+      <td><span class="pill not_available">not_available</span></td>
+      <td>
+        <span class="pill provisional">provisional</span>
+        <span class="pill bounded">bounded</span>
+      </td>
+      <td>Decide whether AQP4 should stay primary once the first clearance packet shows whether the best readout is DTI-ALPS, tau burden, or astroglial stress.</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#tau_proteinopathy_progression"><strong>Tau / Proteinopathy Progression</strong></a>
+        <div class="subtle">DYRK1A</div>
+      </td>
+      <td>p-tau / phospho-tau burden +3 more</td>
+      <td>compound</td>
+      <td><span class="pill not_available">not_available</span></td>
+      <td>
+        <span class="pill provisional">provisional</span>
+        <span class="pill bounded">bounded</span>
+      </td>
+      <td>Decide whether DYRK1A should stay primary or whether the tau lane should temporarily be treated as an upstream-bridge packet anchored on NLRP3 or AQP4 until another direct perturbation anchor lands.</td>
+    </tr>
+    </tbody>
+        </table>
+      </section>
+
+      
+    <article class="detail-card" id="blood_brain_barrier_failure">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">Tight-junction repair and barrier stabilization before inflammatory spillover compounds the injury.</p>
+          <h2>Blood-Brain Barrier Failure</h2>
+          <p>Prioritize an OCLN-centered barrier-repair packet first because the current BBB target packets are strongest around OCLN, CLDN5, and TJP1, and this lane already anchors the BBB-to-immune-infiltration bridge. Direct corpus signal: The treatment repaired BBB structure and function.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported">Support: supported</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill stroke_analog">Analog: stroke_analog</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Primary target now</h3>
+          <p><strong>OCLN</strong></p>
+          <p>OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.</p>
+          <div class="chip-row"><span class="chip">CLDN5</span><span class="chip">TJP1</span><span class="chip">MMP9</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Intervention window</h3>
+          <div class="chip-row"><span class="chip">acute</span><span class="chip">subacute</span></div>
+          <p class="note">Perturbation type: <strong>barrier_module</strong></p>
+          <p class="note">Intervention class: <strong>barrier repair / tight-junction stabilization</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Expected readouts</h3>
+          <ul class="readout-list"><li><strong>Barrier leakage</strong> <span class="subtle">down over hours_to_days</span></li><li><strong>OCLN / CLDN5 / TJP1 restoration</strong> <span class="subtle">up over hours_to_days</span></li><li><strong>Cerebral blood flow</strong> <span class="subtle">up_or_stabilize over days</span></li><li><strong>Downstream inflammatory spillover</strong> <span class="subtle">down over days_to_weeks</span></li></ul>
+          <p class="note">Sample types: <strong>tissue, imaging, plasma</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker panel</h3>
+          <div class="chip-row"><span class="chip">OCLN</span><span class="chip">CLDN5</span><span class="chip">TJP1</span><span class="chip">Cerebral blood flow</span><span class="chip">GFAP</span><span class="chip">NfL</span><span class="chip">Evans blue</span><span class="chip">gadolinium leakage</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">Optical density (OD) readings</span><span class="chip">MBP protein expression</span><span class="chip">NF-200 protein expression</span><span class="chip">PSD-95 protein expression</span><span class="chip">IL-1 (99)</span><span class="chip">IL-6 (58)</span><span class="chip">TNF (54)</span><span class="chip">NLRP3 (51)</span><span class="chip">GFAP (23)</span><span class="chip">HMGB1 (22)</span><span class="chip">CBF (14)</span><span class="chip">AQP4 (5)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41622772, 41751210, 41752185, 41740873, 41683989, 41103638, 41135688, 41157272, 41173520, 41197779, 41327381, 41446731, 41079361, 41177833, 41183617, 41267966, 41328339</strong></p>
+          <p class="note">Source mix: <strong>lane 67 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        
+    <article class="meta-card">
+      <h3>Compound support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no compound attachment surfaced in this build</p>
+    </article>
+    
+        
+    <article class="meta-card">
+      <h3>Trial support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no trial attachment surfaced in this build</p>
+    </article>
+    
+        <article class="meta-card">
+          <h3>Genomics support</h3>
+          <p><span class="pill not_available">not_available</span></p>
+          <p class="note">no exported genomics support in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Parent layers</h3>
+          <p><strong>Transitions:</strong> bbb_permeability_increase_to_peripheral_immune_infiltration</p>
+          <p><strong>Objects:</strong> microglial_chronic_activation, neurovascular_uncoupling</p>
+        </article>
+        <article class="meta-card">
+          <h3>Boundaries</h3>
+          <p><strong>Contradictions:</strong> Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover; keep barrier-module claims tied to permeability outcomes, not junction markers alone.</p>
+          <p><strong>Disconfirming evidence:</strong> no direct compound or trial attachment surfaced in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Next decision</h3>
+          <p>Decide whether OCLN should stay primary over MMP9 once the first barrier-module attachment pass is complete.</p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Best next experiment</h3>
+          <p>Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="mitochondrial_bioenergetic_collapse">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">Rescue mitochondrial quality control early enough to blunt downstream inflammatory amplification.</p>
+          <h2>Mitochondrial / Bioenergetic Collapse</h2>
+          <p>Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Direct corpus signal: UC-MSC-derived exosomes reduce neuronal apoptosis via PINK1/Parkin-mediated mitophagy.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported">Support: supported</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill mixed_neurodegeneration_analog">Analog: mixed_neurodegeneration_analog</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Primary target now</h3>
+          <p><strong>PRKN</strong></p>
+          <p>PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.</p>
+          <div class="chip-row"><span class="chip">CYBB</span><span class="chip">CAT</span><span class="chip">PINK1</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Intervention window</h3>
+          <div class="chip-row"><span class="chip">acute</span><span class="chip">subacute</span></div>
+          <p class="note">Perturbation type: <strong>gene_target</strong></p>
+          <p class="note">Intervention class: <strong>mitochondrial quality-control modulation</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Expected readouts</h3>
+          <ul class="readout-list"><li><strong>ATP / bioenergetic rescue</strong> <span class="subtle">up over hours_to_days</span></li><li><strong>ROS burden</strong> <span class="subtle">down over hours_to_days</span></li><li><strong>Apoptosis pressure</strong> <span class="subtle">down over days</span></li><li><strong>Inflammasome spillover</strong> <span class="subtle">down over days_to_weeks</span></li></ul>
+          <p class="note">Sample types: <strong>tissue, plasma, blood_cell_or_platelet_assay</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker panel</h3>
+          <div class="chip-row"><span class="chip">ATP</span><span class="chip">ROS</span><span class="chip">NfL</span><span class="chip">Bcl-2</span><span class="chip">TUNEL+/NeuN+</span><span class="chip">cerebral oxygen saturation</span><span class="chip">NLRP3</span><span class="chip">Nf-L</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span><span class="chip">TUNEL+/NeuN+ cells</span><span class="chip">Cerebral blood flow</span><span class="chip">eATP</span><span class="chip">ros (148)</span><span class="chip">ROS (30)</span><span class="chip">ATP (19)</span><span class="chip">Atp (3)</span><span class="chip">PINK1 (1)</span><span class="chip">IL-1 (99)</span><span class="chip">IL-6 (58)</span><span class="chip">TNF (54)</span><span class="chip">NLRP3 (51)</span><span class="chip">GFAP (23)</span><span class="chip">HMGB1 (22)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41651694, 41480492, 41576094, 41764101, 41648326, 41267966, 41876825, 41735605, 41153827, 41667502, 41625091, 41103638, 41709060, 41069428, 41110648, 41129987, 41157305, 41175081, 41179995, 41039850, 41135688, 41157272, 41173520, 41197779, 41327381, 41446731</strong></p>
+          <p class="note">Source mix: <strong>lane 50 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        
+    <article class="meta-card">
+      <h3>Compound support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no compound attachment surfaced in this build</p>
+    </article>
+    
+        
+    <article class="meta-card">
+      <h3>Trial support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no trial attachment surfaced in this build</p>
+    </article>
+    
+        <article class="meta-card">
+          <h3>Genomics support</h3>
+          <p><span class="pill not_available">not_available</span></p>
+          <p class="note">no exported genomics support in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Parent layers</h3>
+          <p><strong>Transitions:</strong> mitochondrial_ros_to_inflammasome_activation</p>
+          <p><strong>Objects:</strong> persistent_metabolic_dysfunction, microglial_chronic_activation</p>
+        </article>
+        <article class="meta-card">
+          <h3>Boundaries</h3>
+          <p><strong>Contradictions:</strong> Study found no significant correlation, contradicting the hypothesis of cumulative damage.; Oxidative-stress markers may improve without real ATP rescue or downstream inflammasome relief; keep this packet tied to both mitochondrial and inflammatory readouts.</p>
+          <p><strong>Disconfirming evidence:</strong> no direct compound or trial attachment surfaced in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Next decision</h3>
+          <p>Decide whether PRKN should stay primary over CYBB once the first attachment pass shows whether the better perturbation is mitochondrial rescue or ROS suppression.</p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Best next experiment</h3>
+          <p>Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="neuroinflammation_microglial_state_change">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">Blunt the inflammasome and cytokine network without pretending one marker equals the whole inflammatory state.</p>
+          <h2>Neuroinflammation / Microglial State Change</h2>
+          <p>Use NLRP3 as the primary perturbation node because it is the strongest inflammatory target packet in the repo, links directly to the mito-to-inflammasome transition, and gives a cleaner perturbation frame than chasing one downstream cytokine at a time. Direct corpus signal: Extracellular ATP (eATP) exhibits dual roles in TBI: high concentrations activate P2X7R, leading to NLRP3 inflammasome activation and pyroptosis, while low concentrations activate SUR1–TRPM4–AQP4 complexes, contributing to cerebral edema.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported">Support: supported</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill mixed_neurodegeneration_analog">Analog: mixed_neurodegeneration_analog</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Primary target now</h3>
+          <p><strong>NLRP3</strong></p>
+          <p>NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.</p>
+          <div class="chip-row"><span class="chip">IL1B</span><span class="chip">TNF</span><span class="chip">C3</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Intervention window</h3>
+          <div class="chip-row"><span class="chip">acute</span><span class="chip">subacute</span><span class="chip">chronic</span></div>
+          <p class="note">Perturbation type: <strong>pathway_target</strong></p>
+          <p class="note">Intervention class: <strong>inflammasome / cytokine network modulation</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Expected readouts</h3>
+          <ul class="readout-list"><li><strong>IL-1beta / IL-6 / TNF-alpha network</strong> <span class="subtle">down over hours_to_days</span></li><li><strong>NLRP3 inflammasome burden</strong> <span class="subtle">down over hours_to_days</span></li><li><strong>GFAP and glial stress</strong> <span class="subtle">down over days_to_weeks</span></li><li><strong>Tau amplification pressure</strong> <span class="subtle">down over days_to_weeks</span></li></ul>
+          <p class="note">Sample types: <strong>plasma, CSF, tissue</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker panel</h3>
+          <div class="chip-row"><span class="chip">NLRP3</span><span class="chip">IL-1beta</span><span class="chip">IL-6</span><span class="chip">TNF-alpha</span><span class="chip">GFAP</span><span class="chip">CRP</span><span class="chip">QuinA</span><span class="chip">DBSI-RF</span><span class="chip">IL-1β</span><span class="chip">TNF-α</span><span class="chip">IL-10</span><span class="chip">IL-1 (99)</span><span class="chip">IL-6 (58)</span><span class="chip">TNF (54)</span><span class="chip">NLRP3 (51)</span><span class="chip">GFAP (23)</span><span class="chip">HMGB1 (22)</span><span class="chip">ros (148)</span><span class="chip">ROS (30)</span><span class="chip">ATP (19)</span><span class="chip">Atp (3)</span><span class="chip">PINK1 (1)</span><span class="chip">tau (105)</span><span class="chip">Tau (27)</span><span class="chip">GFAP (21)</span><span class="chip">p-tau (12)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41157272, 41103638, 41663365, 41734021, 41752185, 41756234, 41756282, 41824127, 41612383, 41803087, 41480492, 41622481, 41659975, 41683989, 41709060, 41712436, 41726892, 41737534, 41769894, 41803953, 41880282, 41740873, 41809632, 41039850, 41135688, 41173520, 41197779, 41327381, 41446731, 41069428, 41110648, 41129987, 41153827, 41157305, 41175081, 41179995, 41328339, 41496386, 41594797, 41651695, 41665901, 41700070</strong></p>
+          <p class="note">Source mix: <strong>lane 100 full-text-like / 28 abstract-only; direct target mentions 11 full-text-like / 3 abstract-only</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        
+    <article class="meta-card">
+      <h3>Compound support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no compound attachment surfaced in this build</p>
+    </article>
+    
+        
+    <article class="meta-card">
+      <h3>Trial support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no trial attachment surfaced in this build</p>
+    </article>
+    
+        <article class="meta-card">
+          <h3>Genomics support</h3>
+          <p><span class="pill not_available">not_available</span></p>
+          <p class="note">no exported genomics support in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Parent layers</h3>
+          <p><strong>Transitions:</strong> bbb_permeability_increase_to_peripheral_immune_infiltration, mitochondrial_ros_to_inflammasome_activation, neuroinflammation_to_tau_proteinopathy_progression</p>
+          <p><strong>Objects:</strong> microglial_chronic_activation, persistent_metabolic_dysfunction, tauopathy_progression</p>
+        </article>
+        <article class="meta-card">
+          <h3>Boundaries</h3>
+          <p><strong>Contradictions:</strong> Study found no significant correlation, contradicting the hypothesis of cumulative damage.; Single-cytokine changes can overstate inflammatory control; keep this packet tied to a network-level cytokine plus glial-stress readout panel.</p>
+          <p><strong>Disconfirming evidence:</strong> no direct compound or trial attachment surfaced in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Next decision</h3>
+          <p>Decide whether NLRP3 should stay primary over IL1B or TNF once the first inflammatory attachment pass clarifies whether the cleaner perturbation is the inflammasome itself or a downstream cytokine axis.</p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Best next experiment</h3>
+          <p>Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="axonal_degeneration">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">Treat axonal degeneration as a readout-rich degeneration program that still needs stronger direct perturbation anchors.</p>
+          <h2>Axonal Degeneration</h2>
+          <p>Treat axonal degeneration as a SARM1-centered degeneration program for now because the current evidence supports SARM1 activation as part of the axonal-degeneration chain, but the packet still needs stronger direct perturbation support than BBB, mitochondrial, or inflammasome lanes. Direct corpus signal: Collateral sprouting is independent of Sarm1-mediated Wallerian degeneration.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill mixed_neurodegeneration_analog">Analog: mixed_neurodegeneration_analog</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Primary target now</h3>
+          <p><strong>SARM1</strong></p>
+          <p>SARM1 is the strongest TBI-core axonal-degeneration program anchor in the current repo, even though this lane is still more readout-rich than target-rich.</p>
+          <div class="chip-row"><span class="chip">PRKN</span><span class="chip">DYRK1A</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Intervention window</h3>
+          <div class="chip-row"><span class="chip">subacute</span><span class="chip">chronic</span></div>
+          <p class="note">Perturbation type: <strong>pathway_target</strong></p>
+          <p class="note">Intervention class: <strong>axonal degeneration program modulation</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Expected readouts</h3>
+          <ul class="readout-list"><li><strong>White-matter preservation</strong> <span class="subtle">up_or_stabilize over weeks_to_months</span></li><li><strong>Neuroaxonal spillover</strong> <span class="subtle">down over days_to_weeks</span></li><li><strong>Network dysfunction</strong> <span class="subtle">up_or_stabilize over weeks_to_months</span></li><li><strong>Cognitive recovery trajectory</strong> <span class="subtle">up over weeks_to_months</span></li></ul>
+          <p class="note">Sample types: <strong>imaging, plasma, functional_testing</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker panel</h3>
+          <div class="chip-row"><span class="chip">FA</span><span class="chip">MD</span><span class="chip">RD</span><span class="chip">NfL</span><span class="chip">Tau</span><span class="chip">UCH-L1</span><span class="chip">Fractional Anisotropy (FA)</span><span class="chip">GFAP</span><span class="chip">Mean Diffusivity (MD)</span><span class="chip">Radial Diffusivity (RD)</span><span class="chip">FA (169)</span><span class="chip">fa (52)</span><span class="chip">MD (51)</span><span class="chip">RD (32)</span><span class="chip">FDC (24)</span><span class="chip">nfl (20)</span><span class="chip">nfl (7)</span><span class="chip">PSD95 (6)</span><span class="chip">PSD-95 (3)</span><span class="chip">GFAP (2)</span><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">tau (6)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">rd (2)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41198676, 41267966, 41157305, 41799860, 41153827, 41300163, 41126936, 41100047, 41142161, 41327381, 41397889, 41480492, 41576094, 41192919, 41577806, 41604614, 41740080, 41026543, 41173520, 41032947, 41039850, 41069428, 41079361, 41098044, 41110648, 41110777, 41394307, 41618372, 41622461, 41667502, 41675841, 41700019, 41785317, 41826372, 41132417, 41157272, 41234125, 41513584, 41564671, 41669533, 41709584</strong></p>
+          <p class="note">Source mix: <strong>lane 96 full-text-like / 39 abstract-only; direct target mentions 2 full-text-like / 1 abstract-only</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        
+    <article class="meta-card">
+      <h3>Compound support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no compound attachment surfaced in this build</p>
+    </article>
+    
+        
+    <article class="meta-card">
+      <h3>Trial support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no trial attachment surfaced in this build</p>
+    </article>
+    
+        <article class="meta-card">
+          <h3>Genomics support</h3>
+          <p><span class="pill not_available">not_available</span></p>
+          <p class="note">no exported genomics support in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Parent layers</h3>
+          <p><strong>Transitions:</strong> axonal_degeneration_to_chronic_network_dysfunction</p>
+          <p><strong>Objects:</strong> white_matter_degeneration, synaptic_loss, cognitive_decline_phenotype</p>
+        </article>
+        <article class="meta-card">
+          <h3>Boundaries</h3>
+          <p><strong>Contradictions:</strong> Study found no significant correlation, contradicting the hypothesis of cumulative damage.; After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury.; Imaging shifts can reflect edema resolution rather than true axonal rescue, and plasma neuroaxonal markers can remain elevated despite apparent structural improvement.</p>
+          <p><strong>Disconfirming evidence:</strong> no direct compound or trial attachment surfaced in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Next decision</h3>
+          <p>Decide whether SARM1 should remain a program-level primary target or whether this lane should stay readout-led until stronger direct perturbation evidence accumulates.</p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Best next experiment</h3>
+          <p>Run an axonal-degeneration packet with imaging, plasma neuroaxonal spillover, and network-function readouts so the lane is not judged on DTI alone.</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="glymphatic_astroglial_clearance_failure">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">Focus on the AQP4 clearance module and require a real clearance readout, not just astroglial stress markers.</p>
+          <h2>Glymphatic / Astroglial Clearance Failure</h2>
+          <p>Use an AQP4-centered clearance module because it is the strongest lane-native target currently represented in the corpus, and the glymphatic-to-tau transition already makes downstream protein burden an interpretable readout. Direct corpus signal: These benefits were abolished by the aquaporin-4 inhibitor TGN-020, indicating that mNGF improves TBI outcome by correcting AQP4 dysfunction.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill dementia_analog">Analog: dementia_analog</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Primary target now</h3>
+          <p><strong>AQP4</strong></p>
+          <p>AQP4 is the clearest lane-native clearance target in the current repo and sits inside both glymphatic and neurovascular reasoning.</p>
+          <div class="chip-row"><span class="chip">OCLN</span><span class="chip">CLDN5</span><span class="chip">C3</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Intervention window</h3>
+          <div class="chip-row"><span class="chip">subacute</span><span class="chip">chronic</span></div>
+          <p class="note">Perturbation type: <strong>barrier_module</strong></p>
+          <p class="note">Intervention class: <strong>astroglial clearance restoration</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Expected readouts</h3>
+          <ul class="readout-list"><li><strong>DTI-ALPS / clearance-flow signal</strong> <span class="subtle">up over days_to_weeks</span></li><li><strong>AQP4 polarization</strong> <span class="subtle">normalize over days_to_weeks</span></li><li><strong>Retained tau / protein burden</strong> <span class="subtle">down over weeks_to_months</span></li><li><strong>Astroglial stress</strong> <span class="subtle">down over days_to_weeks</span></li></ul>
+          <p class="note">Sample types: <strong>imaging, tissue, plasma</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker panel</h3>
+          <div class="chip-row"><span class="chip">AQP4</span><span class="chip">DTI-ALPS</span><span class="chip">GFAP</span><span class="chip">C3</span><span class="chip">tau</span><span class="chip">UCH-L1</span><span class="chip">DTI-ALPS index</span><span class="chip">NfL</span><span class="chip">MBP protein expression</span><span class="chip">NF-200 protein expression</span><span class="chip">CBF (14)</span><span class="chip">AQP4 (5)</span><span class="chip">tau (105)</span><span class="chip">Tau (27)</span><span class="chip">GFAP (21)</span><span class="chip">p-tau (12)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41179995, 41039850, 41648326, 41700070, 41824127, 41153827, 41795770, 41827388, 41642456, 41667502, 41103638, 41301762, 41747594, 41792880, 41801080, 41853701, 41079361, 41173520, 41177833, 41183617, 41267966, 41328339, 41496386, 41594797, 41651695, 41665901, 41683989</strong></p>
+          <p class="note">Source mix: <strong>lane 61 full-text-like / 19 abstract-only; direct target mentions 6 full-text-like / 1 abstract-only</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        
+    <article class="meta-card">
+      <h3>Compound support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no compound attachment surfaced in this build</p>
+    </article>
+    
+        
+    <article class="meta-card">
+      <h3>Trial support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no trial attachment surfaced in this build</p>
+    </article>
+    
+        <article class="meta-card">
+          <h3>Genomics support</h3>
+          <p><span class="pill not_available">not_available</span></p>
+          <p class="note">no exported genomics support in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Parent layers</h3>
+          <p><strong>Transitions:</strong> glymphatic_failure_to_tau_protein_accumulation</p>
+          <p><strong>Objects:</strong> neurovascular_uncoupling, tauopathy_progression</p>
+        </article>
+        <article class="meta-card">
+          <h3>Boundaries</h3>
+          <p><strong>Contradictions:</strong> AQP4 abundance can rise while polarization remains abnormal, and glial-stress markers can shift without any real movement in clearance readouts or tau burden.</p>
+          <p><strong>Disconfirming evidence:</strong> no direct compound or trial attachment surfaced in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Next decision</h3>
+          <p>Decide whether AQP4 should stay primary once the first clearance packet shows whether the best readout is DTI-ALPS, tau burden, or astroglial stress.</p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Best next experiment</h3>
+          <p>Run a clearance packet anchored on AQP4 with DTI-ALPS, polarization/localization, and downstream tau burden readouts across the subacute-to-chronic window.</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="tau_proteinopathy_progression">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">Use the direct DYRK1A perturbation anchor, but keep tau claims bounded until the lane itself is less seeded.</p>
+          <h2>Tau / Proteinopathy Progression</h2>
+          <p>Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill mixed_neurodegeneration_analog">Analog: mixed_neurodegeneration_analog</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Primary target now</h3>
+          <p><strong>DYRK1A</strong></p>
+          <p>DYRK1A is the strongest direct perturbation anchor surfaced in the current repo for this lane because the corpus already includes DYRK1A inhibition with SM07883 in a chronic repetitive head-injury model.</p>
+          <div class="chip-row"><span class="chip">NLRP3</span><span class="chip">AQP4</span></div>
+        </article>
+        <article class="meta-card">
+          <h3>Intervention window</h3>
+          <div class="chip-row"><span class="chip">subacute</span><span class="chip">chronic</span></div>
+          <p class="note">Perturbation type: <strong>gene_target</strong></p>
+          <p class="note">Intervention class: <strong>tau-lowering / anti-proteinopathy modulation</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Expected readouts</h3>
+          <ul class="readout-list"><li><strong>p-tau / phospho-tau burden</strong> <span class="subtle">down over days_to_weeks</span></li><li><strong>Circulating tau variants</strong> <span class="subtle">down over weeks</span></li><li><strong>Glial amplification</strong> <span class="subtle">down over days_to_weeks</span></li><li><strong>Chronic functional recovery</strong> <span class="subtle">up over weeks_to_months</span></li></ul>
+          <p class="note">Sample types: <strong>plasma, tissue, functional_testing</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Biomarker panel</h3>
+          <div class="chip-row"><span class="chip">BD-tau</span><span class="chip">t-tau</span><span class="chip">p-tau</span><span class="chip">AT8</span><span class="chip">GFAP</span><span class="chip">Iba1</span><span class="chip">CD45</span><span class="chip">Tau</span><span class="chip">NfL</span><span class="chip">UCH-L1</span><span class="chip">S100B</span><span class="chip">tau (105)</span><span class="chip">Tau (27)</span><span class="chip">GFAP (21)</span><span class="chip">p-tau (12)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span><span class="chip">nfl (7)</span><span class="chip">PSD95 (6)</span><span class="chip">PSD-95 (3)</span><span class="chip">GFAP (2)</span><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">tau (6)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">rd (2)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41651695, 41508043, 41723222, 41665901, 41853047, 41496386, 41683989, 41179995, 41809435, 41328339, 41809632, 41700070, 41747594, 41739474, 41893300, 41594797, 41394307, 41618372, 41622461, 41667502, 41675841, 41700019, 41785317, 41826372, 41132417, 41157272, 41234125, 41300163, 41513584, 41564671, 41669533, 41709584</strong></p>
+          <p class="note">Source mix: <strong>lane 23 full-text-like / 3 abstract-only; direct target mentions 1 full-text-like / 0 abstract-only</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        
+    <article class="meta-card">
+      <h3>Compound support</h3>
+      <p><span class="pill provisional">provisional</span></p>
+      <div class="chip-row"><span class="chip">SM07883</span></div>
+      <p class="note">direct perturbation anchor surfaced inside the current TBI corpus</p>
+    </article>
+    
+        
+    <article class="meta-card">
+      <h3>Trial support</h3>
+      <p><span class="pill not_available">not_available</span></p>
+      <div class="chip-row"><span class="chip muted">No attached items</span></div>
+      <p class="note">no trial attachment surfaced in this build</p>
+    </article>
+    
+        <article class="meta-card">
+          <h3>Genomics support</h3>
+          <p><span class="pill not_available">not_available</span></p>
+          <p class="note">no exported genomics support in this build</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Parent layers</h3>
+          <p><strong>Transitions:</strong> neuroinflammation_to_tau_proteinopathy_progression, glymphatic_failure_to_tau_protein_accumulation, tau_proteinopathy_progression_to_chronic_network_dysfunction</p>
+          <p><strong>Objects:</strong> tauopathy_progression, synaptic_loss, cognitive_decline_phenotype</p>
+        </article>
+        <article class="meta-card">
+          <h3>Boundaries</h3>
+          <p><strong>Contradictions:</strong> After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury.; Circulating tau can fall without matching tissue or functional improvement, and a single chronic model context is not enough to treat the lane as fully hardened.</p>
+          <p><strong>Disconfirming evidence:</strong> none_detected</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Next decision</h3>
+          <p>Decide whether DYRK1A should stay primary or whether the tau lane should temporarily be treated as an upstream-bridge packet anchored on NLRP3 or AQP4 until another direct perturbation anchor lands.</p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Best next experiment</h3>
+          <p>Extend the DYRK1A packet beyond phospho-tau alone by pairing tissue tau suppression with circulating tau variants and chronic function.</p>
+        </article>
+      </div>
+    </article>
+    
+    </main>
+  </body>
+</html>
