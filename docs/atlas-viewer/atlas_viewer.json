@@ -7,25 +7,25 @@
       "actions_url": "https://github.com/matthewdholtkamp/testfile/actions"
     },
     "generated_from": {
-      "index": "reports/mechanism_dossiers/mechanism_dossier_index_2026-03-28_210614.md",
-      "chapter": "reports/atlas_chapter_draft/starter_atlas_chapter_draft_2026-03-28_210614.md",
-      "chapter_synthesis": "reports/atlas_chapter_synthesis_draft/starter_atlas_chapter_synthesis_draft_2026-03-28_210614.md",
-      "ledger": "reports/atlas_chapter_ledger/starter_atlas_chapter_evidence_ledger_2026-03-28_210614.csv",
+      "index": "reports/mechanism_dossiers/mechanism_dossier_index_2026-03-28_212908.md",
+      "chapter": "reports/atlas_chapter_draft/starter_atlas_chapter_draft_2026-03-28_212908.md",
+      "chapter_synthesis": "reports/atlas_chapter_synthesis_draft/starter_atlas_chapter_synthesis_draft_2026-03-28_212909.md",
+      "ledger": "reports/atlas_chapter_ledger/starter_atlas_chapter_evidence_ledger_2026-03-28_212909.csv",
       "workpack": "",
-      "bridge": "reports/mechanism_dossiers/translational_bridge_2026-03-28_210614.csv",
-      "release_manifest": "reports/atlas_release_manifest/atlas_release_manifest_2026-03-28_210614.json",
+      "bridge": "reports/mechanism_dossiers/translational_bridge_2026-03-28_212908.csv",
+      "release_manifest": "reports/atlas_release_manifest/atlas_release_manifest_2026-03-28_212909.json",
       "decision_brief": "",
-      "idea_gate": "reports/idea_generation_gate/idea_generation_gate_2026-03-28_210615.json",
-      "hypothesis_candidates": "reports/hypothesis_candidates/hypothesis_candidates_2026-03-28_210615.json",
-      "synthesis": "reports/mechanistic_synthesis/mechanistic_synthesis_blocks_2026-03-28_210614.csv",
-      "review_packet_index": "reports/mechanism_review_packets/mechanism_review_packet_index_2026-03-28_210614.md",
+      "idea_gate": "reports/idea_generation_gate/idea_generation_gate_2026-03-28_212909.json",
+      "hypothesis_candidates": "reports/hypothesis_candidates/hypothesis_candidates_2026-03-28_212909.json",
+      "synthesis": "reports/mechanistic_synthesis/mechanistic_synthesis_blocks_2026-03-28_212909.csv",
+      "review_packet_index": "reports/mechanism_review_packets/mechanism_review_packet_index_2026-03-28_212909.md",
       "target_packet_index": "",
-      "program_status": "reports/program_status/program_status_report_2026-03-28_210350.md",
+      "program_status": "reports/program_status/program_status_report_2026-03-28_212654.md",
       "chembl_template": "",
       "open_targets_template": "",
-      "clinicaltrials_template": "reports/connector_candidate_manifest/templates/clinicaltrials_gov_import_template_2026-03-28_210346.csv",
-      "preprint_template": "reports/connector_candidate_manifest/templates/biorxiv_medrxiv_import_template_2026-03-28_210346.csv",
-      "tenx_template": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-03-28_210346.csv"
+      "clinicaltrials_template": "reports/connector_candidate_manifest/templates/clinicaltrials_gov_import_template_2026-03-28_212651.csv",
+      "preprint_template": "reports/connector_candidate_manifest/templates/biorxiv_medrxiv_import_template_2026-03-28_212651.csv",
+      "tenx_template": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-03-28_212651.csv"
     }
   },
   "summary": {
@@ -225,9 +225,9 @@
       "trial_rows": 0,
       "preprint_rows": 0,
       "genomics_rows": 0,
-      "source_path": "reports/mechanism_dossiers/blood_brain_barrier_disruption_dossier_2026-03-28_210614.md",
-      "source_href": "../../reports/mechanism_dossiers/blood_brain_barrier_disruption_dossier_2026-03-28_210614.md",
-      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers/blood_brain_barrier_disruption_dossier_2026-03-28_210614.md"
+      "source_path": "reports/mechanism_dossiers/blood_brain_barrier_disruption_dossier_2026-03-28_212908.md",
+      "source_href": "../../reports/mechanism_dossiers/blood_brain_barrier_disruption_dossier_2026-03-28_212908.md",
+      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers/blood_brain_barrier_disruption_dossier_2026-03-28_212908.md"
     },
     {
       "id": "mitochondrial-dysfunction",
@@ -396,9 +396,9 @@
       "trial_rows": 0,
       "preprint_rows": 0,
       "genomics_rows": 0,
-      "source_path": "reports/mechanism_dossiers/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-28_210614.md",
-      "source_href": "../../reports/mechanism_dossiers/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-28_210614.md",
-      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-28_210614.md"
+      "source_path": "reports/mechanism_dossiers/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-28_212908.md",
+      "source_href": "../../reports/mechanism_dossiers/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-28_212908.md",
+      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers/mitochondrial_bioenergetic_dysfunction_dossier_2026-03-28_212908.md"
     },
     {
       "id": "neuroinflammation-microglial-activation",
@@ -585,9 +585,9 @@
       "trial_rows": 0,
       "preprint_rows": 0,
       "genomics_rows": 0,
-      "source_path": "reports/mechanism_dossiers/neuroinflammation_microglial_activation_dossier_2026-03-28_210614.md",
-      "source_href": "../../reports/mechanism_dossiers/neuroinflammation_microglial_activation_dossier_2026-03-28_210614.md",
-      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers/neuroinflammation_microglial_activation_dossier_2026-03-28_210614.md"
+      "source_path": "reports/mechanism_dossiers/neuroinflammation_microglial_activation_dossier_2026-03-28_212908.md",
+      "source_href": "../../reports/mechanism_dossiers/neuroinflammation_microglial_activation_dossier_2026-03-28_212908.md",
+      "source_github_url": "https://github.com/matthewdholtkamp/testfile/blob/main/reports/mechanism_dossiers/neuroinflammation_microglial_activation_dossier_2026-03-28_212908.md"
     }
   ],
   "chapter": {
@@ -1276,7 +1276,7 @@
         "demo_reason": "mechanism is better used as a supporting or follow-on section than the primary demo chapter"
       }
     ],
-    "quality_gate_csv": "reports/atlas_quality_gate/atlas_quality_gate_2026-03-28_210614.csv"
+    "quality_gate_csv": "reports/atlas_quality_gate/atlas_quality_gate_2026-03-28_212909.csv"
   },
   "decision_brief": {},
   "idea_gate": {
@@ -1361,7 +1361,7 @@
         "max_queue_burden": 12
       }
     },
-    "release_manifest_csv": "reports/atlas_release_manifest/atlas_release_manifest_2026-03-28_210614.csv"
+    "release_manifest_csv": "reports/atlas_release_manifest/atlas_release_manifest_2026-03-28_212909.csv"
   },
   "hypothesis_candidates": {
     "rows": [
@@ -1952,12 +1952,12 @@
       "actions": [
         {
           "label": "Open hypothesis candidates",
-          "href": "../../reports/hypothesis_candidates/hypothesis_candidates_2026-03-28_210615.json",
+          "href": "../../reports/hypothesis_candidates/hypothesis_candidates_2026-03-28_212909.json",
           "kind": "local"
         },
         {
           "label": "Open chapter synthesis draft",
-          "href": "../../reports/atlas_chapter_synthesis_draft/starter_atlas_chapter_synthesis_draft_2026-03-28_210614.md",
+          "href": "../../reports/atlas_chapter_synthesis_draft/starter_atlas_chapter_synthesis_draft_2026-03-28_212909.md",
           "kind": "local"
         }
       ]
@@ -1973,7 +1973,7 @@
       "actions": [
         {
           "label": "Open review packets",
-          "href": "../../reports/mechanism_review_packets/mechanism_review_packet_index_2026-03-28_210614.md",
+          "href": "../../reports/mechanism_review_packets/mechanism_review_packet_index_2026-03-28_212909.md",
           "kind": "local"
         },
         {
@@ -1994,7 +1994,7 @@
       "actions": [
         {
           "label": "Open 10x template",
-          "href": "../../reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-03-28_210346.csv",
+          "href": "../../reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-03-28_212651.csv",
           "kind": "local"
         },
         {
