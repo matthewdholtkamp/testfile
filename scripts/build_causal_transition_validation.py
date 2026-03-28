@@ -7,7 +7,7 @@ from glob import glob
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-REQUIRED_SEED_TRANSITIONS = [
+REQUIRED_STARTER_PATHS = [
     {
         'label': 'Blood-Brain Barrier Failure -> Neuroinflammation / Microglial State Change',
         'upstream_lane_id': 'blood_brain_barrier_failure',
@@ -29,6 +29,16 @@ REQUIRED_SEED_TRANSITIONS = [
         'downstream_lane_id': 'tau_proteinopathy_progression',
     },
 ]
+
+VALID_COVERAGE_ROLES = {
+    'bridge',
+    'internal_only',
+    'sink_only',
+    'source_only',
+    'sink_plus_internal',
+    'source_plus_internal',
+    'orphan',
+}
 
 REQUIRED_METADATA_FIELDS = {
     'claims_csv': ['claims_csv'],
@@ -175,6 +185,7 @@ def main():
     transition_json = args.transition_json or latest_report('causal_transition_index_*.json')
     payload = read_json(transition_json)
     transitions = payload.get('rows', [])
+    lane_coverage = payload.get('summary', {}).get('lane_coverage', [])
     transition_map = {}
     transition_pairs = set()
 
@@ -237,11 +248,11 @@ def main():
         if upstream_lane_id and downstream_lane_id:
             transition_pairs.add((upstream_lane_id, downstream_lane_id))
 
-    for seed in REQUIRED_SEED_TRANSITIONS:
+    for seed in REQUIRED_STARTER_PATHS:
         pair = (seed['upstream_lane_id'], seed['downstream_lane_id'])
         if pair not in transition_pairs:
             errors.append(
-                f"Missing required seed transition: {seed['label']} "
+                f"Missing required starter path: {seed['label']} "
                 f"({seed['upstream_lane_id']} -> {seed['downstream_lane_id']})"
             )
 
@@ -249,6 +260,39 @@ def main():
     for label, keys in REQUIRED_METADATA_FIELDS.items():
         if not metadata_value(metadata, keys):
             errors.append(f'Metadata missing provenance field: {label}')
+
+    process_json = metadata_value(metadata, REQUIRED_METADATA_FIELDS['process_json'])
+    process_payload = read_json(os.path.join(REPO_ROOT, process_json)) if process_json else {'lanes': []}
+    process_lanes = process_payload.get('lanes', [])
+    process_lane_ids = {canonical_lane_id(row.get('lane_id')) for row in process_lanes if canonical_lane_id(row.get('lane_id'))}
+
+    if not lane_coverage:
+        errors.append('Summary missing lane_coverage block')
+
+    coverage_by_lane = {canonical_lane_id(row.get('lane_id')): row for row in lane_coverage if canonical_lane_id(row.get('lane_id'))}
+    if process_lane_ids and process_lane_ids != set(coverage_by_lane):
+        missing = sorted(process_lane_ids - set(coverage_by_lane))
+        extra = sorted(set(coverage_by_lane) - process_lane_ids)
+        if missing:
+            errors.append(f'Lane coverage missing starter lanes: {", ".join(missing)}')
+        if extra:
+            errors.append(f'Lane coverage includes unexpected lanes: {", ".join(extra)}')
+
+    for lane_id in sorted(process_lane_ids):
+        row = coverage_by_lane.get(lane_id)
+        if not row:
+            continue
+        role = normalize_key(row.get('coverage_role'))
+        if role not in VALID_COVERAGE_ROLES:
+            errors.append(f'{lane_id} has invalid coverage_role: {normalize(row.get("coverage_role"))}')
+        if normalize(str(row.get('total_transition_count', ''))) == '':
+            errors.append(f'{lane_id} missing total_transition_count in lane coverage')
+        if int(row.get('total_transition_count', 0)) == 0:
+            errors.append(f'{lane_id} is orphaned in the starter transition graph')
+        if not bool(row.get('has_lane_owned_transition')):
+            errors.append(f'{lane_id} lacks a lane-owned transition row')
+        if normalize(row.get('lane_status')) == 'longitudinally_seeded' and normalize(row.get('strongest_support_status')) == 'supported':
+            warnings.append(f'{lane_id} is still longitudinally_seeded even though its strongest related transition is supported; keep downstream claims bounded')
 
     generated_at = datetime.utcnow().strftime('%Y-%m-%d_%H%M%S')
     result = {

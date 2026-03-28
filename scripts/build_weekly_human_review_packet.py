@@ -122,6 +122,8 @@ def render_markdown(packet):
         f"- Longitudinally seeded lanes: `{packet['process_summary'].get('longitudinally_seeded_lanes', 0)}`",
         f"- Causal transitions built: `{packet['transition_summary'].get('transition_count', 0)}`",
         f"- Supported transitions: `{packet['transition_summary'].get('supported_transitions', 0)}`",
+        f"- Covered starter lanes: `{packet['transition_summary'].get('covered_lane_count', 0)}` / `{packet['transition_summary'].get('starter_lane_count', 0)}`",
+        f"- Lanes with owned transitions: `{packet['transition_summary'].get('lane_owned_transition_count', 0)}` / `{packet['transition_summary'].get('starter_lane_count', 0)}`",
         '',
         '## What I Need From You This Week',
         '',
@@ -173,6 +175,18 @@ def render_markdown(packet):
         lines.append(
             f"| {row.get('display_name', '')} | {row.get('support_status', '')} | {row.get('hypothesis_status', '')} | {row.get('timing_support', '')} |"
         )
+    if packet['transition_summary'].get('lane_coverage'):
+        lines.extend([
+            '',
+            '## Transition Coverage By Lane',
+            '',
+            '| Lane | Role | Incoming | Outgoing | Within-Lane | Owned Row |',
+            '| --- | --- | ---: | ---: | ---: | --- |',
+        ])
+        for row in packet['transition_summary']['lane_coverage']:
+            lines.append(
+                f"| {row.get('display_name', '')} | {row.get('coverage_role', '')} | {row.get('incoming_transition_count', 0)} | {row.get('outgoing_transition_count', 0)} | {row.get('within_lane_transition_count', 0)} | {row.get('has_lane_owned_transition', False)} |"
+            )
 
     lines.extend([
         '',

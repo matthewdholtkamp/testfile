@@ -150,6 +150,8 @@ The repo now has two explicit downstream neurodegenerative layers after the atla
      - `mitochondrial ROS -> inflammasome activation`
      - `glymphatic failure -> tau / protein accumulation`
      - `axonal degeneration -> chronic network dysfunction`
+     - `neuroinflammation / microglial state change -> tau / proteinopathy progression`
+     - `tau / proteinopathy progression -> chronic network dysfunction`
    - each transition carries:
      - support status
      - hypothesis status
@@ -158,6 +160,7 @@ The repo now has two explicit downstream neurodegenerative layers after the atla
      - source-quality mix
      - biomarker cues
      - evidence gaps
+   - the process-model payload also emits starter-lane coverage so the repo can verify that all 6 Phase 1 lanes are represented and that each lane owns at least one transition row
 
 Current product surfaces:
 - `docs/process-engine/index.html`

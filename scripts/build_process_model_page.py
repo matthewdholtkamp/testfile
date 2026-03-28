@@ -51,6 +51,54 @@ def pill(label, value, token=''):
     return f'<span class="{css}"><strong>{html.escape(label)}:</strong> {text(value)}</span>'
 
 
+def render_lane_coverage_row(row):
+    owned = 'yes' if row.get('has_lane_owned_transition') else 'no'
+    return f"""
+    <tr>
+      <td>
+        <strong>{text(row.get('display_name'))}</strong>
+        <div class="subtle">{text(row.get('lane_status'))}</div>
+      </td>
+      <td><span class="pill {css_token(row.get('strongest_support_status'))}">{text(row.get('strongest_support_status'))}</span></td>
+      <td>{text(row.get('coverage_role'))}</td>
+      <td>{row.get('incoming_transition_count', 0)}</td>
+      <td>{row.get('outgoing_transition_count', 0)}</td>
+      <td>{row.get('within_lane_transition_count', 0)}</td>
+      <td>{owned}</td>
+    </tr>
+    """
+
+
+def render_lane_coverage(payload):
+    rows = payload.get('summary', {}).get('lane_coverage', [])
+    body = ''.join(render_lane_coverage_row(row) for row in rows)
+    return f"""
+    <section class="coverage-block">
+      <p class="eyebrow">Starter lane coverage</p>
+      <h2>Lane Coverage</h2>
+      <p class="coverage-copy">This table shows whether each Phase 1 lane is represented by explicit causal-transition rows and whether it owns at least one transition rather than appearing only as a downstream sink.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Lane</th>
+              <th>Strongest support</th>
+              <th>Role</th>
+              <th>Incoming</th>
+              <th>Outgoing</th>
+              <th>Within-lane</th>
+              <th>Owned row</th>
+            </tr>
+          </thead>
+          <tbody>
+            {body}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    """
+
+
 def render_transition_card(row):
     examples = ''.join(f'<li>{text(item)}</li>' for item in split_pipe(row.get('example_signals')))
     biomarkers = ''.join(f'<span class="chip">{text(item)}</span>' for item in split_pipe(row.get('biomarker_cues'))) or '<span class="chip muted">None surfaced yet</span>'
@@ -129,6 +177,7 @@ def render_html(payload):
     summary = payload.get('summary', {})
     rows = payload.get('rows', [])
     cards = ''.join(render_transition_card(row) for row in rows)
+    coverage = render_lane_coverage(payload)
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -201,6 +250,20 @@ def render_html(payload):
       .chip-row {{ display:flex; gap:8px; flex-wrap:wrap; }}
       .chip {{ display:inline-flex; align-items:center; padding:7px 11px; border-radius:999px; background: rgba(255,255,255,0.06); color: var(--ink); font-size:0.78rem; }}
       .chip.muted {{ color: var(--muted); }}
+      .coverage-block {{ margin: 0 0 26px; }}
+      .coverage-copy {{ margin-bottom: 14px; }}
+      .table-wrap {{
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        box-shadow: 0 20px 36px rgba(0,0,0,0.18);
+      }}
+      table {{ width: 100%; border-collapse: collapse; min-width: 780px; }}
+      th, td {{ padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }}
+      th {{ color: var(--accent); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em; }}
+      td {{ color: var(--ink); vertical-align: top; }}
+      .subtle {{ color: var(--muted); font-size: 0.82rem; margin-top: 4px; }}
       ul {{ margin: 0; padding-left: 18px; color: var(--muted); }}
       @media (max-width: 720px) {{
         .shell {{ padding: 32px 16px 52px; }}
@@ -242,6 +305,7 @@ def render_html(payload):
           <span>Open viewer →</span>
         </a>
       </section>
+      {coverage}
       {cards}
     </main>
   </body>

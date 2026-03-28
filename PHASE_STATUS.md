@@ -7,11 +7,13 @@ This file is the current handoff for the TBI scientific intelligence system afte
 Phase 2 is now complete as the next downstream layer after the longitudinal process lanes.
 
 Current Phase 2 outputs:
-- four explicit causal-transition rows are now emitted:
+- six explicit causal-transition rows are now emitted:
   - `BBB permeability increase -> peripheral immune infiltration`
   - `mitochondrial ROS -> inflammasome activation`
   - `glymphatic failure -> tau / protein accumulation`
   - `axonal degeneration -> chronic network dysfunction`
+  - `neuroinflammation / microglial state change -> tau / proteinopathy progression`
+  - `tau / proteinopathy progression -> chronic network dysfunction`
 - each transition now carries:
   - support status
   - hypothesis status
@@ -24,11 +26,14 @@ Current Phase 2 outputs:
   - evidence gaps
 - the current transition summary is:
   - `2` `supported`
-  - `2` `provisional`
+  - `4` `provisional`
   - `0` `weak`
   - `2` `established_in_corpus`
-  - `2` `emergent_from_tbi_corpus`
+  - `4` `emergent_from_tbi_corpus`
   - `0` `cross_disciplinary_hypothesis`
+- starter-lane coverage is now explicit and validated:
+  - `6 / 6` starter lanes are covered by at least one transition row
+  - `6 / 6` starter lanes now own at least one transition row
 - the process-model product page is now emitted to:
   - [docs/process-model/index.html](/Users/matthewholtkamp/Documents/testfile/docs/process-model/index.html)
 - the causal-transition build and validation steps are now wired into:

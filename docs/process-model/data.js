@@ -1,20 +1,141 @@
 window.CAUSAL_TRANSITION_DATA = {
   "metadata": {
-    "generated_at": "2026-03-28_125200",
-    "claims_csv": "reports/investigation_claims_2026-03-28_125005.csv",
-    "edges_csv": "reports/investigation_edges_2026-03-28_125005.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-03-28_125005.csv",
-    "process_json": "reports/process_lanes/process_lane_index_2026-03-28_125200.json",
-    "synthesis_csv": "reports/mechanistic_synthesis/mechanistic_synthesis_blocks_2026-03-28_125159.csv"
+    "generated_at": "2026-03-28_125228",
+    "claims_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/investigation_claims_2026-03-18_141503.csv",
+    "edges_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/investigation_edges_2026-03-18_141503.csv",
+    "paper_qa_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/post_extraction_paper_qa_2026-03-18_141503.csv",
+    "process_json": "reports/process_lanes/process_lane_index_2026-03-28_123206.json",
+    "synthesis_csv": "reports/mechanistic_synthesis_neuro_subtrack_test/mechanistic_synthesis_blocks_2026-03-25_210841.csv"
   },
   "summary": {
-    "transition_count": 4,
+    "transition_count": 6,
     "supported_transitions": 2,
-    "provisional_transitions": 2,
+    "provisional_transitions": 4,
     "weak_transitions": 0,
     "established_in_corpus": 2,
-    "emergent_from_tbi_corpus": 2,
-    "cross_disciplinary_hypothesis": 0
+    "emergent_from_tbi_corpus": 4,
+    "cross_disciplinary_hypothesis": 0,
+    "starter_lane_count": 6,
+    "covered_lane_count": 6,
+    "lane_owned_transition_count": 6,
+    "lane_coverage": [
+      {
+        "lane_id": "blood_brain_barrier_failure",
+        "display_name": "Blood-Brain Barrier Failure",
+        "lane_status": "longitudinally_supported",
+        "incoming_transition_count": 0,
+        "outgoing_transition_count": 1,
+        "within_lane_transition_count": 0,
+        "total_transition_count": 1,
+        "coverage_role": "source_only",
+        "has_lane_owned_transition": true,
+        "strongest_support_status": "supported",
+        "covered_by_transition_ids": [
+          "bbb_permeability_increase_to_peripheral_immune_infiltration"
+        ],
+        "covered_by_transition_names": [
+          "BBB permeability increase -> peripheral immune infiltration"
+        ]
+      },
+      {
+        "lane_id": "mitochondrial_bioenergetic_collapse",
+        "display_name": "Mitochondrial / Bioenergetic Collapse",
+        "lane_status": "longitudinally_seeded",
+        "incoming_transition_count": 0,
+        "outgoing_transition_count": 1,
+        "within_lane_transition_count": 0,
+        "total_transition_count": 1,
+        "coverage_role": "source_only",
+        "has_lane_owned_transition": true,
+        "strongest_support_status": "provisional",
+        "covered_by_transition_ids": [
+          "mitochondrial_ros_to_inflammasome_activation"
+        ],
+        "covered_by_transition_names": [
+          "Mitochondrial ROS -> inflammasome activation"
+        ]
+      },
+      {
+        "lane_id": "neuroinflammation_microglial_state_change",
+        "display_name": "Neuroinflammation / Microglial State Change",
+        "lane_status": "longitudinally_seeded",
+        "incoming_transition_count": 2,
+        "outgoing_transition_count": 1,
+        "within_lane_transition_count": 0,
+        "total_transition_count": 3,
+        "coverage_role": "bridge",
+        "has_lane_owned_transition": true,
+        "strongest_support_status": "supported",
+        "covered_by_transition_ids": [
+          "bbb_permeability_increase_to_peripheral_immune_infiltration",
+          "mitochondrial_ros_to_inflammasome_activation",
+          "neuroinflammation_to_tau_proteinopathy_progression"
+        ],
+        "covered_by_transition_names": [
+          "BBB permeability increase -> peripheral immune infiltration",
+          "Mitochondrial ROS -> inflammasome activation",
+          "Neuroinflammation / microglial state change -> tau / proteinopathy progression"
+        ]
+      },
+      {
+        "lane_id": "axonal_degeneration",
+        "display_name": "Axonal Degeneration",
+        "lane_status": "longitudinally_seeded",
+        "incoming_transition_count": 0,
+        "outgoing_transition_count": 0,
+        "within_lane_transition_count": 1,
+        "total_transition_count": 1,
+        "coverage_role": "internal_only",
+        "has_lane_owned_transition": true,
+        "strongest_support_status": "provisional",
+        "covered_by_transition_ids": [
+          "axonal_degeneration_to_chronic_network_dysfunction"
+        ],
+        "covered_by_transition_names": [
+          "Axonal degeneration -> chronic network dysfunction"
+        ]
+      },
+      {
+        "lane_id": "glymphatic_astroglial_clearance_failure",
+        "display_name": "Glymphatic / Astroglial Clearance Failure",
+        "lane_status": "longitudinally_seeded",
+        "incoming_transition_count": 0,
+        "outgoing_transition_count": 1,
+        "within_lane_transition_count": 0,
+        "total_transition_count": 1,
+        "coverage_role": "source_only",
+        "has_lane_owned_transition": true,
+        "strongest_support_status": "supported",
+        "covered_by_transition_ids": [
+          "glymphatic_failure_to_tau_protein_accumulation"
+        ],
+        "covered_by_transition_names": [
+          "Glymphatic failure -> tau / protein accumulation"
+        ]
+      },
+      {
+        "lane_id": "tau_proteinopathy_progression",
+        "display_name": "Tau / Proteinopathy Progression",
+        "lane_status": "longitudinally_seeded",
+        "incoming_transition_count": 2,
+        "outgoing_transition_count": 0,
+        "within_lane_transition_count": 1,
+        "total_transition_count": 3,
+        "coverage_role": "sink_plus_internal",
+        "has_lane_owned_transition": true,
+        "strongest_support_status": "supported",
+        "covered_by_transition_ids": [
+          "glymphatic_failure_to_tau_protein_accumulation",
+          "neuroinflammation_to_tau_proteinopathy_progression",
+          "tau_proteinopathy_progression_to_chronic_network_dysfunction"
+        ],
+        "covered_by_transition_names": [
+          "Glymphatic failure -> tau / protein accumulation",
+          "Neuroinflammation / microglial state change -> tau / proteinopathy progression",
+          "Tau / proteinopathy progression -> chronic network dysfunction"
+        ]
+      }
+    ]
   },
   "rows": [
     {
@@ -146,6 +267,72 @@ window.CAUSAL_TRANSITION_DATA = {
       "contradiction_notes": "",
       "evidence_gaps": "Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.",
       "example_signals": "edge: PMID 41480492 mtROS increases NLRP3_inflammasome || claim: PMID 41103638 mtDAMPs drive neuroinflammation and cell death via TLR9, NLRP3, and cGAS-STING pathways. || claim: PMID 41480492 MAM-derived stress signals promote NLRP3 inflammasome assembly. || claim: PMID 41709060 NLRP3 inflammasome activation and mitochondrial dysfunction amplify neuroinflammatory signaling.",
+      "upstream_bucket_statuses": "{\"acute\": \"provisional\", \"subacute\": \"provisional\", \"chronic\": \"provisional\"}",
+      "downstream_bucket_statuses": "{\"acute\": \"provisional\", \"subacute\": \"provisional\", \"chronic\": \"provisional\"}"
+    },
+    {
+      "transition_id": "neuroinflammation_to_tau_proteinopathy_progression",
+      "display_name": "Neuroinflammation / microglial state change -> tau / proteinopathy progression",
+      "transition_scope": "cross_mechanism",
+      "upstream_node": "Neuroinflammation / microglial state change",
+      "downstream_node": "Tau / proteinopathy progression",
+      "upstream_lane_id": "neuroinflammation_microglial_state_change",
+      "downstream_lane_id": "tau_proteinopathy_progression",
+      "upstream_lane_status": "longitudinally_seeded",
+      "downstream_lane_status": "longitudinally_seeded",
+      "support_status": "provisional",
+      "hypothesis_status": "emergent_from_tbi_corpus",
+      "derivation_type": "edge_supported",
+      "timing_support": "provisional",
+      "expected_time_buckets": "subacute; chronic",
+      "observed_time_buckets": "subacute",
+      "paper_count": 2,
+      "direct_claim_count": 2,
+      "direct_edge_count": 1,
+      "causal_edge_count": 1,
+      "synthesis_support_count": 0,
+      "anchor_pmids": "41683989; 41809632",
+      "source_quality_mix": "full_text_like:3",
+      "support_reason": "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.",
+      "statement_text": "Current TBI evidence suggests that sustained neuroinflammation and microglial state change can amplify tau pathology and broader proteinopathy progression.",
+      "causal_direction_notes": "This row treats persistent inflammatory signaling and maladaptive microglial state change as the upstream pressure on tau/proteinopathy progression. || This transition should stay bounded when the evidence is carried more by inflammatory-tau bridge claims than by multiple direct causal edges.",
+      "biomarker_cues": "tau (3) || NLRP3 (2) || Tau (1)",
+      "contradiction_notes": "",
+      "evidence_gaps": "Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.",
+      "example_signals": "edge: PMID 41683989 Neuroinflammation increases Tau hyperphosphorylation || claim: PMID 41683989 NLRP3 inflammasome activation mediates TBI-induced tau pathology. || claim: PMID 41809632 MSC-induced autophagy in microglia facilitates clearance of protein aggregates (A\u03b2, tau, \u03b1-synuclein) via AMPK/mTOR pathway regulation.",
+      "upstream_bucket_statuses": "{\"acute\": \"provisional\", \"subacute\": \"provisional\", \"chronic\": \"provisional\"}",
+      "downstream_bucket_statuses": "{\"acute\": \"provisional\", \"subacute\": \"provisional\", \"chronic\": \"provisional\"}"
+    },
+    {
+      "transition_id": "tau_proteinopathy_progression_to_chronic_network_dysfunction",
+      "display_name": "Tau / proteinopathy progression -> chronic network dysfunction",
+      "transition_scope": "within_lane",
+      "upstream_node": "Tau / proteinopathy progression",
+      "downstream_node": "Chronic network dysfunction / cognitive decline",
+      "upstream_lane_id": "tau_proteinopathy_progression",
+      "downstream_lane_id": "tau_proteinopathy_progression",
+      "upstream_lane_status": "longitudinally_seeded",
+      "downstream_lane_status": "longitudinally_seeded",
+      "support_status": "provisional",
+      "hypothesis_status": "emergent_from_tbi_corpus",
+      "derivation_type": "edge_supported",
+      "timing_support": "supported",
+      "expected_time_buckets": "chronic",
+      "observed_time_buckets": "subacute; chronic",
+      "paper_count": 5,
+      "direct_claim_count": 3,
+      "direct_edge_count": 3,
+      "causal_edge_count": 1,
+      "synthesis_support_count": 0,
+      "anchor_pmids": "41496386; 41739474; 41747594; 41508043; 41683989",
+      "source_quality_mix": "full_text_like:5; abstract_only:1",
+      "support_reason": "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.",
+      "statement_text": "Current TBI evidence suggests that tau and related proteinopathy progression contribute to chronic network dysfunction and cognitive decline.",
+      "causal_direction_notes": "This within-lane row treats tau/proteinopathy progression as the upstream burden and chronic network dysfunction as its downstream functional expression. || This is a lane-owned transition so tau/proteinopathy progression is no longer represented only as a downstream sink in the starter process model.",
+      "biomarker_cues": "tau (9) || Tau (2) || nfl (2) || RD (1)",
+      "contradiction_notes": "",
+      "evidence_gaps": "Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.",
+      "example_signals": "edge: PMID 41496386 T-tau increases RD || edge: PMID 41739474 t-tau decreases visual memory performance || edge: PMID 41747594 acetylated tau disrupts axon initial segment || claim: PMID 41508043 rmTBI induces dendritic tau pathology.",
       "upstream_bucket_statuses": "{\"acute\": \"provisional\", \"subacute\": \"provisional\", \"chronic\": \"provisional\"}",
       "downstream_bucket_statuses": "{\"acute\": \"provisional\", \"subacute\": \"provisional\", \"chronic\": \"provisional\"}"
     }

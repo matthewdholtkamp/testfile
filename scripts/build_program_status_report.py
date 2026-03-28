@@ -130,12 +130,24 @@ def render_markdown(status):
         f"- Provisional: `{status['transition_summary'].get('provisional_transitions', 0)}`",
         f"- Established in corpus: `{status['transition_summary'].get('established_in_corpus', 0)}`",
         f"- Emergent from TBI corpus: `{status['transition_summary'].get('emergent_from_tbi_corpus', 0)}`",
+        f"- Covered starter lanes: `{status['transition_summary'].get('covered_lane_count', 0)}` / `{status['transition_summary'].get('starter_lane_count', 0)}`",
+        f"- Lanes with owned transitions: `{status['transition_summary'].get('lane_owned_transition_count', 0)}` / `{status['transition_summary'].get('starter_lane_count', 0)}`",
         '',
     ])
     for row in status['transition_rows']:
         lines.append(
             f"- **{row['display_name']}**: support `{row['support_status']}` | hypothesis `{row['hypothesis_status']}` | timing `{row['timing_support']}`"
         )
+    if status['transition_summary'].get('lane_coverage'):
+        lines.extend([
+            '',
+            '## Transition Coverage By Lane',
+            '',
+        ])
+        for row in status['transition_summary']['lane_coverage']:
+            lines.append(
+                f"- **{row['display_name']}**: role `{row['coverage_role']}` | incoming `{row['incoming_transition_count']}` | outgoing `{row['outgoing_transition_count']}` | within `{row['within_lane_transition_count']}` | owned `{row['has_lane_owned_transition']}`"
+            )
     lines.extend([
         '',
         '## Immediate Next Moves',

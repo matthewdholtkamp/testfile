@@ -72,6 +72,36 @@ TRANSITION_CONFIGS = [
         'biomarker_patterns': [r'ROS', r'NLRP3', r'IL1', r'IL6', r'TNF', r'CYBB', r'PRKN', r'PINK1', r'SIRT3'],
     },
     {
+        'transition_id': 'neuroinflammation_to_tau_proteinopathy_progression',
+        'display_name': 'Neuroinflammation / microglial state change -> tau / proteinopathy progression',
+        'transition_scope': 'cross_mechanism',
+        'upstream_node': 'Neuroinflammation / microglial state change',
+        'downstream_node': 'Tau / proteinopathy progression',
+        'upstream_lane_id': 'neuroinflammation_microglial_state_change',
+        'downstream_lane_id': 'tau_proteinopathy_progression',
+        'expected_time_buckets': ['subacute', 'chronic'],
+        'statement_template': 'Current TBI evidence suggests that sustained neuroinflammation and microglial state change can amplify tau pathology and broader proteinopathy progression.',
+        'claim_patterns': [
+            r'nlrp3 inflammasome activation mediates tbi-induced tau pathology',
+            r'neuroinflammation increases tau hyperphosphorylation',
+            r'microglia facilitates clearance of protein aggregates .* tau',
+            r'low-grade peripheral inflammation .* tau',
+        ],
+        'edge_patterns': [
+            r'neuroinflammation increases tau hyperphosphorylation',
+            r'.*inflammasome.*tau',
+        ],
+        'contradiction_patterns': [
+            r'inflam.*tau',
+            r'microgl.*tau',
+        ],
+        'biomarker_patterns': [r'NLRP3', r'IL1', r'IL6', r'TNF', r'tau', r'p-?tau', r'GFAP'],
+        'causal_direction_notes': [
+            'This row treats persistent inflammatory signaling and maladaptive microglial state change as the upstream pressure on tau/proteinopathy progression.',
+            'This transition should stay bounded when the evidence is carried more by inflammatory-tau bridge claims than by multiple direct causal edges.',
+        ],
+    },
+    {
         'transition_id': 'glymphatic_failure_to_tau_protein_accumulation',
         'display_name': 'Glymphatic failure -> tau / protein accumulation',
         'transition_scope': 'cross_mechanism',
@@ -96,6 +126,37 @@ TRANSITION_CONFIGS = [
             r'aqp4.*tau',
         ],
         'biomarker_patterns': [r'AQP4', r'tau', r'p-tau', r'GFAP', r'S100B', r'NSE'],
+    },
+    {
+        'transition_id': 'tau_proteinopathy_progression_to_chronic_network_dysfunction',
+        'display_name': 'Tau / proteinopathy progression -> chronic network dysfunction',
+        'transition_scope': 'within_lane',
+        'upstream_node': 'Tau / proteinopathy progression',
+        'downstream_node': 'Chronic network dysfunction / cognitive decline',
+        'upstream_lane_id': 'tau_proteinopathy_progression',
+        'downstream_lane_id': 'tau_proteinopathy_progression',
+        'expected_time_buckets': ['chronic'],
+        'statement_template': 'Current TBI evidence suggests that tau and related proteinopathy progression contribute to chronic network dysfunction and cognitive decline.',
+        'claim_patterns': [
+            r't-tau elevation correlates with cognitive decline',
+            r'tau pathology',
+            r'tau .* visual memory',
+            r'tau .* cognitive',
+        ],
+        'edge_patterns': [
+            r't-tau decreases visual memory performance',
+            r't-tau increases rd',
+            r'acetylated tau disrupts axon initial segment',
+        ],
+        'contradiction_patterns': [
+            r'tau.*memory',
+            r'tau.*network',
+        ],
+        'biomarker_patterns': [r'tau', r'p-?tau', r'NfL', r'GFAP', r'RD', r'FA'],
+        'causal_direction_notes': [
+            'This within-lane row treats tau/proteinopathy progression as the upstream burden and chronic network dysfunction as its downstream functional expression.',
+            'This is a lane-owned transition so tau/proteinopathy progression is no longer represented only as a downstream sink in the starter process model.',
+        ],
     },
     {
         'transition_id': 'axonal_degeneration_to_chronic_network_dysfunction',
@@ -465,6 +526,8 @@ def build_index_markdown(rows, summary, generated_at):
         f'- Supported transitions: `{summary["supported_transitions"]}`',
         f'- Provisional transitions: `{summary["provisional_transitions"]}`',
         f'- Weak transitions: `{summary["weak_transitions"]}`',
+        f'- Covered starter lanes: `{summary["covered_lane_count"]}` / `{summary["starter_lane_count"]}`',
+        f'- Lanes with owned transitions: `{summary["lane_owned_transition_count"]}` / `{summary["starter_lane_count"]}`',
         '',
         '| Transition | Support | Hypothesis status | Timing support | Anchor PMIDs |',
         '| --- | --- | --- | --- | --- |',
@@ -473,7 +536,75 @@ def build_index_markdown(rows, summary, generated_at):
         lines.append(
             f"| {row['display_name']} | `{row['support_status']}` | `{row['hypothesis_status']}` | `{row['timing_support']}` | {row['anchor_pmids']} |"
         )
+    lines.extend([
+        '',
+        '## Lane Coverage',
+        '',
+        '| Lane | Role | Incoming | Outgoing | Within-lane | Strongest support | Owned transition |',
+        '| --- | --- | --- | --- | --- | --- | --- |',
+    ])
+    for row in summary['lane_coverage']:
+        lines.append(
+            f"| {row['display_name']} | `{row['coverage_role']}` | `{row['incoming_transition_count']}` | `{row['outgoing_transition_count']}` | `{row['within_lane_transition_count']}` | `{row['strongest_support_status']}` | `{row['has_lane_owned_transition']}` |"
+        )
     return '\n'.join(lines) + '\n'
+
+
+def support_max(rows):
+    strongest = 'weak'
+    for row in rows:
+        if SUPPORT_ORDER[normalize(row.get('support_status'))] > SUPPORT_ORDER[strongest]:
+            strongest = normalize(row.get('support_status'))
+    return strongest
+
+
+def coverage_role(incoming_count, outgoing_count, within_count):
+    if outgoing_count > 0 and incoming_count > 0:
+        return 'bridge'
+    if within_count > 0 and incoming_count == 0 and outgoing_count == 0:
+        return 'internal_only'
+    if within_count > 0 and incoming_count > 0 and outgoing_count == 0:
+        return 'sink_plus_internal'
+    if within_count > 0 and outgoing_count > 0 and incoming_count == 0:
+        return 'source_plus_internal'
+    if outgoing_count > 0:
+        return 'source_only'
+    if incoming_count > 0:
+        return 'sink_only'
+    return 'orphan'
+
+
+def build_lane_coverage(rows, lane_index):
+    coverage = []
+    for lane_id, lane in lane_index.items():
+        related = [row for row in rows if row['upstream_lane_id'] == lane_id or row['downstream_lane_id'] == lane_id]
+        incoming = [
+            row for row in rows
+            if row['downstream_lane_id'] == lane_id and row['upstream_lane_id'] != lane_id
+        ]
+        outgoing = [
+            row for row in rows
+            if row['upstream_lane_id'] == lane_id and row['downstream_lane_id'] != lane_id
+        ]
+        within = [
+            row for row in rows
+            if row['upstream_lane_id'] == lane_id and row['downstream_lane_id'] == lane_id
+        ]
+        coverage.append({
+            'lane_id': lane_id,
+            'display_name': normalize(lane.get('display_name')) or lane_id,
+            'lane_status': normalize(lane.get('lane_status')),
+            'incoming_transition_count': len(incoming),
+            'outgoing_transition_count': len(outgoing),
+            'within_lane_transition_count': len(within),
+            'total_transition_count': len(related),
+            'coverage_role': coverage_role(len(incoming), len(outgoing), len(within)),
+            'has_lane_owned_transition': len(outgoing) > 0 or len(within) > 0,
+            'strongest_support_status': support_max(related),
+            'covered_by_transition_ids': [row['transition_id'] for row in related],
+            'covered_by_transition_names': [row['display_name'] for row in related],
+        })
+    return coverage
 
 
 def main():
@@ -602,6 +733,7 @@ def main():
         write_text(os.path.join(packet_dir, f"{config['transition_id']}_causal_transition_{generated_at}.md"), build_markdown_packet(row))
 
     rows.sort(key=lambda row: (-SUPPORT_ORDER[row['support_status']], row['display_name']))
+    lane_coverage = build_lane_coverage(rows, lane_index)
     summary = {
         'transition_count': len(rows),
         'supported_transitions': sum(1 for row in rows if row['support_status'] == 'supported'),
@@ -610,6 +742,10 @@ def main():
         'established_in_corpus': sum(1 for row in rows if row['hypothesis_status'] == 'established_in_corpus'),
         'emergent_from_tbi_corpus': sum(1 for row in rows if row['hypothesis_status'] == 'emergent_from_tbi_corpus'),
         'cross_disciplinary_hypothesis': sum(1 for row in rows if row['hypothesis_status'] == 'cross_disciplinary_hypothesis'),
+        'starter_lane_count': len(lane_coverage),
+        'covered_lane_count': sum(1 for row in lane_coverage if row['total_transition_count'] > 0),
+        'lane_owned_transition_count': sum(1 for row in lane_coverage if row['has_lane_owned_transition']),
+        'lane_coverage': lane_coverage,
     }
     payload = {
         'metadata': {
