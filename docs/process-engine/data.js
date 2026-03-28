@@ -1,9 +1,9 @@
 window.PROCESS_ENGINE_DATA = {
   "metadata": {
-    "generated_at": "2026-03-28_123713",
-    "claims_csv": "reports/investigation_claims_2026-03-28_122905.csv",
-    "edges_csv": "reports/investigation_edges_2026-03-28_122905.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-03-28_122905.csv"
+    "generated_at": "2026-03-28_125200",
+    "claims_csv": "reports/investigation_claims_2026-03-28_125005.csv",
+    "edges_csv": "reports/investigation_edges_2026-03-28_125005.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-03-28_125005.csv"
   },
   "summary": {
     "lane_count": 6,
