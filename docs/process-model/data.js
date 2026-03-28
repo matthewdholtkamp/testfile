@@ -1,11 +1,11 @@
 window.CAUSAL_TRANSITION_DATA = {
   "metadata": {
-    "generated_at": "2026-03-28_123611",
-    "claims_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/investigation_claims_2026-03-18_141503.csv",
-    "edges_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/investigation_edges_2026-03-18_141503.csv",
-    "paper_qa_csv": "reports/post_analysis_run_23248693316_download_20260318_091545/post_extraction_analysis_outputs/post_extraction_paper_qa_2026-03-18_141503.csv",
-    "process_json": "reports/process_lanes/process_lane_index_2026-03-28_123206.json",
-    "synthesis_csv": "reports/mechanistic_synthesis_neuro_subtrack_test/mechanistic_synthesis_blocks_2026-03-25_210841.csv"
+    "generated_at": "2026-03-28_123713",
+    "claims_csv": "reports/investigation_claims_2026-03-28_122905.csv",
+    "edges_csv": "reports/investigation_edges_2026-03-28_122905.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-03-28_122905.csv",
+    "process_json": "reports/process_lanes/process_lane_index_2026-03-28_123713.json",
+    "synthesis_csv": "reports/mechanistic_synthesis/mechanistic_synthesis_blocks_2026-03-28_123135.csv"
   },
   "summary": {
     "transition_count": 4,
