@@ -55,6 +55,7 @@ def main():
     process_json = args.process_json or latest_report('process_lane_index_*.json')
     payload = read_json(process_json)
     lanes = payload.get('lanes', [])
+    summary = payload.get('summary', {})
     lane_map = {normalize(lane.get('lane_id')): lane for lane in lanes}
 
     errors = []
@@ -103,6 +104,7 @@ def main():
     generated_at = datetime.utcnow().strftime('%Y-%m-%d_%H%M%S')
     result = {
         'process_json': os.path.relpath(process_json, REPO_ROOT),
+        'summary': summary,
         'error_count': len(errors),
         'warning_count': len(warnings),
         'errors': errors,
@@ -115,8 +117,17 @@ def main():
         '# Process Lane Validation',
         '',
         f'- Source: `{result["process_json"]}`',
+        f'- Lane count: `{summary.get("lane_count", 0)}`',
         f'- Errors: `{len(errors)}`',
         f'- Warnings: `{len(warnings)}`',
+        '',
+        '## Summary',
+        '',
+        f'- Supported buckets: `{summary.get("supported_buckets", 0)}`',
+        f'- Provisional buckets: `{summary.get("provisional_buckets", 0)}`',
+        f'- Weak buckets: `{summary.get("weak_buckets", 0)}`',
+        f'- Longitudinally supported lanes: `{summary.get("longitudinally_supported_lanes", 0)}`',
+        f'- Longitudinally seeded lanes: `{summary.get("longitudinally_seeded_lanes", 0)}`',
         '',
         '## Errors',
         '',

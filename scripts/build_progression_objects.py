@@ -266,9 +266,20 @@ def latest_report(pattern):
     return candidates[-1]
 
 
+def latest_optional_report(pattern):
+    candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
+    return candidates[-1] if candidates else ''
+
+
 def read_csv(path):
     with open(path, newline='', encoding='utf-8') as handle:
         return list(csv.DictReader(handle))
+
+
+def read_csv_if_exists(path):
+    if not path or not os.path.exists(path):
+        return []
+    return read_csv(path)
 
 
 def read_json(path):
@@ -668,8 +679,8 @@ def main():
     process_json = args.process_json or latest_report('process_lane_index_*.json')
     transition_json = args.transition_json or latest_report('causal_transition_index_*.json')
     synthesis_csv = args.synthesis_csv or latest_report('mechanistic_synthesis_blocks_*.csv')
-    target_seed_csv = args.target_seed_csv or latest_report('target_seed_pack_*.csv')
-    translational_bridge_csv = args.translational_bridge_csv or latest_report('translational_bridge_*.csv')
+    target_seed_csv = args.target_seed_csv or latest_optional_report('target_seed_pack_*.csv')
+    translational_bridge_csv = args.translational_bridge_csv or latest_optional_report('translational_bridge_*.csv')
 
     claims = read_csv(claims_csv)
     edges = read_csv(edges_csv)
@@ -677,8 +688,8 @@ def main():
     process_payload = read_json(process_json)
     transition_payload = read_json(transition_json)
     synthesis_rows = read_csv(synthesis_csv)
-    target_seed_rows = read_csv(target_seed_csv)
-    translational_bridge_rows = read_csv(translational_bridge_csv)
+    target_seed_rows = read_csv_if_exists(target_seed_csv)
+    translational_bridge_rows = read_csv_if_exists(translational_bridge_csv)
     seed_map, bridge_map = build_target_maps(target_seed_rows, translational_bridge_rows)
 
     paper_qa_index = {normalize(row.get('pmid')): row for row in paper_qa}
@@ -808,8 +819,8 @@ def main():
             'process_json': os.path.relpath(process_json, REPO_ROOT),
             'transition_json': os.path.relpath(transition_json, REPO_ROOT),
             'synthesis_csv': os.path.relpath(synthesis_csv, REPO_ROOT),
-            'target_seed_csv': os.path.relpath(target_seed_csv, REPO_ROOT),
-            'translational_bridge_csv': os.path.relpath(translational_bridge_csv, REPO_ROOT),
+            'target_seed_csv': os.path.relpath(target_seed_csv, REPO_ROOT) if target_seed_csv else 'not_available_in_this_build',
+            'translational_bridge_csv': os.path.relpath(translational_bridge_csv, REPO_ROOT) if translational_bridge_csv else 'not_available_in_this_build',
         },
         'summary': summary,
         'rows': rows,

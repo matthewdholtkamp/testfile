@@ -185,7 +185,8 @@ def main():
     transition_json = args.transition_json or latest_report('causal_transition_index_*.json')
     payload = read_json(transition_json)
     transitions = payload.get('rows', [])
-    lane_coverage = payload.get('summary', {}).get('lane_coverage', [])
+    summary = payload.get('summary', {})
+    lane_coverage = summary.get('lane_coverage', [])
     transition_map = {}
     transition_pairs = set()
 
@@ -297,6 +298,7 @@ def main():
     generated_at = datetime.utcnow().strftime('%Y-%m-%d_%H%M%S')
     result = {
         'transition_json': os.path.relpath(transition_json, REPO_ROOT),
+        'summary': summary,
         'transition_count': len(transitions),
         'error_count': len(errors),
         'warning_count': len(warnings),
@@ -316,6 +318,14 @@ def main():
         f'- Transition count: `{result["transition_count"]}`',
         f'- Errors: `{result["error_count"]}`',
         f'- Warnings: `{result["warning_count"]}`',
+        '',
+        '## Summary',
+        '',
+        f'- Supported transitions: `{summary.get("supported_transitions", 0)}`',
+        f'- Provisional transitions: `{summary.get("provisional_transitions", 0)}`',
+        f'- Weak transitions: `{summary.get("weak_transitions", 0)}`',
+        f'- Covered starter lanes: `{summary.get("covered_lane_count", 0)}` / `{summary.get("starter_lane_count", 0)}`',
+        f'- Lanes with owned transitions: `{summary.get("lane_owned_transition_count", 0)}` / `{summary.get("starter_lane_count", 0)}`',
         '',
         '## Errors',
         '',
