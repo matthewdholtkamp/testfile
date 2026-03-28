@@ -15,10 +15,11 @@ The project includes several manual and scheduled GitHub Actions workflows:
 2. **Manual PubMed Extraction Pipeline:** Runs the Gemini-based extraction process.
 3. **Targeted Full-Text Extraction Batch:** Builds a fresh Drive inventory, selects on-topic backlog papers that are already full-text-like, and runs extraction only on that ordered batch.
 4. **Post-Extraction Analysis:** Builds a fresh Drive inventory, downloads the structured extraction JSONs from Drive, and emits the investigation-layer artifacts used for QA and cross-paper synthesis.
-5. **Ongoing Literature Cycle:** Weekly/manual staging cycle that runs retrieval, clears the extraction backlog, and refreshes the post-extraction investigation artifacts.
-6. **Build Atlas Slices:** Runs the investigation layer and emits first-pass mechanism-specific atlas slice briefs.
-7. **Action Queue Extraction:** Uses the investigation action queue to rerun extraction only on papers assigned to specific work lanes such as `deepen_extraction`.
-8. **Connector Enrichment Sidecar:** A local/operator lane that starts from the connector candidate manifest, normalizes Open Targets / ChEMBL / ClinicalTrials.gov / bioRxiv-medRxiv / optional 10x results, and rebuilds mechanism dossiers without changing the core staging workflows.
+5. **Ongoing Literature Cycle:** Daily/manual staging cycle that runs retrieval, clears the extraction backlog, and refreshes the post-extraction investigation artifacts.
+6. **Bounded Daily Acceleration:** A guarded controller that can launch extra later-day staging cycles when the atlas still has real backlog and no current cycle is already running.
+7. **Build Atlas Slices:** Runs the investigation layer and emits first-pass mechanism-specific atlas slice briefs.
+8. **Action Queue Extraction:** Uses the investigation action queue to rerun extraction only on papers assigned to specific work lanes such as `deepen_extraction`.
+9. **Connector Enrichment Sidecar:** A local/operator lane that starts from the connector candidate manifest, normalizes Open Targets / ChEMBL / ClinicalTrials.gov / bioRxiv-medRxiv / optional 10x results, and rebuilds mechanism dossiers without changing the core staging workflows.
 
 ### Running the Extraction Pipeline
 To run a real extraction test, navigate to **Actions** > **Manual PubMed Extraction Pipeline**, click **Run workflow**, and ensure the following exact settings:
@@ -378,6 +379,21 @@ It is designed to:
 
 This gives the project a daily machine cadence and a weekly human decision cadence.
 
+### Bounded extra daily acceleration
+
+The repo now also has a guarded acceleration workflow:
+
+- `.github/workflows/bounded_daily_acceleration.yml`
+
+It is designed to:
+- run in later-day bounded slots
+- check whether the atlas still has enough backlog to justify acceleration
+- skip automatically if a literature cycle is already running
+- skip automatically if the latest successful cycle is too recent
+- dispatch another `Ongoing Literature Cycle` only when the extra work is likely to help
+
+This is the safe way to speed the machine up. It avoids the quota burn and repo churn of an infinite self-restarting loop.
+
 ### Atlas quality gate and review packets
 
 The atlas lane now emits:
@@ -467,7 +483,7 @@ The pipeline's model and rate-limiting behavior can be tuned in `config/config.y
 - `max_papers_per_run`: A hard cap on the number of papers attempted per run.
 - `inter_paper_delay_seconds`: A pause (in seconds) applied after each processed paper to reduce rate-limit risk.
 
-### Ongoing weekly staged cycle
+### Ongoing staged cycle
 The scheduled `Ongoing Literature Cycle` workflow now does more than retrieval and extraction staging. Each daily run:
 - pulls new literature into the staging corpus
 - upgrades and extracts what it can
@@ -475,7 +491,7 @@ The scheduled `Ongoing Literature Cycle` workflow now does more than retrieval a
 - emits an investigation action queue for deeper review or source upgrading
 - emits atlas backbone artifacts
 
-That keeps the staging lane moving toward a usable investigation engine without auto-promoting raw outputs into a final atlas by hand. Default mechanism slice briefs remain a manual workflow so the weekly cycle stays stable and semantically tighter.
+That keeps the staging lane moving toward a usable investigation engine without auto-promoting raw outputs into a final atlas by hand. Extra later-day cycles are now handled by the bounded acceleration workflow instead of a recursive loop. Default mechanism slice briefs remain a manual workflow so the machine lane stays stable and semantically tighter.
 
 Extraction outputs are routed to an `extraction_outputs` folder tree (separate from the source paper markdown files) based on the routing paths in `config/config.yaml`.
 **Note:** The extraction process relies on `scripts/run_extraction.py` and does not change `run_pipeline.py` or the current retrieval behavior.

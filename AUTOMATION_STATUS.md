@@ -11,6 +11,15 @@ This file is the current reality check for what parts of the TBI investigation e
   - Runs every day in the morning window
   - Pulls new literature, upgrades source quality where possible, runs extraction, refreshes post-extraction analysis, builds the investigation queue, and refreshes atlas backbone artifacts
 
+- **Bounded extra daily acceleration**
+  - Workflow: `.github/workflows/bounded_daily_acceleration.yml`
+  - Runs later in the day in two bounded slots
+  - Only dispatches an extra `Ongoing Literature Cycle` when:
+    - no literature cycle is already running
+    - the last successful cycle is old enough
+    - the atlas still has enough blocked/provisional/backlog state to justify acceleration
+  - This is the safe speed-up lane. It is intentionally not a recursive self-restarting loop.
+
 - **Manual/hosted atlas build**
   - Workflow: `.github/workflows/build_atlas_slices.yml`
   - Rebuilds atlas slices, starter packet, chapter draft, evidence table, quality gate, review packets, viewer bundle, and atlas book
@@ -96,7 +105,7 @@ This file is the current reality check for what parts of the TBI investigation e
 
 ### Practical estimate
 
-- **Now:** the literature -> extraction -> investigation -> atlas refresh loop is automated daily
+- **Now:** the literature -> extraction -> investigation -> atlas refresh loop is automated multiple times per day, but with bounded guardrails
 - **1-2 focused working sessions:** enough to tighten the operator-side enrichment loop into a low-friction routine
 - **Longer horizon:** fully unattended scientific promotion should wait until the enrichment and writing gates are trustworthy
 

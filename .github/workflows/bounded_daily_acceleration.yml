@@ -1,0 +1,42 @@
+name: Bounded Daily Acceleration
+
+on:
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: "Acceleration slot to run"
+        required: false
+        default: "auto"
+  schedule:
+    - cron: "0 18,23 * * *"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: bounded-daily-acceleration
+  cancel-in-progress: true
+
+jobs:
+  bounded-acceleration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Dispatch bounded cycle if warranted
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SLOT: ${{ inputs.slot }}
+        run: |
+          python scripts/dispatch_bounded_daily_cycle.py \
+            --repo "$REPO" \
+            --slot "${SLOT:-auto}"
