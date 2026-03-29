@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TBI Cohort Stratification</title>
+    <style>
+      :root {
+        --bg: #11151d;
+        --panel: #1b2230;
+        --panel-soft: #232d3f;
+        --ink: #eef3fb;
+        --muted: #b7c0d4;
+        --accent: #8cc6ff;
+        --line: rgba(140, 198, 255, 0.16);
+        --supported: #8ee0b8;
+        --provisional: #ffd37c;
+        --weak: #ffb0b0;
+        --seeded: #ffcf9b;
+        --bounded: #8cc6ff;
+        --usable: #9bf0d2;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top right, rgba(140,198,255,0.14), transparent 28%),
+          linear-gradient(180deg, #0c1118 0%, var(--bg) 100%);
+        color: var(--ink);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      .shell { max-width: 1240px; margin: 0 auto; padding: 44px 24px 72px; }
+      .hero { max-width: 820px; margin-bottom: 26px; }
+      h1 { margin: 0 0 16px; font-size: clamp(2.4rem, 6vw, 4.4rem); line-height: 0.96; }
+      h2, h3 { margin: 0 0 10px; }
+      p { margin: 0; color: var(--muted); line-height: 1.65; }
+      .eyebrow { margin: 0 0 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.76rem; font-weight: 800; }
+      .summary-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin: 24px 0 28px; }
+      .summary-card, .detail-card, .meta-card, .nav-card, .warning-block {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 22px;
+        box-shadow: 0 22px 40px rgba(0,0,0,0.22);
+      }
+      .summary-card strong { display: block; font-size: 1.9rem; margin-top: 8px; }
+      .nav-grid { display:grid; gap:18px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 28px; }
+      .nav-card { text-decoration:none; color:inherit; }
+      .warning-block ul { margin: 12px 0 0; padding-left: 20px; color: var(--muted); line-height: 1.55; }
+      .board { overflow-x: auto; margin: 0 0 28px; border-radius: 24px; border: 1px solid var(--line); background: rgba(255,255,255,0.03); }
+      table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+      th, td { padding: 18px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); vertical-align: top; }
+      th { color: var(--accent); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
+      a { color: var(--accent); }
+      .subtle { color: var(--muted); margin-top: 6px; font-size: 0.94rem; }
+      .novelty-row { margin-top: 10px; }
+      .pill-row, .chip-row { display:flex; gap:8px; flex-wrap:wrap; }
+      .pill, .chip { display:inline-flex; align-items:center; border-radius:999px; padding:6px 11px; font-size:0.76rem; font-weight:800; background:rgba(255,255,255,0.08); color:var(--ink); }
+      .chip.muted { color: var(--muted); }
+      .pill.supported { background: rgba(142,224,184,0.18); color: var(--supported); }
+      .pill.provisional { background: rgba(255,211,124,0.18); color: var(--provisional); }
+      .pill.weak { background: rgba(255,176,176,0.16); color: var(--weak); }
+      .pill.seeded { background: rgba(255,207,155,0.16); color: var(--seeded); }
+      .pill.bounded { background: rgba(140,198,255,0.18); color: var(--bounded); }
+      .pill.usable { background: rgba(155,240,210,0.16); color: var(--usable); }
+      .pill.novelty { background: rgba(140,198,255,0.16); color: #d7ebff; }
+      .detail-stack { display: grid; gap: 18px; }
+      .detail-head { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom: 18px; }
+      .detail-grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 16px; }
+      .accent-card { border-color: rgba(140,198,255,0.28); }
+      .paper-list { margin: 12px 0 0; padding-left: 18px; color: var(--muted); line-height: 1.5; }
+      .note { margin-top: 10px; font-size: 0.92rem; }
+      @media (max-width: 720px) {
+        .shell { padding: 28px 16px 56px; }
+        .detail-head { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Phase 5 cohort / endotype layer</p>
+        <h1>TBI Cohort Stratification</h1>
+        <p>This layer stops treating all TBI as one disease. It compares endotype packets across injury class, time, dominant process, biomarker panel, imaging pattern, and the best-fit translational bias while keeping new-idea overlays visibly separate from core support.</p>
+      </section>
+      <section class="summary-grid">
+    <article class="summary-card">
+      <span class="eyebrow">Endotypes Defined</span>
+      <strong>7</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Supported Endotypes</span>
+      <strong>2</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Provisional Endotypes</span>
+      <strong>5</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">Defined Biomarker Panels</span>
+      <strong>7</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">With Translational Bias</span>
+      <strong>6</strong>
+      
+    </article>
+    
+    <article class="summary-card">
+      <span class="eyebrow">With Novelty Overlay</span>
+      <strong>6</strong>
+      
+    </article>
+    </section>
+      
+    <section class="nav-grid">
+      <a class="nav-card" href="../process-engine/index.html">
+        <p class="eyebrow">Phase 1</p>
+        <h3>Process Engine</h3>
+        <p>Revisit the six longitudinal lanes.</p>
+      </a>
+      <a class="nav-card" href="../process-model/index.html">
+        <p class="eyebrow">Phase 2</p>
+        <h3>Process Model</h3>
+        <p>Inspect the explicit causal-transition layer.</p>
+      </a>
+      <a class="nav-card" href="../progression-objects/index.html">
+        <p class="eyebrow">Phase 3</p>
+        <h3>Progression Objects</h3>
+        <p>Review recurring degenerative objects.</p>
+      </a>
+      <a class="nav-card" href="../translational-logic/index.html">
+        <p class="eyebrow">Phase 4</p>
+        <h3>Translational Logic</h3>
+        <p>Compare primary targets and expected readouts.</p>
+      </a>
+      <a class="nav-card" href="../index.html">
+        <p class="eyebrow">Portal</p>
+        <h3>Back To Portal</h3>
+        <p>Return to the top-level repo surfaces.</p>
+      </a>
+    </section>
+    
+      
+        <section class="warning-block">
+          <p class="eyebrow">Validation warnings</p>
+          <h2>Bounded endotypes still need careful interpretation</h2>
+          <ul><li>Acute Mild Biomarker / Imaging Bridge has no attached genomics / 10x signature yet</li><li>Acute Mild Biomarker / Imaging Bridge is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Acute Severe Vascular-Dominant has no attached genomics / 10x signature yet</li><li>Acute Blast Vascular / Inflammatory Mixed includes a novelty overlay; do not let it upgrade core TBI support</li><li>Acute Blast Vascular / Inflammatory Mixed has no attached genomics / 10x signature yet</li><li>Acute Blast Vascular / Inflammatory Mixed is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Chronic Repetitive Tau / Clearance Mixed includes a novelty overlay; do not let it upgrade core TBI support</li><li>Chronic Repetitive Tau / Clearance Mixed has no attached genomics / 10x signature yet</li><li>Chronic Repetitive Tau / Clearance Mixed is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Chronic Severe Axonal / Network Decline has no attached genomics / 10x signature yet</li><li>Chronic Severe Axonal / Network Decline is mixed-dominant and needs clear overlap/exclusion framing in the UI</li></ul>
+        </section>
+        
+      <section class="board">
+        <table>
+          <thead>
+            <tr>
+              <th>Endotype</th>
+              <th>Dominant Layer</th>
+              <th>Distinguishing Biomarkers</th>
+              <th>Defining Features</th>
+              <th>Intervention Bias</th>
+              <th>State</th>
+              <th>Next Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+    <tr>
+      <td>
+        <a href="#acute_mild_biomarker_imaging_bridge"><strong>Acute Mild Biomarker / Imaging Bridge</strong></a>
+        <div class="subtle">mild / acute</div>
+        <div class="novelty-row"><span class="pill novelty tbi_emergent">tbi_emergent</span></div>
+      </td>
+      <td>blood_brain_barrier_failure, neuroinflammation_microglial_state_change, microglial_chronic_activation</td>
+      <td>GFAP, UCH-L1, NfL +7 more</td>
+      <td>acute biomarker-positive mild TBI, white matter or microbleed imaging signal +1 more</td>
+      <td>OCLN | barrier repair / tight-junction stabilization</td>
+      <td><span class="pill provisional">provisional</span><span class="pill bounded">bounded</span></td>
+      <td>Which acute mild cases show a barrier-first signature versus a cytokine-first signature when GFAP, UCH-L1, and acute imaging are all present?</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#acute_severe_vascular_dominant"><strong>Acute Severe Vascular-Dominant</strong></a>
+        <div class="subtle">severe / acute</div>
+        <div class="novelty-row"><span class="pill novelty tbi_established">tbi_established</span></div>
+      </td>
+      <td>blood_brain_barrier_failure, mitochondrial_bioenergetic_collapse, neurovascular_uncoupling</td>
+      <td>GFAP, S100B, D-dimer +7 more</td>
+      <td>acute severe presentation, vascular fragility or coagulopathy +1 more</td>
+      <td>OCLN | barrier repair / tight-junction stabilization</td>
+      <td><span class="pill supported">supported</span><span class="pill usable">usable</span></td>
+      <td>Which acute severe cohorts show enough barrier/perfusion pressure that BBB repair should come before a broader anti-inflammatory packet?</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#acute_blast_vascular_inflammatory_mixed"><strong>Acute Blast Vascular / Inflammatory Mixed</strong></a>
+        <div class="subtle">blast / acute</div>
+        <div class="novelty-row"><span class="pill novelty cross_disease_analog">cross_disease_analog</span></div>
+      </td>
+      <td>blood_brain_barrier_failure, neuroinflammation_microglial_state_change, microglial_chronic_activation +1 more</td>
+      <td>GFAP, tau, pituitary hormone abnormalities +7 more</td>
+      <td>blast or breacher exposure, vascular plus immune signal +1 more</td>
+      <td>OCLN | barrier repair / tight-junction stabilization</td>
+      <td><span class="pill provisional">provisional</span><span class="pill bounded">bounded</span></td>
+      <td>Do blast-exposed cohorts behave more like barrier-first vascular injury with immune spillover, or do they deserve a distinct mixed archetype with endocrine overlays?</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#subacute_repetitive_inflammatory_dominant"><strong>Subacute Repetitive Inflammatory-Dominant</strong></a>
+        <div class="subtle">repetitive / subacute</div>
+        <div class="novelty-row"><span class="pill novelty tbi_emergent">tbi_emergent</span></div>
+      </td>
+      <td>neuroinflammation_microglial_state_change, blood_brain_barrier_failure, microglial_chronic_activation</td>
+      <td>IL-6, IL-1beta, TNF-alpha +7 more</td>
+      <td>repetitive exposure history, persistent glial activation +1 more</td>
+      <td>NLRP3 | inflammasome / cytokine network modulation</td>
+      <td><span class="pill supported">supported</span><span class="pill usable">usable</span></td>
+      <td>Which repetitive cohorts still look barrier-conditioned in the subacute window, and which ones are already dominated by persistent microglial activation?</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#chronic_mild_metabolic_white_matter_dominant"><strong>Chronic Mild Metabolic / White Matter Dominant</strong></a>
+        <div class="subtle">mild / chronic</div>
+        <div class="novelty-row"><span class="pill novelty tbi_emergent">tbi_emergent</span></div>
+      </td>
+      <td>mitochondrial_bioenergetic_collapse, axonal_degeneration, persistent_metabolic_dysfunction +2 more</td>
+      <td>NfL, tau, ATP +7 more</td>
+      <td>chronic post-concussive symptoms, white matter microstructural change +1 more</td>
+      <td>PRKN | mitochondrial quality-control modulation</td>
+      <td><span class="pill provisional">provisional</span><span class="pill bounded">bounded</span></td>
+      <td>Which chronic mild cohorts are better explained by metabolic and white matter burden than by continuing vascular or inflammatory pressure?</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#chronic_repetitive_tau_clearance_mixed"><strong>Chronic Repetitive Tau / Clearance Mixed</strong></a>
+        <div class="subtle">repetitive / chronic</div>
+        <div class="novelty-row"><span class="pill novelty cross_disease_analog">cross_disease_analog</span></div>
+      </td>
+      <td>tau_proteinopathy_progression, glymphatic_astroglial_clearance_failure, neuroinflammation_microglial_state_change +3 more</td>
+      <td>BD-tau, p-tau, GFAP +7 more</td>
+      <td>repetitive exposure history, tau burden or tau variant shift +1 more</td>
+      <td>DYRK1A | tau-lowering / anti-proteinopathy modulation</td>
+      <td><span class="pill provisional">provisional</span><span class="pill bounded">bounded</span></td>
+      <td>Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <a href="#chronic_severe_axonal_network_decline"><strong>Chronic Severe Axonal / Network Decline</strong></a>
+        <div class="subtle">severe / chronic</div>
+        <div class="novelty-row"><span class="pill novelty tbi_emergent">tbi_emergent</span></div>
+      </td>
+      <td>axonal_degeneration, mitochondrial_bioenergetic_collapse, white_matter_degeneration +2 more</td>
+      <td>NfL, tau, GFAP +7 more</td>
+      <td>moderate-to-severe injury, axonal injury burden +1 more</td>
+      <td>SARM1 | axonal degeneration program modulation</td>
+      <td><span class="pill provisional">provisional</span><span class="pill bounded">bounded</span></td>
+      <td>Which chronic severe cohorts still look metabolically active enough to justify mitochondrial rescue logic, and which are already dominated by structural degeneration?</td>
+    </tr>
+    </tbody>
+        </table>
+      </section>
+      <section class="detail-stack">
+    <article class="detail-card" id="acute_mild_biomarker_imaging_bridge">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">single_event_or_sport_related_mild</p>
+          <h2>Acute Mild Biomarker / Imaging Bridge</h2>
+          <p>Use this packet for acute mild or sport-concussion cohorts where blood biomarkers and imaging are the main discriminators before the downstream chronic trajectory is clear.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill mixed">Pattern: mixed</span>
+          <span class="pill novelty tbi_emergent">Novelty: tbi_emergent</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Who Falls Here</h3>
+          <p><strong>mild</strong> | <strong>acute</strong></p>
+          <div class="chip-row"><span class="chip">acute biomarker-positive mild TBI</span><span class="chip">white matter or microbleed imaging signal</span><span class="chip">rapid triage / rule-out setting</span></div>
+          <p class="note">Best discriminator: <strong>GFAP + UCH-L1 paired with acute imaging evidence of microbleeds or DTI disruption.</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Dominant Stack</h3>
+          <p><strong>Lanes:</strong> blood_brain_barrier_failure, neuroinflammation_microglial_state_change</p>
+          <p><strong>Transitions:</strong> bbb_permeability_increase_to_peripheral_immune_infiltration</p>
+          <p><strong>Objects:</strong> microglial_chronic_activation</p>
+          <p class="note">Degenerative burden: <strong>low_degenerative_burden</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Distinguishing Biomarker Panel</h3>
+          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">UCH-L1</span><span class="chip">NfL</span><span class="chip">tau</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">IL-6</span><span class="chip">DBSI-RF</span><span class="chip">IL-1β</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Imaging Pattern</h3>
+          <div class="chip-row"><span class="chip">CT triage signal</span><span class="chip">DTI white matter microstructure</span><span class="chip">microbleed burden</span><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular unit</span><span class="chip">hippocampus</span><span class="chip">diffuse / multisite</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Translational Bias</h3>
+          <p><strong>OCLN | barrier repair / tight-junction stabilization</strong></p>
+          <div class="chip-row"><span class="chip">OCLN</span><span class="chip">NLRP3</span></div>
+          <p class="note">Linked packets: <strong>blood_brain_barrier_failure, neuroinflammation_microglial_state_change</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Overlap &amp; Exclusion Risk</h3>
+          <p>Acute biomarker spikes can reflect injury burden without resolving the dominant process, and imaging can remain subtle despite strong circulating markers.</p>
+          <p class="note">Evidence gaps: <strong>Subacute conversion rules are still thin; the current packet is strongest at triage and early follow-up.</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Novelty Overlay</h3>
+          <p><span class="pill novelty none">none</span></p>
+          <p><strong>Bridge:</strong> Acute mild cases may split early by barrier leak plus inflammatory spillover versus fast normalization despite similar symptom burden.</p>
+          <p><strong>Borrowed contexts:</strong> none</p>
+          <p class="note">Highest-value hypothesis: <strong>A biomarker-plus-imaging bridge may separate the acute mild cases that later look inflammatory from those that remain mostly vascular and self-limited.</strong></p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Next Move</h3>
+          <p><strong>Question:</strong> Which acute mild cases show a barrier-first signature versus a cytokine-first signature when GFAP, UCH-L1, and acute imaging are all present?</p>
+          <p><strong>Enrichment:</strong> Deepen acute mild papers that pair blood biomarkers with DTI or CT outcomes and recoverable follow-up windows.</p>
+          <p><strong>Experiment:</strong> Test whether acute biomarker-positive mild cases with imaging abnormalities later align more strongly to BBB or inflammatory downstream packets.</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Evidence Anchors</h3>
+          <p><strong>Anchor PMIDs:</strong> 41707328, 41737590, 41496386, 41173528, 41126936, 41893603</p>
+          <p class="note">Source mix: <strong>full_text_like:4; abstract_only:2</strong></p>
+          <ul class="paper-list"><li><strong>41707328</strong> <span class="subtle">abstract_only</span><br />Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients.</li><li><strong>41737590</strong> <span class="subtle">full_text_like</span><br />Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers</li><li><strong>41496386</strong> <span class="subtle">full_text_like</span><br />Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15</li><li><strong>41173528</strong> <span class="subtle">abstract_only</span><br />Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries.</li><li><strong>41126936</strong> <span class="subtle">full_text_like</span><br />Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review.</li><li><strong>41893603</strong> <span class="subtle">full_text_like</span><br />Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Axis Basis</h3>
+          <p><strong>Injury:</strong> explicit</p>
+          <p><strong>Time:</strong> explicit</p>
+          <p><strong>Dominant pattern:</strong> inferred_bounded</p>
+          <p><strong>Biomarkers:</strong> explicit</p>
+          <p><strong>Imaging:</strong> explicit</p>
+          <p><strong>Genomics:</strong> not_reported</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="acute_severe_vascular_dominant">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">single_event_moderate_to_severe</p>
+          <h2>Acute Severe Vascular-Dominant</h2>
+          <p>Use this packet for acute moderate-to-severe cohorts where vascular failure, hypoperfusion, and coagulopathy dominate the early secondary-injury picture.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported">Support: supported</span>
+          <span class="pill usable">Maturity: usable</span>
+          <span class="pill vascular_dominant">Pattern: vascular_dominant</span>
+          <span class="pill novelty tbi_established">Novelty: tbi_established</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Who Falls Here</h3>
+          <p><strong>severe</strong> | <strong>acute</strong></p>
+          <div class="chip-row"><span class="chip">acute severe presentation</span><span class="chip">vascular fragility or coagulopathy</span><span class="chip">early hypoperfusion or hematoma progression</span></div>
+          <p class="note">Best discriminator: <strong>GFAP or S100B paired with hypoperfusion / hematoma expansion markers and early imaging burden.</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Dominant Stack</h3>
+          <p><strong>Lanes:</strong> blood_brain_barrier_failure, mitochondrial_bioenergetic_collapse</p>
+          <p><strong>Transitions:</strong> bbb_permeability_increase_to_peripheral_immune_infiltration</p>
+          <p><strong>Objects:</strong> neurovascular_uncoupling</p>
+          <p class="note">Degenerative burden: <strong>low_degenerative_burden</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Distinguishing Biomarker Panel</h3>
+          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">S100B</span><span class="chip">D-dimer</span><span class="chip">lactate</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">ATP</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Imaging Pattern</h3>
+          <div class="chip-row"><span class="chip">intracranial hematoma progression</span><span class="chip">cerebral hypoperfusion</span><span class="chip">CT burden</span><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular unit</span><span class="chip">diffuse / multisite</span><span class="chip">hippocampus</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Translational Bias</h3>
+          <p><strong>OCLN | barrier repair / tight-junction stabilization</strong></p>
+          <div class="chip-row"><span class="chip">OCLN</span><span class="chip">PRKN</span></div>
+          <p class="note">Linked packets: <strong>blood_brain_barrier_failure, mitochondrial_bioenergetic_collapse</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Overlap &amp; Exclusion Risk</h3>
+          <p>Severe acute cohorts can look inflammatory quickly, but that does not mean inflammation is the dominant upstream driver in the first window.</p>
+          <p class="note">Evidence gaps: <strong>The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Novelty Overlay</h3>
+          <p><span class="pill novelty stroke_analog">stroke_analog</span></p>
+          <p><strong>Bridge:</strong> Persistent vascular failure may be the upstream switch that conditions later metabolic and inflammatory divergence in severe TBI.</p>
+          <p><strong>Borrowed contexts:</strong> stroke, vascular_cognitive_impairment</p>
+          <p class="note">Highest-value hypothesis: <strong>The most actionable early severe TBI subgroup may be the one with a barrier-plus-perfusion signature before inflammatory amplification fully separates.</strong></p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Next Move</h3>
+          <p><strong>Question:</strong> Which acute severe cohorts show enough barrier/perfusion pressure that BBB repair should come before a broader anti-inflammatory packet?</p>
+          <p><strong>Enrichment:</strong> Deepen severe papers with explicit hypoperfusion, coagulopathy, cerebral blood flow, or hematoma expansion readouts.</p>
+          <p><strong>Experiment:</strong> Stratify acute severe models by vascular leak and perfusion status, then test whether BBB repair readouts move before cytokine relief.</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Evidence Anchors</h3>
+          <p><strong>Anchor PMIDs:</strong> 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41896418</p>
+          <p class="note">Source mix: <strong>full_text_like:4; abstract_only:4</strong></p>
+          <ul class="paper-list"><li><strong>41700282</strong> <span class="subtle">full_text_like</span><br />Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury</li><li><strong>41725719</strong> <span class="subtle">full_text_like</span><br />Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram</li><li><strong>41672813</strong> <span class="subtle">abstract_only</span><br />Neuroworsening from a normal Glasgow Coma Scale Motor Score in the emergency department is an early predictor of neurosurgical intervention, hospital outcomes, and longitudinal disability in traumatic brain injury: A TRACK-TBI Study.</li><li><strong>41653068</strong> <span class="subtle">abstract_only</span><br />Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury.</li><li><strong>41714686</strong> <span class="subtle">full_text_like</span><br />Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study</li><li><strong>41731737</strong> <span class="subtle">abstract_only</span><br />Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Axis Basis</h3>
+          <p><strong>Injury:</strong> explicit</p>
+          <p><strong>Time:</strong> explicit</p>
+          <p><strong>Dominant pattern:</strong> inferred_bounded</p>
+          <p><strong>Biomarkers:</strong> explicit</p>
+          <p><strong>Imaging:</strong> explicit</p>
+          <p><strong>Genomics:</strong> not_reported</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="acute_blast_vascular_inflammatory_mixed">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">military_or_breacher_blast_exposure</p>
+          <h2>Acute Blast Vascular / Inflammatory Mixed</h2>
+          <p>Use this packet for blast-exposed cohorts where vascular disturbance and immune activation coexist early and may not follow the same sequence seen in civilian impact injury.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill mixed">Pattern: mixed</span>
+          <span class="pill novelty cross_disease_analog">Novelty: cross_disease_analog</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Who Falls Here</h3>
+          <p><strong>blast</strong> | <strong>acute</strong></p>
+          <div class="chip-row"><span class="chip">blast or breacher exposure</span><span class="chip">vascular plus immune signal</span><span class="chip">latent neuroinjury risk</span></div>
+          <p class="note">Best discriminator: <strong>GFAP or tau plus military blast exposure history and immune-cell or endocrine disturbance signals.</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Dominant Stack</h3>
+          <p><strong>Lanes:</strong> blood_brain_barrier_failure, neuroinflammation_microglial_state_change</p>
+          <p><strong>Transitions:</strong> bbb_permeability_increase_to_peripheral_immune_infiltration</p>
+          <p><strong>Objects:</strong> microglial_chronic_activation, neurovascular_uncoupling</p>
+          <p class="note">Degenerative burden: <strong>low_degenerative_burden</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Distinguishing Biomarker Panel</h3>
+          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">tau</span><span class="chip">pituitary hormone abnormalities</span><span class="chip">immune-cell subset shift</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">IL-6</span><span class="chip">DBSI-RF</span><span class="chip">IL-1β</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Imaging Pattern</h3>
+          <div class="chip-row"><span class="chip">neural response to low-level blast exposure</span><span class="chip">latent neuroinjury signatures</span><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular unit</span><span class="chip">hippocampus</span><span class="chip">diffuse / multisite</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Translational Bias</h3>
+          <p><strong>OCLN | barrier repair / tight-junction stabilization</strong></p>
+          <div class="chip-row"><span class="chip">OCLN</span><span class="chip">NLRP3</span></div>
+          <p class="note">Linked packets: <strong>blood_brain_barrier_failure, neuroinflammation_microglial_state_change</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Overlap &amp; Exclusion Risk</h3>
+          <p>Blast cohorts often mix repetitive exposure, endocrine injury, and vascular stress, so clean one-driver interpretations are likely to overstate certainty.</p>
+          <p class="note">Evidence gaps: <strong>Cohort granularity is still thin, and the current packet needs better direct imaging anchors.</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Novelty Overlay</h3>
+          <p><span class="pill novelty stroke_analog">stroke_analog</span></p>
+          <p><strong>Bridge:</strong> Blast-exposed cohorts may express a tighter coupling between vascular stress, endocrine disruption, and immune-cell recruitment than standard single-impact TBI cohorts.</p>
+          <p><strong>Borrowed contexts:</strong> stroke, vascular_cognitive_impairment</p>
+          <p class="note">Highest-value hypothesis: <strong>The highest-value blast endotype may be a mixed vascular-plus-inflammatory state that requires barrier-sensitive and immune-sensitive readouts together rather than a single dominant mechanism label.</strong></p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Next Move</h3>
+          <p><strong>Question:</strong> Do blast-exposed cohorts behave more like barrier-first vascular injury with immune spillover, or do they deserve a distinct mixed archetype with endocrine overlays?</p>
+          <p><strong>Enrichment:</strong> Deepen blast papers with immune-cell subset, retinal injury, endocrine, and latent-neuroinjury readouts.</p>
+          <p><strong>Experiment:</strong> Profile blast-exposed models with matched barrier, cytokine, and endocrine readouts to see whether a mixed state outperforms single-driver classification.</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Evidence Anchors</h3>
+          <p><strong>Anchor PMIDs:</strong> 41809238, 41794317, 41596245, 41723947, 41880282</p>
+          <p class="note">Source mix: <strong>full_text_like:3; abstract_only:2</strong></p>
+          <ul class="paper-list"><li><strong>41809238</strong> <span class="subtle">full_text_like</span><br />One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel</li><li><strong>41794317</strong> <span class="subtle">abstract_only</span><br />Identification of immune cell subsets involved in retinal ganglion cell damage following blast exposure.</li><li><strong>41596245</strong> <span class="subtle">full_text_like</span><br />Integrated Blood Biomarker and Neurobehavioural Signatures of Latent Neuroinjury in Experienced Military Breachers Exposed to Repetitive Low-Intensity Blast</li><li><strong>41723947</strong> <span class="subtle">abstract_only</span><br />Pituitary hormone abnormalities following military-related traumatic brain injuries.</li><li><strong>41880282</strong> <span class="subtle">full_text_like</span><br />Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Axis Basis</h3>
+          <p><strong>Injury:</strong> explicit</p>
+          <p><strong>Time:</strong> explicit</p>
+          <p><strong>Dominant pattern:</strong> inferred_bounded</p>
+          <p><strong>Biomarkers:</strong> inferred_bounded</p>
+          <p><strong>Imaging:</strong> inferred_bounded</p>
+          <p><strong>Genomics:</strong> not_reported</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="subacute_repetitive_inflammatory_dominant">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">repetitive_head_impact_or_rmTBI</p>
+          <h2>Subacute Repetitive Inflammatory-Dominant</h2>
+          <p>Use this packet for repetitive-impact cohorts whose subacute biology looks dominated by persistent glial activation and immune spillover rather than pure vascular instability.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill supported">Support: supported</span>
+          <span class="pill usable">Maturity: usable</span>
+          <span class="pill inflammatory_dominant">Pattern: inflammatory_dominant</span>
+          <span class="pill novelty tbi_emergent">Novelty: tbi_emergent</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Who Falls Here</h3>
+          <p><strong>repetitive</strong> | <strong>subacute</strong></p>
+          <div class="chip-row"><span class="chip">repetitive exposure history</span><span class="chip">persistent glial activation</span><span class="chip">subacute white matter stress</span></div>
+          <p class="note">Best discriminator: <strong>IL-6 / TNF-alpha / GFAP with repetitive exposure history plus DTI or white matter stress cues.</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Dominant Stack</h3>
+          <p><strong>Lanes:</strong> neuroinflammation_microglial_state_change, blood_brain_barrier_failure</p>
+          <p><strong>Transitions:</strong> bbb_permeability_increase_to_peripheral_immune_infiltration, mitochondrial_ros_to_inflammasome_activation</p>
+          <p><strong>Objects:</strong> microglial_chronic_activation</p>
+          <p class="note">Degenerative burden: <strong>low_degenerative_burden</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Distinguishing Biomarker Panel</h3>
+          <div class="chip-row"><span class="chip">IL-6</span><span class="chip">IL-1beta</span><span class="chip">TNF-alpha</span><span class="chip">GFAP</span><span class="chip">DBSI-RF</span><span class="chip">IL-1β</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">NLRP3</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Imaging Pattern</h3>
+          <div class="chip-row"><span class="chip">limbic white matter microstructure</span><span class="chip">DTI diffuse injury signal</span><span class="chip">cortex</span><span class="chip">hippocampus</span><span class="chip">diffuse / multisite</span><span class="chip">BBB</span><span class="chip">neurovascular unit</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Translational Bias</h3>
+          <p><strong>NLRP3 | inflammasome / cytokine network modulation</strong></p>
+          <div class="chip-row"><span class="chip">NLRP3</span><span class="chip">OCLN</span></div>
+          <p class="note">Linked packets: <strong>neuroinflammation_microglial_state_change, blood_brain_barrier_failure</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Overlap &amp; Exclusion Risk</h3>
+          <p>Repetitive cohorts can still carry unresolved vascular pressure, so an inflammatory label should stay bounded unless barrier readouts are also tracked.</p>
+          <p class="note">Evidence gaps: <strong>The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Novelty Overlay</h3>
+          <p><span class="pill novelty mixed_neurodegeneration_analog">mixed_neurodegeneration_analog</span></p>
+          <p><strong>Bridge:</strong> Repetitive injury may create a subacute inflammatory persistence state that is conditioned by earlier BBB stress but remains measurable as a glial network rather than a vascular one.</p>
+          <p><strong>Borrowed contexts:</strong> white_matter_degeneration, mitochondrial_neurodegeneration</p>
+          <p class="note">Highest-value hypothesis: <strong>The first strong repetitive-TBI endotype may be a subacute inflammatory persistence state rather than a purely chronic tau state.</strong></p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Next Move</h3>
+          <p><strong>Question:</strong> Which repetitive cohorts still look barrier-conditioned in the subacute window, and which ones are already dominated by persistent microglial activation?</p>
+          <p><strong>Enrichment:</strong> Deepen repetitive-TBI papers that report inflammatory biomarkers together with white matter or network readouts across days to weeks.</p>
+          <p><strong>Experiment:</strong> Stratify repetitive models by subacute cytokine and glial-stress load, then test whether NLRP3-centered logic or BBB-centered logic better predicts downstream change.</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Evidence Anchors</h3>
+          <p><strong>Anchor PMIDs:</strong> 41173520, 41446731, 41740873, 41740080, 41847037, 41508043, 41709584</p>
+          <p class="note">Source mix: <strong>full_text_like:3; abstract_only:4</strong></p>
+          <ul class="paper-list"><li><strong>41173520</strong> <span class="subtle">abstract_only</span><br />A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction.</li><li><strong>41446731</strong> <span class="subtle">full_text_like</span><br />MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury.</li><li><strong>41740873</strong> <span class="subtle">abstract_only</span><br />Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact.</li><li><strong>41740080</strong> <span class="subtle">abstract_only</span><br />Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts.</li><li><strong>41847037</strong> <span class="subtle">full_text_like</span><br />PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury</li><li><strong>41508043</strong> <span class="subtle">full_text_like</span><br />Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Axis Basis</h3>
+          <p><strong>Injury:</strong> explicit</p>
+          <p><strong>Time:</strong> explicit</p>
+          <p><strong>Dominant pattern:</strong> inferred_bounded</p>
+          <p><strong>Biomarkers:</strong> explicit</p>
+          <p><strong>Imaging:</strong> explicit</p>
+          <p><strong>Genomics:</strong> inferred_bounded</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="chronic_mild_metabolic_white_matter_dominant">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">chronic_post_concussive_mild</p>
+          <h2>Chronic Mild Metabolic / White Matter Dominant</h2>
+          <p>Use this packet for chronic mild cohorts where white matter injury and metabolic dysfunction track together more strongly than overt vascular or cytokine signals.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill metabolic_dominant">Pattern: metabolic_dominant</span>
+          <span class="pill novelty tbi_emergent">Novelty: tbi_emergent</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Who Falls Here</h3>
+          <p><strong>mild</strong> | <strong>chronic</strong></p>
+          <div class="chip-row"><span class="chip">chronic post-concussive symptoms</span><span class="chip">white matter microstructural change</span><span class="chip">metabolic stress signatures</span></div>
+          <p class="note">Best discriminator: <strong>NfL or tau paired with DTI white matter disruption and metabolic or mitochondrial stress signals.</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Dominant Stack</h3>
+          <p><strong>Lanes:</strong> mitochondrial_bioenergetic_collapse, axonal_degeneration</p>
+          <p><strong>Transitions:</strong> mitochondrial_ros_to_inflammasome_activation, axonal_degeneration_to_chronic_network_dysfunction</p>
+          <p><strong>Objects:</strong> persistent_metabolic_dysfunction, white_matter_degeneration, cognitive_decline_phenotype</p>
+          <p class="note">Degenerative burden: <strong>moderate_degenerative_burden</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Distinguishing Biomarker Panel</h3>
+          <div class="chip-row"><span class="chip">NfL</span><span class="chip">tau</span><span class="chip">ATP</span><span class="chip">ROS</span><span class="chip">Nf-L</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span><span class="chip">Fractional Anisotropy (FA)</span><span class="chip">GFAP</span><span class="chip">Mean Diffusivity (MD)</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Imaging Pattern</h3>
+          <div class="chip-row"><span class="chip">DTI white matter disruption</span><span class="chip">structural connectivity change</span><span class="chip">perivascular diffusion change</span><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">hippocampus</span><span class="chip">white matter</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Translational Bias</h3>
+          <p><strong>PRKN | mitochondrial quality-control modulation</strong></p>
+          <div class="chip-row"><span class="chip">PRKN</span><span class="chip">SARM1</span></div>
+          <p class="note">Linked packets: <strong>mitochondrial_bioenergetic_collapse, axonal_degeneration</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Overlap &amp; Exclusion Risk</h3>
+          <p>White matter and metabolic signals can remain abnormal without proving that metabolism is upstream; keep axonal and vascular alternatives visible.</p>
+          <p class="note">Evidence gaps: <strong>The packet still needs stronger direct chronic metabolomic and transcriptomic cohort anchors.</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Novelty Overlay</h3>
+          <p><span class="pill novelty mixed_neurodegeneration_analog">mixed_neurodegeneration_analog</span></p>
+          <p><strong>Bridge:</strong> A subset of chronic mild cases may be metabolically dominant first and only secondarily inflammatory, especially when white matter integrity and energy markers cluster together.</p>
+          <p><strong>Borrowed contexts:</strong> white_matter_degeneration, mitochondrial_neurodegeneration</p>
+          <p class="note">Highest-value hypothesis: <strong>ATP/ROS/NfL/FA-style clustering may separate a chronic mild metabolic endotype that is being obscured by generic symptom or inflammation groupings.</strong></p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Next Move</h3>
+          <p><strong>Question:</strong> Which chronic mild cohorts are better explained by metabolic and white matter burden than by continuing vascular or inflammatory pressure?</p>
+          <p><strong>Enrichment:</strong> Deepen chronic mild papers that combine DTI, structural connectivity, glymphatic, or metabolic readouts with outcome phenotypes.</p>
+          <p><strong>Experiment:</strong> Compare ATP/ROS/NfL/DTI clusters against cytokine-first clusters when predicting chronic mild white matter dysfunction.</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Evidence Anchors</h3>
+          <p><strong>Anchor PMIDs:</strong> 41203427, 41622453, 41267966, 41496379, 41701552, 41301762, 41026543, 41175081</p>
+          <p class="note">Source mix: <strong>full_text_like:5; abstract_only:3</strong></p>
+          <ul class="paper-list"><li><strong>41203427</strong> <span class="subtle">abstract_only</span><br />Linking Symptom Phenotypes to Patterns of White Matter Injury in Mild Traumatic Brain Injury: A Latent Class Analysis</li><li><strong>41622453</strong> <span class="subtle">abstract_only</span><br />Cognitive impairment and altered structural connectivity after mild traumatic brain injury: A longitudinal study based on generalized q-sampling imaging.</li><li><strong>41267966</strong> <span class="subtle">full_text_like</span><br />Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights.</li><li><strong>41496379</strong> <span class="subtle">full_text_like</span><br />Neuroimaging correlates of symptom burden and functional recovery following mild traumatic brain injury: A systematic review.</li><li><strong>41701552</strong> <span class="subtle">abstract_only</span><br />Diffusion Tensor Imaging Along the Perivascular Space in Veterans with Remote Mild Traumatic Brain Injuries</li><li><strong>41301762</strong> <span class="subtle">full_text_like</span><br />A Bioinformatic Study of Genetics Involved in Determining Mild Traumatic Brain Injury Severity and Recovery</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Axis Basis</h3>
+          <p><strong>Injury:</strong> explicit</p>
+          <p><strong>Time:</strong> explicit</p>
+          <p><strong>Dominant pattern:</strong> inferred_bounded</p>
+          <p><strong>Biomarkers:</strong> explicit</p>
+          <p><strong>Imaging:</strong> explicit</p>
+          <p><strong>Genomics:</strong> inferred_bounded</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="chronic_repetitive_tau_clearance_mixed">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">repetitive_head_impact_chronic</p>
+          <h2>Chronic Repetitive Tau / Clearance Mixed</h2>
+          <p>Use this packet for chronic repetitive-impact cohorts where tau and clearance failure appear to reinforce each other and may outrank acute vascular logic.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill mixed">Pattern: mixed</span>
+          <span class="pill novelty cross_disease_analog">Novelty: cross_disease_analog</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Who Falls Here</h3>
+          <p><strong>repetitive</strong> | <strong>chronic</strong></p>
+          <div class="chip-row"><span class="chip">repetitive exposure history</span><span class="chip">tau burden or tau variant shift</span><span class="chip">clearance or glymphatic compromise</span></div>
+          <p class="note">Best discriminator: <strong>p-tau or BD-tau together with AQP4 or DTI-ALPS-type clearance evidence.</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Dominant Stack</h3>
+          <p><strong>Lanes:</strong> tau_proteinopathy_progression, glymphatic_astroglial_clearance_failure, neuroinflammation_microglial_state_change</p>
+          <p><strong>Transitions:</strong> glymphatic_failure_to_tau_protein_accumulation, neuroinflammation_to_tau_proteinopathy_progression, tau_proteinopathy_progression_to_chronic_network_dysfunction</p>
+          <p><strong>Objects:</strong> tauopathy_progression, cognitive_decline_phenotype, microglial_chronic_activation</p>
+          <p class="note">Degenerative burden: <strong>moderate_degenerative_burden</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Distinguishing Biomarker Panel</h3>
+          <div class="chip-row"><span class="chip">BD-tau</span><span class="chip">p-tau</span><span class="chip">GFAP</span><span class="chip">AQP4</span><span class="chip">Tau</span><span class="chip">NfL</span><span class="chip">UCH-L1</span><span class="chip">DTI-ALPS index</span><span class="chip">DTI-ALPS</span><span class="chip">IL-6</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Imaging Pattern</h3>
+          <div class="chip-row"><span class="chip">DTI-ALPS signal</span><span class="chip">chronic connectivity decline</span><span class="chip">protein-burden imaging surrogate</span><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">brainstem</span><span class="chip">white matter</span><span class="chip">hippocampus</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Translational Bias</h3>
+          <p><strong>DYRK1A | tau-lowering / anti-proteinopathy modulation</strong></p>
+          <div class="chip-row"><span class="chip">DYRK1A</span><span class="chip">AQP4</span><span class="chip">NLRP3</span></div>
+          <p class="note">Linked packets: <strong>tau_proteinopathy_progression, glymphatic_astroglial_clearance_failure, neuroinflammation_microglial_state_change</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Overlap &amp; Exclusion Risk</h3>
+          <p>Tau and clearance signals can co-occur without proving directionality, and repetitive cohorts can still carry unresolved inflammatory pressure.</p>
+          <p class="note">Evidence gaps: <strong>Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Novelty Overlay</h3>
+          <p><span class="pill novelty dementia_analog">dementia_analog</span></p>
+          <p><strong>Bridge:</strong> Clearance failure may be a stronger determinant of chronic tau persistence than inflammatory load alone in repetitive-impact cohorts.</p>
+          <p><strong>Borrowed contexts:</strong> alzheimers_tauopathy, vascular_cognitive_impairment</p>
+          <p class="note">Highest-value hypothesis: <strong>A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.</strong></p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Next Move</h3>
+          <p><strong>Question:</strong> Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</p>
+          <p><strong>Enrichment:</strong> Deepen repetitive-impact and CTE-adjacent papers with tau variants, glymphatic readouts, and chronic function.</p>
+          <p><strong>Experiment:</strong> Compare AQP4 / DTI-ALPS / tau coherence against NLRP3 / tau coherence in repetitive chronic models and cohorts.</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Evidence Anchors</h3>
+          <p><strong>Anchor PMIDs:</strong> 41508043, 41612558, 41627284, 41700070, 41179995, 41039850, 41342721, 41707558</p>
+          <p class="note">Source mix: <strong>full_text_like:4; abstract_only:4</strong></p>
+          <ul class="paper-list"><li><strong>41508043</strong> <span class="subtle">full_text_like</span><br />Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils.</li><li><strong>41612558</strong> <span class="subtle">abstract_only</span><br />Alterations in CSF Amyloid-β and Tau Biomarkers in Former College and Professional American Football Players: Findings from the DIAGNOSE CTE Research Project.</li><li><strong>41627284</strong> <span class="subtle">abstract_only</span><br />Clinicopathological study of chronic traumatic encephalopathy pathology in a population-based cohort.</li><li><strong>41700070</strong> <span class="subtle">full_text_like</span><br />MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease</li><li><strong>41179995</strong> <span class="subtle">full_text_like</span><br />Glymphatic system and mild traumatic brain injury: a mini review.</li><li><strong>41039850</strong> <span class="subtle">full_text_like</span><br />A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Axis Basis</h3>
+          <p><strong>Injury:</strong> explicit</p>
+          <p><strong>Time:</strong> explicit</p>
+          <p><strong>Dominant pattern:</strong> inferred_bounded</p>
+          <p><strong>Biomarkers:</strong> explicit</p>
+          <p><strong>Imaging:</strong> explicit</p>
+          <p><strong>Genomics:</strong> not_reported</p>
+        </article>
+      </div>
+    </article>
+    
+    <article class="detail-card" id="chronic_severe_axonal_network_decline">
+      <div class="detail-head">
+        <div>
+          <p class="eyebrow">moderate_to_severe_diffuse_axonal_trajectory</p>
+          <h2>Chronic Severe Axonal / Network Decline</h2>
+          <p>Use this packet for chronic severe trajectories where diffuse axonal injury, white matter loss, and network dysfunction dominate the long-term phenotype.</p>
+        </div>
+        <div class="pill-row">
+          <span class="pill provisional">Support: provisional</span>
+          <span class="pill bounded">Maturity: bounded</span>
+          <span class="pill mixed">Pattern: mixed</span>
+          <span class="pill novelty tbi_emergent">Novelty: tbi_emergent</span>
+        </div>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card accent-card">
+          <h3>Who Falls Here</h3>
+          <p><strong>severe</strong> | <strong>chronic</strong></p>
+          <div class="chip-row"><span class="chip">moderate-to-severe injury</span><span class="chip">axonal injury burden</span><span class="chip">long-term network dysfunction</span></div>
+          <p class="note">Best discriminator: <strong>Early MRI traumatic axonal injury burden paired with later white matter or language/network dysfunction.</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Dominant Stack</h3>
+          <p><strong>Lanes:</strong> axonal_degeneration, mitochondrial_bioenergetic_collapse</p>
+          <p><strong>Transitions:</strong> axonal_degeneration_to_chronic_network_dysfunction, tau_proteinopathy_progression_to_chronic_network_dysfunction</p>
+          <p><strong>Objects:</strong> white_matter_degeneration, synaptic_loss, cognitive_decline_phenotype</p>
+          <p class="note">Degenerative burden: <strong>high_degenerative_burden</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Distinguishing Biomarker Panel</h3>
+          <div class="chip-row"><span class="chip">NfL</span><span class="chip">tau</span><span class="chip">GFAP</span><span class="chip">Fractional Anisotropy (FA)</span><span class="chip">Mean Diffusivity (MD)</span><span class="chip">Nf-L</span><span class="chip">ATP</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span><span class="chip">FA</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Imaging Pattern</h3>
+          <div class="chip-row"><span class="chip">early MRI traumatic axonal injury</span><span class="chip">white matter microstructure</span><span class="chip">network dysfunction</span><span class="chip">white matter</span><span class="chip">diffuse / multisite</span><span class="chip">cortex</span><span class="chip">hippocampus</span></div>
+          <p class="note">Profile status: <strong>defined</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Translational Bias</h3>
+          <p><strong>SARM1 | axonal degeneration program modulation</strong></p>
+          <div class="chip-row"><span class="chip">SARM1</span><span class="chip">PRKN</span></div>
+          <p class="note">Linked packets: <strong>axonal_degeneration, mitochondrial_bioenergetic_collapse</strong></p>
+        </article>
+        <article class="meta-card">
+          <h3>Overlap &amp; Exclusion Risk</h3>
+          <p>Chronic severe cohorts often mix irreversible structural burden with still-perturbable metabolic pressure, so a single-label interpretation will overstate certainty.</p>
+          <p class="note">Evidence gaps: <strong>The current packet needs stronger biomarker plus longitudinal-function linkages.</strong></p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Novelty Overlay</h3>
+          <p><span class="pill novelty mixed_neurodegeneration_analog">mixed_neurodegeneration_analog</span></p>
+          <p><strong>Bridge:</strong> A subset of chronic severe TBI may be better characterized by high degenerative burden on top of earlier metabolic stress than by continuing vascular dominance.</p>
+          <p><strong>Borrowed contexts:</strong> white_matter_degeneration, vascular_cognitive_impairment</p>
+          <p class="note">Highest-value hypothesis: <strong>The chronic severe packet may separate best when we treat axonal/network decline as the dominant burden expression of earlier metabolic and vascular stress, not just structural damage.</strong></p>
+        </article>
+        <article class="meta-card accent-card">
+          <h3>Next Move</h3>
+          <p><strong>Question:</strong> Which chronic severe cohorts still look metabolically active enough to justify mitochondrial rescue logic, and which are already dominated by structural degeneration?</p>
+          <p><strong>Enrichment:</strong> Deepen severe chronic papers that connect early MRI axonal injury to long-term network or cognitive outcomes.</p>
+          <p><strong>Experiment:</strong> Compare chronic severe cohorts by early axonal imaging burden and later network dysfunction to see where metabolic versus degeneration-first intervention logic fits better.</p>
+        </article>
+      </div>
+      <div class="detail-grid">
+        <article class="meta-card">
+          <h3>Evidence Anchors</h3>
+          <p><strong>Anchor PMIDs:</strong> 41761716, 41722498, 41700705, 41761707, 41731737, 41709312, 41737875, 41424224</p>
+          <p class="note">Source mix: <strong>full_text_like:2; abstract_only:6</strong></p>
+          <ul class="paper-list"><li><strong>41761716</strong> <span class="subtle">abstract_only</span><br />Traumatic Axonal Injury on Early Magnetic Resonance Imaging and Associations with Long-Term Outcome in Children with Moderate and Severe Traumatic Brain Injury</li><li><strong>41722498</strong> <span class="subtle">abstract_only</span><br />Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use.</li><li><strong>41700705</strong> <span class="subtle">abstract_only</span><br />Computerized Cognitive Remediation Affects White Matter Microstructure in Relation to Improved Cognitive Function in Adults with Chronic Traumatic Brain Injury</li><li><strong>41761707</strong> <span class="subtle">abstract_only</span><br />An Evaluation of Aeromedical Evacuation Strategies Following Traumatic Brain Injury and Severe Blood Loss</li><li><strong>41731737</strong> <span class="subtle">abstract_only</span><br />Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience</li><li><strong>41709312</strong> <span class="subtle">abstract_only</span><br />Fatal Traumatic Brain Injury With Traumatic Axonal Injury, From a Nonpenetrating Sponge Round: A Forensic Case Report.</li></ul>
+        </article>
+        <article class="meta-card">
+          <h3>Axis Basis</h3>
+          <p><strong>Injury:</strong> explicit</p>
+          <p><strong>Time:</strong> explicit</p>
+          <p><strong>Dominant pattern:</strong> inferred_bounded</p>
+          <p><strong>Biomarkers:</strong> inferred_bounded</p>
+          <p><strong>Imaging:</strong> explicit</p>
+          <p><strong>Genomics:</strong> not_reported</p>
+        </article>
+      </div>
+    </article>
+    </section>
+    </main>
+  </body>
+</html>
