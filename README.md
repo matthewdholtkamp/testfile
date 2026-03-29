@@ -127,15 +127,18 @@ It produces:
 - progression-object validation
 - translational-perturbation index
 - translational-perturbation validation
+- cohort-stratification index
+- cohort-stratification validation
 - process-model site output
 - progression-object site output
 - translational-logic site output
+- cohort-stratification site output
 - mechanism dossiers
 - translational bridge table
 - figure-planning artifact
 
-### Process Engine, Process Model, Progression Objects, And Translational Logic
-The repo now has four explicit downstream neurodegenerative layers after the atlas:
+### Process Engine, Process Model, Progression Objects, Translational Logic, And Cohort Stratification
+The repo now has five explicit downstream neurodegenerative layers after the atlas:
 
 1. **Phase 1 Process Engine**
    - six longitudinal lanes:
@@ -221,11 +224,49 @@ The repo now has four explicit downstream neurodegenerative layers after the atl
      - Phase 2 and Phase 3 upstream coverage counts
      - lane coverage rows so the layer cannot silently skip required lanes
 
+5. **Phase 5 Cohort Stratification**
+   - seven starter cohort / endotype packets:
+     - `acute_mild_biomarker_imaging_bridge`
+     - `acute_severe_vascular_dominant`
+     - `acute_blast_vascular_inflammatory_mixed`
+     - `subacute_repetitive_inflammatory_dominant`
+     - `chronic_mild_metabolic_white_matter_dominant`
+     - `chronic_repetitive_tau_clearance_mixed`
+     - `chronic_severe_axonal_network_decline`
+   - each packet carries:
+     - injury class
+     - injury exposure pattern
+     - time profile
+     - dominant process pattern
+     - biomarker profile
+     - imaging profile
+     - genomics status and detail
+     - dominant Phase 1 lanes
+     - dominant Phase 2 transitions
+     - dominant Phase 3 objects
+     - linked Phase 4 translational packets
+     - supporting papers
+     - contradiction notes
+     - evidence gaps
+     - best-next-question / enrichment / experiment guidance
+     - novelty status
+     - comparative analog support
+     - candidate mechanistic bridge
+     - highest-value hypothesis
+   - the cohort payload also emits:
+     - `4 / 4` injury-class coverage
+     - `3 / 3` time-profile coverage
+     - `3 / 3` core dominant-pattern coverage
+     - genomics availability counts
+     - novelty-overlay counts
+     - upstream coverage against Phases 1–4 so the layer cannot silently skip endotype parents
+
 Current product surfaces:
 - `docs/process-engine/index.html`
 - `docs/process-model/index.html`
 - `docs/progression-objects/index.html`
 - `docs/translational-logic/index.html`
+- `docs/cohort-stratification/index.html`
 
 ### Connector Enrichment Sidecar
 The connector lane is intentionally separate from the GitHub staging lane. It uses the repo as the system of record and adds read-only enrichment after post-analysis.

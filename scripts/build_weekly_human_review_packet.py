@@ -130,6 +130,9 @@ def render_markdown(packet):
         f"- Translational packets built: `{packet['translational_summary'].get('packet_count', 0)}`",
         f"- Covered translational lanes: `{packet['translational_summary'].get('covered_lane_count', 0)}` / `{packet['translational_summary'].get('required_lane_count', 0)}`",
         f"- Actionable translational packets: `{packet['translational_summary'].get('actionable_packet_count', 0)}`",
+        f"- Cohort / endotype packets built: `{packet['cohort_summary'].get('packet_count', 0)}`",
+        f"- Covered injury classes: `{packet['cohort_summary'].get('covered_injury_class_count', 0)}` / `{packet['cohort_summary'].get('required_injury_class_count', 0)}`",
+        f"- Usable endotype packets: `{packet['cohort_summary'].get('packets_by_stratification_maturity', {}).get('usable', 0)}`",
         '',
         '## What I Need From You This Week',
         '',
@@ -225,6 +228,17 @@ def render_markdown(packet):
         lines.append(
             f"| {row.get('display_name', '')} | {row.get('primary_target', '')} | {row.get('translation_maturity', '')} | {', '.join(attachment_bits) or 'logic_only'} | {row.get('next_decision', '')} |"
         )
+    lines.extend([
+        '',
+        '## Cohort / Endotype State',
+        '',
+        '| Endotype | Injury | Time | Dominant Pattern | Maturity | Novelty |',
+        '| --- | --- | --- | --- | --- | --- |',
+    ])
+    for row in packet['cohort_rows']:
+        lines.append(
+            f"| {row.get('display_name', '')} | {row.get('injury_class', '')} | {row.get('time_profile', '')} | {row.get('dominant_process_pattern', '')} | {row.get('stratification_maturity', '')} | {row.get('novelty_status', '')} |"
+        )
 
     lines.extend([
         '',
@@ -272,6 +286,7 @@ def render_markdown(packet):
         f"- Causal transitions: `{packet['causal_transition_path']}`",
         f"- Progression objects: `{packet['progression_object_path']}`",
         f"- Translational perturbation: `{packet['translational_path']}`",
+        f"- Cohort stratification: `{packet['cohort_path']}`",
         f"- Target packet index: `{packet['target_packet_index_path']}`",
         f"- Program status: `{packet['program_status_path']}`",
         '',
@@ -290,6 +305,7 @@ def main():
     parser.add_argument('--causal-transition-json', default='', help='Optional causal-transition JSON path.')
     parser.add_argument('--progression-object-json', default='', help='Optional progression-object JSON path.')
     parser.add_argument('--translational-json', default='', help='Optional translational-perturbation JSON path.')
+    parser.add_argument('--cohort-json', default='', help='Optional cohort-stratification JSON path.')
     args = parser.parse_args()
 
     viewer = make_viewer_data()
@@ -301,12 +317,14 @@ def main():
     causal_transition_path = args.causal_transition_json or latest_report('causal_transition_index_*.json')
     progression_object_path = args.progression_object_json or latest_report('progression_object_index_*.json')
     translational_path = args.translational_json or latest_report('translational_perturbation_index_*.json')
+    cohort_path = args.cohort_json or latest_report('cohort_stratification_index_*.json')
     release_manifest = read_json(release_manifest_path) if release_manifest_path else {}
     idea_gate = read_json(idea_gate_path) if idea_gate_path else {}
     process_lanes = read_json(process_lanes_path) if process_lanes_path else {}
     causal_transitions = read_json(causal_transition_path) if causal_transition_path else {}
     progression_objects = read_json(progression_object_path) if progression_object_path else {}
     translational_payload = read_json(translational_path) if translational_path else {}
+    cohort_payload = read_json(cohort_path) if cohort_path else {}
     target_rows = parse_markdown_table(target_packet_index_path)
 
     packet = {
@@ -326,6 +344,8 @@ def main():
         'progression_rows': progression_objects.get('rows', []) if isinstance(progression_objects, dict) else [],
         'translational_summary': translational_payload.get('summary', {}) if isinstance(translational_payload, dict) else {},
         'translational_rows': translational_payload.get('rows', []) if isinstance(translational_payload, dict) else [],
+        'cohort_summary': cohort_payload.get('summary', {}) if isinstance(cohort_payload, dict) else {},
+        'cohort_rows': cohort_payload.get('rows', []) if isinstance(cohort_payload, dict) else [],
         'release_summary': release_manifest.get('summary', {}) if isinstance(release_manifest, dict) else {},
         'release_rows': release_manifest.get('rows', []) if isinstance(release_manifest, dict) else [],
         'target_priorities': target_rows,
@@ -336,6 +356,7 @@ def main():
         'causal_transition_path': causal_transition_path,
         'progression_object_path': progression_object_path,
         'translational_path': translational_path,
+        'cohort_path': cohort_path,
         'target_packet_index_path': target_packet_index_path,
         'program_status_path': program_status_path,
     }

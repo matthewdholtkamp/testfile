@@ -172,6 +172,24 @@ jobs:
             --translational-json "$latest_translational_json" \
             --validation-json "$(ls -1t reports/translational_perturbation_validation/translational_perturbation_validation_*.json | head -n1)" \
             --output-dir docs/translational-logic
+          python scripts/build_cohort_stratification.py \
+            --process-json "$latest_process_json" \
+            --transition-json "$latest_transition_json" \
+            --object-json "$latest_progression_json" \
+            --translational-json "$latest_translational_json" \
+            --output-dir reports/cohort_stratification
+          latest_cohort_json=$(ls -1t reports/cohort_stratification/cohort_stratification_index_*.json | head -n1)
+          python scripts/build_cohort_stratification_validation.py \
+            --cohort-json "$latest_cohort_json" \
+            --process-json "$latest_process_json" \
+            --transition-json "$latest_transition_json" \
+            --object-json "$latest_progression_json" \
+            --translational-json "$latest_translational_json" \
+            --output-dir reports/cohort_stratification_validation
+          python scripts/build_cohort_stratification_page.py \
+            --cohort-json "$latest_cohort_json" \
+            --validation-json "$(ls -1t reports/cohort_stratification_validation/cohort_stratification_validation_*.json | head -n1)" \
+            --output-dir docs/cohort-stratification
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_tbi_atlas_book.py \

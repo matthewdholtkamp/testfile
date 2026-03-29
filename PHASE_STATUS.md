@@ -1,6 +1,67 @@
-# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-4 Complete
+# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-5 Complete
 
 This file is the current handoff for the TBI scientific intelligence system after finishing extraction coverage for the original on-topic corpus and moving into the quality-gated investigation / atlas-construction phase.
+
+## Phase 5 Cohort-Stratification Status
+
+Phase 5 is now complete as the next downstream layer after translational perturbation logic.
+
+Current Phase 5 outputs:
+- seven explicit cohort / endotype packets are now emitted:
+  - `acute_mild_biomarker_imaging_bridge`
+  - `acute_severe_vascular_dominant`
+  - `acute_blast_vascular_inflammatory_mixed`
+  - `subacute_repetitive_inflammatory_dominant`
+  - `chronic_mild_metabolic_white_matter_dominant`
+  - `chronic_repetitive_tau_clearance_mixed`
+  - `chronic_severe_axonal_network_decline`
+- each endotype packet now carries:
+  - injury class
+  - injury exposure pattern
+  - time profile
+  - dominant process pattern
+  - biomarker profile
+  - imaging profile
+  - genomics support status and detail
+  - dominant Phase 1 lanes
+  - dominant Phase 2 transitions
+  - dominant Phase 3 objects
+  - linked Phase 4 translational packets
+  - supporting papers
+  - source-quality mix
+  - contradiction notes
+  - evidence gaps
+  - why-it-matters context
+  - best-next-question guidance
+  - best-next-enrichment guidance
+  - best-next-experiment guidance
+  - novelty status
+  - comparative analog support
+  - borrowed disease contexts
+  - candidate mechanistic bridge
+  - highest-value hypothesis
+  - best discriminator
+- the current cohort-stratification summary is:
+  - `7` endotype packets
+  - `4 / 4` required injury classes covered
+  - `3 / 3` time profiles covered
+  - `3 / 3` core dominant patterns covered
+  - `2` `supported`
+  - `5` `provisional`
+  - `2` `usable`
+  - `5` `bounded`
+  - `0` `seeded`
+  - `2` packets with supportive genomics
+  - `5` packets with explicit `not_available` genomics
+  - `6` packets with novelty overlays
+- the cohort-stratification product page is now emitted to:
+  - [docs/cohort-stratification/index.html](/Users/matthewholtkamp/Documents/testfile/docs/cohort-stratification/index.html)
+- the cohort-stratification build and validation steps are now wired into:
+  - [build_atlas_slices.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/build_atlas_slices.yml)
+  - [refresh_atlas_from_ongoing_cycle.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_atlas_from_ongoing_cycle.yml)
+  - [refresh_public_enrichment.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_public_enrichment.yml)
+  - [run_manual_enrichment_cycle.py](/Users/matthewholtkamp/Documents/testfile/scripts/run_manual_enrichment_cycle.py)
+- the portal, run-center, weekly packet, and program-status layers now surface cohort and endotype state without rebuilding it independently
 
 ## Phase 4 Translational-Perturbation Status
 

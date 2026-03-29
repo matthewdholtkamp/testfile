@@ -29,7 +29,7 @@ def write_text(path, text):
         handle.write(text)
 
 
-def render_html(summary, process_summary, transition_summary, progression_summary, translational_summary):
+def render_html(summary, process_summary, transition_summary, progression_summary, translational_summary, cohort_summary):
     lead = summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')
     stable = summary.get('stable_rows', 0)
     provisional = summary.get('provisional_rows', 0)
@@ -45,6 +45,9 @@ def render_html(summary, process_summary, transition_summary, progression_summar
     translational_count = translational_summary.get('covered_lane_count', 0)
     actionable_packets = translational_summary.get('actionable_packet_count', 0)
     bounded_packets = translational_summary.get('packets_by_translation_maturity', {}).get('bounded', 0)
+    endotype_count = cohort_summary.get('packet_count', 0)
+    usable_endotypes = cohort_summary.get('packets_by_stratification_maturity', {}).get('usable', 0)
+    bounded_endotypes = cohort_summary.get('packets_by_stratification_maturity', {}).get('bounded', 0)
     return f"""<!doctype html>
 <html lang=\"en\">
   <head>
@@ -109,6 +112,8 @@ def render_html(summary, process_summary, transition_summary, progression_summar
         <div class=\"card\"><span class=\"eyebrow\">Object State</span><strong>{supported_objects} supported / {seeded_objects} seeded</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Translational Lanes</span><strong>{translational_count}</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Translational State</span><strong>{actionable_packets} actionable / {bounded_packets} bounded</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Endotypes</span><strong>{endotype_count}</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Endotype State</span><strong>{usable_endotypes} usable / {bounded_endotypes} bounded</strong></div>
       </section>
 
       <section class=\"stack\">
@@ -184,6 +189,19 @@ def render_html(summary, process_summary, transition_summary, progression_summar
           </div>
           <div class=\"button-row\">
             <a class=\"link-button secondary\" href=\"../translational-logic/index.html\">Open Translational Logic</a>
+          </div>
+        </div>
+
+        <div class=\"panel\">
+          <p class=\"eyebrow\">Phase 5 cohort stratification</p>
+          <p>The daily machine now also refreshes cohort and endotype packets so we can separate mild, repetitive, blast, and severe trajectories by dominant process pattern, biomarker profile, imaging pattern, and bounded new-idea overlays.</p>
+          <div class=\"actions\">
+            <div>Endotype packets: <strong>{endotype_count}</strong></div>
+            <div>Usable packets: <strong>{usable_endotypes}</strong></div>
+            <div>Bounded packets: <strong>{bounded_endotypes}</strong></div>
+          </div>
+          <div class=\"button-row\">
+            <a class=\"link-button secondary\" href=\"../cohort-stratification/index.html\">Open Cohort Stratification</a>
           </div>
         </div>
 
@@ -286,12 +304,15 @@ def main():
     progression_payload = read_json_if_exists(progression_json, default={})
     translational_json = latest_optional_report('translational_perturbation_index_*.json')
     translational_payload = read_json_if_exists(translational_json, default={})
+    cohort_json = latest_optional_report('cohort_stratification_index_*.json')
+    cohort_payload = read_json_if_exists(cohort_json, default={})
     html = render_html(
         viewer.get('summary', {}),
         process_payload.get('summary', {}),
         transition_payload.get('summary', {}),
         progression_payload.get('summary', {}),
         translational_payload.get('summary', {}),
+        cohort_payload.get('summary', {}),
     )
     write_text(os.path.join(REPO_ROOT, args.output_path), html)
     print(f'Run-center page written: {os.path.join(REPO_ROOT, args.output_path)}')

@@ -104,13 +104,14 @@ def spotlight_cards(ideas, limit=3):
             """
 
 
-def render_html(viewer, ideas_payload, process_payload, progression_payload, translational_payload):
+def render_html(viewer, ideas_payload, process_payload, progression_payload, translational_payload, cohort_payload):
     summary = viewer.get('summary', {})
     ideas = ideas_payload.get('rows', [])
     spotlight_html = spotlight_cards(ideas, limit=1)
     process_summary = process_payload.get('summary', {}) if isinstance(process_payload, dict) else {}
     progression_summary = progression_payload.get('summary', {}) if isinstance(progression_payload, dict) else {}
     translational_summary = translational_payload.get('summary', {}) if isinstance(translational_payload, dict) else {}
+    cohort_summary = cohort_payload.get('summary', {}) if isinstance(cohort_payload, dict) else {}
     transition_json_path = latest_optional_report('causal_transition_index_*.json')
     transition_payload = read_json_if_exists(transition_json_path, default={})
     transition_summary = transition_payload.get('summary', {}) if isinstance(transition_payload, dict) else {}
@@ -196,6 +197,7 @@ def render_html(viewer, ideas_payload, process_payload, progression_payload, tra
         <div class="snap"><span class="eyebrow">Transitions</span><strong>{transition_summary.get('transition_count', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Progression Objects</span><strong>{progression_summary.get('object_count', 0)}</strong></div>
         <div class="snap"><span class="eyebrow">Translational Lanes</span><strong>{translational_summary.get('covered_lane_count', 0)} / {translational_summary.get('required_lane_count', 0)}</strong></div>
+        <div class="snap"><span class="eyebrow">Endotypes</span><strong>{cohort_summary.get('packet_count', 0)}</strong></div>
       </section>
       <section class="cards">
         <a class="card" href="./run-center/index.html">
@@ -239,6 +241,12 @@ def render_html(viewer, ideas_payload, process_payload, progression_payload, tra
           <h2>Translational Logic</h2>
           <p>Review the perturbation layer: primary targets, challenger targets, expected readouts, and the current compound, trial, and genomics attachment state for each lane.</p>
           <span class="cta">Open translational logic →</span>
+        </a>
+        <a class="card" href="./cohort-stratification/index.html">
+          <p class="eyebrow">Phase 5</p>
+          <h2>Cohort Stratification</h2>
+          <p>Compare endotypes across mild, repetitive, blast, and severe TBI, with dominant process patterns, biomarker and imaging signatures, and bounded novelty overlays for new ideas.</p>
+          <span class="cta">Open cohort stratification →</span>
         </a>
       </section>
       <section class="today">
@@ -285,7 +293,12 @@ def main():
     progression_payload = read_json_if_exists(progression_json_path, default={})
     translational_json_path = latest_optional_report('translational_perturbation_index_*.json')
     translational_payload = read_json_if_exists(translational_json_path, default={})
-    write_text(os.path.join(REPO_ROOT, args.output_path), render_html(viewer, ideas, process_payload, progression_payload, translational_payload))
+    cohort_json_path = latest_optional_report('cohort_stratification_index_*.json')
+    cohort_payload = read_json_if_exists(cohort_json_path, default={})
+    write_text(
+        os.path.join(REPO_ROOT, args.output_path),
+        render_html(viewer, ideas, process_payload, progression_payload, translational_payload, cohort_payload),
+    )
     print(f'Atlas portal page written: {os.path.join(REPO_ROOT, args.output_path)}')
 
 
