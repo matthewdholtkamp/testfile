@@ -5,6 +5,14 @@ import os
 import re
 from glob import glob
 
+from dashboard_ui import (
+    base_css,
+    load_project_state,
+    render_phase_ladder,
+    render_topbar,
+    render_warning_callout,
+)
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DIR_DEFAULT = os.path.join('docs', 'progression-objects')
@@ -29,7 +37,9 @@ def write_text(path, text):
 
 
 def normalize(value):
-    return ' '.join(str(value or '').split()).strip()
+    if value is None:
+        return ''
+    return ' '.join(str(value).split()).strip()
 
 
 def text(value):
@@ -172,16 +182,9 @@ def render_html(payload, validation):
     summary = payload.get('summary', {})
     rows = payload.get('rows', [])
     warnings = validation.get('warnings', []) if isinstance(validation, dict) else []
-    warning_block = ''
-    if warnings:
-        warning_items = ''.join(f'<li>{text(item)}</li>' for item in warnings)
-        warning_block = f'''
-        <section class="warning-block">
-          <p class="eyebrow">Validation warnings</p>
-          <h2>Bounded interpretation still matters</h2>
-          <ul>{warning_items}</ul>
-        </section>
-        '''
+    warning_block = render_warning_callout('Validation warnings', warnings)
+    project_state = load_project_state()
+    root_prefix = '../'
     summary_cards = ''.join([
         render_summary_card('Objects', summary.get('object_count', 0)),
         render_summary_card('Supported', summary.get('objects_by_support_status', {}).get('supported', 0)),
@@ -199,6 +202,7 @@ def render_html(payload, validation):
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TBI Progression Objects</title>
     <style>
+      {base_css(accent='#98c5ff', accent_rgb='152,197,255')}
       :root {{
         --bg: #10131a;
         --panel: #171d27;
@@ -283,33 +287,15 @@ def render_html(payload, validation):
     </style>
   </head>
   <body>
-    <main class="shell">
+    <main class="page shell">
+      {render_topbar(root_prefix, active_nav='portal')}
       <section class="hero">
         <p class="eyebrow">Phase 3 progression layer</p>
         <h1>Neurodegenerative Progression Objects</h1>
         <p>This page tracks recurring progression objects across the TBI process engine. Each object is tied back to process lanes and causal transitions, while staying honest about maturity, contradiction risk, and what question is most worth asking next.</p>
       </section>
       <section class="summary-grid">{summary_cards}</section>
-      <section class="nav-grid">
-        <a class="nav-card" href="../index.html">
-          <p class="eyebrow">Portal</p>
-          <h2>Back to Atlas Portal</h2>
-          <p>Use the portal as the simpler entry point for the project.</p>
-          <span>Open portal →</span>
-        </a>
-        <a class="nav-card" href="../process-engine/index.html">
-          <p class="eyebrow">Phase 1</p>
-          <h2>Process Lanes</h2>
-          <p>Review the six longitudinal lanes that feed these objects.</p>
-          <span>Open process engine →</span>
-        </a>
-        <a class="nav-card" href="../process-model/index.html">
-          <p class="eyebrow">Phase 2</p>
-          <h2>Causal Transitions</h2>
-          <p>Review the explicit upstream-to-downstream transitions behind the object layer.</p>
-          <span>Open process model →</span>
-        </a>
-      </section>
+      {render_phase_ladder(project_state, root_prefix, active_phase='phase3')}
       {warning_block}
       <section>
         <p class="eyebrow">Coverage board</p>

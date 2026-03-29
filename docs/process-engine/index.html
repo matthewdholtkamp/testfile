@@ -5,6 +5,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TBI Process Engine</title>
     <style>
+      
+      :root {
+        --bg: #0b1117;
+        --bg-soft: #101924;
+        --panel: #121c26;
+        --panel-soft: #172430;
+        --ink: #edf4fb;
+        --muted: #9fb4c8;
+        --accent: #9be3cf;
+        --accent-rgb: 155,227,207;
+        --positive: #9be3c0;
+        --warning: #ffd37c;
+        --danger: #ffb6b6;
+        --line: rgba(155,227,207, 0.16);
+        --soft-line: rgba(255,255,255,0.08);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(var(--accent-rgb), 0.14), transparent 28%),
+          linear-gradient(180deg, #090e13 0%, var(--bg) 100%);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      a { color: inherit; }
+      .page { max-width: 1280px; margin: 0 auto; padding: 24px 24px 72px; }
+      .topbar { display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; }
+      .brand-mark { display: grid; gap: 4px; }
+      .brand-mark strong { font-size: 0.98rem; letter-spacing: 0.03em; }
+      .brand-mark span { color: var(--muted); font-size: 0.9rem; }
+      .main-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+      .main-nav a {
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+      .main-nav a.active {
+        color: var(--ink);
+        border-color: rgba(var(--accent-rgb), 0.28);
+        background: rgba(var(--accent-rgb), 0.16);
+      }
+      .masthead { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.95fr); gap: 20px; align-items: start; margin: 28px 0 22px; }
+      .masthead-copy { padding-top: 10px; }
+      .masthead-panel, .surface, .phase-card, .metric, .callout {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      .masthead-panel, .surface, .callout { padding: 22px; }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      h1 { margin: 0 0 14px; font-size: clamp(2.7rem, 5vw, 5.2rem); line-height: 0.94; }
+      h2 { margin: 0; font-size: 1.5rem; }
+      h3 { margin: 0; font-size: 1.08rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.65; }
+      .masthead-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
+        color: var(--ink);
+        font-weight: 800;
+      }
+      .button-link.primary {
+        background: var(--accent);
+        border-color: transparent;
+        color: #071017;
+      }
+      .fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+      .fact {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .fact label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+      .fact strong { display: block; font-size: 1.3rem; line-height: 1.1; }
+      .fact small { display: block; margin-top: 6px; color: var(--muted); line-height: 1.45; }
+      .metric-strip { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin: 18px 0 24px; }
+      .metric { padding: 18px; }
+      .metric label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      .metric strong { display: block; margin-top: 8px; font-size: 1.8rem; line-height: 1; }
+      .metric small { display: block; margin-top: 8px; color: var(--muted); line-height: 1.45; }
+      .phase-ladder-wrap { margin: 0 0 30px; }
+      .phase-ladder { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+      .phase-card { display: block; text-decoration: none; color: inherit; padding: 18px; }
+      .phase-card.active { border-color: rgba(var(--accent-rgb), 0.34); background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.16) 0%, var(--panel-soft) 100%); }
+      .phase-label { color: var(--accent); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; }
+      .phase-title { margin-top: 8px; font-size: 1rem; font-weight: 800; }
+      .phase-metric { margin-top: 12px; font-size: 1.3rem; font-weight: 800; color: var(--ink); }
+      .phase-detail { margin-top: 6px; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
+      .pill-row, .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+      .pill, .chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 6px 11px;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
+      .chip.muted { color: var(--muted); }
+      .pill { background: rgba(255,255,255,0.08); color: var(--ink); }
+      .pill.supported, .pill.actionable, .pill.usable { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
+      .pill.provisional, .pill.bounded { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
+      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
+      .pill.live { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+      .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
+      .section { margin-top: 32px; }
+      .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
+      .section-head p { max-width: 720px; }
+      .split { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr); }
+      .stack { display: grid; gap: 16px; }
+      .list-table { display: grid; gap: 0; }
+      .list-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+      .list-row:first-child { border-top: 0; padding-top: 0; }
+      .list-row:last-child { padding-bottom: 0; }
+      .list-row strong { display: block; margin-bottom: 6px; }
+      .list-row small { display: block; color: var(--muted); line-height: 1.45; }
+      .muted, .subtle, small.subtle { color: var(--muted); }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      table { width: 100%; border-collapse: collapse; min-width: 920px; }
+      th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      th { color: var(--accent); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      td strong { color: var(--ink); }
+      .callout { border-color: rgba(var(--accent-rgb), 0.24); }
+      details.surface { padding: 0; overflow: hidden; }
+      details.surface > summary { list-style: none; cursor: pointer; padding: 18px 22px; font-weight: 800; }
+      details.surface > summary::-webkit-details-marker { display: none; }
+      details.surface .detail-body { padding: 0 22px 22px; }
+      @media (max-width: 980px) {
+        .masthead, .split { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 720px) {
+        .page { padding: 18px 16px 52px; }
+        .fact-grid { grid-template-columns: 1fr; }
+        .list-row { grid-template-columns: 1fr; }
+      }
+    
       :root {
         --bg: #0d1312;
         --panel: #17201f;
@@ -74,7 +244,16 @@
     </style>
   </head>
   <body>
-    <main class="shell">
+    <main class="page shell">
+      
+    <div class="topbar">
+      <div class="brand-mark">
+        <strong>TBI Neurodegenerative Decision Engine</strong>
+        <span>Progress, evidence, translation, stratification, and decisions in one stack.</span>
+      </div>
+      <nav class="main-nav"><a class="active" href="../index.html">Overview</a><a class="" href="../run-center/index.html">Run Center</a><a class="" href="../idea-briefs/index.html">Decision Board</a><a class="" href="../atlas-viewer/index.html">Atlas Viewer</a><a class="" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">GitHub Actions</a></nav>
+    </div>
+    
       <section class="hero">
         <p class="eyebrow">Phase 1 process engine</p>
         <h1>Phase 1 TBI Process Lanes</h1>
@@ -86,26 +265,66 @@
         <article class="summary-card"><span class="eyebrow">Provisional buckets</span><strong>13</strong></article>
         <article class="summary-card"><span class="eyebrow">Weak buckets</span><strong>0</strong></article>
       </section>
-      <section class="nav-grid">
-        <a class="nav-card" href="../index.html">
-          <p class="eyebrow">Portal</p>
-          <h3>Back to Atlas Portal</h3>
-          <p>Use the simplified home surface to move between the atlas, the viewer, and the run center.</p>
-          <span>Open portal →</span>
-        </a>
-        <a class="nav-card" href="../atlas-viewer/index.html">
-          <p class="eyebrow">Evidence</p>
-          <h3>Atlas Viewer</h3>
-          <p>Open the deeper evidence review surface when you want the ledger, release state, and action queue.</p>
-          <span>Open viewer →</span>
-        </a>
-        <a class="nav-card" href="../atlas-book/index.html">
-          <p class="eyebrow">Narrative</p>
-          <h3>Starter Atlas Book</h3>
-          <p>Read the current chapter-grade synthesis while the process-engine layer matures underneath it.</p>
-          <span>Open atlas →</span>
-        </a>
-      </section>
+      
+    <section class="phase-ladder-wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Engine stack</p>
+          <h2>Project progress by phase</h2>
+        </div>
+        <p>Each page sits in the same chain: evidence becomes mechanisms, mechanisms become translation, translation becomes endotypes, and endotypes feed the decision board.</p>
+      </div>
+      <div class="phase-ladder">
+            <a class="phase-card active" href="../process-engine/index.html">
+              <div class="phase-label">Phase 1</div>
+              <div class="phase-title">Process Lanes</div>
+              <div class="phase-metric">6 lanes</div>
+              <div class="phase-detail">1 supported / 5 seeded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../process-model/index.html">
+              <div class="phase-label">Phase 2</div>
+              <div class="phase-title">Causal Transitions</div>
+              <div class="phase-metric">6 transitions</div>
+              <div class="phase-detail">2 supported / 4 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../progression-objects/index.html">
+              <div class="phase-label">Phase 3</div>
+              <div class="phase-title">Progression Objects</div>
+              <div class="phase-metric">7 objects</div>
+              <div class="phase-detail">2 supported / 5 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../translational-logic/index.html">
+              <div class="phase-label">Phase 4</div>
+              <div class="phase-title">Translational Logic</div>
+              <div class="phase-metric">6 / 6 lanes</div>
+              <div class="phase-detail">0 actionable / 6 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill bounded">bounded</span></div>
+            </a>
+            
+            <a class="phase-card " href="../cohort-stratification/index.html">
+              <div class="phase-label">Phase 5</div>
+              <div class="phase-title">Cohort Stratification</div>
+              <div class="phase-metric">7 endotypes</div>
+              <div class="phase-detail">2 usable / 5 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill usable">usable</span></div>
+            </a>
+            
+            <a class="phase-card " href="../idea-briefs/index.html">
+              <div class="phase-label">Phase 6</div>
+              <div class="phase-title">Hypothesis Rankings</div>
+              <div class="phase-metric">5 families</div>
+              <div class="phase-detail">4 slate / 14 supported</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill live">live</span></div>
+            </a>
+            </div>
+    </section>
+    
       
     <section class="lane-section" id="blood_brain_barrier_failure">
       <div class="lane-header">

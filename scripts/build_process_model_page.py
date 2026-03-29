@@ -5,6 +5,8 @@ import os
 import re
 from glob import glob
 
+from dashboard_ui import base_css, load_project_state, render_phase_ladder, render_topbar
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DIR_DEFAULT = os.path.join('docs', 'process-model')
@@ -29,7 +31,9 @@ def write_text(path, text):
 
 
 def normalize(value):
-    return ' '.join((value or '').split()).strip()
+    if value is None:
+        return ''
+    return ' '.join(str(value).split()).strip()
 
 
 def text(value):
@@ -178,6 +182,8 @@ def render_html(payload):
     rows = payload.get('rows', [])
     cards = ''.join(render_transition_card(row) for row in rows)
     coverage = render_lane_coverage(payload)
+    project_state = load_project_state()
+    root_prefix = '../'
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -185,6 +191,7 @@ def render_html(payload):
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TBI Process Model</title>
     <style>
+      {base_css(accent='#8fd7ff', accent_rgb='143,215,255')}
       :root {{
         --bg: #0d1218;
         --panel: #162029;
@@ -271,7 +278,8 @@ def render_html(payload):
     </style>
   </head>
   <body>
-    <main class="shell">
+    <main class="page shell">
+      {render_topbar(root_prefix, active_nav='portal')}
       <section class="hero">
         <p class="eyebrow">Phase 2 causal-transition layer</p>
         <h1>TBI Process Model</h1>
@@ -285,26 +293,7 @@ def render_html(payload):
         <article class="summary-card"><span class="eyebrow">Emergent</span><strong>{summary.get('emergent_from_tbi_corpus', 0)}</strong></article>
         <article class="summary-card"><span class="eyebrow">Cross-disciplinary</span><strong>{summary.get('cross_disciplinary_hypothesis', 0)}</strong></article>
       </section>
-      <section class="nav-grid">
-        <a class="nav-card" href="../index.html">
-          <p class="eyebrow">Portal</p>
-          <h3>Back to Atlas Portal</h3>
-          <p>Use the portal to move between the atlas, the process-engine lane view, and the new process-model transition layer.</p>
-          <span>Open portal →</span>
-        </a>
-        <a class="nav-card" href="../process-engine/index.html">
-          <p class="eyebrow">Phase 1</p>
-          <h3>Process Lanes</h3>
-          <p>Open the longitudinal lane layer when you want the acute, subacute, and chronic support buckets behind these transitions.</p>
-          <span>Open process lanes →</span>
-        </a>
-        <a class="nav-card" href="../atlas-viewer/index.html">
-          <p class="eyebrow">Evidence</p>
-          <h3>Atlas Viewer</h3>
-          <p>Use the evidence viewer when you want the underlying ledger, action queue, and mechanism-level review surface.</p>
-          <span>Open viewer →</span>
-        </a>
-      </section>
+      {render_phase_ladder(project_state, root_prefix, active_phase='phase2')}
       {coverage}
       {cards}
     </main>

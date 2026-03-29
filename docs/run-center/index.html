@@ -5,174 +5,417 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Run Center</title>
     <style>
+      
       :root {
-        --bg: #0b1211;
-        --panel: #172221;
-        --panel-soft: #21302d;
-        --ink: #edf7f2;
-        --muted: #a5b9b1;
+        --bg: #0b1117;
+        --bg-soft: #101924;
+        --panel: #121c26;
+        --panel-soft: #172430;
+        --ink: #edf4fb;
+        --muted: #9fb4c8;
         --accent: #8fe0c7;
-        --warning: #ffd68b;
-        --danger: #ffb1b1;
-        --line: rgba(143,224,199,0.16);
+        --accent-rgb: 143,224,199;
+        --positive: #9be3c0;
+        --warning: #ffd37c;
+        --danger: #ffb6b6;
+        --line: rgba(143,224,199, 0.16);
+        --soft-line: rgba(255,255,255,0.08);
       }
-      * { box-sizing:border-box; }
-      body { margin:0; font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif; background:linear-gradient(180deg,#0a1110 0%,var(--bg) 100%); color:var(--ink); }
-      main { max-width:980px; margin:0 auto; padding:40px 20px 72px; }
-      .hero { max-width:720px; margin-bottom:28px; }
-      .eyebrow { color:var(--accent); text-transform:uppercase; letter-spacing:.14em; font-size:.76rem; font-weight:700; margin:0 0 10px; }
-      h1 { margin:0 0 12px; font-size:clamp(2.2rem,5vw,4rem); line-height:1; }
-      p { margin:0; line-height:1.65; color:var(--muted); }
-      .grid { display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); margin:24px 0 30px; }
-      .card, .panel { background:linear-gradient(180deg,var(--panel) 0%,var(--panel-soft) 100%); border:1px solid var(--line); border-radius:22px; padding:22px; box-shadow:0 24px 40px rgba(0,0,0,.22); }
-      .card strong { display:block; font-size:1.9rem; margin-top:8px; }
-      .stack { display:grid; gap:18px; }
-      .button-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
-      button, .link-button { appearance:none; border:none; border-radius:999px; padding:14px 18px; font:inherit; font-weight:800; cursor:pointer; text-decoration:none; }
-      .primary { background:var(--accent); color:#0e1715; }
-      .secondary { background:rgba(255,255,255,.08); color:var(--ink); }
-      .status { margin-top:10px; font-size:.95rem; }
-      .ok { color:#aef1d0; } .warn { color:var(--warning); } .bad { color:var(--danger); }
-      .runs { display:grid; gap:12px; margin-top:16px; }
-      .run { border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:14px 16px; background:rgba(255,255,255,.03); }
-      .run-top { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-      .pill { display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; font-size:.76rem; font-weight:800; background:rgba(255,255,255,.08); }
-      .actions { display:grid; gap:10px; margin-top:14px; }
-      a { color:var(--accent); }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(var(--accent-rgb), 0.14), transparent 28%),
+          linear-gradient(180deg, #090e13 0%, var(--bg) 100%);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      a { color: inherit; }
+      .page { max-width: 1280px; margin: 0 auto; padding: 24px 24px 72px; }
+      .topbar { display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; }
+      .brand-mark { display: grid; gap: 4px; }
+      .brand-mark strong { font-size: 0.98rem; letter-spacing: 0.03em; }
+      .brand-mark span { color: var(--muted); font-size: 0.9rem; }
+      .main-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+      .main-nav a {
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+      .main-nav a.active {
+        color: var(--ink);
+        border-color: rgba(var(--accent-rgb), 0.28);
+        background: rgba(var(--accent-rgb), 0.16);
+      }
+      .masthead { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.95fr); gap: 20px; align-items: start; margin: 28px 0 22px; }
+      .masthead-copy { padding-top: 10px; }
+      .masthead-panel, .surface, .phase-card, .metric, .callout {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      .masthead-panel, .surface, .callout { padding: 22px; }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      h1 { margin: 0 0 14px; font-size: clamp(2.7rem, 5vw, 5.2rem); line-height: 0.94; }
+      h2 { margin: 0; font-size: 1.5rem; }
+      h3 { margin: 0; font-size: 1.08rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.65; }
+      .masthead-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
+        color: var(--ink);
+        font-weight: 800;
+      }
+      .button-link.primary {
+        background: var(--accent);
+        border-color: transparent;
+        color: #071017;
+      }
+      .fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+      .fact {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .fact label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+      .fact strong { display: block; font-size: 1.3rem; line-height: 1.1; }
+      .fact small { display: block; margin-top: 6px; color: var(--muted); line-height: 1.45; }
+      .metric-strip { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin: 18px 0 24px; }
+      .metric { padding: 18px; }
+      .metric label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      .metric strong { display: block; margin-top: 8px; font-size: 1.8rem; line-height: 1; }
+      .metric small { display: block; margin-top: 8px; color: var(--muted); line-height: 1.45; }
+      .phase-ladder-wrap { margin: 0 0 30px; }
+      .phase-ladder { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+      .phase-card { display: block; text-decoration: none; color: inherit; padding: 18px; }
+      .phase-card.active { border-color: rgba(var(--accent-rgb), 0.34); background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.16) 0%, var(--panel-soft) 100%); }
+      .phase-label { color: var(--accent); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; }
+      .phase-title { margin-top: 8px; font-size: 1rem; font-weight: 800; }
+      .phase-metric { margin-top: 12px; font-size: 1.3rem; font-weight: 800; color: var(--ink); }
+      .phase-detail { margin-top: 6px; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
+      .pill-row, .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+      .pill, .chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 6px 11px;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
+      .chip.muted { color: var(--muted); }
+      .pill { background: rgba(255,255,255,0.08); color: var(--ink); }
+      .pill.supported, .pill.actionable, .pill.usable { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
+      .pill.provisional, .pill.bounded { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
+      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
+      .pill.live { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+      .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
+      .section { margin-top: 32px; }
+      .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
+      .section-head p { max-width: 720px; }
+      .split { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr); }
+      .stack { display: grid; gap: 16px; }
+      .list-table { display: grid; gap: 0; }
+      .list-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+      .list-row:first-child { border-top: 0; padding-top: 0; }
+      .list-row:last-child { padding-bottom: 0; }
+      .list-row strong { display: block; margin-bottom: 6px; }
+      .list-row small { display: block; color: var(--muted); line-height: 1.45; }
+      .muted, .subtle, small.subtle { color: var(--muted); }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      table { width: 100%; border-collapse: collapse; min-width: 920px; }
+      th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      th { color: var(--accent); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      td strong { color: var(--ink); }
+      .callout { border-color: rgba(var(--accent-rgb), 0.24); }
+      details.surface { padding: 0; overflow: hidden; }
+      details.surface > summary { list-style: none; cursor: pointer; padding: 18px 22px; font-weight: 800; }
+      details.surface > summary::-webkit-details-marker { display: none; }
+      details.surface .detail-body { padding: 0 22px 22px; }
+      @media (max-width: 980px) {
+        .masthead, .split { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 720px) {
+        .page { padding: 18px 16px 52px; }
+        .fact-grid { grid-template-columns: 1fr; }
+        .list-row { grid-template-columns: 1fr; }
+      }
+    
+      .control-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+      }
+      .status { margin-top: 12px; font-size: 0.96rem; }
+      .ok { color: var(--positive); }
+      .warn { color: var(--warning); }
+      .bad { color: var(--danger); }
+      .button-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+      button, .button-link.compact {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        font: inherit;
+      }
+      .button-link.compact {
+        padding: 10px 14px;
+        border-radius: 999px;
+        text-decoration: none;
+        background: rgba(255,255,255,0.06);
+        color: var(--ink);
+        font-weight: 800;
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+      .runs { display: grid; gap: 12px; }
+      .run {
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+      }
+      .run-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 6px;
+      }
+      .run p { margin-top: 4px; }
+      .surface h3 { margin-bottom: 12px; }
+      @media (max-width: 980px) {
+        .control-grid { grid-template-columns: 1fr; }
+      }
     </style>
   </head>
   <body>
-    <main>
-      <section class="hero">
-        <p class="eyebrow">Daily control</p>
+    <main class="page">
+      
+    <div class="topbar">
+      <div class="brand-mark">
+        <strong>TBI Neurodegenerative Decision Engine</strong>
+        <span>Progress, evidence, translation, stratification, and decisions in one stack.</span>
+      </div>
+      <nav class="main-nav"><a class="" href="../index.html">Overview</a><a class="active" href="../run-center/index.html">Run Center</a><a class="" href="../idea-briefs/index.html">Decision Board</a><a class="" href="../atlas-viewer/index.html">Atlas Viewer</a><a class="" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">GitHub Actions</a></nav>
+    </div>
+    
+      
+    <section class="masthead">
+      <div class="masthead-copy">
+        <p class="eyebrow">Daily machine lane</p>
         <h1>Run Center</h1>
-        <p>This is the shortest path to move the machine. One click starts the full GitHub daily pipeline, and the atlas/public-enrichment steps follow automatically. Current lead mechanism: <strong>Blood-Brain Barrier Dysfunction</strong>.</p>
+        <p>This page is the machine-control surface. Its job is to start the pipeline, show run health, and make it clear what will be refreshed downstream. It is no longer the whole-program dashboard.</p>
+        <div class="masthead-actions"><a class="button-link primary" href="../index.html">Back to Portal</a><a class="button-link" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">Open GitHub Actions</a><a class="button-link" href="../idea-briefs/index.html">Open Decision Board</a></div>
+      </div>
+      <aside class="masthead-panel">
+        <p class="eyebrow">Machine state</p>
+        <div class="fact-grid"><div class="fact"><label>Lead mechanism</label><strong>Blood-Brain Barrier Dysfunction</strong><small>Current lead mechanism in the live atlas summary.</small></div><div class="fact"><label>Stable rows</label><strong>5</strong><small>Rows that are currently holding in the atlas.</small></div><div class="fact"><label>Blocked rows</label><strong>5</strong><small>Rows still needing repair or adjudication.</small></div><div class="fact"><label>Weekly slate</label><strong>4</strong><small>Decision items already waiting downstream.</small></div></div>
+      </aside>
+    </section>
+    
+      <section class="metric-strip"><article class="metric"><label>Process refresh</label><strong>6</strong><small>Phase 1 lanes rebuilt by the downstream refresh.</small></article><article class="metric"><label>Transition refresh</label><strong>6</strong><small>Phase 2 explicit causal transitions in the current state.</small></article><article class="metric"><label>Object refresh</label><strong>7</strong><small>Phase 3 recurring objects carried forward into the machine lane.</small></article><article class="metric"><label>Translation refresh</label><strong>6</strong><small>Phase 4 lanes with translational packets attached.</small></article><article class="metric"><label>Endotype refresh</label><strong>7</strong><small>Phase 5 endotype packets refreshed downstream.</small></article><article class="metric"><label>Decision refresh</label><strong>5</strong><small>Phase 6 ranking families refreshed after the model stack.</small></article></section>
+      
+    <section class="phase-ladder-wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Engine stack</p>
+          <h2>Project progress by phase</h2>
+        </div>
+        <p>Each page sits in the same chain: evidence becomes mechanisms, mechanisms become translation, translation becomes endotypes, and endotypes feed the decision board.</p>
+      </div>
+      <div class="phase-ladder">
+            <a class="phase-card " href="../process-engine/index.html">
+              <div class="phase-label">Phase 1</div>
+              <div class="phase-title">Process Lanes</div>
+              <div class="phase-metric">6 lanes</div>
+              <div class="phase-detail">1 supported / 5 seeded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../process-model/index.html">
+              <div class="phase-label">Phase 2</div>
+              <div class="phase-title">Causal Transitions</div>
+              <div class="phase-metric">6 transitions</div>
+              <div class="phase-detail">2 supported / 4 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../progression-objects/index.html">
+              <div class="phase-label">Phase 3</div>
+              <div class="phase-title">Progression Objects</div>
+              <div class="phase-metric">7 objects</div>
+              <div class="phase-detail">2 supported / 5 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../translational-logic/index.html">
+              <div class="phase-label">Phase 4</div>
+              <div class="phase-title">Translational Logic</div>
+              <div class="phase-metric">6 / 6 lanes</div>
+              <div class="phase-detail">0 actionable / 6 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill bounded">bounded</span></div>
+            </a>
+            
+            <a class="phase-card " href="../cohort-stratification/index.html">
+              <div class="phase-label">Phase 5</div>
+              <div class="phase-title">Cohort Stratification</div>
+              <div class="phase-metric">7 endotypes</div>
+              <div class="phase-detail">2 usable / 5 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill usable">usable</span></div>
+            </a>
+            
+            <a class="phase-card " href="../idea-briefs/index.html">
+              <div class="phase-label">Phase 6</div>
+              <div class="phase-title">Hypothesis Rankings</div>
+              <div class="phase-metric">5 families</div>
+              <div class="phase-detail">4 slate / 14 supported</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill live">live</span></div>
+            </a>
+            </div>
+    </section>
+    
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Operate</p>
+            <h2>Run the machine and inspect the result</h2>
+          </div>
+          <p>
+            This section is intentionally narrow: dispatch the full pipeline,
+            confirm whether the local control service is up, and inspect the
+            most recent workflow runs.
+          </p>
+        </div>
+        <div class="control-grid">
+          <article class="surface">
+            <h3>Dispatch full pipeline</h3>
+            <p>
+              Use the button below to start <code>Ongoing Literature Cycle</code>.
+              If that succeeds, the atlas refresh and public-enrichment refresh
+              follow automatically.
+            </p>
+            <div class="button-row">
+              <button id="runButton" class="button-link primary">Run Full Pipeline Now</button>
+              <a class="button-link" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">Open GitHub Actions</a>
+              <a class="button-link" href="../index.html">Back to Portal</a>
+            </div>
+            <div id="dispatchStatus" class="status warn">Checking local control service…</div>
+          </article>
+          <article class="surface">
+            <h3>What this refresh touches</h3>
+            <div class="list-table">
+              <div class="list-row"><div><strong>1. Retrieval and source upgrade</strong><small>Pull new literature, attempt full-text upgrades, and refresh staged source state.</small></div></div>
+              <div class="list-row"><div><strong>2. Extraction and post-analysis</strong><small>Run extraction, edge analysis, queue updates, and mechanism-level repair signals.</small></div></div>
+              <div class="list-row"><div><strong>3. Atlas and public enrichment rebuild</strong><small>Rebuild Phases 1–6 and refresh external target, trial, and preprint context.</small></div></div>
+              <div class="list-row"><div><strong>4. Docs and decision surfaces</strong><small>Publish the updated project surfaces after the evidence stack is rebuilt.</small></div></div>
+            </div>
+          </article>
+        </div>
       </section>
 
-      <section class="grid">
-        <div class="card"><span class="eyebrow">Lead</span><strong>Blood-Brain Barrier Dysfunction</strong></div>
-        <div class="card"><span class="eyebrow">Stable</span><strong>5</strong></div>
-        <div class="card"><span class="eyebrow">Provisional</span><strong>6</strong></div>
-        <div class="card"><span class="eyebrow">Blocked</span><strong>5</strong></div>
-        <div class="card"><span class="eyebrow">Process Lanes</span><strong>6</strong></div>
-        <div class="card"><span class="eyebrow">Trajectory State</span><strong>1 supported / 5 seeded</strong></div>
-        <div class="card"><span class="eyebrow">Transitions</span><strong>6</strong></div>
-        <div class="card"><span class="eyebrow">Process Model</span><strong>2 supported</strong></div>
-        <div class="card"><span class="eyebrow">Progression Objects</span><strong>7</strong></div>
-        <div class="card"><span class="eyebrow">Object State</span><strong>2 supported / 1 seeded</strong></div>
-        <div class="card"><span class="eyebrow">Translational Lanes</span><strong>6</strong></div>
-        <div class="card"><span class="eyebrow">Translational State</span><strong>0 actionable / 6 bounded</strong></div>
-        <div class="card"><span class="eyebrow">Endotypes</span><strong>7</strong></div>
-        <div class="card"><span class="eyebrow">Endotype State</span><strong>2 usable / 5 bounded</strong></div>
-        <div class="card"><span class="eyebrow">Hypothesis Families</span><strong>5</strong></div>
-        <div class="card"><span class="eyebrow">Phase 6 State</span><strong>8 supported / 4 slate</strong></div>
-      </section>
-
-      <section class="stack">
-        <div class="panel">
-          <p class="eyebrow">Run the machine</p>
-          <p>Use the button below to dispatch <code>Ongoing Literature Cycle</code>. That run automatically fans out to atlas refresh and public-enrichment refresh after it succeeds.</p>
-          <div class="button-row">
-            <button id="runButton" class="primary">Run Full Pipeline Now</button>
-            <a class="link-button secondary" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">Open GitHub Actions</a>
-            <a class="link-button secondary" href="../index.html">Back to Portal</a>
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Latest runs</p>
+            <h2>Workflow execution and downstream refresh</h2>
           </div>
-          <div id="dispatchStatus" class="status warn">Checking local control service…</div>
+          <p>
+            Use the live run list for execution status. Use the downstream
+            refresh table when you need to remember what the machine is updating
+            after a successful run.
+          </p>
         </div>
-
-        <div class="panel">
-          <p class="eyebrow">What this starts</p>
-          <div class="actions">
-            <div>1. Retrieval + source upgrade attempts</div>
-            <div>2. Gemini extraction</div>
-            <div>3. Post-extraction analysis + action queue</div>
-            <div>4. Atlas rebuild</div>
-            <div>5. Public enrichment refresh</div>
-            <div>6. Docs publish</div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <p class="eyebrow">Phase 1 process engine</p>
-          <p>The daily machine now also keeps the trajectory layer current. That means six process lanes stay synced with the atlas across acute, subacute, and chronic support.</p>
-          <div class="actions">
-            <div>Supported lanes: <strong>1</strong></div>
-            <div>Seeded lanes: <strong>5</strong></div>
-            <div>Total lanes: <strong>6</strong></div>
-          </div>
-          <div class="button-row">
-            <a class="link-button secondary" href="../process-engine/index.html">Open Process Engine</a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <p class="eyebrow">Phase 2 process model</p>
-          <p>The daily machine can now refresh explicit causal transitions as a downstream product layer. This is where the system starts behaving like a process model instead of a chapter set.</p>
-          <div class="actions">
-            <div>Transitions: <strong>6</strong></div>
-            <div>Supported transitions: <strong>2</strong></div>
-            <div>Emergent or hypothesis transitions stay visibly bounded in the product.</div>
-          </div>
-          <div class="button-row">
-            <a class="link-button secondary" href="../process-model/index.html">Open Process Model</a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <p class="eyebrow">Phase 3 progression objects</p>
-          <p>The daily machine now also refreshes recurring neurodegenerative objects so we can compare what is emerging, what is already supported, and what still needs bounded interpretation.</p>
-          <div class="actions">
-            <div>Objects: <strong>7</strong></div>
-            <div>Supported objects: <strong>2</strong></div>
-            <div>Seeded objects: <strong>1</strong></div>
-          </div>
-          <div class="button-row">
-            <a class="link-button secondary" href="../progression-objects/index.html">Open Progression Objects</a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <p class="eyebrow">Phase 4 translational logic</p>
-          <p>The daily machine now also refreshes lane-level perturbation logic so we can compare primary targets, expected readouts, and whether compounds, trials, or genomics actually attach to each lane.</p>
-          <div class="actions">
-            <div>Translational lanes: <strong>6</strong></div>
-            <div>Actionable packets: <strong>0</strong></div>
-            <div>Bounded packets: <strong>6</strong></div>
-          </div>
-          <div class="button-row">
-            <a class="link-button secondary" href="../translational-logic/index.html">Open Translational Logic</a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <p class="eyebrow">Phase 5 cohort stratification</p>
-          <p>The daily machine now also refreshes cohort and endotype packets so we can separate mild, repetitive, blast, and severe trajectories by dominant process pattern, biomarker profile, imaging pattern, and bounded new-idea overlays.</p>
-          <div class="actions">
-            <div>Endotype packets: <strong>7</strong></div>
-            <div>Usable packets: <strong>2</strong></div>
-            <div>Bounded packets: <strong>5</strong></div>
-          </div>
-          <div class="button-row">
-            <a class="link-button secondary" href="../cohort-stratification/index.html">Open Cohort Stratification</a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <p class="eyebrow">Phase 6 hypothesis rankings</p>
-          <p>The daily machine now also refreshes the ranked decision board so we can compare strongest bridges, weakest hinges, best leverage points, biomarker panels, and highest-value next tasks without losing the link back to Phases 1–5.</p>
-          <div class="actions">
-            <div>Ranking families: <strong>5</strong></div>
-            <div>Supported ranked rows: <strong>8</strong></div>
-            <div>Weekly slate size: <strong>4</strong></div>
-          </div>
-          <div class="button-row">
-            <a class="link-button secondary" href="../idea-briefs/index.html">Open Hypothesis Rankings</a>
-          </div>
-        </div>
-
-        <div class="panel">
-          <p class="eyebrow">Latest workflow runs</p>
-          <div id="runList" class="runs"></div>
+        <div class="control-grid">
+          <article class="surface">
+            <h3>Latest workflow runs</h3>
+            <div id="runList" class="runs"></div>
+          </article>
+          <article class="surface">
+            <h3>Downstream refresh map</h3>
+            <div class="list-table">
+            <div class="list-row">
+              <div>
+                <strong>Phase 1 · Process lanes</strong>
+                <small>6 lanes with 1 supported / 5 seeded</small>
+              </div>
+              <div><a class="button-link compact" href="../process-engine/index.html">Open</a></div>
+            </div>
+            
+            <div class="list-row">
+              <div>
+                <strong>Phase 2 · Causal transitions</strong>
+                <small>6 transitions with 2 supported</small>
+              </div>
+              <div><a class="button-link compact" href="../process-model/index.html">Open</a></div>
+            </div>
+            
+            <div class="list-row">
+              <div>
+                <strong>Phase 3 · Progression objects</strong>
+                <small>7 objects with 2 supported</small>
+              </div>
+              <div><a class="button-link compact" href="../progression-objects/index.html">Open</a></div>
+            </div>
+            
+            <div class="list-row">
+              <div>
+                <strong>Phase 4 · Translational packets</strong>
+                <small>6 / 6 lanes covered and 0 actionable</small>
+              </div>
+              <div><a class="button-link compact" href="../translational-logic/index.html">Open</a></div>
+            </div>
+            
+            <div class="list-row">
+              <div>
+                <strong>Phase 5 · Endotype packets</strong>
+                <small>7 endotypes with 2 usable</small>
+              </div>
+              <div><a class="button-link compact" href="../cohort-stratification/index.html">Open</a></div>
+            </div>
+            
+            <div class="list-row">
+              <div>
+                <strong>Phase 6 · Decision board</strong>
+                <small>5 families with a slate size of 4</small>
+              </div>
+              <div><a class="button-link compact" href="../idea-briefs/index.html">Open</a></div>
+            </div>
+            </div>
+          </article>
         </div>
       </section>
     </main>

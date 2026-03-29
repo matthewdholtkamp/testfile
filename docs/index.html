@@ -3,16 +3,23 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TBI Atlas Portal</title>
+    <title>Atlas Portal</title>
     <style>
+      
       :root {
-        --bg: #0f1514;
-        --panel: #182220;
-        --panel-soft: #1f2b29;
-        --ink: #eef6f2;
-        --muted: #aabbb4;
+        --bg: #0b1117;
+        --bg-soft: #101924;
+        --panel: #121c26;
+        --panel-soft: #172430;
+        --ink: #edf4fb;
+        --muted: #9fb4c8;
         --accent: #9ce2cf;
-        --line: rgba(156,226,207,0.14);
+        --accent-rgb: 156,226,207;
+        --positive: #9be3c0;
+        --warning: #ffd37c;
+        --danger: #ffb6b6;
+        --line: rgba(156,226,207, 0.16);
+        --soft-line: rgba(255,255,255,0.08);
       }
       * { box-sizing: border-box; }
       body {
@@ -20,152 +27,844 @@
         min-height: 100vh;
         color: var(--ink);
         background:
-          radial-gradient(circle at top right, rgba(156,226,207,0.12), transparent 30%),
-          linear-gradient(180deg, #0d1413 0%, var(--bg) 100%);
+          radial-gradient(circle at top right, rgba(var(--accent-rgb), 0.14), transparent 28%),
+          linear-gradient(180deg, #090e13 0%, var(--bg) 100%);
         font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
       }
-      .shell { max-width: 1180px; margin: 0 auto; padding: 48px 24px 72px; }
-      .hero { max-width: 760px; margin-bottom: 24px; }
-      .hero p { color: var(--muted); line-height: 1.6; }
-      .cards { display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-      .cards + .cards { margin-top: 20px; }
-      .card, .spotlight-card {
-        display:block;
-        text-decoration:none;
-        color: inherit;
+      a { color: inherit; }
+      .page { max-width: 1280px; margin: 0 auto; padding: 24px 24px 72px; }
+      .topbar { display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; }
+      .brand-mark { display: grid; gap: 4px; }
+      .brand-mark strong { font-size: 0.98rem; letter-spacing: 0.03em; }
+      .brand-mark span { color: var(--muted); font-size: 0.9rem; }
+      .main-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+      .main-nav a {
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+      .main-nav a.active {
+        color: var(--ink);
+        border-color: rgba(var(--accent-rgb), 0.28);
+        background: rgba(var(--accent-rgb), 0.16);
+      }
+      .masthead { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.95fr); gap: 20px; align-items: start; margin: 28px 0 22px; }
+      .masthead-copy { padding-top: 10px; }
+      .masthead-panel, .surface, .phase-card, .metric, .callout {
         background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
         border: 1px solid var(--line);
         border-radius: 24px;
-        padding: 24px;
-        box-shadow: 0 24px 40px rgba(0,0,0,0.2);
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
       }
-      .spotlight-card h3, .card h2 { margin: 0 0 10px; }
+      .masthead-panel, .surface, .callout { padding: 22px; }
       .eyebrow {
         margin: 0 0 10px;
         color: var(--accent);
         text-transform: uppercase;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.14em;
         font-size: 0.76rem;
-        font-weight: 700;
+        font-weight: 800;
       }
-      h1 { margin: 0 0 16px; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 0.96; }
-      h2 { font-size: 1.5rem; }
-      p { margin: 0; color: var(--muted); line-height: 1.6; }
-      .cta { margin-top: 18px; display:inline-flex; gap:8px; color: var(--accent); font-weight: 700; }
-      .meta-row { display:flex; gap:8px; flex-wrap:wrap; margin-top: 14px; }
-      .pill { display:inline-flex; align-items:center; border-radius:999px; padding:6px 12px; font-size:0.76rem; font-weight:700; }
-      .pill.decision { background: rgba(255,255,255,0.08); color: var(--ink); }
-      .pill.strength.assertive { background: rgba(108, 210, 168, 0.18); color: #a7f2cc; }
-      .pill.strength.moderate { background: rgba(255, 209, 102, 0.18); color: #ffe1a3; }
-      .pill.strength.speculative { background: rgba(255, 128, 128, 0.16); color: #ffc1c1; }
-      .snapshot { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:16px; margin: 24px 0 32px; }
-      .snap { padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.05); }
-      .snap strong { display:block; margin-top: 6px; font-size: 1.8rem; }
-      .today { margin: 0 0 30px; }
+      h1 { margin: 0 0 14px; font-size: clamp(2.7rem, 5vw, 5.2rem); line-height: 0.94; }
+      h2 { margin: 0; font-size: 1.5rem; }
+      h3 { margin: 0; font-size: 1.08rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.65; }
+      .masthead-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
+        color: var(--ink);
+        font-weight: 800;
+      }
+      .button-link.primary {
+        background: var(--accent);
+        border-color: transparent;
+        color: #071017;
+      }
+      .fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+      .fact {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .fact label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+      .fact strong { display: block; font-size: 1.3rem; line-height: 1.1; }
+      .fact small { display: block; margin-top: 6px; color: var(--muted); line-height: 1.45; }
+      .metric-strip { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin: 18px 0 24px; }
+      .metric { padding: 18px; }
+      .metric label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      .metric strong { display: block; margin-top: 8px; font-size: 1.8rem; line-height: 1; }
+      .metric small { display: block; margin-top: 8px; color: var(--muted); line-height: 1.45; }
+      .phase-ladder-wrap { margin: 0 0 30px; }
+      .phase-ladder { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+      .phase-card { display: block; text-decoration: none; color: inherit; padding: 18px; }
+      .phase-card.active { border-color: rgba(var(--accent-rgb), 0.34); background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.16) 0%, var(--panel-soft) 100%); }
+      .phase-label { color: var(--accent); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; }
+      .phase-title { margin-top: 8px; font-size: 1rem; font-weight: 800; }
+      .phase-metric { margin-top: 12px; font-size: 1.3rem; font-weight: 800; color: var(--ink); }
+      .phase-detail { margin-top: 6px; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
+      .pill-row, .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+      .pill, .chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 6px 11px;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
+      .chip.muted { color: var(--muted); }
+      .pill { background: rgba(255,255,255,0.08); color: var(--ink); }
+      .pill.supported, .pill.actionable, .pill.usable { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
+      .pill.provisional, .pill.bounded { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
+      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
+      .pill.live { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+      .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
+      .section { margin-top: 32px; }
+      .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
+      .section-head p { max-width: 720px; }
+      .split { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr); }
+      .stack { display: grid; gap: 16px; }
+      .list-table { display: grid; gap: 0; }
+      .list-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+      .list-row:first-child { border-top: 0; padding-top: 0; }
+      .list-row:last-child { padding-bottom: 0; }
+      .list-row strong { display: block; margin-bottom: 6px; }
+      .list-row small { display: block; color: var(--muted); line-height: 1.45; }
+      .muted, .subtle, small.subtle { color: var(--muted); }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      table { width: 100%; border-collapse: collapse; min-width: 920px; }
+      th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      th { color: var(--accent); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      td strong { color: var(--ink); }
+      .callout { border-color: rgba(var(--accent-rgb), 0.24); }
+      details.surface { padding: 0; overflow: hidden; }
+      details.surface > summary { list-style: none; cursor: pointer; padding: 18px 22px; font-weight: 800; }
+      details.surface > summary::-webkit-details-marker { display: none; }
+      details.surface .detail-body { padding: 0 22px 22px; }
+      @media (max-width: 980px) {
+        .masthead, .split { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 720px) {
+        .page { padding: 18px 16px 52px; }
+        .fact-grid { grid-template-columns: 1fr; }
+        .list-row { grid-template-columns: 1fr; }
+      }
+    
+      .page { max-width: 1200px; }
+      .hero-shell { display:grid; gap: 18px; grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr); margin: 28px 0 22px; }
+      .hero-panel { padding: 28px; }
+      .hero-panel h1 { margin: 10px 0 14px; font-size: clamp(2.4rem, 5vw, 4.6rem); line-height: 0.98; }
+      .hero-panel p.lead { max-width: 62ch; font-size: 1.02rem; }
+      .hero-actions { display:flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+      .hero-aside { padding: 24px; display:grid; gap: 14px; }
+      .hero-aside .mini-block { padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.08); }
+      .hero-aside .mini-block:first-child { border-top: 0; padding-top: 0; }
+      .hero-aside span { display:block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em; }
+      .hero-aside strong { display:block; margin-top: 6px; font-size: 1.1rem; }
+      .status-grid { display:grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+      .status-tile { padding: 18px; border-radius: 22px; border: 1px solid var(--line); background: rgba(255,255,255,0.03); }
+      .status-tile span { display:block; color: var(--muted); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; }
+      .status-tile strong { display:block; margin-top: 8px; font-size: 1.18rem; }
+      .status-tile p { margin-top: 8px; font-size: 0.93rem; }
+      .briefing-shell { padding: 22px; }
+      .briefing-toolbar { display:flex; justify-content: space-between; gap: 14px; align-items: start; flex-wrap: wrap; margin-bottom: 18px; }
+      .briefing-toolbar small { display:block; margin-top: 6px; color: var(--muted); line-height: 1.45; }
+      .button-stack { display:flex; gap: 10px; flex-wrap: wrap; }
+      .button-link.compact, .choice-button { appearance:none; border:none; cursor:pointer; font:inherit; }
+      .button-link.compact { padding: 10px 14px; border-radius: 999px; text-decoration: none; background: rgba(255,255,255,0.06); color: var(--ink); font-weight: 800; border: 1px solid rgba(255,255,255,0.08); }
+      .briefing-grid { display:grid; gap: 18px; grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); }
+      .briefing-main h3 { font-size: 1.55rem; margin-bottom: 12px; }
+      .briefing-lists { display:grid; gap: 14px; }
+      .briefing-lists div { padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+      .briefing-lists label, .decision-detail-grid label, .note-label { display:block; color: var(--accent); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; font-weight: 800; }
+      .briefing-lists ul { margin: 0; padding-left: 18px; color: var(--muted); line-height: 1.5; }
+      .briefing-lists li + li { margin-top: 8px; }
+      .decision-grid { display:grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+      .decision-card { padding: 22px; }
+      .card-topline { display:flex; justify-content: space-between; gap: 12px; align-items: start; flex-wrap: wrap; }
+      .decision-card h3 { margin: 6px 0 10px; font-size: 1.2rem; }
+      .decision-question { color: var(--ink); font-weight: 700; margin-bottom: 8px; }
+      .recommend-panel { margin-top: 16px; padding: 16px; border-radius: 18px; background: rgba(var(--accent-rgb), 0.12); border: 1px solid rgba(var(--accent-rgb), 0.18); }
+      .recommend-panel strong { display:block; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+      .recommend-panel p { margin-top: 6px; color: var(--ink); font-weight: 800; }
+      .recommend-panel small { display:block; margin-top: 6px; color: var(--muted); line-height: 1.45; }
+      .decision-detail-grid { display:grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 16px; }
+      .decision-detail-grid > div { padding: 14px; border-radius: 16px; background: rgba(255,255,255,0.04); }
+      .choice-grid { display:grid; gap: 10px; grid-template-columns: 1fr; margin-top: 16px; }
+      .choice-button { text-align:left; padding: 13px 14px; border-radius: 16px; background: rgba(255,255,255,0.04); color: var(--ink); border: 1px solid rgba(255,255,255,0.08); font-weight: 700; }
+      .choice-button:hover { border-color: rgba(var(--accent-rgb), 0.35); }
+      .choice-button.recommended { background: rgba(var(--accent-rgb), 0.12); }
+      .choice-button.selected { border-color: rgba(var(--accent-rgb), 0.48); background: rgba(var(--accent-rgb), 0.16); color: var(--ink); }
+      .choice-result { margin-top: 12px; min-height: 54px; padding: 14px; border-radius: 16px; background: rgba(255,255,255,0.03); color: var(--muted); line-height: 1.5; }
+      .decision-note { width: 100%; margin-top: 8px; resize: vertical; padding: 12px 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.12); color: var(--ink); font: inherit; }
+      .journey-panel { margin-top: 16px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); }
+      .journey-panel summary { cursor: pointer; padding: 14px 16px; font-weight: 800; }
+      .journey-body { padding: 0 16px 16px; }
+      .journey-body ul { margin: 0 0 14px; padding-left: 18px; color: var(--muted); line-height: 1.55; }
+      .timeline-shell { display:grid; gap: 14px; }
+      .timeline-row { display:grid; gap: 16px; grid-template-columns: 122px minmax(0, 1fr); align-items: start; }
+      .timeline-date span { display:inline-flex; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,0.06); color: var(--muted); font-size: 0.82rem; font-weight: 700; }
+      .timeline-body { padding: 18px 20px; border-radius: 22px; border: 1px solid var(--line); background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%); box-shadow: 0 18px 36px rgba(0,0,0,0.18); }
+      .timeline-head { display:flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+      .timeline-body small { display:block; margin-top: 8px; color: var(--muted); line-height: 1.45; }
+      .surface-links { display:grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+      .surface-link { padding: 18px; text-decoration:none; }
+      .surface-link strong { display:block; margin-bottom: 6px; }
+      .section-note { padding: 18px; border-radius: 22px; border: 1px solid rgba(var(--accent-rgb), 0.18); background: rgba(var(--accent-rgb), 0.08); margin-bottom: 14px; }
+      .section-note p { color: var(--ink); }
+      .empty-state { text-align:left; }
+      @media (max-width: 980px) {
+        .hero-shell, .briefing-grid, .decision-detail-grid { grid-template-columns: 1fr; }
+        .timeline-row { grid-template-columns: 1fr; }
+      }
     </style>
   </head>
   <body>
-    <main class="shell">
-      <section class="hero">
-        <p class="eyebrow">TBI investigation engine</p>
-        <h1>Atlas Portal</h1>
-        <p>This is the simplest working surface for the project: run the machine, review the ideas, and read the atlas. The current lead mechanism is <strong>Blood-Brain Barrier Dysfunction</strong>, with 5 stable rows supporting the live atlas.</p>
+    <main class="page">
+      
+    <div class="topbar">
+      <div class="brand-mark">
+        <strong>TBI Neurodegenerative Decision Engine</strong>
+        <span>Progress, evidence, translation, stratification, and decisions in one stack.</span>
+      </div>
+      <nav class="main-nav"><a class="active" href="./index.html">Overview</a><a class="" href="./run-center/index.html">Run Center</a><a class="" href="./idea-briefs/index.html">Decision Board</a><a class="" href="./atlas-viewer/index.html">Atlas Viewer</a><a class="" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">GitHub Actions</a></nav>
+    </div>
+    
+
+      <section class="hero-shell">
+        <article class="surface hero-panel">
+          <p class="eyebrow">Today’s briefing</p>
+          <h1>We already built the engine. Your job now is to choose what it does next.</h1>
+          <p class="lead">The project has completed Phases 1 through 6. The machine has already narrowed the literature into a short decision slate. This page is here to tell you what is finished, what that means in simple English, and what choice is actually on your desk right now.</p>
+          <div class="hero-actions">
+            <a class="button-link primary" href="./idea-briefs/index.html">Review full decision board</a>
+            <a class="button-link" href="./run-center/index.html">Open run center</a>
+            <a class="button-link" href="./cohort-stratification/index.html">Open cohort view</a>
+          </div>
+        </article>
+        <aside class="surface hero-aside">
+          <div class="mini-block">
+            <span>What is done</span>
+            <strong>Phases 1-6 are live on the stack</strong>
+          </div>
+          <div class="mini-block">
+            <span>What is still weak</span>
+            <strong>0 actionable translational packets</strong>
+          </div>
+          <div class="mini-block">
+            <span>What this means</span>
+            <strong>The next gain comes from good human choices, not more dashboard reading.</strong>
+          </div>
+          <div class="mini-block">
+            <span>Lead mechanism</span>
+            <strong>Blood-Brain Barrier Dysfunction</strong>
+          </div>
+          <div class="mini-block">
+            <span>Priority slate</span>
+            <strong>4 decisions now</strong>
+          </div>
+          <div class="mini-block">
+            <span>Current endotypes</span>
+            <strong>7 cohort patterns in play</strong>
+          </div>
+        </aside>
       </section>
-      <section class="snapshot">
-        <div class="snap"><span class="eyebrow">Lead</span><strong>Blood-Brain Barrier Dysfunction</strong></div>
-        <div class="snap"><span class="eyebrow">Stable</span><strong>5</strong></div>
-        <div class="snap"><span class="eyebrow">Provisional</span><strong>6</strong></div>
-        <div class="snap"><span class="eyebrow">Ideas</span><strong>54</strong></div>
-        <div class="snap"><span class="eyebrow">Process Lanes</span><strong>6</strong></div>
-        <div class="snap"><span class="eyebrow">Transitions</span><strong>6</strong></div>
-        <div class="snap"><span class="eyebrow">Progression Objects</span><strong>7</strong></div>
-        <div class="snap"><span class="eyebrow">Translational Lanes</span><strong>6 / 6</strong></div>
-        <div class="snap"><span class="eyebrow">Endotypes</span><strong>7</strong></div>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Where we are</p>
+            <h2>Current state in one screen</h2>
+          </div>
+          <p>This is the shortest honest read of the project: what is built, what is strong enough to act on, and where the current bottleneck sits.</p>
+        </div>
+        <div class="status-grid">
+            <article class="status-tile">
+              <span>Project state</span>
+              <strong>Phases 1-6 complete</strong>
+              <p>The engine stack is built and the current question is where to spend the next cycle.</p>
+            </article>
+            
+            <article class="status-tile">
+              <span>Lead mechanism</span>
+              <strong>Blood-Brain Barrier Dysfunction</strong>
+              <p>This is the dominant mechanism currently surfaced in the atlas summary.</p>
+            </article>
+            
+            <article class="status-tile">
+              <span>Human decisions now</span>
+              <strong>4</strong>
+              <p>These are the choices the dashboard is surfacing for you today.</p>
+            </article>
+            
+            <article class="status-tile">
+              <span>Translational maturity</span>
+              <strong>0 actionable / 6 bounded</strong>
+              <p>Phase 4 is still mostly bounded, which is why the human choice matters.</p>
+            </article>
+            
+            <article class="status-tile">
+              <span>Endotype coverage</span>
+              <strong>4 injury classes / 3 time windows</strong>
+              <p>Phase 5 is broad enough to make cohort-aware decisions instead of generic TBI calls.</p>
+            </article>
+            
+            <article class="status-tile">
+              <span>Decision board</span>
+              <strong>5 families / 4 slate items</strong>
+              <p>Phase 6 has already compressed the decision space for you.</p>
+            </article>
+            </div>
       </section>
-      <section class="cards">
-        <a class="card" href="./run-center/index.html">
-          <p class="eyebrow">Start here</p>
-          <h2>Run Center</h2>
-          <p>Launch the full daily pipeline, see the newest workflow runs, and use one page as the execution surface for the machine.</p>
-          <span class="cta">Open run center →</span>
-        </a>
-        <a class="card" href="./idea-briefs/index.html">
-          <p class="eyebrow">Phase 6</p>
-          <h2>Hypothesis Rankings</h2>
-          <p>Review the ranked decision layer: strongest bridges, weakest hinges, best leverage points, biomarker panels, and the highest-value next tasks.</p>
-          <span class="cta">Open ideas →</span>
-        </a>
-        <a class="card" href="./atlas-book/index.html">
-          <p class="eyebrow">Atlas package</p>
-          <h2>Starter TBI Atlas</h2>
-          <p>Read the current chapter-grade atlas draft with BBB, mitochondrial, and neuroinflammation sections packaged into one deliverable.</p>
-          <span class="cta">Open atlas →</span>
-        </a>
-        <a class="card" href="./process-engine/index.html">
-          <p class="eyebrow">Phase 1</p>
-          <h2>Process Engine</h2>
-          <p>Review the first-pass seeded longitudinal view: six lanes tracked across acute, subacute, and chronic support with provisional buckets shown honestly.</p>
-          <span class="cta">Open process engine →</span>
-        </a>
-        <a class="card" href="./process-model/index.html">
-          <p class="eyebrow">Phase 2</p>
-          <h2>Process Model</h2>
-          <p>Review the explicit causal-transition layer: upstream-to-downstream process links with support strength, timing support, and hypothesis status.</p>
-          <span class="cta">Open process model →</span>
-        </a>
-        <a class="card" href="./progression-objects/index.html">
-          <p class="eyebrow">Phase 3</p>
-          <h2>Progression Objects</h2>
-          <p>Review the recurring neurodegenerative objects that sit on top of the lanes and transitions, with biomarkers, likely targets, and contradiction notes.</p>
-          <span class="cta">Open progression objects →</span>
-        </a>
-        <a class="card" href="./translational-logic/index.html">
-          <p class="eyebrow">Phase 4</p>
-          <h2>Translational Logic</h2>
-          <p>Review the perturbation layer: primary targets, challenger targets, expected readouts, and the current compound, trial, and genomics attachment state for each lane.</p>
-          <span class="cta">Open translational logic →</span>
-        </a>
-        <a class="card" href="./cohort-stratification/index.html">
-          <p class="eyebrow">Phase 5</p>
-          <h2>Cohort Stratification</h2>
-          <p>Compare endotypes across mild, repetitive, blast, and severe TBI, with dominant process patterns, biomarker and imaging signatures, and bounded novelty overlays for new ideas.</p>
-          <span class="cta">Open cohort stratification →</span>
-        </a>
+
+      
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Plain-English explainer</p>
+          <h2>Simple briefing</h2>
+        </div>
+        <p>This panel explains the latest validated state in plain English. If the local control service has Gemini access, it will upgrade this summary automatically. If not, the portal shows the built-in fallback.</p>
+      </div>
+      <article class="briefing-shell surface">
+        <div class="briefing-toolbar">
+          <div>
+            <strong id="briefSourceLabel">Built-in summary</strong>
+            <small id="briefSourceDetail">The local AI explainer is optional. The dashboard still works without it.</small>
+          </div>
+          <div class="button-stack">
+            <button type="button" class="button-link compact" id="refreshBriefButton">Refresh simple summary</button>
+            <button type="button" class="button-link compact" id="copyDecisionButton">Copy my choices</button>
+          </div>
+        </div>
+        <div class="briefing-grid">
+          <div class="briefing-main">
+            <h3 id="briefHeadline">Phases 1 through 6 are built. The next human job is to choose which validated path to push next.</h3>
+            <p id="briefOverview">The system has already mapped the TBI literature into mechanisms, causal bridges, progression states, translational packets, cohort endotypes, and a ranked decision slate. Right now the lead mechanism is Blood-Brain Barrier Dysfunction, the project has 4 priority decisions on the slate, and the main bottleneck is that Phase 4 is still bounded rather than actionable.</p>
+          </div>
+          <div class="briefing-lists">
+            <div>
+              <label>Already completed</label>
+              <ul id="briefCompleted"></ul>
+            </div>
+            <div>
+              <label>What changed</label>
+              <ul id="briefChanged"></ul>
+            </div>
+            <div>
+              <label>Current cautions</label>
+              <ul id="briefCautions"></ul>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+    
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Your decisions</p>
+            <h2>Choose what happens next</h2>
+          </div>
+          <p>These are the live decisions the engine is putting in front of you. Each card explains the question, shows the recommendation, and tells you what will happen if you choose each option.</p>
+        </div>
+        <div class="section-note"><p>If you want the shortest path forward, pick the recommended option on each card, then copy your choices and use them as the action list for the next cycle.</p></div>
+        <div class="decision-grid">
+            <article class="surface decision-card" id="most_informative_biomarker_panel--packet--blood_brain_barrier_failure">
+              <div class="card-topline">
+                <span class="eyebrow">Most Informative Biomarker Panel</span>
+                <div class="pill-row">
+                  <span class="pill supported">supported</span>
+                  <span class="pill live">cross_disease_analog</span>
+                </div>
+              </div>
+              <h3>Blood-Brain Barrier Failure biomarker panel</h3>
+              <p class="decision-question">Do you want this to be the main biomarker panel for the next validation pass?</p>
+              <p>Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.</p>
+              <div class="recommend-panel">
+                <strong>Recommended now</strong>
+                <p>Advance this panel now</p>
+                <small>We treat Blood-Brain Barrier Failure biomarker panel as the live readout set for the next validation pass.</small>
+              </div>
+              <div class="decision-detail-grid">
+                <div>
+                  <label>Why this is on your desk</label>
+                  <p>This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).</p>
+                </div>
+                <div>
+                  <label>If you choose it</label>
+                  <p>Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</p>
+                </div>
+              </div>
+              <div class="choice-grid"><button type="button" class="choice-button recommended" data-card-id="most_informative_biomarker_panel--packet--blood_brain_barrier_failure" data-choice="advance_now" data-label="Advance this panel now" data-outcome="We treat Blood-Brain Barrier Failure biomarker panel as the live readout set for the next validation pass.">Advance this panel now</button><button type="button" class="choice-button" data-card-id="most_informative_biomarker_panel--packet--blood_brain_barrier_failure" data-choice="compare_first" data-label="Compare against one challenger first" data-outcome="We keep the panel active but require one comparison pass before treating it as the default operator panel.">Compare against one challenger first</button><button type="button" class="choice-button" data-card-id="most_informative_biomarker_panel--packet--blood_brain_barrier_failure" data-choice="park" data-label="Park this panel for now" data-outcome="We free attention for other work, but translational and endotype readouts stay less aligned.">Park this panel for now</button></div>
+              <div class="choice-result" data-result-for="most_informative_biomarker_panel--packet--blood_brain_barrier_failure">Pick an option to see the practical outcome.</div>
+              <label class="note-label" for="note-most_informative_biomarker_panel--packet--blood_brain_barrier_failure">Write-in note</label>
+              <textarea id="note-most_informative_biomarker_panel--packet--blood_brain_barrier_failure" class="decision-note" data-note-for="most_informative_biomarker_panel--packet--blood_brain_barrier_failure" rows="3" placeholder="Add your own instruction or concern here."></textarea>
+              <details class="journey-panel">
+                <summary>How the system got here</summary>
+                <div class="journey-body">
+                  <ul><li>Phase 1 named <strong>Blood-Brain Barrier Failure</strong> as the mechanism lane behind this item.</li><li>Phase 2 linked it through <strong>BBB Permeability Increase To Peripheral Immune Infiltration</strong>.</li><li>Phase 3 says the downstream burden shows up as <strong>Microglial Chronic Activation, Neurovascular Uncoupling</strong>.</li><li>Phase 4 turned that path into a translational packet with expected readouts.</li><li>Phase 5 says it matters most in <strong>Acute Mild Biomarker Imaging Bridge, Acute Severe Vascular Dominant, Acute Blast Vascular Inflammatory Mixed, and 1 more</strong>.</li><li>Phase 6 ranked it now because <strong>This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).</strong>.</li></ul>
+                  <a class="button-link compact" href="./idea-briefs/index.html">Open detailed decision board</a>
+                </div>
+              </details>
+            </article>
+            
+            <article class="surface decision-card" id="most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change">
+              <div class="card-topline">
+                <span class="eyebrow">Most Informative Biomarker Panel</span>
+                <div class="pill-row">
+                  <span class="pill supported">supported</span>
+                  <span class="pill live">cross_disease_analog</span>
+                </div>
+              </div>
+              <h3>Neuroinflammation / Microglial State Change biomarker panel</h3>
+              <p class="decision-question">Do you want this to be the main biomarker panel for the next validation pass?</p>
+              <p>Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.</p>
+              <div class="recommend-panel">
+                <strong>Recommended now</strong>
+                <p>Advance this panel now</p>
+                <small>We treat Neuroinflammation / Microglial State Change biomarker panel as the live readout set for the next validation pass.</small>
+              </div>
+              <div class="decision-detail-grid">
+                <div>
+                  <label>Why this is on your desk</label>
+                  <p>This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).</p>
+                </div>
+                <div>
+                  <label>If you choose it</label>
+                  <p>Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</p>
+                </div>
+              </div>
+              <div class="choice-grid"><button type="button" class="choice-button recommended" data-card-id="most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change" data-choice="advance_now" data-label="Advance this panel now" data-outcome="We treat Neuroinflammation / Microglial State Change biomarker panel as the live readout set for the next validation pass.">Advance this panel now</button><button type="button" class="choice-button" data-card-id="most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change" data-choice="compare_first" data-label="Compare against one challenger first" data-outcome="We keep the panel active but require one comparison pass before treating it as the default operator panel.">Compare against one challenger first</button><button type="button" class="choice-button" data-card-id="most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change" data-choice="park" data-label="Park this panel for now" data-outcome="We free attention for other work, but translational and endotype readouts stay less aligned.">Park this panel for now</button></div>
+              <div class="choice-result" data-result-for="most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change">Pick an option to see the practical outcome.</div>
+              <label class="note-label" for="note-most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change">Write-in note</label>
+              <textarea id="note-most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change" class="decision-note" data-note-for="most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change" rows="3" placeholder="Add your own instruction or concern here."></textarea>
+              <details class="journey-panel">
+                <summary>How the system got here</summary>
+                <div class="journey-body">
+                  <ul><li>Phase 1 named <strong>Neuroinflammation / Microglial State Change</strong> as the mechanism lane behind this item.</li><li>Phase 2 linked it through <strong>BBB Permeability Increase To Peripheral Immune Infiltration, Mitochondrial ROS To Inflammasome Activation, Neuroinflammation To Tau Proteinopathy Progression</strong>.</li><li>Phase 3 says the downstream burden shows up as <strong>Microglial Chronic Activation, Persistent Metabolic Dysfunction, Tauopathy Progression</strong>.</li><li>Phase 4 turned that path into a translational packet with expected readouts.</li><li>Phase 5 says it matters most in <strong>Acute Mild Biomarker Imaging Bridge, Acute Blast Vascular Inflammatory Mixed, Subacute Repetitive Inflammatory Dominant, and 1 more</strong>.</li><li>Phase 6 ranked it now because <strong>This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).</strong>.</li></ul>
+                  <a class="button-link compact" href="./idea-briefs/index.html">Open detailed decision board</a>
+                </div>
+              </details>
+            </article>
+            
+            <article class="surface decision-card" id="best_intervention_leverage_point--mitochondrial_bioenergetic_collapse">
+              <div class="card-topline">
+                <span class="eyebrow">Best Intervention Leverage Point</span>
+                <div class="pill-row">
+                  <span class="pill supported">supported</span>
+                  <span class="pill live">cross_disease_analog</span>
+                </div>
+              </div>
+              <h3>Mitochondrial / Bioenergetic Collapse -&gt; PRKN</h3>
+              <p class="decision-question">Do you want this to stay the main target hypothesis for the next translational step?</p>
+              <p>Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).</p>
+              <div class="recommend-panel">
+                <strong>Recommended now</strong>
+                <p>Keep this as the primary target</p>
+                <small>The target stays first in the translational stack and becomes the main intervention story to test next.</small>
+              </div>
+              <div class="decision-detail-grid">
+                <div>
+                  <label>Why this is on your desk</label>
+                  <p>4 endotype packet(s) already map back to this perturbation path.</p>
+                </div>
+                <div>
+                  <label>If you choose it</label>
+                  <p>Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</p>
+                </div>
+              </div>
+              <div class="choice-grid"><button type="button" class="choice-button recommended" data-card-id="best_intervention_leverage_point--mitochondrial_bioenergetic_collapse" data-choice="keep_primary" data-label="Keep this as the primary target" data-outcome="The target stays first in the translational stack and becomes the main intervention story to test next.">Keep this as the primary target</button><button type="button" class="choice-button" data-card-id="best_intervention_leverage_point--mitochondrial_bioenergetic_collapse" data-choice="compare_challenger" data-label="Compare it against a challenger" data-outcome="We hold the target as promising but avoid overcommitting until a direct comparison pass is done.">Compare it against a challenger</button><button type="button" class="choice-button" data-card-id="best_intervention_leverage_point--mitochondrial_bioenergetic_collapse" data-choice="defer_target" data-label="Defer target work" data-outcome="Mechanism understanding continues, but intervention planning slows down.">Defer target work</button></div>
+              <div class="choice-result" data-result-for="best_intervention_leverage_point--mitochondrial_bioenergetic_collapse">Pick an option to see the practical outcome.</div>
+              <label class="note-label" for="note-best_intervention_leverage_point--mitochondrial_bioenergetic_collapse">Write-in note</label>
+              <textarea id="note-best_intervention_leverage_point--mitochondrial_bioenergetic_collapse" class="decision-note" data-note-for="best_intervention_leverage_point--mitochondrial_bioenergetic_collapse" rows="3" placeholder="Add your own instruction or concern here."></textarea>
+              <details class="journey-panel">
+                <summary>How the system got here</summary>
+                <div class="journey-body">
+                  <ul><li>Phase 1 named <strong>Mitochondrial / Bioenergetic Collapse</strong> as the mechanism lane behind this item.</li><li>Phase 2 linked it through <strong>Mitochondrial ROS To Inflammasome Activation</strong>.</li><li>Phase 3 says the downstream burden shows up as <strong>Persistent Metabolic Dysfunction, Microglial Chronic Activation</strong>.</li><li>Phase 4 turned that path into a translational packet with expected readouts.</li><li>Phase 5 says it matters most in <strong>Acute Severe Vascular Dominant, Chronic Mild Metabolic White Matter Dominant, Chronic Severe Axonal Network Decline</strong>.</li><li>Phase 6 ranked it now because <strong>4 endotype packet(s) already map back to this perturbation path.</strong>.</li></ul>
+                  <a class="button-link compact" href="./idea-briefs/index.html">Open detailed decision board</a>
+                </div>
+              </details>
+            </article>
+            
+            <article class="surface decision-card" id="weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed">
+              <div class="card-topline">
+                <span class="eyebrow">Weakest Evidence Hinge</span>
+                <div class="pill-row">
+                  <span class="pill provisional">provisional</span>
+                  <span class="pill live">cross_disease_analog</span>
+                </div>
+              </div>
+              <h3>Clarify Chronic Repetitive Tau / Clearance Mixed</h3>
+              <p class="decision-question">Do you want the next cycle to spend effort resolving this uncertainty?</p>
+              <p>A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.</p>
+              <div class="recommend-panel">
+                <strong>Recommended now</strong>
+                <p>Clarify this hinge now</p>
+                <small>The next work cycle focuses on resolving the uncertainty: Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</small>
+              </div>
+              <div class="decision-detail-grid">
+                <div>
+                  <label>Why this is on your desk</label>
+                  <p>This endotype is already in the product, so clarifying it has immediate downstream value.</p>
+                </div>
+                <div>
+                  <label>If you choose it</label>
+                  <p>Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</p>
+                </div>
+              </div>
+              <div class="choice-grid"><button type="button" class="choice-button recommended" data-card-id="weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed" data-choice="clarify_now" data-label="Clarify this hinge now" data-outcome="The next work cycle focuses on resolving the uncertainty: Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?">Clarify this hinge now</button><button type="button" class="choice-button" data-card-id="weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed" data-choice="watch" data-label="Keep it as a watch item" data-outcome="The hinge stays visible on the board, but it does not become the immediate next task.">Keep it as a watch item</button><button type="button" class="choice-button" data-card-id="weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed" data-choice="reject_for_now" data-label="Reject this split for now" data-outcome="We simplify the model temporarily, accepting that a potentially useful distinction may be missed.">Reject this split for now</button></div>
+              <div class="choice-result" data-result-for="weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed">Pick an option to see the practical outcome.</div>
+              <label class="note-label" for="note-weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed">Write-in note</label>
+              <textarea id="note-weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed" class="decision-note" data-note-for="weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed" rows="3" placeholder="Add your own instruction or concern here."></textarea>
+              <details class="journey-panel">
+                <summary>How the system got here</summary>
+                <div class="journey-body">
+                  <ul><li>Phase 1 named <strong>Tau / Proteinopathy Progression</strong> as the mechanism lane behind this item.</li><li>Phase 2 linked it through <strong>Glymphatic Failure To Tau Protein Accumulation, Neuroinflammation To Tau Proteinopathy Progression, Tau Proteinopathy Progression To Chronic Network Dysfunction</strong>.</li><li>Phase 3 says the downstream burden shows up as <strong>Tauopathy Progression, Cognitive Decline Phenotype, Microglial Chronic Activation</strong>.</li><li>Phase 4 turned that path into a translational packet with expected readouts.</li><li>Phase 5 says it matters most in <strong>Chronic Repetitive Tau Clearance Mixed</strong>.</li><li>Phase 6 ranked it now because <strong>This endotype is already in the product, so clarifying it has immediate downstream value.</strong>.</li></ul>
+                  <a class="button-link compact" href="./idea-briefs/index.html">Open detailed decision board</a>
+                </div>
+              </details>
+            </article>
+            </div>
       </section>
-      <section class="today">
-        <p class="eyebrow">Today’s lead idea</p>
-        
-            <article class="spotlight-card">
-              <div class="eyebrow">Acute Severe Vascular-Dominant</div>
-              <h3>Acute Severe Vascular-Dominant discriminator panel</h3>
-              <p>Use GFAP, S100B, D-dimer, lactate to discriminate the acute severe vascular-dominant endotype from nearby cohorts.</p>
-              <div class="meta-row">
-                <span class="pill decision">Write now</span>
-                <span class="pill strength assertive">assertive</span>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">How we got here</p>
+            <h2>Timeline from mechanism map to decision slate</h2>
+          </div>
+          <p>This is the project path that led to the current decisions. Read it top to bottom when you want the short version of what each phase contributed.</p>
+        </div>
+        <div class="timeline-shell">
+            <article class="timeline-row">
+              <div class="timeline-date">
+                <span>2026-03-29 02:26:55</span>
+              </div>
+              <div class="timeline-body">
+                <div class="timeline-head">
+                  <strong>Phase 1 · Process Lanes</strong>
+                  <span class="pill supported">supported</span>
+                </div>
+                <p>The engine reduced the TBI literature into six recurring process lanes so the project stopped treating every paper as a one-off mechanism note.</p>
+                <small>Why it matters now: Today’s decisions only make sense because the lane map already tells us which biology is actually in play.</small>
+                <small>Latest repo milestone: 6 lanes</small>
               </div>
             </article>
             
+            <article class="timeline-row">
+              <div class="timeline-date">
+                <span>2026-03-28</span>
+              </div>
+              <div class="timeline-body">
+                <div class="timeline-head">
+                  <strong>Phase 2 · Causal Transitions</strong>
+                  <span class="pill supported">supported</span>
+                </div>
+                <p>The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.</p>
+                <small>Why it matters now: Current hinge and leverage decisions are built on these bridges.</small>
+                <small>Latest repo milestone: Complete starter-lane coverage in Phase 2 transitions</small>
+              </div>
+            </article>
+            
+            <article class="timeline-row">
+              <div class="timeline-date">
+                <span>2026-03-28</span>
+              </div>
+              <div class="timeline-body">
+                <div class="timeline-head">
+                  <strong>Phase 3 · Progression Objects</strong>
+                  <span class="pill supported">supported</span>
+                </div>
+                <p>The engine grouped recurring downstream damage states into progression objects such as chronic network dysfunction and neurovascular uncoupling.</p>
+                <small>Why it matters now: The current decision slate uses these objects to explain why a choice matters downstream.</small>
+                <small>Latest repo milestone: Add Phase 3 progression object layer</small>
+              </div>
+            </article>
+            
+            <article class="timeline-row">
+              <div class="timeline-date">
+                <span>2026-03-28</span>
+              </div>
+              <div class="timeline-body">
+                <div class="timeline-head">
+                  <strong>Phase 4 · Translational Logic</strong>
+                  <span class="pill bounded">bounded</span>
+                </div>
+                <p>The engine attached translational packets to each lane so targets, readouts, and intervention logic sit on top of the mechanism map.</p>
+                <small>Why it matters now: Biomarker panels and leverage-point choices come directly from these packets.</small>
+                <small>Latest repo milestone: Implement Phase 4 translational perturbation layer</small>
+              </div>
+            </article>
+            
+            <article class="timeline-row">
+              <div class="timeline-date">
+                <span>2026-03-28</span>
+              </div>
+              <div class="timeline-body">
+                <div class="timeline-head">
+                  <strong>Phase 5 · Cohort Stratification</strong>
+                  <span class="pill usable">usable</span>
+                </div>
+                <p>The engine split TBI into cohort and endotype patterns so mild, repetitive, blast, severe, acute, and chronic states stop collapsing into one disease bucket.</p>
+                <small>Why it matters now: The current ambiguity around tau versus clearance is an endotype problem, not just a mechanism problem.</small>
+                <small>Latest repo milestone: Add Phase 5 cohort stratification layer</small>
+              </div>
+            </article>
+            
+            <article class="timeline-row">
+              <div class="timeline-date">
+                <span>2026-03-28</span>
+              </div>
+              <div class="timeline-body">
+                <div class="timeline-head">
+                  <strong>Phase 6 · Hypothesis Rankings</strong>
+                  <span class="pill live">live</span>
+                </div>
+                <p>The engine ranked the strongest bridges, weakest hinges, biomarker panels, leverage points, and next tasks into a weekly decision slate.</p>
+                <small>Why it matters now: The portal now uses this slate as the human decision queue.</small>
+                <small>Latest repo milestone: Implement phase 6 hypothesis rankings</small>
+              </div>
+            </article>
+            </div>
       </section>
-      <section class="cards">
-        <a class="card" href="./atlas-viewer/index.html">
-          <p class="eyebrow">Deep review</p>
-          <h2>TBI Atlas Viewer</h2>
-          <p>Open the full review console when you want the evidence ledger, action queue, workflow links, and detailed mechanism state.</p>
-          <span class="cta">Open viewer →</span>
-        </a>
-        <a class="card" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">
-          <p class="eyebrow">Automation</p>
-          <h2>GitHub Actions</h2>
-          <p>Open the workflow run surface directly when you want the raw run logs behind the machine.</p>
-          <span class="cta">Open actions →</span>
-        </a>
-        <a class="card" href="https://github.com/matthewdholtkamp/testfile" target="_blank" rel="noreferrer">
-          <p class="eyebrow">Source</p>
-          <h2>Project Repo</h2>
-          <p>Open the repo directly when you need raw reports, workflow YAML files, or code-level investigation context.</p>
-          <span class="cta">Open repo →</span>
-        </a>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Need more detail?</p>
+            <h2>Open the working surfaces</h2>
+          </div>
+          <p>Stay in the portal until you know what question you are answering. Only open a deeper page when you actually need evidence detail or machine control.</p>
+        </div>
+        <div class="surface-links">
+            <a class="surface surface-link" href="./run-center/index.html">
+              <strong>Run Center</strong>
+              <p>Move the machine when you are ready to refresh the evidence stack.</p>
+            </a>
+            
+            <a class="surface surface-link" href="./idea-briefs/index.html">
+              <strong>Decision Board</strong>
+              <p>Open the full ranked board if you need more than the short queue shown here.</p>
+            </a>
+            
+            <a class="surface surface-link" href="./translational-logic/index.html">
+              <strong>Phase 4</strong>
+              <p>Check targets, readouts, and translational packet logic.</p>
+            </a>
+            
+            <a class="surface surface-link" href="./cohort-stratification/index.html">
+              <strong>Phase 5</strong>
+              <p>Check endotypes when the decision depends on cohort context.</p>
+            </a>
+            
+            <a class="surface surface-link" href="./atlas-viewer/index.html">
+              <strong>Atlas Viewer</strong>
+              <p>Use the deeper ledger only when you need raw evidence context.</p>
+            </a>
+            </div>
       </section>
+
+      
+    <section class="phase-ladder-wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Engine stack</p>
+          <h2>Project progress by phase</h2>
+        </div>
+        <p>Each page sits in the same chain: evidence becomes mechanisms, mechanisms become translation, translation becomes endotypes, and endotypes feed the decision board.</p>
+      </div>
+      <div class="phase-ladder">
+            <a class="phase-card " href="./process-engine/index.html">
+              <div class="phase-label">Phase 1</div>
+              <div class="phase-title">Process Lanes</div>
+              <div class="phase-metric">6 lanes</div>
+              <div class="phase-detail">1 supported / 5 seeded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="./process-model/index.html">
+              <div class="phase-label">Phase 2</div>
+              <div class="phase-title">Causal Transitions</div>
+              <div class="phase-metric">6 transitions</div>
+              <div class="phase-detail">2 supported / 4 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="./progression-objects/index.html">
+              <div class="phase-label">Phase 3</div>
+              <div class="phase-title">Progression Objects</div>
+              <div class="phase-metric">7 objects</div>
+              <div class="phase-detail">2 supported / 5 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="./translational-logic/index.html">
+              <div class="phase-label">Phase 4</div>
+              <div class="phase-title">Translational Logic</div>
+              <div class="phase-metric">6 / 6 lanes</div>
+              <div class="phase-detail">0 actionable / 6 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill bounded">bounded</span></div>
+            </a>
+            
+            <a class="phase-card " href="./cohort-stratification/index.html">
+              <div class="phase-label">Phase 5</div>
+              <div class="phase-title">Cohort Stratification</div>
+              <div class="phase-metric">7 endotypes</div>
+              <div class="phase-detail">2 usable / 5 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill usable">usable</span></div>
+            </a>
+            
+            <a class="phase-card " href="./idea-briefs/index.html">
+              <div class="phase-label">Phase 6</div>
+              <div class="phase-title">Hypothesis Rankings</div>
+              <div class="phase-metric">5 families</div>
+              <div class="phase-detail">4 slate / 14 supported</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill live">live</span></div>
+            </a>
+            </div>
+    </section>
+    
     </main>
+    <script>
+      const CONTROL_URL = 'http://127.0.0.1:8765';
+      const FALLBACK_BRIEF = {"headline": "Phases 1 through 6 are built. The next human job is to choose which validated path to push next.", "overview": "The system has already mapped the TBI literature into mechanisms, causal bridges, progression states, translational packets, cohort endotypes, and a ranked decision slate. Right now the lead mechanism is Blood-Brain Barrier Dysfunction, the project has 4 priority decisions on the slate, and the main bottleneck is that Phase 4 is still bounded rather than actionable.", "completed": ["Phase 1 identified 6 process lanes.", "Phase 2 connected them with 6 causal transitions.", "Phase 5 now covers all required injury classes and time windows across 7 endotypes.", "Phase 6 is live across 5 ranking families."], "what_changed": ["The latest mechanism stack was rebuilt on 2026-03-29 02:26:55.", "The current ranked slate contains 4 priority decisions.", "0 translational packets are actionable, so human choice still matters more than autopilot promotion."], "cautions": ["Phase 4 remains bounded, so the system can recommend leverage points but cannot yet claim mature intervention readiness.", "Mixed endotypes in Phase 5 still need human judgment, especially where inflammation and clearance overlap.", "The dashboard can help you choose next actions, but explicit human governance is not yet feeding back automatically into the engine."], "recommended_path": ["Advance this panel now", "Advance this panel now", "Keep this as the primary target"], "decisions": [{"title": "Blood-Brain Barrier Failure biomarker panel", "summary": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.", "recommendation": "Advance this panel now"}, {"title": "Neuroinflammation / Microglial State Change biomarker panel", "summary": "Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.", "recommendation": "Advance this panel now"}, {"title": "Mitochondrial / Bioenergetic Collapse -> PRKN", "summary": "Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).", "recommendation": "Keep this as the primary target"}, {"title": "Clarify Chronic Repetitive Tau / Clearance Mixed", "summary": "A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.", "recommendation": "Clarify this hinge now"}]};
+      const STORAGE_KEY = 'atlas-dashboard-decisions-v1';
+
+      function renderList(id, items) {
+        const target = document.getElementById(id);
+        if (!target) return;
+        target.innerHTML = (items || []).map((item) => `<li>${item}</li>`).join('');
+      }
+
+      function renderBrief(payload, sourceLabel, sourceDetail) {
+        const brief = payload || FALLBACK_BRIEF;
+        document.getElementById('briefHeadline').textContent = brief.headline || FALLBACK_BRIEF.headline;
+        document.getElementById('briefOverview').textContent = brief.overview || FALLBACK_BRIEF.overview;
+        document.getElementById('briefSourceLabel').textContent = sourceLabel;
+        document.getElementById('briefSourceDetail').textContent = sourceDetail;
+        renderList('briefCompleted', brief.completed || FALLBACK_BRIEF.completed || []);
+        renderList('briefChanged', brief.what_changed || FALLBACK_BRIEF.what_changed || []);
+        renderList('briefCautions', brief.cautions || FALLBACK_BRIEF.cautions || []);
+      }
+
+      async function loadAiBrief() {
+        renderBrief(FALLBACK_BRIEF, 'Built-in summary', 'The dashboard is readable without the local AI helper.');
+        try {
+          const response = await fetch(`${CONTROL_URL}/api/dashboard-brief`);
+          const payload = await response.json();
+          if (!payload.ok) throw new Error(payload.error || 'brief unavailable');
+          const source = payload.source === 'gemini' ? `Gemini explainer (${payload.model || 'configured model'})` : 'Built-in summary';
+          const detail = payload.source === 'gemini'
+            ? 'The local control service used Gemini to simplify the current project state.'
+            : 'Local control is online, but the dashboard is still using the deterministic fallback summary.';
+          renderBrief(payload.brief || FALLBACK_BRIEF, source, detail);
+        } catch (error) {
+          renderBrief(FALLBACK_BRIEF, 'Built-in summary', 'The local AI explainer is offline. Start python3 scripts/dashboard_control_server.py if you want the dashboard to upgrade the plain-English summary.');
+        }
+      }
+
+      function readDecisionState() {
+        try {
+          return JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '{}');
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function writeDecisionState(state) {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function applyStoredChoices() {
+        const state = readDecisionState();
+        document.querySelectorAll('[data-result-for]').forEach((node) => {
+          const cardId = node.dataset.resultFor;
+          const choice = state[cardId] || {};
+          if (choice.outcome) node.textContent = choice.outcome;
+        });
+        document.querySelectorAll('.choice-button').forEach((button) => {
+          const cardId = button.dataset.cardId;
+          const choice = state[cardId] || {};
+          button.classList.toggle('selected', choice.value === button.dataset.choice);
+        });
+        document.querySelectorAll('[data-note-for]').forEach((area) => {
+          const cardId = area.dataset.noteFor;
+          const choice = state[cardId] || {};
+          area.value = choice.note || '';
+        });
+      }
+
+      function installDecisionHandlers() {
+        document.querySelectorAll('.choice-button').forEach((button) => {
+          button.addEventListener('click', () => {
+            const state = readDecisionState();
+            const cardId = button.dataset.cardId;
+            state[cardId] = state[cardId] || {};
+            state[cardId].value = button.dataset.choice;
+            state[cardId].label = button.dataset.label;
+            state[cardId].outcome = button.dataset.outcome;
+            writeDecisionState(state);
+            applyStoredChoices();
+          });
+        });
+        document.querySelectorAll('[data-note-for]').forEach((area) => {
+          area.addEventListener('input', () => {
+            const state = readDecisionState();
+            const cardId = area.dataset.noteFor;
+            state[cardId] = state[cardId] || {};
+            state[cardId].note = area.value;
+            writeDecisionState(state);
+          });
+        });
+      }
+
+      function copyDecisions() {
+        const state = readDecisionState();
+        const lines = Object.entries(state).map(([cardId, choice]) => {
+          const note = choice.note ? ` | note: ${choice.note}` : '';
+          return `${cardId}: ${choice.label || choice.value || 'no choice'}${note}`;
+        });
+        const output = lines.length ? lines.join('\n') : 'No decisions selected yet.';
+        navigator.clipboard.writeText(output).then(() => {
+          const detail = document.getElementById('briefSourceDetail');
+          detail.textContent = 'Your current choices were copied to the clipboard.';
+        }).catch(() => {
+          window.alert(output);
+        });
+      }
+
+      document.getElementById('refreshBriefButton').addEventListener('click', loadAiBrief);
+      document.getElementById('copyDecisionButton').addEventListener('click', copyDecisions);
+      installDecisionHandlers();
+      applyStoredChoices();
+      loadAiBrief();
+    </script>
   </body>
 </html>

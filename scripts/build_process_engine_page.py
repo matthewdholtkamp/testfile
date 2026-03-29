@@ -5,6 +5,8 @@ import os
 import re
 from glob import glob
 
+from dashboard_ui import base_css, load_project_state, render_phase_ladder, render_topbar
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DIR_DEFAULT = os.path.join('docs', 'process-engine')
 
@@ -28,7 +30,9 @@ def write_text(path, text):
 
 
 def normalize(value):
-    return ' '.join((value or '').split()).strip()
+    if value is None:
+        return ''
+    return ' '.join(str(value).split()).strip()
 
 
 def text(value):
@@ -151,6 +155,8 @@ def render_html(data):
     summary = data.get('summary', {})
     lanes = data.get('lanes', [])
     lane_cards = ''.join(render_lane(lane) for lane in lanes)
+    project_state = load_project_state()
+    root_prefix = '../'
     return f"""<!doctype html>
 <html lang=\"en\">
   <head>
@@ -158,6 +164,7 @@ def render_html(data):
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
     <title>TBI Process Engine</title>
     <style>
+      {base_css(accent='#9be3cf', accent_rgb='155,227,207')}
       :root {{
         --bg: #0d1312;
         --panel: #17201f;
@@ -227,7 +234,8 @@ def render_html(data):
     </style>
   </head>
   <body>
-    <main class=\"shell\">
+    <main class=\"page shell\">
+      {render_topbar(root_prefix, active_nav='portal')}
       <section class=\"hero\">
         <p class=\"eyebrow\">Phase 1 process engine</p>
         <h1>Phase 1 TBI Process Lanes</h1>
@@ -239,26 +247,7 @@ def render_html(data):
         <article class=\"summary-card\"><span class=\"eyebrow\">Provisional buckets</span><strong>{summary.get('provisional_buckets', 0)}</strong></article>
         <article class=\"summary-card\"><span class=\"eyebrow\">Weak buckets</span><strong>{summary.get('weak_buckets', 0)}</strong></article>
       </section>
-      <section class=\"nav-grid\">
-        <a class=\"nav-card\" href="../index.html">
-          <p class=\"eyebrow\">Portal</p>
-          <h3>Back to Atlas Portal</h3>
-          <p>Use the simplified home surface to move between the atlas, the viewer, and the run center.</p>
-          <span>Open portal →</span>
-        </a>
-        <a class=\"nav-card\" href="../atlas-viewer/index.html">
-          <p class=\"eyebrow\">Evidence</p>
-          <h3>Atlas Viewer</h3>
-          <p>Open the deeper evidence review surface when you want the ledger, release state, and action queue.</p>
-          <span>Open viewer →</span>
-        </a>
-        <a class=\"nav-card\" href="../atlas-book/index.html">
-          <p class=\"eyebrow\">Narrative</p>
-          <h3>Starter Atlas Book</h3>
-          <p>Read the current chapter-grade synthesis while the process-engine layer matures underneath it.</p>
-          <span>Open atlas →</span>
-        </a>
-      </section>
+      {render_phase_ladder(project_state, root_prefix, active_phase='phase1')}
       {lane_cards}
     </main>
   </body>

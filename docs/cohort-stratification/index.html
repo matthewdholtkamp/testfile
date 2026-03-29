@@ -5,6 +5,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TBI Cohort Stratification</title>
     <style>
+      
+      :root {
+        --bg: #0b1117;
+        --bg-soft: #101924;
+        --panel: #121c26;
+        --panel-soft: #172430;
+        --ink: #edf4fb;
+        --muted: #9fb4c8;
+        --accent: #8cc6ff;
+        --accent-rgb: 140,198,255;
+        --positive: #9be3c0;
+        --warning: #ffd37c;
+        --danger: #ffb6b6;
+        --line: rgba(140,198,255, 0.16);
+        --soft-line: rgba(255,255,255,0.08);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(var(--accent-rgb), 0.14), transparent 28%),
+          linear-gradient(180deg, #090e13 0%, var(--bg) 100%);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      a { color: inherit; }
+      .page { max-width: 1280px; margin: 0 auto; padding: 24px 24px 72px; }
+      .topbar { display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; }
+      .brand-mark { display: grid; gap: 4px; }
+      .brand-mark strong { font-size: 0.98rem; letter-spacing: 0.03em; }
+      .brand-mark span { color: var(--muted); font-size: 0.9rem; }
+      .main-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+      .main-nav a {
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+      .main-nav a.active {
+        color: var(--ink);
+        border-color: rgba(var(--accent-rgb), 0.28);
+        background: rgba(var(--accent-rgb), 0.16);
+      }
+      .masthead { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.95fr); gap: 20px; align-items: start; margin: 28px 0 22px; }
+      .masthead-copy { padding-top: 10px; }
+      .masthead-panel, .surface, .phase-card, .metric, .callout {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      .masthead-panel, .surface, .callout { padding: 22px; }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      h1 { margin: 0 0 14px; font-size: clamp(2.7rem, 5vw, 5.2rem); line-height: 0.94; }
+      h2 { margin: 0; font-size: 1.5rem; }
+      h3 { margin: 0; font-size: 1.08rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.65; }
+      .masthead-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
+        color: var(--ink);
+        font-weight: 800;
+      }
+      .button-link.primary {
+        background: var(--accent);
+        border-color: transparent;
+        color: #071017;
+      }
+      .fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+      .fact {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .fact label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+      .fact strong { display: block; font-size: 1.3rem; line-height: 1.1; }
+      .fact small { display: block; margin-top: 6px; color: var(--muted); line-height: 1.45; }
+      .metric-strip { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin: 18px 0 24px; }
+      .metric { padding: 18px; }
+      .metric label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      .metric strong { display: block; margin-top: 8px; font-size: 1.8rem; line-height: 1; }
+      .metric small { display: block; margin-top: 8px; color: var(--muted); line-height: 1.45; }
+      .phase-ladder-wrap { margin: 0 0 30px; }
+      .phase-ladder { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+      .phase-card { display: block; text-decoration: none; color: inherit; padding: 18px; }
+      .phase-card.active { border-color: rgba(var(--accent-rgb), 0.34); background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.16) 0%, var(--panel-soft) 100%); }
+      .phase-label { color: var(--accent); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; }
+      .phase-title { margin-top: 8px; font-size: 1rem; font-weight: 800; }
+      .phase-metric { margin-top: 12px; font-size: 1.3rem; font-weight: 800; color: var(--ink); }
+      .phase-detail { margin-top: 6px; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
+      .pill-row, .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+      .pill, .chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 6px 11px;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
+      .chip.muted { color: var(--muted); }
+      .pill { background: rgba(255,255,255,0.08); color: var(--ink); }
+      .pill.supported, .pill.actionable, .pill.usable { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
+      .pill.provisional, .pill.bounded { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
+      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
+      .pill.live { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+      .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
+      .section { margin-top: 32px; }
+      .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
+      .section-head p { max-width: 720px; }
+      .split { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr); }
+      .stack { display: grid; gap: 16px; }
+      .list-table { display: grid; gap: 0; }
+      .list-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+      .list-row:first-child { border-top: 0; padding-top: 0; }
+      .list-row:last-child { padding-bottom: 0; }
+      .list-row strong { display: block; margin-bottom: 6px; }
+      .list-row small { display: block; color: var(--muted); line-height: 1.45; }
+      .muted, .subtle, small.subtle { color: var(--muted); }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      table { width: 100%; border-collapse: collapse; min-width: 920px; }
+      th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      th { color: var(--accent); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      td strong { color: var(--ink); }
+      .callout { border-color: rgba(var(--accent-rgb), 0.24); }
+      details.surface { padding: 0; overflow: hidden; }
+      details.surface > summary { list-style: none; cursor: pointer; padding: 18px 22px; font-weight: 800; }
+      details.surface > summary::-webkit-details-marker { display: none; }
+      details.surface .detail-body { padding: 0 22px 22px; }
+      @media (max-width: 980px) {
+        .masthead, .split { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 720px) {
+        .page { padding: 18px 16px 52px; }
+        .fact-grid { grid-template-columns: 1fr; }
+        .list-row { grid-template-columns: 1fr; }
+      }
+    
       :root {
         --bg: #11151d;
         --panel: #1b2230;
@@ -78,7 +248,16 @@
     </style>
   </head>
   <body>
-    <main class="shell">
+    <main class="page shell">
+      
+    <div class="topbar">
+      <div class="brand-mark">
+        <strong>TBI Neurodegenerative Decision Engine</strong>
+        <span>Progress, evidence, translation, stratification, and decisions in one stack.</span>
+      </div>
+      <nav class="main-nav"><a class="active" href="../index.html">Overview</a><a class="" href="../run-center/index.html">Run Center</a><a class="" href="../idea-briefs/index.html">Decision Board</a><a class="" href="../atlas-viewer/index.html">Atlas Viewer</a><a class="" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">GitHub Actions</a></nav>
+    </div>
+    
       <section class="hero">
         <p class="eyebrow">Phase 5 cohort / endotype layer</p>
         <h1>TBI Cohort Stratification</h1>
@@ -122,41 +301,71 @@
     </article>
     </section>
       
-    <section class="nav-grid">
-      <a class="nav-card" href="../process-engine/index.html">
-        <p class="eyebrow">Phase 1</p>
-        <h3>Process Engine</h3>
-        <p>Revisit the six longitudinal lanes.</p>
-      </a>
-      <a class="nav-card" href="../process-model/index.html">
-        <p class="eyebrow">Phase 2</p>
-        <h3>Process Model</h3>
-        <p>Inspect the explicit causal-transition layer.</p>
-      </a>
-      <a class="nav-card" href="../progression-objects/index.html">
-        <p class="eyebrow">Phase 3</p>
-        <h3>Progression Objects</h3>
-        <p>Review recurring degenerative objects.</p>
-      </a>
-      <a class="nav-card" href="../translational-logic/index.html">
-        <p class="eyebrow">Phase 4</p>
-        <h3>Translational Logic</h3>
-        <p>Compare primary targets and expected readouts.</p>
-      </a>
-      <a class="nav-card" href="../index.html">
-        <p class="eyebrow">Portal</p>
-        <h3>Back To Portal</h3>
-        <p>Return to the top-level repo surfaces.</p>
-      </a>
+    <section class="phase-ladder-wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Engine stack</p>
+          <h2>Project progress by phase</h2>
+        </div>
+        <p>Each page sits in the same chain: evidence becomes mechanisms, mechanisms become translation, translation becomes endotypes, and endotypes feed the decision board.</p>
+      </div>
+      <div class="phase-ladder">
+            <a class="phase-card " href="../process-engine/index.html">
+              <div class="phase-label">Phase 1</div>
+              <div class="phase-title">Process Lanes</div>
+              <div class="phase-metric">6 lanes</div>
+              <div class="phase-detail">1 supported / 5 seeded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../process-model/index.html">
+              <div class="phase-label">Phase 2</div>
+              <div class="phase-title">Causal Transitions</div>
+              <div class="phase-metric">6 transitions</div>
+              <div class="phase-detail">2 supported / 4 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../progression-objects/index.html">
+              <div class="phase-label">Phase 3</div>
+              <div class="phase-title">Progression Objects</div>
+              <div class="phase-metric">7 objects</div>
+              <div class="phase-detail">2 supported / 5 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../translational-logic/index.html">
+              <div class="phase-label">Phase 4</div>
+              <div class="phase-title">Translational Logic</div>
+              <div class="phase-metric">6 / 6 lanes</div>
+              <div class="phase-detail">0 actionable / 6 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill bounded">bounded</span></div>
+            </a>
+            
+            <a class="phase-card active" href="../cohort-stratification/index.html">
+              <div class="phase-label">Phase 5</div>
+              <div class="phase-title">Cohort Stratification</div>
+              <div class="phase-metric">7 endotypes</div>
+              <div class="phase-detail">2 usable / 5 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill usable">usable</span></div>
+            </a>
+            
+            <a class="phase-card " href="../idea-briefs/index.html">
+              <div class="phase-label">Phase 6</div>
+              <div class="phase-title">Hypothesis Rankings</div>
+              <div class="phase-metric">5 families</div>
+              <div class="phase-detail">4 slate / 14 supported</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill live">live</span></div>
+            </a>
+            </div>
     </section>
     
       
-        <section class="warning-block">
-          <p class="eyebrow">Validation warnings</p>
-          <h2>Bounded endotypes still need careful interpretation</h2>
-          <ul><li>Acute Mild Biomarker / Imaging Bridge has no attached genomics / 10x signature yet</li><li>Acute Mild Biomarker / Imaging Bridge is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Acute Severe Vascular-Dominant has no attached genomics / 10x signature yet</li><li>Acute Blast Vascular / Inflammatory Mixed includes a novelty overlay; do not let it upgrade core TBI support</li><li>Acute Blast Vascular / Inflammatory Mixed has no attached genomics / 10x signature yet</li><li>Acute Blast Vascular / Inflammatory Mixed is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Chronic Repetitive Tau / Clearance Mixed includes a novelty overlay; do not let it upgrade core TBI support</li><li>Chronic Repetitive Tau / Clearance Mixed has no attached genomics / 10x signature yet</li><li>Chronic Repetitive Tau / Clearance Mixed is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Chronic Severe Axonal / Network Decline has no attached genomics / 10x signature yet</li><li>Chronic Severe Axonal / Network Decline is mixed-dominant and needs clear overlap/exclusion framing in the UI</li></ul>
-        </section>
-        
+    <details class="surface">
+      <summary>Validation warnings (11)</summary>
+      <div class="detail-body"><ul><li>Acute Mild Biomarker / Imaging Bridge has no attached genomics / 10x signature yet</li><li>Acute Mild Biomarker / Imaging Bridge is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Acute Severe Vascular-Dominant has no attached genomics / 10x signature yet</li><li>Acute Blast Vascular / Inflammatory Mixed includes a novelty overlay; do not let it upgrade core TBI support</li><li>Acute Blast Vascular / Inflammatory Mixed has no attached genomics / 10x signature yet</li><li>Acute Blast Vascular / Inflammatory Mixed is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Chronic Repetitive Tau / Clearance Mixed includes a novelty overlay; do not let it upgrade core TBI support</li><li>Chronic Repetitive Tau / Clearance Mixed has no attached genomics / 10x signature yet</li><li>Chronic Repetitive Tau / Clearance Mixed is mixed-dominant and needs clear overlap/exclusion framing in the UI</li><li>Chronic Severe Axonal / Network Decline has no attached genomics / 10x signature yet</li><li>Chronic Severe Axonal / Network Decline is mixed-dominant and needs clear overlap/exclusion framing in the UI</li></ul></div>
+    </details>
+    
       <section class="board">
         <table>
           <thead>
@@ -304,12 +513,12 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Distinguishing Biomarker Panel</h3>
-          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">UCH-L1</span><span class="chip">NfL</span><span class="chip">tau</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">IL-6</span><span class="chip">DBSI-RF</span><span class="chip">IL-1β</span></div>
+          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">UCH-L1</span><span class="chip">NfL</span><span class="chip">tau</span><span class="chip">Nf-L</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">Optical density (OD) readings</span><span class="chip">IL-6</span><span class="chip">DBSI-RF</span><span class="chip">TNF-α</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
         <article class="meta-card">
           <h3>Imaging Pattern</h3>
-          <div class="chip-row"><span class="chip">CT triage signal</span><span class="chip">DTI white matter microstructure</span><span class="chip">microbleed burden</span><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular unit</span><span class="chip">hippocampus</span><span class="chip">diffuse / multisite</span></div>
+          <div class="chip-row"><span class="chip">CT triage signal</span><span class="chip">DTI white matter microstructure</span><span class="chip">microbleed burden</span><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular unit</span><span class="chip">diffuse / multisite</span><span class="chip">hippocampus</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
       </div>
@@ -344,9 +553,9 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Evidence Anchors</h3>
-          <p><strong>Anchor PMIDs:</strong> 41707328, 41737590, 41496386, 41173528, 41126936, 41893603</p>
-          <p class="note">Source mix: <strong>full_text_like:4; abstract_only:2</strong></p>
-          <ul class="paper-list"><li><strong>41707328</strong> <span class="subtle">abstract_only</span><br />Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients.</li><li><strong>41737590</strong> <span class="subtle">full_text_like</span><br />Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers</li><li><strong>41496386</strong> <span class="subtle">full_text_like</span><br />Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15</li><li><strong>41173528</strong> <span class="subtle">abstract_only</span><br />Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries.</li><li><strong>41126936</strong> <span class="subtle">full_text_like</span><br />Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review.</li><li><strong>41893603</strong> <span class="subtle">full_text_like</span><br />Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation</li></ul>
+          <p><strong>Anchor PMIDs:</strong> 41707328, 41737590, 41496386, 41173528, 41126936</p>
+          <p class="note">Source mix: <strong>full_text_like:3; abstract_only:2</strong></p>
+          <ul class="paper-list"><li><strong>41707328</strong> <span class="subtle">abstract_only</span><br />Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients.</li><li><strong>41737590</strong> <span class="subtle">full_text_like</span><br />Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers</li><li><strong>41496386</strong> <span class="subtle">full_text_like</span><br />Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15</li><li><strong>41173528</strong> <span class="subtle">abstract_only</span><br />Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries.</li><li><strong>41126936</strong> <span class="subtle">full_text_like</span><br />Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review.</li></ul>
         </article>
         <article class="meta-card">
           <h3>Axis Basis</h3>
@@ -392,7 +601,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Distinguishing Biomarker Panel</h3>
-          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">S100B</span><span class="chip">D-dimer</span><span class="chip">lactate</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">ATP</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span></div>
+          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">S100B</span><span class="chip">D-dimer</span><span class="chip">lactate</span><span class="chip">Nf-L</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">Optical density (OD) readings</span><span class="chip">ATP</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
         <article class="meta-card">
@@ -432,8 +641,8 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Evidence Anchors</h3>
-          <p><strong>Anchor PMIDs:</strong> 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41896418</p>
-          <p class="note">Source mix: <strong>full_text_like:4; abstract_only:4</strong></p>
+          <p><strong>Anchor PMIDs:</strong> 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41604614</p>
+          <p class="note">Source mix: <strong>full_text_like:3; abstract_only:5</strong></p>
           <ul class="paper-list"><li><strong>41700282</strong> <span class="subtle">full_text_like</span><br />Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury</li><li><strong>41725719</strong> <span class="subtle">full_text_like</span><br />Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram</li><li><strong>41672813</strong> <span class="subtle">abstract_only</span><br />Neuroworsening from a normal Glasgow Coma Scale Motor Score in the emergency department is an early predictor of neurosurgical intervention, hospital outcomes, and longitudinal disability in traumatic brain injury: A TRACK-TBI Study.</li><li><strong>41653068</strong> <span class="subtle">abstract_only</span><br />Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury.</li><li><strong>41714686</strong> <span class="subtle">full_text_like</span><br />Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study</li><li><strong>41731737</strong> <span class="subtle">abstract_only</span><br />Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience</li></ul>
         </article>
         <article class="meta-card">
@@ -480,12 +689,12 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Distinguishing Biomarker Panel</h3>
-          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">tau</span><span class="chip">pituitary hormone abnormalities</span><span class="chip">immune-cell subset shift</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">IL-6</span><span class="chip">DBSI-RF</span><span class="chip">IL-1β</span></div>
+          <div class="chip-row"><span class="chip">GFAP</span><span class="chip">tau</span><span class="chip">pituitary hormone abnormalities</span><span class="chip">immune-cell subset shift</span><span class="chip">Nf-L</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">Optical density (OD) readings</span><span class="chip">IL-6</span><span class="chip">DBSI-RF</span><span class="chip">TNF-α</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
         <article class="meta-card">
           <h3>Imaging Pattern</h3>
-          <div class="chip-row"><span class="chip">neural response to low-level blast exposure</span><span class="chip">latent neuroinjury signatures</span><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular unit</span><span class="chip">hippocampus</span><span class="chip">diffuse / multisite</span></div>
+          <div class="chip-row"><span class="chip">neural response to low-level blast exposure</span><span class="chip">latent neuroinjury signatures</span><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular unit</span><span class="chip">diffuse / multisite</span><span class="chip">hippocampus</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
       </div>
@@ -520,9 +729,9 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Evidence Anchors</h3>
-          <p><strong>Anchor PMIDs:</strong> 41809238, 41794317, 41596245, 41723947, 41880282</p>
-          <p class="note">Source mix: <strong>full_text_like:3; abstract_only:2</strong></p>
-          <ul class="paper-list"><li><strong>41809238</strong> <span class="subtle">full_text_like</span><br />One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel</li><li><strong>41794317</strong> <span class="subtle">abstract_only</span><br />Identification of immune cell subsets involved in retinal ganglion cell damage following blast exposure.</li><li><strong>41596245</strong> <span class="subtle">full_text_like</span><br />Integrated Blood Biomarker and Neurobehavioural Signatures of Latent Neuroinjury in Experienced Military Breachers Exposed to Repetitive Low-Intensity Blast</li><li><strong>41723947</strong> <span class="subtle">abstract_only</span><br />Pituitary hormone abnormalities following military-related traumatic brain injuries.</li><li><strong>41880282</strong> <span class="subtle">full_text_like</span><br />Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives</li></ul>
+          <p><strong>Anchor PMIDs:</strong> 41809238, 41794317, 41596245, 41723947</p>
+          <p class="note">Source mix: <strong>full_text_like:2; abstract_only:2</strong></p>
+          <ul class="paper-list"><li><strong>41809238</strong> <span class="subtle">full_text_like</span><br />One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel</li><li><strong>41794317</strong> <span class="subtle">abstract_only</span><br />Identification of immune cell subsets involved in retinal ganglion cell damage following blast exposure.</li><li><strong>41596245</strong> <span class="subtle">full_text_like</span><br />Integrated Blood Biomarker and Neurobehavioural Signatures of Latent Neuroinjury in Experienced Military Breachers Exposed to Repetitive Low-Intensity Blast</li><li><strong>41723947</strong> <span class="subtle">abstract_only</span><br />Pituitary hormone abnormalities following military-related traumatic brain injuries.</li></ul>
         </article>
         <article class="meta-card">
           <h3>Axis Basis</h3>
@@ -568,12 +777,12 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Distinguishing Biomarker Panel</h3>
-          <div class="chip-row"><span class="chip">IL-6</span><span class="chip">IL-1beta</span><span class="chip">TNF-alpha</span><span class="chip">GFAP</span><span class="chip">DBSI-RF</span><span class="chip">IL-1β</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">NLRP3</span></div>
+          <div class="chip-row"><span class="chip">IL-6</span><span class="chip">IL-1beta</span><span class="chip">TNF-alpha</span><span class="chip">GFAP</span><span class="chip">DBSI-RF</span><span class="chip">TNF-α</span><span class="chip">Nf-L</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">Optical density (OD) readings</span><span class="chip">NLRP3</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
         <article class="meta-card">
           <h3>Imaging Pattern</h3>
-          <div class="chip-row"><span class="chip">limbic white matter microstructure</span><span class="chip">DTI diffuse injury signal</span><span class="chip">cortex</span><span class="chip">hippocampus</span><span class="chip">diffuse / multisite</span><span class="chip">BBB</span><span class="chip">neurovascular unit</span></div>
+          <div class="chip-row"><span class="chip">limbic white matter microstructure</span><span class="chip">DTI diffuse injury signal</span><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">hippocampus</span><span class="chip">BBB</span><span class="chip">neurovascular unit</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
       </div>
@@ -744,7 +953,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Distinguishing Biomarker Panel</h3>
-          <div class="chip-row"><span class="chip">BD-tau</span><span class="chip">p-tau</span><span class="chip">GFAP</span><span class="chip">AQP4</span><span class="chip">Tau</span><span class="chip">NfL</span><span class="chip">UCH-L1</span><span class="chip">DTI-ALPS index</span><span class="chip">DTI-ALPS</span><span class="chip">IL-6</span></div>
+          <div class="chip-row"><span class="chip">BD-tau</span><span class="chip">p-tau</span><span class="chip">GFAP</span><span class="chip">AQP4</span><span class="chip">Tau</span><span class="chip">UCH-L1</span><span class="chip">DTI-ALPS index</span><span class="chip">DTI-ALPS</span><span class="chip">IL-6</span><span class="chip">DBSI-RF</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
         <article class="meta-card">
@@ -832,7 +1041,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Distinguishing Biomarker Panel</h3>
-          <div class="chip-row"><span class="chip">NfL</span><span class="chip">tau</span><span class="chip">GFAP</span><span class="chip">Fractional Anisotropy (FA)</span><span class="chip">Mean Diffusivity (MD)</span><span class="chip">Nf-L</span><span class="chip">ATP</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span><span class="chip">FA</span></div>
+          <div class="chip-row"><span class="chip">NfL</span><span class="chip">tau</span><span class="chip">GFAP</span><span class="chip">Fractional Anisotropy (FA)</span><span class="chip">Mean Diffusivity (MD)</span><span class="chip">Radial Diffusivity (RD)</span><span class="chip">Nf-L</span><span class="chip">ATP</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span></div>
           <p class="note">Profile status: <strong>defined</strong></p>
         </article>
         <article class="meta-card">

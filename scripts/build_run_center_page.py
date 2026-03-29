@@ -1,231 +1,293 @@
 import argparse
-import json
 import os
-from glob import glob
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from dashboard_ui import (
+    REPO_ROOT,
+    base_css,
+    docs_href,
+    load_project_state,
+    render_masthead,
+    render_metric_strip,
+    render_phase_ladder,
+    render_topbar,
+    text,
+)
+
 LOCAL_CONTROL_URL = 'http://127.0.0.1:8765'
 
 
-def read_json(path):
-    with open(path, 'r', encoding='utf-8') as handle:
-        return json.load(handle)
-
-
-def read_json_if_exists(path, default=None):
-    if not path or not os.path.exists(path):
-        return {} if default is None else default
-    return read_json(path)
-
-
-def latest_optional_report(pattern):
-    candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
-    return candidates[-1] if candidates else ''
-
-
-def write_text(path, text):
+def write_text(path, text_value):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as handle:
-        handle.write(text)
+        handle.write(text_value)
 
 
-def render_html(summary, process_summary, transition_summary, progression_summary, translational_summary, cohort_summary, hypothesis_summary):
-    lead = summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')
-    stable = summary.get('stable_rows', 0)
-    provisional = summary.get('provisional_rows', 0)
-    blocked = summary.get('blocked_rows', 0)
-    lane_count = process_summary.get('lane_count', 0)
-    supported_lanes = process_summary.get('longitudinally_supported_lanes', 0)
-    seeded_lanes = process_summary.get('longitudinally_seeded_lanes', 0)
-    transition_count = transition_summary.get('transition_count', 0)
-    supported_transitions = transition_summary.get('supported_transitions', 0)
-    progression_count = progression_summary.get('object_count', 0)
-    supported_objects = progression_summary.get('objects_by_support_status', {}).get('supported', 0)
-    seeded_objects = progression_summary.get('objects_by_maturity_status', {}).get('seeded', 0)
-    translational_count = translational_summary.get('covered_lane_count', 0)
-    actionable_packets = translational_summary.get('actionable_packet_count', 0)
-    bounded_packets = translational_summary.get('packets_by_translation_maturity', {}).get('bounded', 0)
-    endotype_count = cohort_summary.get('packet_count', 0)
-    usable_endotypes = cohort_summary.get('packets_by_stratification_maturity', {}).get('usable', 0)
-    bounded_endotypes = cohort_summary.get('packets_by_stratification_maturity', {}).get('bounded', 0)
-    hypothesis_family_count = hypothesis_summary.get('family_count', 0)
-    hypothesis_supported = hypothesis_summary.get('rows_by_support_status', {}).get('supported', 0)
-    hypothesis_portfolio = hypothesis_summary.get('portfolio_size', 0)
-    return f"""<!doctype html>
-<html lang=\"en\">
+def refresh_rows_html(state, root_prefix):
+    process = state.get('process_summary', {})
+    transition = state.get('transition_summary', {})
+    progression = state.get('progression_summary', {})
+    translational = state.get('translational_summary', {})
+    cohort = state.get('cohort_summary', {})
+    hypothesis = state.get('hypothesis_summary', {})
+    rows = [
+        (
+            'Phase 1',
+            'Process lanes',
+            f"{process.get('lane_count', 0)} lanes with "
+            f"{process.get('longitudinally_supported_lanes', 0)} supported / "
+            f"{process.get('longitudinally_seeded_lanes', 0)} seeded",
+            docs_href(root_prefix, 'phase1'),
+        ),
+        (
+            'Phase 2',
+            'Causal transitions',
+            f"{transition.get('transition_count', 0)} transitions with "
+            f"{transition.get('supported_transitions', 0)} supported",
+            docs_href(root_prefix, 'phase2'),
+        ),
+        (
+            'Phase 3',
+            'Progression objects',
+            f"{progression.get('object_count', 0)} objects with "
+            f"{progression.get('objects_by_support_status', {}).get('supported', 0)} supported",
+            docs_href(root_prefix, 'phase3'),
+        ),
+        (
+            'Phase 4',
+            'Translational packets',
+            f"{translational.get('covered_lane_count', 0)} / "
+            f"{translational.get('required_lane_count', 0)} lanes covered and "
+            f"{translational.get('actionable_packet_count', 0)} actionable",
+            docs_href(root_prefix, 'phase4'),
+        ),
+        (
+            'Phase 5',
+            'Endotype packets',
+            f"{cohort.get('packet_count', 0)} endotypes with "
+            f"{cohort.get('packets_by_stratification_maturity', {}).get('usable', 0)} usable",
+            docs_href(root_prefix, 'phase5'),
+        ),
+        (
+            'Phase 6',
+            'Decision board',
+            f"{hypothesis.get('family_count', 0)} families with a slate size of "
+            f"{hypothesis.get('portfolio_size', 0)}",
+            docs_href(root_prefix, 'phase6'),
+        ),
+    ]
+    items = []
+    for phase, title, detail, href in rows:
+        items.append(
+            f'''
+            <div class="list-row">
+              <div>
+                <strong>{text(phase)} · {text(title)}</strong>
+                <small>{text(detail)}</small>
+              </div>
+              <div><a class="button-link compact" href="{href}">Open</a></div>
+            </div>
+            '''
+        )
+    return ''.join(items)
+
+
+def render_html(state):
+    viewer_summary = state.get('viewer_summary', {})
+    hypothesis_summary = state.get('hypothesis_summary', {})
+    root_prefix = '../'
+
+    hero = render_masthead(
+        'Daily machine lane',
+        'Run Center',
+        'This page is the machine-control surface. Its job is to start the pipeline, '
+        'show run health, and make it clear what will be refreshed downstream. '
+        'It is no longer the whole-program dashboard.',
+        facts=[
+            {
+                'label': 'Lead mechanism',
+                'value': viewer_summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction'),
+                'detail': 'Current lead mechanism in the live atlas summary.',
+            },
+            {
+                'label': 'Stable rows',
+                'value': viewer_summary.get('stable_rows', 0),
+                'detail': 'Rows that are currently holding in the atlas.',
+            },
+            {
+                'label': 'Blocked rows',
+                'value': viewer_summary.get('blocked_rows', 0),
+                'detail': 'Rows still needing repair or adjudication.',
+            },
+            {
+                'label': 'Weekly slate',
+                'value': hypothesis_summary.get('portfolio_size', 0),
+                'detail': 'Decision items already waiting downstream.',
+            },
+        ],
+        actions=[
+            {'label': 'Back to Portal', 'href': docs_href(root_prefix, 'portal'), 'primary': True},
+            {'label': 'Open GitHub Actions', 'href': docs_href(root_prefix, 'actions')},
+            {'label': 'Open Decision Board', 'href': docs_href(root_prefix, 'phase6')},
+        ],
+        aside_title='Machine state',
+    )
+
+    metrics = render_metric_strip(
+        [
+            {
+                'label': 'Process refresh',
+                'value': state.get('process_summary', {}).get('lane_count', 0),
+                'detail': 'Phase 1 lanes rebuilt by the downstream refresh.',
+            },
+            {
+                'label': 'Transition refresh',
+                'value': state.get('transition_summary', {}).get('transition_count', 0),
+                'detail': 'Phase 2 explicit causal transitions in the current state.',
+            },
+            {
+                'label': 'Object refresh',
+                'value': state.get('progression_summary', {}).get('object_count', 0),
+                'detail': 'Phase 3 recurring objects carried forward into the machine lane.',
+            },
+            {
+                'label': 'Translation refresh',
+                'value': state.get('translational_summary', {}).get('covered_lane_count', 0),
+                'detail': 'Phase 4 lanes with translational packets attached.',
+            },
+            {
+                'label': 'Endotype refresh',
+                'value': state.get('cohort_summary', {}).get('packet_count', 0),
+                'detail': 'Phase 5 endotype packets refreshed downstream.',
+            },
+            {
+                'label': 'Decision refresh',
+                'value': state.get('hypothesis_summary', {}).get('family_count', 0),
+                'detail': 'Phase 6 ranking families refreshed after the model stack.',
+            },
+        ]
+    )
+
+    return f'''<!doctype html>
+<html lang="en">
   <head>
-    <meta charset=\"utf-8\" />
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Run Center</title>
     <style>
-      :root {{
-        --bg: #0b1211;
-        --panel: #172221;
-        --panel-soft: #21302d;
-        --ink: #edf7f2;
-        --muted: #a5b9b1;
-        --accent: #8fe0c7;
-        --warning: #ffd68b;
-        --danger: #ffb1b1;
-        --line: rgba(143,224,199,0.16);
+      {base_css(accent='#8fe0c7', accent_rgb='143,224,199')}
+      .control-grid {{
+        display: grid;
+        gap: 16px;
+        grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
       }}
-      * {{ box-sizing:border-box; }}
-      body {{ margin:0; font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif; background:linear-gradient(180deg,#0a1110 0%,var(--bg) 100%); color:var(--ink); }}
-      main {{ max-width:980px; margin:0 auto; padding:40px 20px 72px; }}
-      .hero {{ max-width:720px; margin-bottom:28px; }}
-      .eyebrow {{ color:var(--accent); text-transform:uppercase; letter-spacing:.14em; font-size:.76rem; font-weight:700; margin:0 0 10px; }}
-      h1 {{ margin:0 0 12px; font-size:clamp(2.2rem,5vw,4rem); line-height:1; }}
-      p {{ margin:0; line-height:1.65; color:var(--muted); }}
-      .grid {{ display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); margin:24px 0 30px; }}
-      .card, .panel {{ background:linear-gradient(180deg,var(--panel) 0%,var(--panel-soft) 100%); border:1px solid var(--line); border-radius:22px; padding:22px; box-shadow:0 24px 40px rgba(0,0,0,.22); }}
-      .card strong {{ display:block; font-size:1.9rem; margin-top:8px; }}
-      .stack {{ display:grid; gap:18px; }}
-      .button-row {{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }}
-      button, .link-button {{ appearance:none; border:none; border-radius:999px; padding:14px 18px; font:inherit; font-weight:800; cursor:pointer; text-decoration:none; }}
-      .primary {{ background:var(--accent); color:#0e1715; }}
-      .secondary {{ background:rgba(255,255,255,.08); color:var(--ink); }}
-      .status {{ margin-top:10px; font-size:.95rem; }}
-      .ok {{ color:#aef1d0; }} .warn {{ color:var(--warning); }} .bad {{ color:var(--danger); }}
-      .runs {{ display:grid; gap:12px; margin-top:16px; }}
-      .run {{ border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:14px 16px; background:rgba(255,255,255,.03); }}
-      .run-top {{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }}
-      .pill {{ display:inline-flex; align-items:center; border-radius:999px; padding:6px 10px; font-size:.76rem; font-weight:800; background:rgba(255,255,255,.08); }}
-      .actions {{ display:grid; gap:10px; margin-top:14px; }}
-      a {{ color:var(--accent); }}
+      .status {{ margin-top: 12px; font-size: 0.96rem; }}
+      .ok {{ color: var(--positive); }}
+      .warn {{ color: var(--warning); }}
+      .bad {{ color: var(--danger); }}
+      .button-row {{ display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }}
+      button, .button-link.compact {{
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        font: inherit;
+      }}
+      .button-link.compact {{
+        padding: 10px 14px;
+        border-radius: 999px;
+        text-decoration: none;
+        background: rgba(255,255,255,0.06);
+        color: var(--ink);
+        font-weight: 800;
+        border: 1px solid rgba(255,255,255,0.08);
+      }}
+      .runs {{ display: grid; gap: 12px; }}
+      .run {{
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+      }}
+      .run-top {{
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 6px;
+      }}
+      .run p {{ margin-top: 4px; }}
+      .surface h3 {{ margin-bottom: 12px; }}
+      @media (max-width: 980px) {{
+        .control-grid {{ grid-template-columns: 1fr; }}
+      }}
     </style>
   </head>
   <body>
-    <main>
-      <section class=\"hero\">
-        <p class=\"eyebrow\">Daily control</p>
-        <h1>Run Center</h1>
-        <p>This is the shortest path to move the machine. One click starts the full GitHub daily pipeline, and the atlas/public-enrichment steps follow automatically. Current lead mechanism: <strong>{lead}</strong>.</p>
+    <main class="page">
+      {render_topbar(root_prefix, active_nav='run_center')}
+      {hero}
+      {metrics}
+      {render_phase_ladder(state, root_prefix)}
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Operate</p>
+            <h2>Run the machine and inspect the result</h2>
+          </div>
+          <p>
+            This section is intentionally narrow: dispatch the full pipeline,
+            confirm whether the local control service is up, and inspect the
+            most recent workflow runs.
+          </p>
+        </div>
+        <div class="control-grid">
+          <article class="surface">
+            <h3>Dispatch full pipeline</h3>
+            <p>
+              Use the button below to start <code>Ongoing Literature Cycle</code>.
+              If that succeeds, the atlas refresh and public-enrichment refresh
+              follow automatically.
+            </p>
+            <div class="button-row">
+              <button id="runButton" class="button-link primary">Run Full Pipeline Now</button>
+              <a class="button-link" href="{docs_href(root_prefix, 'actions')}" target="_blank" rel="noreferrer">Open GitHub Actions</a>
+              <a class="button-link" href="{docs_href(root_prefix, 'portal')}">Back to Portal</a>
+            </div>
+            <div id="dispatchStatus" class="status warn">Checking local control service…</div>
+          </article>
+          <article class="surface">
+            <h3>What this refresh touches</h3>
+            <div class="list-table">
+              <div class="list-row"><div><strong>1. Retrieval and source upgrade</strong><small>Pull new literature, attempt full-text upgrades, and refresh staged source state.</small></div></div>
+              <div class="list-row"><div><strong>2. Extraction and post-analysis</strong><small>Run extraction, edge analysis, queue updates, and mechanism-level repair signals.</small></div></div>
+              <div class="list-row"><div><strong>3. Atlas and public enrichment rebuild</strong><small>Rebuild Phases 1–6 and refresh external target, trial, and preprint context.</small></div></div>
+              <div class="list-row"><div><strong>4. Docs and decision surfaces</strong><small>Publish the updated project surfaces after the evidence stack is rebuilt.</small></div></div>
+            </div>
+          </article>
+        </div>
       </section>
 
-      <section class=\"grid\">
-        <div class=\"card\"><span class=\"eyebrow\">Lead</span><strong>{lead}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Stable</span><strong>{stable}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Provisional</span><strong>{provisional}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Blocked</span><strong>{blocked}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Process Lanes</span><strong>{lane_count}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Trajectory State</span><strong>{supported_lanes} supported / {seeded_lanes} seeded</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Transitions</span><strong>{transition_count}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Process Model</span><strong>{supported_transitions} supported</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Progression Objects</span><strong>{progression_count}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Object State</span><strong>{supported_objects} supported / {seeded_objects} seeded</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Translational Lanes</span><strong>{translational_count}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Translational State</span><strong>{actionable_packets} actionable / {bounded_packets} bounded</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Endotypes</span><strong>{endotype_count}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Endotype State</span><strong>{usable_endotypes} usable / {bounded_endotypes} bounded</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Hypothesis Families</span><strong>{hypothesis_family_count}</strong></div>
-        <div class=\"card\"><span class=\"eyebrow\">Phase 6 State</span><strong>{hypothesis_supported} supported / {hypothesis_portfolio} slate</strong></div>
-      </section>
-
-      <section class=\"stack\">
-        <div class=\"panel\">
-          <p class=\"eyebrow\">Run the machine</p>
-          <p>Use the button below to dispatch <code>Ongoing Literature Cycle</code>. That run automatically fans out to atlas refresh and public-enrichment refresh after it succeeds.</p>
-          <div class=\"button-row\">
-            <button id=\"runButton\" class=\"primary\">Run Full Pipeline Now</button>
-            <a class=\"link-button secondary\" href=\"https://github.com/matthewdholtkamp/testfile/actions\" target=\"_blank\" rel=\"noreferrer\">Open GitHub Actions</a>
-            <a class=\"link-button secondary\" href=\"../index.html\">Back to Portal</a>
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Latest runs</p>
+            <h2>Workflow execution and downstream refresh</h2>
           </div>
-          <div id=\"dispatchStatus\" class=\"status warn\">Checking local control service…</div>
+          <p>
+            Use the live run list for execution status. Use the downstream
+            refresh table when you need to remember what the machine is updating
+            after a successful run.
+          </p>
         </div>
-
-        <div class=\"panel\">
-          <p class=\"eyebrow\">What this starts</p>
-          <div class=\"actions\">
-            <div>1. Retrieval + source upgrade attempts</div>
-            <div>2. Gemini extraction</div>
-            <div>3. Post-extraction analysis + action queue</div>
-            <div>4. Atlas rebuild</div>
-            <div>5. Public enrichment refresh</div>
-            <div>6. Docs publish</div>
-          </div>
-        </div>
-
-        <div class=\"panel\">
-          <p class=\"eyebrow\">Phase 1 process engine</p>
-          <p>The daily machine now also keeps the trajectory layer current. That means six process lanes stay synced with the atlas across acute, subacute, and chronic support.</p>
-          <div class=\"actions\">
-            <div>Supported lanes: <strong>{supported_lanes}</strong></div>
-            <div>Seeded lanes: <strong>{seeded_lanes}</strong></div>
-            <div>Total lanes: <strong>{lane_count}</strong></div>
-          </div>
-          <div class=\"button-row\">
-            <a class=\"link-button secondary\" href=\"../process-engine/index.html\">Open Process Engine</a>
-          </div>
-        </div>
-
-        <div class=\"panel\">
-          <p class=\"eyebrow\">Phase 2 process model</p>
-          <p>The daily machine can now refresh explicit causal transitions as a downstream product layer. This is where the system starts behaving like a process model instead of a chapter set.</p>
-          <div class=\"actions\">
-            <div>Transitions: <strong>{transition_count}</strong></div>
-            <div>Supported transitions: <strong>{supported_transitions}</strong></div>
-            <div>Emergent or hypothesis transitions stay visibly bounded in the product.</div>
-          </div>
-          <div class=\"button-row\">
-            <a class=\"link-button secondary\" href=\"../process-model/index.html\">Open Process Model</a>
-          </div>
-        </div>
-
-        <div class=\"panel\">
-          <p class=\"eyebrow\">Phase 3 progression objects</p>
-          <p>The daily machine now also refreshes recurring neurodegenerative objects so we can compare what is emerging, what is already supported, and what still needs bounded interpretation.</p>
-          <div class=\"actions\">
-            <div>Objects: <strong>{progression_count}</strong></div>
-            <div>Supported objects: <strong>{supported_objects}</strong></div>
-            <div>Seeded objects: <strong>{seeded_objects}</strong></div>
-          </div>
-          <div class=\"button-row\">
-            <a class=\"link-button secondary\" href=\"../progression-objects/index.html\">Open Progression Objects</a>
-          </div>
-        </div>
-
-        <div class=\"panel\">
-          <p class=\"eyebrow\">Phase 4 translational logic</p>
-          <p>The daily machine now also refreshes lane-level perturbation logic so we can compare primary targets, expected readouts, and whether compounds, trials, or genomics actually attach to each lane.</p>
-          <div class=\"actions\">
-            <div>Translational lanes: <strong>{translational_count}</strong></div>
-            <div>Actionable packets: <strong>{actionable_packets}</strong></div>
-            <div>Bounded packets: <strong>{bounded_packets}</strong></div>
-          </div>
-          <div class=\"button-row\">
-            <a class=\"link-button secondary\" href=\"../translational-logic/index.html\">Open Translational Logic</a>
-          </div>
-        </div>
-
-        <div class=\"panel\">
-          <p class=\"eyebrow\">Phase 5 cohort stratification</p>
-          <p>The daily machine now also refreshes cohort and endotype packets so we can separate mild, repetitive, blast, and severe trajectories by dominant process pattern, biomarker profile, imaging pattern, and bounded new-idea overlays.</p>
-          <div class=\"actions\">
-            <div>Endotype packets: <strong>{endotype_count}</strong></div>
-            <div>Usable packets: <strong>{usable_endotypes}</strong></div>
-            <div>Bounded packets: <strong>{bounded_endotypes}</strong></div>
-          </div>
-          <div class=\"button-row\">
-            <a class=\"link-button secondary\" href=\"../cohort-stratification/index.html\">Open Cohort Stratification</a>
-          </div>
-        </div>
-
-        <div class=\"panel\">
-          <p class=\"eyebrow\">Phase 6 hypothesis rankings</p>
-          <p>The daily machine now also refreshes the ranked decision board so we can compare strongest bridges, weakest hinges, best leverage points, biomarker panels, and highest-value next tasks without losing the link back to Phases 1–5.</p>
-          <div class=\"actions\">
-            <div>Ranking families: <strong>{hypothesis_family_count}</strong></div>
-            <div>Supported ranked rows: <strong>{hypothesis_supported}</strong></div>
-            <div>Weekly slate size: <strong>{hypothesis_portfolio}</strong></div>
-          </div>
-          <div class=\"button-row\">
-            <a class=\"link-button secondary\" href=\"../idea-briefs/index.html\">Open Hypothesis Rankings</a>
-          </div>
-        </div>
-
-        <div class=\"panel\">
-          <p class=\"eyebrow\">Latest workflow runs</p>
-          <div id=\"runList\" class=\"runs\"></div>
+        <div class="control-grid">
+          <article class="surface">
+            <h3>Latest workflow runs</h3>
+            <div id="runList" class="runs"></div>
+          </article>
+          <article class="surface">
+            <h3>Downstream refresh map</h3>
+            <div class="list-table">{refresh_rows_html(state, root_prefix)}</div>
+          </article>
         </div>
       </section>
     </main>
@@ -305,7 +367,7 @@ def render_html(summary, process_summary, transition_summary, progression_summar
     </script>
   </body>
 </html>
-"""
+'''
 
 
 def main():
@@ -313,28 +375,7 @@ def main():
     parser.add_argument('--output-path', default='docs/run-center/index.html', help='Run-center HTML output path.')
     args = parser.parse_args()
 
-    viewer = read_json(os.path.join(REPO_ROOT, 'docs', 'atlas-viewer', 'atlas_viewer.json'))
-    process_json = latest_optional_report('process_lane_index_*.json')
-    process_payload = read_json_if_exists(process_json, default={})
-    transition_json = latest_optional_report('causal_transition_index_*.json')
-    transition_payload = read_json_if_exists(transition_json, default={})
-    progression_json = latest_optional_report('progression_object_index_*.json')
-    progression_payload = read_json_if_exists(progression_json, default={})
-    translational_json = latest_optional_report('translational_perturbation_index_*.json')
-    translational_payload = read_json_if_exists(translational_json, default={})
-    cohort_json = latest_optional_report('cohort_stratification_index_*.json')
-    cohort_payload = read_json_if_exists(cohort_json, default={})
-    hypothesis_json = latest_optional_report('hypothesis_rankings_*.json')
-    hypothesis_payload = read_json_if_exists(hypothesis_json, default={})
-    html = render_html(
-        viewer.get('summary', {}),
-        process_payload.get('summary', {}),
-        transition_payload.get('summary', {}),
-        progression_payload.get('summary', {}),
-        translational_payload.get('summary', {}),
-        cohort_payload.get('summary', {}),
-        hypothesis_payload.get('summary', {}),
-    )
+    html = render_html(load_project_state())
     write_text(os.path.join(REPO_ROOT, args.output_path), html)
     print(f'Run-center page written: {os.path.join(REPO_ROOT, args.output_path)}')
 

@@ -5,6 +5,14 @@ import os
 import re
 from glob import glob
 
+from dashboard_ui import (
+    base_css,
+    load_project_state,
+    render_phase_ladder,
+    render_topbar,
+    render_warning_callout,
+)
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DIR_DEFAULT = os.path.join('docs', 'translational-logic')
@@ -29,7 +37,9 @@ def write_text(path, text):
 
 
 def normalize(value):
-    return ' '.join(str(value or '').split()).strip()
+    if value is None:
+        return ''
+    return ' '.join(str(value).split()).strip()
 
 
 def text(value):
@@ -247,16 +257,9 @@ def render_html(payload, validation):
     summary = payload.get('summary', {})
     rows = payload.get('rows', [])
     warnings = validation.get('warnings', []) if isinstance(validation, dict) else []
-    warning_block = ''
-    if warnings:
-        warning_items = ''.join(f'<li>{text(item)}</li>' for item in warnings)
-        warning_block = f'''
-        <section class="warning-block">
-          <p class="eyebrow">Validation warnings</p>
-          <h2>Bounded interpretation still matters</h2>
-          <ul>{warning_items}</ul>
-        </section>
-        '''
+    warning_block = render_warning_callout('Validation warnings', warnings)
+    project_state = load_project_state()
+    root_prefix = '../'
 
     summary_cards = ''.join([
         render_summary_card('Lanes Covered', f"{summary.get('covered_lane_count', 0)} / {summary.get('required_lane_count', 0)}"),
@@ -276,6 +279,7 @@ def render_html(payload, validation):
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TBI Translational Logic</title>
     <style>
+      {base_css(accent='#9fd2ff', accent_rgb='159,210,255')}
       :root {{
         --bg: #0f1419;
         --panel: #171f29;
@@ -359,7 +363,8 @@ def render_html(payload, validation):
     </style>
   </head>
   <body>
-    <main class="shell">
+    <main class="page shell">
+      {render_topbar(root_prefix, active_nav='portal')}
       <section class="hero">
         <p class="eyebrow">Phase 4 translational logic</p>
         <h1>Translational Perturbation Layer</h1>
@@ -368,12 +373,7 @@ def render_html(payload, validation):
 
       <section class="summary-grid">{summary_cards}</section>
 
-      <section class="nav-grid">
-        <a class="nav-card" href="../index.html"><p class="eyebrow">Portal</p><h2>Back To Portal</h2><p>Return to the main operator surface.</p><span>Open portal →</span></a>
-        <a class="nav-card" href="../process-engine/index.html"><p class="eyebrow">Phase 1</p><h2>Process Engine</h2><p>Review lane timing and longitudinal support.</p><span>Open lanes →</span></a>
-        <a class="nav-card" href="../process-model/index.html"><p class="eyebrow">Phase 2</p><h2>Process Model</h2><p>Review the causal-transition layer feeding these packets.</p><span>Open transitions →</span></a>
-        <a class="nav-card" href="../progression-objects/index.html"><p class="eyebrow">Phase 3</p><h2>Progression Objects</h2><p>Review recurring degenerative objects upstream of intervention logic.</p><span>Open objects →</span></a>
-      </section>
+      {render_phase_ladder(project_state, root_prefix, active_phase='phase4')}
 
       {warning_block}
 

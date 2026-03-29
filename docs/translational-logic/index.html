@@ -5,6 +5,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TBI Translational Logic</title>
     <style>
+      
+      :root {
+        --bg: #0b1117;
+        --bg-soft: #101924;
+        --panel: #121c26;
+        --panel-soft: #172430;
+        --ink: #edf4fb;
+        --muted: #9fb4c8;
+        --accent: #9fd2ff;
+        --accent-rgb: 159,210,255;
+        --positive: #9be3c0;
+        --warning: #ffd37c;
+        --danger: #ffb6b6;
+        --line: rgba(159,210,255, 0.16);
+        --soft-line: rgba(255,255,255,0.08);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(var(--accent-rgb), 0.14), transparent 28%),
+          linear-gradient(180deg, #090e13 0%, var(--bg) 100%);
+        font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      }
+      a { color: inherit; }
+      .page { max-width: 1280px; margin: 0 auto; padding: 24px 24px 72px; }
+      .topbar { display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; }
+      .brand-mark { display: grid; gap: 4px; }
+      .brand-mark strong { font-size: 0.98rem; letter-spacing: 0.03em; }
+      .brand-mark span { color: var(--muted); font-size: 0.9rem; }
+      .main-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+      .main-nav a {
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+        color: var(--muted);
+        font-weight: 700;
+        font-size: 0.92rem;
+      }
+      .main-nav a.active {
+        color: var(--ink);
+        border-color: rgba(var(--accent-rgb), 0.28);
+        background: rgba(var(--accent-rgb), 0.16);
+      }
+      .masthead { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.95fr); gap: 20px; align-items: start; margin: 28px 0 22px; }
+      .masthead-copy { padding-top: 10px; }
+      .masthead-panel, .surface, .phase-card, .metric, .callout {
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      .masthead-panel, .surface, .callout { padding: 22px; }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      h1 { margin: 0 0 14px; font-size: clamp(2.7rem, 5vw, 5.2rem); line-height: 0.94; }
+      h2 { margin: 0; font-size: 1.5rem; }
+      h3 { margin: 0; font-size: 1.08rem; }
+      p { margin: 0; color: var(--muted); line-height: 1.65; }
+      .masthead-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
+        color: var(--ink);
+        font-weight: 800;
+      }
+      .button-link.primary {
+        background: var(--accent);
+        border-color: transparent;
+        color: #071017;
+      }
+      .fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+      .fact {
+        padding: 14px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+      .fact label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+      .fact strong { display: block; font-size: 1.3rem; line-height: 1.1; }
+      .fact small { display: block; margin-top: 6px; color: var(--muted); line-height: 1.45; }
+      .metric-strip { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin: 18px 0 24px; }
+      .metric { padding: 18px; }
+      .metric label { display: block; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      .metric strong { display: block; margin-top: 8px; font-size: 1.8rem; line-height: 1; }
+      .metric small { display: block; margin-top: 8px; color: var(--muted); line-height: 1.45; }
+      .phase-ladder-wrap { margin: 0 0 30px; }
+      .phase-ladder { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+      .phase-card { display: block; text-decoration: none; color: inherit; padding: 18px; }
+      .phase-card.active { border-color: rgba(var(--accent-rgb), 0.34); background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.16) 0%, var(--panel-soft) 100%); }
+      .phase-label { color: var(--accent); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800; }
+      .phase-title { margin-top: 8px; font-size: 1rem; font-weight: 800; }
+      .phase-metric { margin-top: 12px; font-size: 1.3rem; font-weight: 800; color: var(--ink); }
+      .phase-detail { margin-top: 6px; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
+      .pill-row, .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+      .pill, .chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 6px 11px;
+        font-size: 0.76rem;
+        font-weight: 800;
+      }
+      .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
+      .chip.muted { color: var(--muted); }
+      .pill { background: rgba(255,255,255,0.08); color: var(--ink); }
+      .pill.supported, .pill.actionable, .pill.usable { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
+      .pill.provisional, .pill.bounded { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
+      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
+      .pill.live { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+      .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
+      .section { margin-top: 32px; }
+      .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
+      .section-head p { max-width: 720px; }
+      .split { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr); }
+      .stack { display: grid; gap: 16px; }
+      .list-table { display: grid; gap: 0; }
+      .list-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+      .list-row:first-child { border-top: 0; padding-top: 0; }
+      .list-row:last-child { padding-bottom: 0; }
+      .list-row strong { display: block; margin-bottom: 6px; }
+      .list-row small { display: block; color: var(--muted); line-height: 1.45; }
+      .muted, .subtle, small.subtle { color: var(--muted); }
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
+        box-shadow: 0 24px 44px rgba(0,0,0,0.22);
+      }
+      table { width: 100%; border-collapse: collapse; min-width: 920px; }
+      th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      th { color: var(--accent); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; }
+      td strong { color: var(--ink); }
+      .callout { border-color: rgba(var(--accent-rgb), 0.24); }
+      details.surface { padding: 0; overflow: hidden; }
+      details.surface > summary { list-style: none; cursor: pointer; padding: 18px 22px; font-weight: 800; }
+      details.surface > summary::-webkit-details-marker { display: none; }
+      details.surface .detail-body { padding: 0 22px 22px; }
+      @media (max-width: 980px) {
+        .masthead, .split { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 720px) {
+        .page { padding: 18px 16px 52px; }
+        .fact-grid { grid-template-columns: 1fr; }
+        .list-row { grid-template-columns: 1fr; }
+      }
+    
       :root {
         --bg: #0f1419;
         --panel: #171f29;
@@ -88,7 +258,16 @@
     </style>
   </head>
   <body>
-    <main class="shell">
+    <main class="page shell">
+      
+    <div class="topbar">
+      <div class="brand-mark">
+        <strong>TBI Neurodegenerative Decision Engine</strong>
+        <span>Progress, evidence, translation, stratification, and decisions in one stack.</span>
+      </div>
+      <nav class="main-nav"><a class="active" href="../index.html">Overview</a><a class="" href="../run-center/index.html">Run Center</a><a class="" href="../idea-briefs/index.html">Decision Board</a><a class="" href="../atlas-viewer/index.html">Atlas Viewer</a><a class="" href="https://github.com/matthewdholtkamp/testfile/actions" target="_blank" rel="noreferrer">GitHub Actions</a></nav>
+    </div>
+    
       <section class="hero">
         <p class="eyebrow">Phase 4 translational logic</p>
         <h1>Translational Perturbation Layer</h1>
@@ -104,7 +283,7 @@
     
     <article class="summary-card">
       <span class="eyebrow">Actionable</span>
-      <strong></strong>
+      <strong>0</strong>
       
     </article>
     
@@ -116,7 +295,7 @@
     
     <article class="summary-card">
       <span class="eyebrow">Seeded</span>
-      <strong></strong>
+      <strong>0</strong>
       
     </article>
     
@@ -128,25 +307,78 @@
     
     <article class="summary-card">
       <span class="eyebrow">With Trial Support</span>
-      <strong></strong>
+      <strong>0</strong>
       
     </article>
     </section>
 
-      <section class="nav-grid">
-        <a class="nav-card" href="../index.html"><p class="eyebrow">Portal</p><h2>Back To Portal</h2><p>Return to the main operator surface.</p><span>Open portal →</span></a>
-        <a class="nav-card" href="../process-engine/index.html"><p class="eyebrow">Phase 1</p><h2>Process Engine</h2><p>Review lane timing and longitudinal support.</p><span>Open lanes →</span></a>
-        <a class="nav-card" href="../process-model/index.html"><p class="eyebrow">Phase 2</p><h2>Process Model</h2><p>Review the causal-transition layer feeding these packets.</p><span>Open transitions →</span></a>
-        <a class="nav-card" href="../progression-objects/index.html"><p class="eyebrow">Phase 3</p><h2>Progression Objects</h2><p>Review recurring degenerative objects upstream of intervention logic.</p><span>Open objects →</span></a>
-      </section>
+      
+    <section class="phase-ladder-wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Engine stack</p>
+          <h2>Project progress by phase</h2>
+        </div>
+        <p>Each page sits in the same chain: evidence becomes mechanisms, mechanisms become translation, translation becomes endotypes, and endotypes feed the decision board.</p>
+      </div>
+      <div class="phase-ladder">
+            <a class="phase-card " href="../process-engine/index.html">
+              <div class="phase-label">Phase 1</div>
+              <div class="phase-title">Process Lanes</div>
+              <div class="phase-metric">6 lanes</div>
+              <div class="phase-detail">1 supported / 5 seeded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../process-model/index.html">
+              <div class="phase-label">Phase 2</div>
+              <div class="phase-title">Causal Transitions</div>
+              <div class="phase-metric">6 transitions</div>
+              <div class="phase-detail">2 supported / 4 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card " href="../progression-objects/index.html">
+              <div class="phase-label">Phase 3</div>
+              <div class="phase-title">Progression Objects</div>
+              <div class="phase-metric">7 objects</div>
+              <div class="phase-detail">2 supported / 5 provisional</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill supported">supported</span></div>
+            </a>
+            
+            <a class="phase-card active" href="../translational-logic/index.html">
+              <div class="phase-label">Phase 4</div>
+              <div class="phase-title">Translational Logic</div>
+              <div class="phase-metric">6 / 6 lanes</div>
+              <div class="phase-detail">0 actionable / 6 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill bounded">bounded</span></div>
+            </a>
+            
+            <a class="phase-card " href="../cohort-stratification/index.html">
+              <div class="phase-label">Phase 5</div>
+              <div class="phase-title">Cohort Stratification</div>
+              <div class="phase-metric">7 endotypes</div>
+              <div class="phase-detail">2 usable / 5 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill usable">usable</span></div>
+            </a>
+            
+            <a class="phase-card " href="../idea-briefs/index.html">
+              <div class="phase-label">Phase 6</div>
+              <div class="phase-title">Hypothesis Rankings</div>
+              <div class="phase-metric">5 families</div>
+              <div class="phase-detail">4 slate / 14 supported</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill live">live</span></div>
+            </a>
+            </div>
+    </section>
+    
 
       
-        <section class="warning-block">
-          <p class="eyebrow">Validation warnings</p>
-          <h2>Bounded interpretation still matters</h2>
-          <ul><li>Blood-Brain Barrier Failure has no exported genomics support in this build</li><li>Blood-Brain Barrier Failure remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Mitochondrial / Bioenergetic Collapse has no exported genomics support in this build</li><li>Mitochondrial / Bioenergetic Collapse remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Neuroinflammation / Microglial State Change has no exported genomics support in this build</li><li>Neuroinflammation / Microglial State Change remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Axonal Degeneration has no exported genomics support in this build</li><li>Axonal Degeneration remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Glymphatic / Astroglial Clearance Failure has no exported genomics support in this build</li><li>Glymphatic / Astroglial Clearance Failure remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Tau / Proteinopathy Progression has no exported genomics support in this build</li></ul>
-        </section>
-        
+    <details class="surface">
+      <summary>Validation warnings (11)</summary>
+      <div class="detail-body"><ul><li>Blood-Brain Barrier Failure has no exported genomics support in this build</li><li>Blood-Brain Barrier Failure remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Mitochondrial / Bioenergetic Collapse has no exported genomics support in this build</li><li>Mitochondrial / Bioenergetic Collapse remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Neuroinflammation / Microglial State Change has no exported genomics support in this build</li><li>Neuroinflammation / Microglial State Change remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Axonal Degeneration has no exported genomics support in this build</li><li>Axonal Degeneration remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Glymphatic / Astroglial Clearance Failure has no exported genomics support in this build</li><li>Glymphatic / Astroglial Clearance Failure remains perturbation-logic-first with no compound or trial attachment surfaced yet</li><li>Tau / Proteinopathy Progression has no exported genomics support in this build</li></ul></div>
+    </details>
+    
 
       <section class="table-wrap">
         <table>
@@ -185,7 +417,7 @@
       <td>logic-only</td>
       <td><span class="pill not_available">not_available</span></td>
       <td>
-        <span class="pill provisional">provisional</span>
+        <span class="pill supported">supported</span>
         <span class="pill bounded">bounded</span>
       </td>
       <td>Decide whether PRKN should stay primary over CYBB once the first attachment pass shows whether the better perturbation is mitochondrial rescue or ROS suppression.</td>
@@ -200,7 +432,7 @@
       <td>logic-only</td>
       <td><span class="pill not_available">not_available</span></td>
       <td>
-        <span class="pill provisional">provisional</span>
+        <span class="pill supported">supported</span>
         <span class="pill bounded">bounded</span>
       </td>
       <td>Decide whether NLRP3 should stay primary over IL1B or TNF once the first inflammatory attachment pass clarifies whether the cleaner perturbation is the inflammasome itself or a downstream cytokine axis.</td>
@@ -290,9 +522,9 @@
         </article>
         <article class="meta-card">
           <h3>Biomarker panel</h3>
-          <div class="chip-row"><span class="chip">OCLN</span><span class="chip">CLDN5</span><span class="chip">TJP1</span><span class="chip">Cerebral blood flow</span><span class="chip">GFAP</span><span class="chip">NfL</span><span class="chip">Evans blue</span><span class="chip">gadolinium leakage</span><span class="chip">Nf-L</span><span class="chip">MMP-9</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">Optical density (OD) readings</span><span class="chip">MBP protein expression</span><span class="chip">NF-200 protein expression</span><span class="chip">PSD-95 protein expression</span><span class="chip">IL-1 (104)</span><span class="chip">NLRP3 (67)</span><span class="chip">IL-6 (61)</span><span class="chip">TNF (55)</span><span class="chip">HMGB1 (31)</span><span class="chip">GFAP (23)</span><span class="chip">CBF (14)</span><span class="chip">AQP4 (5)</span></div>
+          <div class="chip-row"><span class="chip">OCLN</span><span class="chip">CLDN5</span><span class="chip">TJP1</span><span class="chip">Cerebral blood flow</span><span class="chip">GFAP</span><span class="chip">NfL</span><span class="chip">Evans blue</span><span class="chip">gadolinium leakage</span><span class="chip">Nf-L</span><span class="chip">FITC-labeled mNGF fluorescence</span><span class="chip">Optical density (OD) readings</span><span class="chip">MBP protein expression</span><span class="chip">NF-200 protein expression</span><span class="chip">PSD-95 protein expression</span><span class="chip">Cerebral blood flow (CBF)</span><span class="chip">IL-1 (91)</span><span class="chip">TNF (53)</span><span class="chip">IL-6 (50)</span><span class="chip">NLRP3 (38)</span><span class="chip">GFAP (22)</span><span class="chip">HMGB1 (17)</span><span class="chip">CBF (14)</span><span class="chip">AQP4 (5)</span></div>
           <p class="note">Anchor PMIDs: <strong>41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41622772, 41751210, 41752185, 41740873, 41683989, 41103638, 41135688, 41157272, 41173520, 41197779, 41327381, 41446731, 41079361, 41177833, 41183617, 41267966, 41328339</strong></p>
-          <p class="note">Source mix: <strong>lane 67 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only</strong></p>
+          <p class="note">Source mix: <strong>lane 53 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only</strong></p>
         </article>
       </div>
       <div class="detail-grid">
@@ -350,7 +582,7 @@
           <p>Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Direct corpus signal: UC-MSC-derived exosomes reduce neuronal apoptosis via PINK1/Parkin-mediated mitophagy.</p>
         </div>
         <div class="pill-row">
-          <span class="pill provisional">Support: provisional</span>
+          <span class="pill supported">Support: supported</span>
           <span class="pill bounded">Maturity: bounded</span>
           <span class="pill mixed_neurodegeneration_analog">Analog: mixed_neurodegeneration_analog</span>
         </div>
@@ -377,9 +609,9 @@
         </article>
         <article class="meta-card">
           <h3>Biomarker panel</h3>
-          <div class="chip-row"><span class="chip">ATP</span><span class="chip">ROS</span><span class="chip">NfL</span><span class="chip">Bcl-2</span><span class="chip">TUNEL+/NeuN+</span><span class="chip">cerebral oxygen saturation</span><span class="chip">NLRP3</span><span class="chip">Nf-L</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span><span class="chip">TUNEL+/NeuN+ cells</span><span class="chip">Cerebral blood flow</span><span class="chip">eATP</span><span class="chip">ros (150)</span><span class="chip">ROS (30)</span><span class="chip">ATP (19)</span><span class="chip">Atp (3)</span><span class="chip">PINK1 (1)</span><span class="chip">IL-1 (104)</span><span class="chip">NLRP3 (67)</span><span class="chip">IL-6 (61)</span><span class="chip">TNF (55)</span><span class="chip">HMGB1 (31)</span><span class="chip">GFAP (23)</span></div>
-          <p class="note">Anchor PMIDs: <strong>41651694, 41480492, 41576094, 41764101, 41648326, 41267966, 41876825, 41735605, 41153827, 41667502, 41625091, 41103638, 41709060, 41069428, 41110648, 41129987, 41157305, 41175081, 41179995, 41039850, 41135688, 41157272, 41173520, 41197779, 41327381, 41446731</strong></p>
-          <p class="note">Source mix: <strong>lane 52 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only</strong></p>
+          <div class="chip-row"><span class="chip">ATP</span><span class="chip">ROS</span><span class="chip">NfL</span><span class="chip">Bcl-2</span><span class="chip">TUNEL+/NeuN+</span><span class="chip">cerebral oxygen saturation</span><span class="chip">NLRP3</span><span class="chip">Nf-L</span><span class="chip">Bcl-2 expression</span><span class="chip">NeuN expression</span><span class="chip">TUNEL+/NeuN+ cells</span><span class="chip">Cerebral blood flow</span><span class="chip">eATP</span><span class="chip">ros (134)</span><span class="chip">ROS (21)</span><span class="chip">ATP (19)</span><span class="chip">PINK1 (1)</span><span class="chip">IL-1 (91)</span><span class="chip">TNF (53)</span><span class="chip">IL-6 (50)</span><span class="chip">NLRP3 (38)</span><span class="chip">GFAP (22)</span><span class="chip">HMGB1 (17)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41651694, 41480492, 41576094, 41764101, 41648326, 41267966, 41735605, 41153827, 41667502, 41103638, 41625091, 41709060, 41069428, 41110648, 41129987, 41157305, 41175081, 41179995, 41039850, 41135688, 41157272, 41173520, 41197779, 41327381, 41446731</strong></p>
+          <p class="note">Source mix: <strong>lane 40 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only</strong></p>
         </article>
       </div>
       <div class="detail-grid">
@@ -437,7 +669,7 @@
           <p>Use NLRP3 as the primary perturbation node because it is the strongest inflammatory target packet in the repo, links directly to the mito-to-inflammasome transition, and gives a cleaner perturbation frame than chasing one downstream cytokine at a time. Direct corpus signal: Extracellular ATP (eATP) exhibits dual roles in TBI: high concentrations activate P2X7R, leading to NLRP3 inflammasome activation and pyroptosis, while low concentrations activate SUR1–TRPM4–AQP4 complexes, contributing to cerebral edema.</p>
         </div>
         <div class="pill-row">
-          <span class="pill provisional">Support: provisional</span>
+          <span class="pill supported">Support: supported</span>
           <span class="pill bounded">Maturity: bounded</span>
           <span class="pill mixed_neurodegeneration_analog">Analog: mixed_neurodegeneration_analog</span>
         </div>
@@ -464,9 +696,9 @@
         </article>
         <article class="meta-card">
           <h3>Biomarker panel</h3>
-          <div class="chip-row"><span class="chip">NLRP3</span><span class="chip">IL-1beta</span><span class="chip">IL-6</span><span class="chip">TNF-alpha</span><span class="chip">GFAP</span><span class="chip">CRP</span><span class="chip">QuinA</span><span class="chip">DBSI-RF</span><span class="chip">IL-1β</span><span class="chip">TNF-α</span><span class="chip">IL-10</span><span class="chip">IL-1 (104)</span><span class="chip">NLRP3 (67)</span><span class="chip">IL-6 (61)</span><span class="chip">TNF (55)</span><span class="chip">HMGB1 (31)</span><span class="chip">GFAP (23)</span><span class="chip">ros (150)</span><span class="chip">ROS (30)</span><span class="chip">ATP (19)</span><span class="chip">Atp (3)</span><span class="chip">PINK1 (1)</span><span class="chip">tau (105)</span><span class="chip">Tau (27)</span><span class="chip">GFAP (21)</span><span class="chip">p-tau (12)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span></div>
-          <p class="note">Anchor PMIDs: <strong>41157272, 41103638, 41926211, 41663365, 41734021, 41752185, 41756234, 41756282, 41824127, 41612383, 41480492, 41622481, 41659975, 41683989, 41709060, 41712436, 41726892, 41737534, 41769894, 41803953, 41880282, 41918568, 41740873, 41809632, 41039850, 41135688, 41173520, 41197779, 41327381, 41446731, 41069428, 41110648, 41129987, 41153827, 41157305, 41175081, 41179995, 41328339, 41496386, 41594797, 41651695, 41665901, 41700070</strong></p>
-          <p class="note">Source mix: <strong>lane 106 full-text-like / 28 abstract-only; direct target mentions 13 full-text-like / 3 abstract-only</strong></p>
+          <div class="chip-row"><span class="chip">NLRP3</span><span class="chip">IL-1beta</span><span class="chip">IL-6</span><span class="chip">TNF-alpha</span><span class="chip">GFAP</span><span class="chip">CRP</span><span class="chip">QuinA</span><span class="chip">DBSI-RF</span><span class="chip">TNF-α</span><span class="chip">IL-1β</span><span class="chip">IL-10</span><span class="chip">IL-1 (91)</span><span class="chip">TNF (53)</span><span class="chip">IL-6 (50)</span><span class="chip">NLRP3 (38)</span><span class="chip">GFAP (22)</span><span class="chip">HMGB1 (17)</span><span class="chip">ros (134)</span><span class="chip">ROS (21)</span><span class="chip">ATP (19)</span><span class="chip">PINK1 (1)</span><span class="chip">tau (71)</span><span class="chip">Tau (25)</span><span class="chip">GFAP (15)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span><span class="chip">p-tau (6)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41157272, 41103638, 41663365, 41734021, 41752185, 41756282, 41824127, 41612383, 41803087, 41511466, 41480492, 41622481, 41659975, 41683989, 41709060, 41712436, 41726892, 41737534, 41769894, 41803953, 41740873, 41809632, 41039850, 41135688, 41173520, 41197779, 41327381, 41446731, 41069428, 41110648, 41129987, 41153827, 41157305, 41175081, 41179995, 41328339, 41496386, 41594797, 41651695, 41665901, 41700070</strong></p>
+          <p class="note">Source mix: <strong>lane 79 full-text-like / 28 abstract-only; direct target mentions 9 full-text-like / 3 abstract-only</strong></p>
         </article>
       </div>
       <div class="detail-grid">
@@ -551,9 +783,9 @@
         </article>
         <article class="meta-card">
           <h3>Biomarker panel</h3>
-          <div class="chip-row"><span class="chip">FA</span><span class="chip">MD</span><span class="chip">RD</span><span class="chip">NfL</span><span class="chip">Tau</span><span class="chip">UCH-L1</span><span class="chip">Fractional Anisotropy (FA)</span><span class="chip">GFAP</span><span class="chip">Mean Diffusivity (MD)</span><span class="chip">Radial Diffusivity (RD)</span><span class="chip">FA (171)</span><span class="chip">fa (52)</span><span class="chip">MD (51)</span><span class="chip">RD (32)</span><span class="chip">FDC (24)</span><span class="chip">nfl (20)</span><span class="chip">nfl (7)</span><span class="chip">PSD95 (6)</span><span class="chip">PSD-95 (3)</span><span class="chip">GFAP (2)</span><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">tau (6)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">rd (3)</span></div>
+          <div class="chip-row"><span class="chip">FA</span><span class="chip">MD</span><span class="chip">RD</span><span class="chip">NfL</span><span class="chip">Tau</span><span class="chip">UCH-L1</span><span class="chip">Fractional Anisotropy (FA)</span><span class="chip">GFAP</span><span class="chip">Mean Diffusivity (MD)</span><span class="chip">Radial Diffusivity (RD)</span><span class="chip">FA (167)</span><span class="chip">fa (52)</span><span class="chip">MD (51)</span><span class="chip">RD (32)</span><span class="chip">FDC (24)</span><span class="chip">nfl (19)</span><span class="chip">nfl (6)</span><span class="chip">PSD-95 (2)</span><span class="chip">GFAP (2)</span><span class="chip">PSD95 (2)</span><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">tau (4)</span><span class="chip">rd (2)</span></div>
           <p class="note">Anchor PMIDs: <strong>41198676, 41267966, 41157305, 41799860, 41153827, 41300163, 41126936, 41100047, 41142161, 41327381, 41397889, 41480492, 41576094, 41192919, 41577806, 41604614, 41740080, 41026543, 41173520, 41032947, 41039850, 41069428, 41079361, 41098044, 41110648, 41110777, 41394307, 41618372, 41622461, 41667502, 41675841, 41700019, 41785317, 41826372, 41132417, 41157272, 41234125, 41513584, 41564671, 41669533, 41709584</strong></p>
-          <p class="note">Source mix: <strong>lane 100 full-text-like / 39 abstract-only; direct target mentions 2 full-text-like / 1 abstract-only</strong></p>
+          <p class="note">Source mix: <strong>lane 85 full-text-like / 39 abstract-only; direct target mentions 2 full-text-like / 1 abstract-only</strong></p>
         </article>
       </div>
       <div class="detail-grid">
@@ -638,9 +870,9 @@
         </article>
         <article class="meta-card">
           <h3>Biomarker panel</h3>
-          <div class="chip-row"><span class="chip">AQP4</span><span class="chip">DTI-ALPS</span><span class="chip">GFAP</span><span class="chip">C3</span><span class="chip">tau</span><span class="chip">UCH-L1</span><span class="chip">DTI-ALPS index</span><span class="chip">NfL</span><span class="chip">MBP protein expression</span><span class="chip">NF-200 protein expression</span><span class="chip">CBF (14)</span><span class="chip">AQP4 (5)</span><span class="chip">tau (105)</span><span class="chip">Tau (27)</span><span class="chip">GFAP (21)</span><span class="chip">p-tau (12)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span></div>
-          <p class="note">Anchor PMIDs: <strong>41179995, 41039850, 41648326, 41700070, 41824127, 41153827, 41795770, 41827388, 41642456, 41667502, 41103638, 41301762, 41747594, 41792880, 41801080, 41853701, 41079361, 41173520, 41177833, 41183617, 41267966, 41328339, 41496386, 41594797, 41651695, 41665901, 41683989</strong></p>
-          <p class="note">Source mix: <strong>lane 62 full-text-like / 19 abstract-only; direct target mentions 6 full-text-like / 1 abstract-only</strong></p>
+          <div class="chip-row"><span class="chip">AQP4</span><span class="chip">DTI-ALPS</span><span class="chip">GFAP</span><span class="chip">C3</span><span class="chip">tau</span><span class="chip">UCH-L1</span><span class="chip">DTI-ALPS index</span><span class="chip">MBP protein expression</span><span class="chip">NF-200 protein expression</span><span class="chip">PSD-95 protein expression</span><span class="chip">CBF (14)</span><span class="chip">AQP4 (5)</span><span class="chip">tau (71)</span><span class="chip">Tau (25)</span><span class="chip">GFAP (15)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span><span class="chip">p-tau (6)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41179995, 41039850, 41648326, 41700070, 41824127, 41153827, 41795770, 41827388, 41642456, 41667502, 41103638, 41301762, 41747594, 41792880, 41801080, 41079361, 41173520, 41177833, 41183617, 41267966, 41328339, 41496386, 41594797, 41651695, 41665901, 41683989</strong></p>
+          <p class="note">Source mix: <strong>lane 47 full-text-like / 19 abstract-only; direct target mentions 5 full-text-like / 1 abstract-only</strong></p>
         </article>
       </div>
       <div class="detail-grid">
@@ -725,9 +957,9 @@
         </article>
         <article class="meta-card">
           <h3>Biomarker panel</h3>
-          <div class="chip-row"><span class="chip">BD-tau</span><span class="chip">t-tau</span><span class="chip">p-tau</span><span class="chip">AT8</span><span class="chip">GFAP</span><span class="chip">Iba1</span><span class="chip">CD45</span><span class="chip">Tau</span><span class="chip">NfL</span><span class="chip">UCH-L1</span><span class="chip">S100B</span><span class="chip">tau (105)</span><span class="chip">Tau (27)</span><span class="chip">GFAP (21)</span><span class="chip">p-tau (12)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span><span class="chip">nfl (7)</span><span class="chip">PSD95 (6)</span><span class="chip">PSD-95 (3)</span><span class="chip">GFAP (2)</span><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">tau (6)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">rd (3)</span></div>
-          <p class="note">Anchor PMIDs: <strong>41651695, 41508043, 41723222, 41665901, 41853047, 41496386, 41683989, 41179995, 41809435, 41328339, 41809632, 41700070, 41747594, 41739474, 41893300, 41594797, 41394307, 41618372, 41622461, 41667502, 41675841, 41700019, 41785317, 41826372, 41132417, 41157272, 41234125, 41300163, 41513584, 41564671, 41669533, 41709584</strong></p>
-          <p class="note">Source mix: <strong>lane 23 full-text-like / 3 abstract-only; direct target mentions 1 full-text-like / 0 abstract-only</strong></p>
+          <div class="chip-row"><span class="chip">BD-tau</span><span class="chip">t-tau</span><span class="chip">p-tau</span><span class="chip">AT8</span><span class="chip">GFAP</span><span class="chip">Iba1</span><span class="chip">CD45</span><span class="chip">Tau</span><span class="chip">UCH-L1</span><span class="chip">NfL</span><span class="chip">S100B</span><span class="chip">tau (71)</span><span class="chip">Tau (25)</span><span class="chip">GFAP (15)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span><span class="chip">p-tau (6)</span><span class="chip">nfl (6)</span><span class="chip">PSD-95 (2)</span><span class="chip">GFAP (2)</span><span class="chip">PSD95 (2)</span><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">tau (4)</span><span class="chip">rd (2)</span></div>
+          <p class="note">Anchor PMIDs: <strong>41651695, 41508043, 41665901, 41496386, 41683989, 41179995, 41809435, 41328339, 41594797, 41700070, 41809632, 41747594, 41739474, 41394307, 41618372, 41622461, 41667502, 41675841, 41700019, 41785317, 41826372, 41132417, 41157272, 41234125, 41300163, 41513584, 41564671, 41669533, 41709584</strong></p>
+          <p class="note">Source mix: <strong>lane 18 full-text-like / 3 abstract-only; direct target mentions 1 full-text-like / 0 abstract-only</strong></p>
         </article>
       </div>
       <div class="detail-grid">

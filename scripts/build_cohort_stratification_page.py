@@ -5,6 +5,14 @@ import os
 import re
 from glob import glob
 
+from dashboard_ui import (
+    base_css,
+    load_project_state,
+    render_phase_ladder,
+    render_topbar,
+    render_warning_callout,
+)
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DIR_DEFAULT = os.path.join('docs', 'cohort-stratification')
@@ -29,7 +37,9 @@ def write_text(path, text):
 
 
 def normalize(value):
-    return ' '.join(str(value or '').split()).strip()
+    if value is None:
+        return ''
+    return ' '.join(str(value).split()).strip()
 
 
 def listify(value):
@@ -271,15 +281,9 @@ def render_html(payload, validation):
     summary = payload.get('summary', {})
     rows = payload.get('rows', [])
     warnings = validation.get('warnings', []) if isinstance(validation, dict) else []
-    warning_block = ''
-    if warnings:
-        warning_block = f'''
-        <section class="warning-block">
-          <p class="eyebrow">Validation warnings</p>
-          <h2>Bounded endotypes still need careful interpretation</h2>
-          <ul>{''.join(f'<li>{text(item)}</li>' for item in warnings)}</ul>
-        </section>
-        '''
+    warning_block = render_warning_callout('Validation warnings', warnings)
+    project_state = load_project_state()
+    root_prefix = '../'
 
     summary_cards = ''.join([
         render_summary_card('Endotypes Defined', summary.get('packet_count', 0)),
@@ -300,6 +304,7 @@ def render_html(payload, validation):
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TBI Cohort Stratification</title>
     <style>
+      {base_css(accent='#8cc6ff', accent_rgb='140,198,255')}
       :root {{
         --bg: #11151d;
         --panel: #1b2230;
@@ -373,14 +378,15 @@ def render_html(payload, validation):
     </style>
   </head>
   <body>
-    <main class="shell">
+    <main class="page shell">
+      {render_topbar(root_prefix, active_nav='portal')}
       <section class="hero">
         <p class="eyebrow">Phase 5 cohort / endotype layer</p>
         <h1>TBI Cohort Stratification</h1>
         <p>This layer stops treating all TBI as one disease. It compares endotype packets across injury class, time, dominant process, biomarker panel, imaging pattern, and the best-fit translational bias while keeping new-idea overlays visibly separate from core support.</p>
       </section>
       <section class="summary-grid">{summary_cards}</section>
-      {render_nav_cards()}
+      {render_phase_ladder(project_state, root_prefix, active_phase='phase5')}
       {warning_block}
       <section class="board">
         <table>
