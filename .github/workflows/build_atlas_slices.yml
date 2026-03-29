@@ -284,7 +284,7 @@ jobs:
             --review-packet-index-md "$(ls -1t reports/mechanism_review_packets/mechanism_review_packet_index_*.md | head -n1)"
 
       - name: Publish docs snapshot
-        if: ${{ inputs.publish_docs == 'true' }}
+        if: ${{ github.ref_name == 'main' && inputs.publish_docs == 'true' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
