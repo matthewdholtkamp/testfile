@@ -261,12 +261,39 @@ The repo now has five explicit downstream neurodegenerative layers after the atl
      - novelty-overlay counts
      - upstream coverage against Phases 1–4 so the layer cannot silently skip endotype parents
 
+6. **Phase 6 Hypothesis Generation And Ranking**
+   - five required ranking families:
+     - `strongest_causal_bridge`
+     - `weakest_evidence_hinge`
+     - `best_intervention_leverage_point`
+     - `most_informative_biomarker_panel`
+     - `highest_value_next_task`
+   - the ranking payload now emits:
+     - `54` ranked candidates
+     - `5 / 5` family coverage
+     - a `4`-item weekly slate
+     - confidence score
+     - value score
+     - novelty bonus
+     - support / novelty labels
+     - provenance back to Phases 1–5
+     - family-specific bridge / hinge / leverage / biomarker / next-task fields
+   - the Phase 6 validator enforces:
+     - family coverage
+     - ranking order by core score then support then novelty tie-break
+     - biomarker/readout completeness
+     - valid next-task mapping to real repo execution targets
+     - no novelty inflation of support
+   - the Phase 6 board is surfaced at:
+     - `docs/idea-briefs/index.html`
+
 Current product surfaces:
 - `docs/process-engine/index.html`
 - `docs/process-model/index.html`
 - `docs/progression-objects/index.html`
 - `docs/translational-logic/index.html`
 - `docs/cohort-stratification/index.html`
+- `docs/idea-briefs/index.html`
 
 ### Connector Enrichment Sidecar
 The connector lane is intentionally separate from the GitHub staging lane. It uses the repo as the system of record and adds read-only enrichment after post-analysis.

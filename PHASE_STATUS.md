@@ -1,6 +1,46 @@
-# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-5 Complete
+# Phase Status: Investigation Layer + Connector-Enrichment Sidecar Live + Phase 1-6 Complete
 
 This file is the current handoff for the TBI scientific intelligence system after finishing extraction coverage for the original on-topic corpus and moving into the quality-gated investigation / atlas-construction phase.
+
+## Phase 6 Hypothesis-Ranking Status
+
+Phase 6 is now complete as the ranked decision layer on top of Phases 1-5.
+
+Current Phase 6 outputs:
+- five explicit ranking families are now emitted:
+  - `strongest_causal_bridge`
+  - `weakest_evidence_hinge`
+  - `best_intervention_leverage_point`
+  - `most_informative_biomarker_panel`
+  - `highest_value_next_task`
+- the current hypothesis-ranking payload now carries:
+  - `54` ranked candidate rows
+  - `5 / 5` required ranking families
+  - `4` weekly-slate selections
+  - `10` `supported` ranked rows
+  - `44` `provisional` ranked rows
+  - `24` `cross_disease_analog` rows
+  - `26` `tbi_emergent` rows
+- each ranked row now carries:
+  - confidence score
+  - value score
+  - novelty bonus
+  - support status
+  - novelty status
+  - provenance back to Phases 1-5
+  - family-specific fields for bridge / hinge / leverage / biomarker / next-task logic
+  - next-test or next-move guidance
+- the current validator state is:
+  - `0` errors
+  - bounded warnings only for novelty and weak-support rows
+- the hypothesis-ranking product page is now emitted to:
+  - [docs/idea-briefs/index.html](/Users/matthewholtkamp/Documents/testfile/docs/idea-briefs/index.html)
+- the hypothesis-ranking build and validation steps are now wired into:
+  - [build_atlas_slices.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/build_atlas_slices.yml)
+  - [refresh_atlas_from_ongoing_cycle.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_atlas_from_ongoing_cycle.yml)
+  - [refresh_public_enrichment.yml](/Users/matthewholtkamp/Documents/testfile/.github/workflows/refresh_public_enrichment.yml)
+  - [run_manual_enrichment_cycle.py](/Users/matthewholtkamp/Documents/testfile/scripts/run_manual_enrichment_cycle.py)
+- the portal, run-center, weekly packet, program-status report, and atlas viewer now consume the Phase 6 outputs as the live decision layer
 
 ## Phase 5 Cohort-Stratification Status
 

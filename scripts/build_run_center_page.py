@@ -29,7 +29,7 @@ def write_text(path, text):
         handle.write(text)
 
 
-def render_html(summary, process_summary, transition_summary, progression_summary, translational_summary, cohort_summary):
+def render_html(summary, process_summary, transition_summary, progression_summary, translational_summary, cohort_summary, hypothesis_summary):
     lead = summary.get('lead_mechanism', 'Blood-Brain Barrier Dysfunction')
     stable = summary.get('stable_rows', 0)
     provisional = summary.get('provisional_rows', 0)
@@ -48,6 +48,9 @@ def render_html(summary, process_summary, transition_summary, progression_summar
     endotype_count = cohort_summary.get('packet_count', 0)
     usable_endotypes = cohort_summary.get('packets_by_stratification_maturity', {}).get('usable', 0)
     bounded_endotypes = cohort_summary.get('packets_by_stratification_maturity', {}).get('bounded', 0)
+    hypothesis_family_count = hypothesis_summary.get('family_count', 0)
+    hypothesis_supported = hypothesis_summary.get('rows_by_support_status', {}).get('supported', 0)
+    hypothesis_portfolio = hypothesis_summary.get('portfolio_size', 0)
     return f"""<!doctype html>
 <html lang=\"en\">
   <head>
@@ -114,6 +117,8 @@ def render_html(summary, process_summary, transition_summary, progression_summar
         <div class=\"card\"><span class=\"eyebrow\">Translational State</span><strong>{actionable_packets} actionable / {bounded_packets} bounded</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Endotypes</span><strong>{endotype_count}</strong></div>
         <div class=\"card\"><span class=\"eyebrow\">Endotype State</span><strong>{usable_endotypes} usable / {bounded_endotypes} bounded</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Hypothesis Families</span><strong>{hypothesis_family_count}</strong></div>
+        <div class=\"card\"><span class=\"eyebrow\">Phase 6 State</span><strong>{hypothesis_supported} supported / {hypothesis_portfolio} slate</strong></div>
       </section>
 
       <section class=\"stack\">
@@ -202,6 +207,19 @@ def render_html(summary, process_summary, transition_summary, progression_summar
           </div>
           <div class=\"button-row\">
             <a class=\"link-button secondary\" href=\"../cohort-stratification/index.html\">Open Cohort Stratification</a>
+          </div>
+        </div>
+
+        <div class=\"panel\">
+          <p class=\"eyebrow\">Phase 6 hypothesis rankings</p>
+          <p>The daily machine now also refreshes the ranked decision board so we can compare strongest bridges, weakest hinges, best leverage points, biomarker panels, and highest-value next tasks without losing the link back to Phases 1–5.</p>
+          <div class=\"actions\">
+            <div>Ranking families: <strong>{hypothesis_family_count}</strong></div>
+            <div>Supported ranked rows: <strong>{hypothesis_supported}</strong></div>
+            <div>Weekly slate size: <strong>{hypothesis_portfolio}</strong></div>
+          </div>
+          <div class=\"button-row\">
+            <a class=\"link-button secondary\" href=\"../idea-briefs/index.html\">Open Hypothesis Rankings</a>
           </div>
         </div>
 
@@ -306,6 +324,8 @@ def main():
     translational_payload = read_json_if_exists(translational_json, default={})
     cohort_json = latest_optional_report('cohort_stratification_index_*.json')
     cohort_payload = read_json_if_exists(cohort_json, default={})
+    hypothesis_json = latest_optional_report('hypothesis_rankings_*.json')
+    hypothesis_payload = read_json_if_exists(hypothesis_json, default={})
     html = render_html(
         viewer.get('summary', {}),
         process_payload.get('summary', {}),
@@ -313,6 +333,7 @@ def main():
         progression_payload.get('summary', {}),
         translational_payload.get('summary', {}),
         cohort_payload.get('summary', {}),
+        hypothesis_payload.get('summary', {}),
     )
     write_text(os.path.join(REPO_ROOT, args.output_path), html)
     print(f'Run-center page written: {os.path.join(REPO_ROOT, args.output_path)}')

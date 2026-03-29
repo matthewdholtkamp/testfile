@@ -168,11 +168,6 @@ jobs:
           python scripts/build_idea_generation_gate.py \
             --output-dir reports/idea_generation_gate \
             --release-manifest-csv "$latest_release_manifest"
-          python scripts/build_hypothesis_candidates.py \
-            --output-dir reports/hypothesis_candidates
-          python scripts/build_idea_briefs.py \
-            --output-dir reports/idea_briefs \
-            --site-dir docs/idea-briefs
           python scripts/build_process_lanes.py \
             --claims-csv "$latest_claims" \
             --edges-csv "$latest_edges" \
@@ -245,6 +240,33 @@ jobs:
             --cohort-json "$latest_cohort_json" \
             --validation-json "$(ls -1t reports/cohort_stratification_validation/cohort_stratification_validation_*.json | head -n1)" \
             --output-dir docs/cohort-stratification
+          python scripts/build_hypothesis_candidates.py \
+            --process-json "$latest_process_json" \
+            --transition-json "$latest_transition_json" \
+            --object-json "$latest_progression_json" \
+            --translational-json "$latest_translational_json" \
+            --cohort-json "$latest_cohort_json" \
+            --idea-gate-json "$(ls -1t reports/idea_generation_gate/idea_generation_gate_*.json | head -n1)" \
+            --output-dir reports/hypothesis_candidates
+          latest_hypothesis_candidate_json=$(ls -1t reports/hypothesis_candidates/hypothesis_candidates_*.json | head -n1)
+          python scripts/build_hypothesis_rankings.py \
+            --candidate-json "$latest_hypothesis_candidate_json" \
+            --output-dir reports/hypothesis_rankings
+          latest_hypothesis_ranking_json=$(ls -1t reports/hypothesis_rankings/hypothesis_rankings_*.json | head -n1)
+          python scripts/build_hypothesis_ranking_validation.py \
+            --ranking-json "$latest_hypothesis_ranking_json" \
+            --candidate-json "$latest_hypothesis_candidate_json" \
+            --process-json "$latest_process_json" \
+            --transition-json "$latest_transition_json" \
+            --object-json "$latest_progression_json" \
+            --translational-json "$latest_translational_json" \
+            --cohort-json "$latest_cohort_json" \
+            --output-dir reports/hypothesis_ranking_validation
+          python scripts/build_idea_briefs.py \
+            --ranking-json "$latest_hypothesis_ranking_json" \
+            --candidate-json "$latest_hypothesis_candidate_json" \
+            --output-dir reports/idea_briefs \
+            --site-dir docs/idea-briefs
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_tbi_atlas_book.py \

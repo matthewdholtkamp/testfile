@@ -17,6 +17,11 @@ def latest_report(pattern):
     return candidates[-1] if candidates else ''
 
 
+def latest_optional_report(pattern):
+    candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
+    return candidates[-1] if candidates else ''
+
+
 def read_csv(path):
     with open(path, newline='', encoding='utf-8') as handle:
         return list(csv.DictReader(handle))
@@ -71,6 +76,7 @@ def render_markdown(status):
         f"- Progression Objects: `{status['progression_object_page_path']}`",
         f"- Translational Logic: `{status['translational_logic_page_path']}`",
         f"- Cohort Stratification: `{status['cohort_stratification_page_path']}`",
+        f"- Hypothesis Rankings: `{status['hypothesis_rankings_page_path']}`",
         '',
         '## Automation State',
         '',
@@ -206,6 +212,33 @@ def render_markdown(status):
         )
     lines.extend([
         '',
+        '## Hypothesis Ranking Summary',
+        '',
+        f"- Ranking families: `{status['hypothesis_summary'].get('family_count', 0)}` / `5`",
+        f"- Ranked rows: `{len(status['hypothesis_rows'])}`",
+        f"- Portfolio slate: `{len(status['hypothesis_portfolio'])}`",
+        f"- Supported ranked rows: `{status['hypothesis_summary'].get('rows_by_support_status', {}).get('supported', 0)}`",
+        f"- Cross-disease analog rows: `{status['hypothesis_summary'].get('rows_by_novelty_status', {}).get('cross_disease_analog', 0)}`",
+        '',
+    ])
+    for family_id, family in status['hypothesis_families'].items():
+        top = family.get('top_candidate', {})
+        if not top:
+            continue
+        lines.append(
+            f"- **{family.get('family_label', family_id)}**: {top.get('title', '')} | confidence `{top.get('confidence_score', 0)}` | value `{top.get('value_score', 0)}`"
+        )
+    lines.extend([
+        '',
+        '## Phase 6 Weekly Slate',
+        '',
+    ])
+    for row in status['hypothesis_portfolio'][:3]:
+        lines.append(
+            f"- **{row['title']}** (`{row.get('portfolio_role', 'priority')}`): next move `{row.get('next_test') or row.get('unlocks')}`"
+        )
+    lines.extend([
+        '',
         '## Immediate Next Moves',
         '',
         '1. Fill the top mitochondrial ChEMBL targets first using the seeded query terms and assay keywords from the manual seed pack.',
@@ -226,6 +259,7 @@ def main():
     parser.add_argument('--progression-object-json', default='', help='Optional progression-object JSON path.')
     parser.add_argument('--translational-json', default='', help='Optional translational-perturbation JSON path.')
     parser.add_argument('--cohort-json', default='', help='Optional cohort-stratification JSON path.')
+    parser.add_argument('--hypothesis-ranking-json', default='', help='Optional hypothesis-ranking JSON path.')
     parser.add_argument('--release-manifest-md', default='', help='Optional atlas release-manifest markdown path.')
     parser.add_argument('--review-packet-index-md', default='', help='Optional mechanism review packet index path.')
     parser.add_argument('--target-packet-index-md', default='', help='Optional target enrichment packet index path.')
@@ -246,6 +280,8 @@ def main():
     translational_payload = read_json(translational_path) if translational_path else {}
     cohort_stratification_path = args.cohort_json or latest_report('cohort_stratification_index_*.json')
     cohort_payload = read_json(cohort_stratification_path) if cohort_stratification_path else {}
+    hypothesis_ranking_path = args.hypothesis_ranking_json or latest_optional_report('hypothesis_rankings_*.json')
+    hypothesis_payload = read_json(hypothesis_ranking_path) if hypothesis_ranking_path else {}
     release_manifest_path = args.release_manifest_md or latest_report('atlas_release_manifest_*.md')
     review_packet_index = args.review_packet_index_md or latest_report('mechanism_review_packet_index_*.md')
     target_packet_index = args.target_packet_index_md or latest_report('target_enrichment_packet_index_*.md')
@@ -267,6 +303,7 @@ def main():
         'progression_object_page_path': os.path.join('docs', 'progression-objects', 'index.html'),
         'translational_logic_page_path': os.path.join('docs', 'translational-logic', 'index.html'),
         'cohort_stratification_page_path': os.path.join('docs', 'cohort-stratification', 'index.html'),
+        'hypothesis_rankings_page_path': os.path.join('docs', 'idea-briefs', 'index.html'),
         'quality_gate_path': quality_gate_path,
         'idea_gate_path': idea_gate_path,
         'process_lanes_path': process_lanes_path,
@@ -274,6 +311,7 @@ def main():
         'progression_object_path': progression_object_path,
         'translational_path': translational_path,
         'cohort_stratification_path': cohort_stratification_path,
+        'hypothesis_ranking_path': hypothesis_ranking_path,
         'release_manifest_path': release_manifest_path,
         'review_packet_index_path': review_packet_index,
         'target_packet_index_path': target_packet_index,
@@ -291,6 +329,10 @@ def main():
         'translational_rows': translational_payload.get('rows', []) if isinstance(translational_payload, dict) else [],
         'cohort_summary': cohort_payload.get('summary', {}) if isinstance(cohort_payload, dict) else {},
         'cohort_rows': cohort_payload.get('rows', []) if isinstance(cohort_payload, dict) else [],
+        'hypothesis_summary': hypothesis_payload.get('summary', {}) if isinstance(hypothesis_payload, dict) else {},
+        'hypothesis_rows': hypothesis_payload.get('rows', []) if isinstance(hypothesis_payload, dict) else [],
+        'hypothesis_families': hypothesis_payload.get('families', {}) if isinstance(hypothesis_payload, dict) else {},
+        'hypothesis_portfolio': hypothesis_payload.get('portfolio_slate', []) if isinstance(hypothesis_payload, dict) else [],
     }
 
     os.makedirs(args.output_dir, exist_ok=True)

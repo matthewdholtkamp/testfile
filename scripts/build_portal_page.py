@@ -207,9 +207,9 @@ def render_html(viewer, ideas_payload, process_payload, progression_payload, tra
           <span class="cta">Open run center →</span>
         </a>
         <a class="card" href="./idea-briefs/index.html">
-          <p class="eyebrow">Weekly decisions</p>
-          <h2>Idea Briefs</h2>
-          <p>Review the current hypothesis set in a simpler decision format: what the idea is, why it matters, and what choice moves it forward.</p>
+          <p class="eyebrow">Phase 6</p>
+          <h2>Hypothesis Rankings</h2>
+          <p>Review the ranked decision layer: strongest bridges, weakest hinges, best leverage points, biomarker panels, and the highest-value next tasks.</p>
           <span class="cta">Open ideas →</span>
         </a>
         <a class="card" href="./atlas-book/index.html">

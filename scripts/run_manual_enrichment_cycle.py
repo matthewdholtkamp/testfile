@@ -283,20 +283,6 @@ def main():
     ])
     run_cmd([
         'python3',
-        'scripts/build_hypothesis_candidates.py',
-        '--output-dir',
-        'reports/hypothesis_candidates',
-    ])
-    run_cmd([
-        'python3',
-        'scripts/build_idea_briefs.py',
-        '--output-dir',
-        'reports/idea_briefs',
-        '--site-dir',
-        'docs/idea-briefs',
-    ])
-    run_cmd([
-        'python3',
         'scripts/build_manual_enrichment_workpack.py',
         '--seed-pack-csv',
         latest_csv_in_dir(args.seed_pack_output_dir, 'target_seed_pack_*.csv'),
@@ -324,12 +310,6 @@ def main():
         args.priority_mode,
         '--top-n',
         str(args.target_packet_top_n),
-    ])
-    run_cmd([
-        'python3',
-        'scripts/build_atlas_viewer.py',
-        '--output-dir',
-        args.viewer_output_dir,
     ])
     run_cmd([
         'python3',
@@ -483,6 +463,72 @@ def main():
         latest_csv_in_dir('reports/cohort_stratification_validation', 'cohort_stratification_validation_*.json'),
         '--output-dir',
         'docs/cohort-stratification',
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_hypothesis_candidates.py',
+        '--process-json',
+        latest_process_json,
+        '--transition-json',
+        latest_transition_json,
+        '--object-json',
+        latest_progression_json,
+        '--translational-json',
+        latest_translational_json,
+        '--cohort-json',
+        latest_cohort_json,
+        '--idea-gate-json',
+        latest_csv_in_dir(args.idea_gate_output_dir, 'idea_generation_gate_*.json'),
+        '--output-dir',
+        'reports/hypothesis_candidates',
+    ])
+    latest_hypothesis_candidate_json = latest_csv_in_dir('reports/hypothesis_candidates', 'hypothesis_candidates_*.json')
+    run_cmd([
+        'python3',
+        'scripts/build_hypothesis_rankings.py',
+        '--candidate-json',
+        latest_hypothesis_candidate_json,
+        '--output-dir',
+        'reports/hypothesis_rankings',
+    ])
+    latest_hypothesis_ranking_json = latest_csv_in_dir('reports/hypothesis_rankings', 'hypothesis_rankings_*.json')
+    run_cmd([
+        'python3',
+        'scripts/build_hypothesis_ranking_validation.py',
+        '--ranking-json',
+        latest_hypothesis_ranking_json,
+        '--candidate-json',
+        latest_hypothesis_candidate_json,
+        '--process-json',
+        latest_process_json,
+        '--transition-json',
+        latest_transition_json,
+        '--object-json',
+        latest_progression_json,
+        '--translational-json',
+        latest_translational_json,
+        '--cohort-json',
+        latest_cohort_json,
+        '--output-dir',
+        'reports/hypothesis_ranking_validation',
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_idea_briefs.py',
+        '--ranking-json',
+        latest_hypothesis_ranking_json,
+        '--candidate-json',
+        latest_hypothesis_candidate_json,
+        '--output-dir',
+        'reports/idea_briefs',
+        '--site-dir',
+        'docs/idea-briefs',
+    ])
+    run_cmd([
+        'python3',
+        'scripts/build_atlas_viewer.py',
+        '--output-dir',
+        args.viewer_output_dir,
     ])
     run_cmd([
         'python3',

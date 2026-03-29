@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TBI Idea Briefs</title>
+    <title>Hypothesis Rankings</title>
     <style>
       :root {
         --bg: #0d1318;
@@ -24,51 +24,56 @@
           radial-gradient(circle at top left, rgba(143,217,255,0.14), transparent 30%),
           linear-gradient(180deg, #0b1116 0%, var(--bg) 100%);
       }
-      .shell { max-width: 1180px; margin: 0 auto; padding: 48px 24px 72px; }
-      .hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: start; margin-bottom: 28px; }
-      .eyebrow { margin: 0 0 10px; color: var(--accent); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; }
-      h1 { margin: 0 0 14px; font-size: clamp(2.3rem, 5vw, 4.2rem); line-height: 0.96; }
-      h2, h3 { margin: 0; }
-      p { line-height: 1.6; color: var(--muted); }
-      .hero-panel, .section-heading, .idea-card, .summary-card, .spotlight-card {
+      .shell { max-width: 1220px; margin: 0 auto; padding: 48px 24px 72px; }
+      .hero { display:grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items:start; margin-bottom: 28px; }
+      .hero-panel, .summary-card, .spotlight-card, .family-card, .section-heading, .idea-card, .board-panel {
         background: linear-gradient(180deg, var(--panel) 0%, var(--panel-soft) 100%);
         border: 1px solid var(--line);
         border-radius: 22px;
         box-shadow: 0 20px 40px rgba(0,0,0,0.22);
       }
-      .hero-panel { padding: 24px; }
-      .summary-grid, .spotlight-grid, .idea-grid { display: grid; gap: 16px; }
-      .summary-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin-top: 16px; }
-      .summary-card { padding: 18px; }
-      .summary-card strong { display:block; margin-top: 6px; font-size: 1.8rem; }
-      .spotlight-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 24px 0 34px; }
-      .spotlight-card { padding: 20px; }
+      .hero-panel, .family-card, .spotlight-card, .board-panel, .idea-card, .summary-card { padding: 22px; }
+      .eyebrow { margin: 0 0 10px; color: var(--accent); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; }
+      h1 { margin: 0 0 14px; font-size: clamp(2.3rem, 5vw, 4.2rem); line-height: 0.96; }
+      h2, h3 { margin: 0; }
+      p { line-height: 1.6; color: var(--muted); }
+      .summary-grid, .spotlight-grid, .family-grid, .idea-grid { display:grid; gap:16px; }
+      .summary-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-top: 16px; }
+      .summary-card strong { display:block; margin-top: 6px; font-size: 1.7rem; }
+      .spotlight-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 22px 0 28px; }
       .spotlight-card h3 { margin-bottom: 12px; font-size: 1.12rem; }
-      .spotlight-meta { display:flex; gap:8px; flex-wrap:wrap; margin-top: 16px; }
+      .spotlight-meta, .pill-stack { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+      .next-move { margin-top: 14px; }
+      .family-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 0 0 28px; }
+      .family-list { display:grid; gap:12px; margin-top:14px; }
+      .family-row { display:flex; justify-content:space-between; gap:12px; border-top:1px solid rgba(255,255,255,0.05); padding-top:12px; }
+      .micro-stack { display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
+      .board-panel table { width:100%; border-collapse: collapse; font-size: 0.95rem; }
+      .board-panel th, .board-panel td { border-bottom: 1px solid rgba(255,255,255,0.06); padding: 12px 10px; text-align:left; vertical-align: top; }
+      .board-panel th { color: var(--accent); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+      .subline { margin-top: 6px; color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
       .mechanism-section + .mechanism-section { margin-top: 24px; }
       .section-heading { padding: 22px 24px; margin-bottom: 16px; }
-      .idea-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-      .idea-card { padding: 22px; }
+      .idea-grid { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
       .idea-card-head { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; margin-bottom: 14px; }
-      .pill-stack { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
       .pill { display:inline-flex; align-items:center; border-radius:999px; padding:6px 12px; font-size:0.76rem; font-weight:700; }
       .pill.decision { background: rgba(255,255,255,0.08); color: var(--ink); }
-      .pill.strength.assertive { background: rgba(108, 210, 168, 0.18); color: #a7f2cc; }
-      .pill.strength.moderate { background: rgba(255, 209, 102, 0.18); color: #ffe1a3; }
-      .pill.strength.speculative { background: rgba(255, 128, 128, 0.16); color: #ffc1c1; }
+      .pill.confidence.assertive { background: rgba(108, 210, 168, 0.18); color: #a7f2cc; }
+      .pill.confidence.moderate { background: rgba(255, 209, 102, 0.18); color: #ffe1a3; }
+      .pill.confidence.speculative { background: rgba(255, 128, 128, 0.16); color: #ffc1c1; }
+      .pill.value { background: rgba(255,255,255,0.08); color: var(--ink); }
+      .pill.novelty { background: transparent; border: 1px solid rgba(143,217,255,0.35); color: var(--accent); }
       .statement { color: var(--ink); margin: 0 0 16px; }
-      .meta-grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-      .meta-grid.single { grid-template-columns: 1fr; margin-top: 14px; }
+      .meta-grid { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:14px; }
       .meta-grid div { padding: 14px; border-radius: 16px; background: rgba(255,255,255,0.04); }
       .label { display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color: var(--accent); margin-bottom:6px; }
-      .pmid-row { display:flex; flex-wrap:wrap; gap:8px; margin-top: 16px; }
-      .pmid-chip { color: var(--ink); text-decoration:none; padding:8px 10px; border-radius:999px; background: rgba(255,255,255,0.06); font-size:0.82rem; }
-      .muted { color: var(--muted); }
       .nav-row { display:flex; gap:12px; flex-wrap:wrap; margin-top: 20px; }
       .nav-link { text-decoration:none; color:var(--accent); font-weight:700; }
-      @media (max-width: 900px) {
+      .muted { color: var(--muted); }
+      @media (max-width: 980px) {
         .hero { grid-template-columns: 1fr; }
         .meta-grid { grid-template-columns: 1fr; }
+        .board-panel { overflow-x:auto; }
       }
     </style>
   </head>
@@ -76,316 +81,2292 @@
     <main class="shell">
       <section class="hero">
         <div class="hero-panel">
-          <div class="eyebrow">Idea Engine</div>
-          <h1>TBI Idea Briefs</h1>
-          <p>Blood-Brain Barrier Dysfunction remains the lead mechanism. This page turns the current atlas into a small set of decision-ready hypothesis lanes instead of a larger stack of reports.</p>
+          <div class="eyebrow">Phase 6 decision engine</div>
+          <h1>Hypothesis Rankings</h1>
+          <p>This page is the operator-facing ranking layer on top of Phases 1–5. It separates what we trust most, what still hinges on weak evidence, what is most actionable, and where the best new ideas are likely to come from next.</p>
           <div class="nav-row">
-            <a class="nav-link" href="../atlas-viewer/index.html">Open Atlas Viewer</a>
-            <a class="nav-link" href="../atlas-book/index.html">Open Atlas Book</a>
+            <a class="nav-link" href="../cohort-stratification/index.html">Open Cohort Stratification</a>
+            <a class="nav-link" href="../translational-logic/index.html">Open Translational Logic</a>
+            <a class="nav-link" href="../run-center/index.html">Open Run Center</a>
           </div>
         </div>
         <div class="hero-panel">
           <div class="eyebrow">Snapshot</div>
-          <p>Updated 2026-03-29 033534</p>
+          <p>Updated 2026-03-28 21:26:59</p>
           <div class="summary-grid">
-            <div class="summary-card"><span class="label">Lead mechanism</span><strong>Blood-Brain Barrier Dysfunction</strong></div>
-            <div class="summary-card"><span class="label">Stable rows</span><strong>5</strong></div>
-            <div class="summary-card"><span class="label">Ideas</span><strong>9</strong></div>
-            <div class="summary-card"><span class="label">Starter mechanisms</span><strong>3</strong></div>
+            <div class="summary-card"><span class="label">Families</span><strong>5</strong></div>
+            <div class="summary-card"><span class="label">Ranked rows</span><strong>54</strong></div>
+            <div class="summary-card"><span class="label">Weekly slate</span><strong>4</strong></div>
+            <div class="summary-card"><span class="label">Supported rows</span><strong>14</strong></div>
+            <div class="summary-card"><span class="label">Emergent rows</span><strong>26</strong></div>
+            <div class="summary-card"><span class="label">Cross-disease analogs</span><strong>24</strong></div>
           </div>
         </div>
       </section>
       <section>
-        <div class="eyebrow">Spotlight</div>
+        <div class="eyebrow">Weekly Slate</div>
         <div class="spotlight-grid">
         <article class="spotlight-card">
-          <div class="eyebrow">Blood-Brain Barrier Dysfunction</div>
-          <h3>Blood-Brain Barrier Dysfunction driver hypothesis</h3>
-          <p>SCFAs cross the BBB and inhibit HDACs to promote neuroprotection. TBI-induced BBB breakdown promotes neuroinflammation. Neutrophil-derived exosomes disrupt BBB integrity.</p>
+          <div class="eyebrow">high_confidence_core</div>
+          <h3>Blood-Brain Barrier Failure biomarker panel</h3>
+          <p>Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.</p>
           <div class="spotlight-meta">
-            <span class="pill decision">Write now</span>
-            <span class="pill strength assertive">assertive</span>
+            <span class="pill confidence assertive">assertive</span>
+            <span class="pill value">value 1.0</span>
+            <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
           </div>
+          <p class="next-move">Next move: Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</p>
         </article>
         
         <article class="spotlight-card">
-          <div class="eyebrow">Mitochondrial Dysfunction</div>
-          <h3>Mitochondrial Dysfunction driver hypothesis</h3>
-          <p>Parkin promotes mitochondrial biogenesis and fission while inhibiting mitochondrial fusion post-TBI. MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis. Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits.</p>
+          <div class="eyebrow">highest_value_now</div>
+          <h3>Neuroinflammation / Microglial State Change biomarker panel</h3>
+          <p>Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.</p>
           <div class="spotlight-meta">
-            <span class="pill decision">Needs adjudication</span>
-            <span class="pill strength moderate">moderate</span>
+            <span class="pill confidence assertive">assertive</span>
+            <span class="pill value">value 1.0</span>
+            <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
           </div>
+          <p class="next-move">Next move: Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</p>
         </article>
         
         <article class="spotlight-card">
-          <div class="eyebrow">Neuroinflammation / Microglial Activation</div>
-          <h3>Neuroinflammation / Microglial Activation driver hypothesis</h3>
-          <p>Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100β, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration. GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.</p>
+          <div class="eyebrow">novelty_watch</div>
+          <h3>Mitochondrial / Bioenergetic Collapse -&gt; PRKN</h3>
+          <p>Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).</p>
           <div class="spotlight-meta">
-            <span class="pill decision">Needs adjudication</span>
-            <span class="pill strength moderate">moderate</span>
+            <span class="pill confidence assertive">assertive</span>
+            <span class="pill value">value 1.0</span>
+            <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
           </div>
+          <p class="next-move">Next move: Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</p>
+        </article>
+        
+        <article class="spotlight-card">
+          <div class="eyebrow">hinge_or_task_pick</div>
+          <h3>Clarify Chronic Repetitive Tau / Clearance Mixed</h3>
+          <p>A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.</p>
+          <div class="spotlight-meta">
+            <span class="pill confidence moderate">moderate</span>
+            <span class="pill value">value 1.0</span>
+            <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+          </div>
+          <p class="next-move">Next move: Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</p>
         </article>
         </div>
       </section>
       <section>
-        <div class="eyebrow">Decision Mix</div>
-        <div class="summary-grid"><div class="summary-card"><span class="label">Write now</span><strong>1</strong></div><div class="summary-card"><span class="label">Needs adjudication</span><strong>5</strong></div><div class="summary-card"><span class="label">Needs enrichment</span><strong>3</strong></div></div>
+        <div class="eyebrow">Ranking Families</div>
+        <div class="family-grid">
+            <article class="family-card">
+              <div class="eyebrow">Decision family</div>
+              <h3>Strongest Causal Bridge</h3>
+              <div class="family-list">
+            <div class="family-row">
+              <div>
+                <strong>1. BBB permeability increase -&gt; peripheral immune infiltration bridge</strong>
+                <p>Current TBI evidence supports a directional transition in which BBB permeability increase facilitates peripheral immune infiltration.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 0.871</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>2. Glymphatic failure -&gt; tau / protein accumulation bridge</strong>
+                <p>Current TBI evidence supports a transition in which glymphatic failure contributes to tau or broader pathogenic protein accumulation.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 0.781</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>3. Axonal degeneration -&gt; chronic network dysfunction bridge</strong>
+                <p>Current TBI evidence suggests that axonal degeneration and white-matter injury contribute to chronic network dysfunction and impaired recovery trajectories.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence moderate">moderate</span>
+                <span class="pill value">value 0.728</span>
+              </div>
+            </div>
+            </div>
+            </article>
+            
+            <article class="family-card">
+              <div class="eyebrow">Decision family</div>
+              <h3>Weakest Evidence Hinge</h3>
+              <div class="family-list">
+            <div class="family-row">
+              <div>
+                <strong>1. Clarify Chronic Repetitive Tau / Clearance Mixed</strong>
+                <p>A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence moderate">moderate</span>
+                <span class="pill value">value 1.0</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>2. Harden Cognitive Decline Phenotype</strong>
+                <p>Cognitive decline is the downstream phenotype that makes the rest of the process engine clinically meaningful rather than merely mechanistic.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence moderate">moderate</span>
+                <span class="pill value">value 0.886</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>3. Harden Neurovascular Uncoupling</strong>
+                <p>Neurovascular uncoupling is a candidate systems-level object that could connect vascular leak, impaired clearance, and later network fragility.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence moderate">moderate</span>
+                <span class="pill value">value 0.836</span>
+              </div>
+            </div>
+            </div>
+            </article>
+            
+            <article class="family-card">
+              <div class="eyebrow">Decision family</div>
+              <h3>Best Intervention Leverage Point</h3>
+              <div class="family-list">
+            <div class="family-row">
+              <div>
+                <strong>1. Mitochondrial / Bioenergetic Collapse -&gt; PRKN</strong>
+                <p>Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 1.0</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>2. Tau / Proteinopathy Progression -&gt; DYRK1A</strong>
+                <p>Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence moderate">moderate</span>
+                <span class="pill value">value 0.871</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>3. Blood-Brain Barrier Failure -&gt; OCLN</strong>
+                <p>Prioritize an OCLN-centered barrier-repair packet first because the current BBB target packets are strongest around OCLN, CLDN5, and TJP1, and this lane already anchors the BBB-to-immune-infiltration bridge. Current repo support: 5 full-text-like target-seed hit(s) and 5 exact target match(es).</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 0.857</span>
+              </div>
+            </div>
+            </div>
+            </article>
+            
+            <article class="family-card">
+              <div class="eyebrow">Decision family</div>
+              <h3>Most Informative Biomarker Panel</h3>
+              <div class="family-list">
+            <div class="family-row">
+              <div>
+                <strong>1. Blood-Brain Barrier Failure biomarker panel</strong>
+                <p>Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 1.0</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>2. Neuroinflammation / Microglial State Change biomarker panel</strong>
+                <p>Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 1.0</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>3. Subacute Repetitive Inflammatory-Dominant discriminator panel</strong>
+                <p>Use IL-6, IL-1beta, TNF-alpha, GFAP to discriminate the subacute repetitive inflammatory-dominant endotype from nearby cohorts.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 1.0</span>
+              </div>
+            </div>
+            </div>
+            </article>
+            
+            <article class="family-card">
+              <div class="eyebrow">Decision family</div>
+              <h3>Highest-Value Next Task</h3>
+              <div class="family-list">
+            <div class="family-row">
+              <div>
+                <strong>1. Attach translational evidence to Blood-Brain Barrier Failure</strong>
+                <p>Attach compounds, trials, or stronger genomics support around OCLN so this lane stops being logic-only.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 0.863</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>2. Attach translational evidence to Mitochondrial / Bioenergetic Collapse</strong>
+                <p>Attach compounds, trials, or stronger genomics support around PRKN so this lane stops being logic-only.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 0.863</span>
+              </div>
+            </div>
+            
+            <div class="family-row">
+              <div>
+                <strong>3. Attach translational evidence to Neuroinflammation / Microglial State Change</strong>
+                <p>Attach compounds, trials, or stronger genomics support around NLRP3 so this lane stops being logic-only.</p>
+              </div>
+              <div class="micro-stack">
+                <span class="pill confidence assertive">assertive</span>
+                <span class="pill value">value 0.863</span>
+              </div>
+            </div>
+            </div>
+            </article>
+            </div>
+      </section>
+      <section class="board-panel">
+        <div class="eyebrow">Master Board</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Idea</th>
+              <th>Mechanism</th>
+              <th>Decision Family</th>
+              <th>Confidence</th>
+              <th>Value</th>
+              <th>Novelty</th>
+              <th>Next Move</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <strong>BBB permeability increase -&gt; peripheral immune infiltration bridge</strong>
+                <div class="subline">Current TBI evidence supports a directional transition in which BBB permeability increase facilitates peripheral immune infiltration.</div>
+              </td>
+              <td>Blood-Brain Barrier Failure</td>
+              <td>Strongest Causal Bridge</td>
+              <td>0.871</td>
+              <td>0.871</td>
+              <td><span class="pill novelty tbi-established">tbi_established</span></td>
+              <td>Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded.</td>
+            </tr>
+            
+            <tr>
+              <td>2</td>
+              <td>
+                <strong>Glymphatic failure -&gt; tau / protein accumulation bridge</strong>
+                <div class="subline">Current TBI evidence supports a transition in which glymphatic failure contributes to tau or broader pathogenic protein accumulation.</div>
+              </td>
+              <td>Glymphatic / Astroglial Clearance Failure</td>
+              <td>Strongest Causal Bridge</td>
+              <td>0.781</td>
+              <td>0.781</td>
+              <td><span class="pill novelty tbi-established">tbi_established</span></td>
+              <td>Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</td>
+            </tr>
+            
+            <tr>
+              <td>3</td>
+              <td>
+                <strong>Axonal degeneration -&gt; chronic network dysfunction bridge</strong>
+                <div class="subline">Current TBI evidence suggests that axonal degeneration and white-matter injury contribute to chronic network dysfunction and impaired recovery trajectories.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Strongest Causal Bridge</td>
+              <td>0.668</td>
+              <td>0.728</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</td>
+            </tr>
+            
+            <tr>
+              <td>4</td>
+              <td>
+                <strong>Tau / proteinopathy progression -&gt; chronic network dysfunction bridge</strong>
+                <div class="subline">Current TBI evidence suggests that tau and related proteinopathy progression contribute to chronic network dysfunction and cognitive decline.</div>
+              </td>
+              <td>Tau / Proteinopathy Progression</td>
+              <td>Strongest Causal Bridge</td>
+              <td>0.652</td>
+              <td>0.712</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</td>
+            </tr>
+            
+            <tr>
+              <td>5</td>
+              <td>
+                <strong>Mitochondrial ROS -&gt; inflammasome activation bridge</strong>
+                <div class="subline">Current TBI evidence suggests that mitochondrial ROS or related mitochondrial stress signals amplify inflammasome activation.</div>
+              </td>
+              <td>Mitochondrial / Bioenergetic Collapse</td>
+              <td>Strongest Causal Bridge</td>
+              <td>0.62</td>
+              <td>0.68</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</td>
+            </tr>
+            
+            <tr>
+              <td>6</td>
+              <td>
+                <strong>Neuroinflammation / microglial state change -&gt; tau / proteinopathy progression bridge</strong>
+                <div class="subline">Current TBI evidence suggests that sustained neuroinflammation and microglial state change can amplify tau pathology and broader proteinopathy progression.</div>
+              </td>
+              <td>Neuroinflammation / Microglial State Change</td>
+              <td>Strongest Causal Bridge</td>
+              <td>0.573</td>
+              <td>0.633</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</td>
+            </tr>
+            
+            <tr>
+              <td>1</td>
+              <td>
+                <strong>Clarify Chronic Repetitive Tau / Clearance Mixed</strong>
+                <div class="subline">A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.</div>
+              </td>
+              <td>Tau / Proteinopathy Progression</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.906</td>
+              <td>1.0</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</td>
+            </tr>
+            
+            <tr>
+              <td>2</td>
+              <td>
+                <strong>Harden Cognitive Decline Phenotype</strong>
+                <div class="subline">Cognitive decline is the downstream phenotype that makes the rest of the process engine clinically meaningful rather than merely mechanistic.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.826</td>
+              <td>0.886</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which upstream objects or transitions are most consistently associated with chronic cognitive decline in the current corpus?</td>
+            </tr>
+            
+            <tr>
+              <td>3</td>
+              <td>
+                <strong>Harden Neurovascular Uncoupling</strong>
+                <div class="subline">Neurovascular uncoupling is a candidate systems-level object that could connect vascular leak, impaired clearance, and later network fragility.</div>
+              </td>
+              <td>Blood-Brain Barrier Failure</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.776</td>
+              <td>0.836</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Does the corpus support neurovascular uncoupling as a recurring object, or is it still mostly implied by BBB and clearance disruption?</td>
+            </tr>
+            
+            <tr>
+              <td>4</td>
+              <td>
+                <strong>Clarify Chronic Severe Axonal / Network Decline</strong>
+                <div class="subline">The chronic severe packet may separate best when we treat axonal/network decline as the dominant burden expression of earlier metabolic and vascular stress, not just structural damage.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.723</td>
+              <td>0.783</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which chronic severe cohorts still look metabolically active enough to justify mitochondrial rescue logic, and which are already dominated by structural degeneration?</td>
+            </tr>
+            
+            <tr>
+              <td>5</td>
+              <td>
+                <strong>Clarify Chronic Mild Metabolic / White Matter Dominant</strong>
+                <div class="subline">ATP/ROS/NfL/FA-style clustering may separate a chronic mild metabolic endotype that is being obscured by generic symptom or inflammation groupings.</div>
+              </td>
+              <td>Mitochondrial / Bioenergetic Collapse</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.653</td>
+              <td>0.713</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which chronic mild cohorts are better explained by metabolic and white matter burden than by continuing vascular or inflammatory pressure?</td>
+            </tr>
+            
+            <tr>
+              <td>6</td>
+              <td>
+                <strong>Clarify Acute Blast Vascular / Inflammatory Mixed</strong>
+                <div class="subline">The highest-value blast endotype may be a mixed vascular-plus-inflammatory state that requires barrier-sensitive and immune-sensitive readouts together rather than a single dominant mechanism label.</div>
+              </td>
+              <td>Blood-Brain Barrier Failure</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.631</td>
+              <td>0.751</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Do blast-exposed cohorts behave more like barrier-first vascular injury with immune spillover, or do they deserve a distinct mixed archetype with endocrine overlays?</td>
+            </tr>
+            
+            <tr>
+              <td>7</td>
+              <td>
+                <strong>Clarify Acute Mild Biomarker / Imaging Bridge</strong>
+                <div class="subline">A biomarker-plus-imaging bridge may separate the acute mild cases that later look inflammatory from those that remain mostly vascular and self-limited.</div>
+              </td>
+              <td>Blood-Brain Barrier Failure</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.631</td>
+              <td>0.691</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which acute mild cases show a barrier-first signature versus a cytokine-first signature when GFAP, UCH-L1, and acute imaging are all present?</td>
+            </tr>
+            
+            <tr>
+              <td>8</td>
+              <td>
+                <strong>Harden Persistent Metabolic Dysfunction</strong>
+                <div class="subline">Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase.</div>
+              </td>
+              <td>Mitochondrial / Bioenergetic Collapse</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.61</td>
+              <td>0.67</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Is the current evidence dense enough to separate persistent metabolic dysfunction from generic mitochondrial injury rhetoric?</td>
+            </tr>
+            
+            <tr>
+              <td>9</td>
+              <td>
+                <strong>Harden Synaptic Loss</strong>
+                <div class="subline">Synaptic loss is a plausible convergence point where structural, metabolic, and proteinopathy stress start becoming functionally costly.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.61</td>
+              <td>0.67</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Does the current corpus support synaptic loss as a separate recurring object, or is it still mostly riding on axonal and tau signals?</td>
+            </tr>
+            
+            <tr>
+              <td>10</td>
+              <td>
+                <strong>Harden White Matter Degeneration</strong>
+                <div class="subline">White matter degeneration is one of the most visible ways early structural injury propagates into chronic network vulnerability.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.61</td>
+              <td>0.67</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Can the current corpus distinguish white matter degeneration from acute axonal injury strongly enough to treat it as a recurring progression object?</td>
+            </tr>
+            
+            <tr>
+              <td>11</td>
+              <td>
+                <strong>Resolve Mitochondrial ROS -&gt; inflammasome activation hinge</strong>
+                <div class="subline">Current TBI evidence suggests that mitochondrial ROS or related mitochondrial stress signals amplify inflammasome activation.</div>
+              </td>
+              <td>Mitochondrial / Bioenergetic Collapse</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.587</td>
+              <td>0.647</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Resolve this hinge with targeted full-text review and a tighter timing statement before promoting downstream claims.</td>
+            </tr>
+            
+            <tr>
+              <td>12</td>
+              <td>
+                <strong>Resolve Axonal degeneration -&gt; chronic network dysfunction hinge</strong>
+                <div class="subline">Current TBI evidence suggests that axonal degeneration and white-matter injury contribute to chronic network dysfunction and impaired recovery trajectories.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.575</td>
+              <td>0.635</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Resolve this hinge with targeted full-text review and a tighter timing statement before promoting downstream claims.</td>
+            </tr>
+            
+            <tr>
+              <td>13</td>
+              <td>
+                <strong>Resolve Tau / proteinopathy progression -&gt; chronic network dysfunction hinge</strong>
+                <div class="subline">Current TBI evidence suggests that tau and related proteinopathy progression contribute to chronic network dysfunction and cognitive decline.</div>
+              </td>
+              <td>Tau / Proteinopathy Progression</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.575</td>
+              <td>0.635</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Resolve this hinge with targeted full-text review and a tighter timing statement before promoting downstream claims.</td>
+            </tr>
+            
+            <tr>
+              <td>14</td>
+              <td>
+                <strong>Resolve Neuroinflammation / microglial state change -&gt; tau / proteinopathy progression hinge</strong>
+                <div class="subline">Current TBI evidence suggests that sustained neuroinflammation and microglial state change can amplify tau pathology and broader proteinopathy progression.</div>
+              </td>
+              <td>Neuroinflammation / Microglial State Change</td>
+              <td>Weakest Evidence Hinge</td>
+              <td>0.452</td>
+              <td>0.512</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Resolve this hinge with targeted full-text review and a tighter timing statement before promoting downstream claims.</td>
+            </tr>
+            
+            <tr>
+              <td>1</td>
+              <td>
+                <strong>Mitochondrial / Bioenergetic Collapse -&gt; PRKN</strong>
+                <div class="subline">Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).</div>
+              </td>
+              <td>Mitochondrial / Bioenergetic Collapse</td>
+              <td>Best Intervention Leverage Point</td>
+              <td>0.917</td>
+              <td>1.0</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</td>
+            </tr>
+            
+            <tr>
+              <td>2</td>
+              <td>
+                <strong>Tau / Proteinopathy Progression -&gt; DYRK1A</strong>
+                <div class="subline">Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem.</div>
+              </td>
+              <td>Tau / Proteinopathy Progression</td>
+              <td>Best Intervention Leverage Point</td>
+              <td>0.751</td>
+              <td>0.871</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Extend the DYRK1A packet beyond phospho-tau alone by pairing tissue tau suppression with circulating tau variants and chronic function.</td>
+            </tr>
+            
+            <tr>
+              <td>3</td>
+              <td>
+                <strong>Blood-Brain Barrier Failure -&gt; OCLN</strong>
+                <div class="subline">Prioritize an OCLN-centered barrier-repair packet first because the current BBB target packets are strongest around OCLN, CLDN5, and TJP1, and this lane already anchors the BBB-to-immune-infiltration bridge. Current repo support: 5 full-text-like target-seed hit(s) and 5 exact target match(es).</div>
+              </td>
+              <td>Blood-Brain Barrier Failure</td>
+              <td>Best Intervention Leverage Point</td>
+              <td>0.737</td>
+              <td>0.857</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</td>
+            </tr>
+            
+            <tr>
+              <td>4</td>
+              <td>
+                <strong>Neuroinflammation / Microglial State Change -&gt; NLRP3</strong>
+                <div class="subline">Use NLRP3 as the primary perturbation node because it is the strongest inflammatory target packet in the repo, links directly to the mito-to-inflammasome transition, and gives a cleaner perturbation frame than chasing one downstream cytokine at a time. Current repo support: 9 full-text-like target-seed hit(s) and 11 exact target match(es).</div>
+              </td>
+              <td>Neuroinflammation / Microglial State Change</td>
+              <td>Best Intervention Leverage Point</td>
+              <td>0.737</td>
+              <td>0.857</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</td>
+            </tr>
+            
+            <tr>
+              <td>5</td>
+              <td>
+                <strong>Axonal Degeneration -&gt; SARM1</strong>
+                <div class="subline">Treat axonal degeneration as a SARM1-centered degeneration program for now because the current evidence supports SARM1 activation as part of the axonal-degeneration chain, but the packet still needs stronger direct perturbation support than BBB, mitochondrial, or inflammasome lanes. Direct corpus signal: Collateral sprouting is independent of Sarm1-mediated Wallerian degeneration.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Best Intervention Leverage Point</td>
+              <td>0.596</td>
+              <td>0.716</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an axonal-degeneration packet with imaging, plasma neuroaxonal spillover, and network-function readouts so the lane is not judged on DTI alone.</td>
+            </tr>
+            
+            <tr>
+              <td>6</td>
+              <td>
+                <strong>Glymphatic / Astroglial Clearance Failure -&gt; AQP4</strong>
+                <div class="subline">Use an AQP4-centered clearance module because it is the strongest lane-native target currently represented in the corpus, and the glymphatic-to-tau transition already makes downstream protein burden an interpretable readout. Direct corpus signal: These benefits were abolished by the aquaporin-4 inhibitor TGN-020, indicating that mNGF improves TBI outcome by correcting AQP4 dysfunction.</div>
+              </td>
+              <td>Glymphatic / Astroglial Clearance Failure</td>
+              <td>Best Intervention Leverage Point</td>
+              <td>0.546</td>
+              <td>0.666</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run a clearance packet anchored on AQP4 with DTI-ALPS, polarization/localization, and downstream tau burden readouts across the subacute-to-chronic window.</td>
+            </tr>
+            
+            <tr>
+              <td>1</td>
+              <td>
+                <strong>Blood-Brain Barrier Failure biomarker panel</strong>
+                <div class="subline">Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.</div>
+              </td>
+              <td>Blood-Brain Barrier Failure</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.95</td>
+              <td>1.0</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</td>
+            </tr>
+            
+            <tr>
+              <td>2</td>
+              <td>
+                <strong>Neuroinflammation / Microglial State Change biomarker panel</strong>
+                <div class="subline">Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.</div>
+              </td>
+              <td>Neuroinflammation / Microglial State Change</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.95</td>
+              <td>1.0</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</td>
+            </tr>
+            
+            <tr>
+              <td>3</td>
+              <td>
+                <strong>Subacute Repetitive Inflammatory-Dominant discriminator panel</strong>
+                <div class="subline">Use IL-6, IL-1beta, TNF-alpha, GFAP to discriminate the subacute repetitive inflammatory-dominant endotype from nearby cohorts.</div>
+              </td>
+              <td>Subacute Repetitive Inflammatory-Dominant</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.946</td>
+              <td>1.0</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which repetitive cohorts still look barrier-conditioned in the subacute window, and which ones are already dominated by persistent microglial activation?</td>
+            </tr>
+            
+            <tr>
+              <td>4</td>
+              <td>
+                <strong>Acute Severe Vascular-Dominant discriminator panel</strong>
+                <div class="subline">Use GFAP, S100B, D-dimer, lactate to discriminate the acute severe vascular-dominant endotype from nearby cohorts.</div>
+              </td>
+              <td>Acute Severe Vascular-Dominant</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.946</td>
+              <td>0.946</td>
+              <td><span class="pill novelty tbi-established">tbi_established</span></td>
+              <td>Which acute severe cohorts show enough barrier/perfusion pressure that BBB repair should come before a broader anti-inflammatory packet?</td>
+            </tr>
+            
+            <tr>
+              <td>5</td>
+              <td>
+                <strong>Mitochondrial / Bioenergetic Collapse biomarker panel</strong>
+                <div class="subline">Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.</div>
+              </td>
+              <td>Mitochondrial / Bioenergetic Collapse</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.885</td>
+              <td>1.0</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</td>
+            </tr>
+            
+            <tr>
+              <td>6</td>
+              <td>
+                <strong>Acute Blast Vascular / Inflammatory Mixed discriminator panel</strong>
+                <div class="subline">Use GFAP, tau, pituitary hormone abnormalities, immune-cell subset shift to discriminate the acute blast vascular / inflammatory mixed endotype from nearby cohorts.</div>
+              </td>
+              <td>Acute Blast Vascular / Inflammatory Mixed</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.816</td>
+              <td>0.936</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Do blast-exposed cohorts behave more like barrier-first vascular injury with immune spillover, or do they deserve a distinct mixed archetype with endocrine overlays?</td>
+            </tr>
+            
+            <tr>
+              <td>7</td>
+              <td>
+                <strong>Chronic Repetitive Tau / Clearance Mixed discriminator panel</strong>
+                <div class="subline">Use BD-tau, p-tau, GFAP, AQP4 to discriminate the chronic repetitive tau / clearance mixed endotype from nearby cohorts.</div>
+              </td>
+              <td>Chronic Repetitive Tau / Clearance Mixed</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.816</td>
+              <td>0.936</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</td>
+            </tr>
+            
+            <tr>
+              <td>8</td>
+              <td>
+                <strong>Acute Mild Biomarker / Imaging Bridge discriminator panel</strong>
+                <div class="subline">Use GFAP, UCH-L1, NfL, tau to discriminate the acute mild biomarker / imaging bridge endotype from nearby cohorts.</div>
+              </td>
+              <td>Acute Mild Biomarker / Imaging Bridge</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.816</td>
+              <td>0.876</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which acute mild cases show a barrier-first signature versus a cytokine-first signature when GFAP, UCH-L1, and acute imaging are all present?</td>
+            </tr>
+            
+            <tr>
+              <td>9</td>
+              <td>
+                <strong>Chronic Mild Metabolic / White Matter Dominant discriminator panel</strong>
+                <div class="subline">Use NfL, tau, ATP, ROS to discriminate the chronic mild metabolic / white matter dominant endotype from nearby cohorts.</div>
+              </td>
+              <td>Chronic Mild Metabolic / White Matter Dominant</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.816</td>
+              <td>0.876</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which chronic mild cohorts are better explained by metabolic and white matter burden than by continuing vascular or inflammatory pressure?</td>
+            </tr>
+            
+            <tr>
+              <td>10</td>
+              <td>
+                <strong>Chronic Severe Axonal / Network Decline discriminator panel</strong>
+                <div class="subline">Use NfL, tau, GFAP, Fractional Anisotropy (FA) to discriminate the chronic severe axonal / network decline endotype from nearby cohorts.</div>
+              </td>
+              <td>Chronic Severe Axonal / Network Decline</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.816</td>
+              <td>0.876</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which chronic severe cohorts still look metabolically active enough to justify mitochondrial rescue logic, and which are already dominated by structural degeneration?</td>
+            </tr>
+            
+            <tr>
+              <td>11</td>
+              <td>
+                <strong>Axonal Degeneration biomarker panel</strong>
+                <div class="subline">Track FA, MD, RD, NfL to test whether SARM1 is moving the expected lane biology.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.668</td>
+              <td>0.788</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an axonal-degeneration packet with imaging, plasma neuroaxonal spillover, and network-function readouts so the lane is not judged on DTI alone.</td>
+            </tr>
+            
+            <tr>
+              <td>12</td>
+              <td>
+                <strong>Glymphatic / Astroglial Clearance Failure biomarker panel</strong>
+                <div class="subline">Track AQP4, DTI-ALPS, GFAP, C3 to test whether AQP4 is moving the expected lane biology.</div>
+              </td>
+              <td>Glymphatic / Astroglial Clearance Failure</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.603</td>
+              <td>0.723</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run a clearance packet anchored on AQP4 with DTI-ALPS, polarization/localization, and downstream tau burden readouts across the subacute-to-chronic window.</td>
+            </tr>
+            
+            <tr>
+              <td>13</td>
+              <td>
+                <strong>Tau / Proteinopathy Progression biomarker panel</strong>
+                <div class="subline">Track BD-tau, t-tau, p-tau, AT8 to test whether DYRK1A is moving the expected lane biology.</div>
+              </td>
+              <td>Tau / Proteinopathy Progression</td>
+              <td>Most Informative Biomarker Panel</td>
+              <td>0.603</td>
+              <td>0.723</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Extend the DYRK1A packet beyond phospho-tau alone by pairing tissue tau suppression with circulating tau variants and chronic function.</td>
+            </tr>
+            
+            <tr>
+              <td>1</td>
+              <td>
+                <strong>Attach translational evidence to Blood-Brain Barrier Failure</strong>
+                <div class="subline">Attach compounds, trials, or stronger genomics support around OCLN so this lane stops being logic-only.</div>
+              </td>
+              <td>Blood-Brain Barrier Failure</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.743</td>
+              <td>0.863</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</td>
+            </tr>
+            
+            <tr>
+              <td>2</td>
+              <td>
+                <strong>Attach translational evidence to Mitochondrial / Bioenergetic Collapse</strong>
+                <div class="subline">Attach compounds, trials, or stronger genomics support around PRKN so this lane stops being logic-only.</div>
+              </td>
+              <td>Mitochondrial / Bioenergetic Collapse</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.743</td>
+              <td>0.863</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</td>
+            </tr>
+            
+            <tr>
+              <td>3</td>
+              <td>
+                <strong>Attach translational evidence to Neuroinflammation / Microglial State Change</strong>
+                <div class="subline">Attach compounds, trials, or stronger genomics support around NLRP3 so this lane stops being logic-only.</div>
+              </td>
+              <td>Neuroinflammation / Microglial State Change</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.743</td>
+              <td>0.863</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</td>
+            </tr>
+            
+            <tr>
+              <td>4</td>
+              <td>
+                <strong>Repair Mitochondrial ROS -&gt; inflammasome activation</strong>
+                <div class="subline">Tighten the timing and directional language for this provisional bridge before using it as a stronger downstream dependency.</div>
+              </td>
+              <td>Mitochondrial / Bioenergetic Collapse</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.714</td>
+              <td>0.774</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Run a targeted transition hardening pass with full-text timing review and contradiction cleanup.</td>
+            </tr>
+            
+            <tr>
+              <td>5</td>
+              <td>
+                <strong>Repair Neuroinflammation / microglial state change -&gt; tau / proteinopathy progression</strong>
+                <div class="subline">Tighten the timing and directional language for this provisional bridge before using it as a stronger downstream dependency.</div>
+              </td>
+              <td>Neuroinflammation / Microglial State Change</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.714</td>
+              <td>0.774</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Run a targeted transition hardening pass with full-text timing review and contradiction cleanup.</td>
+            </tr>
+            
+            <tr>
+              <td>6</td>
+              <td>
+                <strong>Attach translational evidence to Axonal Degeneration</strong>
+                <div class="subline">Attach compounds, trials, or stronger genomics support around SARM1 so this lane stops being logic-only.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.713</td>
+              <td>0.833</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run an axonal-degeneration packet with imaging, plasma neuroaxonal spillover, and network-function readouts so the lane is not judged on DTI alone.</td>
+            </tr>
+            
+            <tr>
+              <td>7</td>
+              <td>
+                <strong>Attach translational evidence to Glymphatic / Astroglial Clearance Failure</strong>
+                <div class="subline">Attach compounds, trials, or stronger genomics support around AQP4 so this lane stops being logic-only.</div>
+              </td>
+              <td>Glymphatic / Astroglial Clearance Failure</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.713</td>
+              <td>0.833</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Run a clearance packet anchored on AQP4 with DTI-ALPS, polarization/localization, and downstream tau burden readouts across the subacute-to-chronic window.</td>
+            </tr>
+            
+            <tr>
+              <td>8</td>
+              <td>
+                <strong>Attach translational evidence to Tau / Proteinopathy Progression</strong>
+                <div class="subline">Attach compounds, trials, or stronger genomics support around DYRK1A so this lane stops being logic-only.</div>
+              </td>
+              <td>Tau / Proteinopathy Progression</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.713</td>
+              <td>0.833</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Extend the DYRK1A packet beyond phospho-tau alone by pairing tissue tau suppression with circulating tau variants and chronic function.</td>
+            </tr>
+            
+            <tr>
+              <td>9</td>
+              <td>
+                <strong>Clarify Acute Severe Vascular-Dominant discriminator</strong>
+                <div class="subline">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</div>
+              </td>
+              <td>Acute Severe Vascular-Dominant</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.701</td>
+              <td>0.701</td>
+              <td><span class="pill novelty tbi-established">tbi_established</span></td>
+              <td>Which acute severe cohorts show enough barrier/perfusion pressure that BBB repair should come before a broader anti-inflammatory packet?</td>
+            </tr>
+            
+            <tr>
+              <td>10</td>
+              <td>
+                <strong>Clarify Acute Blast Vascular / Inflammatory Mixed discriminator</strong>
+                <div class="subline">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</div>
+              </td>
+              <td>Acute Blast Vascular / Inflammatory Mixed</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.687</td>
+              <td>0.807</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Do blast-exposed cohorts behave more like barrier-first vascular injury with immune spillover, or do they deserve a distinct mixed archetype with endocrine overlays?</td>
+            </tr>
+            
+            <tr>
+              <td>11</td>
+              <td>
+                <strong>Clarify Chronic Repetitive Tau / Clearance Mixed discriminator</strong>
+                <div class="subline">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</div>
+              </td>
+              <td>Chronic Repetitive Tau / Clearance Mixed</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.687</td>
+              <td>0.807</td>
+              <td><span class="pill novelty cross-disease-analog">cross_disease_analog</span></td>
+              <td>Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</td>
+            </tr>
+            
+            <tr>
+              <td>12</td>
+              <td>
+                <strong>Clarify Acute Mild Biomarker / Imaging Bridge discriminator</strong>
+                <div class="subline">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</div>
+              </td>
+              <td>Acute Mild Biomarker / Imaging Bridge</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.687</td>
+              <td>0.747</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which acute mild cases show a barrier-first signature versus a cytokine-first signature when GFAP, UCH-L1, and acute imaging are all present?</td>
+            </tr>
+            
+            <tr>
+              <td>13</td>
+              <td>
+                <strong>Clarify Chronic Severe Axonal / Network Decline discriminator</strong>
+                <div class="subline">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</div>
+              </td>
+              <td>Chronic Severe Axonal / Network Decline</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.687</td>
+              <td>0.747</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Which chronic severe cohorts still look metabolically active enough to justify mitochondrial rescue logic, and which are already dominated by structural degeneration?</td>
+            </tr>
+            
+            <tr>
+              <td>14</td>
+              <td>
+                <strong>Repair Axonal degeneration -&gt; chronic network dysfunction</strong>
+                <div class="subline">Tighten the timing and directional language for this provisional bridge before using it as a stronger downstream dependency.</div>
+              </td>
+              <td>Axonal Degeneration</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.647</td>
+              <td>0.707</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Run a targeted transition hardening pass with full-text timing review and contradiction cleanup.</td>
+            </tr>
+            
+            <tr>
+              <td>15</td>
+              <td>
+                <strong>Repair Tau / proteinopathy progression -&gt; chronic network dysfunction</strong>
+                <div class="subline">Tighten the timing and directional language for this provisional bridge before using it as a stronger downstream dependency.</div>
+              </td>
+              <td>Tau / Proteinopathy Progression</td>
+              <td>Highest-Value Next Task</td>
+              <td>0.647</td>
+              <td>0.707</td>
+              <td><span class="pill novelty tbi-emergent">tbi_emergent</span></td>
+              <td>Run a targeted transition hardening pass with full-text timing review and contradiction cleanup.</td>
+            </tr>
+            </tbody>
+        </table>
       </section>
       
-        <section class="mechanism-section">
-          <div class="section-heading">
-            <div>
-              <div class="eyebrow">Mechanism lane</div>
-              <h2>Blood-Brain Barrier Dysfunction</h2>
-            </div>
-          </div>
-          <div class="idea-grid">
+            <section class="mechanism-section">
+              <div class="section-heading">
+                <div>
+                  <div class="eyebrow">Ranking family</div>
+                  <h2>Strongest Causal Bridge</h2>
+                </div>
+              </div>
+              <div class="idea-grid">
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Blood-Brain Barrier Failure</div>
+                  <h3>1. BBB permeability increase -&gt; peripheral immune infiltration bridge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.871</span>
+                  <span class="pill novelty tbi-established">tbi_established</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence supports a directional transition in which BBB permeability increase facilitates peripheral immune infiltration.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This bridge already feeds 4 endotype packet(s), 2 translational packet(s), and 2 progression object(s).</span></div>
+                <div><span class="label">Rationale</span><span>BBB permeability increase -&gt; peripheral immune infiltration is currently the strongest directional link connecting Blood-Brain Barrier Failure to Neuroinflammation / Microglial State Change.</span></div>
+                <div><span class="label">Next move</span><span>Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded.</span></div>
+                <div><span class="label">Blockers</span><span>Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded.</span></div>
+              </div>
+            </article>
             
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Blood-Brain Barrier Dysfunction</div>
-              <h3>Blood-Brain Barrier Dysfunction driver hypothesis</h3>
-            </div>
-            <div class="pill-stack">
-              <span class="pill decision">Write now</span>
-              <span class="pill strength assertive">assertive</span>
-            </div>
-          </div>
-          <p class="statement">SCFAs cross the BBB and inhibit HDACs to promote neuroprotection. TBI-induced BBB breakdown promotes neuroinflammation. Neutrophil-derived exosomes disrupt BBB integrity.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>ready_now for idea generation with 27 papers and 6 queue items.</span></div>
-            <div><span class="label">Next test</span><span>Pressure-test the chain against the best full-text anchors and see whether the same ordering survives after blocker cleanup.</span></div>
-            <div><span class="label">Current blocker</span><span>Open blockers: needs source upgrade 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.</span></div>
-            <div><span class="label">What this unlocks</span><span>Advance the mechanism into the chapter draft and keep the blocker notes attached.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>This is strong enough to anchor prose now.</span></div>
-          </div>
-          <div class="pmid-row"><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41859452/" target="_blank" rel="noreferrer">41859452</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41446731/" target="_blank" rel="noreferrer">41446731</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41660351/" target="_blank" rel="noreferrer">41660351</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41752185/" target="_blank" rel="noreferrer">41752185</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41756282/" target="_blank" rel="noreferrer">41756282</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41683989/" target="_blank" rel="noreferrer">41683989</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41673382/" target="_blank" rel="noreferrer">41673382</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41801080/" target="_blank" rel="noreferrer">41801080</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41765742/" target="_blank" rel="noreferrer">41765742</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41786390/" target="_blank" rel="noreferrer">41786390</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41532955/" target="_blank" rel="noreferrer">41532955</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41748851/" target="_blank" rel="noreferrer">41748851</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41863251/" target="_blank" rel="noreferrer">41863251</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41039850/" target="_blank" rel="noreferrer">41039850</a></div>
-        </article>
-        
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Blood-Brain Barrier Dysfunction</div>
-              <h3>Blood-Brain Barrier Dysfunction → Neuroinflammation / Microglial Activation bridge hypothesis</h3>
-            </div>
-            <div class="pill-stack">
-              <span class="pill decision">Needs adjudication</span>
-              <span class="pill strength moderate">moderate</span>
-            </div>
-          </div>
-          <p class="statement">Current BBB rows explicitly support a bridge into neuroinflammation, so BBB should be written as an upstream amplifier of inflammatory injury after TBI.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>This bridge is already explicit in the synthesis packet, so it is ready to be used as a causal demo path.</span></div>
-            <div><span class="label">Next test</span><span>Use the cross-mechanism chain to test whether Blood-Brain Barrier Dysfunction should be framed as upstream of Neuroinflammation / Microglial Activation.</span></div>
-            <div><span class="label">Current blocker</span><span>upgrade_source:2</span></div>
-            <div><span class="label">What this unlocks</span><span>Use full-text anchors to confirm whether the upstream/downstream framing should hold.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>This bridge shapes the atlas architecture, so it needs explicit confirmation.</span></div>
-          </div>
-          <div class="pmid-row"><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41683989/" target="_blank" rel="noreferrer">41683989</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41673382/" target="_blank" rel="noreferrer">41673382</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41801080/" target="_blank" rel="noreferrer">41801080</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41765742/" target="_blank" rel="noreferrer">41765742</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41786390/" target="_blank" rel="noreferrer">41786390</a></div>
-        </article>
-        
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Blood-Brain Barrier Dysfunction</div>
-              <h3>Blood-Brain Barrier Dysfunction translational probe hypothesis</h3>
-            </div>
-            <div class="pill-stack">
-              <span class="pill decision">Needs enrichment</span>
-              <span class="pill strength moderate">moderate</span>
-            </div>
-          </div>
-          <p class="statement">Modulating AQP4, CLDN5, MMP9 may be the fastest translational probe for blood-brain barrier dysfunction in this atlas version.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>These are the most actionable targets/entities currently attached to this mechanism.</span></div>
-            <div><span class="label">Next test</span><span>Prioritize enrichment and literature checks for AQP4, CLDN5, MMP9 before expanding to a wider target set.</span></div>
-            <div><span class="label">Current blocker</span><span>compound/trial depth is still limited</span></div>
-            <div><span class="label">What this unlocks</span><span>Fill target, compound, and trial support before promoting this beyond a probe idea.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>The mechanism is interesting, but the translational layer is still too thin.</span></div>
-          </div>
-          <div class="pmid-row"><span class="muted">No PMIDs listed</span></div>
-        </article>
-        
-          </div>
-        </section>
-        
-        <section class="mechanism-section">
-          <div class="section-heading">
-            <div>
-              <div class="eyebrow">Mechanism lane</div>
-              <h2>Mitochondrial Dysfunction</h2>
-            </div>
-          </div>
-          <div class="idea-grid">
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Glymphatic / Astroglial Clearance Failure</div>
+                  <h3>2. Glymphatic failure -&gt; tau / protein accumulation bridge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.781</span>
+                  <span class="pill novelty tbi-established">tbi_established</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence supports a transition in which glymphatic failure contributes to tau or broader pathogenic protein accumulation.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This bridge already feeds 1 endotype packet(s), 2 translational packet(s), and 2 progression object(s).</span></div>
+                <div><span class="label">Rationale</span><span>Glymphatic failure -&gt; tau / protein accumulation is currently the strongest directional link connecting Glymphatic / Astroglial Clearance Failure to Tau / Proteinopathy Progression.</span></div>
+                <div><span class="label">Next move</span><span>Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Blockers</span><span>Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
             
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Mitochondrial Dysfunction</div>
-              <h3>Mitochondrial Dysfunction driver hypothesis</h3>
-            </div>
-            <div class="pill-stack">
-              <span class="pill decision">Needs adjudication</span>
-              <span class="pill strength moderate">moderate</span>
-            </div>
-          </div>
-          <p class="statement">Parkin promotes mitochondrial biogenesis and fission while inhibiting mitochondrial fusion post-TBI. MAM-mediated Ca2+ overload drives mitochondrial-dependent apoptosis. Parkin knockout exacerbates CCI-induced brain damage, edema, and behavioral deficits.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>ready_now for idea generation with 22 papers and 5 queue items.</span></div>
-            <div><span class="label">Next test</span><span>Pressure-test the chain against the best full-text anchors and see whether the same ordering survives after blocker cleanup.</span></div>
-            <div><span class="label">Current blocker</span><span>Open blockers: needs source upgrade 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.</span></div>
-            <div><span class="label">What this unlocks</span><span>Pressure-test the strongest anchors and decide what language stays assertive versus cautionary.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>The driver story is usable, but the narrative still needs a bounded scientific pass.</span></div>
-          </div>
-          <div class="pmid-row"><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41651694/" target="_blank" rel="noreferrer">41651694</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41737534/" target="_blank" rel="noreferrer">41737534</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41867877/" target="_blank" rel="noreferrer">41867877</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41623705/" target="_blank" rel="noreferrer">41623705</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41267966/" target="_blank" rel="noreferrer">41267966</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41480492/" target="_blank" rel="noreferrer">41480492</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41648326/" target="_blank" rel="noreferrer">41648326</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41735605/" target="_blank" rel="noreferrer">41735605</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41737251/" target="_blank" rel="noreferrer">41737251</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41648607/" target="_blank" rel="noreferrer">41648607</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41709427/" target="_blank" rel="noreferrer">41709427</a></div>
-        </article>
-        
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Mitochondrial Dysfunction</div>
-              <h3>Mitochondrial Dysfunction translational probe hypothesis</h3>
-            </div>
-            <div class="pill-stack">
-              <span class="pill decision">Needs enrichment</span>
-              <span class="pill strength moderate">moderate</span>
-            </div>
-          </div>
-          <p class="statement">Modulating CAT, CYBB, KNG1 may be the fastest translational probe for mitochondrial dysfunction in this atlas version.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>These are the most actionable targets/entities currently attached to this mechanism.</span></div>
-            <div><span class="label">Next test</span><span>Prioritize enrichment and literature checks for CAT, CYBB, KNG1 before expanding to a wider target set.</span></div>
-            <div><span class="label">Current blocker</span><span>compound/trial depth is still limited</span></div>
-            <div><span class="label">What this unlocks</span><span>Fill target, compound, and trial support before promoting this beyond a probe idea.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>The mechanism is interesting, but the translational layer is still too thin.</span></div>
-          </div>
-          <div class="pmid-row"><span class="muted">No PMIDs listed</span></div>
-        </article>
-        
-          </div>
-        </section>
-        
-        <section class="mechanism-section">
-          <div class="section-heading">
-            <div>
-              <div class="eyebrow">Mechanism lane</div>
-              <h2>Neuroinflammation / Microglial Activation</h2>
-            </div>
-          </div>
-          <div class="idea-grid">
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>3. Axonal degeneration -&gt; chronic network dysfunction bridge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.728</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence suggests that axonal degeneration and white-matter injury contribute to chronic network dysfunction and impaired recovery trajectories.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This bridge already feeds 2 endotype packet(s), 1 translational packet(s), and 3 progression object(s).</span></div>
+                <div><span class="label">Rationale</span><span>Axonal degeneration -&gt; chronic network dysfunction is currently the strongest directional link connecting Axonal Degeneration to Axonal Degeneration.</span></div>
+                <div><span class="label">Next move</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
             
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Neuroinflammation / Microglial Activation</div>
-              <h3>Neuroinflammation / Microglial Activation driver hypothesis</h3>
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Tau / Proteinopathy Progression</div>
+                  <h3>4. Tau / proteinopathy progression -&gt; chronic network dysfunction bridge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.712</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence suggests that tau and related proteinopathy progression contribute to chronic network dysfunction and cognitive decline.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This bridge already feeds 2 endotype packet(s), 1 translational packet(s), and 2 progression object(s).</span></div>
+                <div><span class="label">Rationale</span><span>Tau / proteinopathy progression -&gt; chronic network dysfunction is currently the strongest directional link connecting Tau / Proteinopathy Progression to Tau / Proteinopathy Progression.</span></div>
+                <div><span class="label">Next move</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Mitochondrial / Bioenergetic Collapse</div>
+                  <h3>5. Mitochondrial ROS -&gt; inflammasome activation bridge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.68</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence suggests that mitochondrial ROS or related mitochondrial stress signals amplify inflammasome activation.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This bridge already feeds 2 endotype packet(s), 2 translational packet(s), and 2 progression object(s).</span></div>
+                <div><span class="label">Rationale</span><span>Mitochondrial ROS -&gt; inflammasome activation is currently the strongest directional link connecting Mitochondrial / Bioenergetic Collapse to Neuroinflammation / Microglial State Change.</span></div>
+                <div><span class="label">Next move</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Neuroinflammation / Microglial State Change</div>
+                  <h3>6. Neuroinflammation / microglial state change -&gt; tau / proteinopathy progression bridge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.633</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence suggests that sustained neuroinflammation and microglial state change can amplify tau pathology and broader proteinopathy progression.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This bridge already feeds 1 endotype packet(s), 2 translational packet(s), and 1 progression object(s).</span></div>
+                <div><span class="label">Rationale</span><span>Neuroinflammation / microglial state change -&gt; tau / proteinopathy progression is currently the strongest directional link connecting Neuroinflammation / Microglial State Change to Tau / Proteinopathy Progression.</span></div>
+                <div><span class="label">Next move</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
             </div>
-            <div class="pill-stack">
-              <span class="pill decision">Needs adjudication</span>
-              <span class="pill strength moderate">moderate</span>
+            </section>
+            
+            <section class="mechanism-section">
+              <div class="section-heading">
+                <div>
+                  <div class="eyebrow">Ranking family</div>
+                  <h2>Weakest Evidence Hinge</h2>
+                </div>
+              </div>
+              <div class="idea-grid">
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Tau / Proteinopathy Progression</div>
+                  <h3>1. Clarify Chronic Repetitive Tau / Clearance Mixed</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 1.0</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This endotype is already in the product, so clarifying it has immediate downstream value.</span></div>
+                <div><span class="label">Rationale</span><span>p-tau or BD-tau together with AQP4 or DTI-ALPS-type clearance evidence.</span></div>
+                <div><span class="label">Next move</span><span>Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</span></div>
+                <div><span class="label">Blockers</span><span>Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>2. Harden Cognitive Decline Phenotype</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.886</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Cognitive decline is the downstream phenotype that makes the rest of the process engine clinically meaningful rather than merely mechanistic.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This object currently shapes 3 endotype packet(s) and 2 translational packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</span></div>
+                <div><span class="label">Next move</span><span>Which upstream objects or transitions are most consistently associated with chronic cognitive decline in the current corpus?</span></div>
+                <div><span class="label">Blockers</span><span>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Blood-Brain Barrier Failure</div>
+                  <h3>3. Harden Neurovascular Uncoupling</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.836</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Neurovascular uncoupling is a candidate systems-level object that could connect vascular leak, impaired clearance, and later network fragility.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This object currently shapes 2 endotype packet(s) and 2 translational packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Object still needs denser direct support before it should be treated as hardened. || Object remains seeded because parent coverage or direct evidence is still incomplete. || Some supporting rows are abstract-only and should be weighted cautiously.</span></div>
+                <div><span class="label">Next move</span><span>Does the corpus support neurovascular uncoupling as a recurring object, or is it still mostly implied by BBB and clearance disruption?</span></div>
+                <div><span class="label">Blockers</span><span>Object still needs denser direct support before it should be treated as hardened. || Object remains seeded because parent coverage or direct evidence is still incomplete. || Some supporting rows are abstract-only and should be weighted cautiously.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>4. Clarify Chronic Severe Axonal / Network Decline</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.783</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">The chronic severe packet may separate best when we treat axonal/network decline as the dominant burden expression of earlier metabolic and vascular stress, not just structural damage.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This endotype is already in the product, so clarifying it has immediate downstream value.</span></div>
+                <div><span class="label">Rationale</span><span>Early MRI traumatic axonal injury burden paired with later white matter or language/network dysfunction.</span></div>
+                <div><span class="label">Next move</span><span>Which chronic severe cohorts still look metabolically active enough to justify mitochondrial rescue logic, and which are already dominated by structural degeneration?</span></div>
+                <div><span class="label">Blockers</span><span>The current packet needs stronger biomarker plus longitudinal-function linkages.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Mitochondrial / Bioenergetic Collapse</div>
+                  <h3>5. Clarify Chronic Mild Metabolic / White Matter Dominant</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.713</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">ATP/ROS/NfL/FA-style clustering may separate a chronic mild metabolic endotype that is being obscured by generic symptom or inflammation groupings.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This endotype is already in the product, so clarifying it has immediate downstream value.</span></div>
+                <div><span class="label">Rationale</span><span>NfL or tau paired with DTI white matter disruption and metabolic or mitochondrial stress signals.</span></div>
+                <div><span class="label">Next move</span><span>Which chronic mild cohorts are better explained by metabolic and white matter burden than by continuing vascular or inflammatory pressure?</span></div>
+                <div><span class="label">Blockers</span><span>The packet still needs stronger direct chronic metabolomic and transcriptomic cohort anchors.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Blood-Brain Barrier Failure</div>
+                  <h3>6. Clarify Acute Blast Vascular / Inflammatory Mixed</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.751</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">The highest-value blast endotype may be a mixed vascular-plus-inflammatory state that requires barrier-sensitive and immune-sensitive readouts together rather than a single dominant mechanism label.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This endotype is already in the product, so clarifying it has immediate downstream value.</span></div>
+                <div><span class="label">Rationale</span><span>GFAP or tau plus military blast exposure history and immune-cell or endocrine disturbance signals.</span></div>
+                <div><span class="label">Next move</span><span>Do blast-exposed cohorts behave more like barrier-first vascular injury with immune spillover, or do they deserve a distinct mixed archetype with endocrine overlays?</span></div>
+                <div><span class="label">Blockers</span><span>Cohort granularity is still thin, and the current packet needs better direct imaging anchors.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Blood-Brain Barrier Failure</div>
+                  <h3>7. Clarify Acute Mild Biomarker / Imaging Bridge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.691</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">A biomarker-plus-imaging bridge may separate the acute mild cases that later look inflammatory from those that remain mostly vascular and self-limited.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This endotype is already in the product, so clarifying it has immediate downstream value.</span></div>
+                <div><span class="label">Rationale</span><span>GFAP + UCH-L1 paired with acute imaging evidence of microbleeds or DTI disruption.</span></div>
+                <div><span class="label">Next move</span><span>Which acute mild cases show a barrier-first signature versus a cytokine-first signature when GFAP, UCH-L1, and acute imaging are all present?</span></div>
+                <div><span class="label">Blockers</span><span>Subacute conversion rules are still thin; the current packet is strongest at triage and early follow-up.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Mitochondrial / Bioenergetic Collapse</div>
+                  <h3>8. Harden Persistent Metabolic Dysfunction</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.67</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This object currently shapes 1 endotype packet(s) and 2 translational packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</span></div>
+                <div><span class="label">Next move</span><span>Is the current evidence dense enough to separate persistent metabolic dysfunction from generic mitochondrial injury rhetoric?</span></div>
+                <div><span class="label">Blockers</span><span>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>9. Harden Synaptic Loss</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.67</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Synaptic loss is a plausible convergence point where structural, metabolic, and proteinopathy stress start becoming functionally costly.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This object currently shapes 1 endotype packet(s) and 2 translational packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously.</span></div>
+                <div><span class="label">Next move</span><span>Does the current corpus support synaptic loss as a separate recurring object, or is it still mostly riding on axonal and tau signals?</span></div>
+                <div><span class="label">Blockers</span><span>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>10. Harden White Matter Degeneration</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.67</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">White matter degeneration is one of the most visible ways early structural injury propagates into chronic network vulnerability.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This object currently shapes 2 endotype packet(s) and 1 translational packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</span></div>
+                <div><span class="label">Next move</span><span>Can the current corpus distinguish white matter degeneration from acute axonal injury strongly enough to treat it as a recurring progression object?</span></div>
+                <div><span class="label">Blockers</span><span>Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Mitochondrial / Bioenergetic Collapse</div>
+                  <h3>11. Resolve Mitochondrial ROS -&gt; inflammasome activation hinge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.647</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence suggests that mitochondrial ROS or related mitochondrial stress signals amplify inflammasome activation.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This uncertainty currently sits under 2 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Next move</span><span>Resolve this hinge with targeted full-text review and a tighter timing statement before promoting downstream claims.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>12. Resolve Axonal degeneration -&gt; chronic network dysfunction hinge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.635</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence suggests that axonal degeneration and white-matter injury contribute to chronic network dysfunction and impaired recovery trajectories.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This uncertainty currently sits under 2 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Next move</span><span>Resolve this hinge with targeted full-text review and a tighter timing statement before promoting downstream claims.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Tau / Proteinopathy Progression</div>
+                  <h3>13. Resolve Tau / proteinopathy progression -&gt; chronic network dysfunction hinge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.635</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence suggests that tau and related proteinopathy progression contribute to chronic network dysfunction and cognitive decline.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This uncertainty currently sits under 2 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Next move</span><span>Resolve this hinge with targeted full-text review and a tighter timing statement before promoting downstream claims.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Neuroinflammation / Microglial State Change</div>
+                  <h3>14. Resolve Neuroinflammation / microglial state change -&gt; tau / proteinopathy progression hinge</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.512</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Current TBI evidence suggests that sustained neuroinflammation and microglial state change can amplify tau pathology and broader proteinopathy progression.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This uncertainty currently sits under 1 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Next move</span><span>Resolve this hinge with targeted full-text review and a tighter timing statement before promoting downstream claims.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
             </div>
-          </div>
-          <p class="statement">Microglial NLRP3 inflammasome activation promotes pro-inflammatory cytokine release. Aquaporin-4 (AQP-4) genetic knock-out exacerbates post-traumatic brain injury (TBI) glymphatic dysfunction, resulting in the accumulation of tau protein, S100β, glial fibrillary acidic protein (GFAP), and neuron-specific enolase (NSE), which promotes neurofibrillary pathology, neuroinflammation, and neurodegeneration. GAS6 in 3D-sEVs drives M1 to M2 microglial polarization.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>ready_now for idea generation with 75 papers and 18 queue items.</span></div>
-            <div><span class="label">Next test</span><span>Pressure-test the chain against the best full-text anchors and see whether the same ordering survives after blocker cleanup.</span></div>
-            <div><span class="label">Current blocker</span><span>Open blockers: needs deeper extraction 1, needs source upgrade 1, needs adjudication 1 Some supporting rows still carry abstract-only evidence, so claims should stay bounded to mechanism-level interpretation.</span></div>
-            <div><span class="label">What this unlocks</span><span>Pressure-test the strongest anchors and decide what language stays assertive versus cautionary.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>The driver story is usable, but the narrative still needs a bounded scientific pass.</span></div>
-          </div>
-          <div class="pmid-row"><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41737534/" target="_blank" rel="noreferrer">41737534</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41683989/" target="_blank" rel="noreferrer">41683989</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41880282/" target="_blank" rel="noreferrer">41880282</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41734021/" target="_blank" rel="noreferrer">41734021</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41853701/" target="_blank" rel="noreferrer">41853701</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41179995/" target="_blank" rel="noreferrer">41179995</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41642456/" target="_blank" rel="noreferrer">41642456</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41648326/" target="_blank" rel="noreferrer">41648326</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41103638/" target="_blank" rel="noreferrer">41103638</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41508250/" target="_blank" rel="noreferrer">41508250</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41612383/" target="_blank" rel="noreferrer">41612383</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41824127/" target="_blank" rel="noreferrer">41824127</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41618372/" target="_blank" rel="noreferrer">41618372</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41625091/" target="_blank" rel="noreferrer">41625091</a></div>
-        </article>
-        
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Neuroinflammation / Microglial Activation</div>
-              <h3>Neuroinflammation / Microglial Activation → Blood-Brain Barrier Dysfunction bridge hypothesis</h3>
+            </section>
+            
+            <section class="mechanism-section">
+              <div class="section-heading">
+                <div>
+                  <div class="eyebrow">Ranking family</div>
+                  <h2>Best Intervention Leverage Point</h2>
+                </div>
+              </div>
+              <div class="idea-grid">
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Mitochondrial / Bioenergetic Collapse</div>
+                  <h3>1. Mitochondrial / Bioenergetic Collapse -&gt; PRKN</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 1.0</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>4 endotype packet(s) already map back to this perturbation path.</span></div>
+                <div><span class="label">Rationale</span><span>PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.</span></div>
+                <div><span class="label">Next move</span><span>Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</span></div>
+                <div><span class="label">Blockers</span><span>none_detected</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Tau / Proteinopathy Progression</div>
+                  <h3>2. Tau / Proteinopathy Progression -&gt; DYRK1A</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.871</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>2 endotype packet(s) already map back to this perturbation path.</span></div>
+                <div><span class="label">Rationale</span><span>DYRK1A is the strongest direct perturbation anchor surfaced in the current repo for this lane because the corpus already includes DYRK1A inhibition with SM07883 in a chronic repetitive head-injury model.</span></div>
+                <div><span class="label">Next move</span><span>Extend the DYRK1A packet beyond phospho-tau alone by pairing tissue tau suppression with circulating tau variants and chronic function.</span></div>
+                <div><span class="label">Blockers</span><span>none_detected</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Blood-Brain Barrier Failure</div>
+                  <h3>3. Blood-Brain Barrier Failure -&gt; OCLN</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.857</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Prioritize an OCLN-centered barrier-repair packet first because the current BBB target packets are strongest around OCLN, CLDN5, and TJP1, and this lane already anchors the BBB-to-immune-infiltration bridge. Current repo support: 5 full-text-like target-seed hit(s) and 5 exact target match(es).</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>7 endotype packet(s) already map back to this perturbation path.</span></div>
+                <div><span class="label">Rationale</span><span>OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.</span></div>
+                <div><span class="label">Next move</span><span>Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</span></div>
+                <div><span class="label">Blockers</span><span>no direct compound or trial attachment surfaced in this build</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Neuroinflammation / Microglial State Change</div>
+                  <h3>4. Neuroinflammation / Microglial State Change -&gt; NLRP3</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.857</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Use NLRP3 as the primary perturbation node because it is the strongest inflammatory target packet in the repo, links directly to the mito-to-inflammasome transition, and gives a cleaner perturbation frame than chasing one downstream cytokine at a time. Current repo support: 9 full-text-like target-seed hit(s) and 11 exact target match(es).</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>5 endotype packet(s) already map back to this perturbation path.</span></div>
+                <div><span class="label">Rationale</span><span>NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.</span></div>
+                <div><span class="label">Next move</span><span>Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</span></div>
+                <div><span class="label">Blockers</span><span>no direct compound or trial attachment surfaced in this build</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>5. Axonal Degeneration -&gt; SARM1</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.716</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Treat axonal degeneration as a SARM1-centered degeneration program for now because the current evidence supports SARM1 activation as part of the axonal-degeneration chain, but the packet still needs stronger direct perturbation support than BBB, mitochondrial, or inflammasome lanes. Direct corpus signal: Collateral sprouting is independent of Sarm1-mediated Wallerian degeneration.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>3 endotype packet(s) already map back to this perturbation path.</span></div>
+                <div><span class="label">Rationale</span><span>SARM1 is the strongest TBI-core axonal-degeneration program anchor in the current repo, even though this lane is still more readout-rich than target-rich.</span></div>
+                <div><span class="label">Next move</span><span>Run an axonal-degeneration packet with imaging, plasma neuroaxonal spillover, and network-function readouts so the lane is not judged on DTI alone.</span></div>
+                <div><span class="label">Blockers</span><span>no direct compound or trial attachment surfaced in this build</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Glymphatic / Astroglial Clearance Failure</div>
+                  <h3>6. Glymphatic / Astroglial Clearance Failure -&gt; AQP4</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.666</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Use an AQP4-centered clearance module because it is the strongest lane-native target currently represented in the corpus, and the glymphatic-to-tau transition already makes downstream protein burden an interpretable readout. Direct corpus signal: These benefits were abolished by the aquaporin-4 inhibitor TGN-020, indicating that mNGF improves TBI outcome by correcting AQP4 dysfunction.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>1 endotype packet(s) already map back to this perturbation path.</span></div>
+                <div><span class="label">Rationale</span><span>AQP4 is the clearest lane-native clearance target in the current repo and sits inside both glymphatic and neurovascular reasoning.</span></div>
+                <div><span class="label">Next move</span><span>Run a clearance packet anchored on AQP4 with DTI-ALPS, polarization/localization, and downstream tau burden readouts across the subacute-to-chronic window.</span></div>
+                <div><span class="label">Blockers</span><span>no direct compound or trial attachment surfaced in this build</span></div>
+              </div>
+            </article>
             </div>
-            <div class="pill-stack">
-              <span class="pill decision">Needs adjudication</span>
-              <span class="pill strength moderate">moderate</span>
+            </section>
+            
+            <section class="mechanism-section">
+              <div class="section-heading">
+                <div>
+                  <div class="eyebrow">Ranking family</div>
+                  <h2>Most Informative Biomarker Panel</h2>
+                </div>
+              </div>
+              <div class="idea-grid">
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Blood-Brain Barrier Failure</div>
+                  <h3>1. Blood-Brain Barrier Failure biomarker panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 1.0</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.</span></div>
+                <div><span class="label">Next move</span><span>Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</span></div>
+                <div><span class="label">Blockers</span><span>Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover; keep barrier-module claims tied to permeability outcomes, not junction markers alone.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Neuroinflammation / Microglial State Change</div>
+                  <h3>2. Neuroinflammation / Microglial State Change biomarker panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 1.0</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.</span></div>
+                <div><span class="label">Next move</span><span>Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</span></div>
+                <div><span class="label">Blockers</span><span>Study found no significant correlation, contradicting the hypothesis of cumulative damage.; Single-cytokine changes can overstate inflammatory control; keep this packet tied to a network-level cytokine plus glial-stress readout panel.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Subacute Repetitive Inflammatory-Dominant</div>
+                  <h3>3. Subacute Repetitive Inflammatory-Dominant discriminator panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 1.0</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Use IL-6, IL-1beta, TNF-alpha, GFAP to discriminate the subacute repetitive inflammatory-dominant endotype from nearby cohorts.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.</span></div>
+                <div><span class="label">Rationale</span><span>IL-6 / TNF-alpha / GFAP with repetitive exposure history plus DTI or white matter stress cues.</span></div>
+                <div><span class="label">Next move</span><span>Which repetitive cohorts still look barrier-conditioned in the subacute window, and which ones are already dominated by persistent microglial activation?</span></div>
+                <div><span class="label">Blockers</span><span>The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Acute Severe Vascular-Dominant</div>
+                  <h3>4. Acute Severe Vascular-Dominant discriminator panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.946</span>
+                  <span class="pill novelty tbi-established">tbi_established</span>
+                </div>
+              </div>
+              <p class="statement">Use GFAP, S100B, D-dimer, lactate to discriminate the acute severe vascular-dominant endotype from nearby cohorts.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.</span></div>
+                <div><span class="label">Rationale</span><span>GFAP or S100B paired with hypoperfusion / hematoma expansion markers and early imaging burden.</span></div>
+                <div><span class="label">Next move</span><span>Which acute severe cohorts show enough barrier/perfusion pressure that BBB repair should come before a broader anti-inflammatory packet?</span></div>
+                <div><span class="label">Blockers</span><span>The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Mitochondrial / Bioenergetic Collapse</div>
+                  <h3>5. Mitochondrial / Bioenergetic Collapse biomarker panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 1.0</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is already attached to a translational packet and can be tested against 3 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.</span></div>
+                <div><span class="label">Next move</span><span>Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</span></div>
+                <div><span class="label">Blockers</span><span>Study found no significant correlation, contradicting the hypothesis of cumulative damage.; Oxidative-stress markers may improve without real ATP rescue or downstream inflammasome relief; keep this packet tied to both mitochondrial and inflammatory readouts.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Acute Blast Vascular / Inflammatory Mixed</div>
+                  <h3>6. Acute Blast Vascular / Inflammatory Mixed discriminator panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.936</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Use GFAP, tau, pituitary hormone abnormalities, immune-cell subset shift to discriminate the acute blast vascular / inflammatory mixed endotype from nearby cohorts.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.</span></div>
+                <div><span class="label">Rationale</span><span>GFAP or tau plus military blast exposure history and immune-cell or endocrine disturbance signals.</span></div>
+                <div><span class="label">Next move</span><span>Do blast-exposed cohorts behave more like barrier-first vascular injury with immune spillover, or do they deserve a distinct mixed archetype with endocrine overlays?</span></div>
+                <div><span class="label">Blockers</span><span>Cohort granularity is still thin, and the current packet needs better direct imaging anchors.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Chronic Repetitive Tau / Clearance Mixed</div>
+                  <h3>7. Chronic Repetitive Tau / Clearance Mixed discriminator panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.936</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Use BD-tau, p-tau, GFAP, AQP4 to discriminate the chronic repetitive tau / clearance mixed endotype from nearby cohorts.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.</span></div>
+                <div><span class="label">Rationale</span><span>p-tau or BD-tau together with AQP4 or DTI-ALPS-type clearance evidence.</span></div>
+                <div><span class="label">Next move</span><span>Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</span></div>
+                <div><span class="label">Blockers</span><span>Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Acute Mild Biomarker / Imaging Bridge</div>
+                  <h3>8. Acute Mild Biomarker / Imaging Bridge discriminator panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.876</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Use GFAP, UCH-L1, NfL, tau to discriminate the acute mild biomarker / imaging bridge endotype from nearby cohorts.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.</span></div>
+                <div><span class="label">Rationale</span><span>GFAP + UCH-L1 paired with acute imaging evidence of microbleeds or DTI disruption.</span></div>
+                <div><span class="label">Next move</span><span>Which acute mild cases show a barrier-first signature versus a cytokine-first signature when GFAP, UCH-L1, and acute imaging are all present?</span></div>
+                <div><span class="label">Blockers</span><span>Subacute conversion rules are still thin; the current packet is strongest at triage and early follow-up.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Chronic Mild Metabolic / White Matter Dominant</div>
+                  <h3>9. Chronic Mild Metabolic / White Matter Dominant discriminator panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.876</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Use NfL, tau, ATP, ROS to discriminate the chronic mild metabolic / white matter dominant endotype from nearby cohorts.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.</span></div>
+                <div><span class="label">Rationale</span><span>NfL or tau paired with DTI white matter disruption and metabolic or mitochondrial stress signals.</span></div>
+                <div><span class="label">Next move</span><span>Which chronic mild cohorts are better explained by metabolic and white matter burden than by continuing vascular or inflammatory pressure?</span></div>
+                <div><span class="label">Blockers</span><span>The packet still needs stronger direct chronic metabolomic and transcriptomic cohort anchors.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Chronic Severe Axonal / Network Decline</div>
+                  <h3>10. Chronic Severe Axonal / Network Decline discriminator panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.876</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Use NfL, tau, GFAP, Fractional Anisotropy (FA) to discriminate the chronic severe axonal / network decline endotype from nearby cohorts.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.</span></div>
+                <div><span class="label">Rationale</span><span>Early MRI traumatic axonal injury burden paired with later white matter or language/network dysfunction.</span></div>
+                <div><span class="label">Next move</span><span>Which chronic severe cohorts still look metabolically active enough to justify mitochondrial rescue logic, and which are already dominated by structural degeneration?</span></div>
+                <div><span class="label">Blockers</span><span>The current packet needs stronger biomarker plus longitudinal-function linkages.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>11. Axonal Degeneration biomarker panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.788</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Track FA, MD, RD, NfL to test whether SARM1 is moving the expected lane biology.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is already attached to a translational packet and can be tested against 2 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>SARM1 is the strongest TBI-core axonal-degeneration program anchor in the current repo, even though this lane is still more readout-rich than target-rich.</span></div>
+                <div><span class="label">Next move</span><span>Run an axonal-degeneration packet with imaging, plasma neuroaxonal spillover, and network-function readouts so the lane is not judged on DTI alone.</span></div>
+                <div><span class="label">Blockers</span><span>Study found no significant correlation, contradicting the hypothesis of cumulative damage.; After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury.; Imaging shifts can reflect edema resolution rather than true axonal rescue, and plasma neuroaxonal markers can remain elevated despite apparent structural improvement.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Glymphatic / Astroglial Clearance Failure</div>
+                  <h3>12. Glymphatic / Astroglial Clearance Failure biomarker panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.723</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Track AQP4, DTI-ALPS, GFAP, C3 to test whether AQP4 is moving the expected lane biology.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is already attached to a translational packet and can be tested against 1 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>AQP4 is the clearest lane-native clearance target in the current repo and sits inside both glymphatic and neurovascular reasoning.</span></div>
+                <div><span class="label">Next move</span><span>Run a clearance packet anchored on AQP4 with DTI-ALPS, polarization/localization, and downstream tau burden readouts across the subacute-to-chronic window.</span></div>
+                <div><span class="label">Blockers</span><span>AQP4 abundance can rise while polarization remains abnormal, and glial-stress markers can shift without any real movement in clearance readouts or tau burden.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Tau / Proteinopathy Progression</div>
+                  <h3>13. Tau / Proteinopathy Progression biomarker panel</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs adjudication</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.723</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Track BD-tau, t-tau, p-tau, AT8 to test whether DYRK1A is moving the expected lane biology.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This panel is already attached to a translational packet and can be tested against 1 endotype packet(s).</span></div>
+                <div><span class="label">Rationale</span><span>DYRK1A is the strongest direct perturbation anchor surfaced in the current repo for this lane because the corpus already includes DYRK1A inhibition with SM07883 in a chronic repetitive head-injury model.</span></div>
+                <div><span class="label">Next move</span><span>Extend the DYRK1A packet beyond phospho-tau alone by pairing tissue tau suppression with circulating tau variants and chronic function.</span></div>
+                <div><span class="label">Blockers</span><span>After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury.; Circulating tau can fall without matching tissue or functional improvement, and a single chronic model context is not enough to treat the lane as fully hardened.</span></div>
+              </div>
+            </article>
             </div>
-          </div>
-          <p class="statement">The inflammatory chapter should acknowledge that part of the immune signal likely sits downstream of BBB breakdown rather than being treated as a fully isolated mechanism.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>This bridge is already explicit in the synthesis packet, so it is ready to be used as a causal demo path.</span></div>
-            <div><span class="label">Next test</span><span>Use the cross-mechanism chain to test whether Neuroinflammation / Microglial Activation should be framed as upstream of Blood-Brain Barrier Dysfunction.</span></div>
-            <div><span class="label">Current blocker</span><span>upgrade_source:2</span></div>
-            <div><span class="label">What this unlocks</span><span>Use full-text anchors to confirm whether the upstream/downstream framing should hold.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>This bridge shapes the atlas architecture, so it needs explicit confirmation.</span></div>
-          </div>
-          <div class="pmid-row"><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41683989/" target="_blank" rel="noreferrer">41683989</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41673382/" target="_blank" rel="noreferrer">41673382</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41801080/" target="_blank" rel="noreferrer">41801080</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41765742/" target="_blank" rel="noreferrer">41765742</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41786390/" target="_blank" rel="noreferrer">41786390</a></div>
-        </article>
-        
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Neuroinflammation / Microglial Activation</div>
-              <h3>Neuroinflammation / Microglial Activation translational probe hypothesis</h3>
+            </section>
+            
+            <section class="mechanism-section">
+              <div class="section-heading">
+                <div>
+                  <div class="eyebrow">Ranking family</div>
+                  <h2>Highest-Value Next Task</h2>
+                </div>
+              </div>
+              <div class="idea-grid">
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Blood-Brain Barrier Failure</div>
+                  <h3>1. Attach translational evidence to Blood-Brain Barrier Failure</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.863</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Attach compounds, trials, or stronger genomics support around OCLN so this lane stops being logic-only.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is the shortest path from a bounded perturbation packet to an operator-ready intervention story.</span></div>
+                <div><span class="label">Rationale</span><span>Prioritize an OCLN-centered barrier-repair packet first because the current BBB target packets are strongest around OCLN, CLDN5, and TJP1, and this lane already anchors the BBB-to-immune-infiltration bridge. Current repo support: 5 full-text-like target-seed hit(s) and 5 exact target match(es).</span></div>
+                <div><span class="label">Next move</span><span>Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.</span></div>
+                <div><span class="label">Blockers</span><span>no direct compound or trial attachment surfaced in this build</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Mitochondrial / Bioenergetic Collapse</div>
+                  <h3>2. Attach translational evidence to Mitochondrial / Bioenergetic Collapse</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.863</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Attach compounds, trials, or stronger genomics support around PRKN so this lane stops being logic-only.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is the shortest path from a bounded perturbation packet to an operator-ready intervention story.</span></div>
+                <div><span class="label">Rationale</span><span>Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).</span></div>
+                <div><span class="label">Next move</span><span>Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.</span></div>
+                <div><span class="label">Blockers</span><span>none_detected</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Neuroinflammation / Microglial State Change</div>
+                  <h3>3. Attach translational evidence to Neuroinflammation / Microglial State Change</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.863</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Attach compounds, trials, or stronger genomics support around NLRP3 so this lane stops being logic-only.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is the shortest path from a bounded perturbation packet to an operator-ready intervention story.</span></div>
+                <div><span class="label">Rationale</span><span>Use NLRP3 as the primary perturbation node because it is the strongest inflammatory target packet in the repo, links directly to the mito-to-inflammasome transition, and gives a cleaner perturbation frame than chasing one downstream cytokine at a time. Current repo support: 9 full-text-like target-seed hit(s) and 11 exact target match(es).</span></div>
+                <div><span class="label">Next move</span><span>Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.</span></div>
+                <div><span class="label">Blockers</span><span>no direct compound or trial attachment surfaced in this build</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Mitochondrial / Bioenergetic Collapse</div>
+                  <h3>4. Repair Mitochondrial ROS -&gt; inflammasome activation</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.774</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Tighten the timing and directional language for this provisional bridge before using it as a stronger downstream dependency.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is a relatively cheap clarification step with broad impact on ranking quality.</span></div>
+                <div><span class="label">Rationale</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Next move</span><span>Run a targeted transition hardening pass with full-text timing review and contradiction cleanup.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Neuroinflammation / Microglial State Change</div>
+                  <h3>5. Repair Neuroinflammation / microglial state change -&gt; tau / proteinopathy progression</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.774</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Tighten the timing and directional language for this provisional bridge before using it as a stronger downstream dependency.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is a relatively cheap clarification step with broad impact on ranking quality.</span></div>
+                <div><span class="label">Rationale</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Next move</span><span>Run a targeted transition hardening pass with full-text timing review and contradiction cleanup.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Timing support is incomplete or only partially aligned with the expected transition window. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>6. Attach translational evidence to Axonal Degeneration</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.833</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Attach compounds, trials, or stronger genomics support around SARM1 so this lane stops being logic-only.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is the shortest path from a bounded perturbation packet to an operator-ready intervention story.</span></div>
+                <div><span class="label">Rationale</span><span>Treat axonal degeneration as a SARM1-centered degeneration program for now because the current evidence supports SARM1 activation as part of the axonal-degeneration chain, but the packet still needs stronger direct perturbation support than BBB, mitochondrial, or inflammasome lanes. Direct corpus signal: Collateral sprouting is independent of Sarm1-mediated Wallerian degeneration.</span></div>
+                <div><span class="label">Next move</span><span>Run an axonal-degeneration packet with imaging, plasma neuroaxonal spillover, and network-function readouts so the lane is not judged on DTI alone.</span></div>
+                <div><span class="label">Blockers</span><span>no direct compound or trial attachment surfaced in this build</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Glymphatic / Astroglial Clearance Failure</div>
+                  <h3>7. Attach translational evidence to Glymphatic / Astroglial Clearance Failure</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.833</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Attach compounds, trials, or stronger genomics support around AQP4 so this lane stops being logic-only.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is the shortest path from a bounded perturbation packet to an operator-ready intervention story.</span></div>
+                <div><span class="label">Rationale</span><span>Use an AQP4-centered clearance module because it is the strongest lane-native target currently represented in the corpus, and the glymphatic-to-tau transition already makes downstream protein burden an interpretable readout. Direct corpus signal: These benefits were abolished by the aquaporin-4 inhibitor TGN-020, indicating that mNGF improves TBI outcome by correcting AQP4 dysfunction.</span></div>
+                <div><span class="label">Next move</span><span>Run a clearance packet anchored on AQP4 with DTI-ALPS, polarization/localization, and downstream tau burden readouts across the subacute-to-chronic window.</span></div>
+                <div><span class="label">Blockers</span><span>no direct compound or trial attachment surfaced in this build</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Tau / Proteinopathy Progression</div>
+                  <h3>8. Attach translational evidence to Tau / Proteinopathy Progression</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.833</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Attach compounds, trials, or stronger genomics support around DYRK1A so this lane stops being logic-only.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is the shortest path from a bounded perturbation packet to an operator-ready intervention story.</span></div>
+                <div><span class="label">Rationale</span><span>Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem.</span></div>
+                <div><span class="label">Next move</span><span>Extend the DYRK1A packet beyond phospho-tau alone by pairing tissue tau suppression with circulating tau variants and chronic function.</span></div>
+                <div><span class="label">Blockers</span><span>none_detected</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Acute Severe Vascular-Dominant</div>
+                  <h3>9. Clarify Acute Severe Vascular-Dominant discriminator</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Write now</span>
+                  <span class="pill confidence assertive">assertive</span>
+                  <span class="pill value">value 0.701</span>
+                  <span class="pill novelty tbi-established">tbi_established</span>
+                </div>
+              </div>
+              <p class="statement">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is where Phase 5 endotype logic can still produce new ideas without changing the core evidence floor.</span></div>
+                <div><span class="label">Rationale</span><span>GFAP or S100B paired with hypoperfusion / hematoma expansion markers and early imaging burden.</span></div>
+                <div><span class="label">Next move</span><span>Which acute severe cohorts show enough barrier/perfusion pressure that BBB repair should come before a broader anti-inflammatory packet?</span></div>
+                <div><span class="label">Blockers</span><span>The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Acute Blast Vascular / Inflammatory Mixed</div>
+                  <h3>10. Clarify Acute Blast Vascular / Inflammatory Mixed discriminator</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.807</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is where Phase 5 endotype logic can still produce new ideas without changing the core evidence floor.</span></div>
+                <div><span class="label">Rationale</span><span>GFAP or tau plus military blast exposure history and immune-cell or endocrine disturbance signals.</span></div>
+                <div><span class="label">Next move</span><span>Do blast-exposed cohorts behave more like barrier-first vascular injury with immune spillover, or do they deserve a distinct mixed archetype with endocrine overlays?</span></div>
+                <div><span class="label">Blockers</span><span>Cohort granularity is still thin, and the current packet needs better direct imaging anchors.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Chronic Repetitive Tau / Clearance Mixed</div>
+                  <h3>11. Clarify Chronic Repetitive Tau / Clearance Mixed discriminator</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.807</span>
+                  <span class="pill novelty cross-disease-analog">cross_disease_analog</span>
+                </div>
+              </div>
+              <p class="statement">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is where Phase 5 endotype logic can still produce new ideas without changing the core evidence floor.</span></div>
+                <div><span class="label">Rationale</span><span>p-tau or BD-tau together with AQP4 or DTI-ALPS-type clearance evidence.</span></div>
+                <div><span class="label">Next move</span><span>Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?</span></div>
+                <div><span class="label">Blockers</span><span>Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Acute Mild Biomarker / Imaging Bridge</div>
+                  <h3>12. Clarify Acute Mild Biomarker / Imaging Bridge discriminator</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.747</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is where Phase 5 endotype logic can still produce new ideas without changing the core evidence floor.</span></div>
+                <div><span class="label">Rationale</span><span>GFAP + UCH-L1 paired with acute imaging evidence of microbleeds or DTI disruption.</span></div>
+                <div><span class="label">Next move</span><span>Which acute mild cases show a barrier-first signature versus a cytokine-first signature when GFAP, UCH-L1, and acute imaging are all present?</span></div>
+                <div><span class="label">Blockers</span><span>Subacute conversion rules are still thin; the current packet is strongest at triage and early follow-up.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Chronic Severe Axonal / Network Decline</div>
+                  <h3>13. Clarify Chronic Severe Axonal / Network Decline discriminator</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.747</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Use the next enrichment pass to sharpen the biomarker, imaging, or genomics split that makes this endotype operational rather than descriptive.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is where Phase 5 endotype logic can still produce new ideas without changing the core evidence floor.</span></div>
+                <div><span class="label">Rationale</span><span>Early MRI traumatic axonal injury burden paired with later white matter or language/network dysfunction.</span></div>
+                <div><span class="label">Next move</span><span>Which chronic severe cohorts still look metabolically active enough to justify mitochondrial rescue logic, and which are already dominated by structural degeneration?</span></div>
+                <div><span class="label">Blockers</span><span>The current packet needs stronger biomarker plus longitudinal-function linkages.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Axonal Degeneration</div>
+                  <h3>14. Repair Axonal degeneration -&gt; chronic network dysfunction</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.707</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Tighten the timing and directional language for this provisional bridge before using it as a stronger downstream dependency.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is a relatively cheap clarification step with broad impact on ranking quality.</span></div>
+                <div><span class="label">Rationale</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Next move</span><span>Run a targeted transition hardening pass with full-text timing review and contradiction cleanup.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
+            
+            <article class="idea-card">
+              <div class="idea-card-head">
+                <div>
+                  <div class="eyebrow">Tau / Proteinopathy Progression</div>
+                  <h3>15. Repair Tau / proteinopathy progression -&gt; chronic network dysfunction</h3>
+                </div>
+                <div class="pill-stack">
+                  <span class="pill decision">Needs enrichment</span>
+                  <span class="pill confidence moderate">moderate</span>
+                  <span class="pill value">value 0.707</span>
+                  <span class="pill novelty tbi-emergent">tbi_emergent</span>
+                </div>
+              </div>
+              <p class="statement">Tighten the timing and directional language for this provisional bridge before using it as a stronger downstream dependency.</p>
+              <div class="meta-grid">
+                <div><span class="label">Why now</span><span>This is a relatively cheap clarification step with broad impact on ranking quality.</span></div>
+                <div><span class="label">Rationale</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+                <div><span class="label">Next move</span><span>Run a targeted transition hardening pass with full-text timing review and contradiction cleanup.</span></div>
+                <div><span class="label">Blockers</span><span>Transition still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Downstream lane is still seeded/provisional, so this transition should remain bounded. || Upstream lane still needs stronger longitudinal support.</span></div>
+              </div>
+            </article>
             </div>
-            <div class="pill-stack">
-              <span class="pill decision">Needs enrichment</span>
-              <span class="pill strength moderate">moderate</span>
-            </div>
-          </div>
-          <p class="statement">Modulating GFAP, IL1B, IL6 may be the fastest translational probe for neuroinflammation / microglial activation in this atlas version.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>These are the most actionable targets/entities currently attached to this mechanism.</span></div>
-            <div><span class="label">Next test</span><span>Prioritize enrichment and literature checks for GFAP, IL1B, IL6 before expanding to a wider target set.</span></div>
-            <div><span class="label">Current blocker</span><span>compound/trial depth is still limited</span></div>
-            <div><span class="label">What this unlocks</span><span>Fill target, compound, and trial support before promoting this beyond a probe idea.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>The mechanism is interesting, but the translational layer is still too thin.</span></div>
-          </div>
-          <div class="pmid-row"><span class="muted">No PMIDs listed</span></div>
-        </article>
-        
-        <article class="idea-card">
-          <div class="idea-card-head">
-            <div>
-              <div class="eyebrow">Neuroinflammation / Microglial Activation</div>
-              <h3>Neuroinflammation should be split into narrower lanes</h3>
-            </div>
-            <div class="pill-stack">
-              <span class="pill decision">Needs adjudication</span>
-              <span class="pill strength moderate">moderate</span>
-            </div>
-          </div>
-          <p class="statement">The neuroinflammation bucket is likely hiding multiple distinct idea lanes: inflammasome/cytokine signaling, microglial state transition, and glymphatic/astroglial response should be evaluated separately rather than as one monolith.</p>
-          <div class="meta-grid">
-            <div><span class="label">Why now</span><span>This mechanism has 75 papers, so narrowing scope is more useful than adding more volume.</span></div>
-            <div><span class="label">Next test</span><span>Split the next atlas pass into explicit NLRP3, TREM2/GAS6, and AQP4/glymphatic subtracks.</span></div>
-            <div><span class="label">Current blocker</span><span>queue_burden</span></div>
-            <div><span class="label">What this unlocks</span><span>Split the next pass into subtracks and evaluate each as its own hypothesis lane.</span></div>
-          </div>
-          <div class="meta-grid single">
-            <div><span class="label">Decision rationale</span><span>This is the right narrowing move, but it still needs an explicit operator choice.</span></div>
-          </div>
-          <div class="pmid-row"><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41737534/" target="_blank" rel="noreferrer">41737534</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41683989/" target="_blank" rel="noreferrer">41683989</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41880282/" target="_blank" rel="noreferrer">41880282</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41734021/" target="_blank" rel="noreferrer">41734021</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41853701/" target="_blank" rel="noreferrer">41853701</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41179995/" target="_blank" rel="noreferrer">41179995</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41642456/" target="_blank" rel="noreferrer">41642456</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41648326/" target="_blank" rel="noreferrer">41648326</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41103638/" target="_blank" rel="noreferrer">41103638</a><a class="pmid-chip" href="https://pubmed.ncbi.nlm.nih.gov/41508250/" target="_blank" rel="noreferrer">41508250</a></div>
-        </article>
-        
-          </div>
-        </section>
-        
+            </section>
+            
     </main>
   </body>
 </html>
