@@ -1,11 +1,11 @@
 window.CAUSAL_TRANSITION_DATA = {
   "metadata": {
-    "generated_at": "2026-03-30_145244",
+    "generated_at": "2026-03-30_145547",
     "claims_csv": "reports/investigation_claims_2026-03-30_145214.csv",
     "edges_csv": "reports/investigation_edges_2026-03-30_145214.csv",
     "paper_qa_csv": "reports/post_extraction_paper_qa_2026-03-30_145214.csv",
-    "process_json": "reports/process_lanes/process_lane_index_2026-03-30_145244.json",
-    "synthesis_csv": "reports/mechanistic_synthesis/mechanistic_synthesis_blocks_2026-03-30_145243.csv"
+    "process_json": "reports/process_lanes/process_lane_index_2026-03-30_145547.json",
+    "synthesis_csv": "reports/mechanistic_synthesis/mechanistic_synthesis_blocks_2026-03-30_145545.csv"
   },
   "summary": {
     "transition_count": 6,
