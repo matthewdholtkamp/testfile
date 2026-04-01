@@ -1,9 +1,9 @@
 window.PROCESS_ENGINE_DATA = {
   "metadata": {
-    "generated_at": "2026-03-31_150437",
-    "claims_csv": "reports/investigation_claims_2026-03-31_150212.csv",
-    "edges_csv": "reports/investigation_edges_2026-03-31_150212.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-03-31_150212.csv"
+    "generated_at": "2026-04-01_152321",
+    "claims_csv": "reports/investigation_claims_2026-04-01_152245.csv",
+    "edges_csv": "reports/investigation_edges_2026-04-01_152245.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-01_152245.csv"
   },
   "summary": {
     "lane_count": 6,
@@ -455,10 +455,10 @@ window.PROCESS_ENGINE_DATA = {
         "Treat it as both a downstream consequence of primary injury and a possible feed-forward driver of chronic dysfunction."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 63,
-      "full_text_like_papers": 51,
+      "paper_count": 64,
+      "full_text_like_papers": 52,
       "abstract_only_papers": 11,
-      "claim_mentions": 104,
+      "claim_mentions": 105,
       "edge_mentions": 67,
       "unbucketed_mentions": 31,
       "supported_buckets": 0,
@@ -801,10 +801,10 @@ window.PROCESS_ENGINE_DATA = {
         },
         "chronic": {
           "status": "provisional",
-          "paper_count": 8,
-          "full_text_like_papers": 5,
+          "paper_count": 9,
+          "full_text_like_papers": 6,
           "abstract_only_papers": 2,
-          "claim_mentions": 11,
+          "claim_mentions": 12,
           "edge_mentions": 4,
           "anchor_pmids": [
             "41648607",
@@ -812,9 +812,9 @@ window.PROCESS_ENGINE_DATA = {
             "41198676",
             "41522067",
             "41650217",
+            "41918954",
             "41779899",
-            "41664511",
-            "41709427"
+            "41664511"
           ],
           "example_signals": [
             {
@@ -911,19 +911,19 @@ window.PROCESS_ENGINE_DATA = {
         "It likely consolidates upstream vascular and metabolic injury into chronic tissue-level damage, but specific transition edges belong in Phase 2."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 131,
-      "full_text_like_papers": 103,
+      "paper_count": 132,
+      "full_text_like_papers": 104,
       "abstract_only_papers": 28,
-      "claim_mentions": 271,
-      "edge_mentions": 237,
-      "unbucketed_mentions": 82,
+      "claim_mentions": 273,
+      "edge_mentions": 238,
+      "unbucketed_mentions": 83,
       "supported_buckets": 0,
       "provisional_buckets": 3,
       "weak_buckets": 0,
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
-          "claim_mentions": 106
+          "claim_mentions": 107
         },
         {
           "canonical_mechanism": "blood_brain_barrier_disruption",
@@ -1013,7 +1013,7 @@ window.PROCESS_ENGINE_DATA = {
       "top_brain_regions": [
         {
           "label": "cortex",
-          "count": 172
+          "count": 173
         },
         {
           "label": "hippocampus",
@@ -1059,10 +1059,10 @@ window.PROCESS_ENGINE_DATA = {
       "buckets": {
         "acute": {
           "status": "provisional",
-          "paper_count": 67,
-          "full_text_like_papers": 57,
+          "paper_count": 68,
+          "full_text_like_papers": 58,
           "abstract_only_papers": 10,
-          "claim_mentions": 101,
+          "claim_mentions": 103,
           "edge_mentions": 87,
           "anchor_pmids": [
             "41103638",
@@ -1135,7 +1135,7 @@ window.PROCESS_ENGINE_DATA = {
           "brain_region_cues": [
             {
               "label": "cortex",
-              "count": 65
+              "count": 66
             },
             {
               "label": "diffuse / multisite",
@@ -1853,12 +1853,12 @@ window.PROCESS_ENGINE_DATA = {
         "Treat it as a plausible bridge from early structural/vascular disruption into chronic clearance failure and protein accumulation."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 81,
-      "full_text_like_papers": 61,
+      "paper_count": 82,
+      "full_text_like_papers": 62,
       "abstract_only_papers": 19,
       "claim_mentions": 135,
-      "edge_mentions": 114,
-      "unbucketed_mentions": 53,
+      "edge_mentions": 115,
+      "unbucketed_mentions": 54,
       "supported_buckets": 0,
       "provisional_buckets": 3,
       "weak_buckets": 0,
@@ -1925,7 +1925,7 @@ window.PROCESS_ENGINE_DATA = {
       "top_cell_states": [
         {
           "label": "astrocyte",
-          "count": 144
+          "count": 145
         },
         {
           "label": "neuron",
