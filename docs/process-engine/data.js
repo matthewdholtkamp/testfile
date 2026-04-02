@@ -1,9 +1,9 @@
 window.PROCESS_ENGINE_DATA = {
   "metadata": {
-    "generated_at": "2026-04-01_152544",
-    "claims_csv": "reports/investigation_claims_2026-04-01_152245.csv",
-    "edges_csv": "reports/investigation_edges_2026-04-01_152245.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-01_152245.csv"
+    "generated_at": "2026-04-02_145535",
+    "claims_csv": "reports/investigation_claims_2026-04-02_145503.csv",
+    "edges_csv": "reports/investigation_edges_2026-04-02_145503.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-02_145503.csv"
   },
   "summary": {
     "lane_count": 6,
@@ -1383,11 +1383,11 @@ window.PROCESS_ENGINE_DATA = {
         "Treat it as a tissue-consequence lane that also interacts with inflammatory and metabolic stress rather than as a purely downstream endpoint."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 137,
-      "full_text_like_papers": 98,
+      "paper_count": 138,
+      "full_text_like_papers": 99,
       "abstract_only_papers": 39,
-      "claim_mentions": 320,
-      "edge_mentions": 202,
+      "claim_mentions": 321,
+      "edge_mentions": 203,
       "unbucketed_mentions": 110,
       "supported_buckets": 2,
       "provisional_buckets": 1,
@@ -1395,7 +1395,7 @@ window.PROCESS_ENGINE_DATA = {
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "axonal_white_matter_injury",
-          "claim_mentions": 77
+          "claim_mentions": 78
         },
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
@@ -1459,7 +1459,7 @@ window.PROCESS_ENGINE_DATA = {
         },
         {
           "label": "neuron",
-          "count": 40
+          "count": 41
         },
         {
           "label": "astrocyte",
@@ -1497,7 +1497,7 @@ window.PROCESS_ENGINE_DATA = {
         },
         {
           "label": "cortex",
-          "count": 64
+          "count": 66
         },
         {
           "label": "corpus callosum",
@@ -1535,11 +1535,11 @@ window.PROCESS_ENGINE_DATA = {
       "buckets": {
         "acute": {
           "status": "supported",
-          "paper_count": 51,
-          "full_text_like_papers": 41,
+          "paper_count": 52,
+          "full_text_like_papers": 42,
           "abstract_only_papers": 10,
-          "claim_mentions": 82,
-          "edge_mentions": 60,
+          "claim_mentions": 83,
+          "edge_mentions": 61,
           "anchor_pmids": [
             "41267966",
             "41100047",
@@ -1593,7 +1593,7 @@ window.PROCESS_ENGINE_DATA = {
             },
             {
               "label": "neuron",
-              "count": 9
+              "count": 10
             },
             {
               "label": "endothelial cell",
@@ -1619,7 +1619,7 @@ window.PROCESS_ENGINE_DATA = {
             },
             {
               "label": "cortex",
-              "count": 15
+              "count": 17
             },
             {
               "label": "corpus callosum",
