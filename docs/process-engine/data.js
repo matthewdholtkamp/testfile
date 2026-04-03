@@ -1,9 +1,9 @@
 window.PROCESS_ENGINE_DATA = {
   "metadata": {
-    "generated_at": "2026-04-02_145750",
-    "claims_csv": "reports/investigation_claims_2026-04-02_145503.csv",
-    "edges_csv": "reports/investigation_edges_2026-04-02_145503.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-02_145503.csv"
+    "generated_at": "2026-04-03_143931",
+    "claims_csv": "reports/investigation_claims_2026-04-03_143857.csv",
+    "edges_csv": "reports/investigation_edges_2026-04-03_143857.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-03_143857.csv"
   },
   "summary": {
     "lane_count": 6,
@@ -911,11 +911,11 @@ window.PROCESS_ENGINE_DATA = {
         "It likely consolidates upstream vascular and metabolic injury into chronic tissue-level damage, but specific transition edges belong in Phase 2."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 132,
-      "full_text_like_papers": 104,
+      "paper_count": 134,
+      "full_text_like_papers": 106,
       "abstract_only_papers": 28,
-      "claim_mentions": 273,
-      "edge_mentions": 238,
+      "claim_mentions": 279,
+      "edge_mentions": 246,
       "unbucketed_mentions": 83,
       "supported_buckets": 0,
       "provisional_buckets": 3,
@@ -923,7 +923,7 @@ window.PROCESS_ENGINE_DATA = {
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
-          "claim_mentions": 107
+          "claim_mentions": 111
         },
         {
           "canonical_mechanism": "blood_brain_barrier_disruption",
@@ -979,7 +979,7 @@ window.PROCESS_ENGINE_DATA = {
       "top_cell_states": [
         {
           "label": "microglia",
-          "count": 190
+          "count": 203
         },
         {
           "label": "astrocyte",
@@ -1013,7 +1013,7 @@ window.PROCESS_ENGINE_DATA = {
       "top_brain_regions": [
         {
           "label": "cortex",
-          "count": 173
+          "count": 183
         },
         {
           "label": "hippocampus",
@@ -1047,32 +1047,32 @@ window.PROCESS_ENGINE_DATA = {
       "anchor_pmids": [
         "41157272",
         "41103638",
+        "41926211",
         "41663365",
         "41734021",
         "41752185",
         "41756234",
         "41756282",
         "41824127",
-        "41612383",
-        "41803087"
+        "41612383"
       ],
       "buckets": {
         "acute": {
           "status": "provisional",
-          "paper_count": 68,
-          "full_text_like_papers": 58,
+          "paper_count": 69,
+          "full_text_like_papers": 59,
           "abstract_only_papers": 10,
-          "claim_mentions": 103,
-          "edge_mentions": 87,
+          "claim_mentions": 106,
+          "edge_mentions": 93,
           "anchor_pmids": [
             "41103638",
             "41663365",
+            "41926211",
             "41752185",
             "41756282",
             "41803087",
             "41795770",
-            "41726892",
-            "41622228"
+            "41726892"
           ],
           "example_signals": [
             {
@@ -1113,7 +1113,7 @@ window.PROCESS_ENGINE_DATA = {
           "cell_state_cues": [
             {
               "label": "microglia",
-              "count": 61
+              "count": 70
             },
             {
               "label": "neuron",
@@ -1135,7 +1135,7 @@ window.PROCESS_ENGINE_DATA = {
           "brain_region_cues": [
             {
               "label": "cortex",
-              "count": 66
+              "count": 73
             },
             {
               "label": "diffuse / multisite",
@@ -1160,11 +1160,11 @@ window.PROCESS_ENGINE_DATA = {
         },
         "subacute": {
           "status": "provisional",
-          "paper_count": 72,
-          "full_text_like_papers": 60,
+          "paper_count": 73,
+          "full_text_like_papers": 61,
           "abstract_only_papers": 12,
-          "claim_mentions": 104,
-          "edge_mentions": 88,
+          "claim_mentions": 105,
+          "edge_mentions": 89,
           "anchor_pmids": [
             "41734021",
             "41618133",
@@ -1214,7 +1214,7 @@ window.PROCESS_ENGINE_DATA = {
           "cell_state_cues": [
             {
               "label": "microglia",
-              "count": 95
+              "count": 96
             },
             {
               "label": "astrocyte",
@@ -1261,20 +1261,20 @@ window.PROCESS_ENGINE_DATA = {
         },
         "chronic": {
           "status": "provisional",
-          "paper_count": 20,
-          "full_text_like_papers": 15,
+          "paper_count": 21,
+          "full_text_like_papers": 16,
           "abstract_only_papers": 5,
-          "claim_mentions": 29,
-          "edge_mentions": 17,
+          "claim_mentions": 31,
+          "edge_mentions": 18,
           "anchor_pmids": [
             "41511466",
             "41756282",
             "41157272",
+            "41926211",
             "41651695",
             "41694230",
             "41880282",
-            "41612383",
-            "41648607"
+            "41612383"
           ],
           "example_signals": [
             {
@@ -1319,7 +1319,7 @@ window.PROCESS_ENGINE_DATA = {
             },
             {
               "label": "microglia",
-              "count": 7
+              "count": 10
             },
             {
               "label": "astrocyte",
@@ -1337,7 +1337,7 @@ window.PROCESS_ENGINE_DATA = {
           "brain_region_cues": [
             {
               "label": "cortex",
-              "count": 11
+              "count": 14
             },
             {
               "label": "hippocampus",
@@ -1383,12 +1383,12 @@ window.PROCESS_ENGINE_DATA = {
         "Treat it as a tissue-consequence lane that also interacts with inflammatory and metabolic stress rather than as a purely downstream endpoint."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 138,
-      "full_text_like_papers": 99,
+      "paper_count": 139,
+      "full_text_like_papers": 100,
       "abstract_only_papers": 39,
-      "claim_mentions": 321,
+      "claim_mentions": 322,
       "edge_mentions": 203,
-      "unbucketed_mentions": 110,
+      "unbucketed_mentions": 111,
       "supported_buckets": 2,
       "provisional_buckets": 1,
       "weak_buckets": 0,
@@ -1497,7 +1497,7 @@ window.PROCESS_ENGINE_DATA = {
         },
         {
           "label": "cortex",
-          "count": 66
+          "count": 67
         },
         {
           "label": "corpus callosum",
