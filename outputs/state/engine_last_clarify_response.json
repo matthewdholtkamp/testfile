@@ -1,12 +1,15 @@
 {
   "ok": true,
-  "request_id": "",
+  "request_id": "clarify-1775306970911-3gtw7s",
   "source": "fallback",
-  "model": "gemini-3.1-flash-lite",
-  "answer": "No clarify question has been answered yet.",
+  "model": "gemini-2.0-flash-lite-001",
+  "answer": "If you approve the primary decision, it becomes the current manuscript path.",
   "evidence_chain": [
-    "Ask a question from the cockpit to generate a fresh explanation."
+    "The lead mechanism in the live atlas is Blood-Brain Barrier Dysfunction.",
+    "The strongest supported bridge right now is BBB permeability increase -> peripheral immune infiltration.",
+    "The top current uncertainty is Clarify Chronic Repetitive Tau / Clearance Mixed."
   ],
-  "implication": "The engine is waiting for operator input.",
-  "recommended_follow_up": "Use the clarification box on the cockpit page when you want the recommendation explained in plain English."
+  "implication": "The current paper path is good enough to shape, but it still depends on the next decision.",
+  "recommended_follow_up": "Choose the primary decision first, then use its result to lock the manuscript path.",
+  "warning": "HTTP Error 429: Too Many Requests"
 }
