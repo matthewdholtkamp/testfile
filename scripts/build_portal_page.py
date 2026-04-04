@@ -100,6 +100,10 @@ __BASE_CSS__
         border-color: rgba(var(--accent-rgb), 0.32);
       }
       .panel { padding: 22px; }
+      .panel-attention {
+        border-color: rgba(var(--accent-rgb), 0.42);
+        box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.2), 0 24px 44px rgba(0,0,0,0.22);
+      }
       .section-top { display: flex; justify-content: space-between; gap: 16px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
       .section-top h2 { margin-bottom: 0; }
       .section-top p { max-width: 70ch; color: var(--muted); line-height: 1.5; }
@@ -140,7 +144,8 @@ __BASE_CSS__
       .option-button.selected { border-color: rgba(var(--accent-rgb), 0.5); background: rgba(var(--accent-rgb), 0.18); }
       .option-label { display: block; font-weight: 800; margin-bottom: 6px; }
       .option-summary { color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
-      .card-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .card-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+      .card-actions .muted-note { margin: 0; }
       .secondary-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .progress-grid { display: grid; gap: 14px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .progress-card { padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); }
@@ -659,8 +664,13 @@ __BASE_CSS__
           return `<article class=\"decision-card ${primary ? 'primary' : ''}\"><p class=\"empty-note\">No decision emitted for this slot.</p></article>`;
         }
         const selected = ui.selectedOptions[decision.decision_id] || '';
+        const selectedOption = getSelectedOption(decision.decision_id);
         const visibleKnow = primary ? renderMetaList(decision.what_we_know) : '';
         const visibleUncertain = primary ? renderMetaList(decision.what_is_uncertain) : '';
+        const workButtonLabel = selectedOption ? 'Go to apply panel' : 'Open apply panel';
+        const stagedHint = selectedOption
+          ? `<p class=\"muted-note\">${escapeHtml(selectedOption.label)} is staged. Apply it in the panel below.</p>`
+          : '<p class=\"muted-note\">Choose an option, then jump to the apply panel.</p>';
         const options = (decision.options || []).map((option) => `
           <button
             class=\"option-button ${selected === option.id ? 'selected' : ''} ${decision.recommended_option_id === option.id ? 'recommended' : ''}\"
@@ -707,7 +717,8 @@ __BASE_CSS__
             ` : ''}
             <div class=\"option-list\">${options || '<p class=\"empty-note\">No options emitted.</p>'}</div>
             <div class=\"card-actions\">
-              <button class=\"button-inline\" data-role=\"set-active-decision\" data-decision-id=\"${escapeHtml(decision.decision_id)}\">Work on this</button>
+              <button class=\"button-inline\" data-role=\"set-active-decision\" data-decision-id=\"${escapeHtml(decision.decision_id)}\">${workButtonLabel}</button>
+              ${stagedHint}
             </div>
           </article>
         `;
@@ -859,8 +870,8 @@ __BASE_CSS__
           </div>
         ` : '';
         return `
-          <section class=\"panel\">
-            ${sectionHeader('Apply', 'Record Your Choice and Move the Engine', 'Choose an option above, then apply it here or write your own instruction.')}
+          <section class=\"panel\" id=\"applyPanel\">
+            ${sectionHeader('Apply', 'Record Your Choice and Move the Engine', 'Choose an option above, then apply it here. The button on each decision card jumps straight to this panel.')}
             <div class=\"action-grid\">
               <div class=\"action-shell\">
                 <p class=\"muted-note\"><strong style=\"color:var(--ink);\">Working on:</strong> ${escapeHtml(active?.decision_title || 'No active decision')}.</p>
@@ -966,6 +977,27 @@ __BASE_CSS__
         installHandlers();
       }
 
+      function highlightApplyPanel() {
+        const panel = document.getElementById('applyPanel');
+        if (!panel) return;
+        panel.classList.remove('panel-attention');
+        panel.classList.add('panel-attention');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const applyButton = document.getElementById('applyOptionButton');
+        const noteInput = document.getElementById('actionNote');
+        const focusTarget = applyButton && !applyButton.disabled ? applyButton : noteInput;
+        if (focusTarget) {
+          window.setTimeout(() => {
+            try {
+              focusTarget.focus({ preventScroll: true });
+            } catch (error) {
+              focusTarget.focus();
+            }
+          }, 220);
+        }
+        window.setTimeout(() => panel.classList.remove('panel-attention'), 1600);
+      }
+
       async function fetchCommandPage() {
         try {
           const result = await fetchControlJson(COMMAND_PAGE_ENDPOINT, { headers: { 'Accept': 'application/json' } });
@@ -996,10 +1028,18 @@ __BASE_CSS__
         renderApp();
       }
 
-      function setActiveDecision(decisionId) {
+      function setActiveDecision(decisionId, revealApplyPanel = false) {
         if (!decisionId) return;
         ui.activeDecisionId = decisionId;
+        const decision = getDecision(decisionId);
+        const selectedOption = decision ? getSelectedOption(decisionId) : null;
+        ui.actionMessage = selectedOption
+          ? `Ready to apply “${selectedOption.label}” for ${decision?.decision_title || 'the active decision'}.`
+          : `Now working on ${decision?.decision_title || 'the active decision'}. Choose an option, then apply it in the panel below.`;
         renderApp();
+        if (revealApplyPanel) {
+          window.requestAnimationFrame(() => highlightApplyPanel());
+        }
       }
 
       async function syncGitHubPayload(preferredPayload = null) {
@@ -1295,7 +1335,7 @@ __BASE_CSS__
         });
 
         document.querySelectorAll('[data-role="set-active-decision"]').forEach((button) => {
-          button.addEventListener('click', () => setActiveDecision(button.dataset.decisionId));
+          button.addEventListener('click', () => setActiveDecision(button.dataset.decisionId, true));
         });
 
         document.querySelectorAll('[data-role="preset-question"]').forEach((button) => {

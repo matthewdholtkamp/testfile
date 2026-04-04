@@ -869,12 +869,12 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-28",
+      "date": "2026-03-28 21:26:58",
       "title": "Phase 4 \u00b7 Translational Logic",
       "status": "bounded",
       "summary": "The engine attached translational packets to each lane so targets, readouts, and intervention logic sit on top of the mechanism map.",
       "detail": "Biomarker panels and leverage-point choices come directly from these packets.",
-      "meta": "Implement Phase 4 translational perturbation layer"
+      "meta": "6 / 6 lanes"
     },
     {
       "kind": "phase",
