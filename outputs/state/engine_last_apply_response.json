@@ -2,44 +2,44 @@
   "ok": true,
   "accepted": true,
   "needs_confirmation": false,
-  "request_id": "apply-1775309885998-k7bwzy",
+  "request_id": "apply-1775309924247-knj80r",
   "confirmation_threshold": 0.75,
   "interpreted_decision": {
-    "matched_option_id": "adopt_as_default_panel",
+    "matched_option_id": "resolve_now",
     "custom_steering_patch": {},
     "confidence": 1.0,
     "explanation": "A canonical option was selected directly.",
     "model": "direct"
   },
   "triggered_action": {
-    "requested_action_mode": "dispatch_refresh_public_enrichment",
-    "canonical_action_mode": "dispatch_refresh_public_enrichment",
+    "requested_action_mode": "dispatch_targeted_extraction",
+    "canonical_action_mode": "dispatch_targeted_extraction",
     "action_descriptor": {
-      "action_id": "dispatch_refresh_public_enrichment",
-      "label": "Dispatch public enrichment refresh",
+      "action_id": "dispatch_targeted_extraction",
+      "label": "Dispatch targeted extraction",
       "kind": "workflow_dispatch",
-      "workflow": "refresh_public_enrichment.yml",
-      "repo_target": ".github/workflows/refresh_public_enrichment.yml",
-      "executable_target": "gh workflow run refresh_public_enrichment.yml -R matthewdholtkamp/testfile",
+      "workflow": "run_targeted_extraction.yml",
+      "repo_target": ".github/workflows/run_targeted_extraction.yml",
+      "executable_target": "gh workflow run run_targeted_extraction.yml -R matthewdholtkamp/testfile",
       "supported": true,
-      "support_reason": "Requires gh CLI and the public enrichment workflow file."
+      "support_reason": "Requires gh CLI and the targeted extraction workflow file."
     },
     "executed": true,
     "status": "dispatched",
-    "message": "Refresh Public Enrichment was dispatched.",
+    "message": "Targeted Extraction was dispatched.",
     "run": {
       "conclusion": "",
-      "createdAt": "2026-04-04T13:38:14Z",
-      "databaseId": 23980014393,
-      "displayTitle": "Refresh Public Enrichment",
+      "createdAt": "2026-04-04T13:38:53Z",
+      "databaseId": 23980025067,
+      "displayTitle": "Targeted Extraction Batch",
       "status": "queued",
-      "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/23980014393",
-      "workflowName": "Refresh Public Enrichment"
+      "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/23980025067",
+      "workflowName": "Targeted Extraction Batch"
     }
   },
   "updated_direction": {
-    "label": "Blood-Brain Barrier Failure biomarker panel",
-    "reason": "Future slates use this panel as the default operator readout set."
+    "label": "resolving Clarify Chronic Repetitive Tau / Clearance Mixed",
+    "reason": "Future slates will keep this uncertainty at the front until it is clarified."
   },
   "payload": {
     "program_status": {
@@ -883,6 +883,76 @@
     ],
     "decision_history": [
       {
+        "timestamp": "2026-04-04T13:38:56.083545+00:00",
+        "decision_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+        "decision_title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+        "selected_option_id": "resolve_now",
+        "confirmed": false,
+        "free_text": "",
+        "interpreted_intent": "resolve_now",
+        "interpretation_confidence": 1.0,
+        "interpretation_model": "direct",
+        "steering_patch": {
+          "active_path_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+          "active_path_label": "resolving Clarify Chronic Repetitive Tau / Clearance Mixed",
+          "active_direction_reason": "Future slates will keep this uncertainty at the front until it is clarified.",
+          "primary_goal_stage": "decision_confidence",
+          "favored_mechanisms": [
+            "tau_proteinopathy_progression",
+            "glymphatic_astroglial_clearance_failure",
+            "neuroinflammation_microglial_state_change"
+          ],
+          "favored_endotypes": [
+            "chronic_repetitive_tau_clearance_mixed"
+          ],
+          "favored_decision_families": [
+            "weakest_evidence_hinge"
+          ],
+          "evidence_mode": "advance",
+          "current_manuscript_candidate": {
+            "title": "Blood-Brain Barrier Failure biomarker panel",
+            "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
+          },
+          "next_paper_opportunity": {
+            "title": "Blood-Brain Barrier Failure biomarker panel",
+            "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
+          },
+          "last_decision_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+          "last_updated": "2026-04-04T13:38:52.386094+00:00",
+          "pending_machine_actions": [
+            "dispatch_targeted_extraction"
+          ],
+          "operator_note": ""
+        },
+        "triggered_action": {
+          "requested_action_mode": "dispatch_targeted_extraction",
+          "canonical_action_mode": "dispatch_targeted_extraction",
+          "action_descriptor": {
+            "action_id": "dispatch_targeted_extraction",
+            "label": "Dispatch targeted extraction",
+            "kind": "workflow_dispatch",
+            "workflow": "run_targeted_extraction.yml",
+            "repo_target": ".github/workflows/run_targeted_extraction.yml",
+            "executable_target": "gh workflow run run_targeted_extraction.yml -R matthewdholtkamp/testfile",
+            "supported": true,
+            "support_reason": "Requires gh CLI and the targeted extraction workflow file."
+          },
+          "executed": true,
+          "status": "dispatched",
+          "message": "Targeted Extraction was dispatched.",
+          "run": {
+            "conclusion": "",
+            "createdAt": "2026-04-04T13:38:53Z",
+            "databaseId": 23980025067,
+            "displayTitle": "Targeted Extraction Batch",
+            "status": "queued",
+            "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/23980025067",
+            "workflowName": "Targeted Extraction Batch"
+          }
+        },
+        "ai_explanation": "A canonical option was selected directly."
+      },
+      {
         "timestamp": "2026-04-04T13:38:16.473139+00:00",
         "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
         "decision_title": "Blood-Brain Barrier Failure biomarker panel",
@@ -1011,8 +1081,8 @@
       }
     ],
     "current_direction": {
-      "label": "Blood-Brain Barrier Failure biomarker panel",
-      "reason": "Future slates use this panel as the default operator readout set."
+      "label": "resolving Clarify Chronic Repetitive Tau / Clearance Mixed",
+      "reason": "Future slates will keep this uncertainty at the front until it is clarified."
     },
     "support_links": [
       {
@@ -1052,22 +1122,22 @@
       "actionable": false
     },
     "live_action_status": {
-      "request_id": "apply-1775309885998-k7bwzy",
-      "timestamp": "2026-04-04T13:38:16.472857+00:00",
-      "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-      "decision_title": "Blood-Brain Barrier Failure biomarker panel",
-      "message": "Refresh Public Enrichment was dispatched.",
+      "request_id": "apply-1775309924247-knj80r",
+      "timestamp": "2026-04-04T13:38:56.083316+00:00",
+      "decision_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+      "decision_title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+      "message": "Targeted Extraction was dispatched.",
       "status": "dispatched",
-      "requested_action_mode": "dispatch_refresh_public_enrichment",
-      "canonical_action_mode": "dispatch_refresh_public_enrichment",
+      "requested_action_mode": "dispatch_targeted_extraction",
+      "canonical_action_mode": "dispatch_targeted_extraction",
       "run": {
         "conclusion": "",
-        "createdAt": "2026-04-04T13:38:14Z",
-        "databaseId": 23980014393,
-        "displayTitle": "Refresh Public Enrichment",
+        "createdAt": "2026-04-04T13:38:53Z",
+        "databaseId": 23980025067,
+        "displayTitle": "Targeted Extraction Batch",
         "status": "queued",
-        "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/23980014393",
-        "workflowName": "Refresh Public Enrichment"
+        "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/23980025067",
+        "workflowName": "Targeted Extraction Batch"
       }
     }
   },

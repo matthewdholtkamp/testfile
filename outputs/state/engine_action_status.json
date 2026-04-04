@@ -1,19 +1,19 @@
 {
-  "request_id": "apply-1775309885998-k7bwzy",
-  "timestamp": "2026-04-04T13:38:16.472857+00:00",
-  "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-  "decision_title": "Blood-Brain Barrier Failure biomarker panel",
-  "message": "Refresh Public Enrichment was dispatched.",
+  "request_id": "apply-1775309924247-knj80r",
+  "timestamp": "2026-04-04T13:38:56.083316+00:00",
+  "decision_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+  "decision_title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+  "message": "Targeted Extraction was dispatched.",
   "status": "dispatched",
-  "requested_action_mode": "dispatch_refresh_public_enrichment",
-  "canonical_action_mode": "dispatch_refresh_public_enrichment",
+  "requested_action_mode": "dispatch_targeted_extraction",
+  "canonical_action_mode": "dispatch_targeted_extraction",
   "run": {
     "conclusion": "",
-    "createdAt": "2026-04-04T13:38:14Z",
-    "databaseId": 23980014393,
-    "displayTitle": "Refresh Public Enrichment",
+    "createdAt": "2026-04-04T13:38:53Z",
+    "databaseId": 23980025067,
+    "displayTitle": "Targeted Extraction Batch",
     "status": "queued",
-    "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/23980014393",
-    "workflowName": "Refresh Public Enrichment"
+    "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/23980025067",
+    "workflowName": "Targeted Extraction Batch"
   }
 }
