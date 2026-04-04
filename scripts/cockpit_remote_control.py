@@ -115,22 +115,44 @@ def command_payload() -> Dict[str, Any]:
     return hydrate_snapshot_payload(load_command_snapshot())
 
 
+def parse_decision_json(raw: str) -> Dict[str, Any]:
+    text = normalize(raw)
+    if not text:
+        return {}
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError:
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def resolve_decision(payload: Dict[str, Any], decision_id: str, decision_json: str = '') -> Dict[str, Any]:
+    decision = find_decision_in_payload(payload, decision_id)
+    if decision:
+        return decision
+    frozen = parse_decision_json(decision_json)
+    if normalize(frozen.get('decision_id')) == decision_id:
+        return frozen
+    return {}
+
 
 def run_apply(args: argparse.Namespace) -> int:
     request_id = normalize(args.request_id) or f'apply-{int(os.times().elapsed * 1000)}'
     decision_id = normalize(args.decision_id)
+    decision_json = args.decision_json or ''
     option_id = normalize(args.option_id)
     free_text = normalize(args.free_text)
     note = normalize(args.note)
     confirmed = bool(args.confirmed)
 
     payload = command_payload()
-    decision = find_decision_in_payload(payload, decision_id)
+    decision = resolve_decision(payload, decision_id, decision_json)
     if not decision:
         response = {
             'ok': False,
             'request_id': request_id,
             'error': 'unknown_decision',
+            'error_message': 'That decision is no longer present in the live cockpit snapshot. Refresh the page and try again.',
         }
         write_response(LAST_APPLY_RESPONSE_PATH, response)
         git_commit_and_push(f'Cockpit apply response {request_id}')
@@ -257,6 +279,7 @@ def build_parser() -> argparse.ArgumentParser:
     apply_parser = subparsers.add_parser('apply')
     apply_parser.add_argument('--request-id', default='')
     apply_parser.add_argument('--decision-id', required=True)
+    apply_parser.add_argument('--decision-json', default='')
     apply_parser.add_argument('--option-id', default='')
     apply_parser.add_argument('--free-text', default='')
     apply_parser.add_argument('--note', default='')

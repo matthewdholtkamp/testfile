@@ -251,6 +251,7 @@ __BASE_CSS__
       const GITHUB_CLARIFY_WORKFLOW = 'cockpit_clarify_question.yml';
       const GITHUB_TOKEN_KEY = 'atlas-github-token';
       const GITHUB_STATE_FILES = {
+        commandSnapshot: 'docs/command_snapshot.json',
         directionRegistry: 'outputs/state/engine_direction_registry.json',
         decisionLog: 'outputs/state/engine_decision_log.jsonl',
         actionStatus: 'outputs/state/engine_action_status.json',
@@ -511,12 +512,14 @@ __BASE_CSS__
 
       async function loadGitHubRemoteState() {
         const [
+          commandSnapshot,
           directionRegistry,
           decisionHistory,
           actionStatus,
           lastApplyResponse,
           lastClarifyResponse,
         ] = await Promise.all([
+          fetchGitHubJson(GITHUB_STATE_FILES.commandSnapshot, {}),
           fetchGitHubJson(GITHUB_STATE_FILES.directionRegistry, {}),
           fetchGitHubJsonl(GITHUB_STATE_FILES.decisionLog, []),
           fetchGitHubJson(GITHUB_STATE_FILES.actionStatus, {}),
@@ -524,6 +527,7 @@ __BASE_CSS__
           fetchGitHubJson(GITHUB_STATE_FILES.lastClarify, {}),
         ]);
         return {
+          commandSnapshot,
           directionRegistry,
           decisionHistory,
           actionStatus,
@@ -534,9 +538,11 @@ __BASE_CSS__
 
       async function fetchGitHubCommandPage() {
         const remoteState = await loadGitHubRemoteState();
-        const basePayload = remoteState.lastApplyResponse?.payload?.primary_decision
-          ? remoteState.lastApplyResponse.payload
-          : EMBEDDED_PAYLOAD;
+        const basePayload = remoteState.commandSnapshot?.primary_decision
+          ? remoteState.commandSnapshot
+          : (remoteState.lastApplyResponse?.payload?.primary_decision
+            ? remoteState.lastApplyResponse.payload
+            : EMBEDDED_PAYLOAD);
         ui.payload = overlayPayloadWithGitHubState(basePayload, remoteState);
         ui.online = true;
         ui.controlMode = 'github';
@@ -564,6 +570,15 @@ __BASE_CSS__
         const selectedId = ui.selectedOptions[decisionId];
         if (!selectedId) return null;
         return (decision.options || []).find((option) => option.id === selectedId) || null;
+      }
+
+      function freezeDecisionPacket(decision) {
+        if (!decision || typeof decision !== 'object') return '';
+        try {
+          return JSON.stringify(decision);
+        } catch (error) {
+          return '';
+        }
       }
 
       function ensureActiveDecision() {
@@ -1042,9 +1057,17 @@ __BASE_CSS__
         }
       }
 
+      function ensureGitHubApplyResult(result) {
+        if (result && result.ok === false) {
+          throw new Error(result.error_message || result.error || 'GitHub control could not apply the decision.');
+        }
+        return result;
+      }
+
       async function syncGitHubPayload(preferredPayload = null) {
         const remoteState = await loadGitHubRemoteState();
         const basePayload = preferredPayload
+          || (remoteState.commandSnapshot?.primary_decision ? remoteState.commandSnapshot : null)
           || remoteState.lastApplyResponse?.payload
           || EMBEDDED_PAYLOAD;
         ui.payload = overlayPayloadWithGitHubState(basePayload, remoteState);
@@ -1117,12 +1140,13 @@ __BASE_CSS__
             await dispatchGitHubWorkflow(GITHUB_APPLY_WORKFLOW, {
               request_id: requestId,
               decision_id: decision.decision_id,
+              decision_json: freezeDecisionPacket(decision),
               option_id: option.id,
               note: ui.actionNote || '',
               free_text: '',
               confirmed: 'false',
             });
-            const result = await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId);
+            const result = ensureGitHubApplyResult(await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId));
             const remoteState = await syncGitHubPayload(result.payload || null);
             ui.actionNote = '';
             ui.actionWriteIn = '';
@@ -1170,12 +1194,13 @@ __BASE_CSS__
             await dispatchGitHubWorkflow(GITHUB_APPLY_WORKFLOW, {
               request_id: requestId,
               decision_id: decision.decision_id,
+              decision_json: freezeDecisionPacket(decision),
               option_id: '',
               free_text: ui.actionWriteIn,
               note: ui.actionNote || '',
               confirmed: 'false',
             });
-            const result = await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId);
+            const result = ensureGitHubApplyResult(await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId));
             if (result.needs_confirmation) {
               const proposed = result.interpreted_decision?.matched_option_id;
               if (proposed) {
@@ -1183,6 +1208,7 @@ __BASE_CSS__
               }
               ui.pendingConfirmation = {
                 decisionId: decision.decision_id,
+                decisionJson: freezeDecisionPacket(decision),
                 freeText: ui.actionWriteIn,
                 note: ui.actionNote,
                 explanation: result.interpreted_decision?.explanation || 'The write-in instruction needs confirmation.',
@@ -1254,12 +1280,13 @@ __BASE_CSS__
             await dispatchGitHubWorkflow(GITHUB_APPLY_WORKFLOW, {
               request_id: requestId,
               decision_id: pending.decisionId,
+              decision_json: pending.decisionJson || '',
               option_id: '',
               free_text: pending.freeText,
               note: pending.note || '',
               confirmed: 'true',
             });
-            const result = await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId);
+            const result = ensureGitHubApplyResult(await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId));
             const remoteState = await syncGitHubPayload(result.payload || null);
             ui.actionNote = '';
             ui.actionWriteIn = '';

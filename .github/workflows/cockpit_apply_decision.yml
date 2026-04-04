@@ -11,6 +11,10 @@ on:
         description: Decision id to apply
         required: true
         type: string
+      decision_json:
+        description: Frozen decision payload from the cockpit page
+        required: false
+        type: string
       option_id:
         description: Canonical option id, if chosen directly
         required: false
@@ -60,6 +64,7 @@ jobs:
           ATLAS_DISABLE_LOCAL_ACTIONS: "true"
           REQUEST_ID: ${{ inputs.request_id }}
           DECISION_ID: ${{ inputs.decision_id }}
+          DECISION_JSON: ${{ inputs.decision_json }}
           OPTION_ID: ${{ inputs.option_id }}
           FREE_TEXT: ${{ inputs.free_text }}
           NOTE: ${{ inputs.note }}
@@ -72,6 +77,7 @@ jobs:
             apply
             --request-id "$REQUEST_ID"
             --decision-id "$DECISION_ID"
+            --decision-json "$DECISION_JSON"
             --option-id "$OPTION_ID"
             --free-text "$FREE_TEXT"
             --note "$NOTE"
