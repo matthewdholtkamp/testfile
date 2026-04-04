@@ -127,10 +127,10 @@
       .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
       .chip.muted { color: var(--muted); }
       .pill { background: rgba(255,255,255,0.08); color: var(--ink); }
-      .pill.supported, .pill.actionable, .pill.usable { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
-      .pill.provisional, .pill.bounded { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
-      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
-      .pill.live { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+      .pill.supported, .pill.actionable, .pill.usable, .pill.live { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
+      .pill.provisional, .pill.bounded, .pill.supporting-now { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
+      .pill.weak, .pill.seeded, .pill.conflicting, .pill.background { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
+      .pill.driving-now { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
       .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
       .section { margin-top: 32px; }
       .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
@@ -348,25 +348,25 @@
             <a class="phase-card " href="../translational-logic/index.html">
               <div class="phase-label">Phase 4</div>
               <div class="phase-title">Translational Logic</div>
-              <div class="phase-metric">6 / 6 lanes</div>
-              <div class="phase-detail">0 actionable / 6 bounded</div>
+              <div class="phase-metric">0 / 0 lanes</div>
+              <div class="phase-detail">0 actionable / 0 bounded</div>
               <div class="pill-row" style="margin-top:12px;"><span class="pill bounded">bounded</span></div>
             </a>
             
             <a class="phase-card " href="../cohort-stratification/index.html">
               <div class="phase-label">Phase 5</div>
               <div class="phase-title">Cohort Stratification</div>
-              <div class="phase-metric">7 endotypes</div>
-              <div class="phase-detail">2 usable / 5 bounded</div>
-              <div class="pill-row" style="margin-top:12px;"><span class="pill usable">usable</span></div>
+              <div class="phase-metric">0 endotypes</div>
+              <div class="phase-detail">0 usable / 0 bounded</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill bounded">bounded</span></div>
             </a>
             
             <a class="phase-card " href="../idea-briefs/index.html">
               <div class="phase-label">Phase 6</div>
               <div class="phase-title">Hypothesis Rankings</div>
-              <div class="phase-metric">5 families</div>
-              <div class="phase-detail">4 slate / 14 supported</div>
-              <div class="pill-row" style="margin-top:12px;"><span class="pill live">live</span></div>
+              <div class="phase-metric">0 families</div>
+              <div class="phase-detail">0 slate / 0 supported</div>
+              <div class="pill-row" style="margin-top:12px;"><span class="pill seeded">seeded</span></div>
             </a>
             </div>
     </section>
@@ -405,7 +405,7 @@
       <td><span class="pill supported">supported</span></td>
       <td><span class="pill bounded">bounded</span></td>
       <td>2 lanes / 2 transitions / 4 mechanisms</td>
-      <td>IL-1 (91), TNF (53), IL-6 (50) +3 more</td>
+      <td>IL-1 (121), NLRP3 (67), IL-6 (61) +3 more</td>
       <td>not_yet_mapped</td>
       <td><span class="pill clear">clear</span></td>
       <td>high</td>
@@ -419,7 +419,7 @@
       <td><span class="pill supported">supported</span></td>
       <td><span class="pill bounded">bounded</span></td>
       <td>3 lanes / 2 transitions / 4 mechanisms</td>
-      <td>tau (71), Tau (25), GFAP (15) +3 more</td>
+      <td>tau (105), Tau (27), GFAP (21) +3 more</td>
       <td>not_yet_mapped</td>
       <td><span class="pill clear">clear</span></td>
       <td>high</td>
@@ -433,7 +433,7 @@
       <td><span class="pill provisional">provisional</span></td>
       <td><span class="pill bounded">bounded</span></td>
       <td>3 lanes / 2 transitions / 3 mechanisms</td>
-      <td>fa (14), FA (11), nfl (5) +3 more</td>
+      <td>fa (14), FA (11), tau (6) +3 more</td>
       <td>not_yet_mapped</td>
       <td><span class="pill flagged">flagged</span></td>
       <td>high</td>
@@ -447,7 +447,7 @@
       <td><span class="pill provisional">provisional</span></td>
       <td><span class="pill bounded">bounded</span></td>
       <td>2 lanes / 1 transitions / 4 mechanisms</td>
-      <td>ros (134), ROS (21), ATP (19) +1 more</td>
+      <td>ros (150), ROS (30), ATP (19) +2 more</td>
       <td>not_yet_mapped</td>
       <td><span class="pill flagged">flagged</span></td>
       <td>high</td>
@@ -461,7 +461,7 @@
       <td><span class="pill provisional">provisional</span></td>
       <td><span class="pill bounded">bounded</span></td>
       <td>3 lanes / 2 transitions / 4 mechanisms</td>
-      <td>nfl (6), PSD-95 (2), GFAP (2) +1 more</td>
+      <td>nfl (7), PSD95 (6), PSD-95 (3) +1 more</td>
       <td>not_yet_mapped</td>
       <td><span class="pill clear">clear</span></td>
       <td>high</td>
@@ -475,7 +475,7 @@
       <td><span class="pill provisional">provisional</span></td>
       <td><span class="pill bounded">bounded</span></td>
       <td>2 lanes / 1 transitions / 4 mechanisms</td>
-      <td>FA (167), fa (52), MD (51) +3 more</td>
+      <td>FA (171), fa (52), MD (51) +3 more</td>
       <td>not_yet_mapped</td>
       <td><span class="pill flagged">flagged</span></td>
       <td>medium</td>
@@ -521,9 +521,9 @@
         <article class="meta-card">
           <h3>Coverage</h3>
           <ul>
-            <li>Supporting papers: <strong>97</strong></li>
+            <li>Supporting papers: <strong>125</strong></li>
             <li>Anchor PMIDs: <strong>41039850; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731</strong></li>
-            <li>Source mix: <strong>full_text_like:214; abstract_only:84</strong></li>
+            <li>Source mix: <strong>full_text_like:322; abstract_only:84</strong></li>
             <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
           </ul>
         </article>
@@ -537,7 +537,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Biomarkers</h3>
-          <div class="chip-row"><span class="chip">IL-1 (91)</span><span class="chip">TNF (53)</span><span class="chip">IL-6 (50)</span><span class="chip">NLRP3 (38)</span><span class="chip">GFAP (22)</span><span class="chip">HMGB1 (17)</span></div>
+          <div class="chip-row"><span class="chip">IL-1 (121)</span><span class="chip">NLRP3 (67)</span><span class="chip">IL-6 (61)</span><span class="chip">TNF (55)</span><span class="chip">HMGB1 (31)</span><span class="chip">GFAP (23)</span></div>
         </article>
         <article class="meta-card">
           <h3>Likely therapeutic targets</h3>
@@ -547,11 +547,11 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Brain-region cues</h3>
-          <div class="chip-row"><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">unspecified</span><span class="chip">hippocampus</span><span class="chip">white_matter</span><span class="chip">BBB</span></div>
+          <div class="chip-row"><span class="chip">cortex</span><span class="chip">hippocampus</span><span class="chip">unspecified</span><span class="chip">diffuse / multisite</span><span class="chip">white_matter</span><span class="chip">BBB</span></div>
         </article>
         <article class="meta-card">
           <h3>Cell-state cues</h3>
-          <div class="chip-row"><span class="chip">microglia</span><span class="chip">mixed / unspecified</span><span class="chip">astrocyte</span><span class="chip">neuron</span><span class="chip">leukocyte</span><span class="chip">macrophage</span></div>
+          <div class="chip-row"><span class="chip">microglia</span><span class="chip">mixed / unspecified</span><span class="chip">neuron</span><span class="chip">astrocyte</span><span class="chip">leukocyte</span><span class="chip">macrophage</span></div>
         </article>
       </div>
       <div class="detail-grid">
@@ -587,9 +587,9 @@
         <article class="meta-card">
           <h3>Coverage</h3>
           <ul>
-            <li>Supporting papers: <strong>18</strong></li>
+            <li>Supporting papers: <strong>22</strong></li>
             <li>Anchor PMIDs: <strong>41179995; 41328339; 41496386; 41594797; 41651695; 41665901; 41683989; 41700070</strong></li>
-            <li>Source mix: <strong>full_text_like:40; abstract_only:6</strong></li>
+            <li>Source mix: <strong>full_text_like:60; abstract_only:6</strong></li>
             <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
           </ul>
         </article>
@@ -603,7 +603,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Biomarkers</h3>
-          <div class="chip-row"><span class="chip">tau (71)</span><span class="chip">Tau (25)</span><span class="chip">GFAP (15)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span><span class="chip">p-tau (6)</span></div>
+          <div class="chip-row"><span class="chip">tau (105)</span><span class="chip">Tau (27)</span><span class="chip">GFAP (21)</span><span class="chip">p-tau (12)</span><span class="chip">t-tau (9)</span><span class="chip">T-tau (7)</span></div>
         </article>
         <article class="meta-card">
           <h3>Likely therapeutic targets</h3>
@@ -617,7 +617,7 @@
         </article>
         <article class="meta-card">
           <h3>Cell-state cues</h3>
-          <div class="chip-row"><span class="chip">neuron</span><span class="chip">mixed / unspecified</span><span class="chip">axon</span><span class="chip">microglia</span><span class="chip">astrocyte</span><span class="chip">endothelial_cell</span></div>
+          <div class="chip-row"><span class="chip">neuron</span><span class="chip">mixed / unspecified</span><span class="chip">axon</span><span class="chip">astrocyte</span><span class="chip">microglia</span><span class="chip">endothelial_cell</span></div>
         </article>
       </div>
       <div class="detail-grid">
@@ -653,9 +653,9 @@
         <article class="meta-card">
           <h3>Coverage</h3>
           <ul>
-            <li>Supporting papers: <strong>39</strong></li>
+            <li>Supporting papers: <strong>44</strong></li>
             <li>Anchor PMIDs: <strong>41132417; 41157272; 41234125; 41300163; 41513584; 41564671; 41669533; 41709584</strong></li>
-            <li>Source mix: <strong>full_text_like:52; abstract_only:19</strong></li>
+            <li>Source mix: <strong>full_text_like:59; abstract_only:19</strong></li>
             <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
           </ul>
         </article>
@@ -669,7 +669,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Biomarkers</h3>
-          <div class="chip-row"><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">tau (4)</span><span class="chip">rd (2)</span></div>
+          <div class="chip-row"><span class="chip">fa (14)</span><span class="chip">FA (11)</span><span class="chip">tau (6)</span><span class="chip">nfl (5)</span><span class="chip">RD (4)</span><span class="chip">rd (3)</span></div>
         </article>
         <article class="meta-card">
           <h3>Likely therapeutic targets</h3>
@@ -719,9 +719,9 @@
         <article class="meta-card">
           <h3>Coverage</h3>
           <ul>
-            <li>Supporting papers: <strong>97</strong></li>
+            <li>Supporting papers: <strong>123</strong></li>
             <li>Anchor PMIDs: <strong>41069428; 41103638; 41110648; 41129987; 41153827; 41157305; 41175081; 41179995</strong></li>
-            <li>Source mix: <strong>full_text_like:185; abstract_only:59; unknown:4</strong></li>
+            <li>Source mix: <strong>full_text_like:228; abstract_only:59; unknown:4</strong></li>
             <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
           </ul>
         </article>
@@ -735,7 +735,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Biomarkers</h3>
-          <div class="chip-row"><span class="chip">ros (134)</span><span class="chip">ROS (21)</span><span class="chip">ATP (19)</span><span class="chip">PINK1 (1)</span></div>
+          <div class="chip-row"><span class="chip">ros (150)</span><span class="chip">ROS (30)</span><span class="chip">ATP (19)</span><span class="chip">Atp (3)</span><span class="chip">PINK1 (1)</span></div>
         </article>
         <article class="meta-card">
           <h3>Likely therapeutic targets</h3>
@@ -745,11 +745,11 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Brain-region cues</h3>
-          <div class="chip-row"><span class="chip">diffuse / multisite</span><span class="chip">cortex</span><span class="chip">white_matter</span><span class="chip">unspecified</span><span class="chip">hippocampus</span><span class="chip">neurovascular_unit</span></div>
+          <div class="chip-row"><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">white_matter</span><span class="chip">unspecified</span><span class="chip">hippocampus</span><span class="chip">neurovascular_unit</span></div>
         </article>
         <article class="meta-card">
           <h3>Cell-state cues</h3>
-          <div class="chip-row"><span class="chip">mixed / unspecified</span><span class="chip">axon</span><span class="chip">neuron</span><span class="chip">astrocyte</span><span class="chip">microglia</span><span class="chip">myelinated_axon</span></div>
+          <div class="chip-row"><span class="chip">mixed / unspecified</span><span class="chip">neuron</span><span class="chip">axon</span><span class="chip">astrocyte</span><span class="chip">microglia</span><span class="chip">myelinated_axon</span></div>
         </article>
       </div>
       <div class="detail-grid">
@@ -785,9 +785,9 @@
         <article class="meta-card">
           <h3>Coverage</h3>
           <ul>
-            <li>Supporting papers: <strong>25</strong></li>
+            <li>Supporting papers: <strong>36</strong></li>
             <li>Anchor PMIDs: <strong>41394307; 41618372; 41622461; 41667502; 41675841; 41700019; 41785317; 41826372</strong></li>
-            <li>Source mix: <strong>full_text_like:38; abstract_only:10</strong></li>
+            <li>Source mix: <strong>full_text_like:57; abstract_only:10</strong></li>
             <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
           </ul>
         </article>
@@ -801,7 +801,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Biomarkers</h3>
-          <div class="chip-row"><span class="chip">nfl (6)</span><span class="chip">PSD-95 (2)</span><span class="chip">GFAP (2)</span><span class="chip">PSD95 (2)</span></div>
+          <div class="chip-row"><span class="chip">nfl (7)</span><span class="chip">PSD95 (6)</span><span class="chip">PSD-95 (3)</span><span class="chip">GFAP (2)</span></div>
         </article>
         <article class="meta-card">
           <h3>Likely therapeutic targets</h3>
@@ -811,11 +811,11 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Brain-region cues</h3>
-          <div class="chip-row"><span class="chip">cortex</span><span class="chip">hippocampus</span><span class="chip">diffuse / multisite</span><span class="chip">unspecified</span><span class="chip">neurovascular_unit</span><span class="chip">brainstem</span></div>
+          <div class="chip-row"><span class="chip">cortex</span><span class="chip">hippocampus</span><span class="chip">unspecified</span><span class="chip">diffuse / multisite</span><span class="chip">white_matter</span><span class="chip">neurovascular_unit</span></div>
         </article>
         <article class="meta-card">
           <h3>Cell-state cues</h3>
-          <div class="chip-row"><span class="chip">neuron</span><span class="chip">astrocyte</span><span class="chip">axon</span><span class="chip">mixed / unspecified</span><span class="chip">microglia</span><span class="chip">oligodendrocyte</span></div>
+          <div class="chip-row"><span class="chip">neuron</span><span class="chip">astrocyte</span><span class="chip">microglia</span><span class="chip">axon</span><span class="chip">mixed / unspecified</span><span class="chip">oligodendrocyte</span></div>
         </article>
       </div>
       <div class="detail-grid">
@@ -851,9 +851,9 @@
         <article class="meta-card">
           <h3>Coverage</h3>
           <ul>
-            <li>Supporting papers: <strong>92</strong></li>
+            <li>Supporting papers: <strong>100</strong></li>
             <li>Anchor PMIDs: <strong>41032947; 41039850; 41069428; 41079361; 41098044; 41110648; 41110777; 41126936</strong></li>
-            <li>Source mix: <strong>full_text_like:221; abstract_only:84</strong></li>
+            <li>Source mix: <strong>full_text_like:236; abstract_only:84</strong></li>
             <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
           </ul>
         </article>
@@ -867,7 +867,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Biomarkers</h3>
-          <div class="chip-row"><span class="chip">FA (167)</span><span class="chip">fa (52)</span><span class="chip">MD (51)</span><span class="chip">RD (32)</span><span class="chip">FDC (24)</span><span class="chip">nfl (19)</span></div>
+          <div class="chip-row"><span class="chip">FA (171)</span><span class="chip">fa (52)</span><span class="chip">MD (51)</span><span class="chip">RD (32)</span><span class="chip">FDC (24)</span><span class="chip">nfl (20)</span></div>
         </article>
         <article class="meta-card">
           <h3>Likely therapeutic targets</h3>
@@ -881,7 +881,7 @@
         </article>
         <article class="meta-card">
           <h3>Cell-state cues</h3>
-          <div class="chip-row"><span class="chip">axon</span><span class="chip">mixed / unspecified</span><span class="chip">astrocyte</span><span class="chip">neuron</span><span class="chip">oligodendrocyte</span><span class="chip">myelinated_axon</span></div>
+          <div class="chip-row"><span class="chip">axon</span><span class="chip">mixed / unspecified</span><span class="chip">oligodendrocyte</span><span class="chip">astrocyte</span><span class="chip">neuron</span><span class="chip">myelinated_axon</span></div>
         </article>
       </div>
       <div class="detail-grid">
@@ -917,9 +917,9 @@
         <article class="meta-card">
           <h3>Coverage</h3>
           <ul>
-            <li>Supporting papers: <strong>68</strong></li>
+            <li>Supporting papers: <strong>81</strong></li>
             <li>Anchor PMIDs: <strong>41039850; 41079361; 41103638; 41173520; 41177833; 41183617; 41267966; 41328339</strong></li>
-            <li>Source mix: <strong>full_text_like:138; abstract_only:31</strong></li>
+            <li>Source mix: <strong>full_text_like:164; abstract_only:31</strong></li>
             <li>Timing profile: <strong>acute; subacute; chronic</strong></li>
           </ul>
         </article>
@@ -943,11 +943,11 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Brain-region cues</h3>
-          <div class="chip-row"><span class="chip">BBB</span><span class="chip">cortex</span><span class="chip">neurovascular_unit</span><span class="chip">diffuse / multisite</span><span class="chip">brain parenchyma</span><span class="chip">third_cranial_nerve</span></div>
+          <div class="chip-row"><span class="chip">BBB</span><span class="chip">neurovascular_unit</span><span class="chip">cortex</span><span class="chip">diffuse / multisite</span><span class="chip">brain parenchyma</span><span class="chip">third_cranial_nerve</span></div>
         </article>
         <article class="meta-card">
           <h3>Cell-state cues</h3>
-          <div class="chip-row"><span class="chip">endothelial_cell</span><span class="chip">mixed / unspecified</span><span class="chip">astrocyte</span><span class="chip">leukocyte</span><span class="chip">neuron</span><span class="chip">pericyte</span></div>
+          <div class="chip-row"><span class="chip">endothelial_cell</span><span class="chip">mixed / unspecified</span><span class="chip">astrocyte</span><span class="chip">leukocyte</span><span class="chip">neuron</span><span class="chip">microglia</span></div>
         </article>
       </div>
       <div class="detail-grid">

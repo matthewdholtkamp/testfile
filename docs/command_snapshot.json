@@ -2,7 +2,7 @@
   "program_status": {
     "line": "Phases 1 through 6 are built. The engine is now at the point where the next gain comes from choosing a path, not rebuilding the stack.",
     "paragraph": "The system has already mapped mechanisms, causal bridges, progression objects, translational packets, endotypes, and a ranked decision slate. Right now the slate holds 4 candidate decision(s), while Phase 4 remains bounded with 0 actionable packet(s).",
-    "current_direction_line": "The engine is currently steering toward Neuroinflammation / Microglial State Change biomarker panel because Neuroinflammation / Microglial State Change biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path."
+    "current_direction_line": "The engine is currently steering toward Blood-Brain Barrier Failure biomarker panel because Future slates use this panel as the default operator readout set."
   },
   "goal_progress": {
     "stages": [
@@ -48,12 +48,12 @@
       },
       {
         "label": "Paper Readiness",
-        "completed": 3,
+        "completed": 4,
         "total": 4,
         "checkpoints": [
           {
             "label": "Manuscript candidate selected",
-            "complete": false
+            "complete": true
           },
           {
             "label": "Evidence chain complete",
@@ -68,12 +68,12 @@
             "complete": true
           }
         ],
-        "percent": 75
+        "percent": 100
       }
     ],
     "current_manuscript_candidate": {
-      "title": "Not selected yet",
-      "story": "If you approve the primary decision, it becomes the current manuscript path."
+      "title": "Blood-Brain Barrier Failure biomarker panel",
+      "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
     },
     "next_paper_opportunity": {
       "title": "Blood-Brain Barrier Failure biomarker panel",
@@ -150,7 +150,7 @@
     ],
     "current_unknowns": [
       "The top current uncertainty is Clarify Chronic Repetitive Tau / Clearance Mixed.",
-      "Phase 4 is still bounded. It has 6 bounded packet(s), 1 lane(s) with compound support, and 1 lane(s) with trial support.",
+      "Phase 4 is still bounded. It has 6 bounded packet(s), 1 lane(s) with compound support, and 0 lane(s) with trial support.",
       "The biggest paper blocker right now is this: The current evidence does not yet show the expected cumulative damage signal."
     ]
   },
@@ -284,19 +284,21 @@
       "rationale": "NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.",
       "decision_rationale": "NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.",
       "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
-      "source_quality_mix": "lane 79 full-text-like / 28 abstract-only; primary target seed 9 full-text-like hits across 11 match(es); direct target mentions 9 full-text-like / 3 abstract-only",
+      "source_quality_mix": "lane 107 full-text-like / 28 abstract-only; direct target mentions 13 full-text-like / 3 abstract-only",
       "anchor_pmids": [
         "41157272",
         "41103638",
+        "41926211",
         "41663365",
         "41734021",
         "41752185",
+        "41756234",
         "41756282",
         "41824127",
         "41612383",
-        "41803087",
-        "41511466",
         "41480492",
+        "41622481",
+        "41659975",
         "41683989",
         "41709060",
         "41712436",
@@ -304,8 +306,8 @@
         "41737534",
         "41769894",
         "41803953",
-        "41622481",
-        "41659975",
+        "41880282",
+        "41918568",
         "41740873",
         "41809632",
         "41039850",
@@ -328,7 +330,7 @@
         "41665901",
         "41700070"
       ],
-      "supporting_pmids": "41157272; 41103638; 41663365; 41734021; 41752185; 41756282; 41824127; 41612383; 41803087; 41511466; 41480492; 41683989; 41709060; 41712436; 41726892; 41737534; 41769894; 41803953; 41622481; 41659975; 41740873; 41809632; 41039850; 41135688; 41173520; 41197779; 41327381; 41446731; 41069428; 41110648; 41129987; 41153827; 41157305; 41175081; 41179995; 41328339; 41496386; 41594797; 41651695; 41665901; 41700070",
+      "supporting_pmids": "41157272; 41103638; 41926211; 41663365; 41734021; 41752185; 41756234; 41756282; 41824127; 41612383; 41480492; 41622481; 41659975; 41683989; 41709060; 41712436; 41726892; 41737534; 41769894; 41803953; 41880282; 41918568; 41740873; 41809632; 41039850; 41135688; 41173520; 41197779; 41327381; 41446731; 41069428; 41110648; 41129987; 41153827; 41157305; 41175081; 41179995; 41328339; 41496386; 41594797; 41651695; 41665901; 41700070",
       "provenance_refs": [
         "phase1:neuroinflammation_microglial_state_change",
         "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
@@ -356,25 +358,27 @@
         "CRP",
         "QuinA",
         "DBSI-RF",
-        "TNF-\u03b1",
         "IL-1\u03b2",
+        "TNF-\u03b1",
+        "IL-18",
         "IL-10",
-        "IL-1 (91)",
-        "TNF (53)",
-        "IL-6 (50)",
-        "NLRP3 (38)",
-        "GFAP (22)",
-        "HMGB1 (17)",
-        "ros (134)",
-        "ROS (21)",
+        "IL-1 (121)",
+        "NLRP3 (67)",
+        "IL-6 (61)",
+        "TNF (55)",
+        "HMGB1 (31)",
+        "GFAP (23)",
+        "ros (150)",
+        "ROS (30)",
         "ATP (19)",
+        "Atp (3)",
         "PINK1 (1)",
-        "tau (71)",
-        "Tau (25)",
-        "GFAP (15)",
+        "tau (105)",
+        "Tau (27)",
+        "GFAP (21)",
+        "p-tau (12)",
         "t-tau (9)",
-        "T-tau (7)",
-        "p-tau (6)"
+        "T-tau (7)"
       ],
       "biomarker_panel": [
         "NLRP3",
@@ -385,25 +389,27 @@
         "CRP",
         "QuinA",
         "DBSI-RF",
-        "TNF-\u03b1",
         "IL-1\u03b2",
+        "TNF-\u03b1",
+        "IL-18",
         "IL-10",
-        "IL-1 (91)",
-        "TNF (53)",
-        "IL-6 (50)",
-        "NLRP3 (38)",
-        "GFAP (22)",
-        "HMGB1 (17)",
-        "ros (134)",
-        "ROS (21)",
+        "IL-1 (121)",
+        "NLRP3 (67)",
+        "IL-6 (61)",
+        "TNF (55)",
+        "HMGB1 (31)",
+        "GFAP (23)",
+        "ros (150)",
+        "ROS (30)",
         "ATP (19)",
+        "Atp (3)",
         "PINK1 (1)",
-        "tau (71)",
-        "Tau (25)",
-        "GFAP (15)",
+        "tau (105)",
+        "Tau (27)",
+        "GFAP (21)",
+        "p-tau (12)",
         "t-tau (9)",
-        "T-tau (7)",
-        "p-tau (6)"
+        "T-tau (7)"
       ],
       "expected_readouts": [
         "IL-1beta / IL-6 / TNF-alpha network",
@@ -547,7 +553,7 @@
         "rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
         "decision_rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
         "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
-        "source_quality_mix": "lane 53 full-text-like / 14 abstract-only; primary target seed 5 full-text-like hits across 5 match(es); direct target mentions 6 full-text-like / 0 abstract-only",
+        "source_quality_mix": "lane 67 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only",
         "anchor_pmids": [
           "41663365",
           "41673382",
@@ -559,9 +565,9 @@
           "41153827",
           "41532955",
           "41709060",
-          "41752185",
           "41622772",
           "41751210",
+          "41752185",
           "41740873",
           "41683989",
           "41103638",
@@ -577,7 +583,7 @@
           "41267966",
           "41328339"
         ],
-        "supporting_pmids": "41663365; 41673382; 41642456; 41649131; 41039850; 41465583; 41725719; 41153827; 41532955; 41709060; 41752185; 41622772; 41751210; 41740873; 41683989; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731; 41079361; 41177833; 41183617; 41267966; 41328339",
+        "supporting_pmids": "41663365; 41673382; 41642456; 41649131; 41039850; 41465583; 41725719; 41153827; 41532955; 41709060; 41622772; 41751210; 41752185; 41740873; 41683989; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731; 41079361; 41177833; 41183617; 41267966; 41328339",
         "provenance_refs": [
           "phase1:blood_brain_barrier_failure",
           "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
@@ -603,18 +609,18 @@
           "Evans blue",
           "gadolinium leakage",
           "Nf-L",
+          "MMP-9",
           "FITC-labeled mNGF fluorescence",
           "Optical density (OD) readings",
           "MBP protein expression",
           "NF-200 protein expression",
           "PSD-95 protein expression",
-          "Cerebral blood flow (CBF)",
-          "IL-1 (91)",
-          "TNF (53)",
-          "IL-6 (50)",
-          "NLRP3 (38)",
-          "GFAP (22)",
-          "HMGB1 (17)",
+          "IL-1 (121)",
+          "NLRP3 (67)",
+          "IL-6 (61)",
+          "TNF (55)",
+          "HMGB1 (31)",
+          "GFAP (23)",
           "CBF (14)",
           "AQP4 (5)"
         ],
@@ -628,18 +634,18 @@
           "Evans blue",
           "gadolinium leakage",
           "Nf-L",
+          "MMP-9",
           "FITC-labeled mNGF fluorescence",
           "Optical density (OD) readings",
           "MBP protein expression",
           "NF-200 protein expression",
           "PSD-95 protein expression",
-          "Cerebral blood flow (CBF)",
-          "IL-1 (91)",
-          "TNF (53)",
-          "IL-6 (50)",
-          "NLRP3 (38)",
-          "GFAP (22)",
-          "HMGB1 (17)",
+          "IL-1 (121)",
+          "NLRP3 (67)",
+          "IL-6 (61)",
+          "TNF (55)",
+          "HMGB1 (31)",
+          "GFAP (23)",
           "CBF (14)",
           "AQP4 (5)"
         ],
@@ -661,29 +667,28 @@
       }
     },
     {
-      "decision_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+      "decision_id": "weakest_evidence_hinge--object--cognitive_decline_phenotype",
       "priority": "secondary",
-      "decision_title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+      "decision_title": "Harden Cognitive Decline Phenotype",
       "decision_family": "weakest_evidence_hinge",
       "decision_family_label": "Weakest Evidence Hinge",
       "human_question": "Do you want the next cycle to spend real effort resolving this uncertainty?",
-      "why_now": "This endotype is already in the product, so clarifying it has immediate downstream value.",
+      "why_now": "This object currently shapes 3 endotype packet(s) and 2 translational packet(s).",
       "what_we_know": [
-        "Tau / Proteinopathy Progression is currently rated provisional.",
-        "It is tied to 3 Phase 2 transition(s) and 3 downstream object(s).",
-        "It already maps to 1 endotype packet(s)."
+        "Axonal Degeneration is currently rated provisional.",
+        "It already maps to 3 endotype packet(s)."
       ],
       "what_is_uncertain": [
-        "The main open issue is this: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
-        "This item still carries novelty status: Cross Disease Analog."
+        "The main open issue is this: Object still needs denser direct support before it should be treated as hardened.",
+        "This item still carries novelty status: Tbi Emergent."
       ],
       "phase_path": [
-        "Phase 1 mapped the live mechanism lane as Tau Proteinopathy Progression, Glymphatic Astroglial Clearance Failure, Neuroinflammation Microglial State Change.",
-        "Phase 2 connected that lane through Glymphatic Failure To Tau Protein Accumulation, Neuroinflammation To Tau Proteinopathy Progression, Tau Proteinopathy Progression To Chronic Network Dysfunction.",
-        "Phase 3 says the downstream burden shows up as Tauopathy Progression, Cognitive Decline Phenotype, Microglial Chronic Activation.",
-        "Phase 4 attached the translational packet Tau Proteinopathy Progression, Glymphatic Astroglial Clearance Failure, Neuroinflammation Microglial State Change.",
-        "Phase 5 says this matters most in Chronic Repetitive Tau Clearance Mixed.",
-        "Phase 6 ranked Clarify Chronic Repetitive Tau / Clearance Mixed now because This endotype is already in the product, so clarifying it has immediate downstream value.."
+        "Phase 1 mapped the live mechanism lane as Axonal Degeneration, Tau Proteinopathy Progression, Neuroinflammation Microglial State Change.",
+        "Phase 2 connected that lane through not specified.",
+        "Phase 3 says the downstream burden shows up as Cognitive Decline Phenotype.",
+        "Phase 4 attached the translational packet Axonal Degeneration, Tau Proteinopathy Progression.",
+        "Phase 5 says this matters most in Chronic Mild Metabolic White Matter Dominant, Chronic Repetitive Tau Clearance Mixed, Chronic Severe Axonal Network Decline.",
+        "Phase 6 ranked Harden Cognitive Decline Phenotype now because This object currently shapes 3 endotype packet(s) and 2 translational packet(s).."
       ],
       "options": [
         {
@@ -715,134 +720,151 @@
         }
       ],
       "recommended_option_id": "resolve_now",
-      "recommended_reason": "Clarify Chronic Repetitive Tau / Clearance Mixed is the main blocker on the current path, so resolving it now gives the cleanest gain in decision confidence.",
+      "recommended_reason": "Harden Cognitive Decline Phenotype is the main blocker on the current path, so resolving it now gives the cleanest gain in decision confidence.",
       "write_in_allowed": true,
-      "current_manuscript_effect": "If you choose Resolve this now, Clarify Chronic Repetitive Tau / Clearance Mixed becomes part of the current manuscript path instead of staying only on the background slate.",
-      "future_engine_effect": "Clarify Chronic Repetitive Tau / Clearance Mixed will steer future machine runs and slates this way: Future slates will keep this uncertainty at the front until it is clarified.",
+      "current_manuscript_effect": "If you choose Resolve this now, Harden Cognitive Decline Phenotype becomes part of the current manuscript path instead of staying only on the background slate.",
+      "future_engine_effect": "Harden Cognitive Decline Phenotype will steer future machine runs and slates this way: Future slates will keep this uncertainty at the front until it is clarified.",
       "immediate_action_mode": "dispatch_targeted_extraction",
       "detail_link": "./idea-briefs/index.html",
       "support_status": "provisional",
-      "novelty_status": "cross_disease_analog",
-      "statement": "A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.",
+      "novelty_status": "tbi_emergent",
+      "statement": "Cognitive decline is the downstream phenotype that makes the rest of the process engine clinically meaningful rather than merely mechanistic.",
       "source_row": {
-        "candidate_id": "weakest_evidence_hinge::endotype::chronic_repetitive_tau_clearance_mixed",
+        "candidate_id": "weakest_evidence_hinge::object::cognitive_decline_phenotype",
         "family_id": "weakest_evidence_hinge",
         "family_label": "Weakest Evidence Hinge",
         "ranking_family": "weakest_evidence_hinge",
-        "candidate_type": "endotype",
+        "candidate_type": "object",
         "canonical_mechanism": "neuroinflammation_microglial_activation",
-        "display_name": "Tau / Proteinopathy Progression",
-        "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
-        "statement": "A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.",
+        "display_name": "Axonal Degeneration",
+        "title": "Harden Cognitive Decline Phenotype",
+        "statement": "Cognitive decline is the downstream phenotype that makes the rest of the process engine clinically meaningful rather than merely mechanistic.",
         "support_status": "provisional",
-        "novelty_status": "cross_disease_analog",
+        "novelty_status": "tbi_emergent",
         "strength_tag": "moderate",
         "operator_decision": "Needs adjudication",
-        "confidence_score": 0.906,
-        "value_score": 1.0,
-        "core_family_score": 0.906,
-        "novelty_bonus": 0.12,
-        "family_score": 1.026,
+        "confidence_score": 0.826,
+        "value_score": 0.886,
+        "core_family_score": 0.826,
+        "novelty_bonus": 0.06,
+        "family_score": 0.886,
         "target_lane_ids": [
+          "axonal_degeneration",
           "tau_proteinopathy_progression",
-          "glymphatic_astroglial_clearance_failure",
           "neuroinflammation_microglial_state_change"
         ],
         "linked_phase1_lane_ids": [
+          "axonal_degeneration",
           "tau_proteinopathy_progression",
-          "glymphatic_astroglial_clearance_failure",
           "neuroinflammation_microglial_state_change"
         ],
-        "parent_transition_ids": [
-          "glymphatic_failure_to_tau_protein_accumulation",
-          "neuroinflammation_to_tau_proteinopathy_progression",
-          "tau_proteinopathy_progression_to_chronic_network_dysfunction"
-        ],
-        "linked_phase2_transition_ids": [
-          "glymphatic_failure_to_tau_protein_accumulation",
-          "neuroinflammation_to_tau_proteinopathy_progression",
-          "tau_proteinopathy_progression_to_chronic_network_dysfunction"
-        ],
+        "parent_transition_ids": [],
+        "linked_phase2_transition_ids": [],
         "parent_object_ids": [
-          "tauopathy_progression",
-          "cognitive_decline_phenotype",
-          "microglial_chronic_activation"
+          "cognitive_decline_phenotype"
         ],
         "linked_phase3_object_ids": [
-          "tauopathy_progression",
-          "cognitive_decline_phenotype",
-          "microglial_chronic_activation"
+          "cognitive_decline_phenotype"
         ],
         "parent_translational_packet_ids": [
-          "tau_proteinopathy_progression",
-          "glymphatic_astroglial_clearance_failure",
-          "neuroinflammation_microglial_state_change"
+          "axonal_degeneration",
+          "tau_proteinopathy_progression"
         ],
         "linked_phase4_packet_ids": [
-          "tau_proteinopathy_progression",
-          "glymphatic_astroglial_clearance_failure",
-          "neuroinflammation_microglial_state_change"
+          "axonal_degeneration",
+          "tau_proteinopathy_progression"
         ],
         "parent_endotype_ids": [
-          "chronic_repetitive_tau_clearance_mixed"
+          "chronic_mild_metabolic_white_matter_dominant",
+          "chronic_repetitive_tau_clearance_mixed",
+          "chronic_severe_axonal_network_decline"
         ],
         "linked_phase5_endotype_ids": [
-          "chronic_repetitive_tau_clearance_mixed"
+          "chronic_mild_metabolic_white_matter_dominant",
+          "chronic_repetitive_tau_clearance_mixed",
+          "chronic_severe_axonal_network_decline"
         ],
-        "rationale": "p-tau or BD-tau together with AQP4 or DTI-ALPS-type clearance evidence.",
-        "decision_rationale": "p-tau or BD-tau together with AQP4 or DTI-ALPS-type clearance evidence.",
-        "why_now": "This endotype is already in the product, so clarifying it has immediate downstream value.",
-        "source_quality_mix": "full_text_like:4; abstract_only:4",
+        "rationale": "Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.",
+        "decision_rationale": "Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.",
+        "why_now": "This object currently shapes 3 endotype packet(s) and 2 translational packet(s).",
+        "source_quality_mix": "full_text_like:59; abstract_only:19",
         "anchor_pmids": [
-          "41508043",
-          "41612558",
-          "41627284",
-          "41700070",
-          "41179995",
-          "41039850",
-          "41342721",
-          "41707558"
+          "41132417",
+          "41157272",
+          "41234125",
+          "41300163",
+          "41513584",
+          "41564671",
+          "41669533",
+          "41709584"
         ],
-        "supporting_pmids": "41508043; 41612558; 41627284; 41700070; 41179995; 41039850; 41342721; 41707558",
+        "supporting_pmids": "41132417; 41157272; 41234125; 41300163; 41513584; 41564671; 41669533; 41709584",
         "provenance_refs": [
+          "phase1:axonal_degeneration",
           "phase1:tau_proteinopathy_progression",
-          "phase1:glymphatic_astroglial_clearance_failure",
           "phase1:neuroinflammation_microglial_state_change",
-          "phase2:glymphatic_failure_to_tau_protein_accumulation",
-          "phase2:neuroinflammation_to_tau_proteinopathy_progression",
-          "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
-          "phase3:tauopathy_progression",
           "phase3:cognitive_decline_phenotype",
-          "phase3:microglial_chronic_activation",
+          "phase4:axonal_degeneration",
           "phase4:tau_proteinopathy_progression",
-          "phase4:glymphatic_astroglial_clearance_failure",
-          "phase4:neuroinflammation_microglial_state_change",
-          "phase5:chronic_repetitive_tau_clearance_mixed"
+          "phase5:chronic_mild_metabolic_white_matter_dominant",
+          "phase5:chronic_repetitive_tau_clearance_mixed",
+          "phase5:chronic_severe_axonal_network_decline"
         ],
-        "blockers": "Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
-        "next_test": "Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?",
-        "unlocks": "A sharper endotype split improves biomarker ranking and target matching for Phase 4 packets.",
+        "blockers": "Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.",
+        "next_test": "Which upstream objects or transitions are most consistently associated with chronic cognitive decline in the current corpus?",
+        "unlocks": "A stronger object packet improves both biomarker ranking and endotype interpretation.",
         "hypothesis_type": "weakest_evidence_hinge",
-        "hinge_type": "endotype_discriminator_gap",
-        "downstream_dependency_count": 6,
-        "cost_to_clarify": 0.42,
-        "information_gain_if_resolved": 0.98,
-        "weakness_reason": "Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
+        "hinge_type": "translational_attachment_gap",
+        "downstream_dependency_count": 5,
+        "cost_to_clarify": 0.35,
+        "information_gain_if_resolved": 0.8,
+        "weakness_reason": "Object still needs denser direct support before it should be treated as hardened. || Some supporting rows are abstract-only and should be weighted cautiously. || Contradiction-bearing evidence is present and needs adjudication before stronger promotion.",
         "blocking_evidence_types": [
-          "endotype_discriminator_gap",
-          "cohort_precision"
+          "object_support",
+          "parent_coverage"
         ],
-        "needed_enrichment": "Deepen repetitive-impact and CTE-adjacent papers with tau variants, glymphatic readouts, and chronic function.",
-        "rank": 1,
+        "needed_enrichment": "parent_and_anchor_hardening",
+        "rank": 2,
         "portfolio_role": "hinge_or_task_pick"
       }
     }
   ],
-  "decision_history": [],
+  "decision_history": [
+    {
+      "timestamp": "2026-04-04T13:39:41.055419+00:00",
+      "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+      "decision_title": "Blood-Brain Barrier Failure biomarker panel",
+      "selected_option_id": "adopt_as_default_panel",
+      "free_text": "",
+      "interpreted_intent": "adopt_as_default_panel",
+      "triggered_action": "{'requested_action_mode': 'dispatch_refresh_public_enrichment', 'canonical_action_mode': 'dispatch_refresh_public_enrichment', 'action_descriptor': {'action_id': 'dispatch_refresh_public_enrichment', 'label': 'Dispatch public enrichment refresh', 'kind': 'workflow_dispatch', 'workflow': 'refresh_public_enrichment.yml', 'repo_target': '.github/workflows/refresh_public_enrichment.yml', 'executable_target': 'gh workflow run refresh_public_enrichment.yml -R matthewdholtkamp/testfile', 'supported': True, 'support_reason': 'Requires gh CLI and the public enrichment workflow file.'}, 'executed': True, 'status': 'dispatched', 'message': 'Refresh Public Enrichment was dispatched.', 'run': {'conclusion': '', 'createdAt': '2026-04-04T13:39:38Z', 'databaseId': 23980038190, 'displayTitle': 'Refresh Public Enrichment', 'status': 'pending', 'url': 'https://github.com/matthewdholtkamp/testfile/actions/runs/23980038190', 'workflowName': 'Refresh Public Enrichment'}}",
+      "ai_explanation": "A canonical option was selected directly."
+    },
+    {
+      "timestamp": "2026-04-04T13:38:56.083545+00:00",
+      "decision_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+      "decision_title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+      "selected_option_id": "resolve_now",
+      "free_text": "",
+      "interpreted_intent": "resolve_now",
+      "triggered_action": "{'requested_action_mode': 'dispatch_targeted_extraction', 'canonical_action_mode': 'dispatch_targeted_extraction', 'action_descriptor': {'action_id': 'dispatch_targeted_extraction', 'label': 'Dispatch targeted extraction', 'kind': 'workflow_dispatch', 'workflow': 'run_targeted_extraction.yml', 'repo_target': '.github/workflows/run_targeted_extraction.yml', 'executable_target': 'gh workflow run run_targeted_extraction.yml -R matthewdholtkamp/testfile', 'supported': True, 'support_reason': 'Requires gh CLI and the targeted extraction workflow file.'}, 'executed': True, 'status': 'dispatched', 'message': 'Targeted Extraction was dispatched.', 'run': {'conclusion': '', 'createdAt': '2026-04-04T13:38:53Z', 'databaseId': 23980025067, 'displayTitle': 'Targeted Extraction Batch', 'status': 'queued', 'url': 'https://github.com/matthewdholtkamp/testfile/actions/runs/23980025067', 'workflowName': 'Targeted Extraction Batch'}}",
+      "ai_explanation": "A canonical option was selected directly."
+    },
+    {
+      "timestamp": "2026-04-04T13:38:16.473139+00:00",
+      "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+      "decision_title": "Blood-Brain Barrier Failure biomarker panel",
+      "selected_option_id": "adopt_as_default_panel",
+      "free_text": "",
+      "interpreted_intent": "adopt_as_default_panel",
+      "triggered_action": "{'requested_action_mode': 'dispatch_refresh_public_enrichment', 'canonical_action_mode': 'dispatch_refresh_public_enrichment', 'action_descriptor': {'action_id': 'dispatch_refresh_public_enrichment', 'label': 'Dispatch public enrichment refresh', 'kind': 'workflow_dispatch', 'workflow': 'refresh_public_enrichment.yml', 'repo_target': '.github/workflows/refresh_public_enrichment.yml', 'executable_target': 'gh workflow run refresh_public_enrichment.yml -R matthewdholtkamp/testfile', 'supported': True, 'support_reason': 'Requires gh CLI and the public enrichment workflow file.'}, 'executed': True, 'status': 'dispatched', 'message': 'Refresh Public Enrichment was dispatched.', 'run': {'conclusion': '', 'createdAt': '2026-04-04T13:38:14Z', 'databaseId': 23980014393, 'displayTitle': 'Refresh Public Enrichment', 'status': 'queued', 'url': 'https://github.com/matthewdholtkamp/testfile/actions/runs/23980014393', 'workflowName': 'Refresh Public Enrichment'}}",
+      "ai_explanation": "A canonical option was selected directly."
+    }
+  ],
   "phase_timeline": [
     {
       "kind": "phase",
-      "date": "2026-03-29 02:26:55",
+      "date": "2026-04-04 14:16:01",
       "title": "Phase 1 \u00b7 Process Lanes",
       "status": "supported",
       "summary": "The engine reduced the TBI literature into six recurring process lanes so the project stopped treating every paper as a one-off mechanism note.",
@@ -851,7 +873,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-29 02:26:56",
+      "date": "2026-04-04 14:16:01",
       "title": "Phase 2 \u00b7 Causal Transitions",
       "status": "supported",
       "summary": "The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.",
@@ -860,7 +882,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-29 02:26:57",
+      "date": "2026-04-04 14:16:02",
       "title": "Phase 3 \u00b7 Progression Objects",
       "status": "supported",
       "summary": "The engine grouped recurring downstream damage states into progression objects such as chronic network dysfunction and neurovascular uncoupling.",
@@ -869,7 +891,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-28 21:26:58",
+      "date": "2026-04-04 14:16:03",
       "title": "Phase 4 \u00b7 Translational Logic",
       "status": "bounded",
       "summary": "The engine attached translational packets to each lane so targets, readouts, and intervention logic sit on top of the mechanism map.",
@@ -878,26 +900,26 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-28",
+      "date": "2026-04-04 14:16:03",
       "title": "Phase 5 \u00b7 Cohort Stratification",
       "status": "usable",
       "summary": "The engine split TBI into cohort and endotype patterns so mild, repetitive, blast, severe, acute, and chronic states stop collapsing into one disease bucket.",
       "detail": "The current ambiguity around tau versus clearance is an endotype problem, not just a mechanism problem.",
-      "meta": "Add Phase 5 cohort stratification layer"
+      "meta": "7 endotypes"
     },
     {
       "kind": "phase",
-      "date": "2026-03-28",
+      "date": "2026-04-04 14:16:03",
       "title": "Phase 6 \u00b7 Hypothesis Rankings",
       "status": "live",
       "summary": "The engine ranked the strongest bridges, weakest hinges, biomarker panels, leverage points, and next tasks into a weekly decision slate.",
       "detail": "The portal now uses this slate as the human decision queue.",
-      "meta": "Implement phase 6 hypothesis rankings"
+      "meta": "5 families"
     }
   ],
   "current_direction": {
-    "label": "Neuroinflammation / Microglial State Change biomarker panel",
-    "reason": "Neuroinflammation / Microglial State Change biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path."
+    "label": "Blood-Brain Barrier Failure biomarker panel",
+    "reason": "Future slates use this panel as the default operator readout set."
   },
   "support_links": [
     {
