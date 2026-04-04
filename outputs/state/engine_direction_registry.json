@@ -1,18 +1,19 @@
 {
-  "active_path_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
-  "active_path_label": "resolving Clarify Chronic Repetitive Tau / Clearance Mixed",
-  "active_direction_reason": "Future slates will keep this uncertainty at the front until it is clarified.",
-  "primary_goal_stage": "decision_confidence",
+  "active_path_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+  "active_path_label": "Blood-Brain Barrier Failure biomarker panel",
+  "active_direction_reason": "Future slates use this panel as the default operator readout set.",
+  "primary_goal_stage": "paper_readiness",
   "favored_mechanisms": [
-    "tau_proteinopathy_progression",
-    "glymphatic_astroglial_clearance_failure",
-    "neuroinflammation_microglial_state_change"
+    "blood_brain_barrier_failure"
   ],
   "favored_endotypes": [
-    "chronic_repetitive_tau_clearance_mixed"
+    "acute_mild_biomarker_imaging_bridge",
+    "acute_severe_vascular_dominant",
+    "acute_blast_vascular_inflammatory_mixed",
+    "subacute_repetitive_inflammatory_dominant"
   ],
   "favored_decision_families": [
-    "weakest_evidence_hinge"
+    "most_informative_biomarker_panel"
   ],
   "evidence_mode": "advance",
   "current_manuscript_candidate": {
@@ -23,10 +24,10 @@
     "title": "Blood-Brain Barrier Failure biomarker panel",
     "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
   },
-  "last_decision_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
-  "last_updated": "2026-04-04T13:38:52.386094+00:00",
+  "last_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+  "last_updated": "2026-04-04T13:39:37.195869+00:00",
   "pending_machine_actions": [
-    "dispatch_targeted_extraction"
+    "dispatch_refresh_public_enrichment"
   ],
   "operator_note": ""
 }
