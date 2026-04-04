@@ -1,15 +1,15 @@
 {
   "ok": true,
-  "request_id": "clarify-1775306974283-5lnuht",
+  "request_id": "clarify-1775325219183-gjm2b5",
   "source": "fallback",
   "model": "gemini-2.0-flash-lite-001",
-  "answer": "If you approve the primary decision, it becomes the current manuscript path.",
+  "answer": "So far the engine has found a stable mechanism map, a small set of supported causal bridges, and a clear front-running decision path for the next paper.",
   "evidence_chain": [
     "The lead mechanism in the live atlas is Blood-Brain Barrier Dysfunction.",
     "The strongest supported bridge right now is BBB permeability increase -> peripheral immune infiltration.",
-    "The top current uncertainty is Clarify Chronic Repetitive Tau / Clearance Mixed."
+    "The current lead insight is that Subacute Repetitive Inflammatory-Dominant discriminator panel is the best readout set to carry the next paper story, because this panel is where phase 5 endotype logic becomes measurable instead of purely descriptive."
   ],
-  "implication": "The current paper path is good enough to shape, but it still depends on the next decision.",
-  "recommended_follow_up": "Choose the primary decision first, then use its result to lock the manuscript path.",
+  "implication": "We are no longer searching for the basic structure. We are choosing which path deserves commitment now.",
+  "recommended_follow_up": "Use the primary decision card first. It is the shortest path to stronger decision confidence.",
   "warning": "HTTP Error 429: Too Many Requests"
 }
