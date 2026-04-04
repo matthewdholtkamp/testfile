@@ -1,31 +1,31 @@
 {
-  "active_path_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-  "active_path_label": "Blood-Brain Barrier Failure biomarker panel",
+  "active_path_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+  "active_path_label": "Neuroinflammation / Microglial State Change biomarker panel",
   "active_direction_reason": "Future slates use this panel as the default operator readout set.",
   "primary_goal_stage": "paper_readiness",
   "favored_mechanisms": [
-    "blood_brain_barrier_failure"
+    "neuroinflammation_microglial_state_change"
   ],
   "favored_endotypes": [
     "acute_mild_biomarker_imaging_bridge",
-    "acute_severe_vascular_dominant",
     "acute_blast_vascular_inflammatory_mixed",
-    "subacute_repetitive_inflammatory_dominant"
+    "subacute_repetitive_inflammatory_dominant",
+    "chronic_repetitive_tau_clearance_mixed"
   ],
   "favored_decision_families": [
     "most_informative_biomarker_panel"
   ],
   "evidence_mode": "advance",
   "current_manuscript_candidate": {
-    "title": "Blood-Brain Barrier Failure biomarker panel",
-    "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
+    "title": "Neuroinflammation / Microglial State Change biomarker panel",
+    "story": "Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology."
   },
   "next_paper_opportunity": {
     "title": "Blood-Brain Barrier Failure biomarker panel",
     "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
   },
-  "last_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-  "last_updated": "2026-04-04T13:39:37.195869+00:00",
+  "last_decision_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+  "last_updated": "2026-04-04T21:36:33.091471+00:00",
   "pending_machine_actions": [
     "dispatch_refresh_public_enrichment"
   ],
