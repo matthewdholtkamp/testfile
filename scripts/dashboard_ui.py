@@ -877,6 +877,7 @@ def default_direction_registry():
     return {
         'active_path_id': '',
         'active_path_label': '',
+        'active_direction_reason': '',
         'primary_goal_stage': 'discovery',
         'favored_mechanisms': [],
         'favored_endotypes': [],
@@ -887,6 +888,7 @@ def default_direction_registry():
         'last_decision_id': '',
         'last_updated': '',
         'pending_machine_actions': [],
+        'operator_note': '',
     }
 
 

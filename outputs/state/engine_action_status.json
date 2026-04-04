@@ -1,0 +1,11 @@
+{
+  "request_id": "",
+  "timestamp": "",
+  "decision_id": "",
+  "decision_title": "",
+  "message": "No cockpit action has been recorded yet.",
+  "status": "idle",
+  "requested_action_mode": "",
+  "canonical_action_mode": "",
+  "run": {}
+}

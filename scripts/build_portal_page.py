@@ -238,10 +238,25 @@ __BASE_CSS__
       const COMMAND_PAGE_ENDPOINT = '/api/command-page';
       const CLARIFY_ENDPOINT = '/api/clarify-question';
       const APPLY_ENDPOINT = '/api/apply-decision';
+      const GITHUB_API_ROOT = 'https://api.github.com';
+      const GITHUB_OWNER = 'matthewdholtkamp';
+      const GITHUB_REPO = 'testfile';
+      const GITHUB_REF = 'main';
+      const GITHUB_APPLY_WORKFLOW = 'cockpit_apply_decision.yml';
+      const GITHUB_CLARIFY_WORKFLOW = 'cockpit_clarify_question.yml';
+      const GITHUB_TOKEN_KEY = 'atlas-github-token';
+      const GITHUB_STATE_FILES = {
+        directionRegistry: 'outputs/state/engine_direction_registry.json',
+        decisionLog: 'outputs/state/engine_decision_log.jsonl',
+        actionStatus: 'outputs/state/engine_action_status.json',
+        lastApply: 'outputs/state/engine_last_apply_response.json',
+        lastClarify: 'outputs/state/engine_last_clarify_response.json',
+      };
       const EMBEDDED_PAYLOAD = __SNAPSHOT__;
       const ui = {
         payload: EMBEDDED_PAYLOAD,
         online: false,
+        controlMode: 'snapshot',
         activeDecisionId: '',
         askQuestion: '',
         selectedOptions: {},
@@ -250,6 +265,7 @@ __BASE_CSS__
         actionMessage: 'Choose a decision, stage an option, and apply it from this panel.',
         aiResponse: null,
         pendingConfirmation: null,
+        liveActionStatus: null,
       };
       let activeControlUrl = '';
 
@@ -289,8 +305,12 @@ __BASE_CSS__
         });
       }
 
+      function isLocalHostname(hostname) {
+        return ['127.0.0.1', 'localhost', '::1', '[::1]'].includes(String(hostname || '').toLowerCase());
+      }
+
       function sameOriginControlUrl() {
-        if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+        if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') && isLocalHostname(window.location.hostname)) {
           return window.location.origin;
         }
         return '';
@@ -300,7 +320,9 @@ __BASE_CSS__
         const params = new URLSearchParams(window.location.search);
         const queryUrl = params.get('control_url') || '';
         const storedUrl = window.localStorage ? window.localStorage.getItem('atlas-control-url') : '';
-        return uniqueValues([queryUrl, storedUrl, sameOriginControlUrl()].concat(CONTROL_URL_CANDIDATES));
+        const allowStoredUrl = isLocalHostname(window.location.hostname) || String(storedUrl || '').startsWith('https://');
+        const localCandidates = isLocalHostname(window.location.hostname) ? CONTROL_URL_CANDIDATES : [];
+        return uniqueValues([queryUrl, allowStoredUrl ? storedUrl : '', sameOriginControlUrl()].concat(localCandidates));
       }
 
       async function fetchControlJson(endpoint, options = {}) {
@@ -324,6 +346,197 @@ __BASE_CSS__
           }
         }
         throw lastError;
+      }
+
+      function deepClone(value) {
+        return JSON.parse(JSON.stringify(value));
+      }
+
+      function githubToken() {
+        return window.localStorage ? (window.localStorage.getItem(GITHUB_TOKEN_KEY) || '').trim() : '';
+      }
+
+      function hasGitHubToken() {
+        return Boolean(githubToken());
+      }
+
+      function storeGitHubToken(token) {
+        if (!window.localStorage) return;
+        window.localStorage.setItem(GITHUB_TOKEN_KEY, token.trim());
+      }
+
+      function clearGitHubToken() {
+        if (!window.localStorage) return;
+        window.localStorage.removeItem(GITHUB_TOKEN_KEY);
+      }
+
+      function githubHeaders(extraHeaders = {}) {
+        const headers = {
+          'Accept': 'application/vnd.github+json',
+          'X-GitHub-Api-Version': '2022-11-28',
+          ...extraHeaders,
+        };
+        const token = githubToken();
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+        return headers;
+      }
+
+      async function githubApi(path, options = {}) {
+        const response = await fetch(`${GITHUB_API_ROOT}${path}`, {
+          cache: 'no-store',
+          ...options,
+          headers: githubHeaders(options.headers || {}),
+        });
+        if (!response.ok) {
+          let message = `GitHub request failed (${response.status}).`;
+          try {
+            const payload = await response.json();
+            message = payload.message || message;
+          } catch (error) {
+            // Keep the generic message.
+          }
+          throw new Error(message);
+        }
+        if (response.status === 204) {
+          return null;
+        }
+        return response.json();
+      }
+
+      function decodeBase64Utf8(content) {
+        const clean = String(content || '').replace(/\\n/g, '');
+        const binary = atob(clean);
+        const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+        return new TextDecoder().decode(bytes);
+      }
+
+      async function fetchGitHubFile(path, parser, fallbackValue) {
+        try {
+          const payload = await githubApi(`/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/contents/${path}?ref=${encodeURIComponent(GITHUB_REF)}`);
+          return parser(decodeBase64Utf8(payload.content || ''));
+        } catch (error) {
+          if (/404/.test(String(error.message || '')) || /Not Found/i.test(String(error.message || ''))) {
+            return fallbackValue;
+          }
+          throw error;
+        }
+      }
+
+      async function fetchGitHubJson(path, fallbackValue = null) {
+        return fetchGitHubFile(path, (textValue) => JSON.parse(textValue), fallbackValue);
+      }
+
+      async function fetchGitHubJsonl(path, fallbackValue = []) {
+        return fetchGitHubFile(path, (textValue) => textValue.split(/\\n+/).map((line) => line.trim()).filter(Boolean).map((line) => JSON.parse(line)), fallbackValue);
+      }
+
+      async function dispatchGitHubWorkflow(workflowFile, inputs) {
+        await githubApi(`/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/actions/workflows/${encodeURIComponent(workflowFile)}/dispatches`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ref: GITHUB_REF,
+            inputs,
+          }),
+        });
+      }
+
+      function createRequestId(prefix) {
+        return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      async function waitForGitHubResponse(path, requestId, timeoutMs = 120000) {
+        const deadline = Date.now() + timeoutMs;
+        while (Date.now() < deadline) {
+          const result = await fetchGitHubJson(path, null);
+          if (result && result.request_id === requestId) {
+            return result;
+          }
+          await sleep(4000);
+        }
+        throw new Error('GitHub control timed out while waiting for the response file. Check the Actions tab if this keeps happening.');
+      }
+
+      function overlayPayloadWithGitHubState(basePayload, remoteState) {
+        const payload = deepClone(basePayload || EMBEDDED_PAYLOAD);
+        const registry = remoteState.directionRegistry || {};
+        const history = Array.isArray(remoteState.decisionHistory) ? remoteState.decisionHistory.slice().reverse().slice(0, 8) : [];
+        const actionStatus = remoteState.actionStatus || null;
+        if (registry.active_path_label) {
+          payload.current_direction = {
+            label: registry.active_path_label,
+            reason: registry.active_direction_reason || payload.current_direction?.reason || '',
+          };
+        }
+        if (!payload.goal_progress) {
+          payload.goal_progress = {};
+        }
+        if (registry.current_manuscript_candidate?.title) {
+          payload.goal_progress.current_manuscript_candidate = registry.current_manuscript_candidate;
+        }
+        if (registry.next_paper_opportunity?.title) {
+          payload.goal_progress.next_paper_opportunity = registry.next_paper_opportunity;
+        }
+        if (history.length) {
+          payload.decision_history = history;
+        }
+        if (!payload.control_state) {
+          payload.control_state = {};
+        }
+        payload.control_state.preset_questions = payload.control_state.preset_questions || [
+          'What have we discovered so far?',
+          'Why is this recommended?',
+          'What happens if I choose the second option?',
+          'What paper story is emerging?',
+        ];
+        if (actionStatus) {
+          payload.live_action_status = actionStatus;
+          payload.control_state.live_action_status = actionStatus;
+        }
+        return payload;
+      }
+
+      async function loadGitHubRemoteState() {
+        const [
+          directionRegistry,
+          decisionHistory,
+          actionStatus,
+          lastApplyResponse,
+          lastClarifyResponse,
+        ] = await Promise.all([
+          fetchGitHubJson(GITHUB_STATE_FILES.directionRegistry, {}),
+          fetchGitHubJsonl(GITHUB_STATE_FILES.decisionLog, []),
+          fetchGitHubJson(GITHUB_STATE_FILES.actionStatus, {}),
+          fetchGitHubJson(GITHUB_STATE_FILES.lastApply, {}),
+          fetchGitHubJson(GITHUB_STATE_FILES.lastClarify, {}),
+        ]);
+        return {
+          directionRegistry,
+          decisionHistory,
+          actionStatus,
+          lastApplyResponse,
+          lastClarifyResponse,
+        };
+      }
+
+      async function fetchGitHubCommandPage() {
+        const remoteState = await loadGitHubRemoteState();
+        const basePayload = remoteState.lastApplyResponse?.payload?.primary_decision
+          ? remoteState.lastApplyResponse.payload
+          : EMBEDDED_PAYLOAD;
+        ui.payload = overlayPayloadWithGitHubState(basePayload, remoteState);
+        ui.online = true;
+        ui.controlMode = 'github';
+        ui.liveActionStatus = remoteState.actionStatus || null;
+        ui.actionMessage = 'GitHub control is connected. Decisions and questions are dispatched through GitHub Actions.';
       }
 
       function decisionList(payload) {
@@ -377,10 +590,21 @@ __BASE_CSS__
         const direction = payload.current_direction || {};
         const manuscript = payload.goal_progress?.current_manuscript_candidate || {};
         const nextPaper = payload.goal_progress?.next_paper_opportunity || {};
-        const onlinePill = `<span class=\"pill ${ui.online ? 'online' : 'offline'}\">${ui.online ? 'Live control online' : 'Offline snapshot'}</span>`;
-        const statusLine = ui.online
-          ? 'Live control is connected. Choices and questions post directly to the local command server.'
-          : 'The cockpit is using its embedded fallback snapshot. You can review the page offline, but question and apply actions stay disabled until live control is back.';
+        const modeLabel = ui.controlMode === 'local'
+          ? 'Local control'
+          : (ui.controlMode === 'github' ? 'GitHub control' : 'Offline snapshot');
+        const onlinePill = `<span class=\"pill ${ui.online ? 'online' : 'offline'}\">${escapeHtml(modeLabel)}</span>`;
+        const statusLine = ui.controlMode === 'local'
+          ? `Live control is connected at ${activeControlUrl}. Choices and questions post directly to the local command server.`
+          : (ui.controlMode === 'github'
+            ? 'GitHub control is connected. This browser can dispatch decisions and clarifying questions through GitHub Actions.'
+            : 'The cockpit is using its embedded fallback snapshot. You can review the page offline, but question and apply actions stay disabled until live control is back.');
+        const controlButtons = ui.controlMode === 'local'
+          ? `<button class=\"button-inline primary\" id=\"refreshCommandButton\">Refresh live state</button>`
+          : `
+              <button class=\"button-inline primary\" id=\"refreshCommandButton\">Refresh live state</button>
+              <button class=\"button-inline\" id=\"${hasGitHubToken() ? 'disconnectGitHubButton' : 'connectGitHubButton'}\">${hasGitHubToken() ? 'Disconnect GitHub control' : 'Connect GitHub control'}</button>
+            `;
         return `
           <div class=\"offline-banner\">Live control is offline. The cockpit is still usable as a read-only fallback snapshot, and all server actions stay disabled until /api/command-page responds again.</div>
           <section class=\"hero\">
@@ -390,13 +614,14 @@ __BASE_CSS__
               <div class=\"status-strip\">${onlinePill}</div>
               <p class=\"hero-copy\">${escapeHtml(status.line || '')}</p>
               <p class=\"hero-note\">${escapeHtml(status.paragraph || '')}</p>
+              <p class=\"hero-note\">${escapeHtml(statusLine)}</p>
               <div class=\"mini-panel\">
                 <span class=\"field-label\">Current direction</span>
                 <strong>${escapeHtml(direction.label || 'Direction not emitted')}</strong>
                 <p class=\"hero-note\">${escapeHtml(direction.reason || status.current_direction_line || '')}</p>
               </div>
               <div class=\"hero-actions\">
-                <button class=\"button-inline primary ${ui.online ? '' : ''}\" id=\"refreshCommandButton\">Refresh live state</button>
+                ${controlButtons}
               </div>
             </div>
             <div class=\"hero-side\">
@@ -406,6 +631,7 @@ __BASE_CSS__
                 <p class=\"muted-note\">${escapeHtml(manuscript.story || '')}</p>
                 <span style=\"margin-top:10px;\">Next paper opportunity</span>
                 <strong>${escapeHtml(nextPaper.title || 'No secondary paper path emitted')}</strong>
+                <p class=\"muted-note\" style=\"margin-top:10px;\">${hasGitHubToken() ? 'GitHub control is stored in this browser for this page.' : 'To use the public page as a live command surface, connect a fine-grained GitHub token with Actions and Contents read/write.'}</p>
               </div>
             </div>
           </section>
@@ -613,9 +839,14 @@ __BASE_CSS__
         const active = getActiveDecision();
         const selected = active ? getSelectedOption(active.decision_id) : null;
         const pending = ui.pendingConfirmation;
+        const liveAction = payload.live_action_status || ui.liveActionStatus || null;
         const selectedSummary = selected
           ? `<strong>${escapeHtml(selected.label)}</strong><p>${escapeHtml(optionDetail(selected))}</p>`
           : '<strong>No option staged yet</strong><p>Pick an option in one of the decision cards above to stage it here.</p>';
+        const liveActionSummary = liveAction ? `
+          <p class=\"muted-note\" style=\"margin-top:8px;\">Latest recorded action: ${escapeHtml(liveAction.message || liveAction.status || 'Action recorded.')}</p>
+          ${liveAction.run?.url ? `<p class=\"muted-note\"><a class=\"button-link\" href=\"${escapeHtml(liveAction.run.url)}\" target=\"_blank\" rel=\"noreferrer\">Open related run</a></p>` : ''}
+        ` : '';
         const confirmationCard = pending ? `
           <div class=\"action-card\">
             <h3>Confirmation needed</h3>
@@ -654,6 +885,7 @@ __BASE_CSS__
                 <div class=\"action-card action-status\" id=\"actionStatus\">
                   <h3>Action status</h3>
                   <p>${escapeHtml(ui.actionMessage)}</p>
+                  ${liveActionSummary}
                 </div>
               </div>
             </div>
@@ -739,11 +971,27 @@ __BASE_CSS__
           const result = await fetchControlJson(COMMAND_PAGE_ENDPOINT, { headers: { 'Accept': 'application/json' } });
           ui.payload = result.payload || EMBEDDED_PAYLOAD;
           ui.online = true;
+          ui.controlMode = 'local';
+          ui.liveActionStatus = ui.payload.live_action_status || null;
           ui.actionMessage = `Live control is connected at ${activeControlUrl}. Stage a choice above or ask the AI for clarification.`;
         } catch (error) {
-          ui.payload = EMBEDDED_PAYLOAD;
-          ui.online = false;
-          ui.actionMessage = 'Live control is offline. Review the embedded fallback snapshot until /api/command-page comes back.';
+          if (hasGitHubToken()) {
+            try {
+              await fetchGitHubCommandPage();
+            } catch (githubError) {
+              ui.payload = EMBEDDED_PAYLOAD;
+              ui.online = false;
+              ui.controlMode = 'snapshot';
+              ui.liveActionStatus = null;
+              ui.actionMessage = githubError.message || 'GitHub control is unavailable. Review the embedded fallback snapshot until live control comes back.';
+            }
+          } else {
+            ui.payload = EMBEDDED_PAYLOAD;
+            ui.online = false;
+            ui.controlMode = 'snapshot';
+            ui.liveActionStatus = null;
+            ui.actionMessage = 'Live control is offline. Review the embedded fallback snapshot until /api/command-page comes back, or connect GitHub control from this page.';
+          }
         }
         renderApp();
       }
@@ -752,6 +1000,16 @@ __BASE_CSS__
         if (!decisionId) return;
         ui.activeDecisionId = decisionId;
         renderApp();
+      }
+
+      async function syncGitHubPayload(preferredPayload = null) {
+        const remoteState = await loadGitHubRemoteState();
+        const basePayload = preferredPayload
+          || remoteState.lastApplyResponse?.payload
+          || EMBEDDED_PAYLOAD;
+        ui.payload = overlayPayloadWithGitHubState(basePayload, remoteState);
+        ui.liveActionStatus = remoteState.actionStatus || null;
+        return remoteState;
       }
 
       async function askAi(question) {
@@ -763,6 +1021,28 @@ __BASE_CSS__
           recommended_follow_up: 'If the answer changes your confidence, move to the action panel.',
         };
         renderApp();
+        if (ui.controlMode === 'github') {
+          try {
+            const requestId = createRequestId('clarify');
+            await dispatchGitHubWorkflow(GITHUB_CLARIFY_WORKFLOW, {
+              request_id: requestId,
+              decision_id: ui.activeDecisionId || '',
+              question,
+            });
+            const result = await waitForGitHubResponse(GITHUB_STATE_FILES.lastClarify, requestId);
+            ui.aiResponse = result;
+            await syncGitHubPayload();
+          } catch (error) {
+            ui.aiResponse = {
+              answer: error.message || 'The question could not be answered.',
+              evidence_chain: ['GitHub control could not complete the clarify workflow.'],
+              implication: 'The decision state has not changed.',
+              recommended_follow_up: 'Open GitHub control again or try the question once the workflow lane is healthy.',
+            };
+          }
+          renderApp();
+          return;
+        }
         try {
           const result = await fetchControlJson(CLARIFY_ENDPOINT, {
             method: 'POST',
@@ -791,6 +1071,31 @@ __BASE_CSS__
         ui.actionMessage = 'Applying the staged option…';
         ui.pendingConfirmation = null;
         renderApp();
+        if (ui.controlMode === 'github') {
+          try {
+            const requestId = createRequestId('apply');
+            await dispatchGitHubWorkflow(GITHUB_APPLY_WORKFLOW, {
+              request_id: requestId,
+              decision_id: decision.decision_id,
+              option_id: option.id,
+              note: ui.actionNote || '',
+              free_text: '',
+              confirmed: 'false',
+            });
+            const result = await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId);
+            const remoteState = await syncGitHubPayload(result.payload || null);
+            ui.actionNote = '';
+            ui.actionWriteIn = '';
+            ui.aiResponse = null;
+            ui.pendingConfirmation = null;
+            ui.liveActionStatus = remoteState.actionStatus || result.triggered_action || null;
+            ui.actionMessage = (result.triggered_action && result.triggered_action.message) || 'The decision was applied through GitHub control.';
+          } catch (error) {
+            ui.actionMessage = error.message || 'The decision could not be applied.';
+          }
+          renderApp();
+          return;
+        }
         try {
           const result = await fetchControlJson(APPLY_ENDPOINT, {
             method: 'POST',
@@ -819,6 +1124,47 @@ __BASE_CSS__
         ui.actionMessage = 'Interpreting your instruction…';
         ui.pendingConfirmation = null;
         renderApp();
+        if (ui.controlMode === 'github') {
+          try {
+            const requestId = createRequestId('apply');
+            await dispatchGitHubWorkflow(GITHUB_APPLY_WORKFLOW, {
+              request_id: requestId,
+              decision_id: decision.decision_id,
+              option_id: '',
+              free_text: ui.actionWriteIn,
+              note: ui.actionNote || '',
+              confirmed: 'false',
+            });
+            const result = await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId);
+            if (result.needs_confirmation) {
+              const proposed = result.interpreted_decision?.matched_option_id;
+              if (proposed) {
+                ui.selectedOptions[decision.decision_id] = proposed;
+              }
+              ui.pendingConfirmation = {
+                decisionId: decision.decision_id,
+                freeText: ui.actionWriteIn,
+                note: ui.actionNote,
+                explanation: result.interpreted_decision?.explanation || 'The write-in instruction needs confirmation.',
+                summary: proposed ? `The cockpit thinks you mean: ${proposed}.` : 'The cockpit could not map your instruction cleanly enough to act without confirmation.',
+              };
+              ui.actionMessage = result.interpreted_decision?.explanation || 'The write-in instruction needs confirmation.';
+              renderApp();
+              return;
+            }
+            const remoteState = await syncGitHubPayload(result.payload || null);
+            ui.actionNote = '';
+            ui.actionWriteIn = '';
+            ui.aiResponse = null;
+            ui.pendingConfirmation = null;
+            ui.liveActionStatus = remoteState.actionStatus || result.triggered_action || null;
+            ui.actionMessage = (result.triggered_action && result.triggered_action.message) || 'The instruction was applied through GitHub control.';
+          } catch (error) {
+            ui.actionMessage = error.message || 'The instruction could not be applied.';
+          }
+          renderApp();
+          return;
+        }
         try {
           const result = await fetchControlJson(APPLY_ENDPOINT, {
             method: 'POST',
@@ -862,6 +1208,31 @@ __BASE_CSS__
         if (!ui.online || !pending) return;
         ui.actionMessage = 'Applying the confirmed interpretation…';
         renderApp();
+        if (ui.controlMode === 'github') {
+          try {
+            const requestId = createRequestId('apply');
+            await dispatchGitHubWorkflow(GITHUB_APPLY_WORKFLOW, {
+              request_id: requestId,
+              decision_id: pending.decisionId,
+              option_id: '',
+              free_text: pending.freeText,
+              note: pending.note || '',
+              confirmed: 'true',
+            });
+            const result = await waitForGitHubResponse(GITHUB_STATE_FILES.lastApply, requestId);
+            const remoteState = await syncGitHubPayload(result.payload || null);
+            ui.actionNote = '';
+            ui.actionWriteIn = '';
+            ui.aiResponse = null;
+            ui.pendingConfirmation = null;
+            ui.liveActionStatus = remoteState.actionStatus || result.triggered_action || null;
+            ui.actionMessage = (result.triggered_action && result.triggered_action.message) || 'The confirmed instruction was applied through GitHub control.';
+          } catch (error) {
+            ui.actionMessage = error.message || 'The confirmed instruction could not be applied.';
+          }
+          renderApp();
+          return;
+        }
         try {
           const result = await fetchControlJson(APPLY_ENDPOINT, {
             method: 'POST',
@@ -888,6 +1259,27 @@ __BASE_CSS__
       function installHandlers() {
         const refreshButton = document.getElementById('refreshCommandButton');
         if (refreshButton) refreshButton.addEventListener('click', fetchCommandPage);
+
+        const connectGitHubButton = document.getElementById('connectGitHubButton');
+        if (connectGitHubButton) {
+          connectGitHubButton.addEventListener('click', async () => {
+            const token = window.prompt('Paste a fine-grained GitHub token with Actions and Contents read/write access for matthewdholtkamp/testfile.');
+            if (!token || !token.trim()) return;
+            storeGitHubToken(token.trim());
+            ui.actionMessage = 'GitHub control token saved in this browser. Refreshing live state…';
+            renderApp();
+            await fetchCommandPage();
+          });
+        }
+
+        const disconnectGitHubButton = document.getElementById('disconnectGitHubButton');
+        if (disconnectGitHubButton) {
+          disconnectGitHubButton.addEventListener('click', async () => {
+            clearGitHubToken();
+            ui.actionMessage = 'GitHub control has been disconnected in this browser.';
+            await fetchCommandPage();
+          });
+        }
 
         document.querySelectorAll('[data-role="stage-option"]').forEach((button) => {
           button.addEventListener('click', () => {
@@ -1005,11 +1397,13 @@ def render_html(snapshot_payload):
 def main():
     parser = argparse.ArgumentParser(description='Build the main Phase 7 command cockpit page.')
     parser.add_argument('--output-path', default='docs/index.html', help='Portal HTML output path.')
+    parser.add_argument('--snapshot-path', default='docs/command_snapshot.json', help='Tracked command payload snapshot output path.')
     args = parser.parse_args()
 
     snapshot = build_command_page_payload(load_project_state(), root_prefix='./', control_online=False)
     html = render_html(snapshot)
     write_text(os.path.join(REPO_ROOT, args.output_path), html)
+    write_text(os.path.join(REPO_ROOT, args.snapshot_path), json.dumps(snapshot, indent=2) + '\n')
     print(f'Phase 7 command cockpit written: {os.path.join(REPO_ROOT, args.output_path)}')
 
 

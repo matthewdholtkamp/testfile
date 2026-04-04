@@ -53,6 +53,7 @@ PIPELINE_WORKFLOW_PATH = os.path.join(REPO_ROOT, '.github', 'workflows', WORKFLO
 REFRESH_PUBLIC_WORKFLOW_PATH = os.path.join(REPO_ROOT, '.github', 'workflows', REFRESH_PUBLIC_WORKFLOW)
 TARGETED_EXTRACTION_WORKFLOW_PATH = os.path.join(REPO_ROOT, '.github', 'workflows', TARGETED_EXTRACTION_WORKFLOW)
 MANUAL_ENRICHMENT_SCRIPT_PATH = os.path.join(REPO_ROOT, 'scripts', 'run_manual_enrichment_cycle.py')
+DISABLE_LOCAL_ACTIONS = os.environ.get('ATLAS_DISABLE_LOCAL_ACTIONS', 'false').strip().lower() in {'1', 'true', 'yes', 'y'}
 
 ACTION_ALIASES = {
     '': 'record_only',
@@ -185,8 +186,8 @@ def canonical_action_registry():
             'script_path': rel_repo_path(MANUAL_ENRICHMENT_SCRIPT_PATH),
             'repo_target': rel_repo_path(MANUAL_ENRICHMENT_SCRIPT_PATH),
             'executable_target': 'python3 scripts/run_manual_enrichment_cycle.py --default-to-auto',
-            'supported': bool(shutil.which('python3')) and os.path.exists(MANUAL_ENRICHMENT_SCRIPT_PATH),
-            'support_reason': 'Requires python3 and the local manual enrichment script.',
+            'supported': (not DISABLE_LOCAL_ACTIONS) and bool(shutil.which('python3')) and os.path.exists(MANUAL_ENRICHMENT_SCRIPT_PATH),
+            'support_reason': 'Requires python3 and the local manual enrichment script, and stays disabled in hosted remote mode.',
         },
     }
 

@@ -1,0 +1,54 @@
+name: Cockpit Clarify Question
+
+on:
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: Unique request id from the cockpit page
+        required: true
+        type: string
+      question:
+        description: Question to answer in plain English
+        required: true
+        type: string
+      decision_id:
+        description: Optional decision focus id
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cockpit-control-main
+  cancel-in-progress: false
+
+jobs:
+  clarify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Write clarify response
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          REQUEST_ID: ${{ inputs.request_id }}
+          QUESTION: ${{ inputs.question }}
+          DECISION_ID: ${{ inputs.decision_id }}
+        run: |
+          set -euo pipefail
+          python scripts/cockpit_remote_control.py clarify \
+            --request-id "$REQUEST_ID" \
+            --question "$QUESTION" \
+            --decision-id "$DECISION_ID"

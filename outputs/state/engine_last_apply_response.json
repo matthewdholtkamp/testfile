@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "request_id": "",
+  "accepted": false,
+  "needs_confirmation": false,
+  "triggered_action": {
+    "status": "idle",
+    "message": "No cockpit decision has been applied yet."
+  },
+  "updated_direction": {},
+  "payload": {}
+}

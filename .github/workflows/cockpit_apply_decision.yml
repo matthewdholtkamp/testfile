@@ -1,0 +1,82 @@
+name: Cockpit Apply Decision
+
+on:
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: Unique request id from the cockpit page
+        required: true
+        type: string
+      decision_id:
+        description: Decision id to apply
+        required: true
+        type: string
+      option_id:
+        description: Canonical option id, if chosen directly
+        required: false
+        type: string
+      free_text:
+        description: Free-text instruction from the operator
+        required: false
+        type: string
+      note:
+        description: Optional operator note
+        required: false
+        type: string
+      confirmed:
+        description: Whether a low-confidence write-in interpretation was confirmed
+        required: false
+        default: "false"
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: cockpit-control-main
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Apply cockpit decision
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ATLAS_DISABLE_LOCAL_ACTIONS: "true"
+          REQUEST_ID: ${{ inputs.request_id }}
+          DECISION_ID: ${{ inputs.decision_id }}
+          OPTION_ID: ${{ inputs.option_id }}
+          FREE_TEXT: ${{ inputs.free_text }}
+          NOTE: ${{ inputs.note }}
+          CONFIRMED: ${{ inputs.confirmed }}
+        run: |
+          set -euo pipefail
+          args=(
+            python
+            scripts/cockpit_remote_control.py
+            apply
+            --request-id "$REQUEST_ID"
+            --decision-id "$DECISION_ID"
+            --option-id "$OPTION_ID"
+            --free-text "$FREE_TEXT"
+            --note "$NOTE"
+          )
+          if [ "$CONFIRMED" = "true" ]; then
+            args+=(--confirmed)
+          fi
+          "${args[@]}"

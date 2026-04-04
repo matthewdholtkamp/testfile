@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "request_id": "",
+  "source": "fallback",
+  "model": "gemini-3.1-flash-lite",
+  "answer": "No clarify question has been answered yet.",
+  "evidence_chain": [
+    "Ask a question from the cockpit to generate a fresh explanation."
+  ],
+  "implication": "The engine is waiting for operator input.",
+  "recommended_follow_up": "Use the clarification box on the cockpit page when you want the recommendation explained in plain English."
+}
