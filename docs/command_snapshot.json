@@ -772,7 +772,7 @@
   "phase_timeline": [
     {
       "kind": "phase",
-      "date": "2026-04-04 14:17:50",
+      "date": "2026-04-04 15:00:31",
       "title": "Phase 1 \u00b7 Process Lanes",
       "status": "supported",
       "summary": "The engine reduced the TBI literature into six recurring process lanes so the project stopped treating every paper as a one-off mechanism note.",
@@ -781,7 +781,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-04 14:17:50",
+      "date": "2026-04-04 15:00:31",
       "title": "Phase 2 \u00b7 Causal Transitions",
       "status": "supported",
       "summary": "The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.",
