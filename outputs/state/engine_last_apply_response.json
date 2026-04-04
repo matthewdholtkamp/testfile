@@ -1,5 +1,6 @@
 {
   "ok": false,
-  "request_id": "apply-1775325287802-6u16mt",
-  "error": "unknown_decision"
+  "request_id": "apply-neuro-1775338549",
+  "error": "unknown_decision",
+  "error_message": "That decision is no longer present in the live cockpit snapshot. Refresh the page and try again."
 }
