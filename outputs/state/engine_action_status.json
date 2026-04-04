@@ -1,11 +1,11 @@
 {
-  "request_id": "",
-  "timestamp": "",
-  "decision_id": "",
-  "decision_title": "",
-  "message": "No cockpit action has been recorded yet.",
-  "status": "idle",
-  "requested_action_mode": "",
-  "canonical_action_mode": "",
+  "request_id": "apply-smoke-1775270123",
+  "timestamp": "2026-04-04T02:35:30.248885+00:00",
+  "decision_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+  "decision_title": "Neuroinflammation / Microglial State Change biomarker panel",
+  "message": "The choice was recorded and will steer future slates, but no workflow was dispatched.",
+  "status": "recorded_only",
+  "requested_action_mode": "record_only",
+  "canonical_action_mode": "record_only",
   "run": {}
 }

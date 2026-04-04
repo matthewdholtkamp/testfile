@@ -1,16 +1,33 @@
 {
-  "active_path_id": "",
-  "active_path_label": "",
-  "active_direction_reason": "",
+  "active_path_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+  "active_path_label": "other work over Neuroinflammation / Microglial State Change biomarker panel",
+  "active_direction_reason": "Future slates favor other work.",
   "primary_goal_stage": "discovery",
-  "favored_mechanisms": [],
-  "favored_endotypes": [],
-  "favored_decision_families": [],
-  "evidence_mode": "balanced",
-  "current_manuscript_candidate": {},
-  "next_paper_opportunity": {},
-  "last_decision_id": "",
-  "last_updated": "",
-  "pending_machine_actions": [],
-  "operator_note": ""
+  "favored_mechanisms": [
+    "neuroinflammation_microglial_state_change"
+  ],
+  "favored_endotypes": [
+    "acute_mild_biomarker_imaging_bridge",
+    "acute_blast_vascular_inflammatory_mixed",
+    "subacute_repetitive_inflammatory_dominant",
+    "chronic_repetitive_tau_clearance_mixed"
+  ],
+  "favored_decision_families": [
+    "most_informative_biomarker_panel"
+  ],
+  "evidence_mode": "bounded",
+  "current_manuscript_candidate": {
+    "title": "Blood-Brain Barrier Failure biomarker panel",
+    "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
+  },
+  "next_paper_opportunity": {
+    "title": "Blood-Brain Barrier Failure biomarker panel",
+    "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
+  },
+  "last_decision_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+  "last_updated": "2026-04-04T02:35:30.248356+00:00",
+  "pending_machine_actions": [
+    "record_only"
+  ],
+  "operator_note": "overnight smoke test"
 }
