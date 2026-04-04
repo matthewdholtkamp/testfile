@@ -127,10 +127,10 @@
       .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
       .chip.muted { color: var(--muted); }
       .pill { background: rgba(255,255,255,0.08); color: var(--ink); }
-      .pill.supported, .pill.actionable, .pill.usable { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
-      .pill.provisional, .pill.bounded { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
-      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
-      .pill.live { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+      .pill.supported, .pill.actionable, .pill.usable, .pill.live { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
+      .pill.provisional, .pill.bounded, .pill.supporting-now { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
+      .pill.weak, .pill.seeded, .pill.conflicting, .pill.background { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
+      .pill.driving-now { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
       .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
       .section { margin-top: 32px; }
       .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
@@ -905,7 +905,7 @@
       <div class="detail-grid">
         <article class="meta-card">
           <h3>Evidence Anchors</h3>
-          <p><strong>Anchor PMIDs:</strong> 41203427, 41622453, 41267966, 41496379, 41701552, 41301762, 41907798, 41026543</p>
+          <p><strong>Anchor PMIDs:</strong> 41203427, 41622453, 41267966, 41496379, 41701552, 41301762, 41026543, 41175081</p>
           <p class="note">Source mix: <strong>full_text_like:5; abstract_only:3</strong></p>
           <ul class="paper-list"><li><strong>41203427</strong> <span class="subtle">abstract_only</span><br />Linking Symptom Phenotypes to Patterns of White Matter Injury in Mild Traumatic Brain Injury: A Latent Class Analysis</li><li><strong>41622453</strong> <span class="subtle">abstract_only</span><br />Cognitive impairment and altered structural connectivity after mild traumatic brain injury: A longitudinal study based on generalized q-sampling imaging.</li><li><strong>41267966</strong> <span class="subtle">full_text_like</span><br />Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights.</li><li><strong>41496379</strong> <span class="subtle">full_text_like</span><br />Neuroimaging correlates of symptom burden and functional recovery following mild traumatic brain injury: A systematic review.</li><li><strong>41701552</strong> <span class="subtle">abstract_only</span><br />Diffusion Tensor Imaging Along the Perivascular Space in Veterans with Remote Mild Traumatic Brain Injuries</li><li><strong>41301762</strong> <span class="subtle">full_text_like</span><br />A Bioinformatic Study of Genetics Involved in Determining Mild Traumatic Brain Injury Severity and Recovery</li></ul>
         </article>

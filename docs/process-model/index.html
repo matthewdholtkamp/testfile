@@ -127,10 +127,10 @@
       .chip { background: rgba(255,255,255,0.06); color: var(--ink); }
       .chip.muted { color: var(--muted); }
       .pill { background: rgba(255,255,255,0.08); color: var(--ink); }
-      .pill.supported, .pill.actionable, .pill.usable { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
-      .pill.provisional, .pill.bounded { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
-      .pill.weak, .pill.seeded, .pill.conflicting { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
-      .pill.live { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
+      .pill.supported, .pill.actionable, .pill.usable, .pill.live { background: rgba(155, 227, 192, 0.16); color: var(--positive); }
+      .pill.provisional, .pill.bounded, .pill.supporting-now { background: rgba(255, 211, 124, 0.16); color: var(--warning); }
+      .pill.weak, .pill.seeded, .pill.conflicting, .pill.background { background: rgba(255, 182, 182, 0.16); color: var(--danger); }
+      .pill.driving-now { background: rgba(var(--accent-rgb), 0.16); color: var(--accent); }
       .pill.not-available, .pill.none { background: rgba(255,255,255,0.08); color: var(--muted); }
       .section { margin-top: 32px; }
       .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; flex-wrap: wrap; margin-bottom: 14px; }
@@ -791,8 +791,8 @@
           <h3>Evidence</h3>
           <p>Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.</p>
           <ul>
-            <li>Papers: <strong>7</strong></li>
-            <li>Direct claims: <strong>5</strong></li>
+            <li>Papers: <strong>5</strong></li>
+            <li>Direct claims: <strong>3</strong></li>
             <li>Direct edges: <strong>3</strong></li>
             <li>Causal edges: <strong>1</strong></li>
             <li>Synthesis supports: <strong>0</strong></li>
@@ -802,8 +802,8 @@
           <h3>Timing</h3>
           <p>Expected: <strong>chronic</strong></p>
           <p>Observed: <strong>subacute; chronic</strong></p>
-          <p>Anchors: <strong>41496386; 41739474; 41747594; 41508043; 41683989; 41853047; 41893300</strong></p>
-          <p>Source mix: <strong>full_text_like:7; abstract_only:1</strong></p>
+          <p>Anchors: <strong>41496386; 41739474; 41747594; 41508043; 41683989</strong></p>
+          <p>Source mix: <strong>full_text_like:5; abstract_only:1</strong></p>
         </article>
       </div>
       <article class="meta-card">
@@ -817,7 +817,7 @@
         </article>
         <article class="meta-card">
           <h3>Biomarker cues</h3>
-          <div class="chip-row"><span class="chip">tau (13)</span><span class="chip">Tau (2)</span><span class="chip">nfl (2)</span><span class="chip">rd (1)</span><span class="chip">RD (1)</span></div>
+          <div class="chip-row"><span class="chip">tau (9)</span><span class="chip">Tau (2)</span><span class="chip">nfl (2)</span><span class="chip">RD (1)</span></div>
         </article>
       </div>
       <div class="meta-grid">
