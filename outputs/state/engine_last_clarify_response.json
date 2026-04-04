@@ -1,17 +1,12 @@
 {
   "ok": true,
-  "request_id": "clarify-smoke-1775270077",
+  "request_id": "",
   "source": "fallback",
-  "model": "gemini-2.0-flash-lite-001",
-  "answer": "Neuroinflammation / Microglial State Change biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
+  "model": "gemini-3.1-flash-lite",
+  "answer": "No clarify question has been answered yet.",
   "evidence_chain": [
-    "Neuroinflammation / Microglial State Change is currently rated supported.",
-    "It is tied to 3 Phase 2 transition(s) and 3 downstream object(s).",
-    "It already maps to 4 endotype packet(s).",
-    "The main open issue is this: The current evidence does not yet show the expected cumulative damage signal.",
-    "This item still carries novelty status: Cross Disease Analog."
+    "Ask a question from the cockpit to generate a fresh explanation."
   ],
-  "implication": "Neuroinflammation / Microglial State Change biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
-  "recommended_follow_up": "Select Adopt as the default panel if you want the engine to follow the cleanest current path.",
-  "warning": "HTTP Error 429: Too Many Requests"
+  "implication": "The engine is waiting for operator input.",
+  "recommended_follow_up": "Use the clarification box on the cockpit page when you want the recommendation explained in plain English."
 }
