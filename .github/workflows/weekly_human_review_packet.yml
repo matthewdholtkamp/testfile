@@ -96,10 +96,25 @@ jobs:
           python scripts/build_process_model_page.py \
             --transition-json "$latest_transition_json" \
             --output-dir docs/process-model
+          latest_progression_json=$(ls -1t reports/progression_objects/progression_object_index_*.json | head -n1)
+          latest_translational_json=$(ls -1t reports/translational_perturbation/translational_perturbation_index_*.json | head -n1)
+          latest_cohort_json=$(ls -1t reports/cohort_stratification/cohort_stratification_index_*.json | head -n1)
+          latest_hypothesis_ranking_json=$(ls -1t reports/hypothesis_rankings/hypothesis_rankings_*.json | head -n1)
+          python scripts/build_contradiction_brief.py \
+            --transition-json "$latest_transition_json" \
+            --progression-json "$latest_progression_json" \
+            --translational-json "$latest_translational_json" \
+            --cohort-json "$latest_cohort_json" \
+            --hypothesis-json "$latest_hypothesis_ranking_json" \
+            --output-dir reports/contradiction_brief
+          latest_contradiction_json=$(ls -1t reports/contradiction_brief/contradiction_brief_*.json | head -n1)
+          latest_tenx_template=$(ls -1t reports/connector_candidate_manifest/templates/tenx_genomics_import_template_*.csv 2>/dev/null | head -n1)
           python scripts/build_weekly_human_review_packet.py \
             --output-dir reports/weekly_human_review_packet \
             --process-lanes-json "$latest_process_json" \
-            --causal-transition-json "$latest_transition_json"
+            --causal-transition-json "$latest_transition_json" \
+            --contradiction-brief-json "$latest_contradiction_json" \
+            --tenx-template-csv "$latest_tenx_template"
           python scripts/build_atlas_viewer.py \
             --output-dir docs/atlas-viewer
           python scripts/build_portal_page.py \

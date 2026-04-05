@@ -6,9 +6,15 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    from steering_context import load_steering_context
+except ModuleNotFoundError:
+    from scripts.steering_context import load_steering_context
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_VIEWER_PATH = REPO_ROOT / 'docs' / 'atlas-viewer' / 'atlas_viewer.json'
+DEFAULT_DIRECTION_REGISTRY = REPO_ROOT / 'outputs' / 'state' / 'engine_direction_registry.json'
 WORKFLOW_NAME = 'Ongoing Literature Cycle'
 
 PROFILES = {
@@ -33,6 +39,22 @@ PROFILES = {
         'target_full_text_per_run': '3',
         'upgrade_max_chunks': '2',
         'extraction_max_passes': '3',
+        'min_gap_hours': 4,
+        'requires_acceleration': True,
+    },
+    'bbb_first': {
+        'max_articles_per_run': '5',
+        'target_full_text_per_run': '4',
+        'upgrade_max_chunks': '2',
+        'extraction_max_passes': '4',
+        'min_gap_hours': 4,
+        'requires_acceleration': True,
+    },
+    'neuroinflammation_first': {
+        'max_articles_per_run': '5',
+        'target_full_text_per_run': '4',
+        'upgrade_max_chunks': '2',
+        'extraction_max_passes': '4',
         'min_gap_hours': 4,
         'requires_acceleration': True,
     },
@@ -123,16 +145,51 @@ def find_latest_success(runs):
     return None
 
 
-def dispatch_cycle(repo, profile_name):
-    profile = PROFILES[profile_name]
+def build_workflow_inputs(profile, steering_context):
+    profile_inputs = {
+        'max_articles_per_run': profile['max_articles_per_run'],
+        'target_full_text_per_run': profile['target_full_text_per_run'],
+        'upgrade_max_chunks': profile['upgrade_max_chunks'],
+        'extraction_max_passes': profile['extraction_max_passes'],
+    }
+    profile_inputs.update({
+        'steering_priority_mode': steering_context.get('priority_mode', 'default'),
+        'steering_focus_mechanisms': ','.join(steering_context.get('favored_canonical_mechanisms', [])),
+        'steering_focus_endotypes': ','.join(steering_context.get('favored_endotypes', [])),
+        'steering_evidence_mode': steering_context.get('evidence_mode', 'balanced'),
+        'steering_pending_actions': ','.join(steering_context.get('pending_machine_actions', [])),
+    })
+    return profile_inputs
+
+
+def apply_steering_bias(profile_name, steering_context):
+    base = dict(PROFILES[profile_name])
+    reasons = []
+    if steering_context.get('should_bias_scheduler'):
+        if steering_context.get('active_path_label'):
+            reasons.append(f"steering focus: {steering_context['active_path_label']}")
+        if steering_context.get('pending_machine_actions'):
+            reasons.append(
+                'pending machine actions: ' + ', '.join(steering_context.get('pending_machine_actions', []))
+            )
+        priority_mode = steering_context.get('priority_mode')
+        if priority_mode in PROFILES:
+            biased = dict(PROFILES[priority_mode])
+            biased['requires_acceleration'] = True
+            biased['min_gap_hours'] = min(biased.get('min_gap_hours', base['min_gap_hours']), base['min_gap_hours'])
+            return priority_mode, biased, reasons
+        base['requires_acceleration'] = True
+        base['min_gap_hours'] = min(base.get('min_gap_hours', 4), 4)
+    return profile_name, base, reasons
+
+
+def dispatch_cycle(repo, workflow_inputs):
     args = [
         'gh', 'workflow', 'run', 'ongoing_literature_cycle.yml',
         '-R', repo,
-        '-f', f"max_articles_per_run={profile['max_articles_per_run']}",
-        '-f', f"target_full_text_per_run={profile['target_full_text_per_run']}",
-        '-f', f"upgrade_max_chunks={profile['upgrade_max_chunks']}",
-        '-f', f"extraction_max_passes={profile['extraction_max_passes']}",
     ]
+    for key, value in workflow_inputs.items():
+        args.extend(['-f', f'{key}={value}'])
     run_cmd(args)
 
 
@@ -146,18 +203,20 @@ def main():
         help='Dispatch profile to use. auto infers from current UTC hour.'
     )
     parser.add_argument('--viewer-json', default=str(DEFAULT_VIEWER_PATH), help='Atlas viewer JSON path for readiness checks.')
+    parser.add_argument('--direction-registry', default=str(DEFAULT_DIRECTION_REGISTRY), help='Steering registry JSON path.')
     args = parser.parse_args()
 
     profile_name = infer_slot(args.slot)
-    profile = PROFILES[profile_name]
+    steering_context = load_steering_context(args.direction_registry)
+    selected_profile_name, profile, steering_reasons = apply_steering_bias(profile_name, steering_context)
     viewer_path = Path(args.viewer_json)
 
     needs_acceleration, acceleration_reasons = atlas_needs_acceleration(viewer_path)
-    if profile['requires_acceleration'] and not needs_acceleration:
+    if profile['requires_acceleration'] and not needs_acceleration and not steering_context.get('should_bias_scheduler'):
         print(json.dumps({
             'action': 'skip',
             'reason': 'atlas does not currently need acceleration',
-            'profile': profile_name,
+            'profile': selected_profile_name,
         }, indent=2))
         return
 
@@ -180,20 +239,26 @@ def main():
             print(json.dumps({
                 'action': 'skip',
                 'reason': f'latest successful cycle is only {age_hours:.2f}h old',
-                'profile': profile_name,
+                'profile': selected_profile_name,
                 'latest_success_url': latest_success.get('url', ''),
             }, indent=2))
             return
 
-    dispatch_cycle(args.repo, profile_name)
+    workflow_inputs = build_workflow_inputs(profile, steering_context)
+    dispatch_cycle(args.repo, workflow_inputs)
     print(json.dumps({
         'action': 'dispatch',
-        'profile': profile_name,
-        'inputs': {
-            key: value for key, value in profile.items()
-            if key != 'requires_acceleration'
+        'profile': selected_profile_name,
+        'inputs': workflow_inputs,
+        'acceleration_reasons': acceleration_reasons + steering_reasons,
+        'steering_summary': {
+            'active_path_label': steering_context.get('active_path_label', ''),
+            'priority_mode': steering_context.get('priority_mode', 'default'),
+            'focus_mechanisms': steering_context.get('favored_canonical_mechanisms', []),
+            'focus_endotypes': steering_context.get('favored_endotypes', []),
+            'evidence_mode': steering_context.get('evidence_mode', 'balanced'),
+            'should_bias_scheduler': steering_context.get('should_bias_scheduler', False),
         },
-        'acceleration_reasons': acceleration_reasons,
     }, indent=2))
 
 

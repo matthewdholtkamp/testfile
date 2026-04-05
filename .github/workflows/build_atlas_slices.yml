@@ -107,7 +107,12 @@ jobs:
             --action-queue-csv "$latest_action_queue" \
             --backbone-csv "$latest_backbone" \
             --anchors-csv "$latest_anchors" \
+            --steering-aware \
             --output-dir reports/connector_candidate_manifest
+          latest_connector_manifest=$(ls -1t reports/connector_candidate_manifest/connector_candidate_manifest_*.csv | head -n1)
+          python scripts/build_tenx_import_template.py \
+            --candidate-manifest-csv "$latest_connector_manifest" \
+            --output-dir reports/connector_candidate_manifest/templates
           latest_outline=$(ls -1t reports/atlas_narrative_outline/atlas_narrative_outline_*.md | head -n1)
           python scripts/build_atlas_narrative_draft.py \
             --packet-json "$latest_packet" \
@@ -253,6 +258,13 @@ jobs:
             --candidate-json "$latest_hypothesis_candidate_json" \
             --output-dir reports/hypothesis_rankings
           latest_hypothesis_ranking_json=$(ls -1t reports/hypothesis_rankings/hypothesis_rankings_*.json | head -n1)
+          python scripts/build_contradiction_brief.py \
+            --transition-json "$latest_transition_json" \
+            --progression-json "$latest_progression_json" \
+            --translational-json "$latest_translational_json" \
+            --cohort-json "$latest_cohort_json" \
+            --hypothesis-json "$latest_hypothesis_ranking_json" \
+            --output-dir reports/contradiction_brief
           python scripts/build_hypothesis_ranking_validation.py \
             --ranking-json "$latest_hypothesis_ranking_json" \
             --candidate-json "$latest_hypothesis_candidate_json" \

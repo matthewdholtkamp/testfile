@@ -3,6 +3,10 @@ import os
 import subprocess
 from glob import glob
 
+try:
+    from steering_context import load_steering_context
+except ModuleNotFoundError:
+    from scripts.steering_context import load_steering_context
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -99,16 +103,30 @@ def main():
         default='local_connector_inputs/templates',
         help='Directory for 10x template outputs when --build-tenx-template is used.',
     )
+    parser.add_argument(
+        '--direction-registry',
+        default='outputs/state/engine_direction_registry.json',
+        help='Optional steering registry JSON for steering-aware manifest and tenx template behavior.',
+    )
+    parser.add_argument(
+        '--steering-aware',
+        action='store_true',
+        help='Bias connector manifest ordering toward the live steering state and auto-prepare tenx templates when relevant.',
+    )
     args = parser.parse_args()
+    steering_context = load_steering_context(os.path.join(REPO_ROOT, args.direction_registry))
 
     manifest_csv = ''
     if not args.skip_manifest:
-        run_cmd([
+        manifest_cmd = [
             'python3',
             'scripts/build_connector_candidate_manifest.py',
             '--output-dir',
             args.manifest_output_dir,
-        ])
+        ]
+        if args.steering_aware:
+            manifest_cmd.extend(['--steering-aware', '--direction-registry', args.direction_registry])
+        run_cmd(manifest_cmd)
         manifest_csv = latest_csv_in_dir(args.manifest_output_dir, 'connector_candidate_manifest_*.csv')
     else:
         manifest_csv = latest_optional_report_path('connector_candidate_manifest_*.csv')
@@ -127,7 +145,8 @@ def main():
             args.enrichment_input_dir,
         ])
 
-    if args.build_tenx_template:
+    auto_build_tenx_template = args.steering_aware and steering_context.get('should_build_tenx_template')
+    if args.build_tenx_template or auto_build_tenx_template:
         if not manifest_csv:
             raise FileNotFoundError('No connector candidate manifest found for --build-tenx-template.')
         run_cmd([

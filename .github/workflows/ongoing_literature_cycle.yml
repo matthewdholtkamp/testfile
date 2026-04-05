@@ -19,6 +19,26 @@ on:
         description: "Maximum extraction finisher passes in this cycle"
         required: false
         default: "5"
+      steering_priority_mode:
+        description: "Steering-aware priority mode for downstream ranking and connector focus"
+        required: false
+        default: "default"
+      steering_focus_mechanisms:
+        description: "Comma-separated favored canonical mechanisms"
+        required: false
+        default: ""
+      steering_focus_endotypes:
+        description: "Comma-separated favored endotypes"
+        required: false
+        default: ""
+      steering_evidence_mode:
+        description: "Current steering evidence mode"
+        required: false
+        default: "balanced"
+      steering_pending_actions:
+        description: "Comma-separated pending machine actions"
+        required: false
+        default: ""
   schedule:
     - cron: "0 13 * * *"
 
@@ -43,6 +63,45 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Resolve steering context from repo state
+        env:
+          MANUAL_STEERING_PRIORITY_MODE: ${{ inputs.steering_priority_mode }}
+          MANUAL_STEERING_FOCUS_MECHANISMS: ${{ inputs.steering_focus_mechanisms }}
+          MANUAL_STEERING_FOCUS_ENDOTYPES: ${{ inputs.steering_focus_endotypes }}
+          MANUAL_STEERING_EVIDENCE_MODE: ${{ inputs.steering_evidence_mode }}
+          MANUAL_STEERING_PENDING_ACTIONS: ${{ inputs.steering_pending_actions }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path('outputs/state/engine_direction_registry.json')
+          data = {}
+          if path.exists():
+            data = json.loads(path.read_text(encoding='utf-8'))
+
+          def listify(value):
+            if isinstance(value, list):
+              return [str(item).strip() for item in value if str(item).strip()]
+            text = str(value or '').strip()
+            if not text:
+              return []
+            return [part.strip() for part in text.split(',') if part.strip()]
+
+          env_updates = {
+            'STEERING_PRIORITY_MODE': os.environ.get('MANUAL_STEERING_PRIORITY_MODE') or '',
+            'STEERING_FOCUS_MECHANISMS': os.environ.get('MANUAL_STEERING_FOCUS_MECHANISMS') or ','.join(listify(data.get('favored_mechanisms'))),
+            'STEERING_FOCUS_ENDOTYPES': os.environ.get('MANUAL_STEERING_FOCUS_ENDOTYPES') or ','.join(listify(data.get('favored_endotypes'))),
+            'STEERING_EVIDENCE_MODE': os.environ.get('MANUAL_STEERING_EVIDENCE_MODE') or str(data.get('evidence_mode') or 'balanced'),
+            'STEERING_PENDING_ACTIONS': os.environ.get('MANUAL_STEERING_PENDING_ACTIONS') or ','.join(listify(data.get('pending_machine_actions'))),
+          }
+
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as handle:
+            for key, value in env_updates.items():
+              handle.write(f'{key}={value}\\n')
+          PY
+
       - name: Run retrieval cycle
         env:
           RETRIEVAL_MODE_OVERRIDE: legacy
@@ -54,6 +113,7 @@ jobs:
           NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
           UNPAYWALL_EMAIL: ${{ secrets.UNPAYWALL_EMAIL }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          EXTRACTION_RATE_LIMIT_MODE: adaptive
         run: |
           mkdir -p reports output outputs/state
           UPGRADE_CHUNKS="${{ inputs.upgrade_max_chunks }}"
@@ -64,11 +124,27 @@ jobs:
           if [ -z "$EXTRACT_PASSES" ]; then
             EXTRACT_PASSES=5
           fi
+          if [ "$STEERING_EVIDENCE_MODE" = "advance" ] && [ -n "$STEERING_FOCUS_MECHANISMS" ]; then
+            EXTRACT_PASSES=$((EXTRACT_PASSES + 1))
+          fi
+          cat > outputs/state/ongoing_cycle_steering_context.json <<EOF
+          {
+            "steering_priority_mode": "${STEERING_PRIORITY_MODE}",
+            "steering_focus_mechanisms": "${STEERING_FOCUS_MECHANISMS}",
+            "steering_focus_endotypes": "${STEERING_FOCUS_ENDOTYPES}",
+            "steering_evidence_mode": "${STEERING_EVIDENCE_MODE}",
+            "steering_pending_actions": "${STEERING_PENDING_ACTIONS}"
+          }
+          EOF
           python scripts/run_pipeline.py
           python scripts/drain_upgrade_queue.py --chunk-size 10 --max-chunks "$UPGRADE_CHUNKS"
           python scripts/finish_extraction_phase.py --max-passes "$EXTRACT_PASSES" --batch-size 0 --ready-only
           latest_inventory=$(ls -1t reports/drive_inventory_*.csv | head -n1)
           python scripts/post_extraction_analysis.py --inventory "$latest_inventory" --output-dir reports
+          python scripts/materialize_drive_sidecar_db.py \
+            --inventory-csv "$latest_inventory" \
+            --pipeline-state-json output/pipeline_state.json \
+            --output-path outputs/state/corpus_index.sqlite3
           latest_paper_qa=$(ls -1t reports/post_extraction_paper_qa_*.csv | head -n1)
           python scripts/build_investigation_action_queue.py \
             --paper-qa-csv "$latest_paper_qa" \

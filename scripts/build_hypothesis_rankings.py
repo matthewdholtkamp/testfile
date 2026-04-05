@@ -7,6 +7,11 @@ from glob import glob
 
 from build_hypothesis_candidates import FAMILY_CONFIGS, FAMILY_IDS, FAMILY_LABELS, NOVELTY_VALUES, SUPPORT_ORDER
 
+try:
+    from steering_context import load_steering_context, steering_score_for_row
+except ModuleNotFoundError:
+    from scripts.steering_context import load_steering_context, steering_score_for_row
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -58,10 +63,11 @@ def primary_lane(row):
     return lanes[0] if lanes else ''
 
 
-def sort_family_rows(rows):
+def sort_family_rows(rows, context=None):
     return sorted(
         rows,
         key=lambda row: (
+            -steering_score_for_row(row, context or {})[0],
             -float(row.get('core_family_score', 0)),
             -SUPPORT_ORDER.get(normalize(row.get('support_status')), -1),
             -float(row.get('novelty_bonus', 0)),
@@ -96,7 +102,29 @@ def counts(rows, field_name):
     return dict(sorted(mapping.items()))
 
 
-def build_portfolio_slate(rows):
+def steering_sort_tuple(row, context, primary_field='confidence_score'):
+    steering_score, _ = steering_score_for_row(row, context)
+    secondary_field = 'value_score' if primary_field == 'confidence_score' else 'confidence_score'
+    return (
+        -steering_score,
+        -float(row.get(primary_field, 0)),
+        -float(row.get(secondary_field, 0)),
+        normalize(row.get('title')),
+    )
+
+
+def annotate_rows_with_steering(rows, context):
+    annotated = []
+    for row in rows:
+        steering_score, steering_reasons = steering_score_for_row(row, context)
+        enriched = dict(row)
+        enriched['steering_score'] = steering_score
+        enriched['steering_reasons'] = steering_reasons
+        annotated.append(enriched)
+    return annotated
+
+
+def build_portfolio_slate(rows, context):
     used_ids = set()
     used_lanes = set()
     slate = []
@@ -119,9 +147,18 @@ def build_portfolio_slate(rows):
             return True
         return False
 
-    sorted_by_confidence = sorted(rows, key=lambda row: (-float(row.get('confidence_score', 0)), -float(row.get('value_score', 0)), normalize(row.get('title'))))
-    sorted_by_value = sorted(rows, key=lambda row: (-float(row.get('value_score', 0)), -float(row.get('confidence_score', 0)), normalize(row.get('title'))))
-    sorted_by_novelty = sorted(rows, key=lambda row: (-float(row.get('novelty_bonus', 0)), -float(row.get('core_family_score', 0)), normalize(row.get('title'))))
+    annotated_rows = annotate_rows_with_steering(rows, context)
+    sorted_by_confidence = sorted(annotated_rows, key=lambda row: steering_sort_tuple(row, context, 'confidence_score'))
+    sorted_by_value = sorted(annotated_rows, key=lambda row: steering_sort_tuple(row, context, 'value_score'))
+    sorted_by_novelty = sorted(
+        annotated_rows,
+        key=lambda row: (
+            -float(row.get('steering_score', 0)),
+            -float(row.get('novelty_bonus', 0)),
+            -float(row.get('core_family_score', 0)),
+            normalize(row.get('title')),
+        ),
+    )
 
     try_add(
         sorted_by_confidence,
@@ -177,10 +214,19 @@ def render_markdown(payload):
         '## Weekly Slate',
         '',
     ]
+    steering_summary = payload.get('steering_summary', {}) or {}
+    if steering_summary.get('steering_aware'):
+        lines.extend([
+            f"- Steering-aware ranking: `true`",
+            f"- Active direction: `{steering_summary.get('active_path_label', '')}`",
+            f"- Evidence mode: `{steering_summary.get('evidence_mode', 'balanced')}`",
+            f"- Focus mechanisms: `{'; '.join(steering_summary.get('favored_canonical_mechanisms', [])) or 'none'}`",
+            '',
+        ])
     for row in payload.get('portfolio_slate', []):
         lines.extend([
             f"- **{row['title']}** (`{row['portfolio_role']}`): {row['statement']}",
-            f"  confidence `{row['confidence_score']}` | value `{row['value_score']}` | novelty `{row['novelty_status']}`",
+            f"  confidence `{row['confidence_score']}` | value `{row['value_score']}` | novelty `{row['novelty_status']}` | steering `{row.get('steering_score', 0)}`",
         ])
     for family_id in FAMILY_IDS:
         family_payload = payload.get('families', {}).get(family_id, {})
@@ -205,11 +251,13 @@ def main():
     parser = argparse.ArgumentParser(description='Rank Phase 6 hypothesis candidates into family-specific boards and a weekly slate.')
     parser.add_argument('--candidate-json', default='', help='Hypothesis candidate JSON. Defaults to latest report.')
     parser.add_argument('--output-dir', default='reports/hypothesis_rankings', help='Output directory for hypothesis rankings.')
+    parser.add_argument('--direction-registry', default='outputs/state/engine_direction_registry.json', help='Optional steering registry JSON.')
     args = parser.parse_args()
 
     candidate_json = args.candidate_json or latest_report('hypothesis_candidates_*.json')
     candidate_payload = read_json(candidate_json)
     candidate_rows = candidate_payload.get('rows', [])
+    steering_context = load_steering_context(os.path.join(REPO_ROOT, args.direction_registry))
 
     ranked_rows = []
     families = {}
@@ -218,7 +266,7 @@ def main():
         rows_by_family[normalize(row.get('family_id'))].append(dict(row))
 
     for family_id in FAMILY_IDS:
-        ordered = sort_family_rows(rows_by_family.get(family_id, []))
+        ordered = sort_family_rows(rows_by_family.get(family_id, []), steering_context)
         family_rows = []
         for rank, row in enumerate(ordered, start=1):
             ranked = dict(row)
@@ -237,7 +285,8 @@ def main():
         }
 
     ranked_rows.sort(key=lambda row: (FAMILY_IDS.index(row['family_id']) if row['family_id'] in FAMILY_IDS else 99, row['rank']))
-    portfolio_slate = build_portfolio_slate(ranked_rows)
+    ranked_rows = annotate_rows_with_steering(ranked_rows, steering_context)
+    portfolio_slate = build_portfolio_slate(ranked_rows, steering_context)
 
     summary = {
         'family_count': len([family_id for family_id in FAMILY_IDS if families.get(family_id, {}).get('rows')]),
@@ -251,6 +300,10 @@ def main():
         'covered_phase3_object_count': len({item for row in ranked_rows for item in listify(row.get('parent_object_ids')) if item}),
         'covered_phase4_packet_count': len({item for row in ranked_rows for item in listify(row.get('parent_translational_packet_ids')) if item}),
         'covered_phase5_endotype_count': len({item for row in ranked_rows for item in listify(row.get('parent_endotype_ids')) if item}),
+        'steering_aware': True,
+        'steering_focus_mechanisms': steering_context.get('favored_canonical_mechanisms', []),
+        'steering_focus_endotypes': steering_context.get('favored_endotypes', []),
+        'steering_active_path_label': steering_context.get('active_path_label', ''),
     }
 
     payload = {
@@ -261,6 +314,16 @@ def main():
             'candidate_summary': candidate_payload.get('summary', {}),
         },
         'summary': summary,
+        'steering_summary': {
+            'steering_aware': True,
+            'active_path_id': steering_context.get('active_path_id', ''),
+            'active_path_label': steering_context.get('active_path_label', ''),
+            'favored_canonical_mechanisms': steering_context.get('favored_canonical_mechanisms', []),
+            'favored_endotypes': steering_context.get('favored_endotypes', []),
+            'favored_decision_families': steering_context.get('favored_decision_families', []),
+            'evidence_mode': steering_context.get('evidence_mode', 'balanced'),
+            'pending_machine_actions': steering_context.get('pending_machine_actions', []),
+        },
         'families': families,
         'rows': ranked_rows,
         'portfolio_slate': portfolio_slate,

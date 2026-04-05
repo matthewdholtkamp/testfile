@@ -126,7 +126,12 @@ jobs:
             --action-queue-csv "$latest_action_queue" \
             --backbone-csv "$latest_backbone" \
             --anchors-csv "$latest_anchors" \
+            --steering-aware \
             --output-dir reports/connector_candidate_manifest
+          latest_connector_manifest=$(ls -1t reports/connector_candidate_manifest/connector_candidate_manifest_*.csv | head -n1)
+          python scripts/build_tenx_import_template.py \
+            --candidate-manifest-csv "$latest_connector_manifest" \
+            --output-dir reports/connector_candidate_manifest/templates
           latest_enrichment=$(find reports -type f -name 'connector_enrichment_records_*.csv' | sort | tail -n1)
           if [ -n "$latest_enrichment" ]; then
             python scripts/build_mechanism_dossiers.py \
@@ -266,6 +271,13 @@ jobs:
             --candidate-json "$latest_hypothesis_candidate_json" \
             --output-dir reports/hypothesis_rankings
           latest_hypothesis_ranking_json=$(ls -1t reports/hypothesis_rankings/hypothesis_rankings_*.json | head -n1)
+          python scripts/build_contradiction_brief.py \
+            --transition-json "$latest_transition_json" \
+            --progression-json "$latest_progression_json" \
+            --translational-json "$latest_translational_json" \
+            --cohort-json "$latest_cohort_json" \
+            --hypothesis-json "$latest_hypothesis_ranking_json" \
+            --output-dir reports/contradiction_brief
           python scripts/build_hypothesis_ranking_validation.py \
             --ranking-json "$latest_hypothesis_ranking_json" \
             --candidate-json "$latest_hypothesis_candidate_json" \

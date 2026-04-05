@@ -178,6 +178,31 @@ def download_file_content(service, file_id):
         print(f"Error downloading file {file_id}: {e}")
         return ""
 
+
+class AdaptiveBackoffController:
+    def __init__(self, base_delay_seconds, max_delay_seconds=60, rate_limit_mode='static'):
+        self.base_delay_seconds = max(0, int(base_delay_seconds))
+        self.max_delay_seconds = max(self.base_delay_seconds, int(max_delay_seconds))
+        self.rate_limit_mode = rate_limit_mode or 'static'
+        self.current_delay_seconds = self.base_delay_seconds
+        self.rate_limit_events = 0
+
+    def retry_sleep_seconds(self, attempt):
+        proposed = max(5, self.current_delay_seconds) * max(1, attempt)
+        return min(self.max_delay_seconds, proposed)
+
+    def note_rate_limit(self):
+        self.rate_limit_events += 1
+        if self.rate_limit_mode != 'static':
+            self.current_delay_seconds = min(self.max_delay_seconds, max(self.current_delay_seconds, self.base_delay_seconds) + 4)
+
+    def note_success(self):
+        if self.rate_limit_mode != 'static' and self.current_delay_seconds > self.base_delay_seconds:
+            self.current_delay_seconds = max(self.base_delay_seconds, self.current_delay_seconds - 1)
+
+    def inter_paper_delay_seconds(self):
+        return self.current_delay_seconds
+
 def _upload_file(service, folder_id, local_path, filename, mimetype):
     max_retries = 5
     base_delay = 2
@@ -342,7 +367,7 @@ def find_eligible_papers(service, folder_id, state_dict, include_needs_review, a
 
     return eligible
 
-def parse_with_gemini(text, schema_json, taxonomy_configs):
+def parse_with_gemini(text, schema_json, taxonomy_configs, backoff_controller=None):
     """Calls Gemini to parse the text and extract structured JSON."""
     model_name = load_config().get('extraction_model', 'gemini-3.1-flash-lite-preview')
 
@@ -427,8 +452,13 @@ PAPER TEXT:
 
         except Exception as e:
             if "429" in str(e):
-                print(f"Rate limited (429). Waiting before retry...")
-                time.sleep((attempt + 1) * 15)
+                if backoff_controller:
+                    backoff_controller.note_rate_limit()
+                    delay_seconds = backoff_controller.retry_sleep_seconds(attempt + 1)
+                else:
+                    delay_seconds = (attempt + 1) * 15
+                print(f"Rate limited (429). Waiting {delay_seconds} seconds before retry...")
+                time.sleep(delay_seconds)
             elif "400" in str(e):
                 print(f"Bad Request (400) from Gemini: {e}")
                 return None, f"Bad Request: {e}"
@@ -443,7 +473,8 @@ PAPER TEXT:
                 if attempt == max_retries - 1:
                     resp_text = getattr(response, 'text', str(response)) if 'response' in locals() else 'No response object'
                     return None, f"Model malformed JSON failure: Error: {e}\nRaw Response: {resp_text}"
-                time.sleep((attempt + 1) * 5)
+                delay_seconds = backoff_controller.retry_sleep_seconds(attempt + 1) if backoff_controller else (attempt + 1) * 5
+                time.sleep(delay_seconds)
 
     return None, "Max retries exceeded."
 
@@ -591,6 +622,8 @@ def main():
     max_papers_per_run = int(max_papers_override) if max_papers_override else config.get('max_papers_per_run', 5)
     inter_paper_delay_seconds = config.get('inter_paper_delay_seconds', 8)
     extraction_routing = config.get('extraction_routing', {})
+    rate_limit_mode = os.environ.get('EXTRACTION_RATE_LIMIT_MODE', 'static')
+    max_rate_limit_delay_seconds = int(os.environ.get('EXTRACTION_MAX_DELAY_SECONDS', '60'))
 
     if max_papers_per_run <= 0:
         print(f"Error: max_papers_per_run must be strictly positive, but got {max_papers_per_run}.")
@@ -607,6 +640,7 @@ def main():
     print(f"Extraction Model: {extraction_model}")
     print(f"Max Papers Per Run: {max_papers_per_run}")
     print(f"Inter-Paper Delay (seconds): {inter_paper_delay_seconds}")
+    print(f"Adaptive Rate-Limit Mode: {rate_limit_mode}")
     print("Resolved Extraction Routing:")
     for key, path in extraction_routing.items():
         print(f"  {key}: '{path}'")
@@ -705,6 +739,12 @@ def main():
         sys.exit(0)
 
     # Process papers
+    backoff_controller = AdaptiveBackoffController(
+        base_delay_seconds=inter_paper_delay_seconds,
+        max_delay_seconds=max_rate_limit_delay_seconds,
+        rate_limit_mode=rate_limit_mode,
+    )
+
     for paper in eligible_papers:
         paper_id = paper['paper_id']
         file_id = paper['drive_file_id']
@@ -734,7 +774,7 @@ def main():
 
             # Parse with Gemini
             print(f"[{paper_id}] Calling Gemini API for extraction...")
-            extracted_data, error = parse_with_gemini(content, extraction_schema, taxonomy_configs)
+            extracted_data, error = parse_with_gemini(content, extraction_schema, taxonomy_configs, backoff_controller=backoff_controller)
 
             if error or not extracted_data:
                 print(f"[{paper_id}] Extraction failed: {error}")
@@ -822,6 +862,7 @@ def main():
 
             # Success!
             print(f"[{paper_id}] Successfully completed locally and outputs uploaded.")
+            backoff_controller.note_success()
             state_dict[paper_id]['extraction_status'] = 'completed'
             state_dict[paper_id]['extracted_at'] = datetime.utcnow().isoformat()
             state_dict[paper_id]['extraction_version'] = 'v1'
@@ -840,8 +881,9 @@ def main():
 
         finally:
             # Pacing delay applied after every paper (success or handled failure)
-            print(f"[{paper_id}] Applying inter-paper delay of {inter_paper_delay_seconds} seconds...")
-            time.sleep(inter_paper_delay_seconds)
+            current_delay = backoff_controller.inter_paper_delay_seconds()
+            print(f"[{paper_id}] Applying inter-paper delay of {current_delay} seconds...")
+            time.sleep(current_delay)
 
     print("\nExtraction Pipeline Complete.")
 

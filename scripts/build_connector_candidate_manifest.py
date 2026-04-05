@@ -7,6 +7,11 @@ from glob import glob
 
 import yaml
 
+try:
+    from steering_context import load_steering_context
+except ModuleNotFoundError:
+    from scripts.steering_context import load_steering_context
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STARTER_MECHANISMS = [
@@ -21,10 +26,20 @@ DISPLAY_NAMES = {
 }
 PRIORITY_MODE_ORDERS = {
     'default': STARTER_MECHANISMS,
+    'bbb_first': [
+        'blood_brain_barrier_disruption',
+        'neuroinflammation_microglial_activation',
+        'mitochondrial_bioenergetic_dysfunction',
+    ],
     'mitochondrial_first': [
         'mitochondrial_bioenergetic_dysfunction',
         'blood_brain_barrier_disruption',
         'neuroinflammation_microglial_activation',
+    ],
+    'neuroinflammation_first': [
+        'neuroinflammation_microglial_activation',
+        'blood_brain_barrier_disruption',
+        'mitochondrial_bioenergetic_dysfunction',
     ],
 }
 GOOD_BUCKETS = {'high_signal', 'usable'}
@@ -687,13 +702,15 @@ def build_rows(claim_rows, paper_rows, action_rows, backbone_rows, anchor_rows, 
     return rows
 
 
-def render_markdown(rows):
+def render_markdown(rows, priority_mode='default', steering_context=None):
     connector_counts = Counter(row['requested_connector'] for row in rows)
     mechanism_counts = Counter(row['canonical_mechanism'] for row in rows)
     lines = [
         '# Connector Candidate Manifest',
         '',
         f'- Candidate rows: `{len(rows)}`',
+        f'- Priority mode: `{priority_mode}`',
+        f"- Steering focus: `{'; '.join((steering_context or {}).get('favored_canonical_mechanisms', [])) or 'none'}`",
         '',
         '## Connectors Requested',
         '',
@@ -779,6 +796,8 @@ def main():
     parser.add_argument('--alias-yaml', default='config/manual_target_aliases.yaml', help='Path to manual target alias YAML.')
     parser.add_argument('--query-policy-yaml', default='config/query_policy_defaults.yaml', help='Path to connector query-policy defaults YAML.')
     parser.add_argument('--priority-mode', choices=sorted(PRIORITY_MODE_ORDERS), default='mitochondrial_first', help='Manifest ranking mode.')
+    parser.add_argument('--direction-registry', default='outputs/state/engine_direction_registry.json', help='Optional steering registry JSON.')
+    parser.add_argument('--steering-aware', action='store_true', help='Bias the manifest ordering toward the active steering context.')
     parser.add_argument('--output-dir', default='reports/connector_candidate_manifest', help='Directory for output artifacts.')
     args = parser.parse_args()
 
@@ -793,6 +812,8 @@ def main():
     alias_map = load_alias_map(os.path.join(REPO_ROOT, args.alias_yaml))
     policy_config = load_yaml(os.path.join(REPO_ROOT, args.query_policy_yaml))
     _ = registry, presets
+    steering_context = load_steering_context(os.path.join(REPO_ROOT, args.direction_registry))
+    priority_mode = steering_context.get('priority_mode', args.priority_mode) if args.steering_aware else args.priority_mode
 
     rows = build_rows(
         read_csv(claims_csv),
@@ -801,7 +822,7 @@ def main():
         read_csv(backbone_csv) if backbone_csv else [],
         read_csv(anchors_csv) if anchors_csv else [],
         alias_map,
-        args.priority_mode,
+        priority_mode,
         policy_config,
     )
 
@@ -819,7 +840,7 @@ def main():
     ]
     write_csv(csv_path, rows, fieldnames)
     with open(md_path, 'w', encoding='utf-8') as handle:
-        handle.write(render_markdown(rows))
+        handle.write(render_markdown(rows, priority_mode=priority_mode, steering_context=steering_context if args.steering_aware else {}))
     write_templates(args.output_dir, ts, rows)
 
     print(f'Connector candidate manifest written: {csv_path}')

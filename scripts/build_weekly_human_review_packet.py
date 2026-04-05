@@ -16,6 +16,11 @@ def latest_report(pattern):
     return candidates[-1] if candidates else ''
 
 
+def latest_optional(pattern):
+    candidates = sorted(glob(os.path.join(REPO_ROOT, '**', pattern), recursive=True))
+    return candidates[-1] if candidates else ''
+
+
 def read_json(path):
     with open(path, 'r', encoding='utf-8') as handle:
         return json.load(handle)
@@ -52,6 +57,13 @@ def parse_markdown_table(path):
             continue
         rows.append(dict(zip(headers, parts)))
     return rows
+
+
+def count_csv_rows(path):
+    if not path or not os.path.exists(path):
+        return 0
+    with open(path, newline='', encoding='utf-8') as handle:
+        return sum(1 for _ in csv.DictReader(handle))
 
 
 def build_human_actions(viewer, release_manifest, target_rows):
@@ -266,6 +278,21 @@ def render_markdown(packet):
         lines.append(
             f"| {row.get('portfolio_role', '')} | {row.get('title', '')} | {row.get('next_test') or row.get('unlocks') or ''} |"
         )
+    if packet.get('contradiction_summary'):
+        lines.extend([
+            '',
+            '## Contradiction And Tension Brief',
+            '',
+            f"- Items surfaced: `{packet['contradiction_summary'].get('item_count', 0)}`",
+            f"- High-severity items: `{packet['contradiction_summary'].get('high_severity_count', 0)}`",
+            '',
+            '| Artifact | Severity | Summary |',
+            '| --- | --- | --- |',
+        ])
+        for item in packet.get('contradiction_items', [])[:6]:
+            lines.append(
+                f"| {item.get('display_name', '')} | {item.get('severity', '')} | {item.get('summary', '')} |"
+            )
 
     lines.extend([
         '',
@@ -295,6 +322,15 @@ def render_markdown(packet):
         lines.append(
             f"| {row.get('Mechanism', '')} | {row.get('Target', '')} | {row.get('Priority', '')} | {row.get('Full-text Hits', '')} | {row.get('High-signal Hits', '')} |"
         )
+    if packet.get('tenx_template_path'):
+        lines.extend([
+            '',
+            '## 10x Activation Status',
+            '',
+            f"- Seeded 10x template rows: `{packet.get('tenx_template_row_count', 0)}`",
+            f"- Template path: `{packet.get('tenx_template_path', '')}`",
+            '',
+        ])
 
     lines.extend([
         '',
@@ -317,6 +353,8 @@ def render_markdown(packet):
         f"- Hypothesis rankings: `{packet['hypothesis_path']}`",
         f"- Target packet index: `{packet['target_packet_index_path']}`",
         f"- Program status: `{packet['program_status_path']}`",
+        f"- Contradiction brief: `{packet.get('contradiction_brief_path', '')}`",
+        f"- 10x template: `{packet.get('tenx_template_path', '')}`",
         '',
     ])
     return '\n'.join(lines)
@@ -335,6 +373,8 @@ def main():
     parser.add_argument('--translational-json', default='', help='Optional translational-perturbation JSON path.')
     parser.add_argument('--cohort-json', default='', help='Optional cohort-stratification JSON path.')
     parser.add_argument('--hypothesis-ranking-json', default='', help='Optional hypothesis-ranking JSON path.')
+    parser.add_argument('--contradiction-brief-json', default='', help='Optional contradiction-brief JSON path.')
+    parser.add_argument('--tenx-template-csv', default='', help='Optional tenx import template CSV path.')
     args = parser.parse_args()
 
     viewer = make_viewer_data()
@@ -348,6 +388,8 @@ def main():
     translational_path = args.translational_json or latest_report('translational_perturbation_index_*.json')
     cohort_path = args.cohort_json or latest_report('cohort_stratification_index_*.json')
     hypothesis_path = args.hypothesis_ranking_json or latest_report('hypothesis_rankings_*.json')
+    contradiction_brief_path = args.contradiction_brief_json or latest_optional('contradiction_brief_*.json')
+    tenx_template_path = args.tenx_template_csv or latest_optional('tenx_genomics_import_template_*.csv')
     release_manifest = read_json(release_manifest_path) if release_manifest_path else {}
     idea_gate = read_json(idea_gate_path) if idea_gate_path else {}
     process_lanes = read_json(process_lanes_path) if process_lanes_path else {}
@@ -356,6 +398,7 @@ def main():
     translational_payload = read_json(translational_path) if translational_path else {}
     cohort_payload = read_json(cohort_path) if cohort_path else {}
     hypothesis_payload = read_json(hypothesis_path) if hypothesis_path else {}
+    contradiction_payload = read_json(contradiction_brief_path) if contradiction_brief_path else {}
     target_rows = parse_markdown_table(target_packet_index_path)
 
     packet = {
@@ -381,6 +424,8 @@ def main():
         'hypothesis_rows': hypothesis_payload.get('rows', []) if isinstance(hypothesis_payload, dict) else [],
         'hypothesis_families': hypothesis_payload.get('families', {}) if isinstance(hypothesis_payload, dict) else {},
         'hypothesis_portfolio': hypothesis_payload.get('portfolio_slate', []) if isinstance(hypothesis_payload, dict) else [],
+        'contradiction_summary': contradiction_payload.get('summary', {}) if isinstance(contradiction_payload, dict) else {},
+        'contradiction_items': contradiction_payload.get('items', []) if isinstance(contradiction_payload, dict) else [],
         'release_summary': release_manifest.get('summary', {}) if isinstance(release_manifest, dict) else {},
         'release_rows': release_manifest.get('rows', []) if isinstance(release_manifest, dict) else [],
         'target_priorities': target_rows,
@@ -395,6 +440,9 @@ def main():
         'hypothesis_path': hypothesis_path,
         'target_packet_index_path': target_packet_index_path,
         'program_status_path': program_status_path,
+        'contradiction_brief_path': contradiction_brief_path,
+        'tenx_template_path': tenx_template_path,
+        'tenx_template_row_count': count_csv_rows(tenx_template_path),
     }
 
     os.makedirs(args.output_dir, exist_ok=True)
