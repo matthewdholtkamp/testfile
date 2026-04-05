@@ -45,9 +45,23 @@ def write_response(path: str, payload: Dict[str, Any]) -> None:
     write_json(path, payload)
 
 
-def git_commit_and_push(message: str) -> None:
+def refresh_board_snapshot() -> None:
+    subprocess.run(
+        ['python', 'scripts/build_portal_page.py', '--output-path', 'docs/index.html'],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+    subprocess.run(
+        ['python', 'scripts/validate_board_state.py'],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+
+
+def git_commit_and_push(message: str, paths: list[str] | None = None) -> None:
     ensure_git_identity()
-    subprocess.run(['git', '-C', REPO_ROOT, 'add', 'outputs/state'], check=True)
+    staged_paths = paths or ['outputs/state']
+    subprocess.run(['git', '-C', REPO_ROOT, 'add', *staged_paths], check=True)
     diff = subprocess.run(['git', '-C', REPO_ROOT, 'diff', '--cached', '--quiet'])
     if diff.returncode == 0:
         return
@@ -227,6 +241,7 @@ def run_apply(args: argparse.Namespace) -> int:
     }
     append_jsonl(DECISION_LOG_PATH, log_row)
 
+    refresh_board_snapshot()
     refreshed_payload = command_payload()
     response = {
         'ok': True,
@@ -245,7 +260,10 @@ def run_apply(args: argparse.Namespace) -> int:
         'state_paths': state_paths_payload(),
     }
     write_response(LAST_APPLY_RESPONSE_PATH, response)
-    git_commit_and_push(f'Apply cockpit decision {decision.get("decision_title", decision_id)}')
+    git_commit_and_push(
+        f'Apply cockpit decision {decision.get("decision_title", decision_id)}',
+        paths=['outputs/state', 'docs/index.html', 'docs/command_snapshot.json'],
+    )
     return 0
 
 

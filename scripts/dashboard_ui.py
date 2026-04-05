@@ -951,17 +951,12 @@ def select_command_decisions(state, direction_registry=None):
         )
 
     ordered = sorted(source_rows, key=primary_key)
-    primary = ordered[0]
     active_path_id = normalize(direction_registry.get('active_path_id'))
     active_row = next((row for row in ordered if decision_id_for_row(row) == active_path_id), None)
+    primary = active_row or ordered[0]
     used_ids = {decision_id_for_row(primary)}
     secondaries = []
     seen_families = {normalize(primary.get('family_id'))}
-
-    if active_row and decision_id_for_row(active_row) not in used_ids:
-        secondaries.append(active_row)
-        used_ids.add(decision_id_for_row(active_row))
-        seen_families.add(normalize(active_row.get('family_id')))
 
     for row in ordered[1:]:
         candidate_id = decision_id_for_row(row)

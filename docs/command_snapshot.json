@@ -2,7 +2,7 @@
   "program_status": {
     "line": "Phases 1 through 6 are built. The engine is now at the point where the next gain comes from choosing a path, not rebuilding the stack.",
     "paragraph": "The system has already mapped mechanisms, causal bridges, progression objects, translational packets, endotypes, and a ranked decision slate. Right now the slate holds 4 candidate decision(s), while Phase 4 remains bounded with 0 actionable packet(s).",
-    "current_direction_line": "The engine is currently steering toward Neuroinflammation / Microglial State Change biomarker panel because Future slates use this panel as the default operator readout set."
+    "current_direction_line": "The engine is currently steering toward Blood-Brain Barrier Failure biomarker panel because Future slates use this panel as the default operator readout set."
   },
   "goal_progress": {
     "stages": [
@@ -72,8 +72,8 @@
       }
     ],
     "current_manuscript_candidate": {
-      "title": "Neuroinflammation / Microglial State Change biomarker panel",
-      "story": "Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology."
+      "title": "Blood-Brain Barrier Failure biomarker panel",
+      "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
     },
     "next_paper_opportunity": {
       "title": "Blood-Brain Barrier Failure biomarker panel",
@@ -146,39 +146,39 @@
     "major_findings": [
       "The lead mechanism in the live atlas is Blood-Brain Barrier Dysfunction.",
       "The strongest supported bridge right now is BBB permeability increase -> peripheral immune infiltration.",
-      "The current lead insight is that Neuroinflammation / Microglial State Change biomarker panel is the best readout set to carry the next paper story, because this panel is already attached to a translational packet and can be tested against 4 endotype packet(s)."
+      "The current lead insight is that Blood-Brain Barrier Failure biomarker panel is the best readout set to carry the next paper story, because this panel is already attached to a translational packet and can be tested against 4 endotype packet(s)."
     ],
     "current_unknowns": [
       "The top current uncertainty is Clarify Chronic Repetitive Tau / Clearance Mixed.",
       "Phase 4 is still bounded. It has 6 bounded packet(s), 1 lane(s) with compound support, and 1 lane(s) with trial support.",
-      "The biggest paper blocker right now is this: The current evidence does not yet show the expected cumulative damage signal."
+      "The biggest paper blocker right now is this: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover."
     ]
   },
   "primary_decision": {
-    "decision_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+    "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
     "priority": "primary",
-    "title": "Neuroinflammation / Microglial State Change biomarker panel",
-    "decision_title": "Neuroinflammation / Microglial State Change biomarker panel",
+    "title": "Blood-Brain Barrier Failure biomarker panel",
+    "decision_title": "Blood-Brain Barrier Failure biomarker panel",
     "decision_family": "most_informative_biomarker_panel",
     "decision_family_label": "Most Informative Biomarker Panel",
     "human_question": "Do you want this to become the default panel for the next readout pass?",
     "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
     "what_we_know": [
-      "Neuroinflammation / Microglial State Change is currently rated supported.",
-      "It is tied to 3 Phase 2 transition(s) and 3 downstream object(s).",
+      "Blood-Brain Barrier Failure is currently rated supported.",
+      "It is tied to 1 Phase 2 transition(s) and 2 downstream object(s).",
       "It already maps to 4 endotype packet(s)."
     ],
     "what_is_uncertain": [
-      "The main open issue is this: The current evidence does not yet show the expected cumulative damage signal.",
+      "The main open issue is this: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover.",
       "This item still carries novelty status: Cross Disease Analog."
     ],
     "phase_path": [
-      "Phase 1 mapped the live mechanism lane as Neuroinflammation Microglial State Change.",
-      "Phase 2 connected that lane through BBB Permeability Increase To Peripheral Immune Infiltration, Mitochondrial ROS To Inflammasome Activation, Neuroinflammation To Tau Proteinopathy Progression.",
-      "Phase 3 says the downstream burden shows up as Microglial Chronic Activation, Persistent Metabolic Dysfunction, Tauopathy Progression.",
-      "Phase 4 attached the translational packet Neuroinflammation Microglial State Change.",
-      "Phase 5 says this matters most in Acute Mild Biomarker Imaging Bridge, Acute Blast Vascular Inflammatory Mixed, Subacute Repetitive Inflammatory Dominant, and 1 more.",
-      "Phase 6 ranked Neuroinflammation / Microglial State Change biomarker panel now because This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).."
+      "Phase 1 mapped the live mechanism lane as Blood Brain Barrier Failure.",
+      "Phase 2 connected that lane through BBB Permeability Increase To Peripheral Immune Infiltration.",
+      "Phase 3 says the downstream burden shows up as Microglial Chronic Activation, Neurovascular Uncoupling.",
+      "Phase 4 attached the translational packet Blood Brain Barrier Failure.",
+      "Phase 5 says this matters most in Acute Mild Biomarker Imaging Bridge, Acute Severe Vascular Dominant, Acute Blast Vascular Inflammatory Mixed, and 1 more.",
+      "Phase 6 ranked Blood-Brain Barrier Failure biomarker panel now because This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).."
     ],
     "options": [
       {
@@ -210,25 +210,25 @@
       }
     ],
     "recommended_option_id": "adopt_as_default_panel",
-    "recommended_reason": "Neuroinflammation / Microglial State Change biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
+    "recommended_reason": "Blood-Brain Barrier Failure biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
     "write_in_allowed": true,
-    "current_manuscript_effect": "If you choose Adopt as the default panel, Neuroinflammation / Microglial State Change biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
-    "future_engine_effect": "Neuroinflammation / Microglial State Change biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
+    "current_manuscript_effect": "If you choose Adopt as the default panel, Blood-Brain Barrier Failure biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
+    "future_engine_effect": "Blood-Brain Barrier Failure biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
     "immediate_action_mode": "dispatch_refresh_public_enrichment",
     "detail_link": "./idea-briefs/index.html",
     "support_status": "supported",
     "novelty_status": "cross_disease_analog",
-    "statement": "Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.",
+    "statement": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.",
     "source_row": {
-      "candidate_id": "most_informative_biomarker_panel::packet::neuroinflammation_microglial_state_change",
+      "candidate_id": "most_informative_biomarker_panel::packet::blood_brain_barrier_failure",
       "family_id": "most_informative_biomarker_panel",
       "family_label": "Most Informative Biomarker Panel",
       "ranking_family": "most_informative_biomarker_panel",
       "candidate_type": "translational_packet",
-      "canonical_mechanism": "neuroinflammation_microglial_activation",
-      "display_name": "Neuroinflammation / Microglial State Change",
-      "title": "Neuroinflammation / Microglial State Change biomarker panel",
-      "statement": "Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.",
+      "canonical_mechanism": "blood_brain_barrier_disruption",
+      "display_name": "Blood-Brain Barrier Failure",
+      "title": "Blood-Brain Barrier Failure biomarker panel",
+      "statement": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.",
       "support_status": "supported",
       "novelty_status": "cross_disease_analog",
       "strength_tag": "assertive",
@@ -239,429 +239,160 @@
       "novelty_bonus": 0.12,
       "family_score": 1.07,
       "target_lane_ids": [
-        "neuroinflammation_microglial_state_change"
+        "blood_brain_barrier_failure"
       ],
       "linked_phase1_lane_ids": [
-        "neuroinflammation_microglial_state_change"
+        "blood_brain_barrier_failure"
       ],
       "parent_transition_ids": [
-        "bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "mitochondrial_ros_to_inflammasome_activation",
-        "neuroinflammation_to_tau_proteinopathy_progression"
+        "bbb_permeability_increase_to_peripheral_immune_infiltration"
       ],
       "linked_phase2_transition_ids": [
-        "bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "mitochondrial_ros_to_inflammasome_activation",
-        "neuroinflammation_to_tau_proteinopathy_progression"
+        "bbb_permeability_increase_to_peripheral_immune_infiltration"
       ],
       "parent_object_ids": [
         "microglial_chronic_activation",
-        "persistent_metabolic_dysfunction",
-        "tauopathy_progression"
+        "neurovascular_uncoupling"
       ],
       "linked_phase3_object_ids": [
         "microglial_chronic_activation",
-        "persistent_metabolic_dysfunction",
-        "tauopathy_progression"
+        "neurovascular_uncoupling"
       ],
       "parent_translational_packet_ids": [
-        "neuroinflammation_microglial_state_change"
+        "blood_brain_barrier_failure"
       ],
       "linked_phase4_packet_ids": [
-        "neuroinflammation_microglial_state_change"
+        "blood_brain_barrier_failure"
       ],
       "parent_endotype_ids": [
         "acute_mild_biomarker_imaging_bridge",
+        "acute_severe_vascular_dominant",
         "acute_blast_vascular_inflammatory_mixed",
-        "subacute_repetitive_inflammatory_dominant",
-        "chronic_repetitive_tau_clearance_mixed"
+        "subacute_repetitive_inflammatory_dominant"
       ],
       "linked_phase5_endotype_ids": [
         "acute_mild_biomarker_imaging_bridge",
+        "acute_severe_vascular_dominant",
         "acute_blast_vascular_inflammatory_mixed",
-        "subacute_repetitive_inflammatory_dominant",
-        "chronic_repetitive_tau_clearance_mixed"
+        "subacute_repetitive_inflammatory_dominant"
       ],
-      "rationale": "NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.",
-      "decision_rationale": "NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.",
+      "rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
+      "decision_rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
       "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
-      "source_quality_mix": "lane 79 full-text-like / 28 abstract-only; primary target seed 9 full-text-like hits across 11 match(es); direct target mentions 9 full-text-like / 3 abstract-only",
+      "source_quality_mix": "lane 53 full-text-like / 14 abstract-only; primary target seed 5 full-text-like hits across 5 match(es); direct target mentions 6 full-text-like / 0 abstract-only",
       "anchor_pmids": [
-        "41157272",
-        "41103638",
         "41663365",
-        "41734021",
-        "41752185",
-        "41756282",
-        "41824127",
-        "41612383",
-        "41803087",
-        "41511466",
-        "41480492",
-        "41683989",
-        "41709060",
-        "41712436",
-        "41726892",
-        "41737534",
-        "41769894",
-        "41803953",
-        "41622481",
-        "41659975",
-        "41740873",
-        "41809632",
+        "41673382",
+        "41642456",
+        "41649131",
         "41039850",
+        "41465583",
+        "41725719",
+        "41153827",
+        "41532955",
+        "41709060",
+        "41752185",
+        "41622772",
+        "41751210",
+        "41740873",
+        "41683989",
+        "41103638",
         "41135688",
+        "41157272",
         "41173520",
         "41197779",
         "41327381",
         "41446731",
-        "41069428",
-        "41110648",
-        "41129987",
-        "41153827",
-        "41157305",
-        "41175081",
-        "41179995",
-        "41328339",
-        "41496386",
-        "41594797",
-        "41651695",
-        "41665901",
-        "41700070"
+        "41079361",
+        "41177833",
+        "41183617",
+        "41267966",
+        "41328339"
       ],
-      "supporting_pmids": "41157272; 41103638; 41663365; 41734021; 41752185; 41756282; 41824127; 41612383; 41803087; 41511466; 41480492; 41683989; 41709060; 41712436; 41726892; 41737534; 41769894; 41803953; 41622481; 41659975; 41740873; 41809632; 41039850; 41135688; 41173520; 41197779; 41327381; 41446731; 41069428; 41110648; 41129987; 41153827; 41157305; 41175081; 41179995; 41328339; 41496386; 41594797; 41651695; 41665901; 41700070",
+      "supporting_pmids": "41663365; 41673382; 41642456; 41649131; 41039850; 41465583; 41725719; 41153827; 41532955; 41709060; 41752185; 41622772; 41751210; 41740873; 41683989; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731; 41079361; 41177833; 41183617; 41267966; 41328339",
       "provenance_refs": [
-        "phase1:neuroinflammation_microglial_state_change",
+        "phase1:blood_brain_barrier_failure",
         "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "phase2:mitochondrial_ros_to_inflammasome_activation",
-        "phase2:neuroinflammation_to_tau_proteinopathy_progression",
         "phase3:microglial_chronic_activation",
-        "phase3:persistent_metabolic_dysfunction",
-        "phase3:tauopathy_progression",
-        "phase4:neuroinflammation_microglial_state_change",
+        "phase3:neurovascular_uncoupling",
+        "phase4:blood_brain_barrier_failure",
         "phase5:acute_mild_biomarker_imaging_bridge",
+        "phase5:acute_severe_vascular_dominant",
         "phase5:acute_blast_vascular_inflammatory_mixed",
-        "phase5:subacute_repetitive_inflammatory_dominant",
-        "phase5:chronic_repetitive_tau_clearance_mixed"
+        "phase5:subacute_repetitive_inflammatory_dominant"
       ],
-      "blockers": "Study found no significant correlation, contradicting the hypothesis of cumulative damage.; Single-cytokine changes can overstate inflammatory control; keep this packet tied to a network-level cytokine plus glial-stress readout panel.",
-      "next_test": "Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.",
+      "blockers": "Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover; keep barrier-module claims tied to permeability outcomes, not junction markers alone.",
+      "next_test": "Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.",
       "unlocks": "A cleaner panel lets Phase 4 readouts and Phase 5 endotype discrimination use the same operator-facing signal set.",
       "hypothesis_type": "most_informative_biomarker_panel",
       "panel_members": [
-        "NLRP3",
-        "IL-1beta",
-        "IL-6",
-        "TNF-alpha",
+        "OCLN",
+        "CLDN5",
+        "TJP1",
+        "Cerebral blood flow",
         "GFAP",
-        "CRP",
-        "QuinA",
-        "DBSI-RF",
-        "TNF-\u03b1",
-        "IL-1\u03b2",
-        "IL-10",
+        "NfL",
+        "Evans blue",
+        "gadolinium leakage",
+        "Nf-L",
+        "FITC-labeled mNGF fluorescence",
+        "Optical density (OD) readings",
+        "MBP protein expression",
+        "NF-200 protein expression",
+        "PSD-95 protein expression",
+        "Cerebral blood flow (CBF)",
         "IL-1 (91)",
         "TNF (53)",
         "IL-6 (50)",
         "NLRP3 (38)",
         "GFAP (22)",
         "HMGB1 (17)",
-        "ros (134)",
-        "ROS (21)",
-        "ATP (19)",
-        "PINK1 (1)",
-        "tau (71)",
-        "Tau (25)",
-        "GFAP (15)",
-        "t-tau (9)",
-        "T-tau (7)",
-        "p-tau (6)"
+        "CBF (14)",
+        "AQP4 (5)"
       ],
       "biomarker_panel": [
-        "NLRP3",
-        "IL-1beta",
-        "IL-6",
-        "TNF-alpha",
+        "OCLN",
+        "CLDN5",
+        "TJP1",
+        "Cerebral blood flow",
         "GFAP",
-        "CRP",
-        "QuinA",
-        "DBSI-RF",
-        "TNF-\u03b1",
-        "IL-1\u03b2",
-        "IL-10",
+        "NfL",
+        "Evans blue",
+        "gadolinium leakage",
+        "Nf-L",
+        "FITC-labeled mNGF fluorescence",
+        "Optical density (OD) readings",
+        "MBP protein expression",
+        "NF-200 protein expression",
+        "PSD-95 protein expression",
+        "Cerebral blood flow (CBF)",
         "IL-1 (91)",
         "TNF (53)",
         "IL-6 (50)",
         "NLRP3 (38)",
         "GFAP (22)",
         "HMGB1 (17)",
-        "ros (134)",
-        "ROS (21)",
-        "ATP (19)",
-        "PINK1 (1)",
-        "tau (71)",
-        "Tau (25)",
-        "GFAP (15)",
-        "t-tau (9)",
-        "T-tau (7)",
-        "p-tau (6)"
+        "CBF (14)",
+        "AQP4 (5)"
       ],
       "expected_readouts": [
-        "IL-1beta / IL-6 / TNF-alpha network",
-        "NLRP3 inflammasome burden",
-        "GFAP and glial stress",
-        "Tau amplification pressure"
+        "Barrier leakage",
+        "OCLN / CLDN5 / TJP1 restoration",
+        "Cerebral blood flow",
+        "Downstream inflammatory spillover"
       ],
-      "sample_type": "['plasma', 'CSF', 'tissue']",
-      "time_window": "['acute', 'subacute', 'chronic']",
-      "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days_to_weeks', 'days_to_weeks']",
-      "expected_direction": "['down', 'down', 'down', 'down']",
+      "sample_type": "['tissue', 'imaging', 'plasma']",
+      "time_window": "['acute', 'subacute']",
+      "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
+      "expected_direction": "['down', 'up', 'up_or_stabilize', 'down']",
       "endotype_discrimination_score": 1.0,
       "feasibility_score": 0.72,
       "redundancy_penalty": 0.0,
-      "rank": 2,
-      "portfolio_role": "highest_value_now"
+      "rank": 1,
+      "portfolio_role": "high_confidence_core"
     }
   },
   "secondary_decisions": [
-    {
-      "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-      "priority": "secondary",
-      "title": "Blood-Brain Barrier Failure biomarker panel",
-      "decision_title": "Blood-Brain Barrier Failure biomarker panel",
-      "decision_family": "most_informative_biomarker_panel",
-      "decision_family_label": "Most Informative Biomarker Panel",
-      "human_question": "Do you want this to become the default panel for the next readout pass?",
-      "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
-      "what_we_know": [
-        "Blood-Brain Barrier Failure is currently rated supported.",
-        "It is tied to 1 Phase 2 transition(s) and 2 downstream object(s).",
-        "It already maps to 4 endotype packet(s)."
-      ],
-      "what_is_uncertain": [
-        "The main open issue is this: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover.",
-        "This item still carries novelty status: Cross Disease Analog."
-      ],
-      "phase_path": [
-        "Phase 1 mapped the live mechanism lane as Blood Brain Barrier Failure.",
-        "Phase 2 connected that lane through BBB Permeability Increase To Peripheral Immune Infiltration.",
-        "Phase 3 says the downstream burden shows up as Microglial Chronic Activation, Neurovascular Uncoupling.",
-        "Phase 4 attached the translational packet Blood Brain Barrier Failure.",
-        "Phase 5 says this matters most in Acute Mild Biomarker Imaging Bridge, Acute Severe Vascular Dominant, Acute Blast Vascular Inflammatory Mixed, and 1 more.",
-        "Phase 6 ranked Blood-Brain Barrier Failure biomarker panel now because This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).."
-      ],
-      "options": [
-        {
-          "id": "adopt_as_default_panel",
-          "label": "Adopt as the default panel",
-          "what_it_steers": "Readout alignment.",
-          "immediate_action": "Refresh public enrichment and rebuild the decision surfaces around this panel.",
-          "future_effect": "Future slates use this panel as the default operator readout set.",
-          "paper_effect": "This strengthens the figures and methods path.",
-          "immediate_action_mode": "dispatch_refresh_public_enrichment"
-        },
-        {
-          "id": "validate_against_challenger_panel",
-          "label": "Validate against a challenger panel",
-          "what_it_steers": "Panel comparison rather than adoption.",
-          "immediate_action": "Queue targeted extraction or manual enrichment to compare panels.",
-          "future_effect": "Future slates surface competing panels until one wins.",
-          "paper_effect": "This improves panel defensibility.",
-          "immediate_action_mode": "run_manual_enrichment_cycle"
-        },
-        {
-          "id": "park_panel",
-          "label": "Park this panel for now",
-          "what_it_steers": "Away from biomarker-first work.",
-          "immediate_action": "Record park status only.",
-          "future_effect": "Future slates favor other work.",
-          "paper_effect": "This weakens the immediate figure path.",
-          "immediate_action_mode": "record_only"
-        }
-      ],
-      "recommended_option_id": "adopt_as_default_panel",
-      "recommended_reason": "Blood-Brain Barrier Failure biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
-      "write_in_allowed": true,
-      "current_manuscript_effect": "If you choose Adopt as the default panel, Blood-Brain Barrier Failure biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
-      "future_engine_effect": "Blood-Brain Barrier Failure biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
-      "immediate_action_mode": "dispatch_refresh_public_enrichment",
-      "detail_link": "./idea-briefs/index.html",
-      "support_status": "supported",
-      "novelty_status": "cross_disease_analog",
-      "statement": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.",
-      "source_row": {
-        "candidate_id": "most_informative_biomarker_panel::packet::blood_brain_barrier_failure",
-        "family_id": "most_informative_biomarker_panel",
-        "family_label": "Most Informative Biomarker Panel",
-        "ranking_family": "most_informative_biomarker_panel",
-        "candidate_type": "translational_packet",
-        "canonical_mechanism": "blood_brain_barrier_disruption",
-        "display_name": "Blood-Brain Barrier Failure",
-        "title": "Blood-Brain Barrier Failure biomarker panel",
-        "statement": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.",
-        "support_status": "supported",
-        "novelty_status": "cross_disease_analog",
-        "strength_tag": "assertive",
-        "operator_decision": "Write now",
-        "confidence_score": 0.95,
-        "value_score": 1.0,
-        "core_family_score": 0.95,
-        "novelty_bonus": 0.12,
-        "family_score": 1.07,
-        "target_lane_ids": [
-          "blood_brain_barrier_failure"
-        ],
-        "linked_phase1_lane_ids": [
-          "blood_brain_barrier_failure"
-        ],
-        "parent_transition_ids": [
-          "bbb_permeability_increase_to_peripheral_immune_infiltration"
-        ],
-        "linked_phase2_transition_ids": [
-          "bbb_permeability_increase_to_peripheral_immune_infiltration"
-        ],
-        "parent_object_ids": [
-          "microglial_chronic_activation",
-          "neurovascular_uncoupling"
-        ],
-        "linked_phase3_object_ids": [
-          "microglial_chronic_activation",
-          "neurovascular_uncoupling"
-        ],
-        "parent_translational_packet_ids": [
-          "blood_brain_barrier_failure"
-        ],
-        "linked_phase4_packet_ids": [
-          "blood_brain_barrier_failure"
-        ],
-        "parent_endotype_ids": [
-          "acute_mild_biomarker_imaging_bridge",
-          "acute_severe_vascular_dominant",
-          "acute_blast_vascular_inflammatory_mixed",
-          "subacute_repetitive_inflammatory_dominant"
-        ],
-        "linked_phase5_endotype_ids": [
-          "acute_mild_biomarker_imaging_bridge",
-          "acute_severe_vascular_dominant",
-          "acute_blast_vascular_inflammatory_mixed",
-          "subacute_repetitive_inflammatory_dominant"
-        ],
-        "rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
-        "decision_rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
-        "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
-        "source_quality_mix": "lane 53 full-text-like / 14 abstract-only; primary target seed 5 full-text-like hits across 5 match(es); direct target mentions 6 full-text-like / 0 abstract-only",
-        "anchor_pmids": [
-          "41663365",
-          "41673382",
-          "41642456",
-          "41649131",
-          "41039850",
-          "41465583",
-          "41725719",
-          "41153827",
-          "41532955",
-          "41709060",
-          "41752185",
-          "41622772",
-          "41751210",
-          "41740873",
-          "41683989",
-          "41103638",
-          "41135688",
-          "41157272",
-          "41173520",
-          "41197779",
-          "41327381",
-          "41446731",
-          "41079361",
-          "41177833",
-          "41183617",
-          "41267966",
-          "41328339"
-        ],
-        "supporting_pmids": "41663365; 41673382; 41642456; 41649131; 41039850; 41465583; 41725719; 41153827; 41532955; 41709060; 41752185; 41622772; 41751210; 41740873; 41683989; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731; 41079361; 41177833; 41183617; 41267966; 41328339",
-        "provenance_refs": [
-          "phase1:blood_brain_barrier_failure",
-          "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
-          "phase3:microglial_chronic_activation",
-          "phase3:neurovascular_uncoupling",
-          "phase4:blood_brain_barrier_failure",
-          "phase5:acute_mild_biomarker_imaging_bridge",
-          "phase5:acute_severe_vascular_dominant",
-          "phase5:acute_blast_vascular_inflammatory_mixed",
-          "phase5:subacute_repetitive_inflammatory_dominant"
-        ],
-        "blockers": "Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover; keep barrier-module claims tied to permeability outcomes, not junction markers alone.",
-        "next_test": "Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.",
-        "unlocks": "A cleaner panel lets Phase 4 readouts and Phase 5 endotype discrimination use the same operator-facing signal set.",
-        "hypothesis_type": "most_informative_biomarker_panel",
-        "panel_members": [
-          "OCLN",
-          "CLDN5",
-          "TJP1",
-          "Cerebral blood flow",
-          "GFAP",
-          "NfL",
-          "Evans blue",
-          "gadolinium leakage",
-          "Nf-L",
-          "FITC-labeled mNGF fluorescence",
-          "Optical density (OD) readings",
-          "MBP protein expression",
-          "NF-200 protein expression",
-          "PSD-95 protein expression",
-          "Cerebral blood flow (CBF)",
-          "IL-1 (91)",
-          "TNF (53)",
-          "IL-6 (50)",
-          "NLRP3 (38)",
-          "GFAP (22)",
-          "HMGB1 (17)",
-          "CBF (14)",
-          "AQP4 (5)"
-        ],
-        "biomarker_panel": [
-          "OCLN",
-          "CLDN5",
-          "TJP1",
-          "Cerebral blood flow",
-          "GFAP",
-          "NfL",
-          "Evans blue",
-          "gadolinium leakage",
-          "Nf-L",
-          "FITC-labeled mNGF fluorescence",
-          "Optical density (OD) readings",
-          "MBP protein expression",
-          "NF-200 protein expression",
-          "PSD-95 protein expression",
-          "Cerebral blood flow (CBF)",
-          "IL-1 (91)",
-          "TNF (53)",
-          "IL-6 (50)",
-          "NLRP3 (38)",
-          "GFAP (22)",
-          "HMGB1 (17)",
-          "CBF (14)",
-          "AQP4 (5)"
-        ],
-        "expected_readouts": [
-          "Barrier leakage",
-          "OCLN / CLDN5 / TJP1 restoration",
-          "Cerebral blood flow",
-          "Downstream inflammatory spillover"
-        ],
-        "sample_type": "['tissue', 'imaging', 'plasma']",
-        "time_window": "['acute', 'subacute']",
-        "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
-        "expected_direction": "['down', 'up', 'up_or_stabilize', 'down']",
-        "endotype_discrimination_score": 1.0,
-        "feasibility_score": 0.72,
-        "redundancy_penalty": 0.0,
-        "rank": 1,
-        "portfolio_role": "high_confidence_core"
-      }
-    },
     {
       "decision_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
       "priority": "secondary",
@@ -839,9 +570,234 @@
         "rank": 1,
         "portfolio_role": "hinge_or_task_pick"
       }
+    },
+    {
+      "decision_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
+      "priority": "secondary",
+      "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
+      "decision_title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
+      "decision_family": "best_intervention_leverage_point",
+      "decision_family_label": "Best Intervention Leverage Point",
+      "human_question": "Do you want this to stay the main intervention path?",
+      "why_now": "4 endotype packet(s) already map back to this perturbation path.",
+      "what_we_know": [
+        "Mitochondrial / Bioenergetic Collapse is currently rated supported.",
+        "It is tied to 1 Phase 2 transition(s) and 2 downstream object(s).",
+        "It already maps to 3 endotype packet(s)."
+      ],
+      "what_is_uncertain": [
+        "The main open issue is this: none_detected.",
+        "This item still carries novelty status: Cross Disease Analog."
+      ],
+      "phase_path": [
+        "Phase 1 mapped the live mechanism lane as Mitochondrial Bioenergetic Collapse.",
+        "Phase 2 connected that lane through Mitochondrial ROS To Inflammasome Activation.",
+        "Phase 3 says the downstream burden shows up as Persistent Metabolic Dysfunction, Microglial Chronic Activation.",
+        "Phase 4 attached the translational packet Mitochondrial Bioenergetic Collapse.",
+        "Phase 5 says this matters most in Acute Severe Vascular Dominant, Chronic Mild Metabolic White Matter Dominant, Chronic Severe Axonal Network Decline.",
+        "Phase 6 ranked Mitochondrial / Bioenergetic Collapse -> PRKN now because 4 endotype packet(s) already map back to this perturbation path.."
+      ],
+      "options": [
+        {
+          "id": "keep_as_primary_target",
+          "label": "Keep as the primary target",
+          "what_it_steers": "Intervention priority toward this target.",
+          "immediate_action": "Refresh public enrichment and rebuild the decision surfaces around this target.",
+          "future_effect": "Future slates bias toward this target and its readouts.",
+          "paper_effect": "This sharpens the translational story.",
+          "immediate_action_mode": "dispatch_refresh_public_enrichment"
+        },
+        {
+          "id": "run_challenger_comparison",
+          "label": "Run a challenger comparison",
+          "what_it_steers": "Comparison mode rather than commitment.",
+          "immediate_action": "Queue manual enrichment or targeted extraction to compare this target against a challenger.",
+          "future_effect": "Future slates compare target and challenger instead of assuming one winner.",
+          "paper_effect": "This improves rigor before committing to the translational story.",
+          "immediate_action_mode": "run_manual_enrichment_cycle"
+        },
+        {
+          "id": "pause_intervention_push",
+          "label": "Pause intervention push",
+          "what_it_steers": "Away from immediate target commitment.",
+          "immediate_action": "Record the pause only.",
+          "future_effect": "Future slates favor mechanism or biomarker clarification over intervention expansion.",
+          "paper_effect": "This delays translational claims.",
+          "immediate_action_mode": "record_only"
+        }
+      ],
+      "recommended_option_id": "keep_as_primary_target",
+      "recommended_reason": "Mitochondrial / Bioenergetic Collapse -> PRKN already has the strongest support in the current stack, so keeping it primary preserves the cleanest translational story.",
+      "write_in_allowed": true,
+      "current_manuscript_effect": "If you choose Keep as the primary target, Mitochondrial / Bioenergetic Collapse -> PRKN becomes part of the current manuscript path instead of staying only on the background slate.",
+      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse -> PRKN will steer future machine runs and slates this way: Future slates bias toward this target and its readouts.",
+      "immediate_action_mode": "dispatch_refresh_public_enrichment",
+      "detail_link": "./idea-briefs/index.html",
+      "support_status": "supported",
+      "novelty_status": "cross_disease_analog",
+      "statement": "Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).",
+      "source_row": {
+        "candidate_id": "best_intervention_leverage_point::mitochondrial_bioenergetic_collapse",
+        "family_id": "best_intervention_leverage_point",
+        "family_label": "Best Intervention Leverage Point",
+        "ranking_family": "best_intervention_leverage_point",
+        "candidate_type": "translational_packet",
+        "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
+        "display_name": "Mitochondrial / Bioenergetic Collapse",
+        "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
+        "statement": "Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).",
+        "support_status": "supported",
+        "novelty_status": "cross_disease_analog",
+        "strength_tag": "assertive",
+        "operator_decision": "Write now",
+        "confidence_score": 0.917,
+        "value_score": 1.0,
+        "core_family_score": 0.917,
+        "novelty_bonus": 0.12,
+        "family_score": 1.037,
+        "target_lane_ids": [
+          "mitochondrial_bioenergetic_collapse"
+        ],
+        "linked_phase1_lane_ids": [
+          "mitochondrial_bioenergetic_collapse"
+        ],
+        "parent_transition_ids": [
+          "mitochondrial_ros_to_inflammasome_activation"
+        ],
+        "linked_phase2_transition_ids": [
+          "mitochondrial_ros_to_inflammasome_activation"
+        ],
+        "parent_object_ids": [
+          "persistent_metabolic_dysfunction",
+          "microglial_chronic_activation"
+        ],
+        "linked_phase3_object_ids": [
+          "persistent_metabolic_dysfunction",
+          "microglial_chronic_activation"
+        ],
+        "parent_translational_packet_ids": [
+          "mitochondrial_bioenergetic_collapse"
+        ],
+        "linked_phase4_packet_ids": [
+          "mitochondrial_bioenergetic_collapse"
+        ],
+        "parent_endotype_ids": [
+          "acute_severe_vascular_dominant",
+          "chronic_mild_metabolic_white_matter_dominant",
+          "chronic_severe_axonal_network_decline"
+        ],
+        "linked_phase5_endotype_ids": [
+          "acute_severe_vascular_dominant",
+          "chronic_mild_metabolic_white_matter_dominant",
+          "chronic_severe_axonal_network_decline"
+        ],
+        "rationale": "PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.",
+        "decision_rationale": "PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.",
+        "why_now": "4 endotype packet(s) already map back to this perturbation path.",
+        "source_quality_mix": "lane 40 full-text-like / 11 abstract-only; primary target seed 3 full-text-like hits across 3 match(es); direct target mentions 2 full-text-like / 0 abstract-only",
+        "anchor_pmids": [
+          "41651694",
+          "41480492",
+          "41576094",
+          "41764101",
+          "41648326",
+          "41267966",
+          "41735605",
+          "41153827",
+          "41667502",
+          "41103638",
+          "41625091",
+          "41709060",
+          "41069428",
+          "41110648",
+          "41129987",
+          "41157305",
+          "41175081",
+          "41179995",
+          "41039850",
+          "41135688",
+          "41157272",
+          "41173520",
+          "41197779",
+          "41327381",
+          "41446731"
+        ],
+        "supporting_pmids": "41651694; 41480492; 41576094; 41764101; 41648326; 41267966; 41735605; 41153827; 41667502; 41103638; 41625091; 41709060; 41069428; 41110648; 41129987; 41157305; 41175081; 41179995; 41039850; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731",
+        "provenance_refs": [
+          "phase1:mitochondrial_bioenergetic_collapse",
+          "phase2:mitochondrial_ros_to_inflammasome_activation",
+          "phase3:persistent_metabolic_dysfunction",
+          "phase3:microglial_chronic_activation",
+          "phase4:mitochondrial_bioenergetic_collapse",
+          "phase5:acute_severe_vascular_dominant",
+          "phase5:chronic_mild_metabolic_white_matter_dominant",
+          "phase5:chronic_severe_axonal_network_decline"
+        ],
+        "blockers": "none_detected",
+        "next_test": "Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.",
+        "unlocks": "Decide whether PRKN should stay primary over CYBB once the first attachment pass shows whether the better perturbation is mitochondrial rescue or ROS suppression.",
+        "hypothesis_type": "best_intervention_leverage_point",
+        "target_scope": "gene_target",
+        "global_primary": "PRKN",
+        "endotype_specific_primary": "PRKN",
+        "challenger_set": [
+          "CYBB",
+          "CAT",
+          "PINK1"
+        ],
+        "primary_target": "PRKN",
+        "best_available_intervention_class": "mitochondrial quality-control modulation",
+        "expected_readouts": [
+          "ATP / bioenergetic rescue",
+          "ROS burden",
+          "Apoptosis pressure",
+          "Inflammasome spillover"
+        ],
+        "intervention_window": "['acute', 'subacute']",
+        "biomarker_panel": [
+          "ATP",
+          "ROS",
+          "NfL",
+          "Bcl-2",
+          "TUNEL+/NeuN+",
+          "cerebral oxygen saturation",
+          "NLRP3",
+          "Nf-L",
+          "Bcl-2 expression",
+          "NeuN expression",
+          "TUNEL+/NeuN+ cells",
+          "Cerebral blood flow",
+          "eATP",
+          "ros (134)",
+          "ROS (21)",
+          "ATP (19)",
+          "PINK1 (1)",
+          "IL-1 (91)",
+          "TNF (53)",
+          "IL-6 (50)",
+          "NLRP3 (38)",
+          "GFAP (22)",
+          "HMGB1 (17)"
+        ],
+        "sample_type": "['tissue', 'plasma', 'blood_cell_or_platelet_assay']",
+        "readout_window": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
+        "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
+        "rank": 1,
+        "portfolio_role": "novelty_watch"
+      }
     }
   ],
   "decision_history": [
+    {
+      "timestamp": "2026-04-05T17:52:35.703299+00:00",
+      "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+      "decision_title": "Blood-Brain Barrier Failure biomarker panel",
+      "selected_option_id": "adopt_as_default_panel",
+      "free_text": "",
+      "interpreted_intent": "adopt_as_default_panel",
+      "triggered_action": "{'requested_action_mode': 'dispatch_refresh_public_enrichment', 'canonical_action_mode': 'dispatch_refresh_public_enrichment', 'action_descriptor': {'action_id': 'dispatch_refresh_public_enrichment', 'label': 'Dispatch public enrichment refresh', 'kind': 'workflow_dispatch', 'workflow': 'refresh_public_enrichment.yml', 'repo_target': '.github/workflows/refresh_public_enrichment.yml', 'executable_target': 'gh workflow run refresh_public_enrichment.yml -R matthewdholtkamp/testfile', 'supported': True, 'support_reason': 'Requires gh CLI and the public enrichment workflow file.'}, 'executed': True, 'status': 'dispatched', 'message': 'Refresh Public Enrichment was dispatched.', 'run': {'conclusion': '', 'createdAt': '2026-04-05T17:52:33Z', 'databaseId': 24007107815, 'displayTitle': 'Refresh Public Enrichment', 'status': 'queued', 'url': 'https://github.com/matthewdholtkamp/testfile/actions/runs/24007107815', 'workflowName': 'Refresh Public Enrichment'}}",
+      "ai_explanation": "A canonical option was selected directly."
+    },
     {
       "timestamp": "2026-04-04T21:36:36.408573+00:00",
       "decision_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
@@ -940,11 +896,11 @@
     }
   ],
   "current_direction": {
-    "label": "Neuroinflammation / Microglial State Change biomarker panel",
+    "label": "Blood-Brain Barrier Failure biomarker panel",
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-05T16:58:25.749424+00:00",
+    "snapshot_generated_at": "2026-04-05T17:59:31.648582+00:00",
     "source_artifact_timestamps": {
       "process": "2026-03-29 02:26:55",
       "transition": "2026-03-29 02:26:56",
@@ -963,18 +919,18 @@
       "hypothesis": "/Users/matthewholtkamp/Documents/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-03-28_212659.json",
       "idea_briefs": "/Users/matthewholtkamp/Documents/testfile/reports/idea_briefs/idea_briefs_2026-04-03_205011.json"
     },
-    "steering_registry_last_updated": "2026-04-04T21:36:33.091471+00:00",
-    "action_status_timestamp": "2026-04-04T21:36:36.408314+00:00",
+    "steering_registry_last_updated": "2026-04-05T17:52:32.024523+00:00",
+    "action_status_timestamp": "2026-04-05T17:52:35.703077+00:00",
     "build_run_id": "",
     "build_sha": "",
     "steering_aware_automation": false,
-    "active_decision_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
-    "active_decision_label": "Neuroinflammation / Microglial State Change biomarker panel",
+    "active_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+    "active_decision_label": "Blood-Brain Barrier Failure biomarker panel",
     "active_decision_in_visible_slate": true,
     "visible_decision_ids": [
-      "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
       "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-      "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed"
+      "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+      "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse"
     ],
     "deferred_improvement_stack": [
       "steering-aware scheduled ranking and refresh behavior",
