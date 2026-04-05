@@ -904,6 +904,14 @@ def load_decision_history(limit=None):
     return read_jsonl(state_file_path('engine_decision_log.jsonl'), limit=limit)
 
 
+def load_action_status():
+    return read_json_if_exists(state_file_path('engine_action_status.json'), default={}) or {}
+
+
+def decision_id_for_row(row):
+    return normalize(row.get('candidate_id') or row.get('title')).replace(' ', '-').replace(':', '-').replace('/', '-').lower()
+
+
 def hypothesis_rows(state):
     rows = list(state.get('hypothesis', {}).get('rows') or [])
     if rows:
@@ -923,12 +931,13 @@ def sort_ranked_rows(rows):
     return sorted(rows, key=sort_key)
 
 
-def select_command_decisions(state):
+def select_command_decisions(state, direction_registry=None):
     source_rows = list(state.get('portfolio') or [])
     if not source_rows:
         source_rows = sort_ranked_rows(hypothesis_rows(state))
     if not source_rows:
         return None, []
+    direction_registry = direction_registry or {}
 
     def primary_key(row):
         role = normalize(row.get('portfolio_role'))
@@ -943,12 +952,19 @@ def select_command_decisions(state):
 
     ordered = sorted(source_rows, key=primary_key)
     primary = ordered[0]
-    used_ids = {normalize(primary.get('candidate_id'))}
+    active_path_id = normalize(direction_registry.get('active_path_id'))
+    active_row = next((row for row in ordered if decision_id_for_row(row) == active_path_id), None)
+    used_ids = {decision_id_for_row(primary)}
     secondaries = []
     seen_families = {normalize(primary.get('family_id'))}
 
+    if active_row and decision_id_for_row(active_row) not in used_ids:
+        secondaries.append(active_row)
+        used_ids.add(decision_id_for_row(active_row))
+        seen_families.add(normalize(active_row.get('family_id')))
+
     for row in ordered[1:]:
-        candidate_id = normalize(row.get('candidate_id'))
+        candidate_id = decision_id_for_row(row)
         family_id = normalize(row.get('family_id'))
         if candidate_id in used_ids:
             continue
@@ -961,7 +977,7 @@ def select_command_decisions(state):
 
     if len(secondaries) < 2:
         for row in ordered[1:]:
-            candidate_id = normalize(row.get('candidate_id'))
+            candidate_id = decision_id_for_row(row)
             if candidate_id in used_ids:
                 continue
             secondaries.append(row)
@@ -1139,8 +1155,9 @@ def build_decision_packet(row, priority, root_prefix):
     recommended_option_id = recommended_choice_for_row(row)
     recommended = next((item for item in options if item['id'] == recommended_option_id), options[0])
     return {
-        'decision_id': normalize(row.get('candidate_id') or row.get('title')).replace(' ', '-').replace(':', '-').replace('/', '-').lower(),
+        'decision_id': decision_id_for_row(row),
         'priority': priority,
+        'title': normalize(row.get('title')),
         'decision_title': normalize(row.get('title')),
         'decision_family': family_id,
         'decision_family_label': FAMILY_LABELS.get(family_id, pretty_label(family_id)),
@@ -1181,6 +1198,19 @@ def current_direction_summary(primary_packet, direction_registry):
         'label': 'the current ranked slate',
         'reason': 'no prior human steering state has been recorded yet.',
     }
+
+
+def select_context_packet(primary_packet, secondary_packets, direction_registry):
+    active_path_id = normalize(direction_registry.get('active_path_id'))
+    if active_path_id:
+        for packet in [primary_packet] + list(secondary_packets or []):
+            if normalize(packet.get('decision_id')) == active_path_id:
+                return packet
+    if primary_packet:
+        return primary_packet
+    if secondary_packets:
+        return secondary_packets[0]
+    return {}
 
 
 def build_program_status(state, primary_packet, direction_summary):
@@ -1231,11 +1261,12 @@ def build_goal_progress(state, primary_packet, secondary_packets, direction_regi
     transition_ok = bool(state.get('transition') and not read_json_if_exists(latest_optional_report('causal_transition_validation_*.json'), default={}).get('errors'))
     progression_ok = bool(state.get('progression') and not read_json_if_exists(latest_optional_report('progression_object_validation_*.json'), default={}).get('errors'))
 
-    primary_row = primary_packet.get('source_row', {}) if primary_packet else {}
+    context_packet = select_context_packet(primary_packet, secondary_packets, direction_registry)
+    primary_row = context_packet.get('source_row', {}) if context_packet else {}
     decision_confidence_checks = [
         bool(state.get('translational')) and bool(primary_row.get('linked_phase4_packet_ids')),
         bool(state.get('cohort')) and bool(primary_row.get('linked_phase5_endotype_ids')),
-        bool(state.get('hypothesis')) and bool(primary_packet),
+        bool(state.get('hypothesis')) and bool(context_packet),
     ]
     manuscript_selected = bool(normalize(direction_registry.get('current_manuscript_candidate', {}).get('title')))
     evidence_chain_complete = bool(primary_row.get('linked_phase1_lane_ids') and primary_row.get('linked_phase2_transition_ids') and primary_row.get('linked_phase3_object_ids') and primary_row.get('linked_phase4_packet_ids') and primary_row.get('linked_phase5_endotype_ids'))
@@ -1293,6 +1324,34 @@ def build_goal_progress(state, primary_packet, secondary_packets, direction_regi
         'stages': stages,
         'current_manuscript_candidate': current_manuscript_candidate,
         'next_paper_opportunity': next_paper_opportunity(primary_packet, secondary_packets, state, direction_registry),
+    }
+
+
+def build_board_state(state, direction_registry, action_status, primary_packet, secondary_packets):
+    snapshot_generated_at = datetime.now(timezone.utc).isoformat()
+    visible_decisions = [packet for packet in [primary_packet] + list(secondary_packets or []) if packet]
+    visible_ids = [normalize(packet.get('decision_id')) for packet in visible_decisions if normalize(packet.get('decision_id'))]
+    active_decision_id = normalize(direction_registry.get('active_path_id'))
+    return {
+        'snapshot_generated_at': snapshot_generated_at,
+        'source_artifact_timestamps': state.get('report_timestamps', {}),
+        'source_artifact_paths': state.get('report_paths', {}),
+        'steering_registry_last_updated': normalize(direction_registry.get('last_updated')),
+        'action_status_timestamp': normalize(action_status.get('timestamp')),
+        'build_run_id': normalize(os.environ.get('GITHUB_RUN_ID')),
+        'build_sha': normalize(os.environ.get('GITHUB_SHA')),
+        'steering_aware_automation': False,
+        'active_decision_id': active_decision_id,
+        'active_decision_label': normalize(direction_registry.get('active_path_label')),
+        'active_decision_in_visible_slate': active_decision_id in visible_ids if active_decision_id else False,
+        'visible_decision_ids': visible_ids,
+        'deferred_improvement_stack': [
+            'steering-aware scheduled ranking and refresh behavior',
+            'contradiction and tension explanation synthesis',
+            'dynamic extraction throttling and quota-aware backoff',
+            '10x and genomics activation',
+            'drive-to-database migration',
+        ],
     }
 
 
@@ -1418,21 +1477,24 @@ def build_support_links(root_prefix):
 def build_command_page_payload(state, root_prefix='./', direction_registry=None, decision_history=None, control_online=False):
     direction_registry = direction_registry or load_direction_registry()
     decision_history = decision_history if decision_history is not None else load_decision_history()
-    primary_row, secondary_rows = select_command_decisions(state)
+    action_status = load_action_status()
+    primary_row, secondary_rows = select_command_decisions(state, direction_registry=direction_registry)
     primary_packet = build_decision_packet(primary_row, 'primary', root_prefix) if primary_row else {}
     secondary_packets = [build_decision_packet(row, 'secondary', root_prefix) for row in secondary_rows]
+    context_packet = select_context_packet(primary_packet, secondary_packets, direction_registry)
     direction_summary = current_direction_summary(primary_packet, direction_registry)
     goal_progress = build_goal_progress(state, primary_packet, secondary_packets, direction_registry)
     return {
         'program_status': build_program_status(state, primary_packet, direction_summary),
         'goal_progress': goal_progress,
-        'phases': build_phase_strip(state, primary_row or {}, root_prefix),
-        'discovery_summary': build_discovery_summary(state, primary_row or {}),
+        'phases': build_phase_strip(state, context_packet.get('source_row', {}) if context_packet else {}, root_prefix),
+        'discovery_summary': build_discovery_summary(state, context_packet.get('source_row', {}) if context_packet else {}),
         'primary_decision': primary_packet,
         'secondary_decisions': secondary_packets[:2],
         'decision_history': build_decision_history_entries(decision_history),
         'phase_timeline': build_phase_timeline(state, root_prefix),
         'current_direction': direction_summary,
+        'board_state': build_board_state(state, direction_registry, action_status, primary_packet, secondary_packets),
         'support_links': build_support_links(root_prefix),
         'control_state': {
             'online': bool(control_online),

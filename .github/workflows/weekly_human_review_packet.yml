@@ -104,6 +104,7 @@ jobs:
             --output-dir docs/atlas-viewer
           python scripts/build_portal_page.py \
             --output-path docs/index.html
+          python scripts/validate_board_state.py
 
       - name: Publish docs snapshot
         if: ${{ github.event_name == 'schedule' || inputs.publish_docs == 'true' }}

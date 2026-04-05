@@ -115,6 +115,17 @@ __BASE_CSS__
         color: var(--warning);
         display: none;
       }
+      .warning-banner {
+        padding: 14px 16px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 182, 182, 0.28);
+        background: rgba(255, 182, 182, 0.08);
+        color: var(--ink);
+        display: grid;
+        gap: 10px;
+      }
+      .warning-banner strong { color: var(--danger); }
+      .warning-banner ul { margin: 0; padding-left: 18px; color: var(--muted); display: grid; gap: 6px; }
       .offline .offline-banner { display: block; }
       .decision-card { padding: 20px; display: grid; gap: 14px; }
       .decision-card.primary { border-color: rgba(var(--accent-rgb), 0.28); }
@@ -263,6 +274,7 @@ __BASE_CSS__
         payload: EMBEDDED_PAYLOAD,
         online: false,
         controlMode: 'snapshot',
+        remoteState: null,
         activeDecisionId: '',
         askQuestion: '',
         selectedOptions: {},
@@ -356,6 +368,30 @@ __BASE_CSS__
 
       function deepClone(value) {
         return JSON.parse(JSON.stringify(value));
+      }
+
+      function normalizeText(value) {
+        return String(value ?? '').trim();
+      }
+
+      function parseTimestamp(value) {
+        const normalized = normalizeText(value);
+        if (!normalized) return null;
+        const parsed = Date.parse(normalized);
+        return Number.isFinite(parsed) ? parsed : null;
+      }
+
+      function formatRelativeAge(value) {
+        const parsed = parseTimestamp(value);
+        if (!parsed) return 'not available';
+        const diffMs = Math.max(0, Date.now() - parsed);
+        const minutes = Math.floor(diffMs / 60000);
+        if (minutes < 1) return 'just now';
+        if (minutes < 60) return `${minutes} min ago`;
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+        const days = Math.floor(hours / 24);
+        return `${days} day${days === 1 ? '' : 's'} ago`;
       }
 
       function githubToken() {
@@ -476,6 +512,7 @@ __BASE_CSS__
         const registry = remoteState.directionRegistry || {};
         const history = Array.isArray(remoteState.decisionHistory) ? remoteState.decisionHistory.slice().reverse().slice(0, 8) : [];
         const actionStatus = remoteState.actionStatus || null;
+        payload.board_state = payload.board_state || {};
         if (registry.active_path_label) {
           payload.current_direction = {
             label: registry.active_path_label,
@@ -506,6 +543,14 @@ __BASE_CSS__
         if (actionStatus) {
           payload.live_action_status = actionStatus;
           payload.control_state.live_action_status = actionStatus;
+          payload.board_state.action_status_timestamp = actionStatus.timestamp || payload.board_state.action_status_timestamp || '';
+        }
+        if (registry.last_updated) {
+          payload.board_state.steering_registry_last_updated = registry.last_updated;
+        }
+        if (registry.active_path_id) {
+          payload.board_state.active_decision_id = registry.active_path_id;
+          payload.board_state.active_decision_label = registry.active_path_label || payload.board_state.active_decision_label || '';
         }
         return payload;
       }
@@ -546,14 +591,68 @@ __BASE_CSS__
         ui.payload = overlayPayloadWithGitHubState(basePayload, remoteState);
         ui.online = true;
         ui.controlMode = 'github';
+        ui.remoteState = remoteState;
         ui.liveActionStatus = remoteState.actionStatus || null;
-        ui.actionMessage = 'GitHub control is connected. Decisions and questions are dispatched through GitHub Actions.';
+        ui.actionMessage = computeBoardRuntimeState(ui.payload).mismatch
+          ? 'GitHub control is connected, but the published board snapshot is behind the live steering state. Refresh or wait for publish before applying a choice.'
+          : 'GitHub control is connected. Decisions and questions are dispatched through GitHub Actions.';
       }
 
       function decisionList(payload) {
         const primary = payload.primary_decision ? [payload.primary_decision] : [];
         const secondary = Array.isArray(payload.secondary_decisions) ? payload.secondary_decisions.slice(0, 2) : [];
         return primary.concat(secondary).filter((decision) => decision && decision.decision_id);
+      }
+
+      function decisionIdsForPayload(payload) {
+        return decisionList(payload).map((decision) => normalizeText(decision.decision_id)).filter(Boolean);
+      }
+
+      function computeBoardRuntimeState(payload) {
+        const boardState = deepClone(payload.board_state || {});
+        const publishedSnapshot = ui.remoteState?.commandSnapshot?.primary_decision
+          ? ui.remoteState.commandSnapshot
+          : payload;
+        const publishedBoardState = publishedSnapshot.board_state || {};
+        const registry = ui.remoteState?.directionRegistry || {};
+        const actionStatus = ui.remoteState?.actionStatus || payload.live_action_status || ui.liveActionStatus || {};
+        const publishedVisibleIds = decisionIdsForPayload(publishedSnapshot);
+        const visibleIds = decisionIdsForPayload(payload);
+        const liveActiveId = normalizeText(registry.active_path_id || boardState.active_decision_id);
+        const publishedDirectionLabel = normalizeText(publishedSnapshot.current_direction?.label);
+        const liveDirectionLabel = normalizeText(registry.active_path_label || payload.current_direction?.label);
+        const mismatchReasons = [];
+
+        if (ui.controlMode === 'github') {
+          if (publishedDirectionLabel && liveDirectionLabel && publishedDirectionLabel !== liveDirectionLabel) {
+            mismatchReasons.push(`Published direction is ${publishedDirectionLabel}, but live steering says ${liveDirectionLabel}.`);
+          }
+          if (liveActiveId && !publishedVisibleIds.includes(liveActiveId)) {
+            mismatchReasons.push('The published decision slate does not include the live active decision.');
+          }
+        }
+
+        return Object.assign(boardState, {
+          mode: ui.controlMode === 'local'
+            ? 'local_control'
+            : (ui.controlMode === 'github' ? 'github_overlay' : 'embedded_snapshot'),
+          snapshot_generated_at: normalizeText(publishedBoardState.snapshot_generated_at || boardState.snapshot_generated_at),
+          snapshot_age: formatRelativeAge(publishedBoardState.snapshot_generated_at || boardState.snapshot_generated_at),
+          live_steering_last_updated: normalizeText(registry.last_updated || boardState.steering_registry_last_updated),
+          live_steering_age: formatRelativeAge(registry.last_updated || boardState.steering_registry_last_updated),
+          live_action_timestamp: normalizeText(actionStatus.timestamp || boardState.action_status_timestamp),
+          live_action_age: formatRelativeAge(actionStatus.timestamp || boardState.action_status_timestamp),
+          active_decision_id: liveActiveId,
+          active_decision_in_visible_slate: liveActiveId ? visibleIds.includes(liveActiveId) : Boolean(boardState.active_decision_in_visible_slate),
+          mismatch: mismatchReasons.length > 0,
+          mismatch_reasons: mismatchReasons,
+          actions_blocked: ui.controlMode === 'github' && mismatchReasons.length > 0,
+        });
+      }
+
+      function actionsAvailable(payload = ui.payload) {
+        if (!ui.online) return false;
+        return !computeBoardRuntimeState(payload).actions_blocked;
       }
 
       function getDecision(decisionId) {
@@ -610,6 +709,7 @@ __BASE_CSS__
         const direction = payload.current_direction || {};
         const manuscript = payload.goal_progress?.current_manuscript_candidate || {};
         const nextPaper = payload.goal_progress?.next_paper_opportunity || {};
+        const boardState = computeBoardRuntimeState(payload);
         const modeLabel = ui.controlMode === 'local'
           ? 'Local control'
           : (ui.controlMode === 'github' ? 'GitHub control' : 'Offline snapshot');
@@ -617,8 +717,22 @@ __BASE_CSS__
         const statusLine = ui.controlMode === 'local'
           ? `Live control is connected at ${activeControlUrl}. Choices and questions post directly to the local command server.`
           : (ui.controlMode === 'github'
-            ? 'GitHub control is connected. This browser can dispatch decisions and clarifying questions through GitHub Actions.'
+            ? (boardState.mismatch
+              ? 'GitHub control is connected, but the published board snapshot does not fully match the live steering state yet.'
+              : 'GitHub control is connected. This browser can dispatch decisions and clarifying questions through GitHub Actions.')
             : 'The cockpit is using its embedded fallback snapshot. You can review the page offline, but question and apply actions stay disabled until live control is back.');
+        const mismatchBanner = boardState.mismatch ? `
+          <div class=\"warning-banner\">
+            <strong>Board mismatch detected</strong>
+            <p>The published board is lagging the live steering state. Do not trust the visible slate for new actions until the mismatch clears.</p>
+            <ul>
+              ${boardState.mismatch_reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join('')}
+              <li>Hard refresh the page.</li>
+              <li>Reconnect GitHub control if needed.</li>
+              <li>Wait for the latest publish run to finish if a board-affecting workflow is still running.</li>
+            </ul>
+          </div>
+        ` : '';
         const controlButtons = ui.controlMode === 'local'
           ? `<button class=\"button-inline primary\" id=\"refreshCommandButton\">Refresh live state</button>`
           : `
@@ -635,6 +749,7 @@ __BASE_CSS__
               <p class=\"hero-copy\">${escapeHtml(status.line || '')}</p>
               <p class=\"hero-note\">${escapeHtml(status.paragraph || '')}</p>
               <p class=\"hero-note\">${escapeHtml(statusLine)}</p>
+              ${mismatchBanner}
               <div class=\"mini-panel\">
                 <span class=\"field-label\">Current direction</span>
                 <strong>${escapeHtml(direction.label || 'Direction not emitted')}</strong>
@@ -651,6 +766,10 @@ __BASE_CSS__
                 <p class=\"muted-note\">${escapeHtml(manuscript.story || '')}</p>
                 <span style=\"margin-top:10px;\">Next paper opportunity</span>
                 <strong>${escapeHtml(nextPaper.title || 'No secondary paper path emitted')}</strong>
+                <p class=\"muted-note\" style=\"margin-top:10px;\">Published snapshot age: ${escapeHtml(boardState.snapshot_age)}</p>
+                <p class=\"muted-note\">Live steering age: ${escapeHtml(boardState.live_steering_age)}</p>
+                <p class=\"muted-note\">Latest action age: ${escapeHtml(boardState.live_action_age)}</p>
+                <p class=\"muted-note\">Steering-aware automation: ${boardState.steering_aware_automation ? 'Yes' : 'No'}</p>
                 <p class=\"muted-note\" style=\"margin-top:10px;\">${hasGitHubToken() ? 'GitHub control is stored in this browser for this page.' : 'To use the public page as a live command surface, connect a fine-grained GitHub token with Actions and Contents read/write.'}</p>
               </div>
             </div>
@@ -678,6 +797,7 @@ __BASE_CSS__
         if (!decision) {
           return `<article class=\"decision-card ${primary ? 'primary' : ''}\"><p class=\"empty-note\">No decision emitted for this slot.</p></article>`;
         }
+        const liveActionsEnabled = actionsAvailable(ui.payload);
         const selected = ui.selectedOptions[decision.decision_id] || '';
         const selectedOption = getSelectedOption(decision.decision_id);
         const visibleKnow = primary ? renderMetaList(decision.what_we_know) : '';
@@ -692,7 +812,7 @@ __BASE_CSS__
             data-role=\"stage-option\"
             data-decision-id=\"${escapeHtml(decision.decision_id)}\"
             data-option-id=\"${escapeHtml(option.id)}\"
-            ${ui.online ? '' : 'disabled'}>
+            ${liveActionsEnabled ? '' : 'disabled'}>
             <span class=\"option-label\">${escapeHtml(option.label)}</span>
             <span class=\"option-summary\">${escapeHtml(optionButtonDetail(option))}</span>
           </button>
@@ -823,8 +943,9 @@ __BASE_CSS__
       }
 
       function renderAskAi(payload) {
+        const liveActionsEnabled = actionsAvailable(payload);
         const presets = (payload.control_state?.preset_questions || []).map((question) => `
-          <button class=\"chip-button\" data-role=\"preset-question\" data-question=\"${escapeHtml(question)}\" ${ui.online ? '' : 'disabled'}>${escapeHtml(question)}</button>
+          <button class=\"chip-button\" data-role=\"preset-question\" data-question=\"${escapeHtml(question)}\" ${liveActionsEnabled ? '' : 'disabled'}>${escapeHtml(question)}</button>
         `).join('');
         const active = getActiveDecision();
         const contextLine = active
@@ -844,9 +965,9 @@ __BASE_CSS__
               <div class=\"ask-panel\">
                 <div class=\"ask-toolbar\">${presets}</div>
                 <label class=\"field-label\" for=\"clarifyQuestion\">Question</label>
-                <textarea class=\"ask-input\" id=\"clarifyQuestion\" placeholder=\"Ask what the engine discovered, why a recommendation is leading, or what another option would change.\" ${ui.online ? '' : 'disabled'}>${escapeHtml(ui.askQuestion)}</textarea>
+                <textarea class=\"ask-input\" id=\"clarifyQuestion\" placeholder=\"Ask what the engine discovered, why a recommendation is leading, or what another option would change.\" ${liveActionsEnabled ? '' : 'disabled'}>${escapeHtml(ui.askQuestion)}</textarea>
                 <div class=\"action-buttons\">
-                  <button class=\"action-button primary\" id=\"askAiButton\" ${ui.online ? '' : 'disabled'}>Ask</button>
+                  <button class=\"action-button primary\" id=\"askAiButton\" ${liveActionsEnabled ? '' : 'disabled'}>Ask</button>
                 </div>
                 <p class=\"muted-note\" id=\"askAiContext\">${escapeHtml(contextLine)}</p>
               </div>
@@ -866,6 +987,8 @@ __BASE_CSS__
         const selected = active ? getSelectedOption(active.decision_id) : null;
         const pending = ui.pendingConfirmation;
         const liveAction = payload.live_action_status || ui.liveActionStatus || null;
+        const liveActionsEnabled = actionsAvailable(payload);
+        const boardState = computeBoardRuntimeState(payload);
         const selectedSummary = selected
           ? `<strong>${escapeHtml(selected.label)}</strong><p>${escapeHtml(optionDetail(selected))}</p>`
           : '<strong>No option staged yet</strong><p>Pick an option in one of the decision cards above to stage it here.</p>';
@@ -873,13 +996,19 @@ __BASE_CSS__
           <p class=\"muted-note\" style=\"margin-top:8px;\">Latest recorded action: ${escapeHtml(liveAction.message || liveAction.status || 'Action recorded.')}</p>
           ${liveAction.run?.url ? `<p class=\"muted-note\"><a class=\"button-link\" href=\"${escapeHtml(liveAction.run.url)}\" target=\"_blank\" rel=\"noreferrer\">Open related run</a></p>` : ''}
         ` : '';
+        const blockNotice = boardState.actions_blocked ? `
+          <div class=\"warning-banner\">
+            <strong>Actions are paused for this board</strong>
+            <p>GitHub control is available, but this published board snapshot is out of sync with live steering. Refresh the page or wait for the latest docs publish before applying new instructions.</p>
+          </div>
+        ` : '';
         const confirmationCard = pending ? `
           <div class=\"action-card\">
             <h3>Confirmation needed</h3>
             <p>${escapeHtml(pending.explanation || 'The cockpit needs you to confirm the interpreted instruction before it executes it.')}</p>
             <p class=\"muted-note\">${escapeHtml(pending.summary || '')}</p>
             <div class=\"action-buttons\">
-              <button class=\"action-button primary\" id=\"confirmWriteInButton\" ${ui.online ? '' : 'disabled'}>Confirm and apply</button>
+              <button class=\"action-button primary\" id=\"confirmWriteInButton\" ${liveActionsEnabled ? '' : 'disabled'}>Confirm and apply</button>
               <button class=\"action-button\" id=\"cancelWriteInConfirmationButton\">Cancel</button>
             </div>
           </div>
@@ -887,6 +1016,7 @@ __BASE_CSS__
         return `
           <section class=\"panel\" id=\"applyPanel\">
             ${sectionHeader('Apply', 'Record Your Choice and Move the Engine', 'Choose an option above, then apply it here. The button on each decision card jumps straight to this panel.')}
+            ${blockNotice}
             <div class=\"action-grid\">
               <div class=\"action-shell\">
                 <p class=\"muted-note\"><strong style=\"color:var(--ink);\">Working on:</strong> ${escapeHtml(active?.decision_title || 'No active decision')}.</p>
@@ -895,17 +1025,17 @@ __BASE_CSS__
                   ${selectedSummary}
                 </div>
                 <label class=\"field-label\" for=\"actionNote\">Optional note</label>
-                <input class=\"note-input\" id=\"actionNote\" type=\"text\" placeholder=\"Add a short note for the command log if helpful.\" ${ui.online ? '' : 'disabled'} value=\"${escapeHtml(ui.actionNote)}\" />
+                <input class=\"note-input\" id=\"actionNote\" type=\"text\" placeholder=\"Add a short note for the command log if helpful.\" ${liveActionsEnabled ? '' : 'disabled'} value=\"${escapeHtml(ui.actionNote)}\" />
                 <div class=\"action-buttons\">
-                  <button class=\"action-button primary\" id=\"applyOptionButton\" ${ui.online && active && selected ? '' : 'disabled'}>Apply this choice</button>
+                  <button class=\"action-button primary\" id=\"applyOptionButton\" ${liveActionsEnabled && active && selected ? '' : 'disabled'}>Apply this choice</button>
                   <button class=\"action-button\" id=\"clearStagedOptionButton\">Clear</button>
                 </div>
               </div>
               <div class=\"action-shell\">
                 <label class=\"field-label\" for=\"writeInInstruction\">Or write your own instruction</label>
-                <textarea class=\"write-in\" id=\"writeInInstruction\" placeholder=\"If none of the staged options fit, write the instruction in plain English here.\" ${ui.online ? '' : 'disabled'}>${escapeHtml(ui.actionWriteIn)}</textarea>
+                <textarea class=\"write-in\" id=\"writeInInstruction\" placeholder=\"If none of the staged options fit, write the instruction in plain English here.\" ${liveActionsEnabled ? '' : 'disabled'}>${escapeHtml(ui.actionWriteIn)}</textarea>
                 <div class=\"action-buttons\">
-                  <button class=\"action-button\" id=\"applyWriteInButton\" ${ui.online && active ? '' : 'disabled'}>Interpret and apply</button>
+                  <button class=\"action-button\" id=\"applyWriteInButton\" ${liveActionsEnabled && active ? '' : 'disabled'}>Interpret and apply</button>
                 </div>
                 ${confirmationCard}
                 <div class=\"action-card action-status\" id=\"actionStatus\">
@@ -1019,6 +1149,7 @@ __BASE_CSS__
           ui.payload = result.payload || EMBEDDED_PAYLOAD;
           ui.online = true;
           ui.controlMode = 'local';
+          ui.remoteState = null;
           ui.liveActionStatus = ui.payload.live_action_status || null;
           ui.actionMessage = `Live control is connected at ${activeControlUrl}. Stage a choice above or ask the AI for clarification.`;
         } catch (error) {
@@ -1029,6 +1160,7 @@ __BASE_CSS__
               ui.payload = EMBEDDED_PAYLOAD;
               ui.online = false;
               ui.controlMode = 'snapshot';
+              ui.remoteState = null;
               ui.liveActionStatus = null;
               ui.actionMessage = githubError.message || 'GitHub control is unavailable. Review the embedded fallback snapshot until live control comes back.';
             }
@@ -1036,6 +1168,7 @@ __BASE_CSS__
             ui.payload = EMBEDDED_PAYLOAD;
             ui.online = false;
             ui.controlMode = 'snapshot';
+            ui.remoteState = null;
             ui.liveActionStatus = null;
             ui.actionMessage = 'Live control is offline. Review the embedded fallback snapshot until /api/command-page comes back, or connect GitHub control from this page.';
           }
@@ -1071,12 +1204,13 @@ __BASE_CSS__
           || remoteState.lastApplyResponse?.payload
           || EMBEDDED_PAYLOAD;
         ui.payload = overlayPayloadWithGitHubState(basePayload, remoteState);
+        ui.remoteState = remoteState;
         ui.liveActionStatus = remoteState.actionStatus || null;
         return remoteState;
       }
 
       async function askAi(question) {
-        if (!ui.online || !question.trim()) return;
+        if (!actionsAvailable(ui.payload) || !question.trim()) return;
         ui.aiResponse = {
           answer: 'Thinking through the current repo state…',
           evidence_chain: ['The cockpit is waiting for /api/clarify-question.'],
@@ -1130,7 +1264,7 @@ __BASE_CSS__
       async function applySelectedOption() {
         const decision = getActiveDecision();
         const option = decision ? getSelectedOption(decision.decision_id) : null;
-        if (!ui.online || !decision || !option) return;
+        if (!actionsAvailable(ui.payload) || !decision || !option) return;
         ui.actionMessage = 'Applying the staged option…';
         ui.pendingConfirmation = null;
         renderApp();
@@ -1184,7 +1318,7 @@ __BASE_CSS__
 
       async function applyWriteIn() {
         const decision = getActiveDecision();
-        if (!ui.online || !decision || !ui.actionWriteIn.trim()) return;
+        if (!actionsAvailable(ui.payload) || !decision || !ui.actionWriteIn.trim()) return;
         ui.actionMessage = 'Interpreting your instruction…';
         ui.pendingConfirmation = null;
         renderApp();
@@ -1271,7 +1405,7 @@ __BASE_CSS__
 
       async function confirmWriteIn() {
         const pending = ui.pendingConfirmation;
-        if (!ui.online || !pending) return;
+        if (!actionsAvailable(ui.payload) || !pending) return;
         ui.actionMessage = 'Applying the confirmed interpretation…';
         renderApp();
         if (ui.controlMode === 'github') {

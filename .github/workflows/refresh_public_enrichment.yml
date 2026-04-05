@@ -219,6 +219,7 @@ jobs:
             --site-dir docs/atlas-book
           python scripts/build_portal_page.py \
             --output-path docs/index.html
+          python scripts/validate_board_state.py
           python scripts/build_run_center_page.py \
             --output-path docs/run-center/index.html
           python scripts/build_program_status_report.py \
