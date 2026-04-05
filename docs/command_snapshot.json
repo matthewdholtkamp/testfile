@@ -146,38 +146,38 @@
     "major_findings": [
       "The lead mechanism in the live atlas is Blood-Brain Barrier Dysfunction.",
       "The strongest supported bridge right now is BBB permeability increase -> peripheral immune infiltration.",
-      "The current lead insight is that Neuroinflammation / Microglial State Change biomarker panel is the best readout set to carry the next paper story, because this panel is already attached to a translational packet and can be tested against 4 endotype packet(s)."
+      "The current lead insight is that Subacute Repetitive Inflammatory-Dominant discriminator panel is the best readout set to carry the next paper story, because this panel is where phase 5 endotype logic becomes measurable instead of purely descriptive."
     ],
     "current_unknowns": [
       "The top current uncertainty is Clarify Chronic Repetitive Tau / Clearance Mixed.",
       "Phase 4 is still bounded. It has 6 bounded packet(s), 1 lane(s) with compound support, and 0 lane(s) with trial support.",
-      "The biggest paper blocker right now is this: The current evidence does not yet show the expected cumulative damage signal."
+      "The biggest paper blocker right now is this: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers."
     ]
   },
   "primary_decision": {
-    "decision_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+    "decision_id": "most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
     "priority": "primary",
-    "decision_title": "Neuroinflammation / Microglial State Change biomarker panel",
+    "decision_title": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
     "decision_family": "most_informative_biomarker_panel",
     "decision_family_label": "Most Informative Biomarker Panel",
     "human_question": "Do you want this to become the default panel for the next readout pass?",
-    "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
+    "why_now": "This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.",
     "what_we_know": [
-      "Neuroinflammation / Microglial State Change is currently rated supported.",
-      "It is tied to 3 Phase 2 transition(s) and 3 downstream object(s).",
-      "It already maps to 4 endotype packet(s)."
+      "Subacute Repetitive Inflammatory-Dominant is currently rated supported.",
+      "It is tied to 2 Phase 2 transition(s) and 1 downstream object(s).",
+      "It already maps to 1 endotype packet(s)."
     ],
     "what_is_uncertain": [
-      "The main open issue is this: The current evidence does not yet show the expected cumulative damage signal.",
-      "This item still carries novelty status: Cross Disease Analog."
+      "The main open issue is this: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.",
+      "This item still carries novelty status: Tbi Emergent."
     ],
     "phase_path": [
-      "Phase 1 mapped the live mechanism lane as Neuroinflammation Microglial State Change.",
-      "Phase 2 connected that lane through BBB Permeability Increase To Peripheral Immune Infiltration, Mitochondrial ROS To Inflammasome Activation, Neuroinflammation To Tau Proteinopathy Progression.",
-      "Phase 3 says the downstream burden shows up as Microglial Chronic Activation, Persistent Metabolic Dysfunction, Tauopathy Progression.",
-      "Phase 4 attached the translational packet Neuroinflammation Microglial State Change.",
-      "Phase 5 says this matters most in Acute Mild Biomarker Imaging Bridge, Acute Blast Vascular Inflammatory Mixed, Subacute Repetitive Inflammatory Dominant, and 1 more.",
-      "Phase 6 ranked Neuroinflammation / Microglial State Change biomarker panel now because This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).."
+      "Phase 1 mapped the live mechanism lane as Neuroinflammation Microglial State Change, Blood Brain Barrier Failure.",
+      "Phase 2 connected that lane through BBB Permeability Increase To Peripheral Immune Infiltration, Mitochondrial ROS To Inflammasome Activation.",
+      "Phase 3 says the downstream burden shows up as Microglial Chronic Activation.",
+      "Phase 4 attached the translational packet Neuroinflammation Microglial State Change, Blood Brain Barrier Failure.",
+      "Phase 5 says this matters most in Subacute Repetitive Inflammatory Dominant.",
+      "Phase 6 ranked Subacute Repetitive Inflammatory-Dominant discriminator panel now because This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.."
     ],
     "options": [
       {
@@ -209,220 +209,128 @@
       }
     ],
     "recommended_option_id": "adopt_as_default_panel",
-    "recommended_reason": "Neuroinflammation / Microglial State Change biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
+    "recommended_reason": "Subacute Repetitive Inflammatory-Dominant discriminator panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
     "write_in_allowed": true,
-    "current_manuscript_effect": "If you choose Adopt as the default panel, Neuroinflammation / Microglial State Change biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
-    "future_engine_effect": "Neuroinflammation / Microglial State Change biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
+    "current_manuscript_effect": "If you choose Adopt as the default panel, Subacute Repetitive Inflammatory-Dominant discriminator panel becomes part of the current manuscript path instead of staying only on the background slate.",
+    "future_engine_effect": "Subacute Repetitive Inflammatory-Dominant discriminator panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
     "immediate_action_mode": "dispatch_refresh_public_enrichment",
     "detail_link": "./idea-briefs/index.html",
     "support_status": "supported",
-    "novelty_status": "cross_disease_analog",
-    "statement": "Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.",
+    "novelty_status": "tbi_emergent",
+    "statement": "Use IL-6, IL-1beta, TNF-alpha, GFAP to discriminate the subacute repetitive inflammatory-dominant endotype from nearby cohorts.",
     "source_row": {
-      "candidate_id": "most_informative_biomarker_panel::packet::neuroinflammation_microglial_state_change",
+      "candidate_id": "most_informative_biomarker_panel::endotype::subacute_repetitive_inflammatory_dominant",
       "family_id": "most_informative_biomarker_panel",
       "family_label": "Most Informative Biomarker Panel",
       "ranking_family": "most_informative_biomarker_panel",
-      "candidate_type": "translational_packet",
+      "candidate_type": "endotype",
       "canonical_mechanism": "neuroinflammation_microglial_activation",
-      "display_name": "Neuroinflammation / Microglial State Change",
-      "title": "Neuroinflammation / Microglial State Change biomarker panel",
-      "statement": "Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.",
+      "display_name": "Subacute Repetitive Inflammatory-Dominant",
+      "title": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
+      "statement": "Use IL-6, IL-1beta, TNF-alpha, GFAP to discriminate the subacute repetitive inflammatory-dominant endotype from nearby cohorts.",
       "support_status": "supported",
-      "novelty_status": "cross_disease_analog",
+      "novelty_status": "tbi_emergent",
       "strength_tag": "assertive",
       "operator_decision": "Write now",
-      "confidence_score": 0.95,
+      "confidence_score": 0.946,
       "value_score": 1.0,
-      "core_family_score": 0.95,
-      "novelty_bonus": 0.12,
-      "family_score": 1.07,
+      "core_family_score": 0.946,
+      "novelty_bonus": 0.06,
+      "family_score": 1.006,
       "target_lane_ids": [
-        "neuroinflammation_microglial_state_change"
+        "neuroinflammation_microglial_state_change",
+        "blood_brain_barrier_failure"
       ],
       "linked_phase1_lane_ids": [
-        "neuroinflammation_microglial_state_change"
+        "neuroinflammation_microglial_state_change",
+        "blood_brain_barrier_failure"
       ],
       "parent_transition_ids": [
         "bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "mitochondrial_ros_to_inflammasome_activation",
-        "neuroinflammation_to_tau_proteinopathy_progression"
+        "mitochondrial_ros_to_inflammasome_activation"
       ],
       "linked_phase2_transition_ids": [
         "bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "mitochondrial_ros_to_inflammasome_activation",
-        "neuroinflammation_to_tau_proteinopathy_progression"
+        "mitochondrial_ros_to_inflammasome_activation"
       ],
       "parent_object_ids": [
-        "microglial_chronic_activation",
-        "persistent_metabolic_dysfunction",
-        "tauopathy_progression"
+        "microglial_chronic_activation"
       ],
       "linked_phase3_object_ids": [
-        "microglial_chronic_activation",
-        "persistent_metabolic_dysfunction",
-        "tauopathy_progression"
+        "microglial_chronic_activation"
       ],
       "parent_translational_packet_ids": [
-        "neuroinflammation_microglial_state_change"
+        "neuroinflammation_microglial_state_change",
+        "blood_brain_barrier_failure"
       ],
       "linked_phase4_packet_ids": [
-        "neuroinflammation_microglial_state_change"
+        "neuroinflammation_microglial_state_change",
+        "blood_brain_barrier_failure"
       ],
       "parent_endotype_ids": [
-        "acute_mild_biomarker_imaging_bridge",
-        "acute_blast_vascular_inflammatory_mixed",
-        "subacute_repetitive_inflammatory_dominant",
-        "chronic_repetitive_tau_clearance_mixed"
+        "subacute_repetitive_inflammatory_dominant"
       ],
       "linked_phase5_endotype_ids": [
-        "acute_mild_biomarker_imaging_bridge",
-        "acute_blast_vascular_inflammatory_mixed",
-        "subacute_repetitive_inflammatory_dominant",
-        "chronic_repetitive_tau_clearance_mixed"
+        "subacute_repetitive_inflammatory_dominant"
       ],
-      "rationale": "NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.",
-      "decision_rationale": "NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification.",
-      "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
-      "source_quality_mix": "lane 108 full-text-like / 28 abstract-only; direct target mentions 13 full-text-like / 3 abstract-only",
+      "rationale": "IL-6 / TNF-alpha / GFAP with repetitive exposure history plus DTI or white matter stress cues.",
+      "decision_rationale": "IL-6 / TNF-alpha / GFAP with repetitive exposure history plus DTI or white matter stress cues.",
+      "why_now": "This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.",
+      "source_quality_mix": "full_text_like:3; abstract_only:4",
       "anchor_pmids": [
-        "41157272",
-        "41103638",
-        "41926211",
-        "41663365",
-        "41734021",
-        "41752185",
-        "41756234",
-        "41756282",
-        "41824127",
-        "41612383",
-        "41480492",
-        "41622481",
-        "41659975",
-        "41683989",
-        "41709060",
-        "41712436",
-        "41726892",
-        "41737534",
-        "41769894",
-        "41803953",
-        "41880282",
-        "41918568",
-        "41740873",
-        "41809632",
-        "41039850",
-        "41135688",
         "41173520",
-        "41197779",
-        "41327381",
         "41446731",
-        "41069428",
-        "41110648",
-        "41129987",
-        "41153827",
-        "41157305",
-        "41175081",
-        "41179995",
-        "41328339",
-        "41496386",
-        "41594797",
-        "41651695",
-        "41665901",
-        "41700070"
+        "41740873",
+        "41740080",
+        "41847037",
+        "41508043",
+        "41709584"
       ],
-      "supporting_pmids": "41157272; 41103638; 41926211; 41663365; 41734021; 41752185; 41756234; 41756282; 41824127; 41612383; 41480492; 41622481; 41659975; 41683989; 41709060; 41712436; 41726892; 41737534; 41769894; 41803953; 41880282; 41918568; 41740873; 41809632; 41039850; 41135688; 41173520; 41197779; 41327381; 41446731; 41069428; 41110648; 41129987; 41153827; 41157305; 41175081; 41179995; 41328339; 41496386; 41594797; 41651695; 41665901; 41700070",
+      "supporting_pmids": "41173520; 41446731; 41740873; 41740080; 41847037; 41508043; 41709584",
       "provenance_refs": [
         "phase1:neuroinflammation_microglial_state_change",
+        "phase1:blood_brain_barrier_failure",
         "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
         "phase2:mitochondrial_ros_to_inflammasome_activation",
-        "phase2:neuroinflammation_to_tau_proteinopathy_progression",
         "phase3:microglial_chronic_activation",
-        "phase3:persistent_metabolic_dysfunction",
-        "phase3:tauopathy_progression",
         "phase4:neuroinflammation_microglial_state_change",
-        "phase5:acute_mild_biomarker_imaging_bridge",
-        "phase5:acute_blast_vascular_inflammatory_mixed",
-        "phase5:subacute_repetitive_inflammatory_dominant",
-        "phase5:chronic_repetitive_tau_clearance_mixed"
+        "phase4:blood_brain_barrier_failure",
+        "phase5:subacute_repetitive_inflammatory_dominant"
       ],
-      "blockers": "Study found no significant correlation, contradicting the hypothesis of cumulative damage.; Single-cytokine changes can overstate inflammatory control; keep this packet tied to a network-level cytokine plus glial-stress readout panel.",
-      "next_test": "Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.",
-      "unlocks": "A cleaner panel lets Phase 4 readouts and Phase 5 endotype discrimination use the same operator-facing signal set.",
+      "blockers": "The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.",
+      "next_test": "Which repetitive cohorts still look barrier-conditioned in the subacute window, and which ones are already dominated by persistent microglial activation?",
+      "unlocks": "A stronger cohort panel makes Phase 5 more than a literature description by giving it a real discriminator set.",
       "hypothesis_type": "most_informative_biomarker_panel",
       "panel_members": [
-        "NLRP3",
-        "IL-1beta",
         "IL-6",
+        "IL-1beta",
         "TNF-alpha",
         "GFAP",
-        "CRP",
-        "QuinA",
-        "DBSI-RF",
-        "IL-1\u03b2",
-        "TNF-\u03b1",
-        "IL-18",
-        "IL-10",
-        "IL-1 (121)",
-        "NLRP3 (67)",
-        "IL-6 (61)",
-        "TNF (55)",
-        "HMGB1 (31)",
-        "GFAP (23)",
-        "ros (150)",
-        "ROS (32)",
-        "ATP (19)",
-        "Atp (3)",
-        "PINK1 (1)",
-        "tau (105)",
-        "Tau (27)",
-        "GFAP (21)",
-        "p-tau (12)",
-        "t-tau (9)",
-        "T-tau (7)"
+        "limbic white matter microstructure",
+        "DTI diffuse injury signal"
       ],
       "biomarker_panel": [
-        "NLRP3",
-        "IL-1beta",
         "IL-6",
+        "IL-1beta",
         "TNF-alpha",
         "GFAP",
-        "CRP",
-        "QuinA",
-        "DBSI-RF",
-        "IL-1\u03b2",
-        "TNF-\u03b1",
-        "IL-18",
-        "IL-10",
-        "IL-1 (121)",
-        "NLRP3 (67)",
-        "IL-6 (61)",
-        "TNF (55)",
-        "HMGB1 (31)",
-        "GFAP (23)",
-        "ros (150)",
-        "ROS (32)",
-        "ATP (19)",
-        "Atp (3)",
-        "PINK1 (1)",
-        "tau (105)",
-        "Tau (27)",
-        "GFAP (21)",
-        "p-tau (12)",
-        "t-tau (9)",
-        "T-tau (7)"
+        "limbic white matter microstructure",
+        "DTI diffuse injury signal"
       ],
       "expected_readouts": [
-        "IL-1beta / IL-6 / TNF-alpha network",
-        "NLRP3 inflammasome burden",
-        "GFAP and glial stress",
-        "Tau amplification pressure"
+        "IL-6",
+        "IL-1beta",
+        "TNF-alpha",
+        "GFAP",
+        "limbic white matter microstructure",
+        "DTI diffuse injury signal"
       ],
-      "sample_type": "['plasma', 'CSF', 'tissue']",
-      "time_window": "['acute', 'subacute', 'chronic']",
-      "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days_to_weeks', 'days_to_weeks']",
-      "expected_direction": "['down', 'down', 'down', 'down']",
-      "endotype_discrimination_score": 1.0,
-      "feasibility_score": 0.72,
+      "sample_type": "multimodal",
+      "time_window": "subacute",
+      "readout_time_horizon": "subacute",
+      "expected_direction": "pattern_split",
+      "endotype_discrimination_score": 0.7,
+      "feasibility_score": 0.6,
       "redundancy_penalty": 0.0,
       "rank": 2,
       "portfolio_role": "highest_value_now"
@@ -874,7 +782,7 @@
   "phase_timeline": [
     {
       "kind": "phase",
-      "date": "2026-04-05 14:21:43",
+      "date": "2026-04-05 14:23:56",
       "title": "Phase 1 \u00b7 Process Lanes",
       "status": "supported",
       "summary": "The engine reduced the TBI literature into six recurring process lanes so the project stopped treating every paper as a one-off mechanism note.",
@@ -883,7 +791,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-05 14:21:43",
+      "date": "2026-04-05 14:23:56",
       "title": "Phase 2 \u00b7 Causal Transitions",
       "status": "supported",
       "summary": "The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.",
@@ -892,7 +800,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-05 14:21:44",
+      "date": "2026-04-05 14:23:57",
       "title": "Phase 3 \u00b7 Progression Objects",
       "status": "supported",
       "summary": "The engine grouped recurring downstream damage states into progression objects such as chronic network dysfunction and neurovascular uncoupling.",
@@ -901,7 +809,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-05 14:21:45",
+      "date": "2026-04-05 14:23:58",
       "title": "Phase 4 \u00b7 Translational Logic",
       "status": "bounded",
       "summary": "The engine attached translational packets to each lane so targets, readouts, and intervention logic sit on top of the mechanism map.",
@@ -910,7 +818,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-05 14:21:45",
+      "date": "2026-04-05 14:23:58",
       "title": "Phase 5 \u00b7 Cohort Stratification",
       "status": "usable",
       "summary": "The engine split TBI into cohort and endotype patterns so mild, repetitive, blast, severe, acute, and chronic states stop collapsing into one disease bucket.",
@@ -919,7 +827,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-05 14:21:45",
+      "date": "2026-04-05 14:23:58",
       "title": "Phase 6 \u00b7 Hypothesis Rankings",
       "status": "live",
       "summary": "The engine ranked the strongest bridges, weakest hinges, biomarker panels, leverage points, and next tasks into a weekly decision slate.",
