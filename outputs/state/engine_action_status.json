@@ -1,19 +1,19 @@
 {
-  "request_id": "apply-neuro-1775338584",
-  "timestamp": "2026-04-04T21:36:36.408314+00:00",
-  "decision_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
-  "decision_title": "Neuroinflammation / Microglial State Change biomarker panel",
+  "request_id": "apply-1775411543588-8ylhdx",
+  "timestamp": "2026-04-05T17:52:35.703077+00:00",
+  "decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+  "decision_title": "Blood-Brain Barrier Failure biomarker panel",
   "message": "Refresh Public Enrichment was dispatched.",
   "status": "dispatched",
   "requested_action_mode": "dispatch_refresh_public_enrichment",
   "canonical_action_mode": "dispatch_refresh_public_enrichment",
   "run": {
     "conclusion": "",
-    "createdAt": "2026-04-04T21:36:34Z",
-    "databaseId": 23988087305,
+    "createdAt": "2026-04-05T17:52:33Z",
+    "databaseId": 24007107815,
     "displayTitle": "Refresh Public Enrichment",
     "status": "queued",
-    "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/23988087305",
+    "url": "https://github.com/matthewdholtkamp/testfile/actions/runs/24007107815",
     "workflowName": "Refresh Public Enrichment"
   }
 }
