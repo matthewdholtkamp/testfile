@@ -162,12 +162,12 @@ def main():
     elif snapshot_generated_at and action_timestamp < snapshot_generated_at - timedelta(days=7):
         add_issue(issues, 'warning', 'stale_action_status', 'The latest action status is more than 7 days older than the published snapshot.')
 
-    if board_state.get('steering_aware_automation') is not False:
+    if board_state.get('steering_aware_automation') is not True:
         add_issue(
             issues,
             'warning',
             'unexpected_steering_aware_flag',
-            'steering_aware_automation is not explicitly false. This pass expects the scheduler to remain non-steering-aware.',
+            'steering_aware_automation is not explicitly true. The board should now advertise steering-aware automation.',
         )
 
     errors = [item for item in issues if item['level'] == 'error']
