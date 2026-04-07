@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "generated_at": "2026-04-06_144445",
-    "claims_csv": "reports/investigation_claims_2026-04-06_144230.csv",
-    "edges_csv": "reports/investigation_edges_2026-04-06_144230.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-06_144230.csv",
-    "process_json": "reports/process_lanes/process_lane_index_2026-04-06_144445.json",
-    "synthesis_csv": "reports/mechanistic_synthesis/mechanistic_synthesis_blocks_2026-04-06_144443.csv"
+    "generated_at": "2026-04-07_150010",
+    "claims_csv": "reports/investigation_claims_2026-04-07_145938.csv",
+    "edges_csv": "reports/investigation_edges_2026-04-07_145938.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-07_145938.csv",
+    "process_json": "reports/process_lanes/process_lane_index_2026-04-07_150010.json",
+    "synthesis_csv": "reports/mechanistic_synthesis/mechanistic_synthesis_blocks_2026-04-07_150008.csv"
   },
   "summary": {
     "transition_count": 6,
