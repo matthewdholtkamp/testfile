@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "generated_at": "2026-04-09_154619",
-    "claims_csv": "reports/investigation_claims_2026-04-09_154414.csv",
-    "edges_csv": "reports/investigation_edges_2026-04-09_154414.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-09_154414.csv"
+    "generated_at": "2026-04-10_145826",
+    "claims_csv": "reports/investigation_claims_2026-04-10_145757.csv",
+    "edges_csv": "reports/investigation_edges_2026-04-10_145757.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-10_145757.csv"
   },
   "summary": {
     "lane_count": 6,
@@ -27,12 +27,12 @@
         "Use this lane as a likely bridge into peripheral immune infiltration and downstream neuroinflammation, but keep exact directionality evidence-bound in Phase 2."
       ],
       "lane_status": "longitudinally_supported",
-      "paper_count": 84,
-      "full_text_like_papers": 70,
+      "paper_count": 86,
+      "full_text_like_papers": 72,
       "abstract_only_papers": 14,
-      "claim_mentions": 117,
-      "edge_mentions": 80,
-      "unbucketed_mentions": 24,
+      "claim_mentions": 121,
+      "edge_mentions": 86,
+      "unbucketed_mentions": 29,
       "supported_buckets": 3,
       "provisional_buckets": 0,
       "weak_buckets": 0,
@@ -43,11 +43,11 @@
         },
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
-          "claim_mentions": 7
+          "claim_mentions": 8
         },
         {
           "canonical_mechanism": "axonal_white_matter_injury",
-          "claim_mentions": 3
+          "claim_mentions": 4
         },
         {
           "canonical_mechanism": "synaptic_network_remodeling",
@@ -65,10 +65,18 @@
       "top_biomarkers": [
         {
           "label": "GFAP",
-          "count": 6
+          "count": 8
         },
         {
           "label": "Nf-L",
+          "count": 2
+        },
+        {
+          "label": "ZO-1",
+          "count": 2
+        },
+        {
+          "label": "claudin-5",
           "count": 2
         },
         {
@@ -86,24 +94,16 @@
         {
           "label": "NfL",
           "count": 2
-        },
-        {
-          "label": "FITC-labeled mNGF fluorescence",
-          "count": 1
-        },
-        {
-          "label": "Optical density (OD) readings",
-          "count": 1
         }
       ],
       "top_cell_states": [
         {
           "label": "endothelial cell",
-          "count": 78
+          "count": 79
         },
         {
           "label": "astrocyte",
-          "count": 22
+          "count": 24
         },
         {
           "label": "neuron",
@@ -133,11 +133,11 @@
       "top_brain_regions": [
         {
           "label": "BBB",
-          "count": 121
+          "count": 127
         },
         {
           "label": "cortex",
-          "count": 30
+          "count": 34
         },
         {
           "label": "neurovascular unit",
@@ -169,21 +169,21 @@
         "41673382",
         "41642456",
         "41649131",
+        "41954515",
         "41039850",
         "41934291",
         "41465583",
         "41725719",
-        "41153827",
-        "41532955"
+        "41153827"
       ],
       "buckets": {
         "acute": {
           "status": "supported",
-          "paper_count": 54,
-          "full_text_like_papers": 48,
+          "paper_count": 56,
+          "full_text_like_papers": 50,
           "abstract_only_papers": 6,
-          "claim_mentions": 72,
-          "edge_mentions": 53,
+          "claim_mentions": 74,
+          "edge_mentions": 54,
           "anchor_pmids": [
             "41663365",
             "41642456",
@@ -211,7 +211,15 @@
           "biomarker_cues": [
             {
               "label": "GFAP",
-              "count": 4
+              "count": 5
+            },
+            {
+              "label": "ZO-1",
+              "count": 2
+            },
+            {
+              "label": "claudin-5",
+              "count": 2
             },
             {
               "label": "UCH-L1",
@@ -220,20 +228,12 @@
             {
               "label": "MMP-9",
               "count": 2
-            },
-            {
-              "label": "IgG",
-              "count": 2
-            },
-            {
-              "label": "NfL",
-              "count": 2
             }
           ],
           "cell_state_cues": [
             {
               "label": "endothelial cell",
-              "count": 52
+              "count": 53
             },
             {
               "label": "astrocyte",
@@ -255,7 +255,7 @@
           "brain_region_cues": [
             {
               "label": "BBB",
-              "count": 78
+              "count": 81
             },
             {
               "label": "cortex",
@@ -278,20 +278,20 @@
         },
         "subacute": {
           "status": "supported",
-          "paper_count": 25,
-          "full_text_like_papers": 23,
+          "paper_count": 26,
+          "full_text_like_papers": 24,
           "abstract_only_papers": 2,
-          "claim_mentions": 27,
+          "claim_mentions": 29,
           "edge_mentions": 15,
           "anchor_pmids": [
             "41039850",
             "41153827",
+            "41954515",
             "41328339",
             "41622772",
             "41649131",
             "41659975",
-            "41709060",
-            "41737534"
+            "41709060"
           ],
           "example_signals": [
             {
@@ -309,6 +309,10 @@
           ],
           "biomarker_cues": [
             {
+              "label": "GFAP",
+              "count": 2
+            },
+            {
               "label": "Nf-L",
               "count": 2
             },
@@ -323,10 +327,6 @@
             {
               "label": "PSD-95 protein expression",
               "count": 1
-            },
-            {
-              "label": "Cerebral blood flow (CBF)",
-              "count": 1
             }
           ],
           "cell_state_cues": [
@@ -335,12 +335,12 @@
               "count": 15
             },
             {
-              "label": "pericyte",
+              "label": "astrocyte",
               "count": 4
             },
             {
-              "label": "astrocyte",
-              "count": 3
+              "label": "pericyte",
+              "count": 4
             },
             {
               "label": "axon",
@@ -358,7 +358,7 @@
             },
             {
               "label": "cortex",
-              "count": 5
+              "count": 7
             },
             {
               "label": "neurovascular unit",
@@ -455,19 +455,19 @@
         "Treat it as both a downstream consequence of primary injury and a possible feed-forward driver of chronic dysfunction."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 67,
-      "full_text_like_papers": 55,
+      "paper_count": 68,
+      "full_text_like_papers": 56,
       "abstract_only_papers": 11,
-      "claim_mentions": 112,
+      "claim_mentions": 114,
       "edge_mentions": 75,
-      "unbucketed_mentions": 31,
+      "unbucketed_mentions": 33,
       "supported_buckets": 0,
       "provisional_buckets": 3,
       "weak_buckets": 0,
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
-          "claim_mentions": 30
+          "claim_mentions": 31
         },
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
@@ -523,7 +523,7 @@
       "top_cell_states": [
         {
           "label": "neuron",
-          "count": 72
+          "count": 74
         },
         {
           "label": "microglia",
@@ -557,7 +557,7 @@
       "top_brain_regions": [
         {
           "label": "cortex",
-          "count": 51
+          "count": 53
         },
         {
           "label": "hippocampus",
@@ -911,10 +911,10 @@
         "It likely consolidates upstream vascular and metabolic injury into chronic tissue-level damage, but specific transition edges belong in Phase 2."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 142,
-      "full_text_like_papers": 114,
+      "paper_count": 145,
+      "full_text_like_papers": 117,
       "abstract_only_papers": 28,
-      "claim_mentions": 299,
+      "claim_mentions": 302,
       "edge_mentions": 263,
       "unbucketed_mentions": 83,
       "supported_buckets": 0,
@@ -923,7 +923,7 @@
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
-          "claim_mentions": 121
+          "claim_mentions": 123
         },
         {
           "canonical_mechanism": "blood_brain_barrier_disruption",
@@ -945,23 +945,23 @@
       "top_biomarkers": [
         {
           "label": "IL-6",
-          "count": 11
+          "count": 12
+        },
+        {
+          "label": "GFAP",
+          "count": 9
+        },
+        {
+          "label": "IL-1\u03b2",
+          "count": 9
         },
         {
           "label": "DBSI-RF",
           "count": 8
         },
         {
-          "label": "GFAP",
-          "count": 8
-        },
-        {
-          "label": "IL-1\u03b2",
-          "count": 8
-        },
-        {
           "label": "TNF-\u03b1",
-          "count": 5
+          "count": 6
         },
         {
           "label": "CRP",
@@ -982,12 +982,12 @@
           "count": 224
         },
         {
-          "label": "neuron",
-          "count": 54
+          "label": "astrocyte",
+          "count": 55
         },
         {
-          "label": "astrocyte",
-          "count": 53
+          "label": "neuron",
+          "count": 54
         },
         {
           "label": "endothelial cell",
@@ -1013,11 +1013,11 @@
       "top_brain_regions": [
         {
           "label": "cortex",
-          "count": 189
+          "count": 190
         },
         {
           "label": "hippocampus",
-          "count": 65
+          "count": 66
         },
         {
           "label": "diffuse / multisite",
@@ -1059,10 +1059,10 @@
       "buckets": {
         "acute": {
           "status": "provisional",
-          "paper_count": 75,
-          "full_text_like_papers": 65,
+          "paper_count": 76,
+          "full_text_like_papers": 66,
           "abstract_only_papers": 10,
-          "claim_mentions": 120,
+          "claim_mentions": 121,
           "edge_mentions": 106,
           "anchor_pmids": [
             "41103638",
@@ -1160,10 +1160,10 @@
         },
         "subacute": {
           "status": "provisional",
-          "paper_count": 78,
-          "full_text_like_papers": 66,
+          "paper_count": 80,
+          "full_text_like_papers": 68,
           "abstract_only_papers": 12,
-          "claim_mentions": 110,
+          "claim_mentions": 112,
           "edge_mentions": 93,
           "anchor_pmids": [
             "41734021",
@@ -1195,19 +1195,19 @@
               "count": 2
             },
             {
+              "label": "GFAP",
+              "count": 2
+            },
+            {
+              "label": "IL-6",
+              "count": 2
+            },
+            {
+              "label": "TNF-\u03b1",
+              "count": 2
+            },
+            {
               "label": "CD68 expression",
-              "count": 1
-            },
-            {
-              "label": "Iba-1 expression",
-              "count": 1
-            },
-            {
-              "label": "CD68",
-              "count": 1
-            },
-            {
-              "label": "T1-hypointense lesions",
               "count": 1
             }
           ],
@@ -1218,7 +1218,7 @@
             },
             {
               "label": "astrocyte",
-              "count": 22
+              "count": 24
             },
             {
               "label": "neuron",
@@ -1236,11 +1236,11 @@
           "brain_region_cues": [
             {
               "label": "cortex",
-              "count": 84
+              "count": 85
             },
             {
               "label": "hippocampus",
-              "count": 47
+              "count": 48
             },
             {
               "label": "diffuse / multisite",
@@ -1383,19 +1383,19 @@
         "Treat it as a tissue-consequence lane that also interacts with inflammatory and metabolic stress rather than as a purely downstream endpoint."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 143,
-      "full_text_like_papers": 104,
+      "paper_count": 145,
+      "full_text_like_papers": 106,
       "abstract_only_papers": 39,
-      "claim_mentions": 329,
-      "edge_mentions": 204,
-      "unbucketed_mentions": 111,
+      "claim_mentions": 331,
+      "edge_mentions": 205,
+      "unbucketed_mentions": 112,
       "supported_buckets": 2,
       "provisional_buckets": 1,
       "weak_buckets": 0,
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "axonal_white_matter_injury",
-          "claim_mentions": 79
+          "claim_mentions": 81
         },
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
@@ -1425,7 +1425,7 @@
         },
         {
           "label": "GFAP",
-          "count": 19
+          "count": 20
         },
         {
           "label": "NfL",
@@ -1455,7 +1455,7 @@
       "top_cell_states": [
         {
           "label": "axon",
-          "count": 260
+          "count": 262
         },
         {
           "label": "neuron",
@@ -1501,7 +1501,7 @@
         },
         {
           "label": "corpus callosum",
-          "count": 46
+          "count": 48
         },
         {
           "label": "brainstem",
@@ -1509,7 +1509,7 @@
         },
         {
           "label": "BBB",
-          "count": 12
+          "count": 13
         },
         {
           "label": "hippocampus",
@@ -1535,10 +1535,10 @@
       "buckets": {
         "acute": {
           "status": "supported",
-          "paper_count": 54,
-          "full_text_like_papers": 44,
+          "paper_count": 55,
+          "full_text_like_papers": 45,
           "abstract_only_papers": 10,
-          "claim_mentions": 87,
+          "claim_mentions": 88,
           "edge_mentions": 62,
           "anchor_pmids": [
             "41267966",
@@ -1567,7 +1567,7 @@
           "biomarker_cues": [
             {
               "label": "GFAP",
-              "count": 11
+              "count": 12
             },
             {
               "label": "NfL",
@@ -1623,7 +1623,7 @@
             },
             {
               "label": "BBB",
-              "count": 11
+              "count": 12
             },
             {
               "label": "corpus callosum",
@@ -1634,11 +1634,11 @@
         },
         "subacute": {
           "status": "provisional",
-          "paper_count": 61,
-          "full_text_like_papers": 47,
+          "paper_count": 62,
+          "full_text_like_papers": 48,
           "abstract_only_papers": 14,
           "claim_mentions": 92,
-          "edge_mentions": 53,
+          "edge_mentions": 54,
           "anchor_pmids": [
             "41153827",
             "41508250",
@@ -1688,7 +1688,7 @@
           "cell_state_cues": [
             {
               "label": "axon",
-              "count": 76
+              "count": 77
             },
             {
               "label": "neuron",
@@ -1717,11 +1717,11 @@
               "count": 32
             },
             {
-              "label": "diffuse / multisite",
-              "count": 19
+              "label": "corpus callosum",
+              "count": 20
             },
             {
-              "label": "corpus callosum",
+              "label": "diffuse / multisite",
               "count": 19
             },
             {
@@ -1853,19 +1853,19 @@
         "Treat it as a plausible bridge from early structural/vascular disruption into chronic clearance failure and protein accumulation."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 85,
-      "full_text_like_papers": 65,
+      "paper_count": 88,
+      "full_text_like_papers": 68,
       "abstract_only_papers": 19,
-      "claim_mentions": 138,
-      "edge_mentions": 116,
-      "unbucketed_mentions": 54,
+      "claim_mentions": 146,
+      "edge_mentions": 123,
+      "unbucketed_mentions": 57,
       "supported_buckets": 0,
       "provisional_buckets": 3,
       "weak_buckets": 0,
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
-          "claim_mentions": 38
+          "claim_mentions": 40
         },
         {
           "canonical_mechanism": "glymphatic_clearance_impairment",
@@ -1884,14 +1884,14 @@
           "claim_mentions": 4
         },
         {
-          "canonical_mechanism": "synaptic_network_remodeling",
-          "claim_mentions": 1
+          "canonical_mechanism": "excitotoxicity_ionic_dysregulation",
+          "claim_mentions": 2
         }
       ],
       "top_biomarkers": [
         {
           "label": "GFAP",
-          "count": 23
+          "count": 24
         },
         {
           "label": "UCH-L1",
@@ -1914,18 +1914,18 @@
           "count": 2
         },
         {
-          "label": "MBP protein expression",
-          "count": 1
+          "label": "IL-1\u03b2",
+          "count": 2
         },
         {
-          "label": "NF-200 protein expression",
+          "label": "MBP protein expression",
           "count": 1
         }
       ],
       "top_cell_states": [
         {
           "label": "astrocyte",
-          "count": 149
+          "count": 157
         },
         {
           "label": "neuron",
@@ -1937,7 +1937,7 @@
         },
         {
           "label": "endothelial cell",
-          "count": 3
+          "count": 4
         },
         {
           "label": "neuron, axon, oligodendrocyte",
@@ -1959,23 +1959,27 @@
       "top_brain_regions": [
         {
           "label": "cortex",
-          "count": 76
+          "count": 81
         },
         {
           "label": "diffuse / multisite",
           "count": 45
         },
         {
+          "label": "hippocampus",
+          "count": 19
+        },
+        {
           "label": "white matter",
           "count": 18
         },
         {
-          "label": "hippocampus",
-          "count": 17
+          "label": "BBB",
+          "count": 15
         },
         {
-          "label": "BBB",
-          "count": 13
+          "label": "thalamus",
+          "count": 5
         },
         {
           "label": "brainstem",
@@ -1984,31 +1988,27 @@
         {
           "label": "neurovascular unit",
           "count": 4
-        },
-        {
-          "label": "corpus callosum",
-          "count": 3
         }
       ],
       "anchor_pmids": [
         "41179995",
         "41039850",
         "41648326",
+        "41960329",
         "41700070",
         "41824127",
         "41153827",
         "41795770",
         "41827388",
-        "41642456",
-        "41667502"
+        "41954515"
       ],
       "buckets": {
         "acute": {
           "status": "provisional",
-          "paper_count": 32,
-          "full_text_like_papers": 28,
+          "paper_count": 34,
+          "full_text_like_papers": 30,
           "abstract_only_papers": 3,
-          "claim_mentions": 47,
+          "claim_mentions": 49,
           "edge_mentions": 28,
           "anchor_pmids": [
             "41795770",
@@ -2070,11 +2070,11 @@
               "count": 2
             },
             {
-              "label": "microglia, astrocyte, neuron",
-              "count": 1
+              "label": "endothelial cell",
+              "count": 2
             },
             {
-              "label": "neuron, glial cell, astrocyte",
+              "label": "microglia, astrocyte, neuron",
               "count": 1
             }
           ],
@@ -2089,7 +2089,7 @@
             },
             {
               "label": "BBB",
-              "count": 6
+              "count": 7
             },
             {
               "label": "brainstem",
@@ -2106,20 +2106,20 @@
         },
         "subacute": {
           "status": "provisional",
-          "paper_count": 37,
-          "full_text_like_papers": 29,
+          "paper_count": 39,
+          "full_text_like_papers": 31,
           "abstract_only_papers": 8,
-          "claim_mentions": 50,
-          "edge_mentions": 32,
+          "claim_mentions": 56,
+          "edge_mentions": 36,
           "anchor_pmids": [
             "41039850",
+            "41960329",
             "41648326",
             "41792174",
             "41863645",
             "41508250",
             "41153827",
-            "41734021",
-            "41623705"
+            "41734021"
           ],
           "example_signals": [
             {
@@ -2138,7 +2138,7 @@
           "biomarker_cues": [
             {
               "label": "GFAP",
-              "count": 4
+              "count": 5
             },
             {
               "label": "MBP protein expression",
@@ -2160,7 +2160,7 @@
           "cell_state_cues": [
             {
               "label": "astrocyte",
-              "count": 54
+              "count": 61
             },
             {
               "label": "microglia",
@@ -2182,14 +2182,14 @@
           "brain_region_cues": [
             {
               "label": "cortex",
-              "count": 29
-            },
-            {
-              "label": "diffuse / multisite",
-              "count": 13
+              "count": 32
             },
             {
               "label": "hippocampus",
+              "count": 15
+            },
+            {
+              "label": "diffuse / multisite",
               "count": 13
             },
             {
@@ -2197,8 +2197,8 @@
               "count": 5
             },
             {
-              "label": "white matter",
-              "count": 4
+              "label": "thalamus",
+              "count": 5
             }
           ],
           "notes": [
