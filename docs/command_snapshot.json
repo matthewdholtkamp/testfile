@@ -342,7 +342,7 @@
         "UCH-L1",
         "MMP-9",
         "IgG",
-        "IL-1 (123)",
+        "IL-1 (127)",
         "NLRP3 (70)",
         "IL-6 (64)",
         "TNF (57)",
@@ -367,7 +367,7 @@
         "UCH-L1",
         "MMP-9",
         "IgG",
-        "IL-1 (123)",
+        "IL-1 (127)",
         "NLRP3 (70)",
         "IL-6 (64)",
         "TNF (57)",
@@ -593,7 +593,7 @@
       "human_question": "Do you want this to become the default panel for the next readout pass?",
       "why_now": "This panel is already attached to a translational packet and can be tested against 3 endotype packet(s).",
       "what_we_know": [
-        "Mitochondrial / Bioenergetic Collapse is currently rated provisional.",
+        "Mitochondrial / Bioenergetic Collapse is currently rated supported.",
         "It is tied to 1 Phase 2 transition(s) and 2 downstream object(s).",
         "It already maps to 3 endotype packet(s)."
       ],
@@ -638,14 +638,14 @@
           "immediate_action_mode": "record_only"
         }
       ],
-      "recommended_option_id": "validate_against_challenger_panel",
-      "recommended_reason": "Mitochondrial / Bioenergetic Collapse biomarker panel is recommended now because this panel is already attached to a translational packet and can be tested against 3 endotype packet(s)..",
+      "recommended_option_id": "adopt_as_default_panel",
+      "recommended_reason": "Mitochondrial / Bioenergetic Collapse biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
       "write_in_allowed": true,
-      "current_manuscript_effect": "If you choose Validate against a challenger panel, Mitochondrial / Bioenergetic Collapse biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
-      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse biomarker panel will steer future machine runs and slates this way: Future slates surface competing panels until one wins.",
-      "immediate_action_mode": "run_manual_enrichment_cycle",
+      "current_manuscript_effect": "If you choose Adopt as the default panel, Mitochondrial / Bioenergetic Collapse biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
+      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
+      "immediate_action_mode": "dispatch_refresh_public_enrichment",
       "detail_link": "./idea-briefs/index.html",
-      "support_status": "provisional",
+      "support_status": "supported",
       "novelty_status": "cross_disease_analog",
       "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
       "source_row": {
@@ -658,15 +658,15 @@
         "display_name": "Mitochondrial / Bioenergetic Collapse",
         "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
         "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
-        "support_status": "provisional",
+        "support_status": "supported",
         "novelty_status": "cross_disease_analog",
-        "strength_tag": "moderate",
-        "operator_decision": "Needs adjudication",
-        "confidence_score": 0.733,
-        "value_score": 0.853,
-        "core_family_score": 0.733,
+        "strength_tag": "assertive",
+        "operator_decision": "Write now",
+        "confidence_score": 0.885,
+        "value_score": 1.0,
+        "core_family_score": 0.885,
         "novelty_bonus": 0.12,
-        "family_score": 0.853,
+        "family_score": 1.005,
         "target_lane_ids": [
           "mitochondrial_bioenergetic_collapse"
         ],
@@ -706,7 +706,7 @@
         "rationale": "PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.",
         "decision_rationale": "PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.",
         "why_now": "This panel is already attached to a translational packet and can be tested against 3 endotype packet(s).",
-        "source_quality_mix": "lane 56 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only",
+        "source_quality_mix": "lane 57 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only",
         "anchor_pmids": [
           "41651694",
           "41926540",
@@ -769,7 +769,7 @@
           "ATP (23)",
           "Atp (3)",
           "PINK1 (1)",
-          "IL-1 (123)",
+          "IL-1 (127)",
           "NLRP3 (70)",
           "IL-6 (64)",
           "TNF (57)",
@@ -795,7 +795,7 @@
           "ATP (23)",
           "Atp (3)",
           "PINK1 (1)",
-          "IL-1 (123)",
+          "IL-1 (127)",
           "NLRP3 (70)",
           "IL-6 (64)",
           "TNF (57)",
@@ -816,10 +816,11 @@
         "feasibility_score": 0.72,
         "redundancy_penalty": 0.0,
         "rank": 7,
-        "steering_score": 0.32,
+        "steering_score": 0.37,
         "steering_reasons": [
           "favored_family",
-          "favored_endotype"
+          "favored_endotype",
+          "advance_supported"
         ],
         "portfolio_role": "novelty_watch"
       }
@@ -880,7 +881,7 @@
   "phase_timeline": [
     {
       "kind": "phase",
-      "date": "2026-04-10 15:00:10",
+      "date": "2026-04-11 14:22:12",
       "title": "Phase 1 \u00b7 Process Lanes",
       "status": "supported",
       "summary": "The engine reduced the TBI literature into six recurring process lanes so the project stopped treating every paper as a one-off mechanism note.",
@@ -889,7 +890,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-10 15:00:10",
+      "date": "2026-04-11 14:22:12",
       "title": "Phase 2 \u00b7 Causal Transitions",
       "status": "supported",
       "summary": "The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.",
@@ -898,7 +899,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-10 15:00:11",
+      "date": "2026-04-11 14:22:12",
       "title": "Phase 3 \u00b7 Progression Objects",
       "status": "supported",
       "summary": "The engine grouped recurring downstream damage states into progression objects such as chronic network dysfunction and neurovascular uncoupling.",
@@ -907,7 +908,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-10 15:00:12",
+      "date": "2026-04-11 14:22:14",
       "title": "Phase 4 \u00b7 Translational Logic",
       "status": "bounded",
       "summary": "The engine attached translational packets to each lane so targets, readouts, and intervention logic sit on top of the mechanism map.",
@@ -916,7 +917,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-10 15:00:12",
+      "date": "2026-04-11 14:22:14",
       "title": "Phase 5 \u00b7 Cohort Stratification",
       "status": "usable",
       "summary": "The engine split TBI into cohort and endotype patterns so mild, repetitive, blast, severe, acute, and chronic states stop collapsing into one disease bucket.",
@@ -925,7 +926,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-10 15:00:12",
+      "date": "2026-04-11 14:22:14",
       "title": "Phase 6 \u00b7 Hypothesis Rankings",
       "status": "live",
       "summary": "The engine ranked the strongest bridges, weakest hinges, biomarker panels, leverage points, and next tasks into a weekly decision slate.",
@@ -938,29 +939,29 @@
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-10T15:00:13.231022+00:00",
+    "snapshot_generated_at": "2026-04-11T14:22:14.731561+00:00",
     "source_artifact_timestamps": {
-      "process": "2026-04-10 15:00:10",
-      "transition": "2026-04-10 15:00:10",
-      "progression": "2026-04-10 15:00:11",
-      "translational": "2026-04-10 15:00:12",
-      "cohort": "2026-04-10 15:00:12",
-      "hypothesis": "2026-04-10 15:00:12",
-      "idea_briefs": "2026-04-10 15:00:12"
+      "process": "2026-04-11 14:22:12",
+      "transition": "2026-04-11 14:22:12",
+      "progression": "2026-04-11 14:22:12",
+      "translational": "2026-04-11 14:22:14",
+      "cohort": "2026-04-11 14:22:14",
+      "hypothesis": "2026-04-11 14:22:14",
+      "idea_briefs": "2026-04-11 14:22:14"
     },
     "source_artifact_paths": {
-      "process": "/home/runner/work/testfile/testfile/reports/process_lanes/process_lane_index_2026-04-10_150010.json",
-      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-10_150010.json",
-      "progression": "/home/runner/work/testfile/testfile/reports/progression_objects/progression_object_index_2026-04-10_150011.json",
-      "translational": "/home/runner/work/testfile/testfile/reports/translational_perturbation/translational_perturbation_index_2026-04-10_150012.json",
-      "cohort": "/home/runner/work/testfile/testfile/reports/cohort_stratification/cohort_stratification_index_2026-04-10_150012.json",
-      "hypothesis": "/home/runner/work/testfile/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-04-10_150012.json",
-      "idea_briefs": "/home/runner/work/testfile/testfile/reports/idea_briefs/idea_briefs_2026-04-10_150012.json"
+      "process": "/home/runner/work/testfile/testfile/reports/process_lanes/process_lane_index_2026-04-11_142212.json",
+      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-11_142212.json",
+      "progression": "/home/runner/work/testfile/testfile/reports/progression_objects/progression_object_index_2026-04-11_142212.json",
+      "translational": "/home/runner/work/testfile/testfile/reports/translational_perturbation/translational_perturbation_index_2026-04-11_142214.json",
+      "cohort": "/home/runner/work/testfile/testfile/reports/cohort_stratification/cohort_stratification_index_2026-04-11_142214.json",
+      "hypothesis": "/home/runner/work/testfile/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-04-11_142214.json",
+      "idea_briefs": "/home/runner/work/testfile/testfile/reports/idea_briefs/idea_briefs_2026-04-11_142214.json"
     },
     "steering_registry_last_updated": "2026-04-05T17:52:32.024523+00:00",
     "action_status_timestamp": "2026-04-05T17:52:35.703077+00:00",
-    "build_run_id": "24249278379",
-    "build_sha": "032ee6ac6b61438412ca575c83023c9fad2f36a6",
+    "build_run_id": "24284398882",
+    "build_sha": "69d57a5467482b5e34b17c015533af27b4556404",
     "steering_aware_automation": true,
     "active_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
     "active_decision_label": "Blood-Brain Barrier Failure biomarker panel",

@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "generated_at": "2026-04-10_150010",
-    "claims_csv": "reports/investigation_claims_2026-04-10_145757.csv",
-    "edges_csv": "reports/investigation_edges_2026-04-10_145757.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-10_145757.csv"
+    "generated_at": "2026-04-11_142212",
+    "claims_csv": "reports/investigation_claims_2026-04-11_142140.csv",
+    "edges_csv": "reports/investigation_edges_2026-04-11_142140.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-11_142140.csv"
   },
   "summary": {
     "lane_count": 6,
@@ -455,19 +455,19 @@
         "Treat it as both a downstream consequence of primary injury and a possible feed-forward driver of chronic dysfunction."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 68,
-      "full_text_like_papers": 56,
+      "paper_count": 69,
+      "full_text_like_papers": 57,
       "abstract_only_papers": 11,
-      "claim_mentions": 114,
-      "edge_mentions": 75,
-      "unbucketed_mentions": 33,
+      "claim_mentions": 115,
+      "edge_mentions": 76,
+      "unbucketed_mentions": 34,
       "supported_buckets": 0,
       "provisional_buckets": 3,
       "weak_buckets": 0,
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
-          "claim_mentions": 31
+          "claim_mentions": 32
         },
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
@@ -523,7 +523,7 @@
       "top_cell_states": [
         {
           "label": "neuron",
-          "count": 74
+          "count": 76
         },
         {
           "label": "microglia",
@@ -557,7 +557,7 @@
       "top_brain_regions": [
         {
           "label": "cortex",
-          "count": 53
+          "count": 54
         },
         {
           "label": "hippocampus",
@@ -599,10 +599,10 @@
       "buckets": {
         "acute": {
           "status": "provisional",
-          "paper_count": 31,
-          "full_text_like_papers": 28,
+          "paper_count": 32,
+          "full_text_like_papers": 29,
           "abstract_only_papers": 3,
-          "claim_mentions": 51,
+          "claim_mentions": 52,
           "edge_mentions": 38,
           "anchor_pmids": [
             "41651694",
@@ -653,7 +653,7 @@
           "cell_state_cues": [
             {
               "label": "neuron",
-              "count": 40
+              "count": 41
             },
             {
               "label": "microglia",
@@ -675,7 +675,7 @@
           "brain_region_cues": [
             {
               "label": "cortex",
-              "count": 17
+              "count": 18
             },
             {
               "label": "diffuse / multisite",
@@ -911,12 +911,12 @@
         "It likely consolidates upstream vascular and metabolic injury into chronic tissue-level damage, but specific transition edges belong in Phase 2."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 145,
-      "full_text_like_papers": 117,
+      "paper_count": 146,
+      "full_text_like_papers": 118,
       "abstract_only_papers": 28,
-      "claim_mentions": 302,
-      "edge_mentions": 263,
-      "unbucketed_mentions": 83,
+      "claim_mentions": 304,
+      "edge_mentions": 264,
+      "unbucketed_mentions": 86,
       "supported_buckets": 0,
       "provisional_buckets": 3,
       "weak_buckets": 0,
