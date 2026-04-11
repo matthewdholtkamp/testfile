@@ -880,7 +880,7 @@
   "phase_timeline": [
     {
       "kind": "phase",
-      "date": "2026-04-11 14:23:45",
+      "date": "2026-04-11 15:03:51",
       "title": "Phase 1 \u00b7 Process Lanes",
       "status": "supported",
       "summary": "The engine reduced the TBI literature into six recurring process lanes so the project stopped treating every paper as a one-off mechanism note.",
@@ -889,7 +889,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-11 14:23:45",
+      "date": "2026-04-11 15:03:51",
       "title": "Phase 2 \u00b7 Causal Transitions",
       "status": "supported",
       "summary": "The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.",
@@ -938,10 +938,10 @@
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-11T14:23:48.483008+00:00",
+    "snapshot_generated_at": "2026-04-11T15:03:52.749649+00:00",
     "source_artifact_timestamps": {
-      "process": "2026-04-11 14:23:45",
-      "transition": "2026-04-11 14:23:45",
+      "process": "2026-04-11 15:03:51",
+      "transition": "2026-04-11 15:03:51",
       "progression": "2026-04-11 14:23:46",
       "translational": "2026-04-11 14:23:47",
       "cohort": "2026-04-11 14:23:47",
@@ -949,8 +949,8 @@
       "idea_briefs": "2026-04-11 14:23:48"
     },
     "source_artifact_paths": {
-      "process": "/home/runner/work/testfile/testfile/reports/process_lanes/process_lane_index_2026-04-11_142345.json",
-      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-11_142345.json",
+      "process": "/home/runner/work/testfile/testfile/reports/process_lanes/process_lane_index_2026-04-11_150351.json",
+      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-11_150351.json",
       "progression": "/home/runner/work/testfile/testfile/reports/progression_objects/progression_object_index_2026-04-11_142346.json",
       "translational": "/home/runner/work/testfile/testfile/reports/translational_perturbation/translational_perturbation_index_2026-04-11_142347.json",
       "cohort": "/home/runner/work/testfile/testfile/reports/cohort_stratification/cohort_stratification_index_2026-04-11_142347.json",
@@ -959,8 +959,8 @@
     },
     "steering_registry_last_updated": "2026-04-05T17:52:32.024523+00:00",
     "action_status_timestamp": "2026-04-05T17:52:35.703077+00:00",
-    "build_run_id": "24284410341",
-    "build_sha": "f5ecb638faed632e8bd9d8f837c09c93628fe904",
+    "build_run_id": "24285139919",
+    "build_sha": "bc00af2acc826c81bfa32ac1c4b515ac85bedeac",
     "steering_aware_automation": true,
     "active_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
     "active_decision_label": "Blood-Brain Barrier Failure biomarker panel",
