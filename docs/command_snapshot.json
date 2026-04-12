@@ -144,13 +144,13 @@
   ],
   "discovery_summary": {
     "major_findings": [
-      "The lead mechanism in the live atlas is Blood-Brain Barrier Dysfunction.",
+      "The lead mechanism in the live atlas is Mitochondrial Dysfunction.",
       "The strongest supported bridge right now is BBB permeability increase -> peripheral immune infiltration.",
       "The current lead insight is that Blood-Brain Barrier Failure biomarker panel is the best readout set to carry the next paper story, because this panel is already attached to a translational packet and can be tested against 4 endotype packet(s)."
     ],
     "current_unknowns": [
       "The top current uncertainty is Clarify Chronic Repetitive Tau / Clearance Mixed.",
-      "Phase 4 is still bounded. It has 6 bounded packet(s), 1 lane(s) with compound support, and 1 lane(s) with trial support.",
+      "Phase 4 is still bounded. It has 6 bounded packet(s), 1 lane(s) with compound support, and 0 lane(s) with trial support.",
       "The biggest paper blocker right now is this: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover."
     ]
   },
@@ -279,21 +279,23 @@
       "rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
       "decision_rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
       "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
-      "source_quality_mix": "lane 53 full-text-like / 14 abstract-only; primary target seed 5 full-text-like hits across 5 match(es); direct target mentions 6 full-text-like / 0 abstract-only",
+      "source_quality_mix": "lane 74 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only",
       "anchor_pmids": [
         "41663365",
         "41673382",
         "41642456",
         "41649131",
+        "41954515",
         "41039850",
+        "41934291",
         "41465583",
         "41725719",
-        "41153827",
+        "41965904",
         "41532955",
-        "41709060",
-        "41752185",
         "41622772",
         "41751210",
+        "41752185",
+        "41709060",
         "41740873",
         "41683989",
         "41103638",
@@ -309,7 +311,7 @@
         "41267966",
         "41328339"
       ],
-      "supporting_pmids": "41663365; 41673382; 41642456; 41649131; 41039850; 41465583; 41725719; 41153827; 41532955; 41709060; 41752185; 41622772; 41751210; 41740873; 41683989; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731; 41079361; 41177833; 41183617; 41267966; 41328339",
+      "supporting_pmids": "41663365; 41673382; 41642456; 41649131; 41954515; 41039850; 41934291; 41465583; 41725719; 41965904; 41532955; 41622772; 41751210; 41752185; 41709060; 41740873; 41683989; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731; 41079361; 41177833; 41183617; 41267966; 41328339",
       "provenance_refs": [
         "phase1:blood_brain_barrier_failure",
         "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
@@ -335,20 +337,20 @@
         "Evans blue",
         "gadolinium leakage",
         "Nf-L",
-        "FITC-labeled mNGF fluorescence",
-        "Optical density (OD) readings",
-        "MBP protein expression",
-        "NF-200 protein expression",
-        "PSD-95 protein expression",
-        "Cerebral blood flow (CBF)",
-        "IL-1 (91)",
-        "TNF (53)",
-        "IL-6 (50)",
-        "NLRP3 (38)",
-        "GFAP (22)",
-        "HMGB1 (17)",
-        "CBF (14)",
-        "AQP4 (5)"
+        "ZO-1",
+        "claudin-5",
+        "UCH-L1",
+        "MMP-9",
+        "IgG",
+        "IL-1 (127)",
+        "NLRP3 (70)",
+        "IL-6 (64)",
+        "TNF (57)",
+        "HMGB1 (40)",
+        "GFAP (26)",
+        "CBF (17)",
+        "AQP4 (8)",
+        "MMP9 (3)"
       ],
       "biomarker_panel": [
         "OCLN",
@@ -360,20 +362,20 @@
         "Evans blue",
         "gadolinium leakage",
         "Nf-L",
-        "FITC-labeled mNGF fluorescence",
-        "Optical density (OD) readings",
-        "MBP protein expression",
-        "NF-200 protein expression",
-        "PSD-95 protein expression",
-        "Cerebral blood flow (CBF)",
-        "IL-1 (91)",
-        "TNF (53)",
-        "IL-6 (50)",
-        "NLRP3 (38)",
-        "GFAP (22)",
-        "HMGB1 (17)",
-        "CBF (14)",
-        "AQP4 (5)"
+        "ZO-1",
+        "claudin-5",
+        "UCH-L1",
+        "MMP-9",
+        "IgG",
+        "IL-1 (127)",
+        "NLRP3 (70)",
+        "IL-6 (64)",
+        "TNF (57)",
+        "HMGB1 (40)",
+        "GFAP (26)",
+        "CBF (17)",
+        "AQP4 (8)",
+        "MMP9 (3)"
       ],
       "expected_readouts": [
         "Barrier leakage",
@@ -389,6 +391,14 @@
       "feasibility_score": 0.72,
       "redundancy_penalty": 0.0,
       "rank": 1,
+      "steering_score": 1.0,
+      "steering_reasons": [
+        "active_path",
+        "favored_family",
+        "favored_mechanism",
+        "favored_endotype",
+        "advance_supported"
+      ],
       "portfolio_role": "high_confidence_core"
     }
   },
@@ -567,26 +577,28 @@
           "cohort_precision"
         ],
         "needed_enrichment": "Deepen repetitive-impact and CTE-adjacent papers with tau variants, glymphatic readouts, and chronic function.",
-        "rank": 1,
+        "rank": 5,
+        "steering_score": 0.0,
+        "steering_reasons": [],
         "portfolio_role": "hinge_or_task_pick"
       }
     },
     {
-      "decision_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
+      "decision_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
       "priority": "secondary",
-      "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
-      "decision_title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
-      "decision_family": "best_intervention_leverage_point",
-      "decision_family_label": "Best Intervention Leverage Point",
-      "human_question": "Do you want this to stay the main intervention path?",
-      "why_now": "4 endotype packet(s) already map back to this perturbation path.",
+      "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
+      "decision_title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
+      "decision_family": "most_informative_biomarker_panel",
+      "decision_family_label": "Most Informative Biomarker Panel",
+      "human_question": "Do you want this to become the default panel for the next readout pass?",
+      "why_now": "This panel is already attached to a translational packet and can be tested against 3 endotype packet(s).",
       "what_we_know": [
         "Mitochondrial / Bioenergetic Collapse is currently rated supported.",
         "It is tied to 1 Phase 2 transition(s) and 2 downstream object(s).",
         "It already maps to 3 endotype packet(s)."
       ],
       "what_is_uncertain": [
-        "The main open issue is this: none_detected.",
+        "The main open issue is this: The current evidence does not yet show the expected cumulative damage signal.",
         "This item still carries novelty status: Cross Disease Analog."
       ],
       "phase_path": [
@@ -595,66 +607,66 @@
         "Phase 3 says the downstream burden shows up as Persistent Metabolic Dysfunction, Microglial Chronic Activation.",
         "Phase 4 attached the translational packet Mitochondrial Bioenergetic Collapse.",
         "Phase 5 says this matters most in Acute Severe Vascular Dominant, Chronic Mild Metabolic White Matter Dominant, Chronic Severe Axonal Network Decline.",
-        "Phase 6 ranked Mitochondrial / Bioenergetic Collapse -> PRKN now because 4 endotype packet(s) already map back to this perturbation path.."
+        "Phase 6 ranked Mitochondrial / Bioenergetic Collapse biomarker panel now because This panel is already attached to a translational packet and can be tested against 3 endotype packet(s).."
       ],
       "options": [
         {
-          "id": "keep_as_primary_target",
-          "label": "Keep as the primary target",
-          "what_it_steers": "Intervention priority toward this target.",
-          "immediate_action": "Refresh public enrichment and rebuild the decision surfaces around this target.",
-          "future_effect": "Future slates bias toward this target and its readouts.",
-          "paper_effect": "This sharpens the translational story.",
+          "id": "adopt_as_default_panel",
+          "label": "Adopt as the default panel",
+          "what_it_steers": "Readout alignment.",
+          "immediate_action": "Refresh public enrichment and rebuild the decision surfaces around this panel.",
+          "future_effect": "Future slates use this panel as the default operator readout set.",
+          "paper_effect": "This strengthens the figures and methods path.",
           "immediate_action_mode": "dispatch_refresh_public_enrichment"
         },
         {
-          "id": "run_challenger_comparison",
-          "label": "Run a challenger comparison",
-          "what_it_steers": "Comparison mode rather than commitment.",
-          "immediate_action": "Queue manual enrichment or targeted extraction to compare this target against a challenger.",
-          "future_effect": "Future slates compare target and challenger instead of assuming one winner.",
-          "paper_effect": "This improves rigor before committing to the translational story.",
+          "id": "validate_against_challenger_panel",
+          "label": "Validate against a challenger panel",
+          "what_it_steers": "Panel comparison rather than adoption.",
+          "immediate_action": "Queue targeted extraction or manual enrichment to compare panels.",
+          "future_effect": "Future slates surface competing panels until one wins.",
+          "paper_effect": "This improves panel defensibility.",
           "immediate_action_mode": "run_manual_enrichment_cycle"
         },
         {
-          "id": "pause_intervention_push",
-          "label": "Pause intervention push",
-          "what_it_steers": "Away from immediate target commitment.",
-          "immediate_action": "Record the pause only.",
-          "future_effect": "Future slates favor mechanism or biomarker clarification over intervention expansion.",
-          "paper_effect": "This delays translational claims.",
+          "id": "park_panel",
+          "label": "Park this panel for now",
+          "what_it_steers": "Away from biomarker-first work.",
+          "immediate_action": "Record park status only.",
+          "future_effect": "Future slates favor other work.",
+          "paper_effect": "This weakens the immediate figure path.",
           "immediate_action_mode": "record_only"
         }
       ],
-      "recommended_option_id": "keep_as_primary_target",
-      "recommended_reason": "Mitochondrial / Bioenergetic Collapse -> PRKN already has the strongest support in the current stack, so keeping it primary preserves the cleanest translational story.",
+      "recommended_option_id": "adopt_as_default_panel",
+      "recommended_reason": "Mitochondrial / Bioenergetic Collapse biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
       "write_in_allowed": true,
-      "current_manuscript_effect": "If you choose Keep as the primary target, Mitochondrial / Bioenergetic Collapse -> PRKN becomes part of the current manuscript path instead of staying only on the background slate.",
-      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse -> PRKN will steer future machine runs and slates this way: Future slates bias toward this target and its readouts.",
+      "current_manuscript_effect": "If you choose Adopt as the default panel, Mitochondrial / Bioenergetic Collapse biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
+      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
       "immediate_action_mode": "dispatch_refresh_public_enrichment",
       "detail_link": "./idea-briefs/index.html",
       "support_status": "supported",
       "novelty_status": "cross_disease_analog",
-      "statement": "Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).",
+      "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
       "source_row": {
-        "candidate_id": "best_intervention_leverage_point::mitochondrial_bioenergetic_collapse",
-        "family_id": "best_intervention_leverage_point",
-        "family_label": "Best Intervention Leverage Point",
-        "ranking_family": "best_intervention_leverage_point",
+        "candidate_id": "most_informative_biomarker_panel::packet::mitochondrial_bioenergetic_collapse",
+        "family_id": "most_informative_biomarker_panel",
+        "family_label": "Most Informative Biomarker Panel",
+        "ranking_family": "most_informative_biomarker_panel",
         "candidate_type": "translational_packet",
         "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
         "display_name": "Mitochondrial / Bioenergetic Collapse",
-        "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
-        "statement": "Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).",
+        "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
+        "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
         "support_status": "supported",
         "novelty_status": "cross_disease_analog",
         "strength_tag": "assertive",
         "operator_decision": "Write now",
-        "confidence_score": 0.917,
+        "confidence_score": 0.885,
         "value_score": 1.0,
-        "core_family_score": 0.917,
+        "core_family_score": 0.885,
         "novelty_bonus": 0.12,
-        "family_score": 1.037,
+        "family_score": 1.005,
         "target_lane_ids": [
           "mitochondrial_bioenergetic_collapse"
         ],
@@ -693,20 +705,21 @@
         ],
         "rationale": "PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.",
         "decision_rationale": "PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet.",
-        "why_now": "4 endotype packet(s) already map back to this perturbation path.",
-        "source_quality_mix": "lane 40 full-text-like / 11 abstract-only; primary target seed 3 full-text-like hits across 3 match(es); direct target mentions 2 full-text-like / 0 abstract-only",
+        "why_now": "This panel is already attached to a translational packet and can be tested against 3 endotype packet(s).",
+        "source_quality_mix": "lane 57 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only",
         "anchor_pmids": [
           "41651694",
+          "41926540",
           "41480492",
           "41576094",
           "41764101",
           "41648326",
           "41267966",
+          "41876825",
           "41735605",
           "41153827",
-          "41667502",
-          "41103638",
           "41625091",
+          "41103638",
           "41709060",
           "41069428",
           "41110648",
@@ -722,7 +735,7 @@
           "41327381",
           "41446731"
         ],
-        "supporting_pmids": "41651694; 41480492; 41576094; 41764101; 41648326; 41267966; 41735605; 41153827; 41667502; 41103638; 41625091; 41709060; 41069428; 41110648; 41129987; 41157305; 41175081; 41179995; 41039850; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731",
+        "supporting_pmids": "41651694; 41926540; 41480492; 41576094; 41764101; 41648326; 41267966; 41876825; 41735605; 41153827; 41625091; 41103638; 41709060; 41069428; 41110648; 41129987; 41157305; 41175081; 41179995; 41039850; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731",
         "provenance_refs": [
           "phase1:mitochondrial_bioenergetic_collapse",
           "phase2:mitochondrial_ros_to_inflammasome_activation",
@@ -733,27 +746,36 @@
           "phase5:chronic_mild_metabolic_white_matter_dominant",
           "phase5:chronic_severe_axonal_network_decline"
         ],
-        "blockers": "none_detected",
+        "blockers": "Study found no significant correlation, contradicting the hypothesis of cumulative damage.; Oxidative-stress markers may improve without real ATP rescue or downstream inflammasome relief; keep this packet tied to both mitochondrial and inflammatory readouts.",
         "next_test": "Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.",
-        "unlocks": "Decide whether PRKN should stay primary over CYBB once the first attachment pass shows whether the better perturbation is mitochondrial rescue or ROS suppression.",
-        "hypothesis_type": "best_intervention_leverage_point",
-        "target_scope": "gene_target",
-        "global_primary": "PRKN",
-        "endotype_specific_primary": "PRKN",
-        "challenger_set": [
-          "CYBB",
-          "CAT",
-          "PINK1"
+        "unlocks": "A cleaner panel lets Phase 4 readouts and Phase 5 endotype discrimination use the same operator-facing signal set.",
+        "hypothesis_type": "most_informative_biomarker_panel",
+        "panel_members": [
+          "ATP",
+          "ROS",
+          "NfL",
+          "Bcl-2",
+          "TUNEL+/NeuN+",
+          "cerebral oxygen saturation",
+          "NLRP3",
+          "Nf-L",
+          "Bcl-2 expression",
+          "NeuN expression",
+          "TUNEL+/NeuN+ cells",
+          "Cerebral blood flow",
+          "eATP",
+          "ros (154)",
+          "ROS (32)",
+          "ATP (23)",
+          "Atp (3)",
+          "PINK1 (1)",
+          "IL-1 (127)",
+          "NLRP3 (70)",
+          "IL-6 (64)",
+          "TNF (57)",
+          "HMGB1 (40)",
+          "GFAP (26)"
         ],
-        "primary_target": "PRKN",
-        "best_available_intervention_class": "mitochondrial quality-control modulation",
-        "expected_readouts": [
-          "ATP / bioenergetic rescue",
-          "ROS burden",
-          "Apoptosis pressure",
-          "Inflammasome spillover"
-        ],
-        "intervention_window": "['acute', 'subacute']",
         "biomarker_panel": [
           "ATP",
           "ROS",
@@ -768,21 +790,38 @@
           "TUNEL+/NeuN+ cells",
           "Cerebral blood flow",
           "eATP",
-          "ros (134)",
-          "ROS (21)",
-          "ATP (19)",
+          "ros (154)",
+          "ROS (32)",
+          "ATP (23)",
+          "Atp (3)",
           "PINK1 (1)",
-          "IL-1 (91)",
-          "TNF (53)",
-          "IL-6 (50)",
-          "NLRP3 (38)",
-          "GFAP (22)",
-          "HMGB1 (17)"
+          "IL-1 (127)",
+          "NLRP3 (70)",
+          "IL-6 (64)",
+          "TNF (57)",
+          "HMGB1 (40)",
+          "GFAP (26)"
+        ],
+        "expected_readouts": [
+          "ATP / bioenergetic rescue",
+          "ROS burden",
+          "Apoptosis pressure",
+          "Inflammasome spillover"
         ],
         "sample_type": "['tissue', 'plasma', 'blood_cell_or_platelet_assay']",
-        "readout_window": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
+        "time_window": "['acute', 'subacute']",
         "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
-        "rank": 1,
+        "expected_direction": "['up', 'down', 'down', 'down']",
+        "endotype_discrimination_score": 0.75,
+        "feasibility_score": 0.72,
+        "redundancy_penalty": 0.0,
+        "rank": 7,
+        "steering_score": 0.37,
+        "steering_reasons": [
+          "favored_family",
+          "favored_endotype",
+          "advance_supported"
+        ],
         "portfolio_role": "novelty_watch"
       }
     }
@@ -842,7 +881,7 @@
   "phase_timeline": [
     {
       "kind": "phase",
-      "date": "2026-03-29 02:26:55",
+      "date": "2026-04-12 14:40:16",
       "title": "Phase 1 \u00b7 Process Lanes",
       "status": "supported",
       "summary": "The engine reduced the TBI literature into six recurring process lanes so the project stopped treating every paper as a one-off mechanism note.",
@@ -851,7 +890,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-29 02:26:56",
+      "date": "2026-04-12 14:40:16",
       "title": "Phase 2 \u00b7 Causal Transitions",
       "status": "supported",
       "summary": "The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.",
@@ -860,7 +899,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-29 02:26:57",
+      "date": "2026-04-12 14:40:16",
       "title": "Phase 3 \u00b7 Progression Objects",
       "status": "supported",
       "summary": "The engine grouped recurring downstream damage states into progression objects such as chronic network dysfunction and neurovascular uncoupling.",
@@ -869,7 +908,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-28 21:26:58",
+      "date": "2026-04-12 14:40:17",
       "title": "Phase 4 \u00b7 Translational Logic",
       "status": "bounded",
       "summary": "The engine attached translational packets to each lane so targets, readouts, and intervention logic sit on top of the mechanism map.",
@@ -878,7 +917,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-29 02:26:58",
+      "date": "2026-04-12 14:40:18",
       "title": "Phase 5 \u00b7 Cohort Stratification",
       "status": "usable",
       "summary": "The engine split TBI into cohort and endotype patterns so mild, repetitive, blast, severe, acute, and chronic states stop collapsing into one disease bucket.",
@@ -887,7 +926,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-03-28 21:26:59",
+      "date": "2026-04-12 14:40:18",
       "title": "Phase 6 \u00b7 Hypothesis Rankings",
       "status": "live",
       "summary": "The engine ranked the strongest bridges, weakest hinges, biomarker panels, leverage points, and next tasks into a weekly decision slate.",
@@ -900,29 +939,29 @@
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-12T13:41:58.542965+00:00",
+    "snapshot_generated_at": "2026-04-12T14:40:19.072145+00:00",
     "source_artifact_timestamps": {
-      "process": "2026-03-29 02:26:55",
-      "transition": "2026-03-29 02:26:56",
-      "progression": "2026-03-29 02:26:57",
-      "translational": "2026-03-28 21:26:58",
-      "cohort": "2026-03-29 02:26:58",
-      "hypothesis": "2026-03-28 21:26:59",
-      "idea_briefs": "2026-04-03 20:50:11"
+      "process": "2026-04-12 14:40:16",
+      "transition": "2026-04-12 14:40:16",
+      "progression": "2026-04-12 14:40:16",
+      "translational": "2026-04-12 14:40:17",
+      "cohort": "2026-04-12 14:40:18",
+      "hypothesis": "2026-04-12 14:40:18",
+      "idea_briefs": "2026-04-12 14:40:18"
     },
     "source_artifact_paths": {
-      "process": "/Users/matthewholtkamp/Documents/testfile/reports/process_lanes/process_lane_index_2026-03-29_022655.json",
-      "transition": "/Users/matthewholtkamp/Documents/testfile/reports/causal_transitions/causal_transition_index_2026-03-29_022656.json",
-      "progression": "/Users/matthewholtkamp/Documents/testfile/reports/progression_objects/progression_object_index_2026-03-29_022657.json",
-      "translational": "/Users/matthewholtkamp/Documents/testfile/reports/translational_perturbation/translational_perturbation_index_2026-03-28_212658.json",
-      "cohort": "/Users/matthewholtkamp/Documents/testfile/reports/cohort_stratification/cohort_stratification_index_2026-03-29_022658.json",
-      "hypothesis": "/Users/matthewholtkamp/Documents/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-03-28_212659.json",
-      "idea_briefs": "/Users/matthewholtkamp/Documents/testfile/reports/idea_briefs/idea_briefs_2026-04-03_205011.json"
+      "process": "/home/runner/work/testfile/testfile/reports/process_lanes/process_lane_index_2026-04-12_144016.json",
+      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-12_144016.json",
+      "progression": "/home/runner/work/testfile/testfile/reports/progression_objects/progression_object_index_2026-04-12_144016.json",
+      "translational": "/home/runner/work/testfile/testfile/reports/translational_perturbation/translational_perturbation_index_2026-04-12_144017.json",
+      "cohort": "/home/runner/work/testfile/testfile/reports/cohort_stratification/cohort_stratification_index_2026-04-12_144018.json",
+      "hypothesis": "/home/runner/work/testfile/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-04-12_144018.json",
+      "idea_briefs": "/home/runner/work/testfile/testfile/reports/idea_briefs/idea_briefs_2026-04-12_144018.json"
     },
     "steering_registry_last_updated": "2026-04-05T17:52:32.024523+00:00",
     "action_status_timestamp": "2026-04-05T17:52:35.703077+00:00",
-    "build_run_id": "",
-    "build_sha": "",
+    "build_run_id": "24309133462",
+    "build_sha": "ee5ffc39916a841fc4e5127ea268893074277965",
     "steering_aware_automation": true,
     "active_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
     "active_decision_label": "Blood-Brain Barrier Failure biomarker panel",
@@ -930,7 +969,7 @@
     "visible_decision_ids": [
       "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
       "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
-      "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse"
+      "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse"
     ],
     "deferred_improvement_stack": [
       "steering-aware scheduled ranking and refresh behavior",
@@ -941,7 +980,7 @@
     ]
   },
   "manuscript_queue": {
-    "generated_at": "2026-04-12T13:41:58.542192+00:00",
+    "generated_at": "2026-04-12T14:40:19.071819+00:00",
     "summary": {
       "active_count": 2,
       "watchlist_count": 2,
@@ -981,7 +1020,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": true,
-        "last_pack_refresh": "2026-03-28 21:26:59",
+        "last_pack_refresh": "2026-04-12 14:40:18",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -1749,13 +1788,13 @@
         "journal_fit": 2,
         "draft_readiness": 1,
         "evidence_bundle_summary": {
-          "reference_count": 49,
+          "reference_count": 51,
           "claim_count": 10,
           "contradiction_count": 18,
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": false,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_135917.csv"
         },
         "task_ledger": [
           {
@@ -1775,7 +1814,7 @@
               "reopened"
             ],
             "execution_note": "Generated contradiction brief for 18 issue(s); 3 remain blocking.",
-            "last_executed_at": "2026-04-12T13:41:58.491742+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.034362+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -1795,7 +1834,7 @@
               "reopened"
             ],
             "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-            "last_executed_at": "2026-04-12T13:41:58.491803+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.034402+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -1815,12 +1854,12 @@
               "reopened"
             ],
             "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
-            "last_executed_at": "2026-04-12T13:41:58.491828+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.034422+00:00",
             "output_file": "task_outputs/capture_primary_journal_requirements.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-12T13:41:58.491837+00:00",
+          "updated_at": "2026-04-12T14:40:19.034428+00:00",
           "total_tasks": 3,
           "status_counts": {
             "proposed": 0,
@@ -1860,15 +1899,15 @@
         "watchlist_rank": null
       },
       {
-        "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
-        "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
-        "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
-        "theme_key": "mitochondrial_bioenergetic_collapse",
-        "theme_label": "Mitochondrial / Bioenergetic Collapse",
-        "family_id": "best_intervention_leverage_point",
-        "family_preference": 2,
-        "family_score": 1.037,
-        "confidence_score": 0.917,
+        "candidate_id": "most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
+        "pack_key": "most_informative_biomarker_panel_endotype_subacute_repetitive_inflammatory_dominant",
+        "title": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
+        "theme_key": "subacute_repetitive_inflammatory_dominant",
+        "theme_label": "Subacute Repetitive Inflammatory-Dominant",
+        "family_id": "most_informative_biomarker_panel",
+        "family_preference": 4,
+        "family_score": 1.006,
+        "confidence_score": 0.946,
         "value_score": 1.0,
         "support_status": "supported",
         "translation_maturity": "bounded",
@@ -1880,7 +1919,7 @@
         ],
         "manuscript_modes": [
           "endotype_discriminator",
-          "translational_tbi"
+          "mechanistic_biomarker"
         ],
         "audiences": [
           "biomarker",
@@ -1891,7 +1930,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-03-28 21:26:59",
+        "last_pack_refresh": "2026-04-12 14:40:18",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -1928,7 +1967,7 @@
             "score": 7,
             "reasons": [
               "Audience overlap: Biomarker, Mechanism, Neurotrauma",
-              "Manuscript mode fit: Endotype Discriminator, Translational Tbi",
+              "Manuscript mode fit: Endotype Discriminator, Mechanistic Biomarker",
               "Article-type overlap: original research, review",
               "Family fit: journal often suits this manuscript family."
             ],
@@ -1956,343 +1995,6 @@
             }
           },
           "backups": [
-            {
-              "journal": {
-                "id": "neurocritical-care",
-                "name": "Neurocritical Care",
-                "homepage": "https://link.springer.com/journal/12028",
-                "submission_tier": "realistic",
-                "registry_role": "core",
-                "audiences": [
-                  "neurocritical",
-                  "neurotrauma",
-                  "biomarker",
-                  "translational"
-                ],
-                "manuscript_modes": [
-                  "mechanistic_biomarker",
-                  "mechanistic_bridge",
-                  "translational_tbi"
-                ],
-                "preferred_article_types": [
-                  "original research",
-                  "review",
-                  "brief report"
-                ],
-                "primary_fit_families": [
-                  "most_informative_biomarker_panel",
-                  "strongest_causal_bridge",
-                  "best_intervention_leverage_point"
-                ],
-                "notes": "High-fit specialty venue for neurocritical and acute-severity framing, especially when readouts and translational logic are explicit."
-              },
-              "score": 6,
-              "reasons": [
-                "Audience overlap: Biomarker, Neurotrauma, Translational",
-                "Manuscript mode fit: Translational Tbi",
-                "Article-type overlap: brief report, original research",
-                "Family fit: journal often suits this manuscript family."
-              ],
-              "article_type_overlap": [
-                "brief report",
-                "original research",
-                "review"
-              ],
-              "requirements": {
-                "checked": true,
-                "score": 2,
-                "article_type_match": true,
-                "evidence_chain_match": true,
-                "translation_match": false,
-                "scientific_strength_match": false,
-                "reasons": [
-                  "Article type is compatible with the captured journal requirements.",
-                  "Current evidence chain meets the journal requirements snapshot.",
-                  "Bounded translation still conflicts with this journal requirements snapshot.",
-                  "Scientific strength is still below the minimum threshold recorded for this journal."
-                ],
-                "requirements_path": "config/journal_requirements/neurocritical-care.json",
-                "snapshot": {
-                  "verified": true,
-                  "checked_at": "2026-04-12T01:35:00Z",
-                  "source_url": "https://link.springer.com/journal/12028/submission-guidelines",
-                  "source_urls": [
-                    "https://link.springer.com/journal/12028/submission-guidelines",
-                    "https://media.springer.com/full/springer-instructions-for-authors-assets/pdf/12028_Neurocritical%20Care%20Instructions%20February%202025.pdf"
-                  ],
-                  "allowed_article_types": [
-                    "original research",
-                    "review",
-                    "brief report",
-                    "commentary",
-                    "viewpoint"
-                  ],
-                  "requires_full_evidence_chain": true,
-                  "allows_bounded_translation": false,
-                  "minimum_scientific_strength": 3,
-                  "notes": "Official Springer instructions (updated February 2025) list Original work, Brief communication, Review article, Viewpoint, Editorial, Ethical Matters, Take a closer look at trials, Take Notice: Technology, Neuro-Images, Letters, Invited commentary, and Special article. Original work requires a structured abstract and full Methods/Results/Discussion structure. Operational fit rule: keep bounded translation below primary-target readiness."
-                }
-              }
-            },
-            {
-              "journal": {
-                "id": "neurotrauma-reports",
-                "name": "Neurotrauma Reports",
-                "homepage": "https://home.liebertpub.com/publications/neurotrauma-reports/669/overview",
-                "submission_tier": "realistic",
-                "registry_role": "discovery",
-                "audiences": [
-                  "neurotrauma",
-                  "biomarker",
-                  "methods",
-                  "translational"
-                ],
-                "manuscript_modes": [
-                  "mechanistic_biomarker",
-                  "mechanistic_bridge",
-                  "methods_engine"
-                ],
-                "preferred_article_types": [
-                  "original research",
-                  "review",
-                  "methods paper"
-                ],
-                "primary_fit_families": [
-                  "most_informative_biomarker_panel",
-                  "strongest_causal_bridge",
-                  "best_intervention_leverage_point"
-                ],
-                "notes": "Useful fallback for neurotrauma-centered work that may be too novel or too methods-forward for Journal of Neurotrauma."
-              },
-              "score": 5,
-              "reasons": [
-                "Audience overlap: Biomarker, Neurotrauma, Translational",
-                "Article-type overlap: original research, review",
-                "Family fit: journal often suits this manuscript family."
-              ],
-              "article_type_overlap": [
-                "original research",
-                "review"
-              ],
-              "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
-                "translation_match": false,
-                "scientific_strength_match": false,
-                "reasons": [
-                  "Official Neurotrauma Reports author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
-                ],
-                "requirements_path": "config/journal_requirements/neurotrauma-reports.json",
-                "snapshot": {
-                  "verified": false,
-                  "checked_at": "2026-04-12T01:38:00Z",
-                  "source_url": "https://ms.liebertpub.com/NTR",
-                  "notes": "Official Neurotrauma Reports author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
-                }
-              }
-            }
-          ],
-          "scored": [
-            {
-              "journal": {
-                "id": "journal-of-neurotrauma",
-                "name": "Journal of Neurotrauma",
-                "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
-                "submission_tier": "realistic",
-                "registry_role": "core",
-                "audiences": [
-                  "neurotrauma",
-                  "mechanism",
-                  "biomarker",
-                  "translational"
-                ],
-                "manuscript_modes": [
-                  "mechanistic_biomarker",
-                  "mechanistic_bridge",
-                  "translational_tbi",
-                  "endotype_discriminator"
-                ],
-                "preferred_article_types": [
-                  "original research",
-                  "review",
-                  "commentary"
-                ],
-                "primary_fit_families": [
-                  "most_informative_biomarker_panel",
-                  "strongest_causal_bridge",
-                  "best_intervention_leverage_point"
-                ],
-                "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
-              },
-              "score": 7,
-              "reasons": [
-                "Audience overlap: Biomarker, Mechanism, Neurotrauma",
-                "Manuscript mode fit: Endotype Discriminator, Translational Tbi",
-                "Article-type overlap: original research, review",
-                "Family fit: journal often suits this manuscript family."
-              ],
-              "article_type_overlap": [
-                "original research",
-                "review"
-              ],
-              "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
-                "translation_match": false,
-                "scientific_strength_match": false,
-                "reasons": [
-                  "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
-                ],
-                "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
-                "snapshot": {
-                  "verified": false,
-                  "checked_at": "2026-04-12T01:37:00Z",
-                  "source_url": "https://ms.liebertpub.com/NEU",
-                  "notes": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
-                }
-              }
-            },
-            {
-              "journal": {
-                "id": "neurocritical-care",
-                "name": "Neurocritical Care",
-                "homepage": "https://link.springer.com/journal/12028",
-                "submission_tier": "realistic",
-                "registry_role": "core",
-                "audiences": [
-                  "neurocritical",
-                  "neurotrauma",
-                  "biomarker",
-                  "translational"
-                ],
-                "manuscript_modes": [
-                  "mechanistic_biomarker",
-                  "mechanistic_bridge",
-                  "translational_tbi"
-                ],
-                "preferred_article_types": [
-                  "original research",
-                  "review",
-                  "brief report"
-                ],
-                "primary_fit_families": [
-                  "most_informative_biomarker_panel",
-                  "strongest_causal_bridge",
-                  "best_intervention_leverage_point"
-                ],
-                "notes": "High-fit specialty venue for neurocritical and acute-severity framing, especially when readouts and translational logic are explicit."
-              },
-              "score": 6,
-              "reasons": [
-                "Audience overlap: Biomarker, Neurotrauma, Translational",
-                "Manuscript mode fit: Translational Tbi",
-                "Article-type overlap: brief report, original research",
-                "Family fit: journal often suits this manuscript family."
-              ],
-              "article_type_overlap": [
-                "brief report",
-                "original research",
-                "review"
-              ],
-              "requirements": {
-                "checked": true,
-                "score": 2,
-                "article_type_match": true,
-                "evidence_chain_match": true,
-                "translation_match": false,
-                "scientific_strength_match": false,
-                "reasons": [
-                  "Article type is compatible with the captured journal requirements.",
-                  "Current evidence chain meets the journal requirements snapshot.",
-                  "Bounded translation still conflicts with this journal requirements snapshot.",
-                  "Scientific strength is still below the minimum threshold recorded for this journal."
-                ],
-                "requirements_path": "config/journal_requirements/neurocritical-care.json",
-                "snapshot": {
-                  "verified": true,
-                  "checked_at": "2026-04-12T01:35:00Z",
-                  "source_url": "https://link.springer.com/journal/12028/submission-guidelines",
-                  "source_urls": [
-                    "https://link.springer.com/journal/12028/submission-guidelines",
-                    "https://media.springer.com/full/springer-instructions-for-authors-assets/pdf/12028_Neurocritical%20Care%20Instructions%20February%202025.pdf"
-                  ],
-                  "allowed_article_types": [
-                    "original research",
-                    "review",
-                    "brief report",
-                    "commentary",
-                    "viewpoint"
-                  ],
-                  "requires_full_evidence_chain": true,
-                  "allows_bounded_translation": false,
-                  "minimum_scientific_strength": 3,
-                  "notes": "Official Springer instructions (updated February 2025) list Original work, Brief communication, Review article, Viewpoint, Editorial, Ethical Matters, Take a closer look at trials, Take Notice: Technology, Neuro-Images, Letters, Invited commentary, and Special article. Original work requires a structured abstract and full Methods/Results/Discussion structure. Operational fit rule: keep bounded translation below primary-target readiness."
-                }
-              }
-            },
-            {
-              "journal": {
-                "id": "neurotrauma-reports",
-                "name": "Neurotrauma Reports",
-                "homepage": "https://home.liebertpub.com/publications/neurotrauma-reports/669/overview",
-                "submission_tier": "realistic",
-                "registry_role": "discovery",
-                "audiences": [
-                  "neurotrauma",
-                  "biomarker",
-                  "methods",
-                  "translational"
-                ],
-                "manuscript_modes": [
-                  "mechanistic_biomarker",
-                  "mechanistic_bridge",
-                  "methods_engine"
-                ],
-                "preferred_article_types": [
-                  "original research",
-                  "review",
-                  "methods paper"
-                ],
-                "primary_fit_families": [
-                  "most_informative_biomarker_panel",
-                  "strongest_causal_bridge",
-                  "best_intervention_leverage_point"
-                ],
-                "notes": "Useful fallback for neurotrauma-centered work that may be too novel or too methods-forward for Journal of Neurotrauma."
-              },
-              "score": 5,
-              "reasons": [
-                "Audience overlap: Biomarker, Neurotrauma, Translational",
-                "Article-type overlap: original research, review",
-                "Family fit: journal often suits this manuscript family."
-              ],
-              "article_type_overlap": [
-                "original research",
-                "review"
-              ],
-              "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
-                "translation_match": false,
-                "scientific_strength_match": false,
-                "reasons": [
-                  "Official Neurotrauma Reports author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
-                ],
-                "requirements_path": "config/journal_requirements/neurotrauma-reports.json",
-                "snapshot": {
-                  "verified": false,
-                  "checked_at": "2026-04-12T01:38:00Z",
-                  "source_url": "https://ms.liebertpub.com/NTR",
-                  "notes": "Official Neurotrauma Reports author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
-                }
-              }
-            },
             {
               "journal": {
                 "id": "frontiers-in-neurology",
@@ -2323,11 +2025,12 @@
                 ],
                 "notes": "Broad neurological venue that is sometimes useful when the story is mechanistic and cross-cutting rather than strictly critical-care focused."
               },
-              "score": 4,
+              "score": 6,
               "reasons": [
                 "Audience overlap: Biomarker, Neurotrauma",
-                "Manuscript mode fit: Endotype Discriminator",
-                "Article-type overlap: hypothesis and theory, original research"
+                "Manuscript mode fit: Endotype Discriminator, Mechanistic Biomarker",
+                "Article-type overlap: hypothesis and theory, original research",
+                "Family fit: journal often suits this manuscript family."
               ],
               "article_type_overlap": [
                 "hypothesis and theory",
@@ -2371,6 +2074,362 @@
             },
             {
               "journal": {
+                "id": "neurocritical-care",
+                "name": "Neurocritical Care",
+                "homepage": "https://link.springer.com/journal/12028",
+                "submission_tier": "realistic",
+                "registry_role": "core",
+                "audiences": [
+                  "neurocritical",
+                  "neurotrauma",
+                  "biomarker",
+                  "translational"
+                ],
+                "manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "translational_tbi"
+                ],
+                "preferred_article_types": [
+                  "original research",
+                  "review",
+                  "brief report"
+                ],
+                "primary_fit_families": [
+                  "most_informative_biomarker_panel",
+                  "strongest_causal_bridge",
+                  "best_intervention_leverage_point"
+                ],
+                "notes": "High-fit specialty venue for neurocritical and acute-severity framing, especially when readouts and translational logic are explicit."
+              },
+              "score": 6,
+              "reasons": [
+                "Audience overlap: Biomarker, Neurotrauma, Translational",
+                "Manuscript mode fit: Mechanistic Biomarker",
+                "Article-type overlap: brief report, original research",
+                "Family fit: journal often suits this manuscript family."
+              ],
+              "article_type_overlap": [
+                "brief report",
+                "original research",
+                "review"
+              ],
+              "requirements": {
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
+                "translation_match": false,
+                "scientific_strength_match": false,
+                "reasons": [
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
+                ],
+                "requirements_path": "config/journal_requirements/neurocritical-care.json",
+                "snapshot": {
+                  "verified": true,
+                  "checked_at": "2026-04-12T01:35:00Z",
+                  "source_url": "https://link.springer.com/journal/12028/submission-guidelines",
+                  "source_urls": [
+                    "https://link.springer.com/journal/12028/submission-guidelines",
+                    "https://media.springer.com/full/springer-instructions-for-authors-assets/pdf/12028_Neurocritical%20Care%20Instructions%20February%202025.pdf"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "brief report",
+                    "commentary",
+                    "viewpoint"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 3,
+                  "notes": "Official Springer instructions (updated February 2025) list Original work, Brief communication, Review article, Viewpoint, Editorial, Ethical Matters, Take a closer look at trials, Take Notice: Technology, Neuro-Images, Letters, Invited commentary, and Special article. Original work requires a structured abstract and full Methods/Results/Discussion structure. Operational fit rule: keep bounded translation below primary-target readiness."
+                }
+              }
+            }
+          ],
+          "scored": [
+            {
+              "journal": {
+                "id": "journal-of-neurotrauma",
+                "name": "Journal of Neurotrauma",
+                "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
+                "submission_tier": "realistic",
+                "registry_role": "core",
+                "audiences": [
+                  "neurotrauma",
+                  "mechanism",
+                  "biomarker",
+                  "translational"
+                ],
+                "manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "translational_tbi",
+                  "endotype_discriminator"
+                ],
+                "preferred_article_types": [
+                  "original research",
+                  "review",
+                  "commentary"
+                ],
+                "primary_fit_families": [
+                  "most_informative_biomarker_panel",
+                  "strongest_causal_bridge",
+                  "best_intervention_leverage_point"
+                ],
+                "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
+              },
+              "score": 7,
+              "reasons": [
+                "Audience overlap: Biomarker, Mechanism, Neurotrauma",
+                "Manuscript mode fit: Endotype Discriminator, Mechanistic Biomarker",
+                "Article-type overlap: original research, review",
+                "Family fit: journal often suits this manuscript family."
+              ],
+              "article_type_overlap": [
+                "original research",
+                "review"
+              ],
+              "requirements": {
+                "checked": false,
+                "score": 0,
+                "article_type_match": false,
+                "evidence_chain_match": false,
+                "translation_match": false,
+                "scientific_strength_match": false,
+                "reasons": [
+                  "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+                ],
+                "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
+                "snapshot": {
+                  "verified": false,
+                  "checked_at": "2026-04-12T01:37:00Z",
+                  "source_url": "https://ms.liebertpub.com/NEU",
+                  "notes": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+                }
+              }
+            },
+            {
+              "journal": {
+                "id": "frontiers-in-neurology",
+                "name": "Frontiers in Neurology",
+                "homepage": "https://www.frontiersin.org/journals/neurology",
+                "submission_tier": "realistic",
+                "registry_role": "discovery",
+                "audiences": [
+                  "neurology",
+                  "neurotrauma",
+                  "biomarker",
+                  "systems_neuroscience"
+                ],
+                "manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "endotype_discriminator",
+                  "methods_engine"
+                ],
+                "preferred_article_types": [
+                  "original research",
+                  "review",
+                  "hypothesis and theory"
+                ],
+                "primary_fit_families": [
+                  "most_informative_biomarker_panel",
+                  "strongest_causal_bridge"
+                ],
+                "notes": "Broad neurological venue that is sometimes useful when the story is mechanistic and cross-cutting rather than strictly critical-care focused."
+              },
+              "score": 6,
+              "reasons": [
+                "Audience overlap: Biomarker, Neurotrauma",
+                "Manuscript mode fit: Endotype Discriminator, Mechanistic Biomarker",
+                "Article-type overlap: hypothesis and theory, original research",
+                "Family fit: journal often suits this manuscript family."
+              ],
+              "article_type_overlap": [
+                "hypothesis and theory",
+                "original research",
+                "review"
+              ],
+              "requirements": {
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
+                "translation_match": false,
+                "scientific_strength_match": false,
+                "reasons": [
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
+                ],
+                "requirements_path": "config/journal_requirements/frontiers-in-neurology.json",
+                "snapshot": {
+                  "verified": true,
+                  "checked_at": "2026-04-12T01:36:00Z",
+                  "source_url": "https://www.frontiersin.org/journals/neurology/for-authors/article-types",
+                  "source_urls": [
+                    "https://www.frontiersin.org/journals/neurology/for-authors/article-types",
+                    "https://www.frontiersin.org/journals/neurology/for-authors/author-guidelines"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "hypothesis and theory",
+                    "brief report"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 3,
+                  "notes": "Official Frontiers pages show Original Research, Systematic Review/Review, Hypothesis and Theory, and Brief Research Report as accepted article types for this journal family. The author-guidelines page points authors to the article-type word-count limits and recommends full section structure for Original Research. Operational fit rule: keep bounded translation below primary-target readiness."
+                }
+              }
+            },
+            {
+              "journal": {
+                "id": "neurocritical-care",
+                "name": "Neurocritical Care",
+                "homepage": "https://link.springer.com/journal/12028",
+                "submission_tier": "realistic",
+                "registry_role": "core",
+                "audiences": [
+                  "neurocritical",
+                  "neurotrauma",
+                  "biomarker",
+                  "translational"
+                ],
+                "manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "translational_tbi"
+                ],
+                "preferred_article_types": [
+                  "original research",
+                  "review",
+                  "brief report"
+                ],
+                "primary_fit_families": [
+                  "most_informative_biomarker_panel",
+                  "strongest_causal_bridge",
+                  "best_intervention_leverage_point"
+                ],
+                "notes": "High-fit specialty venue for neurocritical and acute-severity framing, especially when readouts and translational logic are explicit."
+              },
+              "score": 6,
+              "reasons": [
+                "Audience overlap: Biomarker, Neurotrauma, Translational",
+                "Manuscript mode fit: Mechanistic Biomarker",
+                "Article-type overlap: brief report, original research",
+                "Family fit: journal often suits this manuscript family."
+              ],
+              "article_type_overlap": [
+                "brief report",
+                "original research",
+                "review"
+              ],
+              "requirements": {
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
+                "translation_match": false,
+                "scientific_strength_match": false,
+                "reasons": [
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
+                ],
+                "requirements_path": "config/journal_requirements/neurocritical-care.json",
+                "snapshot": {
+                  "verified": true,
+                  "checked_at": "2026-04-12T01:35:00Z",
+                  "source_url": "https://link.springer.com/journal/12028/submission-guidelines",
+                  "source_urls": [
+                    "https://link.springer.com/journal/12028/submission-guidelines",
+                    "https://media.springer.com/full/springer-instructions-for-authors-assets/pdf/12028_Neurocritical%20Care%20Instructions%20February%202025.pdf"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "brief report",
+                    "commentary",
+                    "viewpoint"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 3,
+                  "notes": "Official Springer instructions (updated February 2025) list Original work, Brief communication, Review article, Viewpoint, Editorial, Ethical Matters, Take a closer look at trials, Take Notice: Technology, Neuro-Images, Letters, Invited commentary, and Special article. Original work requires a structured abstract and full Methods/Results/Discussion structure. Operational fit rule: keep bounded translation below primary-target readiness."
+                }
+              }
+            },
+            {
+              "journal": {
+                "id": "neurotrauma-reports",
+                "name": "Neurotrauma Reports",
+                "homepage": "https://home.liebertpub.com/publications/neurotrauma-reports/669/overview",
+                "submission_tier": "realistic",
+                "registry_role": "discovery",
+                "audiences": [
+                  "neurotrauma",
+                  "biomarker",
+                  "methods",
+                  "translational"
+                ],
+                "manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "methods_engine"
+                ],
+                "preferred_article_types": [
+                  "original research",
+                  "review",
+                  "methods paper"
+                ],
+                "primary_fit_families": [
+                  "most_informative_biomarker_panel",
+                  "strongest_causal_bridge",
+                  "best_intervention_leverage_point"
+                ],
+                "notes": "Useful fallback for neurotrauma-centered work that may be too novel or too methods-forward for Journal of Neurotrauma."
+              },
+              "score": 6,
+              "reasons": [
+                "Audience overlap: Biomarker, Neurotrauma, Translational",
+                "Manuscript mode fit: Mechanistic Biomarker",
+                "Article-type overlap: original research, review",
+                "Family fit: journal often suits this manuscript family."
+              ],
+              "article_type_overlap": [
+                "original research",
+                "review"
+              ],
+              "requirements": {
+                "checked": false,
+                "score": 0,
+                "article_type_match": false,
+                "evidence_chain_match": false,
+                "translation_match": false,
+                "scientific_strength_match": false,
+                "reasons": [
+                  "Official Neurotrauma Reports author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+                ],
+                "requirements_path": "config/journal_requirements/neurotrauma-reports.json",
+                "snapshot": {
+                  "verified": false,
+                  "checked_at": "2026-04-12T01:38:00Z",
+                  "source_url": "https://ms.liebertpub.com/NTR",
+                  "notes": "Official Neurotrauma Reports author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+                }
+              }
+            },
+            {
+              "journal": {
                 "id": "brain-injury",
                 "name": "Brain Injury",
                 "homepage": "https://www.tandfonline.com/journals/ibij20",
@@ -2398,11 +2457,12 @@
                 ],
                 "notes": "Broad TBI venue that can absorb a clinically framed synthesis when the readout story and longitudinal stakes are clear."
               },
-              "score": 3,
+              "score": 5,
               "reasons": [
                 "Audience overlap: Biomarker",
-                "Manuscript mode fit: Endotype Discriminator",
-                "Article-type overlap: original research, review"
+                "Manuscript mode fit: Endotype Discriminator, Mechanistic Biomarker",
+                "Article-type overlap: original research, review",
+                "Family fit: journal often suits this manuscript family."
               ],
               "article_type_overlap": [
                 "original research",
@@ -2451,11 +2511,12 @@
                 ],
                 "notes": "Better fit when the manuscript emphasizes patient trajectory, outcome relevance, and subgroup framing."
               },
-              "score": 3,
+              "score": 4,
               "reasons": [
                 "Audience overlap: Cohort",
                 "Manuscript mode fit: Endotype Discriminator",
-                "Article-type overlap: original research, review"
+                "Article-type overlap: original research, review",
+                "Family fit: journal often suits this manuscript family."
               ],
               "article_type_overlap": [
                 "original research",
@@ -2505,9 +2566,10 @@
                 ],
                 "notes": "Military-facing alternative when operational relevance and translational framing are stronger than classic rehabilitation framing."
               },
-              "score": 3,
+              "score": 4,
               "reasons": [
                 "Audience overlap: Translational",
+                "Manuscript mode fit: Mechanistic Biomarker",
                 "Article-type overlap: original research, review",
                 "Family fit: journal often suits this manuscript family."
               ],
@@ -2581,10 +2643,11 @@
                 ],
                 "notes": "Core military outlet. Best fit when the manuscript can speak to service members, blast exposure, operational screening, or force-health implications."
               },
-              "score": 2,
+              "score": 3,
               "reasons": [
                 "Manuscript mode fit: Endotype Discriminator",
-                "Article-type overlap: original research, review"
+                "Article-type overlap: original research, review",
+                "Family fit: journal often suits this manuscript family."
               ],
               "article_type_overlap": [
                 "original research",
@@ -2635,15 +2698,35 @@
         "journal_fit": 2,
         "draft_readiness": 1,
         "evidence_bundle_summary": {
-          "reference_count": 47,
+          "reference_count": 63,
           "claim_count": 9,
-          "contradiction_count": 21,
+          "contradiction_count": 19,
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": false,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_135917.csv"
         },
         "task_ledger": [
+          {
+            "task_id": "resolve_lead_contradiction",
+            "label": "Resolve the lead contradiction or evidence tension",
+            "status": "running",
+            "critical": true,
+            "rationale": "The current lane still carries a material blocker: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.",
+            "success_signal": "A future pass reduces or removes the contradiction/blocker language from the candidate ledger.",
+            "allowed_states": [
+              "proposed",
+              "queued",
+              "running",
+              "satisfied",
+              "blocked",
+              "stale",
+              "reopened"
+            ],
+            "execution_note": "Generated contradiction brief for 19 issue(s); 4 remain blocking.",
+            "last_executed_at": "2026-04-12T14:40:19.050202+00:00",
+            "output_file": "task_outputs/resolve_lead_contradiction.md"
+          },
           {
             "task_id": "strengthen_translational_packet",
             "label": "Strengthen Phase 4 beyond bounded translation",
@@ -2661,7 +2744,7 @@
               "reopened"
             ],
             "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-            "last_executed_at": "2026-04-12T13:41:58.529588+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.050243+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -2681,25 +2764,25 @@
               "reopened"
             ],
             "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
-            "last_executed_at": "2026-04-12T13:41:58.529632+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.050263+00:00",
             "output_file": "task_outputs/capture_primary_journal_requirements.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-12T13:41:58.529642+00:00",
-          "total_tasks": 2,
+          "updated_at": "2026-04-12T14:40:19.050270+00:00",
+          "total_tasks": 3,
           "status_counts": {
             "proposed": 0,
             "queued": 0,
-            "running": 1,
+            "running": 2,
             "satisfied": 0,
             "blocked": 1,
             "stale": 0,
             "reopened": 0
           },
-          "open_critical_tasks": 2,
+          "open_critical_tasks": 3,
           "blocking_tasks": 1,
-          "running_tasks": 1
+          "running_tasks": 2
         },
         "scientific_strength_bar": {
           "score": 2,
@@ -2728,15 +2811,15 @@
     ],
     "watchlist": [
       {
-        "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
-        "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
-        "title": "Neuroinflammation / Microglial State Change biomarker panel",
-        "theme_key": "neuroinflammation_microglial_state_change",
-        "theme_label": "Neuroinflammation / Microglial State Change",
+        "candidate_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "pack_key": "most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse",
+        "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
+        "theme_key": "mitochondrial_bioenergetic_collapse",
+        "theme_label": "Mitochondrial / Bioenergetic Collapse",
         "family_id": "most_informative_biomarker_panel",
         "family_preference": 4,
-        "family_score": 1.07,
-        "confidence_score": 0.95,
+        "family_score": 1.005,
+        "confidence_score": 0.885,
         "value_score": 1.0,
         "support_status": "supported",
         "translation_maturity": "bounded",
@@ -2759,7 +2842,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-03-28 21:26:59",
+        "last_pack_refresh": "2026-04-12 14:40:18",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -3527,13 +3610,13 @@
         "journal_fit": 2,
         "draft_readiness": 0,
         "evidence_bundle_summary": {
-          "reference_count": 60,
-          "claim_count": 13,
-          "contradiction_count": 24,
+          "reference_count": 47,
+          "claim_count": 9,
+          "contradiction_count": 22,
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": false,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_135917.csv"
         },
         "task_ledger": [
           {
@@ -3552,8 +3635,8 @@
               "stale",
               "reopened"
             ],
-            "execution_note": "Generated contradiction brief for 24 issue(s); 5 remain blocking.",
-            "last_executed_at": "2026-04-12T13:41:58.520266+00:00",
+            "execution_note": "Generated contradiction brief for 22 issue(s); 4 remain blocking.",
+            "last_executed_at": "2026-04-12T14:40:19.055498+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -3573,7 +3656,7 @@
               "reopened"
             ],
             "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-            "last_executed_at": "2026-04-12T13:41:58.520345+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.055536+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -3593,12 +3676,12 @@
               "reopened"
             ],
             "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
-            "last_executed_at": "2026-04-12T13:41:58.520441+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.055556+00:00",
             "output_file": "task_outputs/capture_primary_journal_requirements.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-12T13:41:58.520462+00:00",
+          "updated_at": "2026-04-12T14:40:19.055563+00:00",
           "total_tasks": 3,
           "status_counts": {
             "proposed": 0,
@@ -3666,7 +3749,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-03-28 21:26:59",
+        "last_pack_refresh": "2026-04-12 14:40:18",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -4406,13 +4489,13 @@
         "journal_fit": 2,
         "draft_readiness": 0,
         "evidence_bundle_summary": {
-          "reference_count": 83,
+          "reference_count": 84,
           "claim_count": 14,
           "contradiction_count": 24,
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": false,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_135917.csv"
         },
         "task_ledger": [
           {
@@ -4432,7 +4515,7 @@
               "reopened"
             ],
             "execution_note": "Generated contradiction brief for 24 issue(s); 4 remain blocking.",
-            "last_executed_at": "2026-04-12T13:41:58.541916+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.071685+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -4452,7 +4535,7 @@
               "reopened"
             ],
             "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-            "last_executed_at": "2026-04-12T13:41:58.541972+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.071725+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -4472,12 +4555,12 @@
               "reopened"
             ],
             "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
-            "last_executed_at": "2026-04-12T13:41:58.541998+00:00",
+            "last_executed_at": "2026-04-12T14:40:19.071745+00:00",
             "output_file": "task_outputs/capture_primary_journal_requirements.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-12T13:41:58.542007+00:00",
+          "updated_at": "2026-04-12T14:40:19.071751+00:00",
           "total_tasks": 3,
           "status_counts": {
             "proposed": 0,

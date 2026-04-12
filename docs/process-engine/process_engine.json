@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "generated_at": "2026-04-11_150351",
-    "claims_csv": "reports/investigation_claims_2026-04-11_142140.csv",
-    "edges_csv": "reports/investigation_edges_2026-04-11_142140.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-11_142140.csv"
+    "generated_at": "2026-04-12_144016",
+    "claims_csv": "reports/investigation_claims_2026-04-12_143941.csv",
+    "edges_csv": "reports/investigation_edges_2026-04-12_143941.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-12_143941.csv"
   },
   "summary": {
     "lane_count": 6,
@@ -27,19 +27,19 @@
         "Use this lane as a likely bridge into peripheral immune infiltration and downstream neuroinflammation, but keep exact directionality evidence-bound in Phase 2."
       ],
       "lane_status": "longitudinally_supported",
-      "paper_count": 86,
-      "full_text_like_papers": 72,
+      "paper_count": 88,
+      "full_text_like_papers": 74,
       "abstract_only_papers": 14,
-      "claim_mentions": 121,
-      "edge_mentions": 86,
-      "unbucketed_mentions": 29,
+      "claim_mentions": 124,
+      "edge_mentions": 90,
+      "unbucketed_mentions": 30,
       "supported_buckets": 3,
       "provisional_buckets": 0,
       "weak_buckets": 0,
       "current_mechanism_overlap": [
         {
           "canonical_mechanism": "blood_brain_barrier_disruption",
-          "claim_mentions": 33
+          "claim_mentions": 35
         },
         {
           "canonical_mechanism": "neuroinflammation_microglial_activation",
@@ -99,15 +99,15 @@
       "top_cell_states": [
         {
           "label": "endothelial cell",
-          "count": 79
+          "count": 80
         },
         {
           "label": "astrocyte",
-          "count": 24
+          "count": 25
         },
         {
           "label": "neuron",
-          "count": 12
+          "count": 13
         },
         {
           "label": "leukocyte",
@@ -133,11 +133,11 @@
       "top_brain_regions": [
         {
           "label": "BBB",
-          "count": 127
+          "count": 133
         },
         {
           "label": "cortex",
-          "count": 34
+          "count": 35
         },
         {
           "label": "neurovascular unit",
@@ -174,16 +174,16 @@
         "41934291",
         "41465583",
         "41725719",
-        "41153827"
+        "41965904"
       ],
       "buckets": {
         "acute": {
           "status": "supported",
-          "paper_count": 56,
-          "full_text_like_papers": 50,
+          "paper_count": 57,
+          "full_text_like_papers": 51,
           "abstract_only_papers": 6,
-          "claim_mentions": 74,
-          "edge_mentions": 54,
+          "claim_mentions": 76,
+          "edge_mentions": 56,
           "anchor_pmids": [
             "41663365",
             "41642456",
@@ -233,7 +233,7 @@
           "cell_state_cues": [
             {
               "label": "endothelial cell",
-              "count": 53
+              "count": 54
             },
             {
               "label": "astrocyte",
@@ -255,7 +255,7 @@
           "brain_region_cues": [
             {
               "label": "BBB",
-              "count": 81
+              "count": 85
             },
             {
               "label": "cortex",
@@ -278,11 +278,11 @@
         },
         "subacute": {
           "status": "supported",
-          "paper_count": 26,
-          "full_text_like_papers": 24,
+          "paper_count": 28,
+          "full_text_like_papers": 26,
           "abstract_only_papers": 2,
-          "claim_mentions": 29,
-          "edge_mentions": 15,
+          "claim_mentions": 30,
+          "edge_mentions": 16,
           "anchor_pmids": [
             "41039850",
             "41153827",
@@ -336,29 +336,29 @@
             },
             {
               "label": "astrocyte",
-              "count": 4
+              "count": 5
             },
             {
               "label": "pericyte",
               "count": 4
             },
             {
-              "label": "axon",
-              "count": 2
+              "label": "neuron",
+              "count": 3
             },
             {
-              "label": "leukocyte",
+              "label": "axon",
               "count": 2
             }
           ],
           "brain_region_cues": [
             {
               "label": "BBB",
-              "count": 27
+              "count": 28
             },
             {
               "label": "cortex",
-              "count": 7
+              "count": 8
             },
             {
               "label": "neurovascular unit",
@@ -911,12 +911,12 @@
         "It likely consolidates upstream vascular and metabolic injury into chronic tissue-level damage, but specific transition edges belong in Phase 2."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 146,
-      "full_text_like_papers": 118,
+      "paper_count": 147,
+      "full_text_like_papers": 119,
       "abstract_only_papers": 28,
-      "claim_mentions": 304,
-      "edge_mentions": 264,
-      "unbucketed_mentions": 86,
+      "claim_mentions": 307,
+      "edge_mentions": 269,
+      "unbucketed_mentions": 91,
       "supported_buckets": 0,
       "provisional_buckets": 3,
       "weak_buckets": 0,
@@ -927,7 +927,7 @@
         },
         {
           "canonical_mechanism": "blood_brain_barrier_disruption",
-          "claim_mentions": 11
+          "claim_mentions": 12
         },
         {
           "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
@@ -983,7 +983,7 @@
         },
         {
           "label": "astrocyte",
-          "count": 55
+          "count": 56
         },
         {
           "label": "neuron",
@@ -1025,7 +1025,7 @@
         },
         {
           "label": "BBB",
-          "count": 32
+          "count": 34
         },
         {
           "label": "white matter",
@@ -1059,10 +1059,10 @@
       "buckets": {
         "acute": {
           "status": "provisional",
-          "paper_count": 76,
-          "full_text_like_papers": 66,
+          "paper_count": 77,
+          "full_text_like_papers": 67,
           "abstract_only_papers": 10,
-          "claim_mentions": 121,
+          "claim_mentions": 123,
           "edge_mentions": 106,
           "anchor_pmids": [
             "41103638",
@@ -1160,10 +1160,10 @@
         },
         "subacute": {
           "status": "provisional",
-          "paper_count": 80,
-          "full_text_like_papers": 68,
+          "paper_count": 81,
+          "full_text_like_papers": 69,
           "abstract_only_papers": 12,
-          "claim_mentions": 112,
+          "claim_mentions": 113,
           "edge_mentions": 93,
           "anchor_pmids": [
             "41734021",
@@ -1218,7 +1218,7 @@
             },
             {
               "label": "astrocyte",
-              "count": 24
+              "count": 25
             },
             {
               "label": "neuron",
@@ -1252,7 +1252,7 @@
             },
             {
               "label": "BBB",
-              "count": 8
+              "count": 9
             }
           ],
           "notes": [
@@ -1853,10 +1853,10 @@
         "Treat it as a plausible bridge from early structural/vascular disruption into chronic clearance failure and protein accumulation."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 88,
-      "full_text_like_papers": 68,
+      "paper_count": 89,
+      "full_text_like_papers": 69,
       "abstract_only_papers": 19,
-      "claim_mentions": 146,
+      "claim_mentions": 147,
       "edge_mentions": 123,
       "unbucketed_mentions": 57,
       "supported_buckets": 0,
@@ -1873,7 +1873,7 @@
         },
         {
           "canonical_mechanism": "blood_brain_barrier_disruption",
-          "claim_mentions": 6
+          "claim_mentions": 7
         },
         {
           "canonical_mechanism": "mitochondrial_bioenergetic_dysfunction",
@@ -1925,7 +1925,7 @@
       "top_cell_states": [
         {
           "label": "astrocyte",
-          "count": 157
+          "count": 158
         },
         {
           "label": "neuron",
@@ -1975,7 +1975,7 @@
         },
         {
           "label": "BBB",
-          "count": 15
+          "count": 16
         },
         {
           "label": "thalamus",
@@ -2106,10 +2106,10 @@
         },
         "subacute": {
           "status": "provisional",
-          "paper_count": 39,
-          "full_text_like_papers": 31,
+          "paper_count": 40,
+          "full_text_like_papers": 32,
           "abstract_only_papers": 8,
-          "claim_mentions": 56,
+          "claim_mentions": 57,
           "edge_mentions": 36,
           "anchor_pmids": [
             "41039850",
@@ -2160,7 +2160,7 @@
           "cell_state_cues": [
             {
               "label": "astrocyte",
-              "count": 61
+              "count": 62
             },
             {
               "label": "microglia",
@@ -2194,7 +2194,7 @@
             },
             {
               "label": "BBB",
-              "count": 5
+              "count": 6
             },
             {
               "label": "thalamus",

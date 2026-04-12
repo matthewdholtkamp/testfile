@@ -1,0 +1,12 @@
+{
+  "updated_at": "2026-04-12T14:40:18.975548+00:00",
+  "summary": {
+    "reference_count": 47,
+    "claim_count": 9,
+    "contradiction_count": 22,
+    "figure_count": 4,
+    "section_packet_count": 5,
+    "primary_journal_verified": false,
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_135917.csv"
+  }
+}

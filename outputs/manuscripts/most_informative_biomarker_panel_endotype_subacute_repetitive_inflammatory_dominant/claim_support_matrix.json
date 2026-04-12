@@ -1,0 +1,260 @@
+{
+  "updated_at": "2026-04-12T14:40:18.960759+00:00",
+  "claims": [
+    {
+      "claim_id": "phase6_candidate_thesis",
+      "phase_key": "phase6",
+      "claim_title": "Candidate manuscript thesis",
+      "claim_text": "Use IL-6, IL-1beta, TNF-alpha, GFAP to discriminate the subacute repetitive inflammatory-dominant endotype from nearby cohorts.",
+      "support_status": "supported",
+      "allowed_language": "Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.",
+      "supporting_pmids": [
+        "41173520",
+        "41446731",
+        "41740873",
+        "41740080",
+        "41847037",
+        "41508043",
+        "41709584"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant"
+      ],
+      "contradiction_notes": [
+        "The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers."
+      ],
+      "evidence_gaps": [],
+      "source_quality_mix": "full_text_like:3; abstract_only:4"
+    },
+    {
+      "claim_id": "phase1_neuroinflammation_microglial_state_change",
+      "phase_key": "phase1",
+      "claim_title": "Neuroinflammation / Microglial State Change",
+      "claim_text": "Innate immune activation, cytokine signaling, and microglial state transitions following TBI.",
+      "support_status": "longitudinally_seeded",
+      "allowed_language": "Use cautious wording and avoid definitive causal or clinical claims.",
+      "supporting_pmids": [
+        "41157272",
+        "41103638",
+        "41926211",
+        "41663365",
+        "41734021",
+        "41752185",
+        "41756234",
+        "41756282",
+        "41824127",
+        "41926540"
+      ],
+      "artifact_refs": [
+        "phase1:neuroinflammation_microglial_state_change"
+      ],
+      "contradiction_notes": [],
+      "evidence_gaps": [
+        "Acute bucket is only provisionally supported.",
+        "Subacute bucket is only provisionally supported.",
+        "Chronic bucket is only provisionally supported."
+      ],
+      "source_quality_mix": ""
+    },
+    {
+      "claim_id": "phase1_blood_brain_barrier_failure",
+      "phase_key": "phase1",
+      "claim_title": "Blood-Brain Barrier Failure",
+      "claim_text": "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.",
+      "support_status": "longitudinally_supported",
+      "allowed_language": "Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.",
+      "supporting_pmids": [
+        "41663365",
+        "41673382",
+        "41642456",
+        "41649131",
+        "41954515",
+        "41039850",
+        "41934291",
+        "41465583",
+        "41725719",
+        "41965904"
+      ],
+      "artifact_refs": [
+        "phase1:blood_brain_barrier_failure"
+      ],
+      "contradiction_notes": [],
+      "evidence_gaps": [
+        "All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling."
+      ],
+      "source_quality_mix": ""
+    },
+    {
+      "claim_id": "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "phase_key": "phase2",
+      "claim_title": "BBB permeability increase -> peripheral immune infiltration",
+      "claim_text": "Current TBI evidence supports a directional transition in which BBB permeability increase facilitates peripheral immune infiltration.",
+      "support_status": "supported",
+      "allowed_language": "Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.",
+      "supporting_pmids": [
+        "41709060",
+        "41740873",
+        "41683989"
+      ],
+      "artifact_refs": [
+        "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration"
+      ],
+      "contradiction_notes": [],
+      "evidence_gaps": [
+        "Some supporting rows are abstract-only and should be weighted cautiously.",
+        "Downstream lane is still seeded/provisional, so this transition should remain bounded."
+      ],
+      "source_quality_mix": "full_text_like:3; abstract_only:2"
+    },
+    {
+      "claim_id": "phase2_mitochondrial_ros_to_inflammasome_activation",
+      "phase_key": "phase2",
+      "claim_title": "Mitochondrial ROS -> inflammasome activation",
+      "claim_text": "Current TBI evidence suggests that mitochondrial ROS or related mitochondrial stress signals amplify inflammasome activation.",
+      "support_status": "provisional",
+      "allowed_language": "Use cautious, hypothesis-oriented wording and explicitly note boundedness.",
+      "supporting_pmids": [
+        "41480492",
+        "41103638",
+        "41709060"
+      ],
+      "artifact_refs": [
+        "phase2:mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "contradiction_notes": [],
+      "evidence_gaps": [
+        "Transition still needs denser direct support before it should be treated as hardened.",
+        "Timing support is incomplete or only partially aligned with the expected transition window.",
+        "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+        "Upstream lane still needs stronger longitudinal support."
+      ],
+      "source_quality_mix": "full_text_like:4"
+    },
+    {
+      "claim_id": "phase3_microglial_chronic_activation",
+      "phase_key": "phase3",
+      "claim_title": "Microglial Chronic Activation",
+      "claim_text": "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration.",
+      "support_status": "supported",
+      "allowed_language": "Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.",
+      "supporting_pmids": [
+        "41039850",
+        "41103638",
+        "41135688",
+        "41157272",
+        "41173520",
+        "41197779",
+        "41327381",
+        "41446731"
+      ],
+      "artifact_refs": [
+        "phase3:microglial_chronic_activation"
+      ],
+      "contradiction_notes": [],
+      "evidence_gaps": [
+        "Some supporting rows are abstract-only and should be weighted cautiously."
+      ],
+      "source_quality_mix": "full_text_like:362; abstract_only:84"
+    },
+    {
+      "claim_id": "phase4_neuroinflammation_microglial_state_change",
+      "phase_key": "phase4",
+      "claim_title": "Neuroinflammation / Microglial State Change",
+      "claim_text": "Blunt the inflammasome and cytokine network without pretending one marker equals the whole inflammatory state.",
+      "support_status": "bounded",
+      "allowed_language": "Use supported mechanistic language, but keep translational claims bounded and non-clinical.",
+      "supporting_pmids": [
+        "41157272",
+        "41103638",
+        "41926211",
+        "41663365",
+        "41734021",
+        "41752185",
+        "41756234",
+        "41756282",
+        "41824127",
+        "41926540",
+        "41480492",
+        "41622481",
+        "41659975",
+        "41683989",
+        "41709060",
+        "41712436"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "contradiction_notes": [
+        "Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
+        "Single-cytokine changes can overstate inflammatory control",
+        "keep this packet tied to a network-level cytokine plus glial-stress readout panel.",
+        "no direct compound or trial attachment surfaced in this build"
+      ],
+      "evidence_gaps": [],
+      "source_quality_mix": "lane 119 full-text-like / 28 abstract-only; direct target mentions 14 full-text-like / 3 abstract-only"
+    },
+    {
+      "claim_id": "phase4_blood_brain_barrier_failure",
+      "phase_key": "phase4",
+      "claim_title": "Blood-Brain Barrier Failure",
+      "claim_text": "Tight-junction repair and barrier stabilization before inflammatory spillover compounds the injury.",
+      "support_status": "bounded",
+      "allowed_language": "Use supported mechanistic language, but keep translational claims bounded and non-clinical.",
+      "supporting_pmids": [
+        "41663365",
+        "41673382",
+        "41642456",
+        "41649131",
+        "41954515",
+        "41039850",
+        "41934291",
+        "41465583",
+        "41725719",
+        "41965904",
+        "41532955",
+        "41622772",
+        "41751210",
+        "41752185",
+        "41709060",
+        "41740873"
+      ],
+      "artifact_refs": [
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "contradiction_notes": [
+        "Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover",
+        "keep barrier-module claims tied to permeability outcomes, not junction markers alone.",
+        "no direct compound or trial attachment surfaced in this build"
+      ],
+      "evidence_gaps": [],
+      "source_quality_mix": "lane 74 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only"
+    },
+    {
+      "claim_id": "phase5_subacute_repetitive_inflammatory_dominant",
+      "phase_key": "phase5",
+      "claim_title": "Subacute Repetitive Inflammatory-Dominant",
+      "claim_text": "This is the best current packet for distinguishing repetitive-TBI cohorts that may respond to inflammasome or glial-state perturbation before chronic tau biology hardens.",
+      "support_status": "usable",
+      "allowed_language": "Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.",
+      "supporting_pmids": [
+        "41173520",
+        "41446731",
+        "41740873",
+        "41740080",
+        "41847037",
+        "41508043",
+        "41709584"
+      ],
+      "artifact_refs": [
+        "phase5:subacute_repetitive_inflammatory_dominant"
+      ],
+      "contradiction_notes": [
+        "Repetitive cohorts can still carry unresolved vascular pressure, so an inflammatory label should stay bounded unless barrier readouts are also tracked."
+      ],
+      "evidence_gaps": [
+        "The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers."
+      ],
+      "source_quality_mix": "full_text_like:3; abstract_only:4"
+    }
+  ]
+}

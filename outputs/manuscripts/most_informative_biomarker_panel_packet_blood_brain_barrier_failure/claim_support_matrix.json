@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T13:41:58.078407+00:00",
+  "updated_at": "2026-04-12T14:40:18.935242+00:00",
   "claims": [
     {
       "claim_id": "phase6_candidate_thesis",
@@ -13,22 +13,22 @@
         "41673382",
         "41642456",
         "41649131",
+        "41954515",
         "41039850",
+        "41934291",
         "41465583",
         "41725719",
-        "41153827",
+        "41965904",
         "41532955",
-        "41709060",
-        "41752185",
         "41622772",
         "41751210",
+        "41752185",
+        "41709060",
         "41740873",
         "41683989",
         "41103638",
         "41135688",
-        "41157272",
-        "41173520",
-        "41197779"
+        "41157272"
       ],
       "artifact_refs": [
         "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure"
@@ -38,7 +38,7 @@
         "keep barrier-module claims tied to permeability outcomes, not junction markers alone."
       ],
       "evidence_gaps": [],
-      "source_quality_mix": "lane 53 full-text-like / 14 abstract-only; primary target seed 5 full-text-like hits across 5 match(es); direct target mentions 6 full-text-like / 0 abstract-only"
+      "source_quality_mix": "lane 74 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only"
     },
     {
       "claim_id": "phase1_blood_brain_barrier_failure",
@@ -57,7 +57,7 @@
         "41934291",
         "41465583",
         "41725719",
-        "41153827"
+        "41965904"
       ],
       "artifact_refs": [
         "phase1:blood_brain_barrier_failure"
@@ -114,7 +114,7 @@
       "evidence_gaps": [
         "Some supporting rows are abstract-only and should be weighted cautiously."
       ],
-      "source_quality_mix": "full_text_like:214; abstract_only:84"
+      "source_quality_mix": "full_text_like:362; abstract_only:84"
     },
     {
       "claim_id": "phase3_neurovascular_uncoupling",
@@ -142,7 +142,7 @@
         "Object remains seeded because parent coverage or direct evidence is still incomplete.",
         "Some supporting rows are abstract-only and should be weighted cautiously."
       ],
-      "source_quality_mix": "full_text_like:138; abstract_only:31"
+      "source_quality_mix": "full_text_like:186; abstract_only:31"
     },
     {
       "claim_id": "phase4_blood_brain_barrier_failure",
@@ -156,18 +156,18 @@
         "41673382",
         "41642456",
         "41649131",
+        "41954515",
         "41039850",
+        "41934291",
         "41465583",
         "41725719",
-        "41153827",
+        "41965904",
         "41532955",
-        "41709060",
-        "41752185",
         "41622772",
         "41751210",
-        "41740873",
-        "41683989",
-        "41103638"
+        "41752185",
+        "41709060",
+        "41740873"
       ],
       "artifact_refs": [
         "phase4:blood_brain_barrier_failure"
@@ -178,7 +178,7 @@
         "no direct compound or trial attachment surfaced in this build"
       ],
       "evidence_gaps": [],
-      "source_quality_mix": "lane 53 full-text-like / 14 abstract-only; primary target seed 5 full-text-like hits across 5 match(es); direct target mentions 6 full-text-like / 0 abstract-only"
+      "source_quality_mix": "lane 74 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only"
     },
     {
       "claim_id": "phase5_acute_mild_biomarker_imaging_bridge",
@@ -192,7 +192,8 @@
         "41737590",
         "41496386",
         "41173528",
-        "41126936"
+        "41126936",
+        "41893603"
       ],
       "artifact_refs": [
         "phase5:acute_mild_biomarker_imaging_bridge"
@@ -204,7 +205,7 @@
         "Subacute conversion rules are still thin",
         "the current packet is strongest at triage and early follow-up."
       ],
-      "source_quality_mix": "full_text_like:3; abstract_only:2"
+      "source_quality_mix": "full_text_like:4; abstract_only:2"
     },
     {
       "claim_id": "phase5_acute_severe_vascular_dominant",
@@ -221,7 +222,7 @@
         "41714686",
         "41731737",
         "41722498",
-        "41604614"
+        "41896418"
       ],
       "artifact_refs": [
         "phase5:acute_severe_vascular_dominant"
@@ -232,7 +233,7 @@
       "evidence_gaps": [
         "The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration."
       ],
-      "source_quality_mix": "full_text_like:3; abstract_only:5"
+      "source_quality_mix": "full_text_like:4; abstract_only:4"
     },
     {
       "claim_id": "phase5_acute_blast_vascular_inflammatory_mixed",
@@ -245,7 +246,8 @@
         "41809238",
         "41794317",
         "41596245",
-        "41723947"
+        "41723947",
+        "41880282"
       ],
       "artifact_refs": [
         "phase5:acute_blast_vascular_inflammatory_mixed"
@@ -256,7 +258,7 @@
       "evidence_gaps": [
         "Cohort granularity is still thin, and the current packet needs better direct imaging anchors."
       ],
-      "source_quality_mix": "full_text_like:2; abstract_only:2"
+      "source_quality_mix": "full_text_like:3; abstract_only:2"
     },
     {
       "claim_id": "phase5_subacute_repetitive_inflammatory_dominant",

@@ -1,0 +1,59 @@
+{
+  "updated_at": "2026-04-12T14:40:18.974435+00:00",
+  "figures": [
+    {
+      "figure_id": "figure_1",
+      "title": "Phase 1 to Phase 5 evidence chain for the manuscript path",
+      "purpose": "Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.",
+      "source_artifacts": [
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase2:mitochondrial_ros_to_inflammasome_activation",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse",
+        "phase5:acute_severe_vascular_dominant",
+        "phase5:chronic_mild_metabolic_white_matter_dominant",
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "allowed_conclusion": "This figure supports the structure of the evidence chain, not a claim of clinical proof."
+    },
+    {
+      "figure_id": "figure_2",
+      "title": "Biomarker and readout panel for the lead translational packet",
+      "purpose": "Show the candidate biomarker panel, expected readouts, time windows, and sample types.",
+      "source_artifacts": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "allowed_conclusion": "This figure supports the proposed readout spine and experimental logic, not treatment efficacy."
+    },
+    {
+      "figure_id": "figure_3",
+      "title": "Downstream burden and endotype context",
+      "purpose": "Show the progression objects (Persistent Metabolic Dysfunction, Microglial Chronic Activation) and the linked endotypes (Acute Severe Vascular-Dominant, Chronic Mild Metabolic / White Matter Dominant, Chronic Severe Axonal / Network Decline).",
+      "source_artifacts": [
+        "phase3:persistent_metabolic_dysfunction",
+        "phase3:microglial_chronic_activation",
+        "phase5:acute_severe_vascular_dominant",
+        "phase5:chronic_mild_metabolic_white_matter_dominant",
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "allowed_conclusion": "This figure supports context and stratification framing only."
+    },
+    {
+      "figure_id": "figure_4",
+      "title": "Evidence boundaries and contradiction map",
+      "purpose": "Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.",
+      "source_artifacts": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase2:mitochondrial_ros_to_inflammasome_activation",
+        "phase4:mitochondrial_bioenergetic_collapse",
+        "phase5:acute_severe_vascular_dominant",
+        "phase5:chronic_mild_metabolic_white_matter_dominant",
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "allowed_conclusion": "This figure is explicitly a limitation and boundedness figure.",
+      "contradiction_count": 22
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+{
+  "updated_at": "2026-04-12T14:40:18.973917+00:00",
+  "issues": [
+    {
+      "issue_id": "phase6_most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse_1",
+      "phase_key": "phase6",
+      "artifact_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+      "artifact_label": "Mitochondrial / Bioenergetic Collapse biomarker panel",
+      "statement": "Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase6_candidate_thesis"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase6_most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse_2",
+      "phase_key": "phase6",
+      "artifact_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+      "artifact_label": "Mitochondrial / Bioenergetic Collapse biomarker panel",
+      "statement": "Oxidative-stress markers may improve without real ATP rescue or downstream inflammasome relief",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase6_candidate_thesis"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase6_most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse_3",
+      "phase_key": "phase6",
+      "artifact_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+      "artifact_label": "Mitochondrial / Bioenergetic Collapse biomarker panel",
+      "statement": "keep this packet tied to both mitochondrial and inflammatory readouts.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase6_candidate_thesis"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_mitochondrial_bioenergetic_collapse_4",
+      "phase_key": "phase1",
+      "artifact_id": "mitochondrial_bioenergetic_collapse",
+      "artifact_label": "Mitochondrial / Bioenergetic Collapse",
+      "statement": "Acute bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_mitochondrial_bioenergetic_collapse"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_mitochondrial_bioenergetic_collapse_5",
+      "phase_key": "phase1",
+      "artifact_id": "mitochondrial_bioenergetic_collapse",
+      "artifact_label": "Mitochondrial / Bioenergetic Collapse",
+      "statement": "Subacute bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_mitochondrial_bioenergetic_collapse"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_mitochondrial_bioenergetic_collapse_6",
+      "phase_key": "phase1",
+      "artifact_id": "mitochondrial_bioenergetic_collapse",
+      "artifact_label": "Mitochondrial / Bioenergetic Collapse",
+      "statement": "Chronic bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_mitochondrial_bioenergetic_collapse"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_mitochondrial_bioenergetic_collapse_7",
+      "phase_key": "phase1",
+      "artifact_id": "mitochondrial_bioenergetic_collapse",
+      "artifact_label": "Mitochondrial / Bioenergetic Collapse",
+      "statement": "Promoted from existing atlas mechanism coverage: mitochondrial bioenergetic dysfunction.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_mitochondrial_bioenergetic_collapse"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_mitochondrial_ros_to_inflammasome_activation_8",
+      "phase_key": "phase2",
+      "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
+      "artifact_label": "Mitochondrial ROS -> inflammasome activation",
+      "statement": "Transition still needs denser direct support before it should be treated as hardened.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_mitochondrial_ros_to_inflammasome_activation_9",
+      "phase_key": "phase2",
+      "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
+      "artifact_label": "Mitochondrial ROS -> inflammasome activation",
+      "statement": "Timing support is incomplete or only partially aligned with the expected transition window.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_mitochondrial_ros_to_inflammasome_activation_10",
+      "phase_key": "phase2",
+      "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
+      "artifact_label": "Mitochondrial ROS -> inflammasome activation",
+      "statement": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_mitochondrial_ros_to_inflammasome_activation_11",
+      "phase_key": "phase2",
+      "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
+      "artifact_label": "Mitochondrial ROS -> inflammasome activation",
+      "statement": "Upstream lane still needs stronger longitudinal support.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase3_persistent_metabolic_dysfunction_12",
+      "phase_key": "phase3",
+      "artifact_id": "persistent_metabolic_dysfunction",
+      "artifact_label": "Persistent Metabolic Dysfunction",
+      "statement": "Object still needs denser direct support before it should be treated as hardened.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase3_persistent_metabolic_dysfunction",
+        "phase3_microglial_chronic_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase3_persistent_metabolic_dysfunction_13",
+      "phase_key": "phase3",
+      "artifact_id": "persistent_metabolic_dysfunction",
+      "artifact_label": "Persistent Metabolic Dysfunction",
+      "statement": "Some supporting rows are abstract-only and should be weighted cautiously.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase3_persistent_metabolic_dysfunction",
+        "phase3_microglial_chronic_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase3_persistent_metabolic_dysfunction_14",
+      "phase_key": "phase3",
+      "artifact_id": "persistent_metabolic_dysfunction",
+      "artifact_label": "Persistent Metabolic Dysfunction",
+      "statement": "Contradiction-bearing evidence is present and needs adjudication before stronger promotion.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase3_persistent_metabolic_dysfunction",
+        "phase3_microglial_chronic_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_mitochondrial_bioenergetic_collapse_15",
+      "phase_key": "phase4",
+      "artifact_id": "mitochondrial_bioenergetic_collapse",
+      "artifact_label": "Mitochondrial / Bioenergetic Collapse",
+      "statement": "no direct compound or trial attachment surfaced in this build",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_severe_vascular_dominant_16",
+      "phase_key": "phase5",
+      "artifact_id": "acute_severe_vascular_dominant",
+      "artifact_label": "Acute Severe Vascular-Dominant",
+      "statement": "Severe acute cohorts can look inflammatory quickly, but that does not mean inflammation is the dominant upstream driver in the first window.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_mild_metabolic_white_matter_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_severe_vascular_dominant_17",
+      "phase_key": "phase5",
+      "artifact_id": "acute_severe_vascular_dominant",
+      "artifact_label": "Acute Severe Vascular-Dominant",
+      "statement": "The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_mild_metabolic_white_matter_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_chronic_mild_metabolic_white_matter_dominant_18",
+      "phase_key": "phase5",
+      "artifact_id": "chronic_mild_metabolic_white_matter_dominant",
+      "artifact_label": "Chronic Mild Metabolic / White Matter Dominant",
+      "statement": "White matter and metabolic signals can remain abnormal without proving that metabolism is upstream",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_mild_metabolic_white_matter_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_chronic_mild_metabolic_white_matter_dominant_19",
+      "phase_key": "phase5",
+      "artifact_id": "chronic_mild_metabolic_white_matter_dominant",
+      "artifact_label": "Chronic Mild Metabolic / White Matter Dominant",
+      "statement": "keep axonal and vascular alternatives visible.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_mild_metabolic_white_matter_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_chronic_mild_metabolic_white_matter_dominant_20",
+      "phase_key": "phase5",
+      "artifact_id": "chronic_mild_metabolic_white_matter_dominant",
+      "artifact_label": "Chronic Mild Metabolic / White Matter Dominant",
+      "statement": "The packet still needs stronger direct chronic metabolomic and transcriptomic cohort anchors.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_mild_metabolic_white_matter_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_chronic_severe_axonal_network_decline_21",
+      "phase_key": "phase5",
+      "artifact_id": "chronic_severe_axonal_network_decline",
+      "artifact_label": "Chronic Severe Axonal / Network Decline",
+      "statement": "Chronic severe cohorts often mix irreversible structural burden with still-perturbable metabolic pressure, so a single-label interpretation will overstate certainty.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_mild_metabolic_white_matter_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_chronic_severe_axonal_network_decline_22",
+      "phase_key": "phase5",
+      "artifact_id": "chronic_severe_axonal_network_decline",
+      "artifact_label": "Chronic Severe Axonal / Network Decline",
+      "statement": "The current packet needs stronger biomarker plus longitudinal-function linkages.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_mild_metabolic_white_matter_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    }
+  ]
+}

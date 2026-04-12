@@ -1,0 +1,308 @@
+{
+  "updated_at": "2026-04-12T14:40:18.955843+00:00",
+  "candidate_id": "most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
+  "pack_key": "most_informative_biomarker_panel_endotype_subacute_repetitive_inflammatory_dominant",
+  "candidate_title": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
+  "theme_key": "subacute_repetitive_inflammatory_dominant",
+  "manuscript_gate_state": "almost ready",
+  "scientific_strength": 2,
+  "journal_fit": 2,
+  "journal_shortlist_score": 2,
+  "journal_verified_fit_score": 0,
+  "journal_requirements_checked": false,
+  "draft_readiness": 1,
+  "active_lane": true,
+  "watchlist_rank": null,
+  "publication_status": "",
+  "primary_journal": {
+    "id": "journal-of-neurotrauma",
+    "name": "Journal of Neurotrauma",
+    "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
+    "submission_tier": "realistic",
+    "registry_role": "core",
+    "audiences": [
+      "neurotrauma",
+      "mechanism",
+      "biomarker",
+      "translational"
+    ],
+    "manuscript_modes": [
+      "mechanistic_biomarker",
+      "mechanistic_bridge",
+      "translational_tbi",
+      "endotype_discriminator"
+    ],
+    "preferred_article_types": [
+      "original research",
+      "review",
+      "commentary"
+    ],
+    "primary_fit_families": [
+      "most_informative_biomarker_panel",
+      "strongest_causal_bridge",
+      "best_intervention_leverage_point"
+    ],
+    "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
+  },
+  "backup_journals": [
+    {
+      "id": "frontiers-in-neurology",
+      "name": "Frontiers in Neurology",
+      "homepage": "https://www.frontiersin.org/journals/neurology",
+      "submission_tier": "realistic",
+      "registry_role": "discovery",
+      "audiences": [
+        "neurology",
+        "neurotrauma",
+        "biomarker",
+        "systems_neuroscience"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "endotype_discriminator",
+        "methods_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "hypothesis and theory"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge"
+      ],
+      "notes": "Broad neurological venue that is sometimes useful when the story is mechanistic and cross-cutting rather than strictly critical-care focused."
+    },
+    {
+      "id": "neurocritical-care",
+      "name": "Neurocritical Care",
+      "homepage": "https://link.springer.com/journal/12028",
+      "submission_tier": "realistic",
+      "registry_role": "core",
+      "audiences": [
+        "neurocritical",
+        "neurotrauma",
+        "biomarker",
+        "translational"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "translational_tbi"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "brief report"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge",
+        "best_intervention_leverage_point"
+      ],
+      "notes": "High-fit specialty venue for neurocritical and acute-severity framing, especially when readouts and translational logic are explicit."
+    }
+  ],
+  "article_type_candidates": [
+    "review",
+    "original research",
+    "hypothesis and theory",
+    "brief report"
+  ],
+  "manuscript_modes": [
+    "endotype_discriminator",
+    "mechanistic_biomarker"
+  ],
+  "phase_links": {
+    "phase1": [
+      "neuroinflammation_microglial_state_change",
+      "blood_brain_barrier_failure"
+    ],
+    "phase2": [
+      "bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "mitochondrial_ros_to_inflammasome_activation"
+    ],
+    "phase3": [
+      "microglial_chronic_activation"
+    ],
+    "phase4": [
+      "neuroinflammation_microglial_state_change",
+      "blood_brain_barrier_failure"
+    ],
+    "phase5": [
+      "subacute_repetitive_inflammatory_dominant"
+    ]
+  },
+  "expected_readouts": [
+    "IL-6",
+    "IL-1beta",
+    "TNF-alpha",
+    "GFAP",
+    "limbic white matter microstructure",
+    "DTI diffuse injury signal"
+  ],
+  "blockers": [
+    "The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers."
+  ],
+  "contradiction_notes": [],
+  "evidence_gaps": [],
+  "source_row": {
+    "candidate_id": "most_informative_biomarker_panel::endotype::subacute_repetitive_inflammatory_dominant",
+    "family_id": "most_informative_biomarker_panel",
+    "family_label": "Most Informative Biomarker Panel",
+    "ranking_family": "most_informative_biomarker_panel",
+    "candidate_type": "endotype",
+    "canonical_mechanism": "neuroinflammation_microglial_activation",
+    "display_name": "Subacute Repetitive Inflammatory-Dominant",
+    "title": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
+    "statement": "Use IL-6, IL-1beta, TNF-alpha, GFAP to discriminate the subacute repetitive inflammatory-dominant endotype from nearby cohorts.",
+    "support_status": "supported",
+    "novelty_status": "tbi_emergent",
+    "strength_tag": "assertive",
+    "operator_decision": "Write now",
+    "confidence_score": 0.946,
+    "value_score": 1.0,
+    "core_family_score": 0.946,
+    "novelty_bonus": 0.06,
+    "family_score": 1.006,
+    "target_lane_ids": [
+      "neuroinflammation_microglial_state_change",
+      "blood_brain_barrier_failure"
+    ],
+    "linked_phase1_lane_ids": [
+      "neuroinflammation_microglial_state_change",
+      "blood_brain_barrier_failure"
+    ],
+    "parent_transition_ids": [
+      "bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "mitochondrial_ros_to_inflammasome_activation"
+    ],
+    "linked_phase2_transition_ids": [
+      "bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "mitochondrial_ros_to_inflammasome_activation"
+    ],
+    "parent_object_ids": [
+      "microglial_chronic_activation"
+    ],
+    "linked_phase3_object_ids": [
+      "microglial_chronic_activation"
+    ],
+    "parent_translational_packet_ids": [
+      "neuroinflammation_microglial_state_change",
+      "blood_brain_barrier_failure"
+    ],
+    "linked_phase4_packet_ids": [
+      "neuroinflammation_microglial_state_change",
+      "blood_brain_barrier_failure"
+    ],
+    "parent_endotype_ids": [
+      "subacute_repetitive_inflammatory_dominant"
+    ],
+    "linked_phase5_endotype_ids": [
+      "subacute_repetitive_inflammatory_dominant"
+    ],
+    "rationale": "IL-6 / TNF-alpha / GFAP with repetitive exposure history plus DTI or white matter stress cues.",
+    "decision_rationale": "IL-6 / TNF-alpha / GFAP with repetitive exposure history plus DTI or white matter stress cues.",
+    "why_now": "This panel is where Phase 5 endotype logic becomes measurable instead of purely descriptive.",
+    "source_quality_mix": "full_text_like:3; abstract_only:4",
+    "anchor_pmids": [
+      "41173520",
+      "41446731",
+      "41740873",
+      "41740080",
+      "41847037",
+      "41508043",
+      "41709584"
+    ],
+    "supporting_pmids": "41173520; 41446731; 41740873; 41740080; 41847037; 41508043; 41709584",
+    "provenance_refs": [
+      "phase1:neuroinflammation_microglial_state_change",
+      "phase1:blood_brain_barrier_failure",
+      "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "phase2:mitochondrial_ros_to_inflammasome_activation",
+      "phase3:microglial_chronic_activation",
+      "phase4:neuroinflammation_microglial_state_change",
+      "phase4:blood_brain_barrier_failure",
+      "phase5:subacute_repetitive_inflammatory_dominant"
+    ],
+    "blockers": "The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.",
+    "next_test": "Which repetitive cohorts still look barrier-conditioned in the subacute window, and which ones are already dominated by persistent microglial activation?",
+    "unlocks": "A stronger cohort panel makes Phase 5 more than a literature description by giving it a real discriminator set.",
+    "hypothesis_type": "most_informative_biomarker_panel",
+    "panel_members": [
+      "IL-6",
+      "IL-1beta",
+      "TNF-alpha",
+      "GFAP",
+      "limbic white matter microstructure",
+      "DTI diffuse injury signal"
+    ],
+    "biomarker_panel": [
+      "IL-6",
+      "IL-1beta",
+      "TNF-alpha",
+      "GFAP",
+      "limbic white matter microstructure",
+      "DTI diffuse injury signal"
+    ],
+    "expected_readouts": [
+      "IL-6",
+      "IL-1beta",
+      "TNF-alpha",
+      "GFAP",
+      "limbic white matter microstructure",
+      "DTI diffuse injury signal"
+    ],
+    "sample_type": "multimodal",
+    "time_window": "subacute",
+    "readout_time_horizon": "subacute",
+    "expected_direction": "pattern_split",
+    "endotype_discrimination_score": 0.7,
+    "feasibility_score": 0.6,
+    "redundancy_penalty": 0.0,
+    "rank": 2,
+    "steering_score": 0.55,
+    "steering_reasons": [
+      "favored_family",
+      "favored_mechanism",
+      "favored_endotype",
+      "advance_supported"
+    ],
+    "portfolio_role": "highest_value_now"
+  },
+  "ready_for_codex_draft": false,
+  "evidence_bundle": {
+    "reference_count": 63,
+    "claim_count": 9,
+    "contradiction_count": 19,
+    "figure_count": 4,
+    "section_packet_count": 5,
+    "primary_journal_verified": false,
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_135917.csv"
+  },
+  "task_execution": {
+    "updated_at": "2026-04-12T14:40:18.955832+00:00",
+    "total_tasks": 3,
+    "status_counts": {
+      "proposed": 0,
+      "queued": 0,
+      "running": 2,
+      "satisfied": 0,
+      "blocked": 1,
+      "stale": 0,
+      "reopened": 0
+    },
+    "open_critical_tasks": 3,
+    "blocking_tasks": 1,
+    "running_tasks": 2
+  },
+  "improvement_window": {
+    "default_pass_target": 3,
+    "hard_cap": 5,
+    "meaningful_improvement_requires": [
+      "scientific_strength",
+      "journal_fit"
+    ]
+  }
+}
