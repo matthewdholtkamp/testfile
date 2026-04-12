@@ -1,33 +1,33 @@
 {
-  "updated_at": "2026-04-12T19:25:47.556430+00:00",
+  "updated_at": "2026-04-12T19:36:50.437877+00:00",
   "artifacts": [
     {
       "phase_key": "phase6",
       "artifact_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
       "label": "Blood-Brain Barrier Failure biomarker panel",
-      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-03-28_212659.json",
+      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-12_193649.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41663365",
         "41673382",
         "41642456",
         "41649131",
+        "41954515",
         "41039850",
+        "41934291",
         "41465583",
         "41725719",
-        "41153827",
+        "41965904",
         "41532955",
-        "41709060",
-        "41752185",
         "41622772",
         "41751210",
+        "41752185",
+        "41709060",
         "41740873",
         "41683989",
         "41103638",
         "41135688",
-        "41157272",
-        "41173520",
-        "41197779"
+        "41157272"
       ]
     },
     {
@@ -54,7 +54,7 @@
       "phase_key": "phase2",
       "artifact_id": "bbb_permeability_increase_to_peripheral_immune_infiltration",
       "label": "BBB permeability increase -> peripheral immune infiltration",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-03-29_022656.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-12_193647.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41709060",
@@ -67,7 +67,7 @@
       "phase_key": "phase3",
       "artifact_id": "microglial_chronic_activation",
       "label": "Microglial Chronic Activation",
-      "source_path": "reports/progression_objects/progression_object_index_2026-03-29_022657.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-12_193648.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41039850",
@@ -79,13 +79,13 @@
         "41327381",
         "41446731"
       ],
-      "source_quality_mix": "full_text_like:214; abstract_only:84"
+      "source_quality_mix": "full_text_like:362; abstract_only:84"
     },
     {
       "phase_key": "phase3",
       "artifact_id": "neurovascular_uncoupling",
       "label": "Neurovascular Uncoupling",
-      "source_path": "reports/progression_objects/progression_object_index_2026-03-29_022657.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-12_193648.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41039850",
@@ -97,54 +97,55 @@
         "41267966",
         "41328339"
       ],
-      "source_quality_mix": "full_text_like:138; abstract_only:31"
+      "source_quality_mix": "full_text_like:186; abstract_only:31"
     },
     {
       "phase_key": "phase4",
       "artifact_id": "blood_brain_barrier_failure",
       "label": "Blood-Brain Barrier Failure",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-03-28_212658.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-12_193649.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41663365",
         "41673382",
         "41642456",
         "41649131",
+        "41954515",
         "41039850",
+        "41934291",
         "41465583",
         "41725719",
-        "41153827",
+        "41965904",
         "41532955",
-        "41709060",
-        "41752185",
         "41622772",
         "41751210",
-        "41740873",
-        "41683989",
-        "41103638"
+        "41752185",
+        "41709060",
+        "41740873"
       ],
-      "source_quality_mix": "lane 53 full-text-like / 14 abstract-only; primary target seed 5 full-text-like hits across 5 match(es); direct target mentions 6 full-text-like / 0 abstract-only"
+      "source_quality_mix": "lane 74 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only"
     },
     {
       "phase_key": "phase5",
       "artifact_id": "acute_mild_biomarker_imaging_bridge",
       "label": "Acute Mild Biomarker / Imaging Bridge",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-03-29_022658.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-12_193649.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41707328",
         "41737590",
         "41496386",
         "41173528",
-        "41126936"
+        "41126936",
+        "41893603"
       ],
-      "source_quality_mix": "full_text_like:3; abstract_only:2"
+      "source_quality_mix": "full_text_like:4; abstract_only:2"
     },
     {
       "phase_key": "phase5",
       "artifact_id": "acute_severe_vascular_dominant",
       "label": "Acute Severe Vascular-Dominant",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-03-29_022658.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-12_193649.json",
       "support_status": "usable",
       "anchor_pmids": [
         "41700282",
@@ -154,29 +155,30 @@
         "41714686",
         "41731737",
         "41722498",
-        "41604614"
+        "41896418"
       ],
-      "source_quality_mix": "full_text_like:3; abstract_only:5"
+      "source_quality_mix": "full_text_like:4; abstract_only:4"
     },
     {
       "phase_key": "phase5",
       "artifact_id": "acute_blast_vascular_inflammatory_mixed",
       "label": "Acute Blast Vascular / Inflammatory Mixed",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-03-29_022658.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-12_193649.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41809238",
         "41794317",
         "41596245",
-        "41723947"
+        "41723947",
+        "41880282"
       ],
-      "source_quality_mix": "full_text_like:2; abstract_only:2"
+      "source_quality_mix": "full_text_like:3; abstract_only:2"
     },
     {
       "phase_key": "phase5",
       "artifact_id": "subacute_repetitive_inflammatory_dominant",
       "label": "Subacute Repetitive Inflammatory-Dominant",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-03-29_022658.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-12_193649.json",
       "support_status": "usable",
       "anchor_pmids": [
         "41173520",

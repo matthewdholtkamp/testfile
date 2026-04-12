@@ -7,16 +7,16 @@
 - **Support status:** supported
 - **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
 - **Artifact refs:** phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure
-- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41752185, 41622772, 41751210, 41740873, 41683989, 41103638, 41135688, 41157272, 41173520, 41197779
+- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904, 41532955, 41622772, 41751210, 41752185, 41709060, 41740873, 41683989, 41103638, 41135688, 41157272
 - **Reference details:**
   - PMID:41663365.
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
+  - Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.
   - PMID:41039850.
+  - Mayer AR, Wick TV, Miller S, Connors KE, Sasi Kumar D, Meier TB, van der Horn HJ, Nathaniel U, Ling JM, Mehos Milliken CJ, Warren K, Patton DA, Gigliotti AP, Zotev V, Kinsler RE, Mannix R. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. Journal of cerebral blood flow and metabolism : official journal of the International Society of Cerebral Blood Flow and Metabolism 2026 Apr 04. doi:10.1177/0271678X261432754. PMID:41934291.
   - PMID:41465583.
-  - Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.
-  - PMID:41153827.
 - **Contradictions:** Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone.
 
 ## Blood-Brain Barrier Failure
@@ -32,9 +32,9 @@
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
-  - PMID:41954515.
+  - Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.
   - PMID:41039850.
-  - PMID:41934291.
+  - Mayer AR, Wick TV, Miller S, Connors KE, Sasi Kumar D, Meier TB, van der Horn HJ, Nathaniel U, Ling JM, Mehos Milliken CJ, Warren K, Patton DA, Gigliotti AP, Zotev V, Kinsler RE, Mannix R. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. Journal of cerebral blood flow and metabolism : official journal of the International Society of Cerebral Blood Flow and Metabolism 2026 Apr 04. doi:10.1177/0271678X261432754. PMID:41934291.
   - PMID:41465583.
 - **Evidence gaps:** All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.
 
@@ -97,16 +97,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:blood_brain_barrier_failure
-- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41752185, 41622772, 41751210, 41740873, 41683989, 41103638
+- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904, 41532955, 41622772, 41751210, 41752185, 41709060, 41740873
 - **Reference details:**
   - PMID:41663365.
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
+  - Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.
   - PMID:41039850.
+  - Mayer AR, Wick TV, Miller S, Connors KE, Sasi Kumar D, Meier TB, van der Horn HJ, Nathaniel U, Ling JM, Mehos Milliken CJ, Warren K, Patton DA, Gigliotti AP, Zotev V, Kinsler RE, Mannix R. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. Journal of cerebral blood flow and metabolism : official journal of the International Society of Cerebral Blood Flow and Metabolism 2026 Apr 04. doi:10.1177/0271678X261432754. PMID:41934291.
   - PMID:41465583.
-  - Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.
-  - PMID:41153827.
 - **Contradictions:** Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone. | no direct compound or trial attachment surfaced in this build
 
 ## Acute Mild Biomarker / Imaging Bridge
@@ -116,13 +116,14 @@
 - **Support status:** bounded
 - **Allowed language:** Use cohort-language as suggestive context only, not as a locked endotype claim.
 - **Artifact refs:** phase5:acute_mild_biomarker_imaging_bridge
-- **Support PMIDs:** 41707328, 41737590, 41496386, 41173528, 41126936
+- **Support PMIDs:** 41707328, 41737590, 41496386, 41173528, 41126936, 41893603
 - **Reference details:**
   - Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients. PMID:41707328.
   - Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers. PMID:41737590.
   - Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. PMID:41496386.
   - Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries. PMID:41173528.
   - Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review. PMID:41126936.
+  - Stavitz J, Swan K, Eckart A, Koc T, Tucker J, Gentile JT, Ghimire PS, Porcelli R. Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation. Sports (Basel, Switzerland) 2026 Mar 13. doi:10.3390/sports14030112. PMID:41893603.
 - **Contradictions:** Acute biomarker spikes can reflect injury burden without resolving the dominant process, and imaging can remain subtle despite strong circulating markers.
 - **Evidence gaps:** Subacute conversion rules are still thin | the current packet is strongest at triage and early follow-up.
 
@@ -133,7 +134,7 @@
 - **Support status:** usable
 - **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
 - **Artifact refs:** phase5:acute_severe_vascular_dominant
-- **Support PMIDs:** 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41604614
+- **Support PMIDs:** 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41896418
 - **Reference details:**
   - Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury. PMID:41700282.
   - Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.
@@ -142,7 +143,7 @@
   - Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study. PMID:41714686.
   - Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience. PMID:41731737.
   - Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use. PMID:41722498.
-  - Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury. PMID:41604614.
+  - Cela E, Tweddell D, Daley M, Morello M, Cepinskas G, Fraser DD. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. Inflammation research : official journal of the European Histamine Research Society ... [et al.] 2026 Mar 27. doi:10.1007/s00011-026-02209-6. PMID:41896418.
 - **Contradictions:** Severe acute cohorts can look inflammatory quickly, but that does not mean inflammation is the dominant upstream driver in the first window.
 - **Evidence gaps:** The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.
 
@@ -153,12 +154,13 @@
 - **Support status:** bounded
 - **Allowed language:** Use cohort-language as suggestive context only, not as a locked endotype claim.
 - **Artifact refs:** phase5:acute_blast_vascular_inflammatory_mixed
-- **Support PMIDs:** 41809238, 41794317, 41596245, 41723947
+- **Support PMIDs:** 41809238, 41794317, 41596245, 41723947, 41880282
 - **Reference details:**
   - Lam TK, Rhind SG, Tenn C, Nakashima A, Shiu MY, King K, Caddy N, Vallikanthan J, Crouzat M, Lester L, Vartanian O. One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel. Neuroimage. Reports 2026 Mar. doi:10.1016/j.ynirp.2026.100335. PMID:41809238.
   - Identification of immune cell subsets involved in retinal ganglion cell damage following blast exposure. PMID:41794317.
   - Integrated Blood Biomarker and Neurobehavioural Signatures of Latent Neuroinjury in Experienced Military Breachers Exposed to Repetitive Low-Intensity Blast. PMID:41596245.
   - Pituitary hormone abnormalities following military-related traumatic brain injuries. PMID:41723947.
+  - Wang Y, Yang N, Chen X, Chen X, Ning Y, Yuan R. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PloS one 2026. doi:10.1371/journal.pone.0344993. PMID:41880282.
 - **Contradictions:** Blast cohorts often mix repetitive exposure, endocrine injury, and vascular stress, so clean one-driver interpretations are likely to overstate certainty.
 - **Evidence gaps:** Cohort granularity is still thin, and the current packet needs better direct imaging anchors.
 
@@ -175,7 +177,7 @@
   - MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. PMID:41446731.
   - Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. PMID:41740873.
   - Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. PMID:41740080.
-  - PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.
+  - Criado-Marrero M, Ravi S, Barroso D, Garza TN, Cuestas Torres DM, Lessard C, Castano JP, Bolen ML, Rubinovich U, Prokop S, Chakrabarty P, Ranum LPW, Febo M, Abisambra JF. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv : the preprint server for biology 2026 Mar 06. doi:10.64898/2026.03.04.709563. PMID:41847037.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. PMID:41709584.
 - **Contradictions:** Repetitive cohorts can still carry unresolved vascular pressure, so an inflammatory label should stay bounded unless barrier readouts are also tracked.

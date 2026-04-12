@@ -1,0 +1,57 @@
+{
+  "updated_at": "2026-04-12T19:36:50.463447+00:00",
+  "figures": [
+    {
+      "figure_id": "figure_1",
+      "title": "Phase 1 to Phase 5 evidence chain for the manuscript path",
+      "purpose": "Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.",
+      "source_artifacts": [
+        "phase1:neuroinflammation_microglial_state_change",
+        "phase1:blood_brain_barrier_failure",
+        "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase2:mitochondrial_ros_to_inflammasome_activation",
+        "phase3:microglial_chronic_activation",
+        "phase4:neuroinflammation_microglial_state_change",
+        "phase4:blood_brain_barrier_failure",
+        "phase5:subacute_repetitive_inflammatory_dominant"
+      ],
+      "allowed_conclusion": "This figure supports the structure of the evidence chain, not a claim of clinical proof."
+    },
+    {
+      "figure_id": "figure_2",
+      "title": "Biomarker and readout panel for the lead translational packet",
+      "purpose": "Show the candidate biomarker panel, expected readouts, time windows, and sample types.",
+      "source_artifacts": [
+        "phase6:most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
+        "phase4:neuroinflammation_microglial_state_change",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "allowed_conclusion": "This figure supports the proposed readout spine and experimental logic, not treatment efficacy."
+    },
+    {
+      "figure_id": "figure_3",
+      "title": "Downstream burden and endotype context",
+      "purpose": "Show the progression objects (Microglial Chronic Activation) and the linked endotypes (Subacute Repetitive Inflammatory-Dominant).",
+      "source_artifacts": [
+        "phase3:microglial_chronic_activation",
+        "phase5:subacute_repetitive_inflammatory_dominant"
+      ],
+      "allowed_conclusion": "This figure supports context and stratification framing only."
+    },
+    {
+      "figure_id": "figure_4",
+      "title": "Evidence boundaries and contradiction map",
+      "purpose": "Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.",
+      "source_artifacts": [
+        "phase6:most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
+        "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase2:mitochondrial_ros_to_inflammasome_activation",
+        "phase4:neuroinflammation_microglial_state_change",
+        "phase4:blood_brain_barrier_failure",
+        "phase5:subacute_repetitive_inflammatory_dominant"
+      ],
+      "allowed_conclusion": "This figure is explicitly a limitation and boundedness figure.",
+      "contradiction_count": 19
+    }
+  ]
+}

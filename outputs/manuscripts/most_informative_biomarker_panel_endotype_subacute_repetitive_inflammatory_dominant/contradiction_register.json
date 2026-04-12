@@ -1,0 +1,269 @@
+{
+  "updated_at": "2026-04-12T19:36:50.463017+00:00",
+  "issues": [
+    {
+      "issue_id": "phase6_most_informative_biomarker_panel_endotype_subacute_repetitive_inflammatory_dominant_1",
+      "phase_key": "phase6",
+      "artifact_id": "most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
+      "artifact_label": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
+      "statement": "The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase6_candidate_thesis"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_neuroinflammation_microglial_state_change_2",
+      "phase_key": "phase1",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Acute bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase1_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_neuroinflammation_microglial_state_change_3",
+      "phase_key": "phase1",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Subacute bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase1_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_neuroinflammation_microglial_state_change_4",
+      "phase_key": "phase1",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Chronic bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase1_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_neuroinflammation_microglial_state_change_5",
+      "phase_key": "phase1",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Promoted from existing atlas mechanism coverage: neuroinflammation microglial activation.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase1_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_blood_brain_barrier_failure_6",
+      "phase_key": "phase1",
+      "artifact_id": "blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure",
+      "statement": "All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase1_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_blood_brain_barrier_failure_7",
+      "phase_key": "phase1",
+      "artifact_id": "blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure",
+      "statement": "Promoted from existing atlas mechanism coverage: blood brain barrier disruption.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase1_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration_8",
+      "phase_key": "phase2",
+      "artifact_id": "bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "artifact_label": "BBB permeability increase -> peripheral immune infiltration",
+      "statement": "Some supporting rows are abstract-only and should be weighted cautiously.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration_9",
+      "phase_key": "phase2",
+      "artifact_id": "bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "artifact_label": "BBB permeability increase -> peripheral immune infiltration",
+      "statement": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_mitochondrial_ros_to_inflammasome_activation_10",
+      "phase_key": "phase2",
+      "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
+      "artifact_label": "Mitochondrial ROS -> inflammasome activation",
+      "statement": "Transition still needs denser direct support before it should be treated as hardened.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_mitochondrial_ros_to_inflammasome_activation_11",
+      "phase_key": "phase2",
+      "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
+      "artifact_label": "Mitochondrial ROS -> inflammasome activation",
+      "statement": "Timing support is incomplete or only partially aligned with the expected transition window.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_mitochondrial_ros_to_inflammasome_activation_12",
+      "phase_key": "phase2",
+      "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
+      "artifact_label": "Mitochondrial ROS -> inflammasome activation",
+      "statement": "Upstream lane still needs stronger longitudinal support.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase2_mitochondrial_ros_to_inflammasome_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_neuroinflammation_microglial_state_change_13",
+      "phase_key": "phase4",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change",
+        "phase4_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_neuroinflammation_microglial_state_change_14",
+      "phase_key": "phase4",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Single-cytokine changes can overstate inflammatory control",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change",
+        "phase4_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_neuroinflammation_microglial_state_change_15",
+      "phase_key": "phase4",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "keep this packet tied to a network-level cytokine plus glial-stress readout panel.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change",
+        "phase4_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_neuroinflammation_microglial_state_change_16",
+      "phase_key": "phase4",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "no direct compound or trial attachment surfaced in this build",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change",
+        "phase4_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_blood_brain_barrier_failure_17",
+      "phase_key": "phase4",
+      "artifact_id": "blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure",
+      "statement": "Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change",
+        "phase4_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_blood_brain_barrier_failure_18",
+      "phase_key": "phase4",
+      "artifact_id": "blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure",
+      "statement": "keep barrier-module claims tied to permeability outcomes, not junction markers alone.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change",
+        "phase4_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_subacute_repetitive_inflammatory_dominant_19",
+      "phase_key": "phase5",
+      "artifact_id": "subacute_repetitive_inflammatory_dominant",
+      "artifact_label": "Subacute Repetitive Inflammatory-Dominant",
+      "statement": "Repetitive cohorts can still carry unresolved vascular pressure, so an inflammatory label should stay bounded unless barrier readouts are also tracked.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Data Points Bundle
 
-- **Biomarker Panel:** OCLN, CLDN5, TJP1, Cerebral blood flow, GFAP, NfL, Evans blue, Gadolinium leakage, Nf L, Fitc Labeled mngf fluorescence, Optical density (od) readings, Mbp protein expression, Nf 200 protein expression, Psd 95 protein expression, Cerebral blood flow (cbf), IL 1 (91), Tnf (53), IL 6 (50), Nlrp3 (38), Gfap (22), Hmgb1 (17), Cbf (14), Aqp4 (5)
+- **Biomarker Panel:** OCLN, CLDN5, TJP1, Cerebral blood flow, GFAP, NfL, Evans blue, Gadolinium leakage, Nf L, Zo 1, Claudin 5, Uch L1, Mmp 9, Igg, IL 1 (127), Nlrp3 (70), IL 6 (64), Tnf (57), Hmgb1 (40), Gfap (26), Cbf (17), Aqp4 (8), Mmp9 (3)
 - **Expected Readouts:** Barrier leakage, Ocln / cldn5 / tjp1 restoration, Cerebral blood flow, Downstream inflammatory spillover
 - **Sample Type:** ['tissue', 'imaging', 'plasma']
 - **Time Window:** ['acute', 'subacute']

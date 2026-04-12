@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-04-12T19:25:47.703899+00:00",
+  "updated_at": "2026-04-12T19:36:50.495068+00:00",
   "summary": {
-    "updated_at": "2026-04-12T19:25:47.702870+00:00",
+    "updated_at": "2026-04-12T19:36:50.494549+00:00",
     "total_tasks": 3,
     "status_counts": {
       "proposed": 0,
@@ -34,7 +34,7 @@
         "reopened"
       ],
       "execution_note": "Lead contradiction still active: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.. 4 issue(s) remain blocking.",
-      "last_executed_at": "2026-04-12T19:25:47.702775+00:00",
+      "last_executed_at": "2026-04-12T19:36:50.494470+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -54,7 +54,7 @@
         "reopened"
       ],
       "execution_note": "Translational packet remains bounded around DYRK1A; strengthening brief updated.",
-      "last_executed_at": "2026-04-12T19:25:47.702832+00:00",
+      "last_executed_at": "2026-04-12T19:36:50.494518+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -74,7 +74,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-12T19:25:47.702862+00:00",
+      "last_executed_at": "2026-04-12T19:36:50.494543+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     }
   ]

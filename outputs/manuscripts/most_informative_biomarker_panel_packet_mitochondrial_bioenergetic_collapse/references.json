@@ -1,0 +1,2275 @@
+{
+  "updated_at": "2026-04-12T19:36:50.473546+00:00",
+  "summary": {
+    "reference_count": 47,
+    "claim_count": 9,
+    "contradiction_count": 22,
+    "figure_count": 4,
+    "section_packet_count": 5,
+    "primary_journal_verified": true,
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_190950.csv"
+  },
+  "references": [
+    {
+      "pmid": "41651694",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 1,
+      "citation_text": "PMID:41651694.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41926540",
+      "title": "Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury.",
+      "authors": "Marcatti M, Labastida JA, Tang TZ, Ahmad A, Payne C, Schwartz N, Villarreal P, Solomon OD, Vargas G, Wu P, Szczesny B",
+      "journal": "Proceedings of the National Academy of Sciences of the United States of America",
+      "publication_date": "2026 Apr 07",
+      "doi": "10.1073/pnas.2527009123",
+      "pmcid": "PMC13056099",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41926540/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13056099/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "output/2026-04-12_MEtAl_Neuron-derivedmitochondrialDNAmtDNA_PMID41926540.md",
+      "abstract": "Traumatic brain injury (TBI) is a leading cause of morbidity and mortality, with closed-head mild TBI (mTBI) accounting for nearly 90% of all cases. Early pathological events include microglial activation and neuronal mitochondrial dysfunction; however, their interconnection in mTBI remains poorly understood. Using a clinically relevant closed-head weight-drop mouse model, we identified mitochondrial DNA (mtDNA)-specific damage and increased expression of innate inflammatory markers (IL-1\u03b1/\u03b2, IL-6, TNF\u03b1, and CXCL1) in the cerebral cortex during the acute mTBI phase. Mechanistically, neurons subjected to in vitro injury model of mTBI exhibited early mtDNA-specific damage followed by mtDNA release via extracellular vesicles (EVs) together with the neuronal and exosomal markers. The released neuronal mtDNA induced a robust microglial activation mediated by binding to the cytoplasmic DNA/RNA sensor Z-DNA-binding protein 1 (ZBP1), triggering activation of the ZBP1-TBK1-IRF3 pathway resulted IL-6 and TNF\u03b1 expression. An early, enhanced amounts of mtDNA, neuronal and exosomal markers were measured in EVs circulating in the blood of mice subjected to mTBI. ZBP1 knockout (KO) mice displayed suppressed microglial-but not astrocytic-activation in the cortex during the acute mTBI phase. We also measured accumulation of mtDNA-specific damage in the hippocampus during the postacute mTBI phase. The absence of microglial activation in ZBP1 KO mice exacerbated hippocampal-related memory deficits in the postacute mTBI phase. Collectively, our findings identify mtDNA-ZBP1 signaling as a key mechanism regulating microglial activation in mTBI.",
+      "full_text_excerpt": "Traumatic brain injury (TBI) is a major healthcare concern with no effective treatment options. Persistent neuroinflammation is a major contributor to cognitive and motor impairments. Microglia, the resident immune cells of the central nervous system (CNS), are essential for the neuroinflammatory response induced by TBI, which differs significantly between mild and moderate-to-severe forms. In mild TBI (mTBI), microglial activation is typically transient and spatially restricted, leading to an early but controlled immune response that supports debris clearance and synaptic remodeling (1,2). By contrast, in moderate to severe TBI, microglial responses are more widespread and prolonged, often characterized by sustained production of proinflammatory cytokines and chronic neuroinflammation, which contribute to extensive neuronal loss and white matter damage (1,2). Thus, when properly regulated, initial microglial activation is neuroprotective; however, persistent activation can shift activated microglia toward a maladaptive, neurotoxic profile that contributes to long-term neurological deficits.\n\nAn increasing number of reports describe chronic microglial activation beyond the acute phase in mTBI (3\u20138). Also, the importance of bidirectional crosstalk between neurons and microglia has been proposed (9\u201311). Dysfunctional neurons release signals that perpetuate microglial reactivity, while activated microglia alter neuronal excitability and synaptic plasticity through cytokine signaling, complement cascade activation, and aberrant synaptic pruning (9,12). This maladaptive feedback loop is thought to contribute to the persistent cognitive and behavioral deficits observed after mTBI and may underlie the increased susceptibility to later neurodegenerative processes (13). Still, the molecular mechanisms underlying these processes remain poorly understood.\n\nMitochondrial dysfunction, particularly in neurons, is an early hallmark of TBI. Due to their high metabolic demand, neuro",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 2,
+      "citation_text": "Marcatti M, Labastida JA, Tang TZ, Ahmad A, Payne C, Schwartz N, Villarreal P, Solomon OD, Vargas G, Wu P, Szczesny B. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. Proceedings of the National Academy of Sciences of the United States of America 2026 Apr 07. doi:10.1073/pnas.2527009123. PMID:41926540.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41480492",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 3,
+      "citation_text": "PMID:41480492.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase2",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase2:mitochondrial_ros_to_inflammasome_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase2_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.",
+        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase2_mitochondrial_ros_to_inflammasome_activation",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41576094",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 4,
+      "citation_text": "PMID:41576094.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41764101",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 5,
+      "citation_text": "PMID:41764101.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41648326",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 6,
+      "citation_text": "PMID:41648326.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41267966",
+      "title": "Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 7,
+      "citation_text": "Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. PMID:41267966.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4",
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse",
+        "phase5:chronic_mild_metabolic_white_matter_dominant"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support",
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.",
+        "This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase4_mitochondrial_bioenergetic_collapse",
+        "phase5_chronic_mild_metabolic_white_matter_dominant"
+      ]
+    },
+    {
+      "pmid": "41876825",
+      "title": "Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury.",
+      "authors": "Baral H, Kumari D, Rahi V, Kaundal RK",
+      "journal": "Molecular neurobiology",
+      "publication_date": "2026 Mar 25",
+      "doi": "10.1007/s12035-026-05818-8",
+      "pmcid": "",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41876825/",
+      "pmc_url": "",
+      "extraction_source": "Crossref HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "output/2026-04-12_HEtAl_EndoplasmicReticulum-MitochondrialCrosstalkin_PMID41876825.md",
+      "abstract": "The endoplasmic reticulum (ER) and mitochondria are fundamental organelles that govern a wide array of cellular processes and maintain intracellular homeostasis through highly specialized and interconnected functions. Their intimate structural and functional coupling at mitochondria-associated membranes (MAMs) enables the regulated exchange of Ca2\u207a, lipids, and metabolites, thereby coordinating key physiological processes. Accumulating evidence underscores the critical role of ER-mitochondrial communication in the maintenance of intracellular Ca2\u207a homeostasis. Traumatic brain injury (TBI), however, disrupts this finely tuned inter-organelle crosstalk, triggering a complex cascade of pathological events characterized by Ca2\u207a dysregulation, ER stress, impaired protein folding, mitochondrial dysfunction, and activation of cell death pathways. This review provides a comprehensive synthesis of current knowledge on MAM-mediated Ca2\u207a transport and delineates how its dysregulation exacerbates cellular stress responses following TBI. We examine the contribution of Ca2\u207a imbalance to ER stress signalling, protein misfolding, and the pathological shift toward excessive mitochondrial fission, culminating in compromised bioenergetics and loss of cellular integrity. Furthermore, we discuss Ca2\u207a dysregulation-driven cell death mechanisms in the injured brain and evaluate emerging therapeutic strategies to restore MAMs function and Ca2\u207a signalling. Collectively, the interplay between Ca2\u207a dysregulation, ER stress, and mitochondrial dysfunction emerges as a central axis underlying neuronal loss after TBI. Elucidating these mechanisms may inform the development of targeted interventions to mitigate secondary injury and preserve neuronal function following TBI.",
+      "full_text_excerpt": "Abstract\n\nThe endoplasmic reticulum (ER) and mitochondria are fundamental organelles that govern a wide array of cellular processes and maintain intracellular homeostasis through highly specialized and interconnected functions. Their intimate structural and functional coupling at mitochondria-associated membranes (MAMs) enables the regulated exchange of Ca2\u207a, lipids, and metabolites, thereby coordinating key physiological processes. Accumulating evidence underscores the critical role of ER-mitochondrial communication in the maintenance of intracellular Ca2\u207a homeostasis. Traumatic brain injury (TBI), however, disrupts this finely tuned inter-organelle crosstalk, triggering a complex cascade of pathological events characterized by Ca2\u207a dysregulation, ER stress, impaired protein folding, mitochondrial dysfunction, and activation of cell death pathways. This review provides a comprehensive synthesis of current knowledge on MAM-mediated Ca2\u207a transport and delineates how its dysregulation exacerbates cellular stress responses following TBI. We examine the contribution of Ca2\u207a imbalance to ER stress signalling, protein misfolding, and the pathological shift toward excessive mitochondrial fission, culminating in compromised bioenergetics and loss of cellular integrity. Furthermore, we discuss Ca2\u207a dysregulation-driven cell death mechanisms in the injured brain and evaluate emerging therapeutic strategies to restore MAMs function and Ca2\u207a signalling. Collectively, the interplay between Ca2\u207a dysregulation, ER stress, and mitochondrial dysfunction emerges as a central axis underlying neuronal loss after TBI. Elucidating these mechanisms may inform the development of targeted interventions to mitigate secondary injury and preserve neuronal function following TBI.\n\nSimilar content being viewed by others\n\nData Availability\n\nNo datasets were generated or analysed during the current study.",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 8,
+      "citation_text": "Baral H, Kumari D, Rahi V, Kaundal RK. Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury. Molecular neurobiology 2026 Mar 25. doi:10.1007/s12035-026-05818-8. PMID:41876825.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41735605",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 9,
+      "citation_text": "PMID:41735605.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41153827",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 10,
+      "citation_text": "PMID:41153827.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase1:mitochondrial_bioenergetic_collapse",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.",
+        "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_seeded",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_mitochondrial_bioenergetic_collapse",
+        "phase3_persistent_metabolic_dysfunction",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41625091",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 11,
+      "citation_text": "PMID:41625091.",
+      "source_phases": [
+        "phase6",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41103638",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 12,
+      "citation_text": "PMID:41103638.",
+      "source_phases": [
+        "phase6",
+        "phase2",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase2:mitochondrial_ros_to_inflammasome_activation",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase2_support",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.",
+        "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase.",
+        "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
+      ],
+      "support_statuses": [
+        "supported",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase2_mitochondrial_ros_to_inflammasome_activation",
+        "phase3_persistent_metabolic_dysfunction",
+        "phase3_microglial_chronic_activation",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41709060",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 13,
+      "citation_text": "PMID:41709060.",
+      "source_phases": [
+        "phase6",
+        "phase2",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase2:mitochondrial_ros_to_inflammasome_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase2_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
+      ],
+      "support_statuses": [
+        "supported",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase2_mitochondrial_ros_to_inflammasome_activation",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41069428",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 14,
+      "citation_text": "PMID:41069428.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
+      ],
+      "support_statuses": [
+        "supported",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase3_persistent_metabolic_dysfunction",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41110648",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 15,
+      "citation_text": "PMID:41110648.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
+      ],
+      "support_statuses": [
+        "supported",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase3_persistent_metabolic_dysfunction",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41129987",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 16,
+      "citation_text": "PMID:41129987.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
+      ],
+      "support_statuses": [
+        "supported",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase3_persistent_metabolic_dysfunction",
+        "phase4_mitochondrial_bioenergetic_collapse"
+      ]
+    },
+    {
+      "pmid": "41157305",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 17,
+      "citation_text": "PMID:41157305.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
+      ],
+      "support_statuses": [
+        "supported",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase3_persistent_metabolic_dysfunction"
+      ]
+    },
+    {
+      "pmid": "41175081",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 18,
+      "citation_text": "PMID:41175081.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
+      ],
+      "support_statuses": [
+        "supported",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase3_persistent_metabolic_dysfunction"
+      ]
+    },
+    {
+      "pmid": "41179995",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 19,
+      "citation_text": "PMID:41179995.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:persistent_metabolic_dysfunction",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
+      ],
+      "support_statuses": [
+        "supported",
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase3_persistent_metabolic_dysfunction"
+      ]
+    },
+    {
+      "pmid": "41039850",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 20,
+      "citation_text": "PMID:41039850.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase3_microglial_chronic_activation"
+      ]
+    },
+    {
+      "pmid": "41135688",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 21,
+      "citation_text": "PMID:41135688.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase3_microglial_chronic_activation"
+      ]
+    },
+    {
+      "pmid": "41157272",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 22,
+      "citation_text": "PMID:41157272.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase3_microglial_chronic_activation"
+      ]
+    },
+    {
+      "pmid": "41173520",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 23,
+      "citation_text": "PMID:41173520.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase3_microglial_chronic_activation"
+      ]
+    },
+    {
+      "pmid": "41197779",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 24,
+      "citation_text": "PMID:41197779.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase3_microglial_chronic_activation"
+      ]
+    },
+    {
+      "pmid": "41327381",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 25,
+      "citation_text": "PMID:41327381.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase3_microglial_chronic_activation"
+      ]
+    },
+    {
+      "pmid": "41446731",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 26,
+      "citation_text": "PMID:41446731.",
+      "source_phases": [
+        "phase6",
+        "phase3",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
+        "phase3:microglial_chronic_activation",
+        "phase4:mitochondrial_bioenergetic_collapse"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase3_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase3_microglial_chronic_activation"
+      ]
+    },
+    {
+      "pmid": "41700282",
+      "title": "Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 27,
+      "citation_text": "Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury. PMID:41700282.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "usable"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant"
+      ]
+    },
+    {
+      "pmid": "41725719",
+      "title": "Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 28,
+      "citation_text": "Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "usable"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant"
+      ]
+    },
+    {
+      "pmid": "41672813",
+      "title": "Neuroworsening from a normal Glasgow Coma Scale Motor Score in the emergency department is an early predictor of neurosurgical intervention, hospital outcomes, and longitudinal disability in traumatic brain injury: A TRACK-TBI Study.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 29,
+      "citation_text": "Neuroworsening from a normal Glasgow Coma Scale Motor Score in the emergency department is an early predictor of neurosurgical intervention, hospital outcomes, and longitudinal disability in traumatic brain injury: A TRACK-TBI Study. PMID:41672813.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "usable"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant"
+      ]
+    },
+    {
+      "pmid": "41653068",
+      "title": "Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 30,
+      "citation_text": "Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury. PMID:41653068.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "usable"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant"
+      ]
+    },
+    {
+      "pmid": "41714686",
+      "title": "Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 31,
+      "citation_text": "Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study. PMID:41714686.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "usable"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant"
+      ]
+    },
+    {
+      "pmid": "41731737",
+      "title": "Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 32,
+      "citation_text": "Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience. PMID:41731737.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant",
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet.",
+        "This is the best packet for tying severe diffuse injury to the downstream cognitive and network phenotype rather than stopping at acute severity labels."
+      ],
+      "support_statuses": [
+        "usable",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ]
+    },
+    {
+      "pmid": "41722498",
+      "title": "Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 33,
+      "citation_text": "Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use. PMID:41722498.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant",
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet.",
+        "This is the best packet for tying severe diffuse injury to the downstream cognitive and network phenotype rather than stopping at acute severity labels."
+      ],
+      "support_statuses": [
+        "usable",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_chronic_severe_axonal_network_decline"
+      ]
+    },
+    {
+      "pmid": "41896418",
+      "title": "Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury.",
+      "authors": "Cela E, Tweddell D, Daley M, Morello M, Cepinskas G, Fraser DD",
+      "journal": "Inflammation research : official journal of the European Histamine Research Society ... [et al.]",
+      "publication_date": "2026 Mar 27",
+      "doi": "10.1007/s00011-026-02209-6",
+      "pmcid": "PMC13031234",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41896418/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13031234/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "output/2026-04-12_EEtAl_Multi-dimensionalplasmaproteomicprofiling_PMID41896418.md",
+      "abstract": "**BACKGROUND**: Severe traumatic brain injury (sTBI) is a leading cause of trauma-related mortality and morbidity in pediatric populations. The heterogeneous progression of sTBI presents significant challenges for prognosis and pathophysiological investigation, necessitating advances beyond traditional approaches. This study utilized plasma proteomic profiling to identify sTBI-specific protein alterations and functional pathways correlating with clinical variables in pediatric patients.\n\n**METHODS**: We performed plasma proteomic analysis on 20 matched pairs of pediatric sTBI patients and healthy controls. Proximity extension assays quantified 1,472 proteins. Gene set enrichment analysis identified enriched Reactome pathways and Gene Ontology terms among differentially expressed proteins. Pathway-clinical variable associations were calculated using weighted correlation sums between pathway proteins and clinical variables. Protein-protein interaction networks were analyzed using STRING.\n\n**RESULTS**: Using significance thresholds of FDR-adjusted P\u2009<\u20090.05 and fold change\u2009\u2265\u20094, we identified 65 differentially expressed proteins between sTBI samples and controls. Analysis revealed proteins involved in neuroinflammation and upregulated pathways related to cytokine and receptor/ligand signaling. Altered protein expression indicated structural and functional changes in neurons, glial cells, and vasculature. Upregulated pathways positively correlated with injury severity score, hyperglycemia, and coagulopathy, while negatively correlating with vault skull fractures and acidosis. IL-6 emerged as a central hub in protein-protein interactions, with distinct clusters representing opsonization, TNF family signaling, amidation, neuronal/astrocyte injury, and multifaceted sTBI responses.\n\n**CONCLUSIONS**: These findings identify differentially expressed plasma proteins and enriched signaling pathways associated with clinical features, providing novel insights into pediatric sTBI pathophysiology. The identification of IL-6 as a central hub protein and the correlation of specific pathways with injury severity, metabolic dysfunction, and coagulopathy suggest potential targets for therapeutic intervention and prognostic biomarker development. This proteomic approach advances our understanding of the complex molecular cascades underlying pediatric sTBI and may inform precision medicine strategies for improved patient outcomes.",
+      "full_text_excerpt": "### Introduction\n\n\nSevere traumatic brain injury (sTBI) represents a leading cause of mortality in children, accounting for two thirds of deaths at a level 1 pediatric trauma center between 2009 and 2019 [1]. Surviving patients frequently experience persistent neurological deficits, with over half demonstrating functional impairments one-year post-rehabilitation [2,3]. sTBI results from external mechanical forces that immediately cause permanent or temporary neurological deficits, decreased consciousness, memory loss, and altered mental state [4,5]. Beyond initial structural damage, cellular function becomes further compromised through secondary injuries including cerebral edema, hemorrhage, and hypoxia [6].\n\nThe evolving anatomy of the pediatric brain and skull manifests distinct pathological responses with unique neurological symptoms compared to adults [7\u20139]. The high plasticity of the pediatric skull and disproportionate head-to-body weight ratio increase children\u2019s susceptibility to external forces affecting both brain parenchyma and vasculature. Additionally, reduced myelin abundance and distribution result in differential absorption of traumatic forces, with increased vulnerability in unmyelinated regions. Distinct pathophysiological mechanisms in the pediatric brain, arising from developmental differences compared to the adult brain, cannot be adequately investigated through adult proteomic screening alone. The heterogeneous progression of sTBI, particularly in pediatric populations, presents significant challenges for outcome prediction, necessitating comprehensive approaches to prognosis and pathophysiological investigation [10,11].\n\nBlood-based injury biomarkers represent a major advancement in sTBI research, utilizing differentially abundant molecules to better characterize injury pathophysiology and disease mechanisms [12\u201314]. Previous studies have identified biomarkers associated with inflammatory and stress responses, including glial fibrillary acidic",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 34,
+      "citation_text": "Cela E, Tweddell D, Daley M, Morello M, Cepinskas G, Fraser DD. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. Inflammation research : official journal of the European Histamine Research Society ... [et al.] 2026 Mar 27. doi:10.1007/s00011-026-02209-6. PMID:41896418.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "usable"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant"
+      ]
+    },
+    {
+      "pmid": "41203427",
+      "title": "Linking Symptom Phenotypes to Patterns of White Matter Injury in Mild Traumatic Brain Injury: A Latent Class Analysis",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 35,
+      "citation_text": "Linking Symptom Phenotypes to Patterns of White Matter Injury in Mild Traumatic Brain Injury: A Latent Class Analysis. PMID:41203427.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_mild_metabolic_white_matter_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_mild_metabolic_white_matter_dominant"
+      ]
+    },
+    {
+      "pmid": "41622453",
+      "title": "Cognitive impairment and altered structural connectivity after mild traumatic brain injury: A longitudinal study based on generalized q-sampling imaging.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 36,
+      "citation_text": "Cognitive impairment and altered structural connectivity after mild traumatic brain injury: A longitudinal study based on generalized q-sampling imaging. PMID:41622453.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_mild_metabolic_white_matter_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_mild_metabolic_white_matter_dominant"
+      ]
+    },
+    {
+      "pmid": "41496379",
+      "title": "Neuroimaging correlates of symptom burden and functional recovery following mild traumatic brain injury: A systematic review.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 37,
+      "citation_text": "Neuroimaging correlates of symptom burden and functional recovery following mild traumatic brain injury: A systematic review. PMID:41496379.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_mild_metabolic_white_matter_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_mild_metabolic_white_matter_dominant"
+      ]
+    },
+    {
+      "pmid": "41701552",
+      "title": "Diffusion Tensor Imaging Along the Perivascular Space in Veterans with Remote Mild Traumatic Brain Injuries",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 38,
+      "citation_text": "Diffusion Tensor Imaging Along the Perivascular Space in Veterans with Remote Mild Traumatic Brain Injuries. PMID:41701552.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_mild_metabolic_white_matter_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_mild_metabolic_white_matter_dominant"
+      ]
+    },
+    {
+      "pmid": "41301762",
+      "title": "A Bioinformatic Study of Genetics Involved in Determining Mild Traumatic Brain Injury Severity and Recovery",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 39,
+      "citation_text": "A Bioinformatic Study of Genetics Involved in Determining Mild Traumatic Brain Injury Severity and Recovery. PMID:41301762.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_mild_metabolic_white_matter_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_mild_metabolic_white_matter_dominant"
+      ]
+    },
+    {
+      "pmid": "41907798",
+      "title": "A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities.",
+      "authors": "Mavroudis I, Petridis F, Ciob\u00eec\u0103 AS, Cojocariu RO, Kazis D, Kamar AAM, Ionescu C, Gheban D, Morosan C, Gurzu B, Novac O, Novac B",
+      "journal": "Frontiers in human neuroscience",
+      "publication_date": "2026",
+      "doi": "10.3389/fnhum.2026.1800956",
+      "pmcid": "PMC13021673",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41907798/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13021673/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "output/2026-04-12_IEtAl_Astructuralnetworkfingerprint_PMID41907798.md",
+      "abstract": "**BACKGROUND**: Mild traumatic brain injury (mTBI) often results in persistent cognitive and somatic deficits despite unremarkable routine neuroimaging. Evidence suggests mTBI affects large-scale neural systems rather than isolated regions, yet structural findings remain heterogeneous across studies.\n\n**OBJECTIVE**: This study synthesized T1-weighted MRI data into a unified structural network fingerprint (SNF) of mTBI.\n\n**METHODS**: We analyzed ten peer-reviewed studies identifying regional abnormalities in adult mTBI via voxel-based, volumetry, grey/white-matter probability mapping or tensor-based morphometry. Thirty-five significant regions of interest (ROIs) were extracted and mapped to a standardized anatomical atlas. ROIs were categorized into canonical networks, and we applied co-alteration graph modeling, principal component analysis (PCA), and hierarchical clustering to evaluate network-level convergence.\n\n**RESULTS**: The SNF identified a core triad of vulnerability: the default mode network (DMN), the limbic/memory system, and thalamic-callosal relay structures. Graph modeling revealed robust clustering among DMN-limbic-thalamic regions. Furthermore, PCA and hierarchical clustering demonstrated that structural alterations strictly align with intrinsic network boundaries, rather than appearing as stochastic damage.\n\n**CONCLUSION**: mTBI exhibits a reproducible structural signature characterized by DMN and thalamo-limbic involvement. This SNF framework establishes a basis for clinically interpretable biomarkers and computable decision-support tools in concussion care.",
+      "full_text_excerpt": "### Introduction\n\n\nMild traumatic brain injury (mTBI) and concussion are highly prevalent worldwide, with disproportionately elevated incidence in military personnel, athletes, and young adults (Cassidy et al., 2004;Lishman, 1988;McCrory et al., 2017). Although many individuals experience clinical recovery, a substantial subset continues to report persistent post-concussive symptoms. These commonly encompass cognitive slowing, memory difficulties, chronic headache, and affective dysregulation (Bigler, 2013;Shenton et al., 2012). A central challenge in the clinical management of mTBI lies in its limited visibility on routine diagnostic imaging. Standard computed tomography (CT) and conventional magnetic resonance imaging (MRI) sequences frequently fail to reveal overt structural abnormalities, creating a gap between patients\u2019 subjective symptom burden and objective radiological findings (Yuh et al., 2014;Wintermark et al., 2015). This diagnostic gap not only complicates long-term prognosis but also creates significant hurdles in legal and occupational medicine. Consequently, there is an urgent clinical imperative to identify more sophisticated, quantitative MRI signatures that can capture the subtle structural rearrangements occurring at the network level.\n\nOver approximately the past two decades, conceptual models of traumatic brain injury have evolved from a focus on discrete focal lesions to a recognition of mTBI as a disorder affecting distributed brain networks (Sharp et al., 2014;Hillary et al., 2014;van der Horn et al., 2016). Biomechanical modeling and neuropathological findings suggest that rotational acceleration, axonal shear, metabolic crisis, and neuroinflammatory responses preferentially involve midline and paralimbic regions, long-range association fibers, and highly interconnected hub regions with substantial metabolic demands (Giza and Hovda, 2014;Werner and Engelhard, 2007;Barkhoudarian et al., 2011). Prominent large-scale networks\u2014such as the defau",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 40,
+      "citation_text": "Mavroudis I, Petridis F, Ciob\u00eec\u0103 AS, Cojocariu RO, Kazis D, Kamar AAM, Ionescu C, Gheban D, Morosan C, Gurzu B, Novac O, Novac B. A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities. Frontiers in human neuroscience 2026. doi:10.3389/fnhum.2026.1800956. PMID:41907798.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_mild_metabolic_white_matter_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_mild_metabolic_white_matter_dominant"
+      ]
+    },
+    {
+      "pmid": "41026543",
+      "title": "Application of Machine Learning in the Diagnosis and Prognosis of Mild Traumatic Brain Injury Using Diffusion Tensor Imaging: A Systematic Review.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 41,
+      "citation_text": "Application of Machine Learning in the Diagnosis and Prognosis of Mild Traumatic Brain Injury Using Diffusion Tensor Imaging: A Systematic Review. PMID:41026543.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_mild_metabolic_white_matter_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_mild_metabolic_white_matter_dominant"
+      ]
+    },
+    {
+      "pmid": "41761716",
+      "title": "Traumatic Axonal Injury on Early Magnetic Resonance Imaging and Associations with Long-Term Outcome in Children with Moderate and Severe Traumatic Brain Injury",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 42,
+      "citation_text": "Traumatic Axonal Injury on Early Magnetic Resonance Imaging and Associations with Long-Term Outcome in Children with Moderate and Severe Traumatic Brain Injury. PMID:41761716.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the best packet for tying severe diffuse injury to the downstream cognitive and network phenotype rather than stopping at acute severity labels.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_severe_axonal_network_decline"
+      ]
+    },
+    {
+      "pmid": "41700705",
+      "title": "Computerized Cognitive Remediation Affects White Matter Microstructure in Relation to Improved Cognitive Function in Adults with Chronic Traumatic Brain Injury",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 43,
+      "citation_text": "Computerized Cognitive Remediation Affects White Matter Microstructure in Relation to Improved Cognitive Function in Adults with Chronic Traumatic Brain Injury. PMID:41700705.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the best packet for tying severe diffuse injury to the downstream cognitive and network phenotype rather than stopping at acute severity labels.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_severe_axonal_network_decline"
+      ]
+    },
+    {
+      "pmid": "41761707",
+      "title": "An Evaluation of Aeromedical Evacuation Strategies Following Traumatic Brain Injury and Severe Blood Loss",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 44,
+      "citation_text": "An Evaluation of Aeromedical Evacuation Strategies Following Traumatic Brain Injury and Severe Blood Loss. PMID:41761707.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the best packet for tying severe diffuse injury to the downstream cognitive and network phenotype rather than stopping at acute severity labels.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_severe_axonal_network_decline"
+      ]
+    },
+    {
+      "pmid": "41709312",
+      "title": "Fatal Traumatic Brain Injury With Traumatic Axonal Injury, From a Nonpenetrating Sponge Round: A Forensic Case Report.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 45,
+      "citation_text": "Fatal Traumatic Brain Injury With Traumatic Axonal Injury, From a Nonpenetrating Sponge Round: A Forensic Case Report. PMID:41709312.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the best packet for tying severe diffuse injury to the downstream cognitive and network phenotype rather than stopping at acute severity labels.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_severe_axonal_network_decline"
+      ]
+    },
+    {
+      "pmid": "41737875",
+      "title": "Increased intracranial pressure in severe traumatic axonal injury patients - A retrospective single-center study",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 46,
+      "citation_text": "Increased intracranial pressure in severe traumatic axonal injury patients - A retrospective single-center study. PMID:41737875.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the best packet for tying severe diffuse injury to the downstream cognitive and network phenotype rather than stopping at acute severity labels.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_severe_axonal_network_decline"
+      ]
+    },
+    {
+      "pmid": "41424224",
+      "title": "Long-lasting neurobehavioral disorders after traumatic brain injury: potential predictors and functional outcomes.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-12_190950.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 47,
+      "citation_text": "Long-lasting neurobehavioral disorders after traumatic brain injury: potential predictors and functional outcomes. PMID:41424224.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:chronic_severe_axonal_network_decline"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the best packet for tying severe diffuse injury to the downstream cognitive and network phenotype rather than stopping at acute severity labels.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_chronic_severe_axonal_network_decline"
+      ]
+    }
+  ]
+}
