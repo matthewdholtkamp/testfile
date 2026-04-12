@@ -17,6 +17,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   Sparkles,
+  Target,
   X,
   Zap,
 } from "lucide-react";
@@ -28,6 +29,7 @@ const GITHUB_REPO = "testfile";
 const GITHUB_REF = "main";
 const GITHUB_APPLY_WORKFLOW = "cockpit_apply_decision.yml";
 const GITHUB_CLARIFY_WORKFLOW = "cockpit_clarify_question.yml";
+const GITHUB_EVIDENCE_WORKFLOW = "ongoing_literature_cycle.yml";
 const GITHUB_TOKEN_KEY = "atlas-github-token";
 
 const GITHUB_STATE_FILES = {
@@ -179,6 +181,48 @@ function journalStateLabel(candidate: AnyRecord): string {
   return candidate?.journal_targets?.primary?.requirements?.checked
     ? "Verified requirements"
     : "Shortlist only";
+}
+
+function taskTone(status: string): "muted" | "accent" | "success" | "warning" | "danger" {
+  if (status === "satisfied") return "success";
+  if (status === "running" || status === "queued") return "accent";
+  if (status === "blocked") return "danger";
+  if (status === "reopened") return "warning";
+  return "muted";
+}
+
+function candidatePriorityMode(candidate: AnyRecord): string {
+  const theme = normalizeText(candidate?.theme_key);
+  if (theme.includes("blood_brain_barrier") || theme === "bbb") {
+    return "bbb_first";
+  }
+  if (theme.includes("neuroinflammation")) {
+    return "neuroinflammation_first";
+  }
+  if (theme.includes("mitochondrial")) {
+    return "mitochondrial_first";
+  }
+  return "default";
+}
+
+function candidatePendingActions(candidate: AnyRecord): string {
+  const tasks = Array.isArray(candidate?.task_ledger) ? candidate.task_ledger : [];
+  return tasks
+    .filter((task: AnyRecord) => task.status !== "satisfied" && task.status !== "stale")
+    .map((task: AnyRecord) => task.task_id)
+    .slice(0, 5)
+    .join(",");
+}
+
+function manuscriptQuestion(candidate: AnyRecord, mode: "missing" | "stronger" | "working"): string {
+  const title = candidate?.title || "this manuscript candidate";
+  if (mode === "missing") {
+    return `For the manuscript candidate "${title}", what is missing before it is ready for a draft? Answer from the current Phase 8 pack, task ledger, journal fit, and blocker state.`;
+  }
+  if (mode === "stronger") {
+    return `For the manuscript candidate "${title}", how do we make this stronger from the current repo state? Prioritize the highest-value moves from the current Phase 8 blocker set, translational maturity, and journal-fit gaps.`;
+  }
+  return `For the manuscript candidate "${title}", what manuscript-hardening work is the engine already doing automatically right now, and what is still not happening automatically?`;
 }
 
 function overlayPayloadWithGitHubState(
@@ -538,6 +582,10 @@ export default function App() {
   const [clarifyResponse, setClarifyResponse] = useState<AnyRecord | null>(
     null,
   );
+  const [manuscriptRunCandidateId, setManuscriptRunCandidateId] = useState("");
+  const [manuscriptRunState, setManuscriptRunState] =
+    useState<DispatchState>("idle");
+  const [manuscriptRunMessage, setManuscriptRunMessage] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -909,6 +957,60 @@ export default function App() {
     }
   }
 
+  async function handleManuscriptQuestion(
+    candidate: AnyRecord,
+    mode: "missing" | "stronger" | "working",
+  ) {
+    const nextQuestion = manuscriptQuestion(candidate, mode);
+    setQuestion(nextQuestion);
+    await handleClarify(nextQuestion);
+  }
+
+  async function handleRunFocusedEvidenceCycle(candidate: AnyRecord) {
+    if (!githubToken) {
+      setSettingsOpen(true);
+      return;
+    }
+
+    const pendingActions = candidatePendingActions(candidate);
+    const priorityMode = candidatePriorityMode(candidate);
+
+    setManuscriptRunCandidateId(candidate.candidate_id || "");
+    setManuscriptRunState("working");
+    setManuscriptRunMessage(
+      `Dispatching a focused evidence cycle for ${candidate.title}…`,
+    );
+
+    try {
+      await dispatchGitHubWorkflow(githubToken, GITHUB_EVIDENCE_WORKFLOW, {
+        max_articles_per_run: "5",
+        target_full_text_per_run: "4",
+        upgrade_max_chunks: "2",
+        extraction_max_passes: "4",
+        steering_priority_mode: priorityMode,
+        steering_focus_mechanisms: candidate.theme_key || "",
+        steering_focus_endotypes: "",
+        steering_evidence_mode: "advance",
+        steering_pending_actions: pendingActions,
+      });
+      setManuscriptRunState("success");
+      setManuscriptRunMessage(
+        `Focused evidence cycle queued for ${candidate.title}. The cycle will run with ${priorityMode} steering and the current open manuscript tasks as pending actions.`,
+      );
+      setActionMessage(
+        `Focused evidence cycle queued for ${candidate.title}. Refresh after the workflow runs to see updated manuscript hardening output.`,
+      );
+      await refreshGitHubState(githubToken);
+    } catch (error) {
+      setManuscriptRunState("error");
+      setManuscriptRunMessage(
+        error instanceof Error
+          ? error.message
+          : "The focused evidence cycle could not be dispatched.",
+      );
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#0b1117] text-[#edf4fb]">
@@ -1124,6 +1226,23 @@ export default function App() {
                 </div>
               </div>
 
+              <div className="rounded-[24px] border border-white/10 bg-black/15 p-5 text-sm leading-7 text-[#9fb4c8]">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
+                  <Target className="h-4 w-4" />
+                  Manuscript steering from here
+                </div>
+                <p className="mt-3">
+                  Phase 8 is already auto-hardening these packs whenever the repo
+                  refresh workflows run. That means the task ledger, blocker
+                  summaries, and evidence bundle all refresh automatically.
+                  What is <span className="font-semibold text-white">not</span>{" "}
+                  fully automatic yet is direct blocker resolution. The buttons
+                  below let you ask manuscript-specific questions and dispatch a
+                  focused evidence cycle against a manuscript’s mechanism and
+                  current open tasks.
+                </p>
+              </div>
+
               <div className="grid gap-5 xl:grid-cols-2">
                 {(manuscriptQueue.active_candidates || []).map(
                   (candidate: AnyRecord) => (
@@ -1209,14 +1328,18 @@ export default function App() {
                         </div>
                         <div className="rounded-2xl border border-white/8 bg-black/15 p-4">
                           <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
-                            Task summary
+                            Automatic hardening
                           </div>
                           <div className="mt-2 text-base font-semibold text-white">
                             {getTaskSummary(candidate)}
                           </div>
                           <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                            Last pack refresh{" "}
-                            {candidate.last_pack_refresh || "unknown"}.
+                            Last executor update{" "}
+                            {formatAge(
+                              candidate.task_execution_summary?.updated_at ||
+                                candidate.last_pack_refresh,
+                            )}
+                            .
                           </p>
                         </div>
                       </div>
@@ -1230,6 +1353,98 @@ export default function App() {
                           {getTopBlocker(candidate)}
                         </p>
                       </div>
+
+                      <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4">
+                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
+                          Task ledger
+                        </div>
+                        <div className="mt-3 space-y-3">
+                          {(candidate.task_ledger || [])
+                            .slice(0, 3)
+                            .map((task: AnyRecord) => (
+                              <div
+                                key={task.task_id}
+                                className="rounded-2xl border border-white/8 bg-white/5 p-3"
+                              >
+                                <div className="flex flex-wrap items-center justify-between gap-2">
+                                  <div className="font-semibold text-white">
+                                    {task.label}
+                                  </div>
+                                  <StatusPill tone={taskTone(task.status)}>
+                                    {task.status}
+                                  </StatusPill>
+                                </div>
+                                <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
+                                  {task.execution_note ||
+                                    task.rationale ||
+                                    "No execution note emitted yet."}
+                                </p>
+                              </div>
+                            ))}
+                        </div>
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        <button
+                          onClick={() =>
+                            void handleManuscriptQuestion(candidate, "missing")
+                          }
+                          className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-[#9fd7bd]/35 hover:bg-white/10"
+                        >
+                          <Sparkles className="h-4 w-4" />
+                          What is missing?
+                        </button>
+                        <button
+                          onClick={() =>
+                            void handleManuscriptQuestion(candidate, "stronger")
+                          }
+                          className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-[#9fd7bd]/35 hover:bg-white/10"
+                        >
+                          <ArrowRight className="h-4 w-4" />
+                          How do we make it stronger?
+                        </button>
+                        <button
+                          onClick={() =>
+                            void handleManuscriptQuestion(candidate, "working")
+                          }
+                          className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-[#9fd7bd]/35 hover:bg-white/10"
+                        >
+                          <Activity className="h-4 w-4" />
+                          Is the engine already working on this?
+                        </button>
+                        <button
+                          onClick={() => void handleRunFocusedEvidenceCycle(candidate)}
+                          disabled={
+                            manuscriptRunState === "working" &&
+                            manuscriptRunCandidateId === candidate.candidate_id
+                          }
+                          className={cn(
+                            "inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold transition",
+                            manuscriptRunState === "working" &&
+                              manuscriptRunCandidateId === candidate.candidate_id
+                              ? "cursor-not-allowed bg-white/5 text-white/35"
+                              : "bg-[#9fd7bd] text-[#071017] hover:bg-[#b0e8ce]",
+                          )}
+                        >
+                          {manuscriptRunState === "working" &&
+                          manuscriptRunCandidateId === candidate.candidate_id ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <Zap className="h-4 w-4" />
+                          )}
+                          Run focused evidence cycle
+                        </button>
+                      </div>
+
+                      {manuscriptRunCandidateId === candidate.candidate_id &&
+                        manuscriptRunMessage && (
+                          <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4 text-sm leading-7 text-[#9fb4c8]">
+                            <div className="font-semibold text-white">
+                              Manuscript run status
+                            </div>
+                            <p className="mt-2">{manuscriptRunMessage}</p>
+                          </div>
+                        )}
 
                       <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4 text-sm text-[#9fb4c8]">
                         Evidence bundle:{" "}
@@ -1282,6 +1497,14 @@ export default function App() {
                             "Not selected"}
                           .
                         </p>
+                        <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
+                          {getTaskSummary(candidate)} · last executor update{" "}
+                          {formatAge(
+                            candidate.task_execution_summary?.updated_at ||
+                              candidate.last_pack_refresh,
+                          )}
+                          .
+                        </p>
                         <div className="mt-4 space-y-3">
                           <ScoreRail
                             label="Scientific strength"
@@ -1298,6 +1521,41 @@ export default function App() {
                             score={candidate.draft_readiness_bar?.score}
                             percent={candidate.draft_readiness_bar?.percent}
                           />
+                        </div>
+                        <div className="mt-4 flex flex-wrap gap-3">
+                          <button
+                            onClick={() =>
+                              void handleManuscriptQuestion(candidate, "missing")
+                            }
+                            className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:border-[#9fd7bd]/35 hover:bg-white/10"
+                          >
+                            <Sparkles className="h-3.5 w-3.5" />
+                            What is missing?
+                          </button>
+                          <button
+                            onClick={() =>
+                              void handleRunFocusedEvidenceCycle(candidate)
+                            }
+                            disabled={
+                              manuscriptRunState === "working" &&
+                              manuscriptRunCandidateId === candidate.candidate_id
+                            }
+                            className={cn(
+                              "inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold transition",
+                              manuscriptRunState === "working" &&
+                                manuscriptRunCandidateId === candidate.candidate_id
+                                ? "cursor-not-allowed bg-white/5 text-white/35"
+                                : "bg-[#9fd7bd] text-[#071017] hover:bg-[#b0e8ce]",
+                            )}
+                          >
+                            {manuscriptRunState === "working" &&
+                            manuscriptRunCandidateId === candidate.candidate_id ? (
+                              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            ) : (
+                              <Zap className="h-3.5 w-3.5" />
+                            )}
+                            Run focused evidence cycle
+                          </button>
                         </div>
                       </div>
                     ),
