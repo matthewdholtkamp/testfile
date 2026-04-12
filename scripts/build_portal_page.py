@@ -330,6 +330,22 @@ __BASE_CSS__
         color: var(--muted);
         line-height: 1.5;
       }
+      .manuscript-alert {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+        display: grid;
+        gap: 8px;
+      }
+      .manuscript-alert p {
+        color: var(--muted);
+        line-height: 1.45;
+        margin: 0;
+      }
+      .manuscript-alert strong {
+        color: var(--ink);
+      }
       .watchlist-shell,
       .tracker-shell {
         display: grid;
@@ -1204,6 +1220,31 @@ __BASE_CSS__
         return `<a class=\"button-link\" href=\"${escapeHtml(href)}\" target=\"_blank\" rel=\"noreferrer\">${escapeHtml(label)}</a>`;
       }
 
+      function manuscriptTaskSummary(candidate) {
+        const summary = candidate.task_execution_summary || {};
+        const counts = summary.status_counts || {};
+        const parts = [];
+        if (counts.running) parts.push(`${counts.running} running`);
+        if (counts.blocked) parts.push(`${counts.blocked} blocked`);
+        if (counts.satisfied) parts.push(`${counts.satisfied} satisfied`);
+        if (!parts.length) parts.push('No executor activity yet');
+        return parts.join(' · ');
+      }
+
+      function manuscriptTopIssue(candidate) {
+        const tasks = candidate.task_ledger || [];
+        const blocked = tasks.find((task) => task.critical && task.status === 'blocked');
+        const running = tasks.find((task) => task.critical && task.status === 'running');
+        const fallback = tasks.find((task) => task.status !== 'satisfied');
+        const selected = blocked || running || fallback;
+        if (!selected) return 'No active blocker is recorded right now.';
+        return selected.execution_note || selected.rationale || selected.label || 'A blocker is still being worked.';
+      }
+
+      function manuscriptJournalStatus(candidate) {
+        return candidate.journal_targets?.requirements_checked ? 'Verified requirements' : 'Shortlist only';
+      }
+
       function renderManuscriptCard(candidate, primaryLane = false) {
         if (!candidate) return '';
         const primaryJournal = candidate.journal_targets?.primary?.journal?.name || 'Primary journal not selected yet';
@@ -1218,12 +1259,17 @@ __BASE_CSS__
               <div class=\"status-strip\">
                 <span class=\"pill ${slugToken(candidate.support_status)}\">${escapeHtml(candidate.support_status || 'not specified')}</span>
                 <span class=\"pill ${slugToken((candidate.publication_status || 'candidate').replace(/\\s+/g, '-'))}\">${escapeHtml(candidate.publication_status || 'candidate')}</span>
+                <span class=\"pill ${candidate.journal_targets?.requirements_checked ? 'supported' : 'bounded'}\">${escapeHtml(manuscriptJournalStatus(candidate))}</span>
               </div>
             </div>
             <div class=\"score-stack\">
               ${renderScoreRow('Scientific strength', candidate.scientific_strength_bar)}
               ${renderScoreRow('Journal fit', candidate.journal_fit_bar)}
               ${renderScoreRow('Draft readiness', candidate.draft_readiness_bar)}
+            </div>
+            <div class=\"manuscript-alert\">
+              <p><strong>Task summary:</strong> ${escapeHtml(manuscriptTaskSummary(candidate))}</p>
+              <p><strong>Top blocker:</strong> ${escapeHtml(manuscriptTopIssue(candidate))}</p>
             </div>
             <div class=\"manuscript-meta-list\">
               <p><strong style=\"color:var(--ink);\">Primary journal:</strong> ${escapeHtml(primaryJournal)}</p>
@@ -1248,6 +1294,9 @@ __BASE_CSS__
               ${renderScoreRow('Draft readiness', candidate.draft_readiness_bar)}
             </div>
             <p class=\"muted-note\"><strong style=\"color:var(--ink);\">Primary journal:</strong> ${escapeHtml(candidate.journal_targets?.primary?.journal?.name || 'Still ranking')}</p>
+            <p class=\"muted-note\"><strong style=\"color:var(--ink);\">Journal state:</strong> ${escapeHtml(manuscriptJournalStatus(candidate))}</p>
+            <p class=\"muted-note\"><strong style=\"color:var(--ink);\">Task summary:</strong> ${escapeHtml(manuscriptTaskSummary(candidate))}</p>
+            <p class=\"muted-note\"><strong style=\"color:var(--ink);\">Top blocker:</strong> ${escapeHtml(manuscriptTopIssue(candidate))}</p>
           </article>
         `;
       }

@@ -793,7 +793,7 @@
         "reopened"
       ],
       "execution_note": "Generated contradiction brief for 24 issue(s); 4 remain blocking.",
-      "last_executed_at": "2026-04-12T13:36:28.432901+00:00",
+      "last_executed_at": "2026-04-12T13:41:58.193933+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -813,7 +813,7 @@
         "reopened"
       ],
       "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-      "last_executed_at": "2026-04-12T13:36:28.432962+00:00",
+      "last_executed_at": "2026-04-12T13:41:58.194116+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -833,12 +833,12 @@
         "reopened"
       ],
       "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
-      "last_executed_at": "2026-04-12T13:36:28.432991+00:00",
+      "last_executed_at": "2026-04-12T13:41:58.194155+00:00",
       "output_file": "task_outputs/capture_primary_journal_requirements.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-12T13:36:28.433000+00:00",
+    "updated_at": "2026-04-12T13:41:58.194165+00:00",
     "total_tasks": 3,
     "status_counts": {
       "proposed": 0,
