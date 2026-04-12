@@ -1,0 +1,17 @@
+{
+  "verified": true,
+  "checked_at": "2026-04-12T13:07:00Z",
+  "source_url": "https://bmjdigitalhealth.bmj.com/pages/authors/",
+  "source_urls": [
+    "https://bmjdigitalhealth.bmj.com/pages/authors/"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "review",
+    "brief report"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 3,
+  "notes": "BMJ Digital Health & AI is a realistic newer venue for digital health and AI workflow manuscripts. Keep it in play for the engine paper rather than biomarker-first trauma papers."
+}

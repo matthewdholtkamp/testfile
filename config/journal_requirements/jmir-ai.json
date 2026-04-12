@@ -1,0 +1,17 @@
+{
+  "verified": true,
+  "checked_at": "2026-04-12T13:06:00Z",
+  "source_url": "https://ai.jmir.org/author-information/",
+  "source_urls": [
+    "https://ai.jmir.org/author-information/"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "review",
+    "viewpoint"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 3,
+  "notes": "JMIR AI is a realistic lower-tier AI-in-health target for system and workflow manuscripts. Use it for AI-enabled decision-support framing rather than trauma-mechanism biomarker papers."
+}

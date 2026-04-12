@@ -1,0 +1,17 @@
+{
+  "verified": true,
+  "checked_at": "2026-04-12T13:08:00Z",
+  "source_url": "https://journals.plos.org/digitalhealth/s/submission-guidelines",
+  "source_urls": [
+    "https://journals.plos.org/digitalhealth/s/submission-guidelines"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "methodology",
+    "review"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 3,
+  "notes": "PLOS Digital Health is a realistic broad digital-health target that fits validated system, methods, software, and workflow papers. Treat this as realistic for the engine manuscript lane."
+}

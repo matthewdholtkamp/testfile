@@ -1,0 +1,18 @@
+{
+  "verified": true,
+  "checked_at": "2026-04-12T13:05:00Z",
+  "source_url": "https://informatics.bmj.com/pages/authors/",
+  "source_urls": [
+    "https://informatics.bmj.com/pages/authors/"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "review",
+    "protocol",
+    "methodology"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 3,
+  "notes": "BMJ Health & Care Informatics is a practical informatics venue for healthcare data, clinical systems, implementation, and decision-support papers. Treat this as a realistic system-paper target below flagship digital-health journals."
+}

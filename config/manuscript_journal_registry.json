@@ -8,10 +8,27 @@
       "homepage": "https://link.springer.com/journal/12028",
       "submission_tier": "realistic",
       "registry_role": "core",
-      "audiences": ["neurocritical", "neurotrauma", "biomarker", "translational"],
-      "manuscript_modes": ["mechanistic_biomarker", "mechanistic_bridge", "translational_tbi"],
-      "preferred_article_types": ["original research", "review", "brief report"],
-      "primary_fit_families": ["most_informative_biomarker_panel", "strongest_causal_bridge", "best_intervention_leverage_point"],
+      "audiences": [
+        "neurocritical",
+        "neurotrauma",
+        "biomarker",
+        "translational"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "translational_tbi"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "brief report"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge",
+        "best_intervention_leverage_point"
+      ],
       "notes": "High-fit specialty venue for neurocritical and acute-severity framing, especially when readouts and translational logic are explicit."
     },
     {
@@ -20,10 +37,28 @@
       "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
       "submission_tier": "realistic",
       "registry_role": "core",
-      "audiences": ["neurotrauma", "mechanism", "biomarker", "translational"],
-      "manuscript_modes": ["mechanistic_biomarker", "mechanistic_bridge", "translational_tbi", "endotype_discriminator"],
-      "preferred_article_types": ["original research", "review", "commentary"],
-      "primary_fit_families": ["most_informative_biomarker_panel", "strongest_causal_bridge", "best_intervention_leverage_point"],
+      "audiences": [
+        "neurotrauma",
+        "mechanism",
+        "biomarker",
+        "translational"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "translational_tbi",
+        "endotype_discriminator"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "commentary"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge",
+        "best_intervention_leverage_point"
+      ],
       "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
     },
     {
@@ -32,10 +67,26 @@
       "homepage": "https://www.tandfonline.com/journals/ibij20",
       "submission_tier": "realistic",
       "registry_role": "core",
-      "audiences": ["brain_injury", "rehabilitation", "biomarker", "clinical_context"],
-      "manuscript_modes": ["mechanistic_biomarker", "endotype_discriminator", "clinical_synthesis"],
-      "preferred_article_types": ["original research", "review", "brief communication"],
-      "primary_fit_families": ["most_informative_biomarker_panel", "strongest_causal_bridge"],
+      "audiences": [
+        "brain_injury",
+        "rehabilitation",
+        "biomarker",
+        "clinical_context"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "endotype_discriminator",
+        "clinical_synthesis"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "brief communication"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge"
+      ],
       "notes": "Broad TBI venue that can absorb a clinically framed synthesis when the readout story and longitudinal stakes are clear."
     },
     {
@@ -44,10 +95,26 @@
       "homepage": "https://journals.lww.com/headtraumarehab/pages/default.aspx",
       "submission_tier": "realistic",
       "registry_role": "core",
-      "audiences": ["rehabilitation", "brain_injury", "cohort", "clinical_context"],
-      "manuscript_modes": ["clinical_synthesis", "endotype_discriminator", "rehabilitation_relevance"],
-      "preferred_article_types": ["original research", "review", "special article"],
-      "primary_fit_families": ["most_informative_biomarker_panel", "strongest_causal_bridge"],
+      "audiences": [
+        "rehabilitation",
+        "brain_injury",
+        "cohort",
+        "clinical_context"
+      ],
+      "manuscript_modes": [
+        "clinical_synthesis",
+        "endotype_discriminator",
+        "rehabilitation_relevance"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "special article"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge"
+      ],
       "notes": "Better fit when the manuscript emphasizes patient trajectory, outcome relevance, and subgroup framing."
     },
     {
@@ -56,10 +123,28 @@
       "homepage": "https://academic.oup.com/milmed",
       "submission_tier": "realistic",
       "registry_role": "core",
-      "audiences": ["military", "brain_injury", "operational_health", "digital_health"],
-      "manuscript_modes": ["clinical_synthesis", "operational_tbi", "methods_engine", "endotype_discriminator"],
-      "preferred_article_types": ["original research", "review", "special communication"],
-      "primary_fit_families": ["most_informative_biomarker_panel", "strongest_causal_bridge", "highest_value_next_task"],
+      "audiences": [
+        "military",
+        "brain_injury",
+        "operational_health",
+        "digital_health"
+      ],
+      "manuscript_modes": [
+        "clinical_synthesis",
+        "operational_tbi",
+        "methods_engine",
+        "endotype_discriminator"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "special communication"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge",
+        "highest_value_next_task"
+      ],
       "notes": "Core military outlet. Best fit when the manuscript can speak to service members, blast exposure, operational screening, or force-health implications."
     },
     {
@@ -68,10 +153,27 @@
       "homepage": "https://home.liebertpub.com/publications/neurotrauma-reports/669/overview",
       "submission_tier": "realistic",
       "registry_role": "discovery",
-      "audiences": ["neurotrauma", "biomarker", "methods", "translational"],
-      "manuscript_modes": ["mechanistic_biomarker", "mechanistic_bridge", "methods_engine"],
-      "preferred_article_types": ["original research", "review", "methods paper"],
-      "primary_fit_families": ["most_informative_biomarker_panel", "strongest_causal_bridge", "best_intervention_leverage_point"],
+      "audiences": [
+        "neurotrauma",
+        "biomarker",
+        "methods",
+        "translational"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "methods_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "methods paper"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge",
+        "best_intervention_leverage_point"
+      ],
       "notes": "Useful fallback for neurotrauma-centered work that may be too novel or too methods-forward for Journal of Neurotrauma."
     },
     {
@@ -80,10 +182,27 @@
       "homepage": "https://mmrjournal.biomedcentral.com/",
       "submission_tier": "realistic",
       "registry_role": "discovery",
-      "audiences": ["military", "translational", "brain_injury", "methods"],
-      "manuscript_modes": ["operational_tbi", "mechanistic_biomarker", "methods_engine"],
-      "preferred_article_types": ["original research", "review", "commentary"],
-      "primary_fit_families": ["most_informative_biomarker_panel", "best_intervention_leverage_point", "highest_value_next_task"],
+      "audiences": [
+        "military",
+        "translational",
+        "brain_injury",
+        "methods"
+      ],
+      "manuscript_modes": [
+        "operational_tbi",
+        "mechanistic_biomarker",
+        "methods_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "commentary"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "best_intervention_leverage_point",
+        "highest_value_next_task"
+      ],
       "notes": "Military-facing alternative when operational relevance and translational framing are stronger than classic rehabilitation framing."
     },
     {
@@ -92,23 +211,54 @@
       "homepage": "https://www.frontiersin.org/journals/neurology",
       "submission_tier": "realistic",
       "registry_role": "discovery",
-      "audiences": ["neurology", "neurotrauma", "biomarker", "systems_neuroscience"],
-      "manuscript_modes": ["mechanistic_biomarker", "mechanistic_bridge", "endotype_discriminator", "methods_engine"],
-      "preferred_article_types": ["original research", "review", "hypothesis and theory"],
-      "primary_fit_families": ["most_informative_biomarker_panel", "strongest_causal_bridge"],
+      "audiences": [
+        "neurology",
+        "neurotrauma",
+        "biomarker",
+        "systems_neuroscience"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "endotype_discriminator",
+        "methods_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "hypothesis and theory"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge"
+      ],
       "notes": "Broad neurological venue that is sometimes useful when the story is mechanistic and cross-cutting rather than strictly critical-care focused."
     },
     {
       "id": "journal-of-medical-internet-research",
       "name": "Journal of Medical Internet Research",
       "homepage": "https://www.jmir.org/",
-      "submission_tier": "realistic",
+      "submission_tier": "stretch",
       "registry_role": "discovery",
-      "audiences": ["digital_health", "medical_informatics", "telehealth", "ai_methods"],
-      "manuscript_modes": ["methods_engine", "digital_health_engine"],
-      "preferred_article_types": ["original research", "review", "viewpoint"],
-      "primary_fit_families": ["highest_value_next_task"],
-      "notes": "Important digital-health option when the paper is about the engine itself, its workflow, or decision-support value rather than a single biomarker path."
+      "audiences": [
+        "digital_health",
+        "medical_informatics",
+        "telehealth",
+        "ai_methods"
+      ],
+      "manuscript_modes": [
+        "methods_engine",
+        "digital_health_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "viewpoint"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
+      "notes": "Flagship digital-health venue, but currently too ambitious for the first system-paper push unless evidence and validation strengthen substantially."
     },
     {
       "id": "bmc-medical-informatics-and-decision-making",
@@ -116,10 +266,24 @@
       "homepage": "https://bmcmedinformdecismak.biomedcentral.com/",
       "submission_tier": "realistic",
       "registry_role": "discovery",
-      "audiences": ["medical_informatics", "decision_support", "methods", "digital_health"],
-      "manuscript_modes": ["methods_engine", "digital_health_engine"],
-      "preferred_article_types": ["original research", "review", "methodology"],
-      "primary_fit_families": ["highest_value_next_task"],
+      "audiences": [
+        "medical_informatics",
+        "decision_support",
+        "methods",
+        "digital_health"
+      ],
+      "manuscript_modes": [
+        "methods_engine",
+        "digital_health_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "methodology"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
       "notes": "Good fit for the system/methods manuscript layer, especially when the decision-support and provenance logic are central."
     },
     {
@@ -128,10 +292,24 @@
       "homepage": "https://home.liebertpub.com/publications/telemedicine-and-e-health/54/overview",
       "submission_tier": "realistic",
       "registry_role": "discovery",
-      "audiences": ["telehealth", "digital_health", "operational_care", "implementation"],
-      "manuscript_modes": ["digital_health_engine", "operational_tbi"],
-      "preferred_article_types": ["original research", "review", "brief report"],
-      "primary_fit_families": ["highest_value_next_task"],
+      "audiences": [
+        "telehealth",
+        "digital_health",
+        "operational_care",
+        "implementation"
+      ],
+      "manuscript_modes": [
+        "digital_health_engine",
+        "operational_tbi"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "brief report"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
       "notes": "Useful if the paper emphasizes workflow deployment, operational care support, or remote triage value."
     },
     {
@@ -140,10 +318,24 @@
       "homepage": "https://journals.sagepub.com/home/dhj",
       "submission_tier": "realistic",
       "registry_role": "discovery",
-      "audiences": ["digital_health", "methods", "implementation", "ai_methods"],
-      "manuscript_modes": ["digital_health_engine", "methods_engine"],
-      "preferred_article_types": ["original research", "review", "protocol"],
-      "primary_fit_families": ["highest_value_next_task"],
+      "audiences": [
+        "digital_health",
+        "methods",
+        "implementation",
+        "ai_methods"
+      ],
+      "manuscript_modes": [
+        "digital_health_engine",
+        "methods_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "protocol"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
       "notes": "Broad digital-health outlet that can absorb platform, workflow, and clinical-decision infrastructure work."
     },
     {
@@ -152,10 +344,24 @@
       "homepage": "https://www.frontiersin.org/journals/digital-health",
       "submission_tier": "realistic",
       "registry_role": "discovery",
-      "audiences": ["digital_health", "ai_methods", "medical_informatics", "clinical_support"],
-      "manuscript_modes": ["digital_health_engine", "methods_engine"],
-      "preferred_article_types": ["original research", "review", "hypothesis and theory"],
-      "primary_fit_families": ["highest_value_next_task"],
+      "audiences": [
+        "digital_health",
+        "ai_methods",
+        "medical_informatics",
+        "clinical_support"
+      ],
+      "manuscript_modes": [
+        "digital_health_engine",
+        "methods_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "hypothesis and theory"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
       "notes": "Useful when the system itself is the main contribution and the manuscript needs a more methods-friendly digital-health venue."
     },
     {
@@ -164,11 +370,130 @@
       "homepage": "https://www.nature.com/npjdigitalmed/",
       "submission_tier": "stretch",
       "registry_role": "discovery",
-      "audiences": ["digital_health", "ai_methods", "clinical_ai", "medical_informatics"],
-      "manuscript_modes": ["digital_health_engine", "methods_engine"],
-      "preferred_article_types": ["original research", "review", "commentary"],
-      "primary_fit_families": ["highest_value_next_task"],
+      "audiences": [
+        "digital_health",
+        "ai_methods",
+        "clinical_ai",
+        "medical_informatics"
+      ],
+      "manuscript_modes": [
+        "digital_health_engine",
+        "methods_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "commentary"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
       "notes": "Stretch venue for a system paper if the evidence and novelty become unusually strong."
+    },
+    {
+      "id": "bmj-health-and-care-informatics",
+      "name": "BMJ Health & Care Informatics",
+      "homepage": "https://informatics.bmj.com/",
+      "submission_tier": "realistic",
+      "registry_role": "core",
+      "audiences": [
+        "digital_health",
+        "medical_informatics",
+        "implementation",
+        "decision_support"
+      ],
+      "manuscript_modes": [
+        "methods_engine",
+        "digital_health_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "protocol",
+        "methodology"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
+      "notes": "Practical informatics venue with a current impact profile under 5 and explicit openness to informatics, implementation, and healthcare workflow papers."
+    },
+    {
+      "id": "jmir-ai",
+      "name": "JMIR AI",
+      "homepage": "https://ai.jmir.org/",
+      "submission_tier": "realistic",
+      "registry_role": "discovery",
+      "audiences": [
+        "digital_health",
+        "ai_methods",
+        "medical_informatics",
+        "clinical_ai"
+      ],
+      "manuscript_modes": [
+        "methods_engine",
+        "digital_health_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "viewpoint"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
+      "notes": "Lower-tier AI-in-health option with a newer profile and a better fit for AI-enabled workflow, manuscript production, and decision-support framing than classic trauma journals."
+    },
+    {
+      "id": "bmj-digital-health-and-ai",
+      "name": "BMJ Digital Health & AI",
+      "homepage": "https://bmjdigitalhealth.bmj.com/",
+      "submission_tier": "realistic",
+      "registry_role": "discovery",
+      "audiences": [
+        "digital_health",
+        "ai_methods",
+        "clinical_ai",
+        "implementation"
+      ],
+      "manuscript_modes": [
+        "methods_engine",
+        "digital_health_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "brief report"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
+      "notes": "New BMJ title focused on digital health and AI, useful for a system paper when we want AI and health-delivery framing without forcing a trauma-specific venue."
+    },
+    {
+      "id": "plos-digital-health",
+      "name": "PLOS Digital Health",
+      "homepage": "https://journals.plos.org/digitalhealth/",
+      "submission_tier": "realistic",
+      "registry_role": "discovery",
+      "audiences": [
+        "digital_health",
+        "ai_methods",
+        "medical_informatics",
+        "implementation"
+      ],
+      "manuscript_modes": [
+        "methods_engine",
+        "digital_health_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "methodology",
+        "review"
+      ],
+      "primary_fit_families": [
+        "highest_value_next_task"
+      ],
+      "notes": "Broad digital-health venue that explicitly accepts methods, software, database, and tool-focused research articles; a good lower-tier home for the engine paper if validation is clear."
     }
   ]
 }
