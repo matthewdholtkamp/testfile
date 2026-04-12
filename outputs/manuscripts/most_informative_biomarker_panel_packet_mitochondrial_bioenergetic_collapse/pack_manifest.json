@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T14:40:18.969184+00:00",
+  "updated_at": "2026-04-12T14:41:47.234839+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
   "pack_key": "most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse",
   "candidate_title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
@@ -157,15 +157,15 @@
     "display_name": "Mitochondrial / Bioenergetic Collapse",
     "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
     "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
-    "support_status": "supported",
+    "support_status": "provisional",
     "novelty_status": "cross_disease_analog",
-    "strength_tag": "assertive",
-    "operator_decision": "Write now",
-    "confidence_score": 0.885,
-    "value_score": 1.0,
-    "core_family_score": 0.885,
+    "strength_tag": "moderate",
+    "operator_decision": "Needs adjudication",
+    "confidence_score": 0.733,
+    "value_score": 0.853,
+    "core_family_score": 0.733,
     "novelty_bonus": 0.12,
-    "family_score": 1.005,
+    "family_score": 0.853,
     "target_lane_ids": [
       "mitochondrial_bioenergetic_collapse"
     ],
@@ -315,11 +315,10 @@
     "feasibility_score": 0.72,
     "redundancy_penalty": 0.0,
     "rank": 7,
-    "steering_score": 0.37,
+    "steering_score": 0.32,
     "steering_reasons": [
       "favored_family",
-      "favored_endotype",
-      "advance_supported"
+      "favored_endotype"
     ],
     "portfolio_role": "novelty_watch"
   },
@@ -331,10 +330,10 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": false,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_135917.csv"
+    "corpus_manifest_path": ""
   },
   "task_execution": {
-    "updated_at": "2026-04-12T14:40:18.969173+00:00",
+    "updated_at": "2026-04-12T14:41:47.234827+00:00",
     "total_tasks": 3,
     "status_counts": {
       "proposed": 0,

@@ -13,7 +13,7 @@
   - MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. PMID:41446731.
   - Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. PMID:41740873.
   - Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. PMID:41740080.
-  - Criado-Marrero M, Ravi S, Barroso D, Garza TN, Cuestas Torres DM, Lessard C, Castano JP, Bolen ML, Rubinovich U, Prokop S, Chakrabarty P, Ranum LPW, Febo M, Abisambra JF. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv : the preprint server for biology 2026 Mar 06. doi:10.64898/2026.03.04.709563. PMID:41847037.
+  - PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. PMID:41709584.
 - **Contradictions:** The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.
@@ -29,7 +29,7 @@
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. The Journal of clinical investigation 2026 Apr 02. doi:10.1172/JCI196112. PMID:41926211.
+  - PMID:41926211.
   - PMID:41663365.
   - PMID:41734021.
   - PMID:41752185.
@@ -50,9 +50,9 @@
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
-  - Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.
+  - PMID:41954515.
   - PMID:41039850.
-  - Mayer AR, Wick TV, Miller S, Connors KE, Sasi Kumar D, Meier TB, van der Horn HJ, Nathaniel U, Ling JM, Mehos Milliken CJ, Warren K, Patton DA, Gigliotti AP, Zotev V, Kinsler RE, Mannix R. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. Journal of cerebral blood flow and metabolism : official journal of the International Society of Cerebral Blood Flow and Metabolism 2026 Apr 04. doi:10.1177/0271678X261432754. PMID:41934291.
+  - PMID:41934291.
   - PMID:41465583.
 - **Evidence gaps:** All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.
 
@@ -114,7 +114,7 @@
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. The Journal of clinical investigation 2026 Apr 02. doi:10.1172/JCI196112. PMID:41926211.
+  - PMID:41926211.
   - PMID:41663365.
   - PMID:41734021.
   - PMID:41752185.
@@ -135,9 +135,9 @@
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
-  - Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.
+  - PMID:41954515.
   - PMID:41039850.
-  - Mayer AR, Wick TV, Miller S, Connors KE, Sasi Kumar D, Meier TB, van der Horn HJ, Nathaniel U, Ling JM, Mehos Milliken CJ, Warren K, Patton DA, Gigliotti AP, Zotev V, Kinsler RE, Mannix R. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. Journal of cerebral blood flow and metabolism : official journal of the International Society of Cerebral Blood Flow and Metabolism 2026 Apr 04. doi:10.1177/0271678X261432754. PMID:41934291.
+  - PMID:41934291.
   - PMID:41465583.
 - **Contradictions:** Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone. | no direct compound or trial attachment surfaced in this build
 
@@ -154,7 +154,7 @@
   - MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. PMID:41446731.
   - Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. PMID:41740873.
   - Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. PMID:41740080.
-  - Criado-Marrero M, Ravi S, Barroso D, Garza TN, Cuestas Torres DM, Lessard C, Castano JP, Bolen ML, Rubinovich U, Prokop S, Chakrabarty P, Ranum LPW, Febo M, Abisambra JF. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv : the preprint server for biology 2026 Mar 06. doi:10.64898/2026.03.04.709563. PMID:41847037.
+  - PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. PMID:41709584.
 - **Contradictions:** Repetitive cohorts can still carry unresolved vascular pressure, so an inflammatory label should stay bounded unless barrier readouts are also tracked.

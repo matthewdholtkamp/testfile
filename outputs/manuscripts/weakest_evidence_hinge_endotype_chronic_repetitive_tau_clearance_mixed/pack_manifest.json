@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T14:40:18.992925+00:00",
+  "updated_at": "2026-04-12T14:41:47.248280+00:00",
   "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
   "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
   "candidate_title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
@@ -264,10 +264,10 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": false,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_135917.csv"
+    "corpus_manifest_path": ""
   },
   "task_execution": {
-    "updated_at": "2026-04-12T14:40:18.992914+00:00",
+    "updated_at": "2026-04-12T14:41:47.248268+00:00",
     "total_tasks": 3,
     "status_counts": {
       "proposed": 0,
