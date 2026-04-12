@@ -958,7 +958,6 @@
     "requirements_checked": true
   },
   "journal_fit": 4,
-  "draft_readiness": 2,
   "evidence_bundle_summary": {
     "reference_count": 47,
     "claim_count": 9,
@@ -985,8 +984,8 @@
         "stale",
         "reopened"
       ],
-      "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-      "last_executed_at": "2026-04-12T19:19:22.418296+00:00",
+      "execution_note": "Translational packet remains bounded around PRKN; strengthening brief updated.",
+      "last_executed_at": "2026-04-12T19:25:47.570262+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -1006,12 +1005,12 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-12T19:19:22.418327+00:00",
+      "last_executed_at": "2026-04-12T19:25:47.570305+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-12T19:19:22.418334+00:00",
+    "updated_at": "2026-04-12T19:25:47.570312+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,
@@ -1026,6 +1025,8 @@
     "blocking_tasks": 0,
     "running_tasks": 1
   },
+  "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+  "draft_readiness": 4,
   "scientific_strength_bar": {
     "score": 2,
     "max": 4,
@@ -1037,9 +1038,9 @@
     "percent": 100
   },
   "draft_readiness_bar": {
-    "score": 2,
+    "score": 4,
     "max": 4,
-    "percent": 50
+    "percent": 100
   },
   "manuscript_gate_state": "almost ready",
   "publication_status": "",

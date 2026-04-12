@@ -1,8 +1,10 @@
 {
-  "updated_at": "2026-04-12T19:19:22.418347+00:00",
+  "updated_at": "2026-04-12T19:25:47.570504+00:00",
   "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
+  "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
   "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
   "candidate_title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
+  "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
   "theme_key": "mitochondrial_bioenergetic_collapse",
   "manuscript_gate_state": "almost ready",
   "scientific_strength": 2,
@@ -10,7 +12,7 @@
   "journal_shortlist_score": 2,
   "journal_verified_fit_score": 4,
   "journal_requirements_checked": true,
-  "draft_readiness": 2,
+  "draft_readiness": 4,
   "active_lane": true,
   "watchlist_rank": null,
   "publication_status": "",
@@ -303,7 +305,7 @@
     "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
   },
   "task_execution": {
-    "updated_at": "2026-04-12T19:19:22.418334+00:00",
+    "updated_at": "2026-04-12T19:25:47.570365+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,

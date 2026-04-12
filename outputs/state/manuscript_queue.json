@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-12T19:19:22.393124+00:00",
+  "generated_at": "2026-04-12T19:25:47.530665+00:00",
   "summary": {
     "active_count": 2,
     "watchlist_count": 2,
@@ -991,7 +991,6 @@
         "requirements_checked": true
       },
       "journal_fit": 4,
-      "draft_readiness": 2,
       "evidence_bundle_summary": {
         "reference_count": 50,
         "claim_count": 10,
@@ -1018,8 +1017,8 @@
             "stale",
             "reopened"
           ],
-          "execution_note": "Generated contradiction brief for 18 issue(s); 3 remain blocking.",
-          "last_executed_at": "2026-04-12T19:19:22.398306+00:00",
+          "execution_note": "Lead contradiction still active: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover. 3 issue(s) remain blocking.",
+          "last_executed_at": "2026-04-12T19:25:47.538155+00:00",
           "output_file": "task_outputs/resolve_lead_contradiction.md"
         },
         {
@@ -1038,8 +1037,8 @@
             "stale",
             "reopened"
           ],
-          "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-          "last_executed_at": "2026-04-12T19:19:22.398342+00:00",
+          "execution_note": "Translational packet remains bounded around OCLN; strengthening brief updated.",
+          "last_executed_at": "2026-04-12T19:25:47.538213+00:00",
           "output_file": "task_outputs/strengthen_translational_packet.md"
         },
         {
@@ -1059,12 +1058,12 @@
             "reopened"
           ],
           "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-          "last_executed_at": "2026-04-12T19:19:22.398365+00:00",
+          "last_executed_at": "2026-04-12T19:25:47.538251+00:00",
           "output_file": "task_outputs/tighten_primary_journal_fit.md"
         }
       ],
       "task_execution_summary": {
-        "updated_at": "2026-04-12T19:19:22.398370+00:00",
+        "updated_at": "2026-04-12T19:25:47.538259+00:00",
         "total_tasks": 3,
         "status_counts": {
           "proposed": 0,
@@ -1079,6 +1078,8 @@
         "blocking_tasks": 0,
         "running_tasks": 2
       },
+      "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+      "draft_readiness": 3,
       "scientific_strength_bar": {
         "score": 2,
         "max": 4,
@@ -1090,9 +1091,9 @@
         "percent": 100
       },
       "draft_readiness_bar": {
-        "score": 2,
+        "score": 3,
         "max": 4,
-        "percent": 50
+        "percent": 75
       },
       "manuscript_gate_state": "almost ready",
       "publication_status": "",
@@ -2063,7 +2064,6 @@
         "requirements_checked": true
       },
       "journal_fit": 4,
-      "draft_readiness": 2,
       "evidence_bundle_summary": {
         "reference_count": 47,
         "claim_count": 9,
@@ -2090,8 +2090,8 @@
             "stale",
             "reopened"
           ],
-          "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-          "last_executed_at": "2026-04-12T19:19:22.418296+00:00",
+          "execution_note": "Translational packet remains bounded around PRKN; strengthening brief updated.",
+          "last_executed_at": "2026-04-12T19:25:47.570283+00:00",
           "output_file": "task_outputs/strengthen_translational_packet.md"
         },
         {
@@ -2111,12 +2111,12 @@
             "reopened"
           ],
           "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-          "last_executed_at": "2026-04-12T19:19:22.418327+00:00",
+          "last_executed_at": "2026-04-12T19:25:47.570346+00:00",
           "output_file": "task_outputs/tighten_primary_journal_fit.md"
         }
       ],
       "task_execution_summary": {
-        "updated_at": "2026-04-12T19:19:22.418334+00:00",
+        "updated_at": "2026-04-12T19:25:47.570365+00:00",
         "total_tasks": 2,
         "status_counts": {
           "proposed": 0,
@@ -2131,6 +2131,8 @@
         "blocking_tasks": 0,
         "running_tasks": 1
       },
+      "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+      "draft_readiness": 4,
       "scientific_strength_bar": {
         "score": 2,
         "max": 4,
@@ -2142,9 +2144,9 @@
         "percent": 100
       },
       "draft_readiness_bar": {
-        "score": 2,
+        "score": 4,
         "max": 4,
-        "percent": 50
+        "percent": 100
       },
       "manuscript_gate_state": "almost ready",
       "publication_status": "",
@@ -3141,7 +3143,6 @@
         "requirements_checked": true
       },
       "journal_fit": 4,
-      "draft_readiness": 1,
       "evidence_bundle_summary": {
         "reference_count": 60,
         "claim_count": 13,
@@ -3168,8 +3169,8 @@
             "stale",
             "reopened"
           ],
-          "execution_note": "Generated contradiction brief for 24 issue(s); 5 remain blocking.",
-          "last_executed_at": "2026-04-12T19:19:22.459947+00:00",
+          "execution_note": "Lead contradiction still active: Study found no significant correlation, contradicting the hypothesis of cumulative damage.. 5 issue(s) remain blocking.",
+          "last_executed_at": "2026-04-12T19:25:47.644173+00:00",
           "output_file": "task_outputs/resolve_lead_contradiction.md"
         },
         {
@@ -3188,8 +3189,8 @@
             "stale",
             "reopened"
           ],
-          "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-          "last_executed_at": "2026-04-12T19:19:22.459991+00:00",
+          "execution_note": "Translational packet remains bounded around NLRP3; strengthening brief updated.",
+          "last_executed_at": "2026-04-12T19:25:47.644230+00:00",
           "output_file": "task_outputs/strengthen_translational_packet.md"
         },
         {
@@ -3209,12 +3210,12 @@
             "reopened"
           ],
           "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-          "last_executed_at": "2026-04-12T19:19:22.460015+00:00",
+          "last_executed_at": "2026-04-12T19:25:47.644301+00:00",
           "output_file": "task_outputs/tighten_primary_journal_fit.md"
         }
       ],
       "task_execution_summary": {
-        "updated_at": "2026-04-12T19:19:22.460022+00:00",
+        "updated_at": "2026-04-12T19:25:47.644334+00:00",
         "total_tasks": 3,
         "status_counts": {
           "proposed": 0,
@@ -3229,6 +3230,8 @@
         "blocking_tasks": 0,
         "running_tasks": 2
       },
+      "top_blocker": "Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
+      "draft_readiness": 2,
       "scientific_strength_bar": {
         "score": 2,
         "max": 4,
@@ -3240,9 +3243,9 @@
         "percent": 100
       },
       "draft_readiness_bar": {
-        "score": 1,
+        "score": 2,
         "max": 4,
-        "percent": 25
+        "percent": 50
       },
       "manuscript_gate_state": "almost ready",
       "publication_status": "",
@@ -4206,7 +4209,6 @@
         "requirements_checked": true
       },
       "journal_fit": 4,
-      "draft_readiness": 1,
       "evidence_bundle_summary": {
         "reference_count": 83,
         "claim_count": 14,
@@ -4233,8 +4235,8 @@
             "stale",
             "reopened"
           ],
-          "execution_note": "Generated contradiction brief for 24 issue(s); 4 remain blocking.",
-          "last_executed_at": "2026-04-12T19:19:22.484488+00:00",
+          "execution_note": "Lead contradiction still active: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.. 4 issue(s) remain blocking.",
+          "last_executed_at": "2026-04-12T19:25:47.702775+00:00",
           "output_file": "task_outputs/resolve_lead_contradiction.md"
         },
         {
@@ -4253,8 +4255,8 @@
             "stale",
             "reopened"
           ],
-          "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-          "last_executed_at": "2026-04-12T19:19:22.484532+00:00",
+          "execution_note": "Translational packet remains bounded around DYRK1A; strengthening brief updated.",
+          "last_executed_at": "2026-04-12T19:25:47.702832+00:00",
           "output_file": "task_outputs/strengthen_translational_packet.md"
         },
         {
@@ -4274,12 +4276,12 @@
             "reopened"
           ],
           "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-          "last_executed_at": "2026-04-12T19:19:22.484558+00:00",
+          "last_executed_at": "2026-04-12T19:25:47.702862+00:00",
           "output_file": "task_outputs/tighten_primary_journal_fit.md"
         }
       ],
       "task_execution_summary": {
-        "updated_at": "2026-04-12T19:19:22.484564+00:00",
+        "updated_at": "2026-04-12T19:25:47.702870+00:00",
         "total_tasks": 3,
         "status_counts": {
           "proposed": 0,
@@ -4294,6 +4296,8 @@
         "blocking_tasks": 0,
         "running_tasks": 2
       },
+      "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+      "draft_readiness": 2,
       "scientific_strength_bar": {
         "score": 2,
         "max": 4,
@@ -4305,9 +4309,9 @@
         "percent": 100
       },
       "draft_readiness_bar": {
-        "score": 1,
+        "score": 2,
         "max": 4,
-        "percent": 25
+        "percent": 50
       },
       "manuscript_gate_state": "almost ready",
       "publication_status": "",

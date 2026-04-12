@@ -13,3 +13,4 @@
 
 ## Check Before Approval
 - Make sure the title, article type, and main claims stay bounded to what the current artifact chain actually proves.
+- Read `blocking_resolution_plan.md` and `translational_strengthening_plan.md` before treating the pack as close to submission-ready.

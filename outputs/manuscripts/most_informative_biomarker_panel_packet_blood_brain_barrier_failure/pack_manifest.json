@@ -1,8 +1,10 @@
 {
-  "updated_at": "2026-04-12T19:19:22.398381+00:00",
+  "updated_at": "2026-04-12T19:25:47.538306+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+  "title": "Blood-Brain Barrier Failure biomarker panel",
   "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
   "candidate_title": "Blood-Brain Barrier Failure biomarker panel",
+  "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
   "theme_key": "blood_brain_barrier_failure",
   "manuscript_gate_state": "almost ready",
   "scientific_strength": 2,
@@ -10,7 +12,7 @@
   "journal_shortlist_score": 2,
   "journal_verified_fit_score": 4,
   "journal_requirements_checked": true,
-  "draft_readiness": 2,
+  "draft_readiness": 3,
   "active_lane": true,
   "watchlist_rank": null,
   "publication_status": "",
@@ -330,7 +332,7 @@
     "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
   },
   "task_execution": {
-    "updated_at": "2026-04-12T19:19:22.398370+00:00",
+    "updated_at": "2026-04-12T19:25:47.537912+00:00",
     "total_tasks": 3,
     "status_counts": {
       "proposed": 0,

@@ -9,6 +9,7 @@
 ## Drafting Rules
 
 - Use the evidence bundle first: references, claim support matrix, contradiction register, source artifact manifest, data points bundle, and section packets.
+- Read blocking_resolution_plan.md and translational_strengthening_plan.md before writing Results or Discussion.
 - Use the claim-evidence map and review memo before drafting any narrative section.
 - Keep all claims bounded to the current artifact chain.
 - Re-check the current journal instructions before final formatting.

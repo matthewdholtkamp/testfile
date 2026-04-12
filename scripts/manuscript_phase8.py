@@ -681,7 +681,7 @@ def choose_journal_targets(candidate, registry):
     }
 
 
-def score_draft_readiness(row, scientific_strength, journal_targets, translation_maturity):
+def score_draft_readiness(row, scientific_strength, journal_targets, translation_maturity, tasks=None, evidence_bundle_summary=None):
     score = 0
     if scientific_strength >= 3:
         score += 1
@@ -691,6 +691,24 @@ def score_draft_readiness(row, scientific_strength, journal_targets, translation
         score += 1
     if journal_targets.get('requirements_checked') and journal_targets.get('verified_journal_fit_score', 0) >= 3:
         score += 1
+    if evidence_bundle_summary:
+        if (
+            int(evidence_bundle_summary.get('reference_count', 0) or 0) >= 20
+            and int(evidence_bundle_summary.get('claim_count', 0) or 0) >= 5
+            and int(evidence_bundle_summary.get('figure_count', 0) or 0) >= 3
+            and int(evidence_bundle_summary.get('section_packet_count', 0) or 0) >= 5
+        ):
+            score += 1
+    if tasks:
+        open_critical = [task for task in tasks if task.get('critical') and task.get('status') != 'satisfied']
+        if open_critical and all(task.get('status') in {'running', 'satisfied'} and normalize(task.get('output_file')) for task in open_critical):
+            score += 1
+        contradiction_open = any(
+            task.get('task_id') == 'resolve_lead_contradiction' and task.get('status') != 'satisfied'
+            for task in tasks
+        )
+        if contradiction_open:
+            score = max(0, score - 1)
     if blocker_severity(row) == 'high':
         score = max(0, score - 1)
     if normalize(translation_maturity) == 'bounded':
@@ -700,6 +718,25 @@ def score_draft_readiness(row, scientific_strength, journal_targets, translation
 
 def has_open_critical_tasks(tasks):
     return any(task.get('critical') and task.get('status') != 'satisfied' for task in tasks or [])
+
+
+def derive_top_blocker(row, tasks=None, contradictions=None):
+    tasks = tasks or []
+    contradictions = contradictions or []
+    blocked_task = next((task for task in tasks if task.get('critical') and task.get('status') == 'blocked'), None)
+    if blocked_task:
+        return normalize(blocked_task.get('execution_note')) or normalize(blocked_task.get('rationale')) or normalize(blocked_task.get('label'))
+
+    blocking_issue = next((issue for issue in contradictions if issue.get('blocking')), None)
+    if blocking_issue:
+        return normalize(blocking_issue.get('statement')) or normalize(blocking_issue.get('recommended_bound'))
+
+    running_task = next((task for task in tasks if task.get('critical') and task.get('status') == 'running'), None)
+    if running_task:
+        return normalize(running_task.get('execution_note')) or normalize(running_task.get('rationale')) or normalize(running_task.get('label'))
+
+    blockers = split_notes(row.get('blockers')) + split_notes(row.get('contradiction_notes')) + split_notes(row.get('evidence_gaps'))
+    return blockers[0] if blockers else ''
 
 
 def manuscript_gate_state(scientific_strength, journal_targets, draft_readiness, translation_maturity, tasks):
@@ -1574,18 +1611,47 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
                 ])
             else:
                 status = 'running'
-                note = f"Generated contradiction brief for {len(contradictions)} issue(s); {len(blocking_contradictions)} remain blocking."
+                lead_statement = normalize(contradictions[0].get('statement')) or normalize(current.get('rationale'))
+                note = f"Lead contradiction still active: {lead_statement}. {len(blocking_contradictions)} issue(s) remain blocking."
                 sections.extend([
                     '## Current contradiction stack',
                     '',
                 ])
                 for issue in contradictions[:8]:
                     sections.append(f"- [{issue['severity']}] {issue['statement']}")
+                if blocking_contradictions:
+                    sections.extend([
+                        '',
+                        '## Blocking issues to resolve before stronger claims',
+                        '',
+                    ])
+                    for issue in blocking_contradictions[:5]:
+                        sections.append(f"- {issue['statement']}")
+                        if normalize(issue.get('recommended_bound')):
+                            sections.append(f"  - Manuscript bound: {issue['recommended_bound']}")
+                sections.extend([
+                    '',
+                    '## BBB manuscript-safe wording for now',
+                    '',
+                    '- Keep the core claim tied to permeability and immune-spillover biology, not junction-marker movement alone.',
+                    '- Treat downstream burden as plausible and mechanistically linked, but not yet fully hardened across every lane.',
+                    '- Present contradiction rows explicitly in limitations rather than smoothing them away in Results.',
+                    '',
+                    '## Best next evidence to lower the contradiction',
+                    '',
+                ])
+                next_test = normalize(row.get('next_test'))
+                expected_readouts = summarize_list(row.get('expected_readouts') or [])
+                if next_test:
+                    sections.append(f"- Run or prioritize the current next-test path: {next_test}")
+                if expected_readouts and expected_readouts != 'None yet':
+                    sections.append(f"- Keep the manuscript anchored to readouts that directly test leakage/permeability: {expected_readouts}")
                 sections.extend([
                     '',
                     '## Next machine emphasis',
                     '',
                     '- Keep bounded wording tied to the contradiction register until new evidence lowers severity or removes the issue.',
+                    '- Prefer evidence that tests whether barrier improvement also changes leakage, inflammatory spillover, or downstream burden in the same lane.',
                 ])
         elif task_id == 'strengthen_translational_packet':
             if normalize(candidate.get('translation_maturity')) != 'bounded':
@@ -1597,11 +1663,12 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
             else:
                 status = 'running'
                 lead_phase4 = phase4_entries[0].get('row') or {}
-                note = 'Generated translational strengthening brief from the linked Phase 4 packet.'
+                primary_target = normalize(lead_phase4.get('primary_target')) or 'not specified'
+                note = f"Translational packet remains bounded around {primary_target}; strengthening brief updated."
                 sections.extend([
                     '## Translational packet status',
                     '',
-                    f"- Primary target: {normalize(lead_phase4.get('primary_target')) or 'not specified'}",
+                    f"- Primary target: {primary_target}",
                     f"- Expected readouts: {summarize_list(lead_phase4.get('expected_readouts') or [])}",
                     f"- Best next experiment: {normalize(lead_phase4.get('best_next_experiment')) or 'not specified'}",
                     f"- Why primary now: {normalize(lead_phase4.get('why_primary_now')) or 'not specified'}",
@@ -1614,6 +1681,19 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
                         '',
                     ])
                     sections.extend([f"- {item}" for item in disconfirming[:5]])
+                sections.extend([
+                    '',
+                    '## What would move this packet beyond bounded',
+                    '',
+                    '- Add direct support that the lead target/readout set shifts the same biology named in the manuscript thesis.',
+                    '- Prefer evidence that connects target movement to permeability, inflammatory spillover, or downstream burden rather than isolated marker motion.',
+                    '- Keep the manuscript framed as a bounded mechanistic biomarker paper until compound or trial attachment becomes stronger.',
+                    '',
+                    '## Manuscript-safe translational framing',
+                    '',
+                    '- Treat the packet as a translational anchor for readout selection, not as proof of intervention-ready efficacy.',
+                    '- Use Phase 4 to justify why the panel is worth prioritizing, while keeping actionability language explicitly limited.',
+                ])
         elif task_id == 'complete_evidence_chain':
             if not missing_phases:
                 status = 'satisfied'
@@ -1725,7 +1805,7 @@ def build_review_memo(candidate, row):
     primary_journal = primary['journal']['name'] if primary else 'No primary journal selected yet'
     requirements = primary.get('requirements') if primary else {}
     blockers = split_notes(row.get('blockers')) + split_notes(row.get('contradiction_notes')) + split_notes(row.get('evidence_gaps'))
-    weakest = blockers[0] if blockers else 'No explicit blocker is recorded, but the packet still needs a cautious read.'
+    weakest = normalize(candidate.get('top_blocker')) or (blockers[0] if blockers else 'No explicit blocker is recorded, but the packet still needs a cautious read.')
     likely_attack = 'Reviewers are likely to press on bounded Phase 4 support and whether the evidence chain justifies the article type.'
     if any('no significant correlation' in item.lower() for item in blockers):
         likely_attack = 'Reviewers are likely to focus on contradiction rows that report no significant correlation or weak cumulative-damage support.'
@@ -1737,7 +1817,7 @@ def build_review_memo(candidate, row):
     journal_note = 'Primary journal requirements have not been captured yet, so journal fit is still provisional.'
     if requirements and requirements.get('checked'):
         journal_note = 'Primary journal requirements have been captured locally and checked against the current pack.'
-    return f"""# Review Memo\n\n## {heading}\n- The candidate has a named paper path with scientific strength currently at **{candidate['scientific_strength']} / 4**.\n- The current primary target journal is **{primary_journal}**.\n- {journal_note}\n\n## Biggest Weakness\n- {weakest}\n\n## Likely Reviewer Attack\n- {likely_attack}\n\n## Check Before Approval\n- Make sure the title, article type, and main claims stay bounded to what the current artifact chain actually proves.\n"""
+    return f"""# Review Memo\n\n## {heading}\n- The candidate has a named paper path with scientific strength currently at **{candidate['scientific_strength']} / 4**.\n- The current primary target journal is **{primary_journal}**.\n- {journal_note}\n\n## Biggest Weakness\n- {weakest}\n\n## Likely Reviewer Attack\n- {likely_attack}\n\n## Check Before Approval\n- Make sure the title, article type, and main claims stay bounded to what the current artifact chain actually proves.\n- Read `blocking_resolution_plan.md` and `translational_strengthening_plan.md` before treating the pack as close to submission-ready.\n"""
 
 
 def build_claim_evidence_map(candidate, row):
@@ -1852,6 +1932,7 @@ def build_codex_handoff_markdown(candidate):
         '## Drafting Rules',
         '',
         '- Use the evidence bundle first: references, claim support matrix, contradiction register, source artifact manifest, data points bundle, and section packets.',
+        '- Read blocking_resolution_plan.md and translational_strengthening_plan.md before writing Results or Discussion.',
         '- Use the claim-evidence map and review memo before drafting any narrative section.',
         '- Keep all claims bounded to the current artifact chain.',
         '- Re-check the current journal instructions before final formatting.',
@@ -1867,8 +1948,10 @@ def build_pack_manifest(candidate, row, publication_entry):
     return {
         'updated_at': iso_now(),
         'candidate_id': candidate['candidate_id'],
+        'title': candidate['title'],
         'pack_key': candidate['pack_key'],
         'candidate_title': candidate['title'],
+        'top_blocker': candidate.get('top_blocker', ''),
         'theme_key': candidate['theme_key'],
         'manuscript_gate_state': candidate['manuscript_gate_state'],
         'scientific_strength': candidate['scientific_strength'],
@@ -1936,12 +2019,20 @@ def build_candidate_payload(row, state, direction_registry, journal_registry, pu
     journal_targets = choose_journal_targets(candidate, journal_registry)
     candidate['journal_targets'] = journal_targets
     candidate['journal_fit'] = journal_targets['display_journal_fit_score']
-    candidate['draft_readiness'] = score_draft_readiness(row, candidate['scientific_strength'], journal_targets, candidate['translation_maturity'])
     phase_entries = phase_entries_for_candidate(row, state, indexes)
     evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
     candidate['evidence_bundle_summary'] = evidence_bundle['summary']
     candidate['task_ledger'] = build_task_ledger(row, candidate, journal_targets)
     candidate['task_ledger'], _, candidate['task_execution_summary'] = execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle)
+    candidate['top_blocker'] = derive_top_blocker(row, candidate['task_ledger'], evidence_bundle.get('contradictions'))
+    candidate['draft_readiness'] = score_draft_readiness(
+        row,
+        candidate['scientific_strength'],
+        journal_targets,
+        candidate['translation_maturity'],
+        tasks=candidate['task_ledger'],
+        evidence_bundle_summary=evidence_bundle.get('summary'),
+    )
     candidate['scientific_strength_bar'] = score_bar_payload(candidate['scientific_strength'])
     candidate['journal_fit_bar'] = score_bar_payload(candidate['journal_fit'])
     candidate['draft_readiness_bar'] = score_bar_payload(candidate['draft_readiness'])
@@ -2094,6 +2185,16 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
         candidate['evidence_bundle_summary'] = evidence_bundle['summary']
         candidate['task_ledger'], task_outputs, candidate['task_execution_summary'] = execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle)
+        candidate['top_blocker'] = derive_top_blocker(row, candidate['task_ledger'], evidence_bundle.get('contradictions'))
+        candidate['draft_readiness'] = score_draft_readiness(
+            row,
+            candidate['scientific_strength'],
+            candidate['journal_targets'],
+            candidate['translation_maturity'],
+            tasks=candidate['task_ledger'],
+            evidence_bundle_summary=evidence_bundle.get('summary'),
+        )
+        candidate['draft_readiness_bar'] = score_bar_payload(candidate['draft_readiness'])
         candidate['manuscript_gate_state'] = manuscript_gate_state(candidate['scientific_strength'], candidate['journal_targets'], candidate['draft_readiness'], candidate['translation_maturity'], candidate['task_ledger'])
         candidate['ready_for_codex_draft'] = ready_for_codex_draft(candidate['scientific_strength'], candidate['journal_targets'], candidate['draft_readiness'], candidate['task_ledger'], candidate['manuscript_gate_state'])
         candidate['draft_status'] = 'ready_for_codex_draft' if candidate['ready_for_codex_draft'] else ('pack_ready' if candidate['manuscript_gate_state'] == 'ready to build phase 8 pack' else 'gathering evidence')
@@ -2115,6 +2216,10 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         write_text(folder / 'journal_fit.md', build_journal_fit_markdown(candidate))
         write_text(folder / 'manuscript_brief.md', build_manuscript_brief(candidate, row))
         write_text(folder / 'codex_handoff.md', build_codex_handoff_markdown(candidate))
+        if 'resolve_lead_contradiction' in task_outputs:
+            write_text(folder / 'blocking_resolution_plan.md', task_outputs['resolve_lead_contradiction'])
+        if 'strengthen_translational_packet' in task_outputs:
+            write_text(folder / 'translational_strengthening_plan.md', task_outputs['strengthen_translational_packet'])
         write_json(folder / 'references.json', {
             'updated_at': iso_now(),
             'summary': evidence_bundle['summary'],
@@ -2180,6 +2285,8 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
                     'source_artifact_manifest.json',
                     'data_points.json',
                     'journal_requirements_snapshot.json',
+                    'blocking_resolution_plan.md',
+                    'translational_strengthening_plan.md',
                     'review_memo.md',
                     'journal_fit.md',
                     'codex_handoff.md',
