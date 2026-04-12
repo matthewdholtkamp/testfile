@@ -1881,6 +1881,16 @@ def write_text(path, text_value):
         handle.write(text_value)
 
 
+def should_preserve_existing_frontend(path):
+    if not os.path.exists(path):
+        return False
+    try:
+        with open(path, 'r', encoding='utf-8') as handle:
+            return 'data-react-cockpit="true"' in handle.read()
+    except OSError:
+        return False
+
+
 def render_html(snapshot_payload):
     html = HTML_TEMPLATE
     html = html.replace('__BASE_CSS__', base_css(accent='#9fd7bd', accent_rgb='159,215,189'))
@@ -1905,9 +1915,13 @@ def main():
     )
     snapshot = build_command_page_payload(state, root_prefix='./', control_online=False)
     html = render_html(snapshot)
-    write_text(os.path.join(REPO_ROOT, args.output_path), html)
+    output_path = os.path.join(REPO_ROOT, args.output_path)
+    if should_preserve_existing_frontend(output_path):
+        print(f'Preserving React cockpit frontend at {output_path}; writing refreshed snapshot only.')
+    else:
+        write_text(output_path, html)
     write_text(os.path.join(REPO_ROOT, args.snapshot_path), json.dumps(snapshot, indent=2) + '\n')
-    print(f'Phase 7 command cockpit written: {os.path.join(REPO_ROOT, args.output_path)}')
+    print(f'Phase 7 command cockpit written: {output_path}')
 
 
 if __name__ == '__main__':

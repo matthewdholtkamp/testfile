@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b1117;
+  --color-bg-soft: #101924;
+  --color-panel: #121c26;
+  --color-panel-soft: #172430;
+  --color-ink: #edf4fb;
+  --color-muted: #9fb4c8;
+  --color-accent: #9fd7bd;
+  --color-positive: #9be3c0;
+  --color-warning: #ffd37c;
+  --color-danger: #ffb6b6;
+  --color-line: rgba(159, 215, 189, 0.16);
+  --color-soft-line: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    background-image: radial-gradient(circle at top right, rgba(159, 215, 189, 0.14), transparent 28%), linear-gradient(180deg, #090e13 0%, var(--color-bg) 100%);
+    min-height: 100vh;
+  }
+}
