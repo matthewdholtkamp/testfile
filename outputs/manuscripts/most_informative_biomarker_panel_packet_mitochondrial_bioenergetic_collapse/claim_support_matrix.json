@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-04-12T19:36:50.475742+00:00",
+  "updated_at": "2026-04-12T19:38:19.104210+00:00",
   "claims": [
     {
       "claim_id": "phase6_candidate_thesis",
       "phase_key": "phase6",
       "claim_title": "Candidate manuscript thesis",
       "claim_text": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
-      "support_status": "supported",
-      "allowed_language": "Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.",
+      "support_status": "provisional",
+      "allowed_language": "Use cautious, hypothesis-oriented wording and explicitly note boundedness.",
       "supporting_pmids": [
         "41651694",
         "41926540",

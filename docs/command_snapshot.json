@@ -593,7 +593,7 @@
       "human_question": "Do you want this to become the default panel for the next readout pass?",
       "why_now": "This panel is already attached to a translational packet and can be tested against 3 endotype packet(s).",
       "what_we_know": [
-        "Mitochondrial / Bioenergetic Collapse is currently rated supported.",
+        "Mitochondrial / Bioenergetic Collapse is currently rated provisional.",
         "It is tied to 1 Phase 2 transition(s) and 2 downstream object(s).",
         "It already maps to 3 endotype packet(s)."
       ],
@@ -638,14 +638,14 @@
           "immediate_action_mode": "record_only"
         }
       ],
-      "recommended_option_id": "adopt_as_default_panel",
-      "recommended_reason": "Mitochondrial / Bioenergetic Collapse biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
+      "recommended_option_id": "validate_against_challenger_panel",
+      "recommended_reason": "Mitochondrial / Bioenergetic Collapse biomarker panel is recommended now because this panel is already attached to a translational packet and can be tested against 3 endotype packet(s)..",
       "write_in_allowed": true,
-      "current_manuscript_effect": "If you choose Adopt as the default panel, Mitochondrial / Bioenergetic Collapse biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
-      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
-      "immediate_action_mode": "dispatch_refresh_public_enrichment",
+      "current_manuscript_effect": "If you choose Validate against a challenger panel, Mitochondrial / Bioenergetic Collapse biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
+      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse biomarker panel will steer future machine runs and slates this way: Future slates surface competing panels until one wins.",
+      "immediate_action_mode": "run_manual_enrichment_cycle",
       "detail_link": "./idea-briefs/index.html",
-      "support_status": "supported",
+      "support_status": "provisional",
       "novelty_status": "cross_disease_analog",
       "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
       "source_row": {
@@ -658,15 +658,15 @@
         "display_name": "Mitochondrial / Bioenergetic Collapse",
         "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
         "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
-        "support_status": "supported",
+        "support_status": "provisional",
         "novelty_status": "cross_disease_analog",
-        "strength_tag": "assertive",
-        "operator_decision": "Write now",
-        "confidence_score": 0.885,
-        "value_score": 1.0,
-        "core_family_score": 0.885,
+        "strength_tag": "moderate",
+        "operator_decision": "Needs adjudication",
+        "confidence_score": 0.733,
+        "value_score": 0.853,
+        "core_family_score": 0.733,
         "novelty_bonus": 0.12,
-        "family_score": 1.005,
+        "family_score": 0.853,
         "target_lane_ids": [
           "mitochondrial_bioenergetic_collapse"
         ],
@@ -816,11 +816,10 @@
         "feasibility_score": 0.72,
         "redundancy_penalty": 0.0,
         "rank": 7,
-        "steering_score": 0.37,
+        "steering_score": 0.32,
         "steering_reasons": [
           "favored_family",
-          "favored_endotype",
-          "advance_supported"
+          "favored_endotype"
         ],
         "portfolio_role": "novelty_watch"
       }
@@ -881,7 +880,7 @@
   "phase_timeline": [
     {
       "kind": "phase",
-      "date": "2026-04-12 19:36:47",
+      "date": "2026-04-12 19:38:16",
       "title": "Phase 1 \u00b7 Process Lanes",
       "status": "supported",
       "summary": "The engine reduced the TBI literature into six recurring process lanes so the project stopped treating every paper as a one-off mechanism note.",
@@ -890,7 +889,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-12 19:36:47",
+      "date": "2026-04-12 19:38:16",
       "title": "Phase 2 \u00b7 Causal Transitions",
       "status": "supported",
       "summary": "The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.",
@@ -899,7 +898,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-12 19:36:48",
+      "date": "2026-04-12 19:38:16",
       "title": "Phase 3 \u00b7 Progression Objects",
       "status": "supported",
       "summary": "The engine grouped recurring downstream damage states into progression objects such as chronic network dysfunction and neurovascular uncoupling.",
@@ -908,7 +907,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-12 19:36:49",
+      "date": "2026-04-12 19:38:18",
       "title": "Phase 4 \u00b7 Translational Logic",
       "status": "bounded",
       "summary": "The engine attached translational packets to each lane so targets, readouts, and intervention logic sit on top of the mechanism map.",
@@ -917,7 +916,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-12 19:36:49",
+      "date": "2026-04-12 19:38:18",
       "title": "Phase 5 \u00b7 Cohort Stratification",
       "status": "usable",
       "summary": "The engine split TBI into cohort and endotype patterns so mild, repetitive, blast, severe, acute, and chronic states stop collapsing into one disease bucket.",
@@ -926,7 +925,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-12 19:36:49",
+      "date": "2026-04-12 19:38:18",
       "title": "Phase 6 \u00b7 Hypothesis Rankings",
       "status": "live",
       "summary": "The engine ranked the strongest bridges, weakest hinges, biomarker panels, leverage points, and next tasks into a weekly decision slate.",
@@ -939,29 +938,29 @@
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-12T19:36:50.574438+00:00",
+    "snapshot_generated_at": "2026-04-12T19:38:19.151914+00:00",
     "source_artifact_timestamps": {
-      "process": "2026-04-12 19:36:47",
-      "transition": "2026-04-12 19:36:47",
-      "progression": "2026-04-12 19:36:48",
-      "translational": "2026-04-12 19:36:49",
-      "cohort": "2026-04-12 19:36:49",
-      "hypothesis": "2026-04-12 19:36:49",
-      "idea_briefs": "2026-04-12 19:36:50"
+      "process": "2026-04-12 19:38:16",
+      "transition": "2026-04-12 19:38:16",
+      "progression": "2026-04-12 19:38:16",
+      "translational": "2026-04-12 19:38:18",
+      "cohort": "2026-04-12 19:38:18",
+      "hypothesis": "2026-04-12 19:38:18",
+      "idea_briefs": "2026-04-12 19:38:18"
     },
     "source_artifact_paths": {
-      "process": "/home/runner/work/testfile/testfile/reports/process_lanes/process_lane_index_2026-04-12_193647.json",
-      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-12_193647.json",
-      "progression": "/home/runner/work/testfile/testfile/reports/progression_objects/progression_object_index_2026-04-12_193648.json",
-      "translational": "/home/runner/work/testfile/testfile/reports/translational_perturbation/translational_perturbation_index_2026-04-12_193649.json",
-      "cohort": "/home/runner/work/testfile/testfile/reports/cohort_stratification/cohort_stratification_index_2026-04-12_193649.json",
-      "hypothesis": "/home/runner/work/testfile/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-04-12_193649.json",
-      "idea_briefs": "/home/runner/work/testfile/testfile/reports/idea_briefs/idea_briefs_2026-04-12_193650.json"
+      "process": "/home/runner/work/testfile/testfile/reports/process_lanes/process_lane_index_2026-04-12_193816.json",
+      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-12_193816.json",
+      "progression": "/home/runner/work/testfile/testfile/reports/progression_objects/progression_object_index_2026-04-12_193816.json",
+      "translational": "/home/runner/work/testfile/testfile/reports/translational_perturbation/translational_perturbation_index_2026-04-12_193818.json",
+      "cohort": "/home/runner/work/testfile/testfile/reports/cohort_stratification/cohort_stratification_index_2026-04-12_193818.json",
+      "hypothesis": "/home/runner/work/testfile/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-04-12_193818.json",
+      "idea_briefs": "/home/runner/work/testfile/testfile/reports/idea_briefs/idea_briefs_2026-04-12_193818.json"
     },
     "steering_registry_last_updated": "2026-04-05T17:52:32.024523+00:00",
     "action_status_timestamp": "2026-04-05T17:52:35.703077+00:00",
-    "build_run_id": "24314722745",
-    "build_sha": "b26c2bb1b8d3423f085730be263df64da08584a7",
+    "build_run_id": "24314733379",
+    "build_sha": "9e6846f53c46eea5569efeb8c671057043a1c69e",
     "steering_aware_automation": true,
     "active_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
     "active_decision_label": "Blood-Brain Barrier Failure biomarker panel",
@@ -980,7 +979,7 @@
     ]
   },
   "manuscript_queue": {
-    "generated_at": "2026-04-12T19:36:50.573975+00:00",
+    "generated_at": "2026-04-12T19:38:19.151664+00:00",
     "summary": {
       "active_count": 2,
       "watchlist_count": 2,
@@ -1020,7 +1019,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": true,
-        "last_pack_refresh": "2026-04-12 19:36:49",
+        "last_pack_refresh": "2026-04-12 19:38:18",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -1979,7 +1978,7 @@
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": true,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_190950.csv"
+          "corpus_manifest_path": ""
         },
         "task_ledger": [
           {
@@ -1999,7 +1998,7 @@
               "reopened"
             ],
             "execution_note": "Lead contradiction still active: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover. 3 issue(s) remain blocking.",
-            "last_executed_at": "2026-04-12T19:36:50.537693+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.140251+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -2019,7 +2018,7 @@
               "reopened"
             ],
             "execution_note": "Translational packet remains bounded around OCLN; strengthening brief updated.",
-            "last_executed_at": "2026-04-12T19:36:50.537733+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.140290+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -2039,12 +2038,12 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-12T19:36:50.537755+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.140312+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-12T19:36:50.537761+00:00",
+          "updated_at": "2026-04-12T19:38:19.140319+00:00",
           "total_tasks": 3,
           "status_counts": {
             "proposed": 0,
@@ -2117,7 +2116,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-04-12 19:36:49",
+        "last_pack_refresh": "2026-04-12 19:38:18",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -3076,7 +3075,7 @@
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": true,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_190950.csv"
+          "corpus_manifest_path": ""
         },
         "task_ledger": [
           {
@@ -3096,7 +3095,7 @@
               "reopened"
             ],
             "execution_note": "Lead contradiction still active: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.. 4 issue(s) remain blocking.",
-            "last_executed_at": "2026-04-12T19:36:50.553190+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.143615+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -3116,7 +3115,7 @@
               "reopened"
             ],
             "execution_note": "Translational packet remains bounded around NLRP3; strengthening brief updated.",
-            "last_executed_at": "2026-04-12T19:36:50.553232+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.143655+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -3136,12 +3135,12 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-12T19:36:50.553253+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.143677+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-12T19:36:50.553259+00:00",
+          "updated_at": "2026-04-12T19:38:19.143683+00:00",
           "total_tasks": 3,
           "status_counts": {
             "proposed": 0,
@@ -3192,10 +3191,10 @@
         "theme_label": "Mitochondrial / Bioenergetic Collapse",
         "family_id": "most_informative_biomarker_panel",
         "family_preference": 4,
-        "family_score": 1.005,
-        "confidence_score": 0.885,
-        "value_score": 1.0,
-        "support_status": "supported",
+        "family_score": 0.853,
+        "confidence_score": 0.733,
+        "value_score": 0.853,
+        "support_status": "provisional",
         "translation_maturity": "bounded",
         "article_type_candidates": [
           "review",
@@ -3216,7 +3215,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-04-12 19:36:49",
+        "last_pack_refresh": "2026-04-12 19:38:18",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -4175,7 +4174,7 @@
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": true,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_190950.csv"
+          "corpus_manifest_path": ""
         },
         "task_ledger": [
           {
@@ -4195,7 +4194,7 @@
               "reopened"
             ],
             "execution_note": "Lead contradiction still active: Study found no significant correlation, contradicting the hypothesis of cumulative damage.. 4 issue(s) remain blocking.",
-            "last_executed_at": "2026-04-12T19:36:50.558224+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.147135+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -4215,7 +4214,7 @@
               "reopened"
             ],
             "execution_note": "Translational packet remains bounded around PRKN; strengthening brief updated.",
-            "last_executed_at": "2026-04-12T19:36:50.558261+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.147172+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -4235,12 +4234,12 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-12T19:36:50.558281+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.147194+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-12T19:36:50.558287+00:00",
+          "updated_at": "2026-04-12T19:38:19.147200+00:00",
           "total_tasks": 3,
           "status_counts": {
             "proposed": 0,
@@ -4310,7 +4309,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-04-12 19:36:49",
+        "last_pack_refresh": "2026-04-12 19:38:18",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -5241,7 +5240,7 @@
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": true,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-12_190950.csv"
+          "corpus_manifest_path": ""
         },
         "task_ledger": [
           {
@@ -5261,7 +5260,7 @@
               "reopened"
             ],
             "execution_note": "Lead contradiction still active: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.. 4 issue(s) remain blocking.",
-            "last_executed_at": "2026-04-12T19:36:50.573819+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.151512+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -5281,7 +5280,7 @@
               "reopened"
             ],
             "execution_note": "Translational packet remains bounded around DYRK1A; strengthening brief updated.",
-            "last_executed_at": "2026-04-12T19:36:50.573860+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.151550+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -5301,12 +5300,12 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-12T19:36:50.573880+00:00",
+            "last_executed_at": "2026-04-12T19:38:19.151571+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-12T19:36:50.573887+00:00",
+          "updated_at": "2026-04-12T19:38:19.151578+00:00",
           "total_tasks": 3,
           "status_counts": {
             "proposed": 0,
