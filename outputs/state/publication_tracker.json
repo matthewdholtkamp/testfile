@@ -1,0 +1,14 @@
+{
+  "updated_at": "",
+  "entries": [],
+  "valid_statuses": [
+    "awaiting your approval",
+    "approved for submission",
+    "submitted",
+    "under review",
+    "accepted",
+    "published",
+    "rejected / retargeting"
+  ],
+  "notes": "Manual by operator for now. Move manuscripts here once they reach human approval or journal-facing states."
+}

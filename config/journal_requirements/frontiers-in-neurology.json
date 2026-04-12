@@ -1,0 +1,19 @@
+{
+  "verified": true,
+  "checked_at": "2026-04-12T01:36:00Z",
+  "source_url": "https://www.frontiersin.org/journals/neurology/for-authors/article-types",
+  "source_urls": [
+    "https://www.frontiersin.org/journals/neurology/for-authors/article-types",
+    "https://www.frontiersin.org/journals/neurology/for-authors/author-guidelines"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "review",
+    "hypothesis and theory",
+    "brief report"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 3,
+  "notes": "Official Frontiers pages show Original Research, Systematic Review/Review, Hypothesis and Theory, and Brief Research Report as accepted article types for this journal family. The author-guidelines page points authors to the article-type word-count limits and recommends full section structure for Original Research. Operational fit rule: keep bounded translation below primary-target readiness."
+}

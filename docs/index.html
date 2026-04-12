@@ -216,6 +216,48 @@
       .subsection-label { display: block; color: var(--accent); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; font-weight: 800; }
       .hero-meta strong { display: block; color: var(--ink); line-height: 1.45; }
       .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .board-status-details,
+      .folded-panel {
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255,255,255,0.02);
+      }
+      .board-status-details {
+        padding: 12px 14px;
+      }
+      .board-status-details summary,
+      .folded-panel summary {
+        cursor: pointer;
+        list-style: none;
+        color: var(--ink);
+        font-weight: 800;
+      }
+      .board-status-details summary::-webkit-details-marker,
+      .folded-panel summary::-webkit-details-marker {
+        display: none;
+      }
+      .board-status-details summary::after,
+      .folded-panel summary::after {
+        content: '+';
+        float: right;
+        color: var(--accent);
+      }
+      .board-status-details[open] summary::after,
+      .folded-panel[open] summary::after {
+        content: '−';
+      }
+      .board-status-details .muted-note {
+        margin: 10px 0 0;
+      }
+      .folded-panel {
+        padding: 16px 18px;
+      }
+      .folded-panel summary {
+        margin: -2px 0;
+      }
+      .folded-panel .folded-body {
+        margin-top: 14px;
+      }
       .hero-actions .button-link,
       .hero-actions .button-inline,
       .button-inline,
@@ -373,6 +415,82 @@
       .timeline-item strong,
       .history-item strong { display: block; margin-bottom: 6px; }
       .item-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+      .manuscript-grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .manuscript-card,
+      .watchlist-item,
+      .tracker-item {
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        display: grid;
+        gap: 12px;
+      }
+      .manuscript-card.primary-lane {
+        border-color: rgba(var(--accent-rgb), 0.22);
+        background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.08) 0%, rgba(255,255,255,0.03) 100%);
+      }
+      .manuscript-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .manuscript-title strong,
+      .watchlist-item strong,
+      .tracker-item strong {
+        display: block;
+        color: var(--ink);
+        line-height: 1.35;
+      }
+      .score-stack {
+        display: grid;
+        gap: 10px;
+      }
+      .score-row {
+        display: grid;
+        gap: 6px;
+      }
+      .score-row label {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .score-row strong {
+        color: var(--ink);
+        font-size: 0.88rem;
+      }
+      .score-track {
+        width: 100%;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.08);
+        overflow: hidden;
+      }
+      .score-fill {
+        height: 100%;
+        background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.92), rgba(155,227,192,0.92));
+      }
+      .manuscript-meta-list {
+        display: grid;
+        gap: 8px;
+      }
+      .manuscript-meta-list p {
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .watchlist-shell,
+      .tracker-shell {
+        display: grid;
+        gap: 12px;
+      }
       .support-footer {
         display: flex;
         gap: 10px;
@@ -395,7 +513,8 @@
         .progress-grid,
         .discovery-grid,
         .secondary-grid,
-        .phase-grid { grid-template-columns: 1fr; }
+        .phase-grid,
+        .manuscript-grid { grid-template-columns: 1fr; }
         .page { padding-left: 16px; padding-right: 16px; }
         .hero { padding: 20px; }
       }
@@ -896,6 +1015,17 @@
               <button class="button-inline primary" id="refreshCommandButton">Refresh live state</button>
               <button class="button-inline" id="${hasGitHubToken() ? 'disconnectGitHubButton' : 'connectGitHubButton'}">${hasGitHubToken() ? 'Disconnect GitHub control' : 'Connect GitHub control'}</button>
             `;
+        const boardStatusDetails = `
+          <details class="board-status-details">
+            <summary>Board status and control details</summary>
+            <p class="muted-note">${escapeHtml(statusLine)}</p>
+            <p class="muted-note">Published snapshot age: ${escapeHtml(boardState.snapshot_age)}</p>
+            <p class="muted-note">Live steering age: ${escapeHtml(boardState.live_steering_age)}</p>
+            <p class="muted-note">Latest action age: ${escapeHtml(boardState.live_action_age)}</p>
+            <p class="muted-note">Steering-aware automation: ${boardState.steering_aware_automation ? 'Yes' : 'No'}</p>
+            <p class="muted-note">${hasGitHubToken() ? 'GitHub control is stored in this browser for this page.' : 'To use the public page as a live command surface, connect a fine-grained GitHub token with Actions and Contents read/write.'}</p>
+          </details>
+        `;
         return `
           <div class="offline-banner">Live control is offline. The cockpit is still usable as a read-only fallback snapshot, and all server actions stay disabled until /api/command-page responds again.</div>
           <section class="hero">
@@ -905,13 +1035,13 @@
               <div class="status-strip">${onlinePill}</div>
               <p class="hero-copy">${escapeHtml(status.line || '')}</p>
               <p class="hero-note">${escapeHtml(status.paragraph || '')}</p>
-              <p class="hero-note">${escapeHtml(statusLine)}</p>
               ${mismatchBanner}
               <div class="mini-panel">
                 <span class="field-label">Current direction</span>
                 <strong>${escapeHtml(direction.label || 'Direction not emitted')}</strong>
                 <p class="hero-note">${escapeHtml(direction.reason || status.current_direction_line || '')}</p>
               </div>
+              ${boardStatusDetails}
               <div class="hero-actions">
                 ${controlButtons}
               </div>
@@ -923,11 +1053,7 @@
                 <p class="muted-note">${escapeHtml(manuscript.story || '')}</p>
                 <span style="margin-top:10px;">Next paper opportunity</span>
                 <strong>${escapeHtml(nextPaper.title || 'No secondary paper path emitted')}</strong>
-                <p class="muted-note" style="margin-top:10px;">Published snapshot age: ${escapeHtml(boardState.snapshot_age)}</p>
-                <p class="muted-note">Live steering age: ${escapeHtml(boardState.live_steering_age)}</p>
-                <p class="muted-note">Latest action age: ${escapeHtml(boardState.live_action_age)}</p>
-                <p class="muted-note">Steering-aware automation: ${boardState.steering_aware_automation ? 'Yes' : 'No'}</p>
-                <p class="muted-note" style="margin-top:10px;">${hasGitHubToken() ? 'GitHub control is stored in this browser for this page.' : 'To use the public page as a live command surface, connect a fine-grained GitHub token with Actions and Contents read/write.'}</p>
+                <p class="muted-note" style="margin-top:10px;">This is the paper lane the engine is carrying right now, plus the next plausible branch if you decide to pivot later.</p>
               </div>
             </div>
           </section>
@@ -1032,8 +1158,13 @@
           : '<div class="decision-card"><p class="empty-note">No secondary decisions are active in this snapshot.</p></div>';
         return `
           <section class="panel">
-            ${sectionHeader('Keep in View', 'Other Decisions Worth Keeping Nearby', 'These may matter next, but they should not outrank the main choice.')}
-            <div class="secondary-grid">${body}</div>
+            <details class="folded-panel">
+              <summary>Other decisions worth keeping nearby</summary>
+              <div class="folded-body">
+                <p class="muted-note">These may matter next, but they should not outrank the main choice.</p>
+                <div class="secondary-grid">${body}</div>
+              </div>
+            </details>
           </section>
         `;
       }
@@ -1117,24 +1248,29 @@
         const evidenceText = Array.isArray(answer.evidence_chain) ? answer.evidence_chain.join(' ') : (answer.evidence_chain || '');
         return `
           <section class="panel">
-            ${sectionHeader('Clarify', 'Ask a Question Before You Commit', 'Use this when you want the recommendation explained in plain English.')}
-            <div class="ask-grid">
-              <div class="ask-panel">
-                <div class="ask-toolbar">${presets}</div>
-                <label class="field-label" for="clarifyQuestion">Question</label>
-                <textarea class="ask-input" id="clarifyQuestion" placeholder="Ask what the engine discovered, why a recommendation is leading, or what another option would change." ${liveActionsEnabled ? '' : 'disabled'}>${escapeHtml(ui.askQuestion)}</textarea>
-                <div class="action-buttons">
-                  <button class="action-button primary" id="askAiButton" ${liveActionsEnabled ? '' : 'disabled'}>Ask</button>
+            <details class="folded-panel">
+              <summary>Ask for clarification before you commit</summary>
+              <div class="folded-body">
+                <p class="muted-note">Use this when you want the recommendation explained in plain English.</p>
+                <div class="ask-grid">
+                  <div class="ask-panel">
+                    <div class="ask-toolbar">${presets}</div>
+                    <label class="field-label" for="clarifyQuestion">Question</label>
+                    <textarea class="ask-input" id="clarifyQuestion" placeholder="Ask what the engine discovered, why a recommendation is leading, or what another option would change." ${liveActionsEnabled ? '' : 'disabled'}>${escapeHtml(ui.askQuestion)}</textarea>
+                    <div class="action-buttons">
+                      <button class="action-button primary" id="askAiButton" ${liveActionsEnabled ? '' : 'disabled'}>Ask</button>
+                    </div>
+                    <p class="muted-note" id="askAiContext">${escapeHtml(contextLine)}</p>
+                  </div>
+                  <div class="answer-shell" id="aiAnswerShell">
+                    <div class="answer-card"><h3>Answer</h3><p>${escapeHtml(answer.answer || '')}</p></div>
+                    <div class="answer-card"><h3>Evidence chain</h3><p>${escapeHtml(evidenceText)}</p></div>
+                    <div class="answer-card"><h3>Implication</h3><p>${escapeHtml(answer.implication || '')}</p></div>
+                    <div class="answer-card"><h3>Recommended follow-up</h3><p>${escapeHtml(answer.recommended_follow_up || '')}</p></div>
+                  </div>
                 </div>
-                <p class="muted-note" id="askAiContext">${escapeHtml(contextLine)}</p>
               </div>
-              <div class="answer-shell" id="aiAnswerShell">
-                <div class="answer-card"><h3>Answer</h3><p>${escapeHtml(answer.answer || '')}</p></div>
-                <div class="answer-card"><h3>Evidence chain</h3><p>${escapeHtml(evidenceText)}</p></div>
-                <div class="answer-card"><h3>Implication</h3><p>${escapeHtml(answer.implication || '')}</p></div>
-                <div class="answer-card"><h3>Recommended follow-up</h3><p>${escapeHtml(answer.recommended_follow_up || '')}</p></div>
-              </div>
-            </div>
+            </details>
           </section>
         `;
       }
@@ -1206,6 +1342,114 @@
         `;
       }
 
+      function renderScoreRow(label, scorePayload) {
+        const score = scorePayload?.score || 0;
+        const max = scorePayload?.max || 4;
+        const percent = scorePayload?.percent || 0;
+        return `
+          <div class="score-row">
+            <label><span>${escapeHtml(label)}</span><strong>${score} / ${max}</strong></label>
+            <div class="score-track"><div class="score-fill" style="width:${percent}%"></div></div>
+          </div>
+        `;
+      }
+
+      function manuscriptArtifactLink(packKey, label) {
+        if (!packKey) return '';
+        const href = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/tree/${GITHUB_REF}/outputs/manuscripts/${encodeURIComponent(packKey)}`;
+        return `<a class="button-link" href="${escapeHtml(href)}" target="_blank" rel="noreferrer">${escapeHtml(label)}</a>`;
+      }
+
+      function renderManuscriptCard(candidate, primaryLane = false) {
+        if (!candidate) return '';
+        const primaryJournal = candidate.journal_targets?.primary?.journal?.name || 'Primary journal not selected yet';
+        const backupJournals = (candidate.journal_targets?.backups || []).map((item) => item.journal?.name).filter(Boolean);
+        return `
+          <article class="manuscript-card ${primaryLane ? 'primary-lane' : ''}">
+            <div class="manuscript-head">
+              <div class="manuscript-title">
+                <strong>${escapeHtml(candidate.title || 'Manuscript candidate')}</strong>
+                <p class="muted-note">${escapeHtml(candidate.manuscript_gate_state || 'not ready')}</p>
+              </div>
+              <div class="status-strip">
+                <span class="pill ${slugToken(candidate.support_status)}">${escapeHtml(candidate.support_status || 'not specified')}</span>
+                <span class="pill ${slugToken((candidate.publication_status || 'candidate').replace(/\s+/g, '-'))}">${escapeHtml(candidate.publication_status || 'candidate')}</span>
+              </div>
+            </div>
+            <div class="score-stack">
+              ${renderScoreRow('Scientific strength', candidate.scientific_strength_bar)}
+              ${renderScoreRow('Journal fit', candidate.journal_fit_bar)}
+              ${renderScoreRow('Draft readiness', candidate.draft_readiness_bar)}
+            </div>
+            <div class="manuscript-meta-list">
+              <p><strong style="color:var(--ink);">Primary journal:</strong> ${escapeHtml(primaryJournal)}</p>
+              <p><strong style="color:var(--ink);">Backups:</strong> ${escapeHtml(backupJournals.length ? backupJournals.join(', ') : 'Still ranking')}</p>
+              <p><strong style="color:var(--ink);">Draft status:</strong> ${escapeHtml(candidate.draft_status || 'not started')}</p>
+              <p><strong style="color:var(--ink);">Review memo:</strong> ${escapeHtml(candidate.review_memo_status || 'not available')}</p>
+              <p><strong style="color:var(--ink);">Last pack refresh:</strong> ${escapeHtml(candidate.last_pack_refresh || 'Not recorded')}</p>
+            </div>
+            ${manuscriptArtifactLink(candidate.pack_key, 'Open manuscript pack')}
+          </article>
+        `;
+      }
+
+      function renderWatchlistItem(candidate) {
+        return `
+          <article class="watchlist-item">
+            <strong>${escapeHtml(candidate.title || 'Watchlist candidate')}</strong>
+            <p class="muted-note">${escapeHtml(candidate.manuscript_gate_state || 'not ready')}</p>
+            <div class="score-stack">
+              ${renderScoreRow('Scientific strength', candidate.scientific_strength_bar)}
+              ${renderScoreRow('Journal fit', candidate.journal_fit_bar)}
+              ${renderScoreRow('Draft readiness', candidate.draft_readiness_bar)}
+            </div>
+            <p class="muted-note"><strong style="color:var(--ink);">Primary journal:</strong> ${escapeHtml(candidate.journal_targets?.primary?.journal?.name || 'Still ranking')}</p>
+          </article>
+        `;
+      }
+
+      function renderPublicationTrackerItem(entry) {
+        return `
+          <article class="tracker-item">
+            <strong>${escapeHtml(entry.title || 'Tracked manuscript')}</strong>
+            <p class="muted-note"><strong style="color:var(--ink);">Status:</strong> ${escapeHtml(entry.status || 'not set')}</p>
+            <p class="muted-note"><strong style="color:var(--ink);">Journal:</strong> ${escapeHtml(entry.journal_name || 'Not recorded')}</p>
+            <p class="muted-note"><strong style="color:var(--ink);">Updated:</strong> ${escapeHtml(entry.updated_at || 'Not recorded')}</p>
+            <p class="muted-note">${escapeHtml(entry.note || '')}</p>
+          </article>
+        `;
+      }
+
+      function renderManuscriptQueue(payload) {
+        const queue = payload.manuscript_queue || {};
+        const active = queue.active_candidates || [];
+        const watchlist = queue.watchlist || [];
+        const tracker = queue.publication_tracker || [];
+        const activeCards = active.length
+          ? active.map((candidate, index) => renderManuscriptCard(candidate, index === 0)).join('')
+          : '<div class="manuscript-card"><p class="empty-note">No manuscript lanes are active yet.</p></div>';
+        const watchlistCards = watchlist.length
+          ? watchlist.map((candidate) => renderWatchlistItem(candidate)).join('')
+          : '<div class="watchlist-item"><p class="empty-note">No watchlist candidates are waiting behind the active manuscript lanes.</p></div>';
+        const trackerCards = tracker.length
+          ? tracker.map((entry) => renderPublicationTrackerItem(entry)).join('')
+          : '<div class="tracker-item"><p class="empty-note">No manuscripts have been moved into the publication tracker yet.</p></div>';
+        return `
+          <section class="panel">
+            ${sectionHeader('Manuscripts', 'Manuscript Queue', 'These are the paper outputs the engine is actively building, plus the next candidates waiting behind them.')}
+            <div class="manuscript-grid">${activeCards}</div>
+            <details class="folded-panel" style="margin-top:14px;" open>
+              <summary>Watchlist</summary>
+              <div class="folded-body watchlist-shell">${watchlistCards}</div>
+            </details>
+            <details class="folded-panel" style="margin-top:14px;">
+              <summary>Publication Tracker</summary>
+              <div class="folded-body tracker-shell">${trackerCards}</div>
+            </details>
+          </section>
+        `;
+      }
+
       function renderTimelineHistory(payload) {
         const timeline = (payload.phase_timeline || []).map((item) => `
           <article class="timeline-item">
@@ -1267,12 +1511,13 @@
         document.body.classList.toggle('offline', !ui.online);
         app.innerHTML = [
           renderHero(ui.payload),
-          renderProgress(ui.payload),
           renderPrimaryDecision(ui.payload),
+          renderActionPanel(ui.payload),
+          renderManuscriptQueue(ui.payload),
+          renderProgress(ui.payload),
           renderDiscovery(ui.payload),
           renderSecondaryDecisions(ui.payload),
           renderAskAi(ui.payload),
-          renderActionPanel(ui.payload),
           renderTimelineHistory(ui.payload),
           renderSupportLinks(ui.payload),
         ].join('');

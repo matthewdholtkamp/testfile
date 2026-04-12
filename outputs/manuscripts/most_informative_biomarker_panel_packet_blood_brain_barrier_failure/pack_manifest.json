@@ -1,0 +1,331 @@
+{
+  "updated_at": "2026-04-12T12:30:13.994886+00:00",
+  "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+  "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+  "candidate_title": "Blood-Brain Barrier Failure biomarker panel",
+  "theme_key": "blood_brain_barrier_failure",
+  "manuscript_gate_state": "almost ready",
+  "scientific_strength": 2,
+  "journal_fit": 2,
+  "journal_shortlist_score": 2,
+  "journal_verified_fit_score": 0,
+  "journal_requirements_checked": false,
+  "draft_readiness": 1,
+  "active_lane": true,
+  "watchlist_rank": null,
+  "publication_status": "",
+  "primary_journal": {
+    "id": "journal-of-neurotrauma",
+    "name": "Journal of Neurotrauma",
+    "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
+    "submission_tier": "realistic",
+    "registry_role": "core",
+    "audiences": [
+      "neurotrauma",
+      "mechanism",
+      "biomarker",
+      "translational"
+    ],
+    "manuscript_modes": [
+      "mechanistic_biomarker",
+      "mechanistic_bridge",
+      "translational_tbi",
+      "endotype_discriminator"
+    ],
+    "preferred_article_types": [
+      "original research",
+      "review",
+      "commentary"
+    ],
+    "primary_fit_families": [
+      "most_informative_biomarker_panel",
+      "strongest_causal_bridge",
+      "best_intervention_leverage_point"
+    ],
+    "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
+  },
+  "backup_journals": [
+    {
+      "id": "frontiers-in-neurology",
+      "name": "Frontiers in Neurology",
+      "homepage": "https://www.frontiersin.org/journals/neurology",
+      "submission_tier": "realistic",
+      "registry_role": "discovery",
+      "audiences": [
+        "neurology",
+        "neurotrauma",
+        "biomarker",
+        "systems_neuroscience"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "endotype_discriminator",
+        "methods_engine"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "hypothesis and theory"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge"
+      ],
+      "notes": "Broad neurological venue that is sometimes useful when the story is mechanistic and cross-cutting rather than strictly critical-care focused."
+    },
+    {
+      "id": "neurocritical-care",
+      "name": "Neurocritical Care",
+      "homepage": "https://link.springer.com/journal/12028",
+      "submission_tier": "realistic",
+      "registry_role": "core",
+      "audiences": [
+        "neurocritical",
+        "neurotrauma",
+        "biomarker",
+        "translational"
+      ],
+      "manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "translational_tbi"
+      ],
+      "preferred_article_types": [
+        "original research",
+        "review",
+        "brief report"
+      ],
+      "primary_fit_families": [
+        "most_informative_biomarker_panel",
+        "strongest_causal_bridge",
+        "best_intervention_leverage_point"
+      ],
+      "notes": "High-fit specialty venue for neurocritical and acute-severity framing, especially when readouts and translational logic are explicit."
+    }
+  ],
+  "article_type_candidates": [
+    "review",
+    "original research",
+    "hypothesis and theory",
+    "brief report"
+  ],
+  "manuscript_modes": [
+    "endotype_discriminator",
+    "mechanistic_biomarker"
+  ],
+  "phase_links": {
+    "phase1": [
+      "blood_brain_barrier_failure"
+    ],
+    "phase2": [
+      "bbb_permeability_increase_to_peripheral_immune_infiltration"
+    ],
+    "phase3": [
+      "microglial_chronic_activation",
+      "neurovascular_uncoupling"
+    ],
+    "phase4": [
+      "blood_brain_barrier_failure"
+    ],
+    "phase5": [
+      "acute_mild_biomarker_imaging_bridge",
+      "acute_severe_vascular_dominant",
+      "acute_blast_vascular_inflammatory_mixed",
+      "subacute_repetitive_inflammatory_dominant"
+    ]
+  },
+  "expected_readouts": [
+    "Barrier leakage",
+    "OCLN / CLDN5 / TJP1 restoration",
+    "Cerebral blood flow",
+    "Downstream inflammatory spillover"
+  ],
+  "blockers": [
+    "Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover",
+    "keep barrier-module claims tied to permeability outcomes, not junction markers alone."
+  ],
+  "contradiction_notes": [],
+  "evidence_gaps": [],
+  "source_row": {
+    "candidate_id": "most_informative_biomarker_panel::packet::blood_brain_barrier_failure",
+    "family_id": "most_informative_biomarker_panel",
+    "family_label": "Most Informative Biomarker Panel",
+    "ranking_family": "most_informative_biomarker_panel",
+    "candidate_type": "translational_packet",
+    "canonical_mechanism": "blood_brain_barrier_disruption",
+    "display_name": "Blood-Brain Barrier Failure",
+    "title": "Blood-Brain Barrier Failure biomarker panel",
+    "statement": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.",
+    "support_status": "supported",
+    "novelty_status": "cross_disease_analog",
+    "strength_tag": "assertive",
+    "operator_decision": "Write now",
+    "confidence_score": 0.95,
+    "value_score": 1.0,
+    "core_family_score": 0.95,
+    "novelty_bonus": 0.12,
+    "family_score": 1.07,
+    "target_lane_ids": [
+      "blood_brain_barrier_failure"
+    ],
+    "linked_phase1_lane_ids": [
+      "blood_brain_barrier_failure"
+    ],
+    "parent_transition_ids": [
+      "bbb_permeability_increase_to_peripheral_immune_infiltration"
+    ],
+    "linked_phase2_transition_ids": [
+      "bbb_permeability_increase_to_peripheral_immune_infiltration"
+    ],
+    "parent_object_ids": [
+      "microglial_chronic_activation",
+      "neurovascular_uncoupling"
+    ],
+    "linked_phase3_object_ids": [
+      "microglial_chronic_activation",
+      "neurovascular_uncoupling"
+    ],
+    "parent_translational_packet_ids": [
+      "blood_brain_barrier_failure"
+    ],
+    "linked_phase4_packet_ids": [
+      "blood_brain_barrier_failure"
+    ],
+    "parent_endotype_ids": [
+      "acute_mild_biomarker_imaging_bridge",
+      "acute_severe_vascular_dominant",
+      "acute_blast_vascular_inflammatory_mixed",
+      "subacute_repetitive_inflammatory_dominant"
+    ],
+    "linked_phase5_endotype_ids": [
+      "acute_mild_biomarker_imaging_bridge",
+      "acute_severe_vascular_dominant",
+      "acute_blast_vascular_inflammatory_mixed",
+      "subacute_repetitive_inflammatory_dominant"
+    ],
+    "rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
+    "decision_rationale": "OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame.",
+    "why_now": "This panel is already attached to a translational packet and can be tested against 4 endotype packet(s).",
+    "source_quality_mix": "lane 53 full-text-like / 14 abstract-only; primary target seed 5 full-text-like hits across 5 match(es); direct target mentions 6 full-text-like / 0 abstract-only",
+    "anchor_pmids": [
+      "41663365",
+      "41673382",
+      "41642456",
+      "41649131",
+      "41039850",
+      "41465583",
+      "41725719",
+      "41153827",
+      "41532955",
+      "41709060",
+      "41752185",
+      "41622772",
+      "41751210",
+      "41740873",
+      "41683989",
+      "41103638",
+      "41135688",
+      "41157272",
+      "41173520",
+      "41197779",
+      "41327381",
+      "41446731",
+      "41079361",
+      "41177833",
+      "41183617",
+      "41267966",
+      "41328339"
+    ],
+    "supporting_pmids": "41663365; 41673382; 41642456; 41649131; 41039850; 41465583; 41725719; 41153827; 41532955; 41709060; 41752185; 41622772; 41751210; 41740873; 41683989; 41103638; 41135688; 41157272; 41173520; 41197779; 41327381; 41446731; 41079361; 41177833; 41183617; 41267966; 41328339",
+    "provenance_refs": [
+      "phase1:blood_brain_barrier_failure",
+      "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "phase3:microglial_chronic_activation",
+      "phase3:neurovascular_uncoupling",
+      "phase4:blood_brain_barrier_failure",
+      "phase5:acute_mild_biomarker_imaging_bridge",
+      "phase5:acute_severe_vascular_dominant",
+      "phase5:acute_blast_vascular_inflammatory_mixed",
+      "phase5:subacute_repetitive_inflammatory_dominant"
+    ],
+    "blockers": "Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover; keep barrier-module claims tied to permeability outcomes, not junction markers alone.",
+    "next_test": "Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.",
+    "unlocks": "A cleaner panel lets Phase 4 readouts and Phase 5 endotype discrimination use the same operator-facing signal set.",
+    "hypothesis_type": "most_informative_biomarker_panel",
+    "panel_members": [
+      "OCLN",
+      "CLDN5",
+      "TJP1",
+      "Cerebral blood flow",
+      "GFAP",
+      "NfL",
+      "Evans blue",
+      "gadolinium leakage",
+      "Nf-L",
+      "FITC-labeled mNGF fluorescence",
+      "Optical density (OD) readings",
+      "MBP protein expression",
+      "NF-200 protein expression",
+      "PSD-95 protein expression",
+      "Cerebral blood flow (CBF)",
+      "IL-1 (91)",
+      "TNF (53)",
+      "IL-6 (50)",
+      "NLRP3 (38)",
+      "GFAP (22)",
+      "HMGB1 (17)",
+      "CBF (14)",
+      "AQP4 (5)"
+    ],
+    "biomarker_panel": [
+      "OCLN",
+      "CLDN5",
+      "TJP1",
+      "Cerebral blood flow",
+      "GFAP",
+      "NfL",
+      "Evans blue",
+      "gadolinium leakage",
+      "Nf-L",
+      "FITC-labeled mNGF fluorescence",
+      "Optical density (OD) readings",
+      "MBP protein expression",
+      "NF-200 protein expression",
+      "PSD-95 protein expression",
+      "Cerebral blood flow (CBF)",
+      "IL-1 (91)",
+      "TNF (53)",
+      "IL-6 (50)",
+      "NLRP3 (38)",
+      "GFAP (22)",
+      "HMGB1 (17)",
+      "CBF (14)",
+      "AQP4 (5)"
+    ],
+    "expected_readouts": [
+      "Barrier leakage",
+      "OCLN / CLDN5 / TJP1 restoration",
+      "Cerebral blood flow",
+      "Downstream inflammatory spillover"
+    ],
+    "sample_type": "['tissue', 'imaging', 'plasma']",
+    "time_window": "['acute', 'subacute']",
+    "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
+    "expected_direction": "['down', 'up', 'up_or_stabilize', 'down']",
+    "endotype_discrimination_score": 1.0,
+    "feasibility_score": 0.72,
+    "redundancy_penalty": 0.0,
+    "rank": 1,
+    "portfolio_role": "high_confidence_core"
+  },
+  "ready_for_codex_draft": false,
+  "improvement_window": {
+    "default_pass_target": 3,
+    "hard_cap": 5,
+    "meaningful_improvement_requires": [
+      "scientific_strength",
+      "journal_fit"
+    ]
+  }
+}

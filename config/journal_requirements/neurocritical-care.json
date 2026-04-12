@@ -1,0 +1,20 @@
+{
+  "verified": true,
+  "checked_at": "2026-04-12T01:35:00Z",
+  "source_url": "https://link.springer.com/journal/12028/submission-guidelines",
+  "source_urls": [
+    "https://link.springer.com/journal/12028/submission-guidelines",
+    "https://media.springer.com/full/springer-instructions-for-authors-assets/pdf/12028_Neurocritical%20Care%20Instructions%20February%202025.pdf"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "review",
+    "brief report",
+    "commentary",
+    "viewpoint"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 3,
+  "notes": "Official Springer instructions (updated February 2025) list Original work, Brief communication, Review article, Viewpoint, Editorial, Ethical Matters, Take a closer look at trials, Take Notice: Technology, Neuro-Images, Letters, Invited commentary, and Special article. Original work requires a structured abstract and full Methods/Results/Discussion structure. Operational fit rule: keep bounded translation below primary-target readiness."
+}

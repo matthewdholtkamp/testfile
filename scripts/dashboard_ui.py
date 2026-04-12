@@ -6,6 +6,8 @@ import subprocess
 from datetime import datetime, timezone
 from glob import glob
 
+from manuscript_phase8 import build_manuscript_queue_payload, load_publication_tracker
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE_DIR = os.path.join(REPO_ROOT, 'outputs', 'state')
 
@@ -1473,12 +1475,18 @@ def build_command_page_payload(state, root_prefix='./', direction_registry=None,
     direction_registry = direction_registry or load_direction_registry()
     decision_history = decision_history if decision_history is not None else load_decision_history()
     action_status = load_action_status()
+    publication_tracker = load_publication_tracker()
     primary_row, secondary_rows = select_command_decisions(state, direction_registry=direction_registry)
     primary_packet = build_decision_packet(primary_row, 'primary', root_prefix) if primary_row else {}
     secondary_packets = [build_decision_packet(row, 'secondary', root_prefix) for row in secondary_rows]
     context_packet = select_context_packet(primary_packet, secondary_packets, direction_registry)
     direction_summary = current_direction_summary(primary_packet, direction_registry)
     goal_progress = build_goal_progress(state, primary_packet, secondary_packets, direction_registry)
+    manuscript_queue = build_manuscript_queue_payload(
+        state,
+        direction_registry=direction_registry,
+        publication_tracker=publication_tracker,
+    )
     return {
         'program_status': build_program_status(state, primary_packet, direction_summary),
         'goal_progress': goal_progress,
@@ -1490,6 +1498,7 @@ def build_command_page_payload(state, root_prefix='./', direction_registry=None,
         'phase_timeline': build_phase_timeline(state, root_prefix),
         'current_direction': direction_summary,
         'board_state': build_board_state(state, direction_registry, action_status, primary_packet, secondary_packets),
+        'manuscript_queue': manuscript_queue,
         'support_links': build_support_links(root_prefix),
         'control_state': {
             'online': bool(control_online),

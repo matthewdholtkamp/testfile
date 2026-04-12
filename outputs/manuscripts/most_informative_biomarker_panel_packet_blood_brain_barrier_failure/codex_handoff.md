@@ -1,0 +1,15 @@
+# Codex Draft Handoff
+
+- **Candidate ID:** most_informative_biomarker_panel--packet--blood_brain_barrier_failure
+- **Candidate title:** Blood-Brain Barrier Failure biomarker panel
+- **Primary journal:** Journal of Neurotrauma
+- **Backups:** Frontiers in Neurology, Neurocritical Care
+- **Article types in play:** review, original research, hypothesis and theory, brief report
+
+## Drafting Rules
+
+- Use the claim-evidence map and review memo before drafting any narrative section.
+- Keep all claims bounded to the current artifact chain.
+- Re-check the current journal instructions before final formatting.
+- Produce the manuscript in markdown first, with journal-aware sectioning.
+

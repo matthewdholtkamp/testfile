@@ -126,7 +126,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs
+          git add docs outputs/manuscripts outputs/state/manuscript_queue.json outputs/state/publication_tracker.json
           if git diff --cached --quiet; then
             echo "No docs changes to publish."
             exit 0
@@ -143,3 +143,6 @@ jobs:
             reports/program_status/
             reports/atlas_release_manifest/
             docs/atlas-viewer/
+            outputs/manuscripts/
+            outputs/state/manuscript_queue.json
+            outputs/state/publication_tracker.json

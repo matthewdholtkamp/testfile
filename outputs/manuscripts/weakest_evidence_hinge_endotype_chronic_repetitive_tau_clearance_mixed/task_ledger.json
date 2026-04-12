@@ -1,0 +1,56 @@
+{
+  "updated_at": "2026-04-12T12:30:14.006724+00:00",
+  "tasks": [
+    {
+      "task_id": "resolve_lead_contradiction",
+      "label": "Resolve the lead contradiction or evidence tension",
+      "status": "proposed",
+      "critical": true,
+      "rationale": "The current lane still carries a material blocker: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
+      "success_signal": "A future pass reduces or removes the contradiction/blocker language from the candidate ledger.",
+      "allowed_states": [
+        "proposed",
+        "queued",
+        "running",
+        "satisfied",
+        "blocked",
+        "stale",
+        "reopened"
+      ]
+    },
+    {
+      "task_id": "strengthen_translational_packet",
+      "label": "Strengthen Phase 4 beyond bounded translation",
+      "status": "proposed",
+      "critical": true,
+      "rationale": "The linked translational packet is still bounded, which caps manuscript confidence.",
+      "success_signal": "Linked Phase 4 packet becomes usable/actionable or accumulates stronger compound/trial/readout support.",
+      "allowed_states": [
+        "proposed",
+        "queued",
+        "running",
+        "satisfied",
+        "blocked",
+        "stale",
+        "reopened"
+      ]
+    },
+    {
+      "task_id": "capture_primary_journal_requirements",
+      "label": "Capture live requirements for Journal of Neurotrauma",
+      "status": "proposed",
+      "critical": true,
+      "rationale": "Primary journal choice is still a shortlist call. No verified requirements snapshot exists yet.",
+      "success_signal": "A stored requirements snapshot exists for the primary journal and the pack can be checked against it.",
+      "allowed_states": [
+        "proposed",
+        "queued",
+        "running",
+        "satisfied",
+        "blocked",
+        "stale",
+        "reopened"
+      ]
+    }
+  ]
+}
