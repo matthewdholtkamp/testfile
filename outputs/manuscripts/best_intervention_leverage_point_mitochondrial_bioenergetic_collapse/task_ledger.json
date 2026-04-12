@@ -1,0 +1,61 @@
+{
+  "updated_at": "2026-04-12T19:19:22.418926+00:00",
+  "summary": {
+    "updated_at": "2026-04-12T19:19:22.418334+00:00",
+    "total_tasks": 2,
+    "status_counts": {
+      "proposed": 0,
+      "queued": 0,
+      "running": 1,
+      "satisfied": 1,
+      "blocked": 0,
+      "stale": 0,
+      "reopened": 0
+    },
+    "open_critical_tasks": 1,
+    "blocking_tasks": 0,
+    "running_tasks": 1
+  },
+  "tasks": [
+    {
+      "task_id": "strengthen_translational_packet",
+      "label": "Strengthen Phase 4 beyond bounded translation",
+      "status": "running",
+      "critical": true,
+      "rationale": "The linked translational packet is still bounded, which caps manuscript confidence.",
+      "success_signal": "Linked Phase 4 packet becomes usable/actionable or accumulates stronger compound/trial/readout support.",
+      "allowed_states": [
+        "proposed",
+        "queued",
+        "running",
+        "satisfied",
+        "blocked",
+        "stale",
+        "reopened"
+      ],
+      "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
+      "last_executed_at": "2026-04-12T19:19:22.418296+00:00",
+      "output_file": "task_outputs/strengthen_translational_packet.md"
+    },
+    {
+      "task_id": "tighten_primary_journal_fit",
+      "label": "Check article-type and evidence fit for Journal of Neurotrauma",
+      "status": "satisfied",
+      "critical": true,
+      "rationale": "Primary journal choice is selected and now needs an explicit pass against the stored requirements snapshot.",
+      "success_signal": "Journal fit remains high after validating article type, evidence chain, translation maturity, and scientific strength against the stored requirements snapshot.",
+      "allowed_states": [
+        "proposed",
+        "queued",
+        "running",
+        "satisfied",
+        "blocked",
+        "stale",
+        "reopened"
+      ],
+      "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
+      "last_executed_at": "2026-04-12T19:19:22.418327+00:00",
+      "output_file": "task_outputs/tighten_primary_journal_fit.md"
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-12T14:41:47.256008+00:00",
+  "updated_at": "2026-04-12T19:19:22.495052+00:00",
   "artifacts": [
     {
       "phase_key": "phase6",
       "artifact_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
       "label": "Clarify Chronic Repetitive Tau / Clearance Mixed",
-      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-12_144146.json",
+      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-03-28_212659.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41508043",
@@ -82,7 +82,7 @@
       "phase_key": "phase2",
       "artifact_id": "glymphatic_failure_to_tau_protein_accumulation",
       "label": "Glymphatic failure -> tau / protein accumulation",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-12_144144.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-03-29_022656.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41179995",
@@ -95,7 +95,7 @@
       "phase_key": "phase2",
       "artifact_id": "neuroinflammation_to_tau_proteinopathy_progression",
       "label": "Neuroinflammation / microglial state change -> tau / proteinopathy progression",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-12_144144.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-03-29_022656.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41683989",
@@ -107,24 +107,22 @@
       "phase_key": "phase2",
       "artifact_id": "tau_proteinopathy_progression_to_chronic_network_dysfunction",
       "label": "Tau / proteinopathy progression -> chronic network dysfunction",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-12_144144.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-03-29_022656.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41496386",
         "41739474",
         "41747594",
         "41508043",
-        "41683989",
-        "41853047",
-        "41893300"
+        "41683989"
       ],
-      "source_quality_mix": "full_text_like:7; abstract_only:1"
+      "source_quality_mix": "full_text_like:5; abstract_only:1"
     },
     {
       "phase_key": "phase3",
       "artifact_id": "tauopathy_progression",
       "label": "Tauopathy Progression",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-12_144144.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-03-29_022657.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41179995",
@@ -136,13 +134,13 @@
         "41683989",
         "41700070"
       ],
-      "source_quality_mix": "full_text_like:63; abstract_only:6"
+      "source_quality_mix": "full_text_like:40; abstract_only:6"
     },
     {
       "phase_key": "phase3",
       "artifact_id": "cognitive_decline_phenotype",
       "label": "Cognitive Decline Phenotype",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-12_144144.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-03-29_022657.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41132417",
@@ -154,13 +152,13 @@
         "41669533",
         "41709584"
       ],
-      "source_quality_mix": "full_text_like:64; abstract_only:19"
+      "source_quality_mix": "full_text_like:52; abstract_only:19"
     },
     {
       "phase_key": "phase3",
       "artifact_id": "microglial_chronic_activation",
       "label": "Microglial Chronic Activation",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-12_144144.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-03-29_022657.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41039850",
@@ -172,91 +170,91 @@
         "41327381",
         "41446731"
       ],
-      "source_quality_mix": "full_text_like:362; abstract_only:84"
+      "source_quality_mix": "full_text_like:214; abstract_only:84"
     },
     {
       "phase_key": "phase4",
       "artifact_id": "tau_proteinopathy_progression",
       "label": "Tau / Proteinopathy Progression",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-12_144146.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-03-28_212658.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41651695",
         "41508043",
-        "41723222",
         "41665901",
-        "41853047",
         "41496386",
         "41683989",
         "41179995",
         "41809435",
-        "41953056",
-        "41809632",
+        "41328339",
+        "41594797",
         "41700070",
+        "41809632",
         "41747594",
         "41739474",
-        "41893300",
-        "41328339"
+        "41394307",
+        "41618372",
+        "41622461"
       ],
-      "source_quality_mix": "lane 24 full-text-like / 3 abstract-only; direct target mentions 1 full-text-like / 0 abstract-only"
+      "source_quality_mix": "lane 18 full-text-like / 3 abstract-only; direct target mentions 1 full-text-like / 0 abstract-only"
     },
     {
       "phase_key": "phase4",
       "artifact_id": "glymphatic_astroglial_clearance_failure",
       "label": "Glymphatic / Astroglial Clearance Failure",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-12_144146.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-03-28_212658.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41179995",
         "41039850",
         "41648326",
-        "41960329",
         "41700070",
         "41824127",
         "41153827",
         "41795770",
         "41827388",
-        "41954515",
+        "41642456",
+        "41667502",
         "41103638",
         "41301762",
         "41747594",
         "41792880",
         "41801080",
-        "41853701"
+        "41079361"
       ],
-      "source_quality_mix": "lane 69 full-text-like / 19 abstract-only; direct target mentions 8 full-text-like / 1 abstract-only"
+      "source_quality_mix": "lane 47 full-text-like / 19 abstract-only; direct target mentions 5 full-text-like / 1 abstract-only"
     },
     {
       "phase_key": "phase4",
       "artifact_id": "neuroinflammation_microglial_state_change",
       "label": "Neuroinflammation / Microglial State Change",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-12_144146.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-03-28_212658.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41157272",
         "41103638",
-        "41926211",
         "41663365",
         "41734021",
         "41752185",
-        "41756234",
         "41756282",
         "41824127",
-        "41926540",
+        "41612383",
+        "41803087",
+        "41511466",
         "41480492",
-        "41622481",
-        "41659975",
         "41683989",
         "41709060",
-        "41712436"
+        "41712436",
+        "41726892",
+        "41737534"
       ],
-      "source_quality_mix": "lane 119 full-text-like / 28 abstract-only; direct target mentions 14 full-text-like / 3 abstract-only"
+      "source_quality_mix": "lane 79 full-text-like / 28 abstract-only; primary target seed 9 full-text-like hits across 11 match(es); direct target mentions 9 full-text-like / 3 abstract-only"
     },
     {
       "phase_key": "phase5",
       "artifact_id": "chronic_repetitive_tau_clearance_mixed",
       "label": "Chronic Repetitive Tau / Clearance Mixed",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-12_144146.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-03-29_022658.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41508043",

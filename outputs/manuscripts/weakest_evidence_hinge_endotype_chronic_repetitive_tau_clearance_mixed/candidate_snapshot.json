@@ -27,7 +27,7 @@
   ],
   "evidence_chain_complete": true,
   "is_active_path": false,
-  "last_pack_refresh": "2026-04-12 14:41:46",
+  "last_pack_refresh": "2026-03-28 21:26:59",
   "scientific_strength": 2,
   "journal_targets": {
     "primary": {
@@ -71,21 +71,114 @@
         "review"
       ],
       "requirements": {
-        "checked": false,
-        "score": 0,
-        "article_type_match": false,
-        "evidence_chain_match": false,
-        "translation_match": false,
-        "scientific_strength_match": false,
+        "checked": true,
+        "score": 4,
+        "article_type_match": true,
+        "evidence_chain_match": true,
+        "translation_match": true,
+        "scientific_strength_match": true,
         "reasons": [
-          "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+          "Article type is compatible with the captured journal requirements.",
+          "Current evidence chain meets the journal requirements snapshot.",
+          "Translation maturity is within the journal requirements bounds.",
+          "Scientific strength clears the minimum threshold recorded for this journal."
         ],
         "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
         "snapshot": {
-          "verified": false,
-          "checked_at": "2026-04-12T01:37:00Z",
-          "source_url": "https://ms.liebertpub.com/NEU",
-          "notes": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+          "journal_name": "Journal of Neurotrauma",
+          "verified": true,
+          "checked_at": "2026-04-12T19:15:00Z",
+          "source_url": "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50",
+          "source_urls": [
+            "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50"
+          ],
+          "access": "subscription",
+          "accepts_preprints": true,
+          "peer_review": {
+            "identity_transparency": "single anonymized"
+          },
+          "format_neutral_first_submission": true,
+          "allowed_article_types": [
+            "original research",
+            "review",
+            "short communication",
+            "letter to the editor"
+          ],
+          "preferred_article_types": [
+            "original research",
+            "review"
+          ],
+          "article_type_requirements": {
+            "original research": {
+              "word_limit": 6000,
+              "abstract_type": "unstructured",
+              "abstract_word_limit": 450,
+              "max_figures": 10,
+              "max_tables": 6
+            },
+            "review": {
+              "word_limit_range": [
+                8000,
+                12000
+              ],
+              "abstract_type": "unstructured",
+              "abstract_word_limit": 250,
+              "max_figures": 10,
+              "max_tables": 6
+            },
+            "short communication": {
+              "word_limit": 2000,
+              "abstract_type": "unstructured",
+              "abstract_word_limit": 250,
+              "max_tables_and_or_figures": 2
+            },
+            "letter to the editor": {
+              "word_limit": 500,
+              "max_figures_or_tables": 1,
+              "max_references": 5
+            }
+          },
+          "required_manuscript_elements": [
+            "unstructured abstract",
+            "minimum 4 keywords",
+            "title page before abstract",
+            "author contributions section",
+            "statements and declarations section",
+            "transparency rigor and reproducibility summary",
+            "funding statement",
+            "conflict of interest statement",
+            "data availability statement"
+          ],
+          "transparency_rigor_reproducibility": {
+            "required": true,
+            "word_limit": 500,
+            "placement": "after conclusion"
+          },
+          "clinical_trial_registration_required": true,
+          "reference_style": "Sage Vancouver",
+          "title_page_requirements": {
+            "full_contact_for_each_author": true,
+            "corresponding_author_required": true,
+            "placement": "within manuscript before abstract"
+          },
+          "submission_requirements": {
+            "orcid_required_for_submitting_author": true,
+            "coauthor_orcid_strongly_encouraged": true,
+            "visual_abstract_encouraged": true,
+            "word_figure_table_counts_required": true,
+            "funder_information_required": true,
+            "keywords_required": true
+          },
+          "publishing_fees": {
+            "submission_fee_usd": 49,
+            "page_charge_usd_per_page": 90,
+            "print_color_first_image_usd": 800,
+            "print_color_additional_image_usd": 200
+          },
+          "requires_full_evidence_chain": true,
+          "allows_bounded_translation": true,
+          "minimum_scientific_strength": 2,
+          "notes": "Manual capture from the official Journal of Neurotrauma instructions supplied on April 12, 2026. This journal explicitly considers original research, reviews, short communications, and letters to the editor; case reports are not accepted. It accepts format-neutral first submissions but still requires IRB/disclosure elements and a 500-word Transparency, Rigor, and Reproducibility Summary after the conclusion. Operational fit rule: mechanistic biomarker and pathophysiological studies can remain bounded in translational maturity if claims are explicitly limited and the evidence chain, declarations, and reproducibility summary are complete. Additional useful but non-blocking follow-up would be the linked article-type-specific rigor pages for pathophysiological mechanistic studies and fluid biomarker papers."
         }
       }
     },
@@ -282,21 +375,114 @@
           "review"
         ],
         "requirements": {
-          "checked": false,
-          "score": 0,
-          "article_type_match": false,
-          "evidence_chain_match": false,
-          "translation_match": false,
-          "scientific_strength_match": false,
+          "checked": true,
+          "score": 4,
+          "article_type_match": true,
+          "evidence_chain_match": true,
+          "translation_match": true,
+          "scientific_strength_match": true,
           "reasons": [
-            "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+            "Article type is compatible with the captured journal requirements.",
+            "Current evidence chain meets the journal requirements snapshot.",
+            "Translation maturity is within the journal requirements bounds.",
+            "Scientific strength clears the minimum threshold recorded for this journal."
           ],
           "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
           "snapshot": {
-            "verified": false,
-            "checked_at": "2026-04-12T01:37:00Z",
-            "source_url": "https://ms.liebertpub.com/NEU",
-            "notes": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+            "journal_name": "Journal of Neurotrauma",
+            "verified": true,
+            "checked_at": "2026-04-12T19:15:00Z",
+            "source_url": "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50",
+            "source_urls": [
+              "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50"
+            ],
+            "access": "subscription",
+            "accepts_preprints": true,
+            "peer_review": {
+              "identity_transparency": "single anonymized"
+            },
+            "format_neutral_first_submission": true,
+            "allowed_article_types": [
+              "original research",
+              "review",
+              "short communication",
+              "letter to the editor"
+            ],
+            "preferred_article_types": [
+              "original research",
+              "review"
+            ],
+            "article_type_requirements": {
+              "original research": {
+                "word_limit": 6000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 450,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "review": {
+                "word_limit_range": [
+                  8000,
+                  12000
+                ],
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "short communication": {
+                "word_limit": 2000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_tables_and_or_figures": 2
+              },
+              "letter to the editor": {
+                "word_limit": 500,
+                "max_figures_or_tables": 1,
+                "max_references": 5
+              }
+            },
+            "required_manuscript_elements": [
+              "unstructured abstract",
+              "minimum 4 keywords",
+              "title page before abstract",
+              "author contributions section",
+              "statements and declarations section",
+              "transparency rigor and reproducibility summary",
+              "funding statement",
+              "conflict of interest statement",
+              "data availability statement"
+            ],
+            "transparency_rigor_reproducibility": {
+              "required": true,
+              "word_limit": 500,
+              "placement": "after conclusion"
+            },
+            "clinical_trial_registration_required": true,
+            "reference_style": "Sage Vancouver",
+            "title_page_requirements": {
+              "full_contact_for_each_author": true,
+              "corresponding_author_required": true,
+              "placement": "within manuscript before abstract"
+            },
+            "submission_requirements": {
+              "orcid_required_for_submitting_author": true,
+              "coauthor_orcid_strongly_encouraged": true,
+              "visual_abstract_encouraged": true,
+              "word_figure_table_counts_required": true,
+              "funder_information_required": true,
+              "keywords_required": true
+            },
+            "publishing_fees": {
+              "submission_fee_usd": 49,
+              "page_charge_usd_per_page": 90,
+              "print_color_first_image_usd": 800,
+              "print_color_additional_image_usd": 200
+            },
+            "requires_full_evidence_chain": true,
+            "allows_bounded_translation": true,
+            "minimum_scientific_strength": 2,
+            "notes": "Manual capture from the official Journal of Neurotrauma instructions supplied on April 12, 2026. This journal explicitly considers original research, reviews, short communications, and letters to the editor; case reports are not accepted. It accepts format-neutral first submissions but still requires IRB/disclosure elements and a 500-word Transparency, Rigor, and Reproducibility Summary after the conclusion. Operational fit rule: mechanistic biomarker and pathophysiological studies can remain bounded in translational maturity if claims are explicitly limited and the evidence chain, declarations, and reproducibility summary are complete. Additional useful but non-blocking follow-up would be the linked article-type-specific rigor pages for pathophysiological mechanistic studies and fluid biomarker papers."
           }
         }
       },
@@ -760,20 +946,20 @@
       }
     ],
     "shortlist_journal_fit_score": 2,
-    "verified_journal_fit_score": 0,
-    "display_journal_fit_score": 2,
-    "requirements_checked": false
+    "verified_journal_fit_score": 4,
+    "display_journal_fit_score": 4,
+    "requirements_checked": true
   },
-  "journal_fit": 2,
-  "draft_readiness": 0,
+  "journal_fit": 4,
+  "draft_readiness": 1,
   "evidence_bundle_summary": {
-    "reference_count": 84,
+    "reference_count": 83,
     "claim_count": 14,
     "contradiction_count": 24,
     "figure_count": 4,
     "section_packet_count": 5,
-    "primary_journal_verified": false,
-    "corpus_manifest_path": ""
+    "primary_journal_verified": true,
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
   },
   "task_ledger": [
     {
@@ -793,7 +979,7 @@
         "reopened"
       ],
       "execution_note": "Generated contradiction brief for 24 issue(s); 4 remain blocking.",
-      "last_executed_at": "2026-04-12T14:41:47.248195+00:00",
+      "last_executed_at": "2026-04-12T19:19:22.484488+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -813,16 +999,16 @@
         "reopened"
       ],
       "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
-      "last_executed_at": "2026-04-12T14:41:47.248239+00:00",
+      "last_executed_at": "2026-04-12T19:19:22.484532+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
-      "task_id": "capture_primary_journal_requirements",
-      "label": "Capture live requirements for Journal of Neurotrauma",
-      "status": "blocked",
+      "task_id": "tighten_primary_journal_fit",
+      "label": "Check article-type and evidence fit for Journal of Neurotrauma",
+      "status": "satisfied",
       "critical": true,
-      "rationale": "Primary journal choice is still a shortlist call. No verified requirements snapshot exists yet.",
-      "success_signal": "A stored requirements snapshot exists for the primary journal and the pack can be checked against it.",
+      "rationale": "Primary journal choice is selected and now needs an explicit pass against the stored requirements snapshot.",
+      "success_signal": "Journal fit remains high after validating article type, evidence chain, translation maturity, and scientific strength against the stored requirements snapshot.",
       "allowed_states": [
         "proposed",
         "queued",
@@ -832,25 +1018,25 @@
         "stale",
         "reopened"
       ],
-      "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
-      "last_executed_at": "2026-04-12T14:41:47.248261+00:00",
-      "output_file": "task_outputs/capture_primary_journal_requirements.md"
+      "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
+      "last_executed_at": "2026-04-12T19:19:22.484558+00:00",
+      "output_file": "task_outputs/tighten_primary_journal_fit.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-12T14:41:47.248268+00:00",
+    "updated_at": "2026-04-12T19:19:22.484564+00:00",
     "total_tasks": 3,
     "status_counts": {
       "proposed": 0,
       "queued": 0,
       "running": 2,
-      "satisfied": 0,
-      "blocked": 1,
+      "satisfied": 1,
+      "blocked": 0,
       "stale": 0,
       "reopened": 0
     },
-    "open_critical_tasks": 3,
-    "blocking_tasks": 1,
+    "open_critical_tasks": 2,
+    "blocking_tasks": 0,
     "running_tasks": 2
   },
   "scientific_strength_bar": {
@@ -859,14 +1045,14 @@
     "percent": 50
   },
   "journal_fit_bar": {
-    "score": 2,
+    "score": 4,
     "max": 4,
-    "percent": 50
+    "percent": 100
   },
   "draft_readiness_bar": {
-    "score": 0,
+    "score": 1,
     "max": 4,
-    "percent": 0
+    "percent": 25
   },
   "manuscript_gate_state": "almost ready",
   "publication_status": "",

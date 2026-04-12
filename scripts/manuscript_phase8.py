@@ -2156,6 +2156,10 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         })
         for filename, content in evidence_bundle['section_packets'].items():
             write_text(section_packets_dir / filename, content)
+        expected_task_output_names = {f'{task_id}.md' for task_id in task_outputs}
+        for existing_output in task_outputs_dir.glob('*.md'):
+            if existing_output.name not in expected_task_output_names:
+                existing_output.unlink()
         for task_id, content in task_outputs.items():
             write_text(task_outputs_dir / f'{task_id}.md', content)
         write_json(folder / 'candidate_snapshot.json', candidate)
@@ -2193,7 +2197,11 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         if not child.is_dir() or child.name in expected_folder_names:
             continue
         if (child / 'pack_manifest.json').exists() and (child / 'candidate_snapshot.json').exists():
-            shutil.rmtree(child)
+            try:
+                shutil.rmtree(child)
+            except FileNotFoundError:
+                # Another rebuild pass may have already removed the stale folder.
+                pass
 
     queue['artifact_manifest'] = manifests
     write_json(queue_state_path, queue)

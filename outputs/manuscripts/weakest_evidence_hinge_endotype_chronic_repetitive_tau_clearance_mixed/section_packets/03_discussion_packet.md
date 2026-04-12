@@ -1,6 +1,6 @@
 # Discussion Packet
 
 - Primary journal target: Journal of Neurotrauma.
-- Primary journal requirements checked: no.
+- Primary journal requirements checked: yes.
 - Discussion should distinguish direct TBI support from cross-disease analog support, and keep bounded translational logic clearly separate from intervention claims.
 

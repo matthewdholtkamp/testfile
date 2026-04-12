@@ -4,8 +4,8 @@
 - **Theme:** Tau / Proteinopathy Progression
 - **Gate state:** almost ready
 - **Scientific strength:** 2 / 4
-- **Journal fit:** 2 / 4
-- **Draft readiness:** 0 / 4
+- **Journal fit:** 4 / 4
+- **Draft readiness:** 1 / 4
 - **Current path:** No
 
 ## Story Spine

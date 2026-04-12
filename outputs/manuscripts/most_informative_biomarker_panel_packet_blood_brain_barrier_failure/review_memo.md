@@ -3,7 +3,7 @@
 ## Why This Is Worth Developing
 - The candidate has a named paper path with scientific strength currently at **2 / 4**.
 - The current primary target journal is **Journal of Neurotrauma**.
-- Primary journal requirements have not been captured yet, so journal fit is still provisional.
+- Primary journal requirements have been captured locally and checked against the current pack.
 
 ## Biggest Weakness
 - Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover
