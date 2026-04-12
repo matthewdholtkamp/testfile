@@ -26,5 +26,5 @@
 - Neurotrauma Reports — shortlist score 4 (unchecked): Audience overlap: Biomarker, Neurotrauma, Translational Article-type overlap: review
 - Brain Injury — shortlist score 3 (unchecked): Audience overlap: Biomarker Manuscript mode fit: Endotype Discriminator Article-type overlap: review
 - Journal of Head Trauma Rehabilitation — shortlist score 3 (unchecked): Audience overlap: Cohort Manuscript mode fit: Endotype Discriminator Article-type overlap: review
-- Military Medical Research — shortlist score 2 (unchecked): Audience overlap: Translational Article-type overlap: review
-- Military Medicine — shortlist score 2 (unchecked): Manuscript mode fit: Endotype Discriminator Article-type overlap: review
+- Military Medical Research — shortlist score 2 (checked): Audience overlap: Translational Article-type overlap: review
+- Military Medicine — shortlist score 2 (checked): Manuscript mode fit: Endotype Discriminator Article-type overlap: review

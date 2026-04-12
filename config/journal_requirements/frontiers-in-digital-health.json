@@ -1,0 +1,22 @@
+{
+  "journal_name": "Frontiers in Digital Health",
+  "verified": true,
+  "checked_at": "2026-04-12T13:43:00Z",
+  "source_url": "https://www.frontiersin.org/journals/digital-health/sections/human-factors-and-digital-health/for-authors/article-types",
+  "source_urls": [
+    "https://www.frontiersin.org/journals/digital-health/about",
+    "https://www.frontiersin.org/journals/digital-health/sections/human-factors-and-digital-health/for-authors/article-types"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "review",
+    "methods",
+    "brief report",
+    "hypothesis and theory",
+    "technology and code"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 3,
+  "notes": "Official Frontiers pages list broad digital-health scope and article types including Original Research, Review, Methods, Hypothesis and Theory, Brief Research Report, and Technology and Code. This is a realistic digital-health system venue when the manuscript can support a strong methods and validation narrative."
+}

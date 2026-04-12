@@ -1,0 +1,21 @@
+{
+  "journal_name": "DIGITAL HEALTH",
+  "verified": true,
+  "checked_at": "2026-04-12T13:42:00Z",
+  "source_url": "https://journals.sagepub.com/author-instructions/dhj",
+  "source_urls": [
+    "https://journals.sagepub.com/author-instructions/dhj"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "brief report",
+    "review",
+    "case study",
+    "study protocol",
+    "commentary"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 3,
+  "notes": "Official SAGE instructions list Original Research Article, Brief Report, Review, Case Study, Study Protocol, Perspective, Commentary, and other formats. DIGITAL HEALTH is a realistic lower-tier digital-health venue for engine, workflow, and implementation manuscripts that still need rigorous methods and a clean evidence chain."
+}

@@ -900,7 +900,7 @@
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-12T13:24:06.156314+00:00",
+    "snapshot_generated_at": "2026-04-12T13:36:28.729847+00:00",
     "source_artifact_timestamps": {
       "process": "2026-03-29 02:26:55",
       "transition": "2026-03-29 02:26:56",
@@ -941,7 +941,7 @@
     ]
   },
   "manuscript_queue": {
-    "generated_at": "2026-04-12T13:24:06.155898+00:00",
+    "generated_at": "2026-04-12T13:36:28.729300+00:00",
     "summary": {
       "active_count": 2,
       "watchlist_count": 2,
@@ -1629,17 +1629,38 @@
                 "review"
               ],
               "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
                 "translation_match": false,
                 "scientific_strength_match": false,
                 "reasons": [
-                  "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
                 ],
                 "requirements_path": "config/journal_requirements/military-medical-research.json",
-                "snapshot": {}
+                "snapshot": {
+                  "journal_name": "Military Medical Research",
+                  "verified": true,
+                  "checked_at": "2026-04-12T13:41:00Z",
+                  "source_url": "https://link.springer.com/journal/40779",
+                  "source_urls": [
+                    "https://link.springer.com/journal/40779"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "commentary",
+                    "perspective"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 4,
+                  "notes": "The current Springer journal overview shows research, review, commentary, and perspective content and emphasizes basic medical science and clinical research for military and civilian medicine. Treat this as a stricter military discovery target rather than the default first-choice venue."
+                }
               }
             },
             {
@@ -1684,17 +1705,39 @@
                 "review"
               ],
               "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
                 "translation_match": false,
                 "scientific_strength_match": false,
                 "reasons": [
-                  "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
                 ],
                 "requirements_path": "config/journal_requirements/military-medicine.json",
-                "snapshot": {}
+                "snapshot": {
+                  "journal_name": "Military Medicine",
+                  "verified": true,
+                  "checked_at": "2026-04-12T13:40:00Z",
+                  "source_url": "https://academic.oup.com/milmed/pages/general_instructions",
+                  "source_urls": [
+                    "https://academic.oup.com/milmed/pages/general_instructions"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "case report",
+                    "brief report",
+                    "commentary"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 3,
+                  "notes": "Official Oxford instructions list feature articles, review articles, case reports, brief reports, commentaries, and letters to the editor. This is a realistic military-facing target for operational TBI, biomarker, and system papers that can stay clinically grounded without overclaiming translational actionability."
+                }
               }
             }
           ],
@@ -1705,11 +1748,20 @@
         },
         "journal_fit": 2,
         "draft_readiness": 1,
+        "evidence_bundle_summary": {
+          "reference_count": 49,
+          "claim_count": 10,
+          "contradiction_count": 18,
+          "figure_count": 4,
+          "section_packet_count": 5,
+          "primary_journal_verified": false,
+          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+        },
         "task_ledger": [
           {
             "task_id": "resolve_lead_contradiction",
             "label": "Resolve the lead contradiction or evidence tension",
-            "status": "proposed",
+            "status": "running",
             "critical": true,
             "rationale": "The current lane still carries a material blocker: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover",
             "success_signal": "A future pass reduces or removes the contradiction/blocker language from the candidate ledger.",
@@ -1721,12 +1773,15 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Generated contradiction brief for 18 issue(s); 3 remain blocking.",
+            "last_executed_at": "2026-04-12T13:36:28.680895+00:00",
+            "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
             "task_id": "strengthen_translational_packet",
             "label": "Strengthen Phase 4 beyond bounded translation",
-            "status": "proposed",
+            "status": "running",
             "critical": true,
             "rationale": "The linked translational packet is still bounded, which caps manuscript confidence.",
             "success_signal": "Linked Phase 4 packet becomes usable/actionable or accumulates stronger compound/trial/readout support.",
@@ -1738,12 +1793,15 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
+            "last_executed_at": "2026-04-12T13:36:28.680955+00:00",
+            "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
             "task_id": "capture_primary_journal_requirements",
             "label": "Capture live requirements for Journal of Neurotrauma",
-            "status": "proposed",
+            "status": "blocked",
             "critical": true,
             "rationale": "Primary journal choice is still a shortlist call. No verified requirements snapshot exists yet.",
             "success_signal": "A stored requirements snapshot exists for the primary journal and the pack can be checked against it.",
@@ -1755,9 +1813,28 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
+            "last_executed_at": "2026-04-12T13:36:28.680981+00:00",
+            "output_file": "task_outputs/capture_primary_journal_requirements.md"
           }
         ],
+        "task_execution_summary": {
+          "updated_at": "2026-04-12T13:36:28.680990+00:00",
+          "total_tasks": 3,
+          "status_counts": {
+            "proposed": 0,
+            "queued": 0,
+            "running": 2,
+            "satisfied": 0,
+            "blocked": 1,
+            "stale": 0,
+            "reopened": 0
+          },
+          "open_critical_tasks": 3,
+          "blocking_tasks": 1,
+          "running_tasks": 2
+        },
         "scientific_strength_bar": {
           "score": 2,
           "max": 4,
@@ -2439,17 +2516,38 @@
                 "review"
               ],
               "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
                 "translation_match": false,
                 "scientific_strength_match": false,
                 "reasons": [
-                  "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
                 ],
                 "requirements_path": "config/journal_requirements/military-medical-research.json",
-                "snapshot": {}
+                "snapshot": {
+                  "journal_name": "Military Medical Research",
+                  "verified": true,
+                  "checked_at": "2026-04-12T13:41:00Z",
+                  "source_url": "https://link.springer.com/journal/40779",
+                  "source_urls": [
+                    "https://link.springer.com/journal/40779"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "commentary",
+                    "perspective"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 4,
+                  "notes": "The current Springer journal overview shows research, review, commentary, and perspective content and emphasizes basic medical science and clinical research for military and civilian medicine. Treat this as a stricter military discovery target rather than the default first-choice venue."
+                }
               }
             },
             {
@@ -2493,17 +2591,39 @@
                 "review"
               ],
               "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
                 "translation_match": false,
                 "scientific_strength_match": false,
                 "reasons": [
-                  "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
                 ],
                 "requirements_path": "config/journal_requirements/military-medicine.json",
-                "snapshot": {}
+                "snapshot": {
+                  "journal_name": "Military Medicine",
+                  "verified": true,
+                  "checked_at": "2026-04-12T13:40:00Z",
+                  "source_url": "https://academic.oup.com/milmed/pages/general_instructions",
+                  "source_urls": [
+                    "https://academic.oup.com/milmed/pages/general_instructions"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "case report",
+                    "brief report",
+                    "commentary"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 3,
+                  "notes": "Official Oxford instructions list feature articles, review articles, case reports, brief reports, commentaries, and letters to the editor. This is a realistic military-facing target for operational TBI, biomarker, and system papers that can stay clinically grounded without overclaiming translational actionability."
+                }
               }
             }
           ],
@@ -2514,11 +2634,20 @@
         },
         "journal_fit": 2,
         "draft_readiness": 1,
+        "evidence_bundle_summary": {
+          "reference_count": 47,
+          "claim_count": 9,
+          "contradiction_count": 21,
+          "figure_count": 4,
+          "section_packet_count": 5,
+          "primary_journal_verified": false,
+          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+        },
         "task_ledger": [
           {
             "task_id": "strengthen_translational_packet",
             "label": "Strengthen Phase 4 beyond bounded translation",
-            "status": "proposed",
+            "status": "running",
             "critical": true,
             "rationale": "The linked translational packet is still bounded, which caps manuscript confidence.",
             "success_signal": "Linked Phase 4 packet becomes usable/actionable or accumulates stronger compound/trial/readout support.",
@@ -2530,12 +2659,15 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
+            "last_executed_at": "2026-04-12T13:36:28.714093+00:00",
+            "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
             "task_id": "capture_primary_journal_requirements",
             "label": "Capture live requirements for Journal of Neurotrauma",
-            "status": "proposed",
+            "status": "blocked",
             "critical": true,
             "rationale": "Primary journal choice is still a shortlist call. No verified requirements snapshot exists yet.",
             "success_signal": "A stored requirements snapshot exists for the primary journal and the pack can be checked against it.",
@@ -2547,9 +2679,28 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
+            "last_executed_at": "2026-04-12T13:36:28.714132+00:00",
+            "output_file": "task_outputs/capture_primary_journal_requirements.md"
           }
         ],
+        "task_execution_summary": {
+          "updated_at": "2026-04-12T13:36:28.714142+00:00",
+          "total_tasks": 2,
+          "status_counts": {
+            "proposed": 0,
+            "queued": 0,
+            "running": 1,
+            "satisfied": 0,
+            "blocked": 1,
+            "stale": 0,
+            "reopened": 0
+          },
+          "open_critical_tasks": 2,
+          "blocking_tasks": 1,
+          "running_tasks": 1
+        },
         "scientific_strength_bar": {
           "score": 2,
           "max": 4,
@@ -3256,17 +3407,38 @@
                 "review"
               ],
               "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
                 "translation_match": false,
                 "scientific_strength_match": false,
                 "reasons": [
-                  "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
                 ],
                 "requirements_path": "config/journal_requirements/military-medical-research.json",
-                "snapshot": {}
+                "snapshot": {
+                  "journal_name": "Military Medical Research",
+                  "verified": true,
+                  "checked_at": "2026-04-12T13:41:00Z",
+                  "source_url": "https://link.springer.com/journal/40779",
+                  "source_urls": [
+                    "https://link.springer.com/journal/40779"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "commentary",
+                    "perspective"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 4,
+                  "notes": "The current Springer journal overview shows research, review, commentary, and perspective content and emphasizes basic medical science and clinical research for military and civilian medicine. Treat this as a stricter military discovery target rather than the default first-choice venue."
+                }
               }
             },
             {
@@ -3311,17 +3483,39 @@
                 "review"
               ],
               "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
                 "translation_match": false,
                 "scientific_strength_match": false,
                 "reasons": [
-                  "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
                 ],
                 "requirements_path": "config/journal_requirements/military-medicine.json",
-                "snapshot": {}
+                "snapshot": {
+                  "journal_name": "Military Medicine",
+                  "verified": true,
+                  "checked_at": "2026-04-12T13:40:00Z",
+                  "source_url": "https://academic.oup.com/milmed/pages/general_instructions",
+                  "source_urls": [
+                    "https://academic.oup.com/milmed/pages/general_instructions"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "case report",
+                    "brief report",
+                    "commentary"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 3,
+                  "notes": "Official Oxford instructions list feature articles, review articles, case reports, brief reports, commentaries, and letters to the editor. This is a realistic military-facing target for operational TBI, biomarker, and system papers that can stay clinically grounded without overclaiming translational actionability."
+                }
               }
             }
           ],
@@ -3332,11 +3526,20 @@
         },
         "journal_fit": 2,
         "draft_readiness": 0,
+        "evidence_bundle_summary": {
+          "reference_count": 60,
+          "claim_count": 13,
+          "contradiction_count": 24,
+          "figure_count": 4,
+          "section_packet_count": 5,
+          "primary_journal_verified": false,
+          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+        },
         "task_ledger": [
           {
             "task_id": "resolve_lead_contradiction",
             "label": "Resolve the lead contradiction or evidence tension",
-            "status": "proposed",
+            "status": "running",
             "critical": true,
             "rationale": "The current lane still carries a material blocker: Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
             "success_signal": "A future pass reduces or removes the contradiction/blocker language from the candidate ledger.",
@@ -3348,12 +3551,15 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Generated contradiction brief for 24 issue(s); 5 remain blocking.",
+            "last_executed_at": "2026-04-12T13:36:28.707427+00:00",
+            "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
             "task_id": "strengthen_translational_packet",
             "label": "Strengthen Phase 4 beyond bounded translation",
-            "status": "proposed",
+            "status": "running",
             "critical": true,
             "rationale": "The linked translational packet is still bounded, which caps manuscript confidence.",
             "success_signal": "Linked Phase 4 packet becomes usable/actionable or accumulates stronger compound/trial/readout support.",
@@ -3365,12 +3571,15 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
+            "last_executed_at": "2026-04-12T13:36:28.707496+00:00",
+            "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
             "task_id": "capture_primary_journal_requirements",
             "label": "Capture live requirements for Journal of Neurotrauma",
-            "status": "proposed",
+            "status": "blocked",
             "critical": true,
             "rationale": "Primary journal choice is still a shortlist call. No verified requirements snapshot exists yet.",
             "success_signal": "A stored requirements snapshot exists for the primary journal and the pack can be checked against it.",
@@ -3382,9 +3591,28 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
+            "last_executed_at": "2026-04-12T13:36:28.707546+00:00",
+            "output_file": "task_outputs/capture_primary_journal_requirements.md"
           }
         ],
+        "task_execution_summary": {
+          "updated_at": "2026-04-12T13:36:28.707563+00:00",
+          "total_tasks": 3,
+          "status_counts": {
+            "proposed": 0,
+            "queued": 0,
+            "running": 2,
+            "satisfied": 0,
+            "blocked": 1,
+            "stale": 0,
+            "reopened": 0
+          },
+          "open_critical_tasks": 3,
+          "blocking_tasks": 1,
+          "running_tasks": 2
+        },
         "scientific_strength_bar": {
           "score": 2,
           "max": 4,
@@ -4060,17 +4288,38 @@
                 "review"
               ],
               "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
                 "translation_match": false,
                 "scientific_strength_match": false,
                 "reasons": [
-                  "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
                 ],
                 "requirements_path": "config/journal_requirements/military-medical-research.json",
-                "snapshot": {}
+                "snapshot": {
+                  "journal_name": "Military Medical Research",
+                  "verified": true,
+                  "checked_at": "2026-04-12T13:41:00Z",
+                  "source_url": "https://link.springer.com/journal/40779",
+                  "source_urls": [
+                    "https://link.springer.com/journal/40779"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "commentary",
+                    "perspective"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 4,
+                  "notes": "The current Springer journal overview shows research, review, commentary, and perspective content and emphasizes basic medical science and clinical research for military and civilian medicine. Treat this as a stricter military discovery target rather than the default first-choice venue."
+                }
               }
             },
             {
@@ -4113,17 +4362,39 @@
                 "review"
               ],
               "requirements": {
-                "checked": false,
-                "score": 0,
-                "article_type_match": false,
-                "evidence_chain_match": false,
+                "checked": true,
+                "score": 2,
+                "article_type_match": true,
+                "evidence_chain_match": true,
                 "translation_match": false,
                 "scientific_strength_match": false,
                 "reasons": [
-                  "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+                  "Article type is compatible with the captured journal requirements.",
+                  "Current evidence chain meets the journal requirements snapshot.",
+                  "Bounded translation still conflicts with this journal requirements snapshot.",
+                  "Scientific strength is still below the minimum threshold recorded for this journal."
                 ],
                 "requirements_path": "config/journal_requirements/military-medicine.json",
-                "snapshot": {}
+                "snapshot": {
+                  "journal_name": "Military Medicine",
+                  "verified": true,
+                  "checked_at": "2026-04-12T13:40:00Z",
+                  "source_url": "https://academic.oup.com/milmed/pages/general_instructions",
+                  "source_urls": [
+                    "https://academic.oup.com/milmed/pages/general_instructions"
+                  ],
+                  "allowed_article_types": [
+                    "original research",
+                    "review",
+                    "case report",
+                    "brief report",
+                    "commentary"
+                  ],
+                  "requires_full_evidence_chain": true,
+                  "allows_bounded_translation": false,
+                  "minimum_scientific_strength": 3,
+                  "notes": "Official Oxford instructions list feature articles, review articles, case reports, brief reports, commentaries, and letters to the editor. This is a realistic military-facing target for operational TBI, biomarker, and system papers that can stay clinically grounded without overclaiming translational actionability."
+                }
               }
             }
           ],
@@ -4134,11 +4405,20 @@
         },
         "journal_fit": 2,
         "draft_readiness": 0,
+        "evidence_bundle_summary": {
+          "reference_count": 83,
+          "claim_count": 14,
+          "contradiction_count": 24,
+          "figure_count": 4,
+          "section_packet_count": 5,
+          "primary_journal_verified": false,
+          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+        },
         "task_ledger": [
           {
             "task_id": "resolve_lead_contradiction",
             "label": "Resolve the lead contradiction or evidence tension",
-            "status": "proposed",
+            "status": "running",
             "critical": true,
             "rationale": "The current lane still carries a material blocker: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
             "success_signal": "A future pass reduces or removes the contradiction/blocker language from the candidate ledger.",
@@ -4150,12 +4430,15 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Generated contradiction brief for 24 issue(s); 4 remain blocking.",
+            "last_executed_at": "2026-04-12T13:36:28.728692+00:00",
+            "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
             "task_id": "strengthen_translational_packet",
             "label": "Strengthen Phase 4 beyond bounded translation",
-            "status": "proposed",
+            "status": "running",
             "critical": true,
             "rationale": "The linked translational packet is still bounded, which caps manuscript confidence.",
             "success_signal": "Linked Phase 4 packet becomes usable/actionable or accumulates stronger compound/trial/readout support.",
@@ -4167,12 +4450,15 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Generated translational strengthening brief from the linked Phase 4 packet.",
+            "last_executed_at": "2026-04-12T13:36:28.729112+00:00",
+            "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
             "task_id": "capture_primary_journal_requirements",
             "label": "Capture live requirements for Journal of Neurotrauma",
-            "status": "proposed",
+            "status": "blocked",
             "critical": true,
             "rationale": "Primary journal choice is still a shortlist call. No verified requirements snapshot exists yet.",
             "success_signal": "A stored requirements snapshot exists for the primary journal and the pack can be checked against it.",
@@ -4184,9 +4470,28 @@
               "blocked",
               "stale",
               "reopened"
-            ]
+            ],
+            "execution_note": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal.",
+            "last_executed_at": "2026-04-12T13:36:28.729155+00:00",
+            "output_file": "task_outputs/capture_primary_journal_requirements.md"
           }
         ],
+        "task_execution_summary": {
+          "updated_at": "2026-04-12T13:36:28.729166+00:00",
+          "total_tasks": 3,
+          "status_counts": {
+            "proposed": 0,
+            "queued": 0,
+            "running": 2,
+            "satisfied": 0,
+            "blocked": 1,
+            "stale": 0,
+            "reopened": 0
+          },
+          "open_critical_tasks": 3,
+          "blocking_tasks": 1,
+          "running_tasks": 2
+        },
         "scientific_strength_bar": {
           "score": 2,
           "max": 4,

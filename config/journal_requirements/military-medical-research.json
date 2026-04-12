@@ -1,0 +1,19 @@
+{
+  "journal_name": "Military Medical Research",
+  "verified": true,
+  "checked_at": "2026-04-12T13:41:00Z",
+  "source_url": "https://link.springer.com/journal/40779",
+  "source_urls": [
+    "https://link.springer.com/journal/40779"
+  ],
+  "allowed_article_types": [
+    "original research",
+    "review",
+    "commentary",
+    "perspective"
+  ],
+  "requires_full_evidence_chain": true,
+  "allows_bounded_translation": false,
+  "minimum_scientific_strength": 4,
+  "notes": "The current Springer journal overview shows research, review, commentary, and perspective content and emphasizes basic medical science and clinical research for military and civilian medicine. Treat this as a stricter military discovery target rather than the default first-choice venue."
+}

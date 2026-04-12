@@ -1518,6 +1518,208 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
     }
 
 
+def task_markdown(task, sections):
+    lines = [
+        f"# {task['label']}",
+        '',
+        f"- **Task ID:** {task['task_id']}",
+        f"- **Status:** {task['status']}",
+        f"- **Critical:** {'yes' if task.get('critical') else 'no'}",
+        f"- **Rationale:** {task['rationale']}",
+        f"- **Success signal:** {task['success_signal']}",
+    ]
+    if normalize(task.get('execution_note')):
+        lines.append(f"- **Executor note:** {task['execution_note']}")
+    lines.append('')
+    lines.extend(sections)
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
+    executed = []
+    outputs = {}
+    primary = candidate.get('journal_targets', {}).get('primary') or {}
+    primary_journal = primary.get('journal', {}) or {}
+    requirements = primary.get('requirements') or {}
+    phase4_entries = [entry for entry in phase_entries if entry['phase_key'] == 'phase4']
+    missing_phases = [
+        phase_key for phase_key, links in [
+            ('phase1', row.get('linked_phase1_lane_ids') or []),
+            ('phase2', row.get('linked_phase2_transition_ids') or []),
+            ('phase3', row.get('linked_phase3_object_ids') or []),
+            ('phase4', row.get('linked_phase4_packet_ids') or []),
+            ('phase5', row.get('linked_phase5_endotype_ids') or []),
+        ] if not links
+    ]
+    contradictions = evidence_bundle.get('contradictions') or []
+    blocking_contradictions = [item for item in contradictions if item.get('blocking')]
+    figures = evidence_bundle.get('figures') or []
+
+    for task in candidate.get('task_ledger') or []:
+        current = deepcopy(task)
+        task_id = current['task_id']
+        sections = []
+        status = current['status']
+        note = ''
+
+        if task_id == 'resolve_lead_contradiction':
+            if not contradictions:
+                status = 'satisfied'
+                note = 'No contradiction rows are currently attached to this manuscript pack.'
+                sections.extend([
+                    '## Outcome',
+                    '',
+                    '- No unresolved contradiction items remain in the current bundle.',
+                ])
+            else:
+                status = 'running'
+                note = f"Generated contradiction brief for {len(contradictions)} issue(s); {len(blocking_contradictions)} remain blocking."
+                sections.extend([
+                    '## Current contradiction stack',
+                    '',
+                ])
+                for issue in contradictions[:8]:
+                    sections.append(f"- [{issue['severity']}] {issue['statement']}")
+                sections.extend([
+                    '',
+                    '## Next machine emphasis',
+                    '',
+                    '- Keep bounded wording tied to the contradiction register until new evidence lowers severity or removes the issue.',
+                ])
+        elif task_id == 'strengthen_translational_packet':
+            if normalize(candidate.get('translation_maturity')) != 'bounded':
+                status = 'satisfied'
+                note = 'Phase 4 translation is no longer capped at bounded.'
+            elif not phase4_entries:
+                status = 'blocked'
+                note = 'No linked Phase 4 packet is available to strengthen.'
+            else:
+                status = 'running'
+                lead_phase4 = phase4_entries[0].get('row') or {}
+                note = 'Generated translational strengthening brief from the linked Phase 4 packet.'
+                sections.extend([
+                    '## Translational packet status',
+                    '',
+                    f"- Primary target: {normalize(lead_phase4.get('primary_target')) or 'not specified'}",
+                    f"- Expected readouts: {summarize_list(lead_phase4.get('expected_readouts') or [])}",
+                    f"- Best next experiment: {normalize(lead_phase4.get('best_next_experiment')) or 'not specified'}",
+                    f"- Why primary now: {normalize(lead_phase4.get('why_primary_now')) or 'not specified'}",
+                ])
+                disconfirming = split_notes(lead_phase4.get('disconfirming_evidence'))
+                if disconfirming:
+                    sections.extend([
+                        '',
+                        '## Disconfirming evidence to keep visible',
+                        '',
+                    ])
+                    sections.extend([f"- {item}" for item in disconfirming[:5]])
+        elif task_id == 'complete_evidence_chain':
+            if not missing_phases:
+                status = 'satisfied'
+                note = 'All phases 1 through 5 are linked for this manuscript candidate.'
+            else:
+                status = 'running'
+                note = f"Evidence chain still missing: {', '.join(pretty_label(item) for item in missing_phases)}."
+                sections.extend([
+                    '## Missing phase links',
+                    '',
+                ])
+                sections.extend([f"- {pretty_label(item)}" for item in missing_phases])
+        elif task_id == 'define_figure_spine':
+            if figures and (normalize(row.get('expected_readouts')) or normalize(row.get('next_test'))):
+                status = 'satisfied'
+                note = 'Figure spine and readout path are present in the current pack.'
+            else:
+                status = 'running'
+                note = f"Generated figure spine with {len(figures)} planned figure(s), but readout guidance is still sparse."
+            sections.extend([
+                '## Figure spine',
+                '',
+            ])
+            sections.extend([f"- {figure['title']}" for figure in figures[:6]] or ['- No figure plan was generated.'])
+        elif task_id == 'capture_primary_journal_requirements':
+            if requirements.get('checked'):
+                status = 'satisfied'
+                note = f"Verified requirements snapshot exists for {primary_journal.get('name') or 'the primary journal'}."
+            else:
+                status = 'blocked'
+                snapshot = requirements.get('snapshot') or {}
+                reason = normalize(snapshot.get('notes')) or 'No verified requirements snapshot is available yet.'
+                note = reason
+                sections.extend([
+                    '## Requirements capture status',
+                    '',
+                    f"- Journal: {primary_journal.get('name') or 'not selected'}",
+                    f"- Snapshot path: `{requirements.get('requirements_path') or 'not recorded'}`",
+                    f"- Blocking reason: {reason}",
+                ])
+        elif task_id == 'tighten_primary_journal_fit':
+            if not requirements.get('checked'):
+                status = 'blocked'
+                note = 'Cannot tighten journal fit until a verified requirements snapshot exists.'
+            else:
+                matches = {
+                    'article_type_match': bool(requirements.get('article_type_match')),
+                    'evidence_chain_match': bool(requirements.get('evidence_chain_match')),
+                    'translation_match': bool(requirements.get('translation_match')),
+                    'scientific_strength_match': bool(requirements.get('scientific_strength_match')),
+                }
+                status = 'satisfied' if all(matches.values()) else 'running'
+                note = f"Requirements check for {primary_journal.get('name') or 'the primary journal'} is {'fully aligned' if all(matches.values()) else 'still mixed'}."
+                sections.extend([
+                    '## Journal fit checks',
+                    '',
+                    f"- Article type match: {'yes' if matches['article_type_match'] else 'no'}",
+                    f"- Evidence chain match: {'yes' if matches['evidence_chain_match'] else 'no'}",
+                    f"- Translation match: {'yes' if matches['translation_match'] else 'no'}",
+                    f"- Scientific strength match: {'yes' if matches['scientific_strength_match'] else 'no'}",
+                ])
+                if requirements.get('reasons'):
+                    sections.extend(['', '## Notes', ''])
+                    sections.extend([f"- {reason}" for reason in requirements['reasons'][:8]])
+        elif task_id == 'select_primary_journal':
+            if primary_journal:
+                status = 'satisfied'
+                note = f"Primary journal selected: {primary_journal.get('name')}."
+                sections.extend([
+                    '## Primary journal',
+                    '',
+                    f"- {primary_journal.get('name')}",
+                ])
+            else:
+                status = 'blocked'
+                note = 'No realistic primary journal is currently available for this candidate.'
+        elif task_id == 'monitor_candidate':
+            status = 'satisfied'
+            note = 'Candidate is currently in monitor mode only.'
+            sections.extend([
+                '## Monitoring state',
+                '',
+                '- No active manuscript hardening task is needed beyond tracking new evidence shifts.',
+            ])
+
+        current['status'] = status
+        current['execution_note'] = note
+        current['last_executed_at'] = iso_now()
+        current['output_file'] = f"task_outputs/{task_id}.md"
+        outputs[task_id] = task_markdown(current, sections or ['## Status', '', f"- {note or 'No executor note.'}"])
+        executed.append(current)
+
+    status_counts = {state: 0 for state in TASK_STATES}
+    for task in executed:
+        status_counts[task['status']] = status_counts.get(task['status'], 0) + 1
+    summary = {
+        'updated_at': iso_now(),
+        'total_tasks': len(executed),
+        'status_counts': status_counts,
+        'open_critical_tasks': sum(1 for task in executed if task.get('critical') and task['status'] != 'satisfied'),
+        'blocking_tasks': sum(1 for task in executed if task['status'] == 'blocked'),
+        'running_tasks': sum(1 for task in executed if task['status'] == 'running'),
+    }
+    return executed, outputs, summary
+
+
 def build_review_memo(candidate, row):
     primary = candidate['journal_targets'].get('primary')
     primary_journal = primary['journal']['name'] if primary else 'No primary journal selected yet'
@@ -1696,6 +1898,7 @@ def build_pack_manifest(candidate, row, publication_entry):
         'source_row': row,
         'ready_for_codex_draft': candidate['ready_for_codex_draft'],
         'evidence_bundle': candidate.get('evidence_bundle_summary', {}),
+        'task_execution': candidate.get('task_execution_summary', {}),
         'improvement_window': {
             'default_pass_target': 3,
             'hard_cap': 5,
@@ -1704,7 +1907,7 @@ def build_pack_manifest(candidate, row, publication_entry):
     }
 
 
-def build_candidate_payload(row, state, direction_registry, journal_registry, publication_tracker, indexes):
+def build_candidate_payload(row, state, direction_registry, journal_registry, publication_tracker, indexes, corpus_index):
     candidate_id = canonical_candidate_id(row.get('candidate_id') or row.get('title'))
     title = normalize(row.get('title') or row.get('display_name') or candidate_id)
     theme = theme_key(row)
@@ -1734,7 +1937,11 @@ def build_candidate_payload(row, state, direction_registry, journal_registry, pu
     candidate['journal_targets'] = journal_targets
     candidate['journal_fit'] = journal_targets['display_journal_fit_score']
     candidate['draft_readiness'] = score_draft_readiness(row, candidate['scientific_strength'], journal_targets, candidate['translation_maturity'])
+    phase_entries = phase_entries_for_candidate(row, state, indexes)
+    evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
+    candidate['evidence_bundle_summary'] = evidence_bundle['summary']
     candidate['task_ledger'] = build_task_ledger(row, candidate, journal_targets)
+    candidate['task_ledger'], _, candidate['task_execution_summary'] = execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle)
     candidate['scientific_strength_bar'] = score_bar_payload(candidate['scientific_strength'])
     candidate['journal_fit_bar'] = score_bar_payload(candidate['journal_fit'])
     candidate['draft_readiness_bar'] = score_bar_payload(candidate['draft_readiness'])
@@ -1808,10 +2015,11 @@ def build_manuscript_queue_payload(state, direction_registry=None, publication_t
     publication_tracker = publication_tracker or load_publication_tracker()
     journal_registry = journal_registry or load_journal_registry()
     indexes = build_phase_indexes(state)
+    corpus_index = load_corpus_reference_index()
     candidates = []
     publication_entries = {}
     for row in representative_candidate_rows(state, direction_registry):
-        candidate, publication_entry = build_candidate_payload(row, state, direction_registry, journal_registry, publication_tracker, indexes)
+        candidate, publication_entry = build_candidate_payload(row, state, direction_registry, journal_registry, publication_tracker, indexes, corpus_index)
         publication_entries[candidate['candidate_id']] = publication_entry
         candidates.append(candidate)
     candidates.sort(key=lambda item: candidate_priority_key(item, item.get('publication_status')))
@@ -1876,18 +2084,26 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         artifacts_dir = folder / 'artifacts'
         drafts_dir = folder / 'drafts'
         section_packets_dir = folder / 'section_packets'
+        task_outputs_dir = folder / 'task_outputs'
         artifacts_dir.mkdir(parents=True, exist_ok=True)
         drafts_dir.mkdir(parents=True, exist_ok=True)
         section_packets_dir.mkdir(parents=True, exist_ok=True)
+        task_outputs_dir.mkdir(parents=True, exist_ok=True)
 
         phase_entries = phase_entries_for_candidate(row, state, indexes)
         evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
         candidate['evidence_bundle_summary'] = evidence_bundle['summary']
+        candidate['task_ledger'], task_outputs, candidate['task_execution_summary'] = execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle)
+        candidate['manuscript_gate_state'] = manuscript_gate_state(candidate['scientific_strength'], candidate['journal_targets'], candidate['draft_readiness'], candidate['translation_maturity'], candidate['task_ledger'])
+        candidate['ready_for_codex_draft'] = ready_for_codex_draft(candidate['scientific_strength'], candidate['journal_targets'], candidate['draft_readiness'], candidate['task_ledger'], candidate['manuscript_gate_state'])
+        candidate['draft_status'] = 'ready_for_codex_draft' if candidate['ready_for_codex_draft'] else ('pack_ready' if candidate['manuscript_gate_state'] == 'ready to build phase 8 pack' else 'gathering evidence')
+        candidate['review_memo_status'] = 'available' if candidate['manuscript_gate_state'] != 'not ready' else 'early warning'
 
         manifest = build_pack_manifest(candidate, row, publication_entry)
         manifests.append({'candidate_id': candidate['candidate_id'], 'folder': str(folder.relative_to(REPO_ROOT)), 'gate_state': candidate['manuscript_gate_state']})
         write_json(folder / 'pack_manifest.json', manifest)
-        write_json(folder / 'task_ledger.json', {'updated_at': iso_now(), 'tasks': candidate['task_ledger']})
+        write_json(folder / 'task_ledger.json', {'updated_at': iso_now(), 'summary': candidate['task_execution_summary'], 'tasks': candidate['task_ledger']})
+        write_json(folder / 'task_executor_summary.json', candidate['task_execution_summary'])
         write_json(folder / 'journal_targets.json', {
             'updated_at': iso_now(),
             'primary': candidate['journal_targets'].get('primary'),
@@ -1940,6 +2156,8 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         })
         for filename, content in evidence_bundle['section_packets'].items():
             write_text(section_packets_dir / filename, content)
+        for task_id, content in task_outputs.items():
+            write_text(task_outputs_dir / f'{task_id}.md', content)
         write_json(folder / 'candidate_snapshot.json', candidate)
         ready_path = folder / READY_FOR_CODEX_FILENAME
         if candidate['ready_for_codex_draft']:

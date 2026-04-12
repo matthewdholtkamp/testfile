@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T13:24:05.867240+00:00",
+  "updated_at": "2026-04-12T13:36:28.388912+00:00",
   "primary": {
     "journal": {
       "id": "journal-of-neurotrauma",
@@ -645,17 +645,38 @@
         "review"
       ],
       "requirements": {
-        "checked": false,
-        "score": 0,
-        "article_type_match": false,
-        "evidence_chain_match": false,
+        "checked": true,
+        "score": 2,
+        "article_type_match": true,
+        "evidence_chain_match": true,
         "translation_match": false,
         "scientific_strength_match": false,
         "reasons": [
-          "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+          "Article type is compatible with the captured journal requirements.",
+          "Current evidence chain meets the journal requirements snapshot.",
+          "Bounded translation still conflicts with this journal requirements snapshot.",
+          "Scientific strength is still below the minimum threshold recorded for this journal."
         ],
         "requirements_path": "config/journal_requirements/military-medical-research.json",
-        "snapshot": {}
+        "snapshot": {
+          "journal_name": "Military Medical Research",
+          "verified": true,
+          "checked_at": "2026-04-12T13:41:00Z",
+          "source_url": "https://link.springer.com/journal/40779",
+          "source_urls": [
+            "https://link.springer.com/journal/40779"
+          ],
+          "allowed_article_types": [
+            "original research",
+            "review",
+            "commentary",
+            "perspective"
+          ],
+          "requires_full_evidence_chain": true,
+          "allows_bounded_translation": false,
+          "minimum_scientific_strength": 4,
+          "notes": "The current Springer journal overview shows research, review, commentary, and perspective content and emphasizes basic medical science and clinical research for military and civilian medicine. Treat this as a stricter military discovery target rather than the default first-choice venue."
+        }
       }
     },
     {
@@ -700,17 +721,39 @@
         "review"
       ],
       "requirements": {
-        "checked": false,
-        "score": 0,
-        "article_type_match": false,
-        "evidence_chain_match": false,
+        "checked": true,
+        "score": 2,
+        "article_type_match": true,
+        "evidence_chain_match": true,
         "translation_match": false,
         "scientific_strength_match": false,
         "reasons": [
-          "Requirements snapshot has not been captured yet. Keep this as a shortlist, not a verified fit."
+          "Article type is compatible with the captured journal requirements.",
+          "Current evidence chain meets the journal requirements snapshot.",
+          "Bounded translation still conflicts with this journal requirements snapshot.",
+          "Scientific strength is still below the minimum threshold recorded for this journal."
         ],
         "requirements_path": "config/journal_requirements/military-medicine.json",
-        "snapshot": {}
+        "snapshot": {
+          "journal_name": "Military Medicine",
+          "verified": true,
+          "checked_at": "2026-04-12T13:40:00Z",
+          "source_url": "https://academic.oup.com/milmed/pages/general_instructions",
+          "source_urls": [
+            "https://academic.oup.com/milmed/pages/general_instructions"
+          ],
+          "allowed_article_types": [
+            "original research",
+            "review",
+            "case report",
+            "brief report",
+            "commentary"
+          ],
+          "requires_full_evidence_chain": true,
+          "allows_bounded_translation": false,
+          "minimum_scientific_strength": 3,
+          "notes": "Official Oxford instructions list feature articles, review articles, case reports, brief reports, commentaries, and letters to the editor. This is a realistic military-facing target for operational TBI, biomarker, and system papers that can stay clinically grounded without overclaiming translational actionability."
+        }
       }
     }
   ]

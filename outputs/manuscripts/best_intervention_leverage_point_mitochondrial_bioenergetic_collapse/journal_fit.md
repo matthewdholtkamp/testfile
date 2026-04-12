@@ -26,5 +26,5 @@
 - Frontiers in Neurology — shortlist score 4 (checked): Audience overlap: Biomarker, Neurotrauma Manuscript mode fit: Endotype Discriminator Article-type overlap: hypothesis and theory, original research
 - Brain Injury — shortlist score 3 (unchecked): Audience overlap: Biomarker Manuscript mode fit: Endotype Discriminator Article-type overlap: original research, review
 - Journal of Head Trauma Rehabilitation — shortlist score 3 (unchecked): Audience overlap: Cohort Manuscript mode fit: Endotype Discriminator Article-type overlap: original research, review
-- Military Medical Research — shortlist score 3 (unchecked): Audience overlap: Translational Article-type overlap: original research, review Family fit: journal often suits this manuscript family.
-- Military Medicine — shortlist score 2 (unchecked): Manuscript mode fit: Endotype Discriminator Article-type overlap: original research, review
+- Military Medical Research — shortlist score 3 (checked): Audience overlap: Translational Article-type overlap: original research, review Family fit: journal often suits this manuscript family.
+- Military Medicine — shortlist score 2 (checked): Manuscript mode fit: Endotype Discriminator Article-type overlap: original research, review
