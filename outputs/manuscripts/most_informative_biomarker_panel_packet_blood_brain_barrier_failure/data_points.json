@@ -1,0 +1,55 @@
+{
+  "updated_at": "2026-04-12T13:24:05.829537+00:00",
+  "data_points": {
+    "biomarker_panel": [
+      "OCLN",
+      "CLDN5",
+      "TJP1",
+      "Cerebral blood flow",
+      "GFAP",
+      "NfL",
+      "Evans blue",
+      "gadolinium leakage",
+      "Nf-L",
+      "FITC-labeled mNGF fluorescence",
+      "Optical density (OD) readings",
+      "MBP protein expression",
+      "NF-200 protein expression",
+      "PSD-95 protein expression",
+      "Cerebral blood flow (CBF)",
+      "IL-1 (91)",
+      "TNF (53)",
+      "IL-6 (50)",
+      "NLRP3 (38)",
+      "GFAP (22)",
+      "HMGB1 (17)",
+      "CBF (14)",
+      "AQP4 (5)"
+    ],
+    "expected_readouts": [
+      "Barrier leakage",
+      "OCLN / CLDN5 / TJP1 restoration",
+      "Cerebral blood flow",
+      "Downstream inflammatory spillover"
+    ],
+    "sample_type": "['tissue', 'imaging', 'plasma']",
+    "time_window": "['acute', 'subacute']",
+    "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
+    "expected_direction": "['down', 'up', 'up_or_stabilize', 'down']",
+    "linked_endotypes": [
+      "acute_mild_biomarker_imaging_bridge",
+      "acute_severe_vascular_dominant",
+      "acute_blast_vascular_inflammatory_mixed",
+      "subacute_repetitive_inflammatory_dominant"
+    ],
+    "linked_translational_packets": [
+      "blood_brain_barrier_failure"
+    ],
+    "primary_target": "OCLN",
+    "challenger_targets": [
+      "CLDN5",
+      "TJP1",
+      "MMP9"
+    ]
+  }
+}

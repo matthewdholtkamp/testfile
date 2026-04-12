@@ -1,0 +1,268 @@
+{
+  "updated_at": "2026-04-12T13:24:05.825384+00:00",
+  "issues": [
+    {
+      "issue_id": "phase6_most_informative_biomarker_panel_packet_blood_brain_barrier_failure_1",
+      "phase_key": "phase6",
+      "artifact_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure biomarker panel",
+      "statement": "Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase6_candidate_thesis"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase6_most_informative_biomarker_panel_packet_blood_brain_barrier_failure_2",
+      "phase_key": "phase6",
+      "artifact_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure biomarker panel",
+      "statement": "keep barrier-module claims tied to permeability outcomes, not junction markers alone.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase6_candidate_thesis"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_blood_brain_barrier_failure_3",
+      "phase_key": "phase1",
+      "artifact_id": "blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure",
+      "statement": "All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_blood_brain_barrier_failure_4",
+      "phase_key": "phase1",
+      "artifact_id": "blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure",
+      "statement": "Promoted from existing atlas mechanism coverage: blood brain barrier disruption.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration_5",
+      "phase_key": "phase2",
+      "artifact_id": "bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "artifact_label": "BBB permeability increase -> peripheral immune infiltration",
+      "statement": "Some supporting rows are abstract-only and should be weighted cautiously.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration_6",
+      "phase_key": "phase2",
+      "artifact_id": "bbb_permeability_increase_to_peripheral_immune_infiltration",
+      "artifact_label": "BBB permeability increase -> peripheral immune infiltration",
+      "statement": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase3_neurovascular_uncoupling_7",
+      "phase_key": "phase3",
+      "artifact_id": "neurovascular_uncoupling",
+      "artifact_label": "Neurovascular Uncoupling",
+      "statement": "Object still needs denser direct support before it should be treated as hardened.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase3_microglial_chronic_activation",
+        "phase3_neurovascular_uncoupling"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase3_neurovascular_uncoupling_8",
+      "phase_key": "phase3",
+      "artifact_id": "neurovascular_uncoupling",
+      "artifact_label": "Neurovascular Uncoupling",
+      "statement": "Object remains seeded because parent coverage or direct evidence is still incomplete.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase3_microglial_chronic_activation",
+        "phase3_neurovascular_uncoupling"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_blood_brain_barrier_failure_9",
+      "phase_key": "phase4",
+      "artifact_id": "blood_brain_barrier_failure",
+      "artifact_label": "Blood-Brain Barrier Failure",
+      "statement": "no direct compound or trial attachment surfaced in this build",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase4_blood_brain_barrier_failure"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_mild_biomarker_imaging_bridge_10",
+      "phase_key": "phase5",
+      "artifact_id": "acute_mild_biomarker_imaging_bridge",
+      "artifact_label": "Acute Mild Biomarker / Imaging Bridge",
+      "statement": "Acute biomarker spikes can reflect injury burden without resolving the dominant process, and imaging can remain subtle despite strong circulating markers.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_mild_biomarker_imaging_bridge_11",
+      "phase_key": "phase5",
+      "artifact_id": "acute_mild_biomarker_imaging_bridge",
+      "artifact_label": "Acute Mild Biomarker / Imaging Bridge",
+      "statement": "Subacute conversion rules are still thin",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_mild_biomarker_imaging_bridge_12",
+      "phase_key": "phase5",
+      "artifact_id": "acute_mild_biomarker_imaging_bridge",
+      "artifact_label": "Acute Mild Biomarker / Imaging Bridge",
+      "statement": "the current packet is strongest at triage and early follow-up.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_severe_vascular_dominant_13",
+      "phase_key": "phase5",
+      "artifact_id": "acute_severe_vascular_dominant",
+      "artifact_label": "Acute Severe Vascular-Dominant",
+      "statement": "Severe acute cohorts can look inflammatory quickly, but that does not mean inflammation is the dominant upstream driver in the first window.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_severe_vascular_dominant_14",
+      "phase_key": "phase5",
+      "artifact_id": "acute_severe_vascular_dominant",
+      "artifact_label": "Acute Severe Vascular-Dominant",
+      "statement": "The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_blast_vascular_inflammatory_mixed_15",
+      "phase_key": "phase5",
+      "artifact_id": "acute_blast_vascular_inflammatory_mixed",
+      "artifact_label": "Acute Blast Vascular / Inflammatory Mixed",
+      "statement": "Blast cohorts often mix repetitive exposure, endocrine injury, and vascular stress, so clean one-driver interpretations are likely to overstate certainty.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_acute_blast_vascular_inflammatory_mixed_16",
+      "phase_key": "phase5",
+      "artifact_id": "acute_blast_vascular_inflammatory_mixed",
+      "artifact_label": "Acute Blast Vascular / Inflammatory Mixed",
+      "statement": "Cohort granularity is still thin, and the current packet needs better direct imaging anchors.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_subacute_repetitive_inflammatory_dominant_17",
+      "phase_key": "phase5",
+      "artifact_id": "subacute_repetitive_inflammatory_dominant",
+      "artifact_label": "Subacute Repetitive Inflammatory-Dominant",
+      "statement": "Repetitive cohorts can still carry unresolved vascular pressure, so an inflammatory label should stay bounded unless barrier readouts are also tracked.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_subacute_repetitive_inflammatory_dominant_18",
+      "phase_key": "phase5",
+      "artifact_id": "subacute_repetitive_inflammatory_dominant",
+      "artifact_label": "Subacute Repetitive Inflammatory-Dominant",
+      "statement": "The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge",
+        "phase5_acute_severe_vascular_dominant",
+        "phase5_acute_blast_vascular_inflammatory_mixed",
+        "phase5_subacute_repetitive_inflammatory_dominant"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    }
+  ]
+}

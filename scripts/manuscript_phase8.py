@@ -1,7 +1,9 @@
+import csv
 import json
 import os
 import re
 import shutil
+import ast
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
@@ -9,12 +11,14 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 STATE_DIR = REPO_ROOT / 'outputs' / 'state'
 MANUSCRIPT_ROOT = REPO_ROOT / 'outputs' / 'manuscripts'
+OUTPUT_ROOT = REPO_ROOT / 'output'
 JOURNAL_REGISTRY_PATH = REPO_ROOT / 'config' / 'manuscript_journal_registry.json'
 JOURNAL_REQUIREMENTS_DIR = REPO_ROOT / 'config' / 'journal_requirements'
 MANUSCRIPT_QUEUE_STATE_PATH = STATE_DIR / 'manuscript_queue.json'
 PUBLICATION_TRACKER_STATE_PATH = STATE_DIR / 'publication_tracker.json'
 READY_FOR_CODEX_FILENAME = 'ready_for_codex_draft.json'
 ACTIVE_LANE_LIMIT = 2
+PROCESS_ENGINE_DOC_PATH = REPO_ROOT / 'docs' / 'process-engine' / 'process_engine.json'
 
 QUEUE_STATUSES = [
     'awaiting your approval',
@@ -121,9 +125,21 @@ def summarize_list(values, limit=4):
 
 
 def split_notes(value):
+    if isinstance(value, list):
+        raw_parts = []
+        for item in value:
+            raw_parts.extend(split_notes(item))
+        return ordered_unique(raw_parts)
     text = normalize(value)
     if not text:
         return []
+    if text.startswith('[') and text.endswith(']'):
+        try:
+            parsed = ast.literal_eval(text)
+        except (ValueError, SyntaxError):
+            parsed = None
+        if isinstance(parsed, list):
+            return split_notes(parsed)
     bits = [normalize(part) for part in re.split(r'\|\||;|\n', text) if normalize(part)]
     bits = [part for part in bits if part.lower() not in {'none', 'none_detected', 'not specified', 'n/a'}]
     return bits
@@ -189,6 +205,167 @@ def load_journal_requirements(journal_id):
     return read_json(path, {}) or {}
 
 
+def latest_corpus_manifest_path():
+    candidates = sorted(OUTPUT_ROOT.glob('pubmed_tbi_manifest_*.csv'))
+    return candidates[-1] if candidates else None
+
+
+def parse_pmid_list(value):
+    if isinstance(value, list):
+        raw_values = value
+    else:
+        raw_values = re.split(r'[;,\|\n]+', normalize(value))
+    seen = set()
+    pmids = []
+    for item in raw_values:
+        text = normalize(item)
+        if not text:
+            continue
+        match = re.search(r'(\d{6,9})', text)
+        if not match:
+            continue
+        pmid = match.group(1)
+        if pmid not in seen:
+            seen.add(pmid)
+            pmids.append(pmid)
+    return pmids
+
+
+def source_quality_tier_from_rank(rank_value):
+    rank = normalize(rank_value)
+    if rank in {'2', '3', '4', '5'}:
+        return 'full_text_like'
+    if rank == '1':
+        return 'abstract_only'
+    return 'unknown'
+
+
+def parse_source_markdown_metadata(path):
+    path = Path(path)
+    if not path.exists():
+        return {}
+    text = path.read_text()
+
+    def capture(label):
+        match = re.search(rf'^\*\*{re.escape(label)}:\*\*\s*(.+)$', text, flags=re.MULTILINE)
+        return normalize(match.group(1)) if match else ''
+
+    abstract = ''
+    abstract_match = re.search(r'## Abstract\s+(.+?)(?:\n## |\Z)', text, flags=re.DOTALL)
+    if abstract_match:
+        abstract = normalize(abstract_match.group(1))
+
+    full_text_excerpt = ''
+    full_text_match = re.search(r'## Full Text\s+(.+?)(?:\n## |\Z)', text, flags=re.DOTALL)
+    if full_text_match:
+        full_text_excerpt = normalize(full_text_match.group(1))[:2000]
+
+    return {
+        'title': normalize(text.splitlines()[0].lstrip('# ').strip()) if text else '',
+        'authors': capture('Authors'),
+        'journal': capture('Journal'),
+        'publication_date': capture('Publication Date'),
+        'pmid': capture('PMID'),
+        'pmcid': capture('PMCID'),
+        'doi': capture('DOI'),
+        'pubmed_url': capture('PubMed URL'),
+        'pmc_url': capture('PMC URL'),
+        'extraction_source': capture('Extraction Source'),
+        'extraction_rank': capture('Extraction Rank'),
+        'abstract': abstract,
+        'full_text_excerpt': full_text_excerpt,
+        'source_markdown_path': str(path.relative_to(REPO_ROOT)),
+    }
+
+
+def load_corpus_reference_index():
+    manifest_path = latest_corpus_manifest_path()
+    manifest_rows = {}
+    if manifest_path and manifest_path.exists():
+        with manifest_path.open(newline='') as handle:
+            for row in csv.DictReader(handle):
+                pmid = normalize(row.get('PMID'))
+                if pmid:
+                    manifest_rows[pmid] = row
+
+    source_paths = {}
+    for path in OUTPUT_ROOT.glob('*_PMID*.md'):
+        match = re.search(r'_PMID(\d+)\.md$', path.name)
+        if match:
+            source_paths[match.group(1)] = path
+
+    return {
+        'manifest_path': str(manifest_path.relative_to(REPO_ROOT)) if manifest_path else '',
+        'manifest_rows': manifest_rows,
+        'source_paths': source_paths,
+        'parsed_markdown': {},
+    }
+
+
+def corpus_reference_record(pmid, corpus_index):
+    pmid = normalize(pmid)
+    if not pmid:
+        return {}
+    manifest_row = dict(corpus_index.get('manifest_rows', {}).get(pmid, {}))
+    source_path = corpus_index.get('source_paths', {}).get(pmid)
+    parsed_cache = corpus_index.setdefault('parsed_markdown', {})
+    source_meta = parsed_cache.get(pmid)
+    if source_meta is None:
+        source_meta = parse_source_markdown_metadata(source_path) if source_path else {}
+        parsed_cache[pmid] = source_meta
+
+    extraction_rank = normalize(source_meta.get('extraction_rank') or manifest_row.get('extraction_rank'))
+    extraction_source = normalize(source_meta.get('extraction_source') or manifest_row.get('extraction_source'))
+    source_quality_tier = source_quality_tier_from_rank(extraction_rank)
+
+    return {
+        'pmid': pmid,
+        'title': normalize(source_meta.get('title') or manifest_row.get('title')),
+        'authors': normalize(source_meta.get('authors')),
+        'journal': normalize(source_meta.get('journal')),
+        'publication_date': normalize(source_meta.get('publication_date')),
+        'doi': normalize(source_meta.get('doi') or manifest_row.get('DOI')),
+        'pmcid': normalize(source_meta.get('pmcid') or manifest_row.get('PMCID')),
+        'pubmed_url': normalize(source_meta.get('pubmed_url')),
+        'pmc_url': normalize(source_meta.get('pmc_url')),
+        'extraction_source': extraction_source,
+        'extraction_rank': extraction_rank,
+        'source_quality_tier': source_quality_tier,
+        'manifest_source': corpus_index.get('manifest_path', ''),
+        'source_markdown_path': normalize(source_meta.get('source_markdown_path')),
+        'abstract': normalize(source_meta.get('abstract')),
+        'full_text_excerpt': normalize(source_meta.get('full_text_excerpt')),
+        'retrieval_mode': normalize(manifest_row.get('retrieval_mode')),
+        'source_query': normalize(manifest_row.get('source_query')),
+        'domain': normalize(manifest_row.get('domain')),
+    }
+
+
+def citation_text(record):
+    pieces = []
+    if normalize(record.get('authors')):
+        pieces.append(record['authors'])
+    if normalize(record.get('title')):
+        pieces.append(record['title'])
+    journal_and_year = ' '.join(part for part in [normalize(record.get('journal')), normalize(record.get('publication_date'))] if part)
+    if journal_and_year:
+        pieces.append(journal_and_year)
+    if normalize(record.get('doi')):
+        pieces.append(f"doi:{record['doi']}")
+    pieces.append(f"PMID:{record['pmid']}")
+    return '. '.join(piece.rstrip('.') for piece in pieces if piece).strip() + '.'
+
+
+def load_process_rows(state):
+    rows = list(state.get('process', {}).get('rows', []) or [])
+    if rows:
+        return rows
+    if PROCESS_ENGINE_DOC_PATH.exists():
+        data = read_json(PROCESS_ENGINE_DOC_PATH)
+        return list(data.get('lanes', []) or [])
+    return []
+
+
 def evidence_chain_complete(row):
     return all([
         bool(row.get('linked_phase1_lane_ids')),
@@ -200,9 +377,10 @@ def evidence_chain_complete(row):
 
 
 def build_phase_indexes(state):
+    process_rows = load_process_rows(state)
     translational = {normalize(row.get('lane_id')): row for row in state.get('translational', {}).get('rows', []) or []}
     cohort = {normalize(row.get('packet_id') or row.get('endotype_id') or row.get('display_name')): row for row in state.get('cohort', {}).get('rows', []) or []}
-    process = {normalize(row.get('lane_id') or row.get('display_name')): row for row in state.get('process', {}).get('rows', []) or []}
+    process = {normalize(row.get('lane_id') or row.get('display_name')): row for row in process_rows}
     transition = {normalize(row.get('transition_id') or row.get('display_name')): row for row in state.get('transition', {}).get('rows', []) or []}
     progression = {normalize(row.get('object_id') or row.get('display_name')): row for row in state.get('progression', {}).get('rows', []) or []}
     return {
@@ -691,6 +869,655 @@ def build_claim_rows(row, candidate):
     ]
 
 
+def ordered_unique(values):
+    seen = set()
+    ordered = []
+    for value in values:
+        text = normalize(value)
+        if not text or text in seen:
+            continue
+        seen.add(text)
+        ordered.append(text)
+    return ordered
+
+
+def extract_pmids_from_text(value):
+    return parse_pmid_list(value)
+
+
+def repo_relative_path(path):
+    path = Path(path)
+    try:
+        return str(path.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path)
+
+
+def artifact_source_path(state, phase_key):
+    report_paths = state.get('report_paths', {})
+    if phase_key == 'phase1':
+        return repo_relative_path(PROCESS_ENGINE_DOC_PATH)
+    mapping = {
+        'phase2': report_paths.get('transition'),
+        'phase3': report_paths.get('progression'),
+        'phase4': report_paths.get('translational'),
+        'phase5': report_paths.get('cohort'),
+        'phase6': report_paths.get('hypothesis') or report_paths.get('idea_briefs'),
+    }
+    value = mapping.get(phase_key)
+    return repo_relative_path(value) if value else ''
+
+
+def artifact_id_for_row(phase_key, row):
+    if phase_key == 'phase1':
+        return normalize(row.get('lane_id') or row.get('display_name'))
+    if phase_key == 'phase2':
+        return normalize(row.get('transition_id') or row.get('display_name'))
+    if phase_key == 'phase3':
+        return normalize(row.get('object_id') or row.get('display_name'))
+    if phase_key == 'phase4':
+        return normalize(row.get('lane_id') or row.get('display_name'))
+    if phase_key == 'phase5':
+        return normalize(row.get('endotype_id') or row.get('packet_id') or row.get('display_name'))
+    return normalize(row.get('candidate_id') or row.get('title') or row.get('display_name'))
+
+
+def artifact_label_for_row(phase_key, row):
+    return normalize(row.get('display_name') or row.get('title') or artifact_id_for_row(phase_key, row))
+
+
+def support_status_for_row(phase_key, row):
+    if phase_key == 'phase1':
+        return normalize(row.get('lane_status') or row.get('support_status'))
+    if phase_key == 'phase4':
+        return normalize(row.get('translation_maturity') or row.get('support_status'))
+    if phase_key == 'phase5':
+        return normalize(row.get('stratification_maturity') or row.get('support_status'))
+    return normalize(row.get('support_status') or row.get('maturity_status') or row.get('hypothesis_status'))
+
+
+def allowed_language_for_status(phase_key, status):
+    status = normalize(status)
+    if phase_key == 'phase4' and status == 'bounded':
+        return 'Use supported mechanistic language, but keep translational claims bounded and non-clinical.'
+    if phase_key == 'phase5' and status == 'bounded':
+        return 'Use cohort-language as suggestive context only, not as a locked endotype claim.'
+    if status in {'supported', 'usable', 'longitudinally_supported', 'established_in_corpus'}:
+        return 'Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.'
+    if status in {'provisional', 'bounded', 'seeded', 'emergent_from_tbi_corpus'}:
+        return 'Use cautious, hypothesis-oriented wording and explicitly note boundedness.'
+    return 'Use cautious wording and avoid definitive causal or clinical claims.'
+
+
+def phase_entries_for_candidate(row, state, indexes):
+    entries = []
+    phase_specs = [
+        ('phase1', row.get('linked_phase1_lane_ids') or [], indexes.get('process', {})),
+        ('phase2', row.get('linked_phase2_transition_ids') or [], indexes.get('transition', {})),
+        ('phase3', row.get('linked_phase3_object_ids') or [], indexes.get('progression', {})),
+        ('phase4', row.get('linked_phase4_packet_ids') or [], indexes.get('translational', {})),
+        ('phase5', row.get('linked_phase5_endotype_ids') or [], indexes.get('cohort', {})),
+    ]
+    for phase_key, ids, lookup in phase_specs:
+        for linked_id in ids:
+            phase_row = lookup.get(normalize(linked_id)) or {}
+            entries.append({
+                'phase_key': phase_key,
+                'artifact_id': normalize(linked_id),
+                'label': artifact_label_for_row(phase_key, phase_row) or pretty_label(linked_id),
+                'row': phase_row,
+                'support_status': support_status_for_row(phase_key, phase_row),
+                'source_path': artifact_source_path(state, phase_key),
+            })
+    return entries
+
+
+def supporting_pmids_for_phase_entry(entry):
+    row = entry.get('row') or {}
+    pmids = []
+    pmids.extend(parse_pmid_list(row.get('anchor_pmids')))
+    pmids.extend(extract_pmids_from_text(row.get('example_signals')))
+    if entry.get('phase_key') == 'phase5':
+        for paper in row.get('supporting_papers') or []:
+            pmids.extend(parse_pmid_list(paper.get('pmid')))
+    return ordered_unique(pmids)
+
+
+def add_reference_support(support_map, ordered_pmids, overrides, pmid, *, phase_key, artifact_id, artifact_label, role, note='', support_status='', metadata_override=None):
+    pmid = normalize(pmid)
+    if not pmid:
+        return
+    if pmid not in support_map:
+        support_map[pmid] = {
+            'phases': [],
+            'artifact_refs': [],
+            'roles': [],
+            'notes': [],
+            'support_statuses': [],
+        }
+        ordered_pmids.append(pmid)
+    entry = support_map[pmid]
+    if phase_key and phase_key not in entry['phases']:
+        entry['phases'].append(phase_key)
+    artifact_ref = f'{phase_key}:{artifact_id}' if phase_key and artifact_id else artifact_id
+    if artifact_ref and artifact_ref not in entry['artifact_refs']:
+        entry['artifact_refs'].append(artifact_ref)
+    if role and role not in entry['roles']:
+        entry['roles'].append(role)
+    if support_status and support_status not in entry['support_statuses']:
+        entry['support_statuses'].append(support_status)
+    note = normalize(note)
+    if note and note not in entry['notes']:
+        entry['notes'].append(note)
+    if metadata_override:
+        overrides.setdefault(pmid, {}).update({key: value for key, value in metadata_override.items() if normalize(value)})
+
+
+def collect_reference_records(candidate, row, phase_entries, corpus_index):
+    support_map = {}
+    ordered_pmids = []
+    overrides = {}
+
+    for pmid in parse_pmid_list(row.get('anchor_pmids')) + parse_pmid_list(row.get('supporting_pmids')):
+        add_reference_support(
+            support_map,
+            ordered_pmids,
+            overrides,
+            pmid,
+            phase_key='phase6',
+            artifact_id=candidate['candidate_id'],
+            artifact_label=candidate['title'],
+            role='candidate_anchor',
+            note='Ranked manuscript candidate support.',
+            support_status=normalize(row.get('support_status')),
+        )
+
+    for entry in phase_entries:
+        phase_key = entry['phase_key']
+        artifact_id = entry['artifact_id']
+        artifact_label = entry['label']
+        phase_row = entry.get('row') or {}
+        for pmid in supporting_pmids_for_phase_entry(entry):
+            add_reference_support(
+                support_map,
+                ordered_pmids,
+                overrides,
+                pmid,
+                phase_key=phase_key,
+                artifact_id=artifact_id,
+                artifact_label=artifact_label,
+                role=f'{phase_key}_support',
+                note=normalize(phase_row.get('support_reason') or phase_row.get('why_it_matters') or phase_row.get('description')),
+                support_status=entry.get('support_status'),
+            )
+        if phase_key == 'phase5':
+            for paper in phase_row.get('supporting_papers') or []:
+                pmid = normalize(paper.get('pmid'))
+                if not pmid:
+                    continue
+                add_reference_support(
+                    support_map,
+                    ordered_pmids,
+                    overrides,
+                    pmid,
+                    phase_key=phase_key,
+                    artifact_id=artifact_id,
+                    artifact_label=artifact_label,
+                    role='phase5_supporting_paper',
+                    note='Cohort-supporting paper in linked endotype packet.',
+                    support_status=entry.get('support_status'),
+                    metadata_override={
+                        'title': normalize(paper.get('title')),
+                        'source_quality_tier': normalize(paper.get('source_quality_tier')),
+                    },
+                )
+
+    references = []
+    for number, pmid in enumerate(ordered_pmids, start=1):
+        record = corpus_reference_record(pmid, corpus_index)
+        record.update({key: value for key, value in overrides.get(pmid, {}).items() if normalize(value) and not normalize(record.get(key))})
+        record['reference_number'] = number
+        record['citation_text'] = citation_text(record)
+        record['source_phases'] = support_map[pmid]['phases']
+        record['artifact_refs'] = support_map[pmid]['artifact_refs']
+        record['support_roles'] = support_map[pmid]['roles']
+        record['support_notes'] = support_map[pmid]['notes']
+        record['support_statuses'] = support_map[pmid]['support_statuses']
+        references.append(record)
+    return references
+
+
+def phase_claim_text(entry, row):
+    phase_key = entry['phase_key']
+    phase_row = entry.get('row') or {}
+    label = entry['label']
+    if phase_key == 'phase1':
+        return normalize(phase_row.get('description') or f'{label} is the lead mechanism lane for this manuscript path.')
+    if phase_key == 'phase2':
+        return normalize(phase_row.get('statement_text') or f'{label} is the lead causal bridge in the current evidence chain.')
+    if phase_key == 'phase3':
+        return normalize(phase_row.get('why_it_matters') or phase_row.get('description') or f'{label} is a downstream progression burden linked to the lead mechanism path.')
+    if phase_key == 'phase4':
+        primary_target = normalize(phase_row.get('primary_target'))
+        readouts = summarize_list(phase_row.get('expected_readouts') or [])
+        return normalize(
+            phase_row.get('lane_descriptor')
+            or f'{label} centers on {primary_target or "the current primary target"} with readouts {readouts}.'
+        )
+    if phase_key == 'phase5':
+        biomarkers = summarize_list(phase_row.get('biomarker_profile') or [])
+        return normalize(
+            phase_row.get('why_it_matters')
+            or f'{label} provides cohort and endotype context with biomarkers {biomarkers}.'
+        )
+    return normalize(row.get('statement') or row.get('why_now'))
+
+
+def build_claim_support_matrix(candidate, row, phase_entries):
+    claims = []
+    candidate_claim_pmids = ordered_unique(
+        parse_pmid_list(row.get('anchor_pmids'))
+        + parse_pmid_list(row.get('supporting_pmids'))
+    )
+    claims.append({
+        'claim_id': 'phase6_candidate_thesis',
+        'phase_key': 'phase6',
+        'claim_title': 'Candidate manuscript thesis',
+        'claim_text': normalize(row.get('statement') or row.get('why_now') or row.get('decision_rationale')),
+        'support_status': normalize(row.get('support_status')),
+        'allowed_language': allowed_language_for_status('phase6', normalize(row.get('support_status'))),
+        'supporting_pmids': candidate_claim_pmids[:20],
+        'artifact_refs': [f"phase6:{candidate['candidate_id']}"],
+        'contradiction_notes': split_notes(row.get('blockers')),
+        'evidence_gaps': [],
+        'source_quality_mix': normalize(row.get('source_quality_mix')),
+    })
+    for entry in phase_entries:
+        phase_row = entry.get('row') or {}
+        claims.append({
+            'claim_id': f"{entry['phase_key']}_{slugify(entry['artifact_id'])}",
+            'phase_key': entry['phase_key'],
+            'claim_title': entry['label'],
+            'claim_text': phase_claim_text(entry, row),
+            'support_status': entry.get('support_status'),
+            'allowed_language': allowed_language_for_status(entry['phase_key'], entry.get('support_status')),
+            'supporting_pmids': supporting_pmids_for_phase_entry(entry)[:16],
+            'artifact_refs': [f"{entry['phase_key']}:{entry['artifact_id']}"],
+            'contradiction_notes': split_notes(phase_row.get('contradiction_notes')) + split_notes(phase_row.get('disconfirming_evidence')),
+            'evidence_gaps': split_notes(phase_row.get('evidence_gaps')),
+            'source_quality_mix': normalize(phase_row.get('source_quality_mix')),
+        })
+    return claims
+
+
+def contradiction_severity(statement):
+    text = normalize(statement).lower()
+    if not text:
+        return 'low'
+    high_tokens = ['contradict', 'no significant correlation', 'bounded', 'no direct', 'no trial', 'no compound', 'caps manuscript confidence']
+    medium_tokens = ['abstract-only', 'seeded', 'provisional', 'still needs', 'weighted cautiously', 'incomplete']
+    if any(token in text for token in high_tokens):
+        return 'high'
+    if any(token in text for token in medium_tokens):
+        return 'medium'
+    return 'low'
+
+
+def build_contradiction_register(candidate, row, phase_entries, claims):
+    claim_ids_by_phase = {}
+    for claim in claims:
+        claim_ids_by_phase.setdefault(claim['phase_key'], []).append(claim['claim_id'])
+    issues = []
+    seen = set()
+
+    def add_issue(phase_key, artifact_id, artifact_label, statement):
+        text = normalize(statement)
+        if not text or text in seen:
+            return
+        seen.add(text)
+        severity = contradiction_severity(text)
+        issues.append({
+            'issue_id': f"{phase_key}_{slugify(artifact_id)}_{len(issues) + 1}",
+            'phase_key': phase_key,
+            'artifact_id': artifact_id,
+            'artifact_label': artifact_label,
+            'statement': text,
+            'severity': severity,
+            'blocking': severity == 'high',
+            'affected_claim_ids': claim_ids_by_phase.get(phase_key, []),
+            'recommended_bound': 'State this as a limitation or bounded uncertainty rather than smoothing it away.',
+        })
+
+    for note in split_notes(row.get('blockers')):
+        add_issue('phase6', candidate['candidate_id'], candidate['title'], note)
+    for entry in phase_entries:
+        phase_row = entry.get('row') or {}
+        for note in (
+            split_notes(phase_row.get('contradiction_notes'))
+            + split_notes(phase_row.get('evidence_gaps'))
+            + split_notes(phase_row.get('disconfirming_evidence'))
+            + split_notes(phase_row.get('lane_notes'))
+        ):
+            add_issue(entry['phase_key'], entry['artifact_id'], entry['label'], note)
+    return issues
+
+
+def build_source_artifact_manifest(candidate, row, state, phase_entries):
+    artifacts = [
+        {
+            'phase_key': 'phase6',
+            'artifact_id': candidate['candidate_id'],
+            'label': candidate['title'],
+            'source_path': artifact_source_path(state, 'phase6'),
+            'support_status': normalize(row.get('support_status')),
+            'anchor_pmids': parse_pmid_list(row.get('anchor_pmids'))[:20],
+        }
+    ]
+    for entry in phase_entries:
+        phase_row = entry.get('row') or {}
+        artifacts.append({
+            'phase_key': entry['phase_key'],
+            'artifact_id': entry['artifact_id'],
+            'label': entry['label'],
+            'source_path': entry['source_path'],
+            'support_status': entry.get('support_status'),
+            'anchor_pmids': supporting_pmids_for_phase_entry(entry)[:16],
+            'source_quality_mix': normalize(phase_row.get('source_quality_mix')),
+        })
+    return artifacts
+
+
+def build_figure_plan(candidate, row, phase_entries, contradictions):
+    progression_labels = [entry['label'] for entry in phase_entries if entry['phase_key'] == 'phase3']
+    cohort_labels = [entry['label'] for entry in phase_entries if entry['phase_key'] == 'phase5']
+    phase_artifacts = [f"{entry['phase_key']}:{entry['artifact_id']}" for entry in phase_entries]
+    figures = [
+        {
+            'figure_id': 'figure_1',
+            'title': 'Phase 1 to Phase 5 evidence chain for the manuscript path',
+            'purpose': 'Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.',
+            'source_artifacts': phase_artifacts,
+            'allowed_conclusion': 'This figure supports the structure of the evidence chain, not a claim of clinical proof.',
+        },
+        {
+            'figure_id': 'figure_2',
+            'title': 'Biomarker and readout panel for the lead translational packet',
+            'purpose': 'Show the candidate biomarker panel, expected readouts, time windows, and sample types.',
+            'source_artifacts': [f"phase6:{candidate['candidate_id']}"] + [f"{entry['phase_key']}:{entry['artifact_id']}" for entry in phase_entries if entry['phase_key'] == 'phase4'],
+            'allowed_conclusion': 'This figure supports the proposed readout spine and experimental logic, not treatment efficacy.',
+        },
+        {
+            'figure_id': 'figure_3',
+            'title': 'Downstream burden and endotype context',
+            'purpose': f'Show the progression objects ({", ".join(progression_labels) or "not specified"}) and the linked endotypes ({", ".join(cohort_labels) or "not specified"}).',
+            'source_artifacts': [f"{entry['phase_key']}:{entry['artifact_id']}" for entry in phase_entries if entry['phase_key'] in {'phase3', 'phase5'}],
+            'allowed_conclusion': 'This figure supports context and stratification framing only.',
+        },
+        {
+            'figure_id': 'figure_4',
+            'title': 'Evidence boundaries and contradiction map',
+            'purpose': 'Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.',
+            'source_artifacts': [f"phase6:{candidate['candidate_id']}"] + [f"{item['phase_key']}:{item['artifact_id']}" for item in phase_entries if item['phase_key'] in {'phase2', 'phase4', 'phase5'}],
+            'allowed_conclusion': 'This figure is explicitly a limitation and boundedness figure.',
+            'contradiction_count': len(contradictions),
+        },
+    ]
+    return figures
+
+
+def build_section_packets(candidate, row, state, phase_entries, claims, contradictions, references, source_artifacts, corpus_manifest_path=''):
+    lead_refs = ', '.join(f"PMID {item['pmid']}" for item in references[:8]) or 'no lead references yet'
+    artifact_paths = ', '.join(ordered_unique(item['source_path'] for item in source_artifacts if item.get('source_path')))
+    endotypes = ', '.join(entry['label'] for entry in phase_entries if entry['phase_key'] == 'phase5') or 'no linked endotypes'
+    progression = ', '.join(entry['label'] for entry in phase_entries if entry['phase_key'] == 'phase3') or 'no linked progression objects'
+    methods_lines = [
+        '# Methods Packet',
+        '',
+        '## Evidence Assembly',
+        '',
+        f'- Candidate assembled from the live Phase 6 ranked slate using `{candidate["candidate_id"]}`.',
+        f'- Phase artifacts used: {artifact_paths or "not recorded"}.',
+        f'- Corpus manifest used: `{corpus_manifest_path or "not recorded"}`.',
+        '- Manuscript package rules: keep mechanistic claims tied to source artifacts, treat bounded translation as non-clinical, and preserve contradiction language rather than smoothing it away.',
+        '',
+    ]
+    intro_lines = [
+        '# Introduction Packet',
+        '',
+        f'- Lead manuscript thesis: {normalize(row.get("statement") or row.get("why_now"))}',
+        f'- Lead rationale: {normalize(row.get("decision_rationale") or row.get("rationale"))}',
+        f'- Core anchor references: {lead_refs}.',
+        '',
+    ]
+    results_lines = [
+        '# Results Packet',
+        '',
+        f'- Phase 3 burden to carry in the narrative: {progression}.',
+        f'- Endotype context to carry in the narrative: {endotypes}.',
+        '',
+    ]
+    for claim in claims:
+        results_lines.append(f"## {claim['claim_title']}")
+        results_lines.append('')
+        results_lines.append(f"- Claim: {claim['claim_text']}")
+        results_lines.append(f"- Allowed wording: {claim['allowed_language']}")
+        results_lines.append(f"- Support PMIDs: {', '.join(claim['supporting_pmids']) or 'none recorded'}")
+        if claim['contradiction_notes']:
+            results_lines.append(f"- Contradictions: {' | '.join(claim['contradiction_notes'])}")
+        if claim['evidence_gaps']:
+            results_lines.append(f"- Evidence gaps: {' | '.join(claim['evidence_gaps'])}")
+        results_lines.append('')
+    discussion_lines = [
+        '# Discussion Packet',
+        '',
+        f'- Primary journal target: {candidate["journal_targets"].get("primary", {}).get("journal", {}).get("name", "not selected")}.',
+        f'- Primary journal requirements checked: {"yes" if candidate["journal_targets"].get("requirements_checked") else "no"}.',
+        '- Discussion should distinguish direct TBI support from cross-disease analog support, and keep bounded translational logic clearly separate from intervention claims.',
+        '',
+    ]
+    limitations_lines = [
+        '# Limitations Packet',
+        '',
+        f'- Total contradiction and evidence-boundary items: {len(contradictions)}.',
+        '- Use this packet to keep the manuscript honest about contradiction, bounded translation, abstract-only support, and missing trial/compound attachment.',
+        '',
+    ]
+    for issue in contradictions:
+        limitations_lines.append(f"- [{issue['severity']}] {issue['statement']}")
+    return {
+        '00_introduction_packet.md': '\n'.join(intro_lines) + '\n',
+        '01_methods_packet.md': '\n'.join(methods_lines) + '\n',
+        '02_results_packet.md': '\n'.join(results_lines) + '\n',
+        '03_discussion_packet.md': '\n'.join(discussion_lines) + '\n',
+        '04_limitations_packet.md': '\n'.join(limitations_lines) + '\n',
+    }
+
+
+def build_claim_support_markdown(claims, references_by_pmid):
+    lines = ['# Claim Support Matrix', '']
+    for claim in claims:
+        lines.extend([
+            f"## {claim['claim_title']}",
+            '',
+            f"- **Phase:** {claim['phase_key']}",
+            f"- **Claim:** {claim['claim_text']}",
+            f"- **Support status:** {claim['support_status'] or 'not specified'}",
+            f"- **Allowed language:** {claim['allowed_language']}",
+            f"- **Artifact refs:** {', '.join(claim['artifact_refs']) or 'none'}",
+            f"- **Support PMIDs:** {', '.join(claim['supporting_pmids']) or 'none'}",
+        ])
+        if claim['supporting_pmids']:
+            lines.append('- **Reference details:**')
+            for pmid in claim['supporting_pmids'][:8]:
+                record = references_by_pmid.get(pmid, {})
+                lines.append(f"  - {record.get('citation_text') or f'PMID:{pmid}'}")
+        if claim['contradiction_notes']:
+            lines.append(f"- **Contradictions:** {' | '.join(claim['contradiction_notes'])}")
+        if claim['evidence_gaps']:
+            lines.append(f"- **Evidence gaps:** {' | '.join(claim['evidence_gaps'])}")
+        lines.append('')
+    return '\n'.join(lines)
+
+
+def build_contradiction_markdown(contradictions):
+    lines = ['# Contradiction Register', '']
+    if not contradictions:
+        lines.append('- No contradiction items recorded.')
+        return '\n'.join(lines) + '\n'
+    for issue in contradictions:
+        lines.extend([
+            f"## {issue['artifact_label']}",
+            '',
+            f"- **Phase:** {issue['phase_key']}",
+            f"- **Severity:** {issue['severity']}",
+            f"- **Blocking:** {'yes' if issue['blocking'] else 'no'}",
+            f"- **Statement:** {issue['statement']}",
+            f"- **Affected claims:** {', '.join(issue['affected_claim_ids']) or 'none'}",
+            f"- **Recommended bound:** {issue['recommended_bound']}",
+            '',
+        ])
+    return '\n'.join(lines)
+
+
+def build_reference_markdown(references):
+    lines = ['# References Bundle', '']
+    for record in references:
+        lines.append(f"{record['reference_number']}. {record['citation_text']}")
+        lines.append(f"   - Source phases: {', '.join(record.get('source_phases') or []) or 'not specified'}")
+        lines.append(f"   - Quality: {record.get('source_quality_tier') or 'unknown'}")
+        lines.append(f"   - Artifact refs: {', '.join(record.get('artifact_refs') or []) or 'none'}")
+        if record.get('support_notes'):
+            lines.append(f"   - Why included: {' | '.join(record['support_notes'][:2])}")
+        lines.append('')
+    return '\n'.join(lines)
+
+
+def build_figure_plan_markdown(figures):
+    lines = ['# Figure and Table Evidence Plan', '']
+    for figure in figures:
+        lines.extend([
+            f"## {figure['figure_id'].replace('_', ' ').title()}: {figure['title']}",
+            '',
+            f"- **Purpose:** {figure['purpose']}",
+            f"- **Source artifacts:** {', '.join(figure.get('source_artifacts') or []) or 'none'}",
+            f"- **Allowed conclusion:** {figure['allowed_conclusion']}",
+            '',
+        ])
+    lines.extend([
+        '## Recommended Tables',
+        '',
+        '- **Table 1:** Claim support matrix by phase, claim, support status, and PMIDs.',
+        '- **Table 2:** Journal-fit and requirements snapshot for the primary journal plus backups.',
+        '- **Table 3:** Contradiction and evidence-boundary register.',
+        '',
+    ])
+    return '\n'.join(lines)
+
+
+def build_source_artifact_markdown(source_artifacts):
+    lines = ['# Source Artifact Manifest', '']
+    for artifact in source_artifacts:
+        lines.extend([
+            f"## {artifact['label']}",
+            '',
+            f"- **Phase:** {artifact['phase_key']}",
+            f"- **Artifact ID:** {artifact['artifact_id']}",
+            f"- **Support status:** {artifact.get('support_status') or 'not specified'}",
+            f"- **Source path:** `{artifact.get('source_path') or 'not recorded'}`",
+            f"- **Anchor PMIDs:** {', '.join(artifact.get('anchor_pmids') or []) or 'none recorded'}",
+        ])
+        if normalize(artifact.get('source_quality_mix')):
+            lines.append(f"- **Source quality mix:** {artifact['source_quality_mix']}")
+        lines.append('')
+    return '\n'.join(lines)
+
+
+def build_data_points_markdown(data_points):
+    lines = ['# Data Points Bundle', '']
+    for key, value in data_points.items():
+        label = pretty_label(key)
+        if isinstance(value, list):
+            rendered = ', '.join(pretty_label(item) if isinstance(item, str) else normalize(item) for item in value if normalize(item))
+            lines.append(f"- **{label}:** {rendered or 'not recorded'}")
+        else:
+            lines.append(f"- **{label}:** {normalize(value) or 'not recorded'}")
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
+    references = collect_reference_records(candidate, row, phase_entries, corpus_index)
+    references_by_pmid = {record['pmid']: record for record in references}
+    claims = build_claim_support_matrix(candidate, row, phase_entries)
+    contradiction_register = build_contradiction_register(candidate, row, phase_entries, claims)
+    source_artifacts = build_source_artifact_manifest(candidate, row, state, phase_entries)
+    figures = build_figure_plan(candidate, row, phase_entries, contradiction_register)
+    section_packets = build_section_packets(
+        candidate,
+        row,
+        state,
+        phase_entries,
+        claims,
+        contradiction_register,
+        references,
+        source_artifacts,
+        corpus_manifest_path=corpus_index.get('manifest_path', ''),
+    )
+
+    supporting_claims = {}
+    for claim in claims:
+        for pmid in claim.get('supporting_pmids') or []:
+            supporting_claims.setdefault(pmid, []).append(claim['claim_id'])
+    for record in references:
+        record['supporting_claim_ids'] = supporting_claims.get(record['pmid'], [])
+
+    journal_snapshot = {
+        'primary': candidate['journal_targets'].get('primary'),
+        'backups': candidate['journal_targets'].get('backups'),
+        'requirements_checked': candidate['journal_targets'].get('requirements_checked'),
+        'shortlist_journal_fit_score': candidate['journal_targets'].get('shortlist_journal_fit_score', 0),
+        'verified_journal_fit_score': candidate['journal_targets'].get('verified_journal_fit_score', 0),
+    }
+    data_points = {
+        'biomarker_panel': row.get('biomarker_panel') or row.get('panel_members') or [],
+        'expected_readouts': row.get('expected_readouts') or [],
+        'sample_type': row.get('sample_type') or [],
+        'time_window': row.get('time_window') or [],
+        'readout_time_horizon': row.get('readout_time_horizon') or [],
+        'expected_direction': row.get('expected_direction') or [],
+        'linked_endotypes': row.get('linked_phase5_endotype_ids') or [],
+        'linked_translational_packets': row.get('linked_phase4_packet_ids') or [],
+        'primary_target': next((entry.get('row', {}).get('primary_target') for entry in phase_entries if entry['phase_key'] == 'phase4' and normalize(entry.get('row', {}).get('primary_target'))), ''),
+        'challenger_targets': next((entry.get('row', {}).get('challenger_targets') for entry in phase_entries if entry['phase_key'] == 'phase4' and entry.get('row', {}).get('challenger_targets')), []),
+    }
+    summary = {
+        'reference_count': len(references),
+        'claim_count': len(claims),
+        'contradiction_count': len(contradiction_register),
+        'figure_count': len(figures),
+        'section_packet_count': len(section_packets),
+        'primary_journal_verified': bool(candidate['journal_targets'].get('requirements_checked')),
+        'corpus_manifest_path': corpus_index.get('manifest_path', ''),
+    }
+    return {
+        'references': references,
+        'claims': claims,
+        'contradictions': contradiction_register,
+        'source_artifacts': source_artifacts,
+        'figures': figures,
+        'section_packets': section_packets,
+        'journal_snapshot': journal_snapshot,
+        'data_points': data_points,
+        'summary': summary,
+        'reference_markdown': build_reference_markdown(references),
+        'claim_support_markdown': build_claim_support_markdown(claims, references_by_pmid),
+        'contradiction_markdown': build_contradiction_markdown(contradiction_register),
+        'figure_plan_markdown': build_figure_plan_markdown(figures),
+        'source_artifact_markdown': build_source_artifact_markdown(source_artifacts),
+        'data_points_markdown': build_data_points_markdown(data_points),
+    }
+
+
 def build_review_memo(candidate, row):
     primary = candidate['journal_targets'].get('primary')
     primary_journal = primary['journal']['name'] if primary else 'No primary journal selected yet'
@@ -822,6 +1649,7 @@ def build_codex_handoff_markdown(candidate):
         '',
         '## Drafting Rules',
         '',
+        '- Use the evidence bundle first: references, claim support matrix, contradiction register, source artifact manifest, data points bundle, and section packets.',
         '- Use the claim-evidence map and review memo before drafting any narrative section.',
         '- Keep all claims bounded to the current artifact chain.',
         '- Re-check the current journal instructions before final formatting.',
@@ -867,6 +1695,7 @@ def build_pack_manifest(candidate, row, publication_entry):
         'evidence_gaps': split_notes(row.get('evidence_gaps')),
         'source_row': row,
         'ready_for_codex_draft': candidate['ready_for_codex_draft'],
+        'evidence_bundle': candidate.get('evidence_bundle_summary', {}),
         'improvement_window': {
             'default_pass_target': 3,
             'hard_cap': 5,
@@ -1013,8 +1842,8 @@ def candidate_folder(root, candidate):
     return Path(root) / candidate['pack_key']
 
 
-def candidate_row_lookup(state):
-    rows = list(state.get('portfolio') or state.get('hypothesis', {}).get('rows') or [])
+def candidate_row_lookup(state, direction_registry=None):
+    rows = representative_candidate_rows(state, direction_registry or {})
     lookup = {}
     for row in rows:
         candidate_id = canonical_candidate_id(row.get('candidate_id') or row.get('title'))
@@ -1029,7 +1858,9 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
     if not Path(publication_state_path).exists():
         write_json(publication_state_path, publication_tracker)
     queue = build_manuscript_queue_payload(state, direction_registry=direction_registry, publication_tracker=publication_tracker, journal_registry=journal_registry)
-    row_lookup = candidate_row_lookup(state)
+    row_lookup = candidate_row_lookup(state, direction_registry=direction_registry)
+    indexes = build_phase_indexes(state)
+    corpus_index = load_corpus_reference_index()
     root = Path(manuscript_root)
     root.mkdir(parents=True, exist_ok=True)
 
@@ -1044,8 +1875,14 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         expected_folder_names.add(folder.name)
         artifacts_dir = folder / 'artifacts'
         drafts_dir = folder / 'drafts'
+        section_packets_dir = folder / 'section_packets'
         artifacts_dir.mkdir(parents=True, exist_ok=True)
         drafts_dir.mkdir(parents=True, exist_ok=True)
+        section_packets_dir.mkdir(parents=True, exist_ok=True)
+
+        phase_entries = phase_entries_for_candidate(row, state, indexes)
+        evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
+        candidate['evidence_bundle_summary'] = evidence_bundle['summary']
 
         manifest = build_pack_manifest(candidate, row, publication_entry)
         manifests.append({'candidate_id': candidate['candidate_id'], 'folder': str(folder.relative_to(REPO_ROOT)), 'gate_state': candidate['manuscript_gate_state']})
@@ -1062,6 +1899,47 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         write_text(folder / 'journal_fit.md', build_journal_fit_markdown(candidate))
         write_text(folder / 'manuscript_brief.md', build_manuscript_brief(candidate, row))
         write_text(folder / 'codex_handoff.md', build_codex_handoff_markdown(candidate))
+        write_json(folder / 'references.json', {
+            'updated_at': iso_now(),
+            'summary': evidence_bundle['summary'],
+            'references': evidence_bundle['references'],
+        })
+        write_text(folder / 'references.md', evidence_bundle['reference_markdown'])
+        write_json(folder / 'claim_support_matrix.json', {
+            'updated_at': iso_now(),
+            'claims': evidence_bundle['claims'],
+        })
+        write_text(folder / 'claim_support_matrix.md', evidence_bundle['claim_support_markdown'])
+        write_json(folder / 'contradiction_register.json', {
+            'updated_at': iso_now(),
+            'issues': evidence_bundle['contradictions'],
+        })
+        write_text(folder / 'contradiction_register.md', evidence_bundle['contradiction_markdown'])
+        write_json(folder / 'figure_evidence_plan.json', {
+            'updated_at': iso_now(),
+            'figures': evidence_bundle['figures'],
+        })
+        write_text(folder / 'figure_evidence_plan.md', evidence_bundle['figure_plan_markdown'])
+        write_json(folder / 'source_artifact_manifest.json', {
+            'updated_at': iso_now(),
+            'artifacts': evidence_bundle['source_artifacts'],
+        })
+        write_text(folder / 'source_artifact_manifest.md', evidence_bundle['source_artifact_markdown'])
+        write_json(folder / 'data_points.json', {
+            'updated_at': iso_now(),
+            'data_points': evidence_bundle['data_points'],
+        })
+        write_text(folder / 'data_points.md', evidence_bundle['data_points_markdown'])
+        write_json(folder / 'journal_requirements_snapshot.json', {
+            'updated_at': iso_now(),
+            'journal_snapshot': evidence_bundle['journal_snapshot'],
+        })
+        write_json(folder / 'evidence_bundle_summary.json', {
+            'updated_at': iso_now(),
+            'summary': evidence_bundle['summary'],
+        })
+        for filename, content in evidence_bundle['section_packets'].items():
+            write_text(section_packets_dir / filename, content)
         write_json(folder / 'candidate_snapshot.json', candidate)
         ready_path = folder / READY_FOR_CODEX_FILENAME
         if candidate['ready_for_codex_draft']:
@@ -1074,10 +1952,20 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
                 'drafting_mode': 'journal_aware_markdown_first',
                 'required_files': [
                     'pack_manifest.json',
-                    'claim_evidence_map.md',
+                    'references.json',
+                    'claim_support_matrix.json',
+                    'contradiction_register.json',
+                    'source_artifact_manifest.json',
+                    'data_points.json',
+                    'journal_requirements_snapshot.json',
                     'review_memo.md',
                     'journal_fit.md',
                     'codex_handoff.md',
+                    'section_packets/00_introduction_packet.md',
+                    'section_packets/01_methods_packet.md',
+                    'section_packets/02_results_packet.md',
+                    'section_packets/03_discussion_packet.md',
+                    'section_packets/04_limitations_packet.md',
                 ],
             })
         elif ready_path.exists():

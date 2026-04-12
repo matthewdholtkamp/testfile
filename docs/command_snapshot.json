@@ -900,7 +900,7 @@
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-12T12:39:44.851370+00:00",
+    "snapshot_generated_at": "2026-04-12T13:24:06.156314+00:00",
     "source_artifact_timestamps": {
       "process": "2026-03-29 02:26:55",
       "transition": "2026-03-29 02:26:56",
@@ -941,7 +941,7 @@
     ]
   },
   "manuscript_queue": {
-    "generated_at": "2026-04-12T12:39:44.850931+00:00",
+    "generated_at": "2026-04-12T13:24:06.155898+00:00",
     "summary": {
       "active_count": 2,
       "watchlist_count": 2,

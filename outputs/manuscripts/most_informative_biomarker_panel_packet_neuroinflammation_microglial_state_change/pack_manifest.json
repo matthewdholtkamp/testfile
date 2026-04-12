@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T12:30:14.001718+00:00",
+  "updated_at": "2026-04-12T13:24:05.866055+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
   "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
   "candidate_title": "Neuroinflammation / Microglial State Change biomarker panel",
@@ -355,6 +355,15 @@
     "portfolio_role": "highest_value_now"
   },
   "ready_for_codex_draft": false,
+  "evidence_bundle": {
+    "reference_count": 60,
+    "claim_count": 13,
+    "contradiction_count": 24,
+    "figure_count": 4,
+    "section_packet_count": 5,
+    "primary_journal_verified": false,
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+  },
   "improvement_window": {
     "default_pass_target": 3,
     "hard_cap": 5,

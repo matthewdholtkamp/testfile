@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-12T12:39:44.669416+00:00",
+  "generated_at": "2026-04-12T13:24:05.807669+00:00",
   "summary": {
     "active_count": 2,
     "watchlist_count": 2,
@@ -838,7 +838,16 @@
       "review_memo_status": "available",
       "queue_status": "candidate",
       "active_lane": true,
-      "watchlist_rank": null
+      "watchlist_rank": null,
+      "evidence_bundle_summary": {
+        "reference_count": 49,
+        "claim_count": 10,
+        "contradiction_count": 18,
+        "figure_count": 4,
+        "section_packet_count": 5,
+        "primary_journal_verified": false,
+        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+      }
     },
     {
       "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
@@ -1630,7 +1639,16 @@
       "review_memo_status": "available",
       "queue_status": "candidate",
       "active_lane": true,
-      "watchlist_rank": null
+      "watchlist_rank": null,
+      "evidence_bundle_summary": {
+        "reference_count": 47,
+        "claim_count": 9,
+        "contradiction_count": 21,
+        "figure_count": 4,
+        "section_packet_count": 5,
+        "primary_journal_verified": false,
+        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+      }
     }
   ],
   "watchlist": [
@@ -2465,7 +2483,16 @@
       "review_memo_status": "available",
       "queue_status": "candidate",
       "active_lane": false,
-      "watchlist_rank": 1
+      "watchlist_rank": 1,
+      "evidence_bundle_summary": {
+        "reference_count": 60,
+        "claim_count": 13,
+        "contradiction_count": 24,
+        "figure_count": 4,
+        "section_packet_count": 5,
+        "primary_journal_verified": false,
+        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+      }
     },
     {
       "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
@@ -3267,7 +3294,16 @@
       "review_memo_status": "available",
       "queue_status": "candidate",
       "active_lane": false,
-      "watchlist_rank": 2
+      "watchlist_rank": 2,
+      "evidence_bundle_summary": {
+        "reference_count": 83,
+        "claim_count": 14,
+        "contradiction_count": 24,
+        "figure_count": 4,
+        "section_packet_count": 5,
+        "primary_journal_verified": false,
+        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+      }
     }
   ],
   "publication_tracker": [],

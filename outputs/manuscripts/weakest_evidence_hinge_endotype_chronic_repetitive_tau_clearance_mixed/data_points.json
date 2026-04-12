@@ -1,0 +1,24 @@
+{
+  "updated_at": "2026-04-12T13:24:05.904110+00:00",
+  "data_points": {
+    "biomarker_panel": [],
+    "expected_readouts": [],
+    "sample_type": [],
+    "time_window": [],
+    "readout_time_horizon": [],
+    "expected_direction": [],
+    "linked_endotypes": [
+      "chronic_repetitive_tau_clearance_mixed"
+    ],
+    "linked_translational_packets": [
+      "tau_proteinopathy_progression",
+      "glymphatic_astroglial_clearance_failure",
+      "neuroinflammation_microglial_state_change"
+    ],
+    "primary_target": "DYRK1A",
+    "challenger_targets": [
+      "NLRP3",
+      "AQP4"
+    ]
+  }
+}

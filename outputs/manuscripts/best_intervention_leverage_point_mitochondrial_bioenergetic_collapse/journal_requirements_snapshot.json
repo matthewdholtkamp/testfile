@@ -1,0 +1,208 @@
+{
+  "updated_at": "2026-04-12T13:24:05.846366+00:00",
+  "journal_snapshot": {
+    "primary": {
+      "journal": {
+        "id": "journal-of-neurotrauma",
+        "name": "Journal of Neurotrauma",
+        "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
+        "submission_tier": "realistic",
+        "registry_role": "core",
+        "audiences": [
+          "neurotrauma",
+          "mechanism",
+          "biomarker",
+          "translational"
+        ],
+        "manuscript_modes": [
+          "mechanistic_biomarker",
+          "mechanistic_bridge",
+          "translational_tbi",
+          "endotype_discriminator"
+        ],
+        "preferred_article_types": [
+          "original research",
+          "review",
+          "commentary"
+        ],
+        "primary_fit_families": [
+          "most_informative_biomarker_panel",
+          "strongest_causal_bridge",
+          "best_intervention_leverage_point"
+        ],
+        "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
+      },
+      "score": 7,
+      "reasons": [
+        "Audience overlap: Biomarker, Mechanism, Neurotrauma",
+        "Manuscript mode fit: Endotype Discriminator, Translational Tbi",
+        "Article-type overlap: original research, review",
+        "Family fit: journal often suits this manuscript family."
+      ],
+      "article_type_overlap": [
+        "original research",
+        "review"
+      ],
+      "requirements": {
+        "checked": false,
+        "score": 0,
+        "article_type_match": false,
+        "evidence_chain_match": false,
+        "translation_match": false,
+        "scientific_strength_match": false,
+        "reasons": [
+          "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+        ],
+        "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
+        "snapshot": {
+          "verified": false,
+          "checked_at": "2026-04-12T01:37:00Z",
+          "source_url": "https://ms.liebertpub.com/NEU",
+          "notes": "Official Journal of Neurotrauma author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+        }
+      }
+    },
+    "backups": [
+      {
+        "journal": {
+          "id": "neurocritical-care",
+          "name": "Neurocritical Care",
+          "homepage": "https://link.springer.com/journal/12028",
+          "submission_tier": "realistic",
+          "registry_role": "core",
+          "audiences": [
+            "neurocritical",
+            "neurotrauma",
+            "biomarker",
+            "translational"
+          ],
+          "manuscript_modes": [
+            "mechanistic_biomarker",
+            "mechanistic_bridge",
+            "translational_tbi"
+          ],
+          "preferred_article_types": [
+            "original research",
+            "review",
+            "brief report"
+          ],
+          "primary_fit_families": [
+            "most_informative_biomarker_panel",
+            "strongest_causal_bridge",
+            "best_intervention_leverage_point"
+          ],
+          "notes": "High-fit specialty venue for neurocritical and acute-severity framing, especially when readouts and translational logic are explicit."
+        },
+        "score": 6,
+        "reasons": [
+          "Audience overlap: Biomarker, Neurotrauma, Translational",
+          "Manuscript mode fit: Translational Tbi",
+          "Article-type overlap: brief report, original research",
+          "Family fit: journal often suits this manuscript family."
+        ],
+        "article_type_overlap": [
+          "brief report",
+          "original research",
+          "review"
+        ],
+        "requirements": {
+          "checked": true,
+          "score": 2,
+          "article_type_match": true,
+          "evidence_chain_match": true,
+          "translation_match": false,
+          "scientific_strength_match": false,
+          "reasons": [
+            "Article type is compatible with the captured journal requirements.",
+            "Current evidence chain meets the journal requirements snapshot.",
+            "Bounded translation still conflicts with this journal requirements snapshot.",
+            "Scientific strength is still below the minimum threshold recorded for this journal."
+          ],
+          "requirements_path": "config/journal_requirements/neurocritical-care.json",
+          "snapshot": {
+            "verified": true,
+            "checked_at": "2026-04-12T01:35:00Z",
+            "source_url": "https://link.springer.com/journal/12028/submission-guidelines",
+            "source_urls": [
+              "https://link.springer.com/journal/12028/submission-guidelines",
+              "https://media.springer.com/full/springer-instructions-for-authors-assets/pdf/12028_Neurocritical%20Care%20Instructions%20February%202025.pdf"
+            ],
+            "allowed_article_types": [
+              "original research",
+              "review",
+              "brief report",
+              "commentary",
+              "viewpoint"
+            ],
+            "requires_full_evidence_chain": true,
+            "allows_bounded_translation": false,
+            "minimum_scientific_strength": 3,
+            "notes": "Official Springer instructions (updated February 2025) list Original work, Brief communication, Review article, Viewpoint, Editorial, Ethical Matters, Take a closer look at trials, Take Notice: Technology, Neuro-Images, Letters, Invited commentary, and Special article. Original work requires a structured abstract and full Methods/Results/Discussion structure. Operational fit rule: keep bounded translation below primary-target readiness."
+          }
+        }
+      },
+      {
+        "journal": {
+          "id": "neurotrauma-reports",
+          "name": "Neurotrauma Reports",
+          "homepage": "https://home.liebertpub.com/publications/neurotrauma-reports/669/overview",
+          "submission_tier": "realistic",
+          "registry_role": "discovery",
+          "audiences": [
+            "neurotrauma",
+            "biomarker",
+            "methods",
+            "translational"
+          ],
+          "manuscript_modes": [
+            "mechanistic_biomarker",
+            "mechanistic_bridge",
+            "methods_engine"
+          ],
+          "preferred_article_types": [
+            "original research",
+            "review",
+            "methods paper"
+          ],
+          "primary_fit_families": [
+            "most_informative_biomarker_panel",
+            "strongest_causal_bridge",
+            "best_intervention_leverage_point"
+          ],
+          "notes": "Useful fallback for neurotrauma-centered work that may be too novel or too methods-forward for Journal of Neurotrauma."
+        },
+        "score": 5,
+        "reasons": [
+          "Audience overlap: Biomarker, Neurotrauma, Translational",
+          "Article-type overlap: original research, review",
+          "Family fit: journal often suits this manuscript family."
+        ],
+        "article_type_overlap": [
+          "original research",
+          "review"
+        ],
+        "requirements": {
+          "checked": false,
+          "score": 0,
+          "article_type_match": false,
+          "evidence_chain_match": false,
+          "translation_match": false,
+          "scientific_strength_match": false,
+          "reasons": [
+            "Official Neurotrauma Reports author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+          ],
+          "requirements_path": "config/journal_requirements/neurotrauma-reports.json",
+          "snapshot": {
+            "verified": false,
+            "checked_at": "2026-04-12T01:38:00Z",
+            "source_url": "https://ms.liebertpub.com/NTR",
+            "notes": "Official Neurotrauma Reports author instructions are currently behind a Cloudflare-protected submission portal from this environment. Keep this journal as shortlist-only until the instructions are captured manually or from a session that can access the publisher portal."
+          }
+        }
+      }
+    ],
+    "requirements_checked": false,
+    "shortlist_journal_fit_score": 2,
+    "verified_journal_fit_score": 0
+  }
+}

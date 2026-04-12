@@ -1,0 +1,361 @@
+{
+  "updated_at": "2026-04-12T13:24:05.902129+00:00",
+  "issues": [
+    {
+      "issue_id": "phase6_weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed_1",
+      "phase_key": "phase6",
+      "artifact_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+      "artifact_label": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+      "statement": "Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase6_candidate_thesis"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_tau_proteinopathy_progression_2",
+      "phase_key": "phase1",
+      "artifact_id": "tau_proteinopathy_progression",
+      "artifact_label": "Tau / Proteinopathy Progression",
+      "statement": "Acute bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_tau_proteinopathy_progression",
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase1_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_tau_proteinopathy_progression_3",
+      "phase_key": "phase1",
+      "artifact_id": "tau_proteinopathy_progression",
+      "artifact_label": "Tau / Proteinopathy Progression",
+      "statement": "Subacute bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_tau_proteinopathy_progression",
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase1_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_tau_proteinopathy_progression_4",
+      "phase_key": "phase1",
+      "artifact_id": "tau_proteinopathy_progression",
+      "artifact_label": "Tau / Proteinopathy Progression",
+      "statement": "Chronic bucket is only provisionally supported.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_tau_proteinopathy_progression",
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase1_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_tau_proteinopathy_progression_5",
+      "phase_key": "phase1",
+      "artifact_id": "tau_proteinopathy_progression",
+      "artifact_label": "Tau / Proteinopathy Progression",
+      "statement": "No single canonical atlas mechanism anchors this lane yet",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_tau_proteinopathy_progression",
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase1_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_tau_proteinopathy_progression_6",
+      "phase_key": "phase1",
+      "artifact_id": "tau_proteinopathy_progression",
+      "artifact_label": "Tau / Proteinopathy Progression",
+      "statement": "it is currently seeded from cross-mechanism evidence and conservative keyword matching.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_tau_proteinopathy_progression",
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase1_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_tau_proteinopathy_progression_7",
+      "phase_key": "phase1",
+      "artifact_id": "tau_proteinopathy_progression",
+      "artifact_label": "Tau / Proteinopathy Progression",
+      "statement": "Treat this lane as a seeded trajectory lane until stronger canonical support or explicit normalization is added.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_tau_proteinopathy_progression",
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase1_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_glymphatic_astroglial_clearance_failure_8",
+      "phase_key": "phase1",
+      "artifact_id": "glymphatic_astroglial_clearance_failure",
+      "artifact_label": "Glymphatic / Astroglial Clearance Failure",
+      "statement": "Promoted from existing atlas mechanism coverage: glymphatic clearance impairment.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_tau_proteinopathy_progression",
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase1_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase1_neuroinflammation_microglial_state_change_9",
+      "phase_key": "phase1",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Promoted from existing atlas mechanism coverage: neuroinflammation microglial activation.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase1_tau_proteinopathy_progression",
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase1_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_glymphatic_failure_to_tau_protein_accumulation_10",
+      "phase_key": "phase2",
+      "artifact_id": "glymphatic_failure_to_tau_protein_accumulation",
+      "artifact_label": "Glymphatic failure -> tau / protein accumulation",
+      "statement": "Some supporting rows are abstract-only and should be weighted cautiously.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_glymphatic_failure_to_tau_protein_accumulation",
+        "phase2_neuroinflammation_to_tau_proteinopathy_progression",
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_glymphatic_failure_to_tau_protein_accumulation_11",
+      "phase_key": "phase2",
+      "artifact_id": "glymphatic_failure_to_tau_protein_accumulation",
+      "artifact_label": "Glymphatic failure -> tau / protein accumulation",
+      "statement": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase2_glymphatic_failure_to_tau_protein_accumulation",
+        "phase2_neuroinflammation_to_tau_proteinopathy_progression",
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_glymphatic_failure_to_tau_protein_accumulation_12",
+      "phase_key": "phase2",
+      "artifact_id": "glymphatic_failure_to_tau_protein_accumulation",
+      "artifact_label": "Glymphatic failure -> tau / protein accumulation",
+      "statement": "Upstream lane still needs stronger longitudinal support.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_glymphatic_failure_to_tau_protein_accumulation",
+        "phase2_neuroinflammation_to_tau_proteinopathy_progression",
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_neuroinflammation_to_tau_proteinopathy_progression_13",
+      "phase_key": "phase2",
+      "artifact_id": "neuroinflammation_to_tau_proteinopathy_progression",
+      "artifact_label": "Neuroinflammation / microglial state change -> tau / proteinopathy progression",
+      "statement": "Transition still needs denser direct support before it should be treated as hardened.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_glymphatic_failure_to_tau_protein_accumulation",
+        "phase2_neuroinflammation_to_tau_proteinopathy_progression",
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase2_neuroinflammation_to_tau_proteinopathy_progression_14",
+      "phase_key": "phase2",
+      "artifact_id": "neuroinflammation_to_tau_proteinopathy_progression",
+      "artifact_label": "Neuroinflammation / microglial state change -> tau / proteinopathy progression",
+      "statement": "Timing support is incomplete or only partially aligned with the expected transition window.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase2_glymphatic_failure_to_tau_protein_accumulation",
+        "phase2_neuroinflammation_to_tau_proteinopathy_progression",
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase3_cognitive_decline_phenotype_15",
+      "phase_key": "phase3",
+      "artifact_id": "cognitive_decline_phenotype",
+      "artifact_label": "Cognitive Decline Phenotype",
+      "statement": "After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase3_tauopathy_progression",
+        "phase3_cognitive_decline_phenotype",
+        "phase3_microglial_chronic_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase3_cognitive_decline_phenotype_16",
+      "phase_key": "phase3",
+      "artifact_id": "cognitive_decline_phenotype",
+      "artifact_label": "Cognitive Decline Phenotype",
+      "statement": "Object still needs denser direct support before it should be treated as hardened.",
+      "severity": "medium",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase3_tauopathy_progression",
+        "phase3_cognitive_decline_phenotype",
+        "phase3_microglial_chronic_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase3_cognitive_decline_phenotype_17",
+      "phase_key": "phase3",
+      "artifact_id": "cognitive_decline_phenotype",
+      "artifact_label": "Cognitive Decline Phenotype",
+      "statement": "Contradiction-bearing evidence is present and needs adjudication before stronger promotion.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase3_tauopathy_progression",
+        "phase3_cognitive_decline_phenotype",
+        "phase3_microglial_chronic_activation"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_tau_proteinopathy_progression_18",
+      "phase_key": "phase4",
+      "artifact_id": "tau_proteinopathy_progression",
+      "artifact_label": "Tau / Proteinopathy Progression",
+      "statement": "Circulating tau can fall without matching tissue or functional improvement, and a single chronic model context is not enough to treat the lane as fully hardened.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase4_tau_proteinopathy_progression",
+        "phase4_glymphatic_astroglial_clearance_failure",
+        "phase4_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_glymphatic_astroglial_clearance_failure_19",
+      "phase_key": "phase4",
+      "artifact_id": "glymphatic_astroglial_clearance_failure",
+      "artifact_label": "Glymphatic / Astroglial Clearance Failure",
+      "statement": "AQP4 abundance can rise while polarization remains abnormal, and glial-stress markers can shift without any real movement in clearance readouts or tau burden.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase4_tau_proteinopathy_progression",
+        "phase4_glymphatic_astroglial_clearance_failure",
+        "phase4_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_glymphatic_astroglial_clearance_failure_20",
+      "phase_key": "phase4",
+      "artifact_id": "glymphatic_astroglial_clearance_failure",
+      "artifact_label": "Glymphatic / Astroglial Clearance Failure",
+      "statement": "no direct compound or trial attachment surfaced in this build",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase4_tau_proteinopathy_progression",
+        "phase4_glymphatic_astroglial_clearance_failure",
+        "phase4_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_neuroinflammation_microglial_state_change_21",
+      "phase_key": "phase4",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
+      "severity": "high",
+      "blocking": true,
+      "affected_claim_ids": [
+        "phase4_tau_proteinopathy_progression",
+        "phase4_glymphatic_astroglial_clearance_failure",
+        "phase4_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_neuroinflammation_microglial_state_change_22",
+      "phase_key": "phase4",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "Single-cytokine changes can overstate inflammatory control",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase4_tau_proteinopathy_progression",
+        "phase4_glymphatic_astroglial_clearance_failure",
+        "phase4_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase4_neuroinflammation_microglial_state_change_23",
+      "phase_key": "phase4",
+      "artifact_id": "neuroinflammation_microglial_state_change",
+      "artifact_label": "Neuroinflammation / Microglial State Change",
+      "statement": "keep this packet tied to a network-level cytokine plus glial-stress readout panel.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase4_tau_proteinopathy_progression",
+        "phase4_glymphatic_astroglial_clearance_failure",
+        "phase4_neuroinflammation_microglial_state_change"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    },
+    {
+      "issue_id": "phase5_chronic_repetitive_tau_clearance_mixed_24",
+      "phase_key": "phase5",
+      "artifact_id": "chronic_repetitive_tau_clearance_mixed",
+      "artifact_label": "Chronic Repetitive Tau / Clearance Mixed",
+      "statement": "Tau and clearance signals can co-occur without proving directionality, and repetitive cohorts can still carry unresolved inflammatory pressure.",
+      "severity": "low",
+      "blocking": false,
+      "affected_claim_ids": [
+        "phase5_chronic_repetitive_tau_clearance_mixed"
+      ],
+      "recommended_bound": "State this as a limitation or bounded uncertainty rather than smoothing it away."
+    }
+  ]
+}

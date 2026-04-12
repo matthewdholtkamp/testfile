@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T12:30:13.998411+00:00",
+  "updated_at": "2026-04-12T13:24:05.837013+00:00",
   "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
   "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
   "candidate_title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
@@ -293,6 +293,15 @@
     "portfolio_role": "novelty_watch"
   },
   "ready_for_codex_draft": false,
+  "evidence_bundle": {
+    "reference_count": 47,
+    "claim_count": 9,
+    "contradiction_count": 21,
+    "figure_count": 4,
+    "section_packet_count": 5,
+    "primary_journal_verified": false,
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv"
+  },
   "improvement_window": {
     "default_pass_target": 3,
     "hard_cap": 5,

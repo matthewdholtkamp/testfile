@@ -1,0 +1,67 @@
+{
+  "updated_at": "2026-04-12T13:24:05.903089+00:00",
+  "figures": [
+    {
+      "figure_id": "figure_1",
+      "title": "Phase 1 to Phase 5 evidence chain for the manuscript path",
+      "purpose": "Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.",
+      "source_artifacts": [
+        "phase1:tau_proteinopathy_progression",
+        "phase1:glymphatic_astroglial_clearance_failure",
+        "phase1:neuroinflammation_microglial_state_change",
+        "phase2:glymphatic_failure_to_tau_protein_accumulation",
+        "phase2:neuroinflammation_to_tau_proteinopathy_progression",
+        "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase3:tauopathy_progression",
+        "phase3:cognitive_decline_phenotype",
+        "phase3:microglial_chronic_activation",
+        "phase4:tau_proteinopathy_progression",
+        "phase4:glymphatic_astroglial_clearance_failure",
+        "phase4:neuroinflammation_microglial_state_change",
+        "phase5:chronic_repetitive_tau_clearance_mixed"
+      ],
+      "allowed_conclusion": "This figure supports the structure of the evidence chain, not a claim of clinical proof."
+    },
+    {
+      "figure_id": "figure_2",
+      "title": "Biomarker and readout panel for the lead translational packet",
+      "purpose": "Show the candidate biomarker panel, expected readouts, time windows, and sample types.",
+      "source_artifacts": [
+        "phase6:weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+        "phase4:tau_proteinopathy_progression",
+        "phase4:glymphatic_astroglial_clearance_failure",
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "allowed_conclusion": "This figure supports the proposed readout spine and experimental logic, not treatment efficacy."
+    },
+    {
+      "figure_id": "figure_3",
+      "title": "Downstream burden and endotype context",
+      "purpose": "Show the progression objects (Tauopathy Progression, Cognitive Decline Phenotype, Microglial Chronic Activation) and the linked endotypes (Chronic Repetitive Tau / Clearance Mixed).",
+      "source_artifacts": [
+        "phase3:tauopathy_progression",
+        "phase3:cognitive_decline_phenotype",
+        "phase3:microglial_chronic_activation",
+        "phase5:chronic_repetitive_tau_clearance_mixed"
+      ],
+      "allowed_conclusion": "This figure supports context and stratification framing only."
+    },
+    {
+      "figure_id": "figure_4",
+      "title": "Evidence boundaries and contradiction map",
+      "purpose": "Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.",
+      "source_artifacts": [
+        "phase6:weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+        "phase2:glymphatic_failure_to_tau_protein_accumulation",
+        "phase2:neuroinflammation_to_tau_proteinopathy_progression",
+        "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4:tau_proteinopathy_progression",
+        "phase4:glymphatic_astroglial_clearance_failure",
+        "phase4:neuroinflammation_microglial_state_change",
+        "phase5:chronic_repetitive_tau_clearance_mixed"
+      ],
+      "allowed_conclusion": "This figure is explicitly a limitation and boundedness figure.",
+      "contradiction_count": 24
+    }
+  ]
+}
