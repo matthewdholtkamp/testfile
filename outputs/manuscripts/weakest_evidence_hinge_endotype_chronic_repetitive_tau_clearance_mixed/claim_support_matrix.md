@@ -32,7 +32,7 @@
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - PMID:41723222.
   - PMID:41665901.
-  - Lora SJ, Rhind SG, Watling SE, Narciso L, Warsh J, Vartanian O, McCluskey T, Tyndale RF, Tartaglia MC, Shiu MY, Vallée I, Crouzat M, Vergie I, Vasdev N, Boileau I. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain communications 2026. doi:10.1093/braincomms/fcag070. PMID:41853047.
+  - PMID:41853047.
   - PMID:41496386.
   - PMID:41683989.
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
@@ -50,9 +50,9 @@
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
   - A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. PMID:41039850.
   - PMID:41648326.
-  - Lilova RL, Bernas T, Ryu J, Kelliher C, Lafrenaye A. Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. Research square 2026 Mar 30. doi:10.21203/rs.3.rs-9152535/v1. PMID:41960329.
+  - PMID:41960329.
   - MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease. PMID:41700070.
-  - Luo L, Yu M, Li X, Bi Y, Duan P, Meng Y, Jin Z, Feng W, Li L, Xing Y, Chen J, Zhang B. Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1. Neurochemical research 2026 Mar 13. doi:10.1007/s11064-026-04724-8. PMID:41824127.
+  - PMID:41824127.
   - PMID:41153827.
   - PMID:41795770.
 - **Evidence gaps:** Acute bucket is only provisionally supported. | Subacute bucket is only provisionally supported. | Chronic bucket is only provisionally supported.
@@ -68,7 +68,7 @@
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. The Journal of clinical investigation 2026 Apr 02. doi:10.1172/JCI196112. PMID:41926211.
+  - PMID:41926211.
   - PMID:41663365.
   - PMID:41734021.
   - PMID:41752185.
@@ -100,7 +100,7 @@
 - **Support PMIDs:** 41683989, 41809632
 - **Reference details:**
   - PMID:41683989.
-  - Mazurek CY, Kaniuk JK, Ahuja CS. Mesenchymal stem cells and the central nervous system: historical perspectives and future directions. Frontiers in molecular neuroscience 2026. doi:10.3389/fnmol.2026.1742864. PMID:41809632.
+  - PMID:41809632.
 - **Evidence gaps:** Transition still needs denser direct support before it should be treated as hardened. | Timing support is incomplete or only partially aligned with the expected transition window. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Tau / proteinopathy progression -> chronic network dysfunction
@@ -117,8 +117,8 @@
   - PMID:41747594.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - PMID:41683989.
-  - Lora SJ, Rhind SG, Watling SE, Narciso L, Warsh J, Vartanian O, McCluskey T, Tyndale RF, Tartaglia MC, Shiu MY, Vallée I, Crouzat M, Vergie I, Vasdev N, Boileau I. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain communications 2026. doi:10.1093/braincomms/fcag070. PMID:41853047.
-  - Huang YQ, Zhong CY, Burley G, Shi YC, Lin S. Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease. Metabolites 2026 Feb 24. doi:10.3390/metabo16030148. PMID:41893300.
+  - PMID:41853047.
+  - PMID:41893300.
 - **Evidence gaps:** Transition still needs denser direct support before it should be treated as hardened. | Some supporting rows are abstract-only and should be weighted cautiously. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Tauopathy Progression
@@ -192,7 +192,7 @@
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - PMID:41723222.
   - PMID:41665901.
-  - Lora SJ, Rhind SG, Watling SE, Narciso L, Warsh J, Vartanian O, McCluskey T, Tyndale RF, Tartaglia MC, Shiu MY, Vallée I, Crouzat M, Vergie I, Vasdev N, Boileau I. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain communications 2026. doi:10.1093/braincomms/fcag070. PMID:41853047.
+  - PMID:41853047.
   - PMID:41496386.
   - PMID:41683989.
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
@@ -210,9 +210,9 @@
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
   - A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. PMID:41039850.
   - PMID:41648326.
-  - Lilova RL, Bernas T, Ryu J, Kelliher C, Lafrenaye A. Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. Research square 2026 Mar 30. doi:10.21203/rs.3.rs-9152535/v1. PMID:41960329.
+  - PMID:41960329.
   - MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease. PMID:41700070.
-  - Luo L, Yu M, Li X, Bi Y, Duan P, Meng Y, Jin Z, Feng W, Li L, Xing Y, Chen J, Zhang B. Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1. Neurochemical research 2026 Mar 13. doi:10.1007/s11064-026-04724-8. PMID:41824127.
+  - PMID:41824127.
   - PMID:41153827.
   - PMID:41795770.
 - **Contradictions:** AQP4 abundance can rise while polarization remains abnormal, and glial-stress markers can shift without any real movement in clearance readouts or tau burden. | no direct compound or trial attachment surfaced in this build
@@ -228,7 +228,7 @@
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. The Journal of clinical investigation 2026 Apr 02. doi:10.1172/JCI196112. PMID:41926211.
+  - PMID:41926211.
   - PMID:41663365.
   - PMID:41734021.
   - PMID:41752185.

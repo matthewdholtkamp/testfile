@@ -5,7 +5,7 @@
 - **Phase:** phase6
 - **Artifact ID:** most_informative_biomarker_panel--packet--blood_brain_barrier_failure
 - **Support status:** supported
-- **Source path:** `reports/hypothesis_rankings/hypothesis_rankings_2026-04-13_150756.json`
+- **Source path:** `reports/hypothesis_rankings/hypothesis_rankings_2026-04-13_151033.json`
 - **Anchor PMIDs:** 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904, 41532955, 41622772, 41751210, 41752185, 41709060, 41740873, 41683989, 41103638, 41135688, 41157272
 
 ## Blood-Brain Barrier Failure
@@ -21,7 +21,7 @@
 - **Phase:** phase2
 - **Artifact ID:** bbb_permeability_increase_to_peripheral_immune_infiltration
 - **Support status:** supported
-- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-13_150754.json`
+- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-13_151030.json`
 - **Anchor PMIDs:** 41709060, 41740873, 41683989
 - **Source quality mix:** full_text_like:3; abstract_only:2
 
@@ -30,7 +30,7 @@
 - **Phase:** phase3
 - **Artifact ID:** microglial_chronic_activation
 - **Support status:** supported
-- **Source path:** `reports/progression_objects/progression_object_index_2026-04-13_150754.json`
+- **Source path:** `reports/progression_objects/progression_object_index_2026-04-13_151031.json`
 - **Anchor PMIDs:** 41039850, 41103638, 41135688, 41157272, 41173520, 41197779, 41327381, 41446731
 - **Source quality mix:** full_text_like:362; abstract_only:84
 
@@ -39,7 +39,7 @@
 - **Phase:** phase3
 - **Artifact ID:** neurovascular_uncoupling
 - **Support status:** provisional
-- **Source path:** `reports/progression_objects/progression_object_index_2026-04-13_150754.json`
+- **Source path:** `reports/progression_objects/progression_object_index_2026-04-13_151031.json`
 - **Anchor PMIDs:** 41039850, 41079361, 41103638, 41173520, 41177833, 41183617, 41267966, 41328339
 - **Source quality mix:** full_text_like:186; abstract_only:31
 
@@ -48,7 +48,7 @@
 - **Phase:** phase4
 - **Artifact ID:** blood_brain_barrier_failure
 - **Support status:** bounded
-- **Source path:** `reports/translational_perturbation/translational_perturbation_index_2026-04-13_150756.json`
+- **Source path:** `reports/translational_perturbation/translational_perturbation_index_2026-04-13_151032.json`
 - **Anchor PMIDs:** 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904, 41532955, 41622772, 41751210, 41752185, 41709060, 41740873
 - **Source quality mix:** lane 74 full-text-like / 14 abstract-only; direct target mentions 6 full-text-like / 0 abstract-only
 
@@ -57,7 +57,7 @@
 - **Phase:** phase5
 - **Artifact ID:** acute_mild_biomarker_imaging_bridge
 - **Support status:** bounded
-- **Source path:** `reports/cohort_stratification/cohort_stratification_index_2026-04-13_150756.json`
+- **Source path:** `reports/cohort_stratification/cohort_stratification_index_2026-04-13_151032.json`
 - **Anchor PMIDs:** 41707328, 41737590, 41496386, 41173528, 41126936, 41893603
 - **Source quality mix:** full_text_like:4; abstract_only:2
 
@@ -66,7 +66,7 @@
 - **Phase:** phase5
 - **Artifact ID:** acute_severe_vascular_dominant
 - **Support status:** usable
-- **Source path:** `reports/cohort_stratification/cohort_stratification_index_2026-04-13_150756.json`
+- **Source path:** `reports/cohort_stratification/cohort_stratification_index_2026-04-13_151032.json`
 - **Anchor PMIDs:** 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41896418
 - **Source quality mix:** full_text_like:4; abstract_only:4
 
@@ -75,7 +75,7 @@
 - **Phase:** phase5
 - **Artifact ID:** acute_blast_vascular_inflammatory_mixed
 - **Support status:** bounded
-- **Source path:** `reports/cohort_stratification/cohort_stratification_index_2026-04-13_150756.json`
+- **Source path:** `reports/cohort_stratification/cohort_stratification_index_2026-04-13_151032.json`
 - **Anchor PMIDs:** 41809238, 41794317, 41596245, 41723947, 41880282
 - **Source quality mix:** full_text_like:3; abstract_only:2
 
@@ -84,6 +84,6 @@
 - **Phase:** phase5
 - **Artifact ID:** subacute_repetitive_inflammatory_dominant
 - **Support status:** usable
-- **Source path:** `reports/cohort_stratification/cohort_stratification_index_2026-04-13_150756.json`
+- **Source path:** `reports/cohort_stratification/cohort_stratification_index_2026-04-13_151032.json`
 - **Anchor PMIDs:** 41173520, 41446731, 41740873, 41740080, 41847037, 41508043, 41709584
 - **Source quality mix:** full_text_like:3; abstract_only:4

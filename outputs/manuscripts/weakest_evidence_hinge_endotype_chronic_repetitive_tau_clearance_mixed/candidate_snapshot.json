@@ -27,7 +27,7 @@
   ],
   "evidence_chain_complete": true,
   "is_active_path": false,
-  "last_pack_refresh": "2026-04-13 15:07:56",
+  "last_pack_refresh": "2026-04-13 15:10:33",
   "scientific_strength": 2,
   "journal_targets": {
     "primary": {
@@ -1092,7 +1092,7 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-13_143208.csv",
+    "corpus_manifest_path": "",
     "journal_specific_rigor_profile_count": 1,
     "journal_specific_rigor_critical_gaps": 7,
     "journal_specific_rigor_fill_entries": 7
@@ -1130,7 +1130,7 @@
         "reopened"
       ],
       "execution_note": "Lead contradiction still active: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.. 4 issue(s) remain blocking.",
-      "last_executed_at": "2026-04-13T15:07:57.232900+00:00",
+      "last_executed_at": "2026-04-13T15:10:33.617754+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -1150,7 +1150,7 @@
         "reopened"
       ],
       "execution_note": "Translational packet remains bounded around DYRK1A; strengthening brief updated.",
-      "last_executed_at": "2026-04-13T15:07:57.232945+00:00",
+      "last_executed_at": "2026-04-13T15:10:33.617798+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -1170,7 +1170,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-13T15:07:57.232972+00:00",
+      "last_executed_at": "2026-04-13T15:10:33.617825+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     },
     {
@@ -1190,12 +1190,12 @@
         "reopened"
       ],
       "execution_note": "Journal-specific rigor checklist is active with 7 critical gap(s) across 1 profile(s).",
-      "last_executed_at": "2026-04-13T15:07:57.232997+00:00",
+      "last_executed_at": "2026-04-13T15:10:33.617849+00:00",
       "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-13T15:07:57.233005+00:00",
+    "updated_at": "2026-04-13T15:10:33.617856+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,
