@@ -20,6 +20,17 @@
 - Fluid biomarker papers: Clinically relevant assessment validity
 - Fluid biomarker papers: Statistics, multiple comparisons, and replication
 
+## Structured fill packet
+
+- Open fill entries: 7
+- Critical fill entries: 7
+- Assay validation and analytical performance -> Methods, Supplemental methods/table
+- Biofluid sample handling, batching, and blinding -> Methods, Transparency, Rigor and Reproducibility Summary
+- Data, code, and sample availability -> Statements and Declarations, Data availability
+- Participant and sample accounting -> Methods, Results, Transparency, Rigor and Reproducibility Summary
+- Use `journal_specific_rigor_fill_packet.md` as the working sheet for filling these disclosures instead of treating the checklist as a dead-end report.
+
 ## Drafting rule
 
 - Use `journal_specific_rigor_checklist.md` to write the JNT Transparency, Rigor and Reproducibility Summary instead of improvising it late.
+- Use `journal_specific_rigor_fill_packet.md` to decide which manuscript section to edit and which pack files to consult for each gap.

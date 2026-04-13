@@ -19,6 +19,7 @@
 - Critical rigor gaps still open: 7
 - Top rigor gaps: Fluid biomarker papers: Study registration and analytic plan disclosure | Fluid biomarker papers: Participant and sample accounting | Fluid biomarker papers: Biofluid sample handling, batching, and blinding
 - Full checklist: `journal_specific_rigor_checklist.md`
+- Working fill packet: `journal_specific_rigor_fill_packet.md`
 
 ## Backup Journals
 

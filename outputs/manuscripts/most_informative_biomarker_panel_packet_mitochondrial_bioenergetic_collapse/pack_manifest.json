@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-13T01:26:55.596254+00:00",
+  "updated_at": "2026-04-13T15:07:57.203504+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
   "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
   "pack_key": "most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse",
@@ -159,15 +159,15 @@
     "display_name": "Mitochondrial / Bioenergetic Collapse",
     "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
     "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
-    "support_status": "provisional",
+    "support_status": "supported",
     "novelty_status": "cross_disease_analog",
-    "strength_tag": "moderate",
-    "operator_decision": "Needs adjudication",
-    "confidence_score": 0.733,
-    "value_score": 0.853,
-    "core_family_score": 0.733,
+    "strength_tag": "assertive",
+    "operator_decision": "Write now",
+    "confidence_score": 0.885,
+    "value_score": 1.0,
+    "core_family_score": 0.885,
     "novelty_bonus": 0.12,
-    "family_score": 0.853,
+    "family_score": 1.005,
     "target_lane_ids": [
       "mitochondrial_bioenergetic_collapse"
     ],
@@ -317,10 +317,11 @@
     "feasibility_score": 0.72,
     "redundancy_penalty": 0.0,
     "rank": 7,
-    "steering_score": 0.32,
+    "steering_score": 0.37,
     "steering_reasons": [
       "favored_family",
-      "favored_endotype"
+      "favored_endotype",
+      "advance_supported"
     ],
     "portfolio_role": "novelty_watch"
   },
@@ -332,9 +333,10 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-13_143208.csv",
     "journal_specific_rigor_profile_count": 2,
-    "journal_specific_rigor_critical_gaps": 14
+    "journal_specific_rigor_critical_gaps": 14,
+    "journal_specific_rigor_fill_entries": 14
   },
   "journal_specific_rigor": {
     "profile_count": 2,
@@ -351,8 +353,11 @@
       "Fluid biomarker papers: Statistics, multiple comparisons, and replication"
     ]
   },
+  "journal_specific_rigor_fill_packet": {
+    "open_entry_count": 14
+  },
   "task_execution": {
-    "updated_at": "2026-04-13T01:26:55.596217+00:00",
+    "updated_at": "2026-04-13T15:07:57.203461+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,

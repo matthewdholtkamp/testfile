@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-13T15:07:57.165364+00:00",
+  "updated_at": "2026-04-13T15:07:57.212850+00:00",
   "journal_specific_rigor_fill_packet": {
     "applicable": true,
     "journal_name": "Journal of Neurotrauma",
@@ -81,7 +81,7 @@
           "section_packets/01_methods_packet.md"
         ],
         "questions_to_answer": [
-          "Was Blood-Brain Barrier Failure biomarker panel or its underlying study preregistered anywhere, even internally or retrospectively?",
+          "Was Mitochondrial / Bioenergetic Collapse biomarker panel or its underlying study preregistered anywhere, even internally or retrospectively?",
           "Was the analytic plan fixed before looking at the main biomarker outcomes, and can we say that explicitly?",
           "If there was no preregistration, what bounded language will we use so the transparency summary is honest?"
         ],
@@ -191,7 +191,7 @@
           "section_packets/01_methods_packet.md"
         ],
         "questions_to_answer": [
-          "Was Blood-Brain Barrier Failure biomarker panel or its underlying study preregistered anywhere, even internally or retrospectively?",
+          "Was Mitochondrial / Bioenergetic Collapse biomarker panel or its underlying study preregistered anywhere, even internally or retrospectively?",
           "Was the analytic plan fixed before looking at the main biomarker outcomes, and can we say that explicitly?",
           "If there was no preregistration, what bounded language will we use so the transparency summary is honest?"
         ],
@@ -344,7 +344,7 @@
         "gap_label": "Experimental manipulation and batching details",
         "status": "partial",
         "critical": true,
-        "current_pack_evidence": "The current pack names the mechanistic next test (Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.) and translational target (OCLN), but it does not yet capture timing, state, devices, batching, or technical-failure details.",
+        "current_pack_evidence": "The current pack names the mechanistic next test (Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.) and translational target (PRKN), but it does not yet capture timing, state, devices, batching, or technical-failure details.",
         "needed_next": "Capture manipulation timing, subject state, devices or assays used, batching rules, storage conditions, and unexpected events for the lead mechanistic experiment.",
         "manuscript_sections": [
           "Methods",
@@ -359,11 +359,11 @@
           "section_packets/01_methods_packet.md"
         ],
         "questions_to_answer": [
-          "What exact timing, state, batching, and handling details apply to Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.?",
+          "What exact timing, state, batching, and handling details apply to Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.?",
           "Which devices, reagents, or assay conditions need to be frozen into Methods so the experiment is reproducible?",
           "What technical failures or unexpected events must be named explicitly?"
         ],
-        "draft_stub": "Pathophysiological mechanistic studies: Freeze the key reproducibility details for Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel., including timing, batching, storage, and technical failures."
+        "draft_stub": "Pathophysiological mechanistic studies: Freeze the key reproducibility details for Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window., including timing, batching, storage, and technical failures."
       },
       {
         "entry_id": "pathophysiological_mechanistic_studies::target_engagement_and_specificity",
@@ -372,7 +372,7 @@
         "gap_label": "Target engagement, specificity, and control logic",
         "status": "partial",
         "critical": true,
-        "current_pack_evidence": "The current packet already points at OCLN and the next experimental move, but target engagement, specificity controls, cross-validation, and positive/negative controls are not yet explicit.",
+        "current_pack_evidence": "The current packet already points at PRKN and the next experimental move, but target engagement, specificity controls, cross-validation, and positive/negative controls are not yet explicit.",
         "needed_next": "Add target-engagement readouts, specificity controls, cross-validation, and negative/positive control language to the mechanistic plan.",
         "manuscript_sections": [
           "Methods",
@@ -388,11 +388,11 @@
           "section_packets/02_results_packet.md"
         ],
         "questions_to_answer": [
-          "What evidence would show OCLN is truly engaged rather than just moving with correlated noise?",
+          "What evidence would show PRKN is truly engaged rather than just moving with correlated noise?",
           "Which positive controls, negative controls, or cross-validation readouts should be named in the packet?",
           "How do we show barrier restoration is linked to permeability and downstream spillover rather than marker movement alone?"
         ],
-        "draft_stub": "Pathophysiological mechanistic studies: Explain how OCLN will be shown to be engaged with specificity controls rather than correlated marker movement alone."
+        "draft_stub": "Pathophysiological mechanistic studies: Explain how PRKN will be shown to be engaged with specificity controls rather than correlated marker movement alone."
       }
     ],
     "summary": {

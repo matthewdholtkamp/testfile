@@ -14,4 +14,4 @@
 
 ## Check Before Approval
 - Make sure the title, article type, and main claims stay bounded to what the current artifact chain actually proves.
-- Read `blocking_resolution_plan.md`, `translational_strengthening_plan.md`, and `journal_specific_rigor_checklist.md` before treating the pack as close to submission-ready.
+- Read `blocking_resolution_plan.md`, `translational_strengthening_plan.md`, `journal_specific_rigor_checklist.md`, and `journal_specific_rigor_fill_packet.md` before treating the pack as close to submission-ready.

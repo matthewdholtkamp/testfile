@@ -31,3 +31,4 @@
 - Fluid biomarker papers: Assay validation and analytical performance
 - Fluid biomarker papers: Clinically relevant assessment validity
 - Full checklist: `journal_specific_rigor_checklist.md`
+- Fill packet: `journal_specific_rigor_fill_packet.md`
