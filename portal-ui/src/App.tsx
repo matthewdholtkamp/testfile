@@ -214,6 +214,54 @@ function candidatePendingActions(candidate: AnyRecord): string {
     .join(",");
 }
 
+function actionableManuscriptTasks(candidate: AnyRecord): AnyRecord[] {
+  const tasks = Array.isArray(candidate?.task_ledger) ? candidate.task_ledger : [];
+  return tasks
+    .filter(
+      (task: AnyRecord) =>
+        task &&
+        task.task_id &&
+        task.status !== "satisfied" &&
+        task.status !== "stale",
+    )
+    .sort((left: AnyRecord, right: AnyRecord) => {
+      const criticalWeight =
+        Number(Boolean(right.critical)) - Number(Boolean(left.critical));
+      if (criticalWeight !== 0) return criticalWeight;
+      const runningWeight =
+        Number(normalizeText(right.status) === "running") -
+        Number(normalizeText(left.status) === "running");
+      if (runningWeight !== 0) return runningWeight;
+      return normalizeText(left.label).localeCompare(normalizeText(right.label));
+    })
+    .slice(0, 3);
+}
+
+function manuscriptTaskActionLabel(task: AnyRecord): string {
+  const taskId = normalizeText(task?.task_id);
+  if (taskId === "resolve_lead_contradiction") return "Resolve contradiction";
+  if (taskId === "strengthen_translational_packet") return "Strengthen Phase 4";
+  if (taskId === "prepare_journal_specific_rigor_packet") {
+    return "Burn down JNT rigor gaps";
+  }
+  if (taskId === "tighten_primary_journal_fit") return "Re-check journal fit";
+  return task?.label || "Run task";
+}
+
+function manuscriptTaskActionNote(task: AnyRecord): string {
+  const taskId = normalizeText(task?.task_id);
+  if (taskId === "resolve_lead_contradiction") {
+    return "Queue a focused run against the lead contradiction rather than the whole pack.";
+  }
+  if (taskId === "strengthen_translational_packet") {
+    return "Push the cycle toward unbounding the Phase 4 packet and tightening translational support.";
+  }
+  if (taskId === "prepare_journal_specific_rigor_packet") {
+    return "Focus the next run on closing the JNT-specific rigor gaps instead of just refreshing the checklist.";
+  }
+  return "Queue a focused run with this Phase 8 task at the front of the steering context.";
+}
+
 function manuscriptQuestion(candidate: AnyRecord, mode: "missing" | "stronger" | "working"): string {
   const title = candidate?.title || "this manuscript candidate";
   if (mode === "missing") {
@@ -966,20 +1014,23 @@ export default function App() {
     await handleClarify(nextQuestion);
   }
 
-  async function handleRunFocusedEvidenceCycle(candidate: AnyRecord) {
+  async function runManuscriptEvidenceCycle(
+    candidate: AnyRecord,
+    pendingActions: string,
+    loadingMessage: string,
+    successMessage: string,
+    actionMessageText: string,
+  ) {
     if (!githubToken) {
       setSettingsOpen(true);
       return;
     }
 
-    const pendingActions = candidatePendingActions(candidate);
     const priorityMode = candidatePriorityMode(candidate);
 
     setManuscriptRunCandidateId(candidate.candidate_id || "");
     setManuscriptRunState("working");
-    setManuscriptRunMessage(
-      `Dispatching a focused evidence cycle for ${candidate.title}…`,
-    );
+    setManuscriptRunMessage(loadingMessage);
 
     try {
       await dispatchGitHubWorkflow(githubToken, GITHUB_EVIDENCE_WORKFLOW, {
@@ -994,12 +1045,8 @@ export default function App() {
         steering_pending_actions: pendingActions,
       });
       setManuscriptRunState("success");
-      setManuscriptRunMessage(
-        `Focused evidence cycle queued for ${candidate.title}. The cycle will run with ${priorityMode} steering and the current open manuscript tasks as pending actions.`,
-      );
-      setActionMessage(
-        `Focused evidence cycle queued for ${candidate.title}. Refresh after the workflow runs to see updated manuscript hardening output.`,
-      );
+      setManuscriptRunMessage(successMessage);
+      setActionMessage(actionMessageText);
       await refreshGitHubState(githubToken);
     } catch (error) {
       setManuscriptRunState("error");
@@ -1007,8 +1054,31 @@ export default function App() {
         error instanceof Error
           ? error.message
           : "The focused evidence cycle could not be dispatched.",
-      );
+        );
     }
+  }
+
+  async function handleRunFocusedEvidenceCycle(candidate: AnyRecord) {
+    const pendingActions = candidatePendingActions(candidate);
+    await runManuscriptEvidenceCycle(
+      candidate,
+      pendingActions,
+      `Dispatching a focused evidence cycle for ${candidate.title}…`,
+      `Focused evidence cycle queued for ${candidate.title}. The cycle will run with ${candidatePriorityMode(candidate)} steering and the current open manuscript tasks as pending actions.`,
+      `Focused evidence cycle queued for ${candidate.title}. Refresh after the workflow runs to see updated manuscript hardening output.`,
+    );
+  }
+
+  async function handleRunManuscriptTask(candidate: AnyRecord, task: AnyRecord) {
+    const pendingAction = normalizeText(task?.task_id);
+    if (!pendingAction) return;
+    await runManuscriptEvidenceCycle(
+      candidate,
+      pendingAction,
+      `Dispatching ${manuscriptTaskActionLabel(task).toLowerCase()} for ${candidate.title}…`,
+      `${manuscriptTaskActionLabel(task)} queued for ${candidate.title}. The next cycle will prioritize this specific Phase 8 task first.`,
+      `${manuscriptTaskActionLabel(task)} queued for ${candidate.title}. Refresh after the workflow runs to see whether the blocker state changed.`,
+    );
   }
 
   if (loading) {
@@ -1237,9 +1307,9 @@ export default function App() {
                   summaries, and evidence bundle all refresh automatically.
                   What is <span className="font-semibold text-white">not</span>{" "}
                   fully automatic yet is direct blocker resolution. The buttons
-                  below let you ask manuscript-specific questions and dispatch a
-                  focused evidence cycle against a manuscript’s mechanism and
-                  current open tasks.
+                  below let you ask manuscript-specific questions, run the whole
+                  focused evidence cycle, or push one named Phase 8 task to the
+                  front of the queue.
                 </p>
               </div>
 
@@ -1384,6 +1454,45 @@ export default function App() {
                         </div>
                       </div>
 
+                      {actionableManuscriptTasks(candidate).length > 0 && (
+                        <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4">
+                          <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
+                            Drive from here
+                          </div>
+                          <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
+                            Queue one named manuscript task instead of a broader cycle.
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-3">
+                            {actionableManuscriptTasks(candidate).map((task: AnyRecord) => (
+                              <button
+                                key={task.task_id}
+                                onClick={() => void handleRunManuscriptTask(candidate, task)}
+                                disabled={
+                                  manuscriptRunState === "working" &&
+                                  manuscriptRunCandidateId === candidate.candidate_id
+                                }
+                                title={manuscriptTaskActionNote(task)}
+                                className={cn(
+                                  "inline-flex items-center gap-2 rounded-2xl border px-4 py-2 text-sm font-semibold transition",
+                                  manuscriptRunState === "working" &&
+                                    manuscriptRunCandidateId === candidate.candidate_id
+                                    ? "cursor-not-allowed border-white/8 bg-white/5 text-white/35"
+                                    : "border-white/10 bg-white/5 text-white hover:border-[#9fd7bd]/35 hover:bg-white/10",
+                                )}
+                              >
+                                {manuscriptRunState === "working" &&
+                                manuscriptRunCandidateId === candidate.candidate_id ? (
+                                  <Loader2 className="h-4 w-4 animate-spin" />
+                                ) : (
+                                  <ChevronRight className="h-4 w-4" />
+                                )}
+                                {manuscriptTaskActionLabel(task)}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                       <div className="mt-4 flex flex-wrap gap-3">
                         <button
                           onClick={() =>
@@ -1457,7 +1566,10 @@ export default function App() {
                         figures ·{" "}
                         {candidate.evidence_bundle_summary
                           ?.section_packet_count || 0}{" "}
-                        section packets.
+                        section packets ·{" "}
+                        {candidate.journal_specific_rigor_summary
+                          ?.critical_gap_count || 0}{" "}
+                        rigor gaps.
                       </div>
                     </article>
                   ),

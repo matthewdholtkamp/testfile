@@ -1767,6 +1767,273 @@ def build_journal_specific_rigor_markdown(journal_specific_rigor):
     return '\n'.join(lines)
 
 
+def rigor_fill_sections(item_id):
+    sections = {
+        'registration_and_plan': [
+            'Transparency, Rigor and Reproducibility Summary',
+            'Methods',
+        ],
+        'participant_accounting': [
+            'Methods',
+            'Results',
+            'Transparency, Rigor and Reproducibility Summary',
+        ],
+        'sample_handling_and_blinding': ['Methods', 'Transparency, Rigor and Reproducibility Summary'],
+        'assay_performance': ['Methods', 'Supplemental methods/table'],
+        'clinical_outcome_validity': ['Methods', 'Discussion'],
+        'statistics_and_replication': ['Methods', 'Transparency, Rigor and Reproducibility Summary', 'Discussion'],
+        'availability': ['Statements and Declarations', 'Data availability'],
+        'subject_accounting_randomization_blinding': ['Methods', 'Transparency, Rigor and Reproducibility Summary'],
+        'experimental_manipulation_details': ['Methods', 'Figure legend / supplemental methods'],
+        'target_engagement_and_specificity': ['Methods', 'Results', 'Discussion'],
+        'analysis_and_multiple_comparisons': ['Methods', 'Transparency, Rigor and Reproducibility Summary'],
+        'replication_and_validation': ['Results', 'Discussion', 'Transparency, Rigor and Reproducibility Summary'],
+    }
+    return sections.get(item_id, ['Transparency, Rigor and Reproducibility Summary'])
+
+
+def rigor_fill_pack_files(item_id):
+    base = [
+        'journal_specific_rigor_checklist.md',
+        'review_memo.md',
+        'pack_manifest.json',
+    ]
+    specific = {
+        'registration_and_plan': ['manuscript_brief.md', 'section_packets/01_methods_packet.md'],
+        'participant_accounting': ['section_packets/01_methods_packet.md', 'section_packets/02_results_packet.md', 'data_points.md'],
+        'sample_handling_and_blinding': ['data_points.md', 'source_artifact_manifest.md', 'section_packets/01_methods_packet.md'],
+        'assay_performance': ['data_points.md', 'references.md', 'section_packets/01_methods_packet.md'],
+        'clinical_outcome_validity': ['claim_support_matrix.md', 'references.md', 'section_packets/01_methods_packet.md'],
+        'statistics_and_replication': ['claim_support_matrix.md', 'contradiction_register.md', 'section_packets/01_methods_packet.md'],
+        'availability': ['source_artifact_manifest.md', 'references.md'],
+        'subject_accounting_randomization_blinding': ['section_packets/01_methods_packet.md', 'section_packets/02_results_packet.md'],
+        'experimental_manipulation_details': ['data_points.md', 'translational_strengthening_plan.md', 'section_packets/01_methods_packet.md'],
+        'target_engagement_and_specificity': ['blocking_resolution_plan.md', 'figure_evidence_plan.md', 'section_packets/02_results_packet.md'],
+        'analysis_and_multiple_comparisons': ['claim_support_matrix.md', 'contradiction_register.md', 'section_packets/01_methods_packet.md'],
+        'replication_and_validation': ['contradiction_register.md', 'review_memo.md', 'section_packets/03_discussion_packet.md'],
+    }
+    ordered = []
+    for item in base + specific.get(item_id, []):
+        if item not in ordered:
+            ordered.append(item)
+    return ordered
+
+
+def rigor_fill_questions(profile_id, item_id, candidate, row, phase_entries):
+    primary_target = next(
+        (
+            normalize(entry.get('row', {}).get('primary_target'))
+            for entry in phase_entries
+            if entry['phase_key'] == 'phase4' and normalize(entry.get('row', {}).get('primary_target'))
+        ),
+        '',
+    )
+    next_test = normalize(row.get('next_test') or 'the lead experiment')
+    title = normalize(candidate.get('title') or 'the manuscript')
+    prompts = {
+        'registration_and_plan': [
+            f"Was {title} or its underlying study preregistered anywhere, even internally or retrospectively?",
+            'Was the analytic plan fixed before looking at the main biomarker outcomes, and can we say that explicitly?',
+            'If there was no preregistration, what bounded language will we use so the transparency summary is honest?',
+        ],
+        'participant_accounting': [
+            'How many participants or samples were screened, collected, analyzed, quality-passed, and linked to outcomes?',
+            'What exclusion, assay-failure, or missing-data counts need to be stated explicitly?',
+            'Can we produce one accounting table that matches the biomarker and clinical readouts exactly?',
+        ],
+        'sample_handling_and_blinding': [
+            'What was the timing of sample collection relative to injury and follow-up state?',
+            'How were samples handled, stored, batched, and protected from freeze-thaw variability?',
+            'Who was blinded during collection, assay processing, quality control, and analysis?',
+        ],
+        'assay_performance': [
+            'Which assay platform generated the core BBB biomarker readouts, and what validation details are available?',
+            'What CV, LLOD/LLOQ, dilutional linearity, specificity, or lot-bridging data can we report?',
+            'If formal validation is thin, what exactly can we say without overstating assay certainty?',
+        ],
+        'clinical_outcome_validity': [
+            'Which clinical assessments are treated as established standards versus provisional surrogates?',
+            'What citations support the validity of those outcome measures in TBI or adjacent cohorts?',
+            'What wording keeps the biomarker-to-outcome bridge bounded but still useful?',
+        ],
+        'statistics_and_replication': [
+            'What were the core statistical assumptions and how were multiple comparisons handled?',
+            'How were outliers, missing data, and repeated measures treated?',
+            'Do we have internal replication, external validation, or only a planned replication path?',
+        ],
+        'availability': [
+            'What data can be shared now, and what must remain restricted for ethics, privacy, or licensing reasons?',
+            'Can we point to code, derived tables, or a future repository plan even if raw data are limited?',
+            'What sample-availability statement is honest for this paper?',
+        ],
+        'subject_accounting_randomization_blinding': [
+            'How many subjects or samples entered, completed, failed QC, or dropped out of the mechanistic packet?',
+            'Was any randomization used, and if not, what is the clean rationale?',
+            'Who was blinded during manipulation, measurement, and analysis?',
+        ],
+        'experimental_manipulation_details': [
+            f"What exact timing, state, batching, and handling details apply to {next_test}?",
+            'Which devices, reagents, or assay conditions need to be frozen into Methods so the experiment is reproducible?',
+            'What technical failures or unexpected events must be named explicitly?',
+        ],
+        'target_engagement_and_specificity': [
+            f"What evidence would show {primary_target or 'the lead target'} is truly engaged rather than just moving with correlated noise?",
+            'Which positive controls, negative controls, or cross-validation readouts should be named in the packet?',
+            'How do we show barrier restoration is linked to permeability and downstream spillover rather than marker movement alone?',
+        ],
+        'analysis_and_multiple_comparisons': [
+            'Which analyses are primary versus exploratory for the mechanistic packet?',
+            'How will non-independence, multiple comparisons, and missing data be handled explicitly?',
+            'What statistical language is safe enough for JNT without pretending the design is stronger than it is?',
+        ],
+        'replication_and_validation': [
+            'Do we already have replication, cross-cohort confirmation, or orthogonal validation for the lead mechanism?',
+            'If not, what is the concrete next replication step and how will we state that transparently?',
+            'Which current contradiction rows should be reframed as validation debt rather than ignored?',
+        ],
+    }
+    return prompts.get(
+        item_id,
+        [
+            f"What exactly is missing for {profile_id} / {item_id} in {title}?",
+            'What can be stated now from the current pack?',
+            'What still needs confirmation from source artifacts or author knowledge?',
+        ],
+    )
+
+
+def rigor_fill_draft_stub(profile_label, item, candidate, row, phase_entries):
+    primary_target = next(
+        (
+            normalize(entry.get('row', {}).get('primary_target'))
+            for entry in phase_entries
+            if entry['phase_key'] == 'phase4' and normalize(entry.get('row', {}).get('primary_target'))
+        ),
+        '',
+    )
+    next_test = normalize(row.get('next_test') or 'the lead packet')
+    item_id = item.get('item_id')
+    stubs = {
+        'registration_and_plan': 'State whether the study or analysis plan was preregistered, and if it was not, say that explicitly while bounding any post hoc analyses.',
+        'participant_accounting': 'Report the counts for screened, sampled, analyzed, quality-passed, and outcome-linked participants in one traceable flow.',
+        'sample_handling_and_blinding': 'Name collection timing, handling/storage conditions, batching, and who was blinded during sample processing and analysis.',
+        'assay_performance': 'Describe the assay platform, validation state, and the analytical-performance details that support the main biomarker readouts.',
+        'clinical_outcome_validity': 'State which paired clinical assessments are established standards versus provisional readouts and cite their validation basis.',
+        'statistics_and_replication': 'Define the primary analyses, multiple-comparison handling, outlier/missing-data rules, and the current replication status.',
+        'availability': 'Provide a direct data/code/sample availability statement that says what can be shared now and what cannot.',
+        'subject_accounting_randomization_blinding': 'Report subject accounting, randomization logic, and who was blinded during the mechanistic experiment.',
+        'experimental_manipulation_details': f'Freeze the key reproducibility details for {next_test}, including timing, batching, storage, and technical failures.',
+        'target_engagement_and_specificity': f'Explain how {primary_target or "the lead mechanism"} will be shown to be engaged with specificity controls rather than correlated marker movement alone.',
+        'analysis_and_multiple_comparisons': 'Spell out the primary analyses, statistical assumptions, and multiple-comparison rules for the mechanistic packet.',
+        'replication_and_validation': 'State whether the current mechanistic result is replicated, externally validated, only planned, or still missing validation.',
+    }
+    return (
+        f"{profile_label}: {stubs.get(item_id, item.get('recommendation') or 'Fill this gap explicitly in the manuscript package.')}"
+    )
+
+
+def build_journal_specific_rigor_fill_packet(candidate, row, phase_entries, journal_specific_rigor):
+    if not journal_specific_rigor.get('applicable'):
+        return {
+            'applicable': False,
+            'journal_name': journal_specific_rigor.get('journal_name') or '',
+            'entries': [],
+            'summary': {
+                'entry_count': 0,
+                'critical_entry_count': 0,
+                'open_entry_count': 0,
+            },
+        }
+
+    entries = []
+    for profile in journal_specific_rigor.get('profiles') or []:
+        for item in profile.get('checklist') or []:
+            if normalize(item.get('status')) == 'supported':
+                continue
+            entries.append({
+                'entry_id': f"{profile['profile_id']}::{item['item_id']}",
+                'profile_id': profile['profile_id'],
+                'profile_label': profile['label'],
+                'gap_label': item['label'],
+                'status': item['status'],
+                'critical': bool(item.get('critical')),
+                'current_pack_evidence': item.get('evidence') or '',
+                'needed_next': item.get('recommendation') or '',
+                'manuscript_sections': rigor_fill_sections(item.get('item_id')),
+                'recommended_pack_files': rigor_fill_pack_files(item.get('item_id')),
+                'questions_to_answer': rigor_fill_questions(profile['profile_id'], item.get('item_id'), candidate, row, phase_entries),
+                'draft_stub': rigor_fill_draft_stub(profile['label'], item, candidate, row, phase_entries),
+            })
+
+    entries.sort(
+        key=lambda entry: (
+            0 if entry['critical'] else 1,
+            0 if normalize(entry.get('status')) == 'missing' else 1,
+            entry['profile_label'],
+            entry['gap_label'],
+        )
+    )
+    return {
+        'applicable': True,
+        'journal_name': journal_specific_rigor.get('journal_name') or '',
+        'entries': entries,
+        'summary': {
+            'entry_count': len(entries),
+            'critical_entry_count': sum(1 for entry in entries if entry['critical']),
+            'open_entry_count': sum(1 for entry in entries if normalize(entry.get('status')) != 'supported'),
+        },
+    }
+
+
+def build_journal_specific_rigor_fill_markdown(fill_packet):
+    lines = ['# Journal-Specific Rigor Fill Packet', '']
+    if not fill_packet.get('applicable'):
+        lines.append('- No journal-specific fill packet is needed for this manuscript candidate yet.')
+        lines.append('')
+        return '\n'.join(lines)
+    summary = fill_packet.get('summary') or {}
+    lines.extend([
+        f"- **Journal:** {fill_packet.get('journal_name') or 'not recorded'}",
+        f"- **Open entries to fill:** {summary.get('open_entry_count', 0)}",
+        f"- **Critical entries:** {summary.get('critical_entry_count', 0)}",
+        '',
+        'Use this packet as the working sheet for closing JNT-specific rigor debt. Each entry tells you where the text belongs, what to consult in the pack, and a safe first drafting stub.',
+        '',
+    ])
+    for entry in fill_packet.get('entries') or []:
+        critical_tag = 'critical' if entry.get('critical') else 'non-critical'
+        lines.extend([
+            f"## {entry['gap_label']}",
+            '',
+            f"- **Profile:** {entry['profile_label']}",
+            f"- **Status:** {entry.get('status')}",
+            f"- **Priority:** {critical_tag}",
+            f"- **Manuscript sections:** {', '.join(entry.get('manuscript_sections') or [])}",
+            f"- **Current pack evidence:** {entry.get('current_pack_evidence') or 'not recorded'}",
+            f"- **Needed next:** {entry.get('needed_next') or 'not recorded'}",
+            '',
+            '### Pack files to consult',
+            '',
+        ])
+        for path in entry.get('recommended_pack_files') or []:
+            lines.append(f'- `{path}`')
+        lines.extend([
+            '',
+            '### Questions to answer',
+            '',
+        ])
+        for question in entry.get('questions_to_answer') or []:
+            lines.append(f'- {question}')
+        lines.extend([
+            '',
+            '### Draft starter',
+            '',
+            f"> {entry.get('draft_stub') or 'Draft this disclosure explicitly rather than leaving it implicit.'}",
+            '',
+        ])
+    return '\n'.join(lines)
+
+
 def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
     references = collect_reference_records(candidate, row, phase_entries, corpus_index)
     references_by_pmid = {record['pmid']: record for record in references}
@@ -1802,6 +2069,7 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
     }
     primary_snapshot = ((candidate['journal_targets'].get('primary') or {}).get('requirements') or {}).get('snapshot') or {}
     journal_specific_rigor = build_journal_specific_rigor_checklist(candidate, row, phase_entries, primary_snapshot)
+    journal_specific_rigor_fill_packet = build_journal_specific_rigor_fill_packet(candidate, row, phase_entries, journal_specific_rigor)
     data_points = {
         'biomarker_panel': row.get('biomarker_panel') or row.get('panel_members') or [],
         'expected_readouts': row.get('expected_readouts') or [],
@@ -1824,6 +2092,7 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
         'corpus_manifest_path': corpus_index.get('manifest_path', ''),
         'journal_specific_rigor_profile_count': journal_specific_rigor.get('summary', {}).get('profile_count', 0),
         'journal_specific_rigor_critical_gaps': journal_specific_rigor.get('summary', {}).get('critical_gap_count', 0),
+        'journal_specific_rigor_fill_entries': journal_specific_rigor_fill_packet.get('summary', {}).get('open_entry_count', 0),
     }
     return {
         'references': references,
@@ -1834,6 +2103,7 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
         'section_packets': section_packets,
         'journal_snapshot': journal_snapshot,
         'journal_specific_rigor': journal_specific_rigor,
+        'journal_specific_rigor_fill_packet': journal_specific_rigor_fill_packet,
         'data_points': data_points,
         'summary': summary,
         'reference_markdown': build_reference_markdown(references),
@@ -1843,6 +2113,7 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
         'source_artifact_markdown': build_source_artifact_markdown(source_artifacts),
         'data_points_markdown': build_data_points_markdown(data_points),
         'journal_specific_rigor_markdown': build_journal_specific_rigor_markdown(journal_specific_rigor),
+        'journal_specific_rigor_fill_markdown': build_journal_specific_rigor_fill_markdown(journal_specific_rigor_fill_packet),
     }
 
 
@@ -1871,6 +2142,7 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
     primary_journal = primary.get('journal', {}) or {}
     requirements = primary.get('requirements') or {}
     journal_specific_rigor = evidence_bundle.get('journal_specific_rigor') or {}
+    journal_specific_fill_packet = evidence_bundle.get('journal_specific_rigor_fill_packet') or {}
     journal_specific_summary = journal_specific_rigor.get('summary') or {}
     phase4_entries = [entry for entry in phase_entries if entry['phase_key'] == 'phase4']
     missing_phases = [
@@ -2067,6 +2339,7 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
                     for gap in journal_specific_summary.get('top_gaps', [])[:5]:
                         sections.append(f"- {gap}")
                     sections.append('- Full checklist: `journal_specific_rigor_checklist.md`')
+                    sections.append('- Fill packet: `journal_specific_rigor_fill_packet.md`')
         elif task_id == 'prepare_journal_specific_rigor_packet':
             if not journal_specific_rigor.get('applicable'):
                 status = 'satisfied'
@@ -2099,9 +2372,22 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
                         sections.append(f"- {gap}")
                 sections.extend([
                     '',
+                    '## Structured fill packet',
+                    '',
+                    f"- Open fill entries: {journal_specific_fill_packet.get('summary', {}).get('open_entry_count', 0)}",
+                    f"- Critical fill entries: {journal_specific_fill_packet.get('summary', {}).get('critical_entry_count', 0)}",
+                ])
+                for entry in (journal_specific_fill_packet.get('entries') or [])[:4]:
+                    sections.append(
+                        f"- {entry['gap_label']} -> {', '.join(entry.get('manuscript_sections') or [])}"
+                    )
+                sections.extend([
+                    '- Use `journal_specific_rigor_fill_packet.md` as the working sheet for filling these disclosures instead of treating the checklist as a dead-end report.',
+                    '',
                     '## Drafting rule',
                     '',
                     '- Use `journal_specific_rigor_checklist.md` to write the JNT Transparency, Rigor and Reproducibility Summary instead of improvising it late.',
+                    '- Use `journal_specific_rigor_fill_packet.md` to decide which manuscript section to edit and which pack files to consult for each gap.',
                 ])
         elif task_id == 'select_primary_journal':
             if primary_journal:
@@ -2168,7 +2454,7 @@ def build_review_memo(candidate, row):
     rigor_note = ''
     if journal_specific_summary.get('profile_count'):
         rigor_note = f"\n- The journal-specific rigor checklist is active with **{journal_specific_summary.get('critical_gap_count', 0)}** critical gap(s) still open in `journal_specific_rigor_checklist.md`."
-    return f"""# Review Memo\n\n## {heading}\n- The candidate has a named paper path with scientific strength currently at **{candidate['scientific_strength']} / 4**.\n- The current primary target journal is **{primary_journal}**.\n- {journal_note}{rigor_note}\n\n## Biggest Weakness\n- {weakest}\n\n## Likely Reviewer Attack\n- {likely_attack}\n\n## Check Before Approval\n- Make sure the title, article type, and main claims stay bounded to what the current artifact chain actually proves.\n- Read `blocking_resolution_plan.md`, `translational_strengthening_plan.md`, and `journal_specific_rigor_checklist.md` before treating the pack as close to submission-ready.\n"""
+    return f"""# Review Memo\n\n## {heading}\n- The candidate has a named paper path with scientific strength currently at **{candidate['scientific_strength']} / 4**.\n- The current primary target journal is **{primary_journal}**.\n- {journal_note}{rigor_note}\n\n## Biggest Weakness\n- {weakest}\n\n## Likely Reviewer Attack\n- {likely_attack}\n\n## Check Before Approval\n- Make sure the title, article type, and main claims stay bounded to what the current artifact chain actually proves.\n- Read `blocking_resolution_plan.md`, `translational_strengthening_plan.md`, `journal_specific_rigor_checklist.md`, and `journal_specific_rigor_fill_packet.md` before treating the pack as close to submission-ready.\n"""
 
 
 def build_claim_evidence_map(candidate, row):
@@ -2233,6 +2519,7 @@ def build_journal_fit_markdown(candidate):
                 if journal_specific_summary.get('top_gaps'):
                     lines.append(f"- Top rigor gaps: {' | '.join(journal_specific_summary.get('top_gaps', [])[:3])}")
                 lines.append('- Full checklist: `journal_specific_rigor_checklist.md`')
+                lines.append('- Working fill packet: `journal_specific_rigor_fill_packet.md`')
             lines.append('')
     if backups:
         lines.extend(['## Backup Journals', ''])
@@ -2296,6 +2583,7 @@ def build_codex_handoff_markdown(candidate):
         '- Use the evidence bundle first: references, claim support matrix, contradiction register, source artifact manifest, data points bundle, and section packets.',
         '- Read blocking_resolution_plan.md and translational_strengthening_plan.md before writing Results or Discussion.',
         '- Read journal_specific_rigor_checklist.md before drafting the Transparency, Rigor and Reproducibility Summary or Methods language.',
+        '- Use journal_specific_rigor_fill_packet.md to turn each open JNT rigor gap into explicit Methods, Results, Discussion, or Statements language.',
         '- Use the claim-evidence map and review memo before drafting any narrative section.',
         '- Keep all claims bounded to the current artifact chain.',
         '- Re-check the current journal instructions before final formatting.',
@@ -2345,6 +2633,9 @@ def build_pack_manifest(candidate, row, publication_entry):
         'ready_for_codex_draft': candidate['ready_for_codex_draft'],
         'evidence_bundle': candidate.get('evidence_bundle_summary', {}),
         'journal_specific_rigor': candidate.get('journal_specific_rigor_summary', {}),
+        'journal_specific_rigor_fill_packet': {
+            'open_entry_count': candidate.get('evidence_bundle_summary', {}).get('journal_specific_rigor_fill_entries', 0),
+        },
         'task_execution': candidate.get('task_execution_summary', {}),
         'improvement_window': {
             'default_pass_target': 3,
@@ -2626,6 +2917,11 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
             'journal_specific_rigor': evidence_bundle['journal_specific_rigor'],
         })
         write_text(folder / 'journal_specific_rigor_checklist.md', evidence_bundle['journal_specific_rigor_markdown'])
+        write_json(folder / 'journal_specific_rigor_fill_packet.json', {
+            'updated_at': iso_now(),
+            'journal_specific_rigor_fill_packet': evidence_bundle['journal_specific_rigor_fill_packet'],
+        })
+        write_text(folder / 'journal_specific_rigor_fill_packet.md', evidence_bundle['journal_specific_rigor_fill_markdown'])
         write_json(folder / 'evidence_bundle_summary.json', {
             'updated_at': iso_now(),
             'summary': evidence_bundle['summary'],
@@ -2658,6 +2954,8 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
                     'journal_requirements_snapshot.json',
                     'journal_specific_rigor_checklist.json',
                     'journal_specific_rigor_checklist.md',
+                    'journal_specific_rigor_fill_packet.json',
+                    'journal_specific_rigor_fill_packet.md',
                     'blocking_resolution_plan.md',
                     'translational_strengthening_plan.md',
                     'review_memo.md',
