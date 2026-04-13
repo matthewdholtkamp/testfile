@@ -30,7 +30,7 @@
   ],
   "evidence_chain_complete": true,
   "is_active_path": false,
-  "last_pack_refresh": "2026-04-13 01:24:48",
+  "last_pack_refresh": "2026-04-13 01:26:55",
   "scientific_strength": 2,
   "journal_targets": {
     "primary": {
@@ -1123,7 +1123,7 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+    "corpus_manifest_path": "",
     "journal_specific_rigor_profile_count": 2,
     "journal_specific_rigor_critical_gaps": 14
   },
@@ -1160,7 +1160,7 @@
         "reopened"
       ],
       "execution_note": "Lead contradiction still active: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.. 4 issue(s) remain blocking.",
-      "last_executed_at": "2026-04-13T01:24:49.467907+00:00",
+      "last_executed_at": "2026-04-13T01:26:55.584237+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -1180,7 +1180,7 @@
         "reopened"
       ],
       "execution_note": "Translational packet remains bounded around NLRP3; strengthening brief updated.",
-      "last_executed_at": "2026-04-13T01:24:49.467952+00:00",
+      "last_executed_at": "2026-04-13T01:26:55.584279+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -1200,7 +1200,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-13T01:24:49.467979+00:00",
+      "last_executed_at": "2026-04-13T01:26:55.584304+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     },
     {
@@ -1220,12 +1220,12 @@
         "reopened"
       ],
       "execution_note": "Journal-specific rigor checklist is active with 14 critical gap(s) across 2 profile(s).",
-      "last_executed_at": "2026-04-13T01:24:49.468002+00:00",
+      "last_executed_at": "2026-04-13T01:26:55.584326+00:00",
       "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-13T01:24:49.468009+00:00",
+    "updated_at": "2026-04-13T01:26:55.584332+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,
