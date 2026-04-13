@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-04-13T00:52:10.058594+00:00",
+  "updated_at": "2026-04-13T01:24:49.511511+00:00",
   "summary": {
-    "reference_count": 83,
+    "reference_count": 84,
     "claim_count": 14,
     "contradiction_count": 24,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
     "journal_specific_rigor_profile_count": 1,
     "journal_specific_rigor_critical_gaps": 7
   },
@@ -25,7 +25,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -89,7 +89,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -138,7 +138,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -187,7 +187,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -260,7 +260,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -336,7 +336,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -402,7 +402,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -451,7 +451,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -500,7 +500,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -554,7 +554,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -564,22 +564,27 @@
       "reference_number": 10,
       "citation_text": "PMID:41723222.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression",
+        "phase4:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression",
+        "phase4_tau_proteinopathy_progression"
       ]
     },
     {
@@ -595,7 +600,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -638,43 +643,54 @@
     },
     {
       "pmid": "41853047",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "title": "Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast.",
+      "authors": "Lora SJ, Rhind SG, Watling SE, Narciso L, Warsh J, Vartanian O, McCluskey T, Tyndale RF, Tartaglia MC, Shiu MY, Vall\u00e9e I, Crouzat M, Vergie I, Vasdev N, Boileau I",
+      "journal": "Brain communications",
+      "publication_date": "2026",
+      "doi": "10.1093/braincomms/fcag070",
+      "pmcid": "PMC12993815",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41853047/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12993815/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_SJEtAl_Tau-PETimagingandblood_PMID41853047.md",
+      "abstract": "Repeated low-intensity blast overpressure exposures, frequently sustained by Special Operations Forces during breaching, combat training, and weapons use, are thought to initiate tau-related neurodegenerative changes that may remain clinically silent for years. The long-term impact of cumulative blast overpressure on brain health is poorly understood, and sensitive biomarkers are needed for early detection and monitoring of subclinical injury in high-risk populations. In this cross-sectional study, 25 actively serving male Canadian Special Operations Forces personnel (mean [SD] age, 43.6 [6.1] years) with \u226516 years of breaching and explosives experience were compared with 10 age-matched Canadian Armed Forces controls (mean [SD] age, 39.8 [6.8] years) with minimal blast exposure. All participants underwent [18F]flortaucipir PET imaging to quantify cortical tau deposition, MRI, ultrasensitive digital immunoassay for plasma biomarkers, and comprehensive clinical and neurocognitive testing. Group differences in regional [18F]flortaucipir standardized uptake value ratios were assessed using analysis of covariance, and voxelwise Z-score mapping identified clusters of elevated tracer uptake (>2 SD above control mean). Linear regression analyses were conducted to examine associations between PET tau signal, plasma biomarkers, cumulative blast exposure and clinical outcomes. Special Operations Forces personnel exhibited significantly higher [18F]flortaucipir uptake in the frontal (P & 0.022) and temporal cortices (P & 0.037) compared with controls. Voxelwise mapping revealed tau clusters in 88% of exposed individuals, with nearly half localized to the frontal cortex. Elevated PET signal correlated with cumulative years of breaching, post-concussive symptoms, sleep disturbance and functional impairment. Plasma biomarkers showed converging evidence of neurodegeneration: brain-derived tau, glial fibrillary acidic protein and amyloid-\u03b242 levels were significantly associated with regional tau PET uptake. A reduced amyloid-\u03b242/40 ratio and elevated phosphorylated tau isoforms further supported early molecular changes consistent with neurodegeneration. Cumulative occupational blast overpressure exposure in Special Operations Forces is associated with frontal-predominant tau deposition and plasma biomarker signatures of astroglial activation, axonal injury and CNS-specific tau release. These convergent imaging and molecular findings support a link between repetitive blast exposure and early-stage tauopathy, and highlight the value of combined tau PET imaging and fluid biomarkers as non-invasive tools for early detection, monitoring, and targeted risk mitigation in blast-exposed populations.",
+      "full_text_excerpt": "### Introduction\n\n\nMilitary personnel, particularly those serving in Special Operations Forces (SOF), are routinely exposed to occupational hazards that threaten brain health and operational readiness.1,2Among the most pervasive is blast overpressure (BOP), the high-energy pressure wave generated by breaching charges, high-calibre weapons, and explosives during training and operations.3,4While single high-intensity blasts can cause moderate-to-severe traumatic brain injury (TBI), most exposures in active-duty SOF are lower in intensity, occur repeatedly, and fall below diagnostic thresholds for concussion or mild TBI.5Growing evidence indicates that such cumulative, subconcussive exposures produce subtle yet progressive impairments in cognition, mood and performance, with potential long-term implications for neurodegenerative risk.6,7Despite these emerging links, the underlying biological mechanisms remain insufficiently defined, and validated biomarkers for early detection or risk stratification are still lacking.8\n\nIn SOF breachers and snipers, cumulative BOP exposures can number in the hundreds to thousands over a career. Common symptoms\u2014headache, tinnitus, slowed cognition, irritability, mood disturbance, memory changes and sleep disruption\u2014are characteristic of chronic, low-grade neurological dysfunction.2,9-12These complaints frequently coincide with elevated circulating markers of axonal and glial injury, indicating sustained neuroinflammation and early neurodegenerative change that often remains undetectable on routine neuroimaging13-16Together, these observations highlight the need for multimodal tools that can detect subclinical brain injury in chronically BOP-exposed personnel, as the persistent symptom-biomarker profile points to an underlying degenerative process requiring sensitivein vivodiagnostic approaches for monitoring and informing early preventive or therapeutic interventions.17\n\nMechanistically, blast shockwaves impart complex shear, tensile an",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 12,
-      "citation_text": "PMID:41853047.",
+      "citation_text": "Lora SJ, Rhind SG, Watling SE, Narciso L, Warsh J, Vartanian O, McCluskey T, Tyndale RF, Tartaglia MC, Shiu MY, Vall\u00e9e I, Crouzat M, Vergie I, Vasdev N, Boileau I. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain communications 2026. doi:10.1093/braincomms/fcag070. PMID:41853047.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase2",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression",
+        "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase2_support",
+        "phase4_support"
       ],
       "support_notes": [
-        "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
+        "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.",
+        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "provisional",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression",
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4_tau_proteinopathy_progression"
       ]
     },
     {
@@ -690,7 +706,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -750,7 +766,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -802,26 +818,26 @@
     },
     {
       "pmid": "41809435",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "title": "Serum biomarker trajectory clusters predict functional outcome and quality of life for traumatic brain injury.",
+      "authors": "Do TS, Carnes C, Yang Z, Kobeissy F, Yadikar H, Olbricht G, Tenovuo O, Posti JP, Steyerberg EW, Wilson L, von Steinb\u00fcchel N, Czeiter E, Buki A, Menon DK, Maas AIR, Wang KK, Obafemi-Ajayi T",
+      "journal": "Brain communications",
+      "publication_date": "2026",
+      "doi": "10.1093/braincomms/fcag055",
+      "pmcid": "PMC12970999",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41809435/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12970999/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_TSEtAl_Serumbiomarkertrajectoryclusters_PMID41809435.md",
+      "abstract": "Serum brain-enriched biomarkers are increasingly employed in the clinical evaluation of traumatic brain injury (TBI) to assist with triage, neuroimaging decisions, and prognostication. However, the potential of temporal biomarker trajectories to inform disease monitoring and long-term outcomes remains underexplored. We aim to identify distinct biomarker trajectory (TRAJ) profiles in traumatic brain injury patients and to examine their associations with long-term clinical outcomes. The study included 373, CT-positive Intensive Care Unit (ICU) traumatic brain injury patients (256 with initial Glasgow Coma Scale 3-12) from the Collaborative European NeuroTrauma Effectiveness Research in TBI (CENTER-TBI) core study who had at least two serum samples collected between days 1 and 5 post-injury. Six biomarkers -glial fibrillary acidic protein, ubiquitin C-terminal hydrolase-L1, neurofilament light chain, Tau, S100B, and neuron-specific enolase- were analysed. Optimal cluster solutions were determined using a composite validation index derived from seven internal clustering metrics. Distinct high and low trajectory classes emerged for all biomarkers; each comprising at least 40% of the cohort for five of the biomarkers. Cross-biomarker concordance analysis identified composite high (n = 104) and low (n = 110) TRAJ profiles. Key metrics for evaluating patient outcomes include Glasgow Outcome Scale Extended (GOSE), mortality, and Quality of Life after Brain Injury Overall Scale (QoLIBRI-OS) at 3, 6, and 12 months as well as a prognostic incremental value analysis using a conventional prediction model: International Mission for Prognosis and Analysis of Clinical Trials in TBI (IMPACT). High TRAJ membership is strongly associated with poor functional recovery (GOSE 1-4 at 3-12 months; odds ratio (OR) 8.79 [95% confidence interval (CI): 4.56-16.97]-12.29 [95%CI: 6.19-24.40], P < 0.001) and increased 180-day mortality (OR (14.84 [95%CI: 5.56-39.64], P < 0.001). Conversely, low TRAJ membership predicted favourable recovery (GOSE 6-8 at 3-12 months; OR 7.42 [95%CI: 3.10-17.76]-10.83 [95%CI: 3.65-32.14], P < 0.001) and better quality of life (QoLIBRI-OS \u226552; OR 4.98 [95%CI: 1.92-12.89], P < 0.01). Compared to single day-1 biomarker measurements, trajectory-based profiles yielded larger effect sizes and provided incremental prognostic value when added to the IMPACT prediction model (\u0394R\u00b2 9-17%, P < 0.05). Overall, repeated biomarker measurements across the acute phase yield superior prognostic accuracy relative to single timepoint assessments. These findings underscore the importance of integrating longitudinal biomarker monitoring into ICU-based traumatic brain injury care and suggest that temporal trajectory profiling may improve prognostic modelling and facilitate more precise patient stratification for both clinical management and interventional studies.",
+      "full_text_excerpt": "### Introduction\n\n\nTraumatic brain injury (TBI) represents a major global health burden as one of the top three causes of injury-related death and disability,1-3with an estimated 50\u201360 million new cases each year. It is also a significant economic burden, costing the global economy around US$400 billion annually. TBI is inherently heterogeneous, varying in severity, aetiology, pathology, clinical trajectory and prognosis.4Although the Glasgow Coma Scale (GCS) is widely used to categorize TBI severity\u2014mild (GCS 13\u201315), moderate (GCS 9\u201312), and severe (GCS 3\u20138)\u2014it lacks the sensitivity to capture the complex and dynamic nature of brain injury.1,3As a result, there is growing emphasis to go beyond the traditional severity-based approaches to seek objective, biology-driven means that complement traditional scoring and imaging to improve prognostic precision.5For example, neuroimaging methods, such as CT imaging, are being used in addition to GCS scores, to determine injury severity as quantified by presence or absence of brain lesions, or the type of lesion (such as different haematoma types, subarachnoid haemorrhage, or diffuse axonal injury).6CT is now considered a standard component of early TBI evaluation to detect intracranial injury and assist in determining injury severity.7Blood-based biomarkers have also emerged as promising tools to complement clinical assessment, enabling more rapid efficient complimentary means to assess brain injury characteristics and monitor progression, neuroworsening, and/or secondary insults.8Recently, the NIH/NINDS TBI Classification and Nomenclature Initiative has formalized a new Common Data Elements\u2013Multidimensional Characterization (CBI-M) framework that seeks to redefine how TBI is classified.3,9The four-pillar model (clinical, biomarker, imaging, and modifier domains) integrates biological and physiological data to capture the continuous spectrum of injury. The biomarker pillar of the CBI-M framework highlights validated serum p",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 15,
-      "citation_text": "PMID:41809435.",
+      "citation_text": "Do TS, Carnes C, Yang Z, Kobeissy F, Yadikar H, Olbricht G, Tenovuo O, Posti JP, Steyerberg EW, Wilson L, von Steinb\u00fcchel N, Czeiter E, Buki A, Menon DK, Maas AIR, Wang KK, Obafemi-Ajayi T. Serum biomarker trajectory clusters predict functional outcome and quality of life for traumatic brain injury. Brain communications 2026. doi:10.1093/braincomms/fcag055. PMID:41809435.",
       "source_phases": [
         "phase1",
         "phase4"
@@ -848,43 +864,48 @@
     },
     {
       "pmid": "41953056",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "title": "Post-traumatic stress disorder: pathogenesis, epidemiological characteristics, animal models, and potential therapeutic strategies.",
+      "authors": "Nguyen F, Shetty AK",
+      "journal": "Military Medical Research",
+      "publication_date": "2026 Dec",
+      "doi": "10.1016/j.mmr.2026.100005",
+      "pmcid": "PMC13054577",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41953056/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13054577/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_FEtAl_Post-traumaticstressdisorderpathogenesis_PMID41953056.md",
+      "abstract": "Post-traumatic stress disorder (PTSD) is a complex neurobehavioral disorder that disproportionately affects military service members. The clinical presentation of PTSD is heterogeneous and may overlap with other psychiatric conditions. According to the Fifth Edition of the Diagnostic and Statistical Manual of Mental Disorders (DSM-5), common symptoms include memory loss, mood and personality changes, impulsiveness, aggression, anxiety, and depression. The pathophysiological mechanisms underlying PTSD remain incompletely understood, although research implicates pathways involving the hypothalamic-pituitary-adrenal (HPA) axis, dysfunctional neural circuitry, neurochemical imbalances, neuroinflammatory processes, and genetic and epigenetic factors. Approximately 7% of the U.S. adult population has met the diagnostic criteria for PTSD in their lifetime, with a substantially higher prevalence of 12%-30% among military personnel. Multiple animal models, including single-stressor, intermediate complexity, social interaction, predator stress, and blast exposure paradigms, have been employed to investigate PTSD mechanisms. Current treatment strategies typically integrate pharmacotherapy and psychotherapy. Military service members are at increased risk for blast injuries, which frequently result in traumatic brain injury (TBI). Although some symptoms of TBI may resolve, approximately 20% of affected individuals develop new symptoms, including PTSD. Evidence suggests that exposure to blast shock waves (BSWs) serves as a critical trigger for the clinical manifestations of both TBI and PTSD. Recent studies have identified several mechanisms contributing to BSW-induced brain dysfunction, including intraneuronal accumulation of phosphorylated Tau (p-Tau), activation of the dynorphin/kappa opioid receptor, and activation of metabotropic glutamate receptor 2/3 signaling pathways. This review provides an overview of the clinical features, treatments, pathophysiology, and epidemiology of PTSD, as well as animal models and their limitations in replicating PTSD-like symptoms. It further examines the relationship between BSW exposure, brain injury, and PTSD, discusses animal models that simulate blast trauma and PTSD-like symptoms, and evaluates potential therapies to mitigate BSW-induced PTSD. Finally, the review addresses the limitations of current models and proposes future directions for elucidating the mechanisms linking brain trauma to PTSD.",
+      "full_text_excerpt": "### Background\n\n\nPost-traumatic stress disorder (PTSD) is a complex neuropsychiatric disorder characterized by diverse clinical manifestations. It may develop following abuse, accidental injury, natural disasters, terrorism, medical trauma, occupational stress, or military combat[1]. The etiologies of PTSD are classified as type 1 or type 2 trauma[1]. Type 1 trauma generally involves a single, unexpected event, often occurring in childhood, whereas type 2 trauma results from repeated exposure to external stressors such as persistent abuse[1]. Military personnel are at greater risk for PTSD than civilians due to the frequency and severity of trauma exposures[2]. Diagnosis relies on the Diagnostic and Statistical Manual of Mental Disorders, Fifth Edition (DSM-5) criteria for trauma-related disorders[3],[4]. The DSM-5 reclassified PTSD to distinguish it from anxiety and depressive disorders, thereby enhancing diagnostic precision. Diagnostic criteria require symptoms to persist for more than one month and include at least one intrusive symptom, one avoidance symptom, two indicators of altered arousal or reactivity, and two negative alterations in mood or cognition[3],[4]. The heterogeneity of PTSD presentations complicates pharmacological management[4],[5],[6]. Frequently observed symptoms include memory impairment, mood and personality disturbances, impulsivity, aggression, anxiety, and depression[5],[7].\n\nThe standard approach to PTSD treatment involves a combination of pharmacotherapy and psychotherapy[2],[4]. First-line pharmacological agents include selective serotonin reuptake inhibitors (SSRIs)[2],[8], while prazosin is frequently used to alleviate nightmares and sleep disturbances[9]. Pharmacological interventions generally demonstrate only moderate efficacy. Evidence-based psychotherapies, including cognitive-behavioral therapy, prolonged exposure therapy, and eye movement desensitization and reprocessing, are regarded as the gold standard for PTSD management.",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 16,
-      "citation_text": "PMID:41953056.",
+      "citation_text": "Nguyen F, Shetty AK. Post-traumatic stress disorder: pathogenesis, epidemiological characteristics, animal models, and potential therapeutic strategies. Military Medical Research 2026 Dec. doi:10.1016/j.mmr.2026.100005. PMID:41953056.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression",
+        "phase4:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression",
+        "phase4_tau_proteinopathy_progression"
       ]
     },
     {
@@ -900,7 +921,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -935,43 +956,48 @@
     },
     {
       "pmid": "41960329",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "title": "Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury.",
+      "authors": "Lilova RL, Bernas T, Ryu J, Kelliher C, Lafrenaye A",
+      "journal": "Research square",
+      "publication_date": "2026 Mar 30",
+      "doi": "10.21203/rs.3.rs-9152535/v1",
+      "pmcid": "PMC13060523",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41960329/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13060523/",
+      "extraction_source": "Crossref HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_RLEtAl_Waterchannelchangesin_PMID41960329.md",
+      "abstract": "Traumatic brain injury (TBI) is a significant concern, with millions sustaining a TBI each year. The vast majority are categorized as mild, in which diffuse pathologies are the hallmark and multiple cell types are affected, including astrocytes. Buprenorphine (bup), a semi-synthetic opioid, is a common human and veterinary analgesic. Previous studies from our group showed that a single dose of slow-release bup administered acutely following TBI alters astrocyte morphology at 1 day and 4 weeks post-injury in a region-specific manner. The current study expands on these findings by examining how four major astrocyte-associated proteins, GFAP, SWELL1/LRRC8A, TRPM4, and AQP4, are affected by such a dose of bup. Adult male rats received either sham or TBI via a central fluid percussion injury model, followed by saline or bup 15 min following injury. Protein quantification at 1 day and 4 weeks post-injury revealed region- and time-dependent effects of acute bup administration. Specifically, bup reduced hippocampal GFAP, increased cortical TRPM4, and elevated thalamic AQP4 and SWELL1 at 4 weeks following TBI. Taken together, these findings indicate that a single post-injury dose of bup can alter major astrocytic protein expression beyond the acute phase in a region- and time-dependent manner.",
+      "full_text_excerpt": "DOI: https://doi.org/10.21203/rs.3.rs-9152535/v1\n\nTraumatic brain injury (TBI) is a significant concern, with millions sustaining a TBI each year. The vast majority are categorized as mild, in which diffuse pathologies are the hallmark and multiple cell types are affected, including astrocytes. Buprenorphine (bup), a semi-synthetic opioid, is a common human and veterinary analgesic. Previous studies from our group showed that a single dose of slow-release bup administered acutely following TBI alters astrocyte morphology at 1 day and 4 weeks post-injury in a region-specific manner. The current study expands on these findings by examining how four major astrocyte-associated proteins, GFAP, SWELL1/LRRC8A, TRPM4, and AQP4, are affected by such a dose of bup. Adult male rats received either sham or TBI via a central fluid percussion injury model, followed by saline or bup 15 min following injury. Protein quantification at 1 day and 4 weeks post-injury revealed region- and time-dependent effects of acute bup administration. Specifically, bup reduced hippocampal GFAP, increased cortical TRPM4, and elevated thalamic AQP4 and SWELL1 at 4 weeks following TBI. Taken together, these findings indicate that a single post-injury dose of bup can alter major astrocytic protein expression beyond the acute phase in a region- and time-dependent manner.\n\nTraumatic brain injury (TBI) is a significant public health concern with no definitive cure. Globally, between 27 and 69 million individuals will sustain a TBI each year, with roughly 80% of those cases falling into the category of mild TBI1\u20133. Even with what are labelled \u201cmild\u201d injuries, TBI survivors can endure an array of cognitive4\u20136, emotional7\u20139, sensory10, and physical11\u201313 consequences that impair their quality and length of life both acutely and chronically14\u201316. In the United States, the economic consequences from nonfatal TBI alone were estimated at nearly $41 billion in 201617, further underscoring the burden TBI puts on bo",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 18,
-      "citation_text": "PMID:41960329.",
+      "citation_text": "Lilova RL, Bernas T, Ryu J, Kelliher C, Lafrenaye A. Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. Research square 2026 Mar 30. doi:10.21203/rs.3.rs-9152535/v1. PMID:41960329.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:glymphatic_astroglial_clearance_failure"
+        "phase1:glymphatic_astroglial_clearance_failure",
+        "phase4:glymphatic_astroglial_clearance_failure"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_glymphatic_astroglial_clearance_failure"
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase4_glymphatic_astroglial_clearance_failure"
       ]
     },
     {
@@ -987,8 +1013,8 @@
       "extraction_source": "PMC XML",
       "extraction_rank": "5",
       "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_LEtAl_EsketamineSuppressesAstrocyte-DrivenNeuroinflammation_PMID41824127.md",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_LEtAl_EsketamineSuppressesAstrocyte-DrivenNeuroinflammation_PMID41824127.md",
       "abstract": "Traumatic brain injury (TBI) is a major global health issue leading to high mortality and disability. Activated astrocytes are one of the pivotal driving factors in the neuroinflammatory cascade following TBI. This study aims to investigate the role of esketamine on TBI and the underlying mechanism. Mice received a mouse weight-drop cortical impact or sham surgery and TBI mice were treated with either vehicle or esketamine at 2\u00a0h post-injury for 7 consecutive days. The modified Neurological Severity Scoring system, Rotarod test, Open Field test and Novel Object Recognition test were used to assess the neurological function after TBI. And cortical tissues surrounding focal trauma were obtained for Nissl staining, immunofluorescence, ELISA assay and western blotting. In vitro, astrocytes were induced with LPS, followed by the addition of esketamine to the culture medium. After a 24\u00a0h exposure, the astrocytes were collected for CCK-8 assay, qRT-PCR, western blotting, immunofluorescence and Co-IP analysis. Esketamine dramatically improved the neurological outcome of mice and reduced neuronal cell death (P\u2009<\u20090.05) and neuroinflammation after TBI. Its anti-inflammatory benefits stem from its ability to suppress astrocyte activation (P\u2009<\u20090.05), inhibit pro-inflammatory A1 astrocyte differentiation (P\u2009<\u20090.01), and promote the formation of protective A2 astrocytes (P\u2009<\u20090.01). Esketamine exerts its effects by inhibiting the METTL5/c-Myc/PD-L1 signaling pathway. Esketamine can effectively alleviate activated astrocytes and promote the polarization of activated astrocytes toward A2 following TBI by inhibiting the METTL5/c-Myc/PD-L1, demonstrating significant anti-inflammatory and neuroprotective effects.",
       "full_text_excerpt": "### Introduction\n\n\nTraumatic brain injury (TBI) is a serious global public health problem that contributes considerably to mortality and disability [1]. It is estimated that 55\u00a0million new cases occur each year and this number continues to rise, particularly among young and middle-aged men [1,2]. TBI is categorized into primary injury caused by direct trauma and secondary injury caused by pathological processes such as excitotoxicity and inflammation. Secondary injury is one of the main causes of poor prognosis in patients, and inhibiting secondary brain injury is the key to treating TBI [3].\n\nRecent studies have demonstrated that N6-methyladenosine (m6A) modification plays an important role in the pathophysiology of TBI [4]. Previous studies on the function of m6A modification in TBI have mainly focused on m6A modification of messenger RNA (mRNA), but recent human genetic studies have indicated that methylation of ribosomal RNA (rRNA m6A) has also been associated with brain development and cognition [4,5]. However, the specific role of rRNA m6A in TBI remains unclear and further in-depth studies are required.\n\nNumerous studies have been conducted on microglia-mediated neuroinflammation after TBI, but the relationship between astrocytes and neuroinflammation after TBI remains controversial, and the mechanisms need to be further revealed. In a recent study, the newly discovered methyltransferase METTL5 together with TRMT112 promoted the m6A methylation of 18\u00a0S rRNA [6]. In TBI models, the expression of c-Myc gene is significantly upregulated [7]. Knockdown of METTL5 modulates the c-Myc signaling pathway and inhibits PD-L1 production [8]. PD-L1 is expressed on both microglia and astrocytes and plays an important role in central nervous system inflammation [9].\n\nKetamine is a noncompetitive NMDA receptor antagonist commonly used in clinical practice for anesthetic, analgesia, antidepressant, and anti-anxiety treatment [10]. Research indicates that ketamine may reduce t",
       "retrieval_mode": "legacy",
@@ -1038,7 +1064,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1074,26 +1100,26 @@
     },
     {
       "pmid": "41795770",
-      "title": "\u03b2-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury.",
-      "authors": "Rauk Z, Maciak P, Setkowicz Z, Barczyk-Wo\u017anicka O, Romek M, Tylko G, Samiec M, Duda M",
-      "journal": "Molecular neurobiology",
-      "publication_date": "2026 Mar 08",
-      "doi": "10.1007/s12035-026-05759-2",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
       "pmcid": "",
-      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41795770/",
+      "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "Abstract only",
-      "extraction_rank": "1",
-      "source_quality_tier": "abstract_only",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_ZEtAl_-hydroxybutyrateModulatesNeuroinflammatoryResponses_PMID41795770.md",
-      "abstract": "The ketogenic diet has attracted increasing interest for its potential neuroprotective effects, mediated by \u03b2-hydroxybutyrate (BHB), a ketone body influencing energy metabolism and inflammation. This study examined whether BHB supplementation modulates cellular responses to injury in an in vitro scratch model of traumatic brain injury (TBI). Primary cortical and hippocampal neuron-glia cultures derived from neonatal rats were maintained for 21\u00a0days in vitro (DIV). Cultures were supplemented with 5\u00a0mM BHB from DIV14 to DIV21. At DIV21, mechanical scratch injury was applied, and cellular responses were assessed 6\u00a0h and 24\u00a0h post-injury using live-cell migration imaging, Western blotting (GFAP, NeuN), cytokine profiling, immunocytochemistry, and electron microscopy. BHB supplementation was associated with increased astrocyte density in injured cortical and hippocampal cultures and with shifts in astrocyte morphology toward bipolar and intermediate phenotypes, suggesting modulation of astrocyte reactivity. In BHB-supplemented cortical cultures, neuronal density within the injury area was higher compared with non-supplemented controls. BHB reduced levels of the pro-inflammatory cytokine IL-1\u03b2 and modulated the expression profiles of GM-CSF, IFN\u03b3, and Neuropilin-1, in a\u00a0region- and time-dependent manner. GFAP expression in hippocampal cultures displayed a biphasic response, indicating dynamic astrocyte regulation following injury. Ultrastructural analysis revealed injury-induced cellular alterations, while BHB-supplemented cultures exhibited features consistent with improved cellular integrity. Collectively, these findings suggest that BHB modulates astrocyte-associated inflammatory responses and supports cellular adaptation following mechanical injury in neuron-glia cultures. While limited to an in vitro setting, this study provides insight into potential mechanisms by which BHB may influence neuroinflammatory processes after TBI.",
-      "full_text_excerpt": "*Full text not cleanly available.*",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "reference_number": 21,
-      "citation_text": "Rauk Z, Maciak P, Setkowicz Z, Barczyk-Wo\u017anicka O, Romek M, Tylko G, Samiec M, Duda M. \u03b2-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury. Molecular neurobiology 2026 Mar 08. doi:10.1007/s12035-026-05759-2. PMID:41795770.",
+      "citation_text": "PMID:41795770.",
       "source_phases": [
         "phase1",
         "phase4"
@@ -1120,26 +1146,26 @@
     },
     {
       "pmid": "41827388",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "title": "Diagnostic and Prognostic Value of Serum Glial Fibrillary Acidic Protein in Acute Ischemic Stroke.",
+      "authors": "Agnello L, Ciaccio AM, Del Ben F, Daidone M, Pacinella G, Masucci A, Tamburello M, Gambino CM, Tuttolomondo A, Ciaccio M",
+      "journal": "Journal of clinical medicine",
+      "publication_date": "2026 Mar 04",
+      "doi": "10.3390/jcm15051971",
+      "pmcid": "PMC12985606",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41827388/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12985606/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_LEtAl_DiagnosticandPrognosticValue_PMID41827388.md",
+      "abstract": "Background: Acute ischemic stroke (AIS) remains a major cause of morbidity and mortality, with an unmet need for reliable blood-based biomarkers. Glial fibrillary acidic protein (GFAP), an astrocytic structural protein, is established in hemorrhagic stroke and traumatic brain injury, but its role in AIS remains incompletely defined. Methods: In this retrospective case-control study, we enrolled AIS patients and healthy controls. Serum GFAP was measured within 24 h using the Lumipulse G1200 automated assay. Stroke severity and outcome were assessed with the National Institutes of Health Stroke Scale (NIHSS) and functional outcome with the modified Rankin Scale (mRS). Associations with clinical measures were explored using Spearman correlation, and diagnostic accuracy was determined by ROC analysis. Results: GFAP levels were significantly higher in AIS patients than controls (median 132.9 vs. 30.0 pg/mL, p < 0.001). The ROC analysis yielded an AUC of 0.88 (95% CI 0.81-0.96). A cutoff of 71 pg/mL achieved 74% sensitivity and 92% specificity, while 150 pg/mL and 32 pg/mL optimized positive and negative predictive values (95% and 96%). GFAP was correlated with stroke severity (NIHSS, \u03c1 = 0.37-0.40, p < 0.001) and disability (mRS, \u03c1 = 0.48-0.49, p < 0.001). No significant differences appeared across TOAST subtypes. Conclusions: Serum GFAP is significantly elevated in AIS and demonstrates strong diagnostic and prognostic value. Integration of GFAP into clinical workflows may enhance early stroke detection and outcome prediction, supporting its role as a promising biomarker in AIS.",
+      "full_text_excerpt": "### 1. Introduction\n\n\nAcute ischemic stroke (AIS) represents a major global health challenge, ranking as the third leading cause of death and the fourth leading cause of disability-adjusted life years worldwide [1]. In 2021, there were approximately 7.8 million incident cases of ischemic stroke globally, accounting for 65.3% of all stroke subtypes [1,2]. Despite declining age-standardized incidence rates in some regions, the absolute burden continues to rise due to population growth and aging, with projections indicating further increases through 2030 [3,4]. This growing burden underscores the urgent need for improved diagnostic and prognostic tools to optimize patient management and outcomes.\n\nCurrent stroke diagnosis relies heavily on neuroimaging, which, while effective, is expensive, not universally available, and can be time-consuming in emergency settings where rapid treatment decisions are critical [5]. Blood-based biomarkers offer a complementary approach that could expedite diagnosis, aid in stroke subtype differentiation, predict clinical outcomes, and potentially guide therapeutic decisions [6,7]. However, despite extensive research, no individual biomarker or panel has achieved sufficient diagnostic performance for routine clinical use in the acute setting, particularly within the narrow therapeutic window for interventions such as thrombolysis [5,8].\n\nIn the last decade, Glial fibrillary acidic protein (GFAP) has emerged as a promising biomarker for acute brain injury. It is an intermediate filament protein expressed in astrocytes and released into the bloodstream following brain injury. While elevated GFAP levels are well documented in hemorrhagic stroke, traumatic brain injury, and neurodegenerative diseases, such as Alzheimer\u2019s disease, increasing evidence suggests that GFAP may also play a role in the pathophysiology and clinical course of ischemic stroke [9,10,11,12]. Nevertheless, the diagnostic and prognostic value of GFAP in AIS remains incomple",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 22,
-      "citation_text": "PMID:41827388.",
+      "citation_text": "Agnello L, Ciaccio AM, Del Ben F, Daidone M, Pacinella G, Masucci A, Tamburello M, Gambino CM, Tuttolomondo A, Ciaccio M. Diagnostic and Prognostic Value of Serum Glial Fibrillary Acidic Protein in Acute Ischemic Stroke. Journal of clinical medicine 2026 Mar 04. doi:10.3390/jcm15051971. PMID:41827388.",
       "source_phases": [
         "phase1",
         "phase4"
@@ -1166,43 +1192,48 @@
     },
     {
       "pmid": "41954515",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "title": "Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury.",
+      "authors": "Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L",
+      "journal": "CNS neuroscience & therapeutics",
+      "publication_date": "2026 Apr",
+      "doi": "10.1002/cns.70858",
+      "pmcid": "PMC13064413",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41954515/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13064413/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_YEtAl_Astrocyte-DerivedExosomalmiR-211-5pAlleviates_PMID41954515.md",
+      "abstract": "**BACKGROUND**: Traumatic brain injury (TBI) triggers a cascade of secondary damage, including neuroinflammation, astrocyte activation, and disruption of the blood-brain barrier (BBB), all of which contribute to long-term neurological deficits. Astrocyte-derived exosomes have emerged as a promising therapeutic avenue; however, the specific contributions of their molecular cargo remain poorly understood. This study explores whether astrocyte-derived exosomal delivery of microRNA-211-5p (miR-211-5p) can attenuate secondary injury and enhance functional recovery following TBI.\n\n**METHODS**: Primary astrocytes were transfected with AAV-rno-miR-211-5p, and the resulting exosomes were isolated and characterized. TBI was induced in adult rats using a controlled cortical impact (CCI) model. Exosomes (1\u2009\u00d7\u20091011 particles) were administered intravenously 30\u2009min post-injury. Behavioral assessments were conducted to evaluate cognitive function and neurological deficits. Brain edema, glial activation, and the expression of inflammatory cytokines (IL-6, IL-1\u03b2, TNF-\u03b1) and BBB-related markers-including glial fibrillary acidic protein (GFAP), matrix metalloproteinase 9 (MMP9), aquaporin 4 (AQP4), and the tight junction proteins zonula occludens-1 (ZO-1) and claudin-5-were analyzed using quantitative real-time PCR, Western blotting, enzyme-linked immunosorbent assay, and histopathological techniques.\n\n**RESULTS**: Exosomes enriched with miR-211-5p significantly improved cognitive and neurological outcomes, reduced cerebral edema, and downregulated the expression of GFAP, MMP9, and AQP4. Furthermore, the integrity of the BBB was preserved, as evidenced by sustained expression of ZO-1 and claudin-5. Levels of the proinflammatory cytokines IL-6, IL-1\u03b2, and TNF-\u03b1 were also markedly decreased in the injured cortex.\n\n**CONCLUSION**: Astrocyte-derived exosomal miR-211-5p confers neuroprotection in TBI by modulating glial activation, reducing neuroinflammation, and preserving BBB integrity. These findings underscore the therapeutic potential of miR-211-5p-loaded exosomes as a cell-free, targeted intervention for brain trauma.",
+      "full_text_excerpt": "### Introduction\n\n\nTraumatic brain injury (TBI) is a leading cause of mortality and long\u2010term disability, particularly among young adults and the elderly [1,2]. Besides the immediate mechanical insult, TBI initiates a cascade of secondary injury processes, including neuroinflammation, oxidative stress, cerebral edema, and blood\u2013brain barrier (BBB) disruption, which collectively contribute to progressive neurological decline [3]. Despite decades of research, therapeutic options for TBI remain limited, and current clinical interventions are largely supportive rather than curative [2]. A major obstacle in the development of effective treatments is the lack of targeted strategies that address the complex cellular and molecular interactions in the injured brain [4].\n\nAstrocytes, the most abundant glial cell type in the central nervous system, play a pivotal role in modulating the post\u2010injury environment [5]. Upon TBI, astrocytes become reactive, a process characterized by morphological changes and upregulation of glial fibrillary acidic protein (GFAP) [6]. While reactive astrocytes can initially serve protective functions, excessive or prolonged activation contributes to glial scar formation [7], neuroinflammation, and impaired neural regeneration [5]. Although several studies have investigated astrocytic responses following brain injury, the mechanisms by which astrocytes communicate with surrounding cells and influence neuroinflammatory and regenerative processes remain incompletely understood [8].\n\nExosomes\u2014small extracellular vesicles ranging from 30 to 150\u2009nm\u2014have recently gained attention as potent mediators of intercellular communication [9]. Astrocyte\u2010derived exosomes carry diverse cargos, including proteins, lipids, and microRNAs (miRNAs), and can influence neuronal survival, glial activation, and immune responses [10]. However, previous studies exploring the therapeutic potential of exosomes in TBI models have often treated them as homogenous entities without c",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 23,
-      "citation_text": "PMID:41954515.",
+      "citation_text": "Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:glymphatic_astroglial_clearance_failure"
+        "phase1:glymphatic_astroglial_clearance_failure",
+        "phase4:glymphatic_astroglial_clearance_failure"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_glymphatic_astroglial_clearance_failure"
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase4_glymphatic_astroglial_clearance_failure"
       ]
     },
     {
@@ -1218,7 +1249,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1275,7 +1306,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1318,43 +1349,48 @@
     },
     {
       "pmid": "41926211",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
+      "title": "Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury.",
+      "authors": "Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P",
+      "journal": "The Journal of clinical investigation",
+      "publication_date": "2026 Apr 02",
+      "doi": "10.1172/JCI196112",
       "pmcid": "",
-      "pubmed_url": "",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41926211/",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "extraction_source": "Crossref PDF",
+      "extraction_rank": "2",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_ZEtAl_Aging-dependentmicroglialheterogeneityworsens_PMID41926211.md",
+      "abstract": "Traumatic brain injury (TBI) disproportionately affects the elderly, yet the underlying mechanisms remain unclear. Here, we demonstrate that aged TBI brains predominantly harbor pro-inflammatory NLRP3+ microglia, in stark contrast to the neuroprotective Lysozyme+ microglia prevalent in young TBI brains. This age-dependent microglial dichotomy correlates with elevated mortality and impaired recovery in aged TBI mice. By leveraging an integrative multi-omics approach combined with metabolomics and epigenome analysis, we identify a previously unrecognized link between enhanced glycolysis and pro-inflammatory chromatin landscape in NLRP3+ microglia. Further investigation identifies ELF1 as a key transcription factor driving NLRP3+ microglia formation. Importantly, ablation of ELF1 reverses age-associated microglial dysfunction and improves TBI outcomes. Finally, we discover that Imeglimin, a clinically approved antihyperglycemic agent capable of crossing the blood brain barrier, inhibits ELF1 and reverses microglial phenotype, reducing acute mortality rate and leading to improved functional recovery of aged TBI mice. Our work elucidates the mechanistic basis of age-dependent TBI outcomes, reveals the crosstalk between metabolic rewiring and epigenetic regulation in microglial aging, and identifies ELF1 as a promising therapeutic target for improving TBI outcome.",
+      "full_text_excerpt": "1\n\nAging-dependent microglial heterogeneity worsens outcomes in models of traumatic 1 brain injury 2 Zhichao Lu1,4,10, Yi Shuai7,10, Chenxing Wang1,4,10, Zongheng Liu8,10, Ziheng Wang5,6, Qianqian 3 Liu1,4, Rui Jiang1,4, Jue Zhu1,4, Yongqi Zhu1,4, Weiquan Liao1,4, Xingjia Zhu1,4, Jingwei Zhao9, 4 Kaibin Shi2,3*, Wei Shi1,4*, Peipei Gong1,4* 5 1 Department of Neurosurgery, Research Center of Clinical Medicine, Affiliated Hospital of 6 Nantong University, Medical School of Nantong University, Nantong, Jiangsu, China. 7 2 Department of Neurology, China National Clinical Research Center for Neurological 8 Diseases, Beijing Tiantan Hospital, Capital Medical University, Beijing, China. 9 3 Chinese Institute for Immunology, Chinese Institutes for Medical Research, Beijing, China. 10 4 Neuro- Microscopy and Minimally Invasive Translational Medicine Innovation Center, 11 Affiliated Hospital of Nantong University, Nantong, Jiangsu, China. 12 5 MOE Frontier Science Centre for Precision Oncology, University of Macau, Macau SAR, 13 China. 14 6 The School of Public Health and Preventive Medicine, Monash University, Melbourne, 15 Victoria, Australia. 16 7 Faculty of Medicine, The Chinese University of Hong Kong, Shatin, Hong Kong Special 17 Administrative Region, China. 18 8 Department of Neurosurgery, Zhejiang Provincial Hospital of Chinese Medicine, The First 19 Affiliated Hospital of Zhejiang Chinese Medical University, Hangzhou, Zhejiang, China. 20 9 Department of General Surgery, Xinhua Hospital, Affiliated to Shanghai Jiao Tong University 21 School of Medicine, Shanghai, 200092, China. 22 2\n\n10 These authors contributed equally. 23 *Corresponding Authors 24 Peipei Gong, Address: Department of Neurosurgery, Research Center of Clinical Medicine, 25 Affiliated Hospital of Nantong University, Medical School of Nantong University, Nantong, 26 Jiangsu, China., E-mail: ntgpp@ntu.edu.cn. 27 Wei Shi , Address: Department of Neurosurgery, Research Center of Clinical Medicine, 28 Affil",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 26,
-      "citation_text": "PMID:41926211.",
+      "citation_text": "Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. The Journal of clinical investigation 2026 Apr 02. doi:10.1172/JCI196112. PMID:41926211.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change"
+        "phase1:neuroinflammation_microglial_state_change",
+        "phase4:neuroinflammation_microglial_state_change"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change"
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase4_neuroinflammation_microglial_state_change"
       ]
     },
     {
@@ -1370,7 +1406,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1405,26 +1441,26 @@
     },
     {
       "pmid": "41734021",
-      "title": "Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model.",
-      "authors": "Li T, Castro-Gomez S, Botella Lucena P, Vieira-Saecker A, Schwartz S, Ding Y, Deng Y, Guo M, Stein V, Golenbock DT, Latz E, Heneka MT",
-      "journal": "The Journal of clinical investigation",
-      "publication_date": "2026 Feb 24",
-      "doi": "10.1172/JCI199818",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
       "pmcid": "",
-      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41734021/",
+      "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "Crossref PDF",
-      "extraction_rank": "2",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_TEtAl_InflammasomeadaptorASCpromotes_PMID41734021.md",
-      "abstract": "Mild traumatic brain injury (mTBI) from closed-head injuries (CHI) can lead to prevalent neuropsychiatric disorders, including mood disorders and an increased risk for neurodegenerative diseases and dementia. Inflammasomes are molecular complexes crucial for neuroinflammation and secondary damage after trauma, however their role in mild CHI is poorly understood. In this study, we investigate the cellular expression of inflammasome-related genes and their functional significance in CHI models. Single-cell RNA sequencing analysis of cortical tissue after trauma revealed selective expression of Asc (also known as Pycard), which encodes the inflammasome adaptor Apoptosis-associated Speck-like protein containing a Caspase recruitment domain (ASC), predominantly in microglial clusters. Sustained upregulation of inflammasome-related proteins, microglia activation and astrocyte reactivity persisted up to 21 days in a model for mTBI, with this pattern significantly reduced in Asc-/- mice. Importantly, mild cognitive impairment induced after mild CHI was largely abrogated in Asc-/- mice. These findings suggest that ASC, as the primary inflammasome adaptor, plays a critical role in sustaining neuroinflammation and contributes to cognitive deficits after mild CHI. This study provides insights into the molecular neuroinflammatory mechanisms underlying CHI, potentially informing future therapeutic strategies.",
-      "full_text_excerpt": "1 Inflammasome adaptor ASC promotes sustained neuroinflammation and mild 1 cognitive impairment in a closed-head injury model 2 3 Tao Li*1, Sergio Castro-Gomez*#1,2, Pablo Botella Lucena 3, Ana Vieira-Saecker1, Stephanie Schwartz1,2, 4 Yingying Ding 2, Yushuang Deng 4, Maling Gou 5, Valentin Stein2, Douglas T. Golenbock 6, Eicke Latz 7,8,9, 5 Michael T. Heneka#3,6 6 7 1. Clinic of Parkinson, Sleep and Movement Disorders, Center for Neurology, University Hospital Bonn, University 8 of Bonn, Bonn, Germany 9 2. Institute of Physiology II, University Hospital Bonn, University of Bonn, Bonn, Germany 10 3. Luxembourg Centre for Systems Biomedicine (LCSB), University of Luxembourg, Belvaux, Luxembourg 11 4. German Center for Neurodegenerative Diseases (DZNE), Bonn, Germany 12 5. Department of Biotherapy, Cancer Center and State Key Laboratory of Biotherapy, West China Hospital, 13 Sichuan University, Chengdu, PR China 14 6. Division of Infectious Diseases and Immunology, University of Massachusetts Medical School, Worcester, USA 15 7. Institute of Innate Immunity, University Hospital Bonn, Bonn, Germany 16 8. Centre of Molecular Inflammation Research, Norwegian University of Science and Technology, Trondheim, 17 Norway 18 9. Deutsches Rheuma-Forschungszentrum (DRFZ), Berlin, Germany 19 20 21 *Authorship notes: TL and SC-G contributed equally to this work. 22 #Correspondence: michael.heneka@uni.lu, sergio.castro-gomez@ukbonn.de 23 Competing interests : M.T.H. is a scientific advisory board member at Alector the Dementia Discovery 24 Fund, and Muna Therapeutics and has received honoraria for oral presentations from Pfizer, Novartis, 25 Roche, Abbvie, and Biogen. E.L. is a co -founder and adviser at IFM Therapeutics, Dioscure Therapeutics, 26 Stealth\u2019 Biotech, and Odyssey Therapeutics. 27 2 Abstract 28 Mild traumatic brain injury (mTBI) from closed-head injuries (CHI) can lead to prevalent neuropsychiatric 29 disorders, including mood disorders and an increased risk for neuro",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "reference_number": 28,
-      "citation_text": "Li T, Castro-Gomez S, Botella Lucena P, Vieira-Saecker A, Schwartz S, Ding Y, Deng Y, Guo M, Stein V, Golenbock DT, Latz E, Heneka MT. Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model. The Journal of clinical investigation 2026 Feb 24. doi:10.1172/JCI199818. PMID:41734021.",
+      "citation_text": "PMID:41734021.",
       "source_phases": [
         "phase1",
         "phase4"
@@ -1462,7 +1498,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1508,7 +1544,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1518,22 +1554,27 @@
       "reference_number": 30,
       "citation_text": "PMID:41756234.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change"
+        "phase1:neuroinflammation_microglial_state_change",
+        "phase4:neuroinflammation_microglial_state_change"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change"
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase4_neuroinflammation_microglial_state_change"
       ]
     },
     {
@@ -1549,7 +1590,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1584,6 +1625,52 @@
     },
     {
       "pmid": "41926540",
+      "title": "Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury.",
+      "authors": "Marcatti M, Labastida JA, Tang TZ, Ahmad A, Payne C, Schwartz N, Villarreal P, Solomon OD, Vargas G, Wu P, Szczesny B",
+      "journal": "Proceedings of the National Academy of Sciences of the United States of America",
+      "publication_date": "2026 Apr 07",
+      "doi": "10.1073/pnas.2527009123",
+      "pmcid": "PMC13056099",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41926540/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13056099/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_MEtAl_Neuron-derivedmitochondrialDNAmtDNA_PMID41926540.md",
+      "abstract": "Traumatic brain injury (TBI) is a leading cause of morbidity and mortality, with closed-head mild TBI (mTBI) accounting for nearly 90% of all cases. Early pathological events include microglial activation and neuronal mitochondrial dysfunction; however, their interconnection in mTBI remains poorly understood. Using a clinically relevant closed-head weight-drop mouse model, we identified mitochondrial DNA (mtDNA)-specific damage and increased expression of innate inflammatory markers (IL-1\u03b1/\u03b2, IL-6, TNF\u03b1, and CXCL1) in the cerebral cortex during the acute mTBI phase. Mechanistically, neurons subjected to in vitro injury model of mTBI exhibited early mtDNA-specific damage followed by mtDNA release via extracellular vesicles (EVs) together with the neuronal and exosomal markers. The released neuronal mtDNA induced a robust microglial activation mediated by binding to the cytoplasmic DNA/RNA sensor Z-DNA-binding protein 1 (ZBP1), triggering activation of the ZBP1-TBK1-IRF3 pathway resulted IL-6 and TNF\u03b1 expression. An early, enhanced amounts of mtDNA, neuronal and exosomal markers were measured in EVs circulating in the blood of mice subjected to mTBI. ZBP1 knockout (KO) mice displayed suppressed microglial-but not astrocytic-activation in the cortex during the acute mTBI phase. We also measured accumulation of mtDNA-specific damage in the hippocampus during the postacute mTBI phase. The absence of microglial activation in ZBP1 KO mice exacerbated hippocampal-related memory deficits in the postacute mTBI phase. Collectively, our findings identify mtDNA-ZBP1 signaling as a key mechanism regulating microglial activation in mTBI.",
+      "full_text_excerpt": "Traumatic brain injury (TBI) is a major healthcare concern with no effective treatment options. Persistent neuroinflammation is a major contributor to cognitive and motor impairments. Microglia, the resident immune cells of the central nervous system (CNS), are essential for the neuroinflammatory response induced by TBI, which differs significantly between mild and moderate-to-severe forms. In mild TBI (mTBI), microglial activation is typically transient and spatially restricted, leading to an early but controlled immune response that supports debris clearance and synaptic remodeling (1,2). By contrast, in moderate to severe TBI, microglial responses are more widespread and prolonged, often characterized by sustained production of proinflammatory cytokines and chronic neuroinflammation, which contribute to extensive neuronal loss and white matter damage (1,2). Thus, when properly regulated, initial microglial activation is neuroprotective; however, persistent activation can shift activated microglia toward a maladaptive, neurotoxic profile that contributes to long-term neurological deficits.\n\nAn increasing number of reports describe chronic microglial activation beyond the acute phase in mTBI (3\u20138). Also, the importance of bidirectional crosstalk between neurons and microglia has been proposed (9\u201311). Dysfunctional neurons release signals that perpetuate microglial reactivity, while activated microglia alter neuronal excitability and synaptic plasticity through cytokine signaling, complement cascade activation, and aberrant synaptic pruning (9,12). This maladaptive feedback loop is thought to contribute to the persistent cognitive and behavioral deficits observed after mTBI and may underlie the increased susceptibility to later neurodegenerative processes (13). Still, the molecular mechanisms underlying these processes remain poorly understood.\n\nMitochondrial dysfunction, particularly in neurons, is an early hallmark of TBI. Due to their high metabolic demand, neuro",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 32,
+      "citation_text": "Marcatti M, Labastida JA, Tang TZ, Ahmad A, Payne C, Schwartz N, Villarreal P, Solomon OD, Vargas G, Wu P, Szczesny B. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. Proceedings of the National Academy of Sciences of the United States of America 2026 Apr 07. doi:10.1073/pnas.2527009123. PMID:41926540.",
+      "source_phases": [
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase1:neuroinflammation_microglial_state_change",
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
+      ],
+      "support_statuses": [
+        "longitudinally_seeded",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
+    },
+    {
+      "pmid": "41747594",
       "title": "",
       "authors": "",
       "journal": "",
@@ -1595,56 +1682,15 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 32,
-      "citation_text": "PMID:41926540.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
-      ],
-      "support_statuses": [
-        "longitudinally_seeded"
-      ],
-      "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
-      "pmid": "41747594",
-      "title": "Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury.",
-      "authors": "Chen W, Wu ZC, Lin L, Huang S, Jiang Q, Huang H, Xie YC, Huang LX, Li G, Fu QL, Pei Z, Yao X",
-      "journal": "International immunopharmacology",
-      "publication_date": "2026 Apr 15",
-      "doi": "10.1016/j.intimp.2026.116415",
-      "pmcid": "",
-      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41747594/",
-      "pmc_url": "",
-      "extraction_source": "Abstract only",
-      "extraction_rank": "1",
-      "source_quality_tier": "abstract_only",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_WEtAl_Effectofintranasaltreatment_PMID41747594.md",
-      "abstract": "**BACKGROUND**: Repeated traumatic brain injury (rTBI) has attracted increasing attention owing to its long-term effects on cognition and behaviour. Moreover, research has shown that acetylated tau (ac-tau) represents a common pathology linking rTBI and Alzheimer's disease that can lead to neuronal cell death. Therefore, in this study, we evaluated the therapeutic potential of mesenchymal stromal cell-derived extracellular vesicles enriched with nicotinamide phosphoribosyltransferase (NAMPT-EVs) for improving cognitive and behavioral impairments following repeated controlled cortical injury (rCCI).\n\n**METHODS**: Morris water maze and novel object recognition test were evaluated at 1-month post-rCCI with intranasal treatment of NAMPT-EVs. Expression of Sirtuin 1(SIRT1), ac-tau, neuron loss, neuroinflammation, AQP4 polarity, and meningeal lymphatic morphology and function were assessed 1\u00a0month after treatment.\n\n**RESULTS**: Intranasal administration of NAMPT-EVs significantly increased the expression of SIRT1 to deacetylate tau in rCCI mice. Additionally, NAMPT-EVs suppressed neuroinflammation and maintained aquaporin protein-4 polarity to facilitate the glymphatic system and promote the repair of the meningeal lymphatic system, which benefits the clearance of ac-tau from the brain parenchyma. Notably, the reduction in ac-tau prevented axon initial segment degradation and tau mislocalisation, resulting in a neuroprotective effect.\n\n**CONCLUSIONS**: NAMPT-EVs reduce neuronal loss and improve cognitive function in rCCI mice through multiple mechanisms. Therefore, NAMPT-EVs is promising for preventing cognitive deficit after rTBI.",
-      "full_text_excerpt": "*Full text not cleanly available.*",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
       "reference_number": 33,
-      "citation_text": "Chen W, Wu ZC, Lin L, Huang S, Jiang Q, Huang H, Xie YC, Huang LX, Li G, Fu QL, Pei Z, Yao X. Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. International immunopharmacology 2026 Apr 15. doi:10.1016/j.intimp.2026.116415. PMID:41747594.",
+      "citation_text": "PMID:41747594.",
       "source_phases": [
         "phase2",
         "phase4"
@@ -1688,8 +1734,8 @@
       "extraction_source": "PMC XML",
       "extraction_rank": "5",
       "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_CYEtAl_Mesenchymalstemcellsand_PMID41809632.md",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_CYEtAl_Mesenchymalstemcellsand_PMID41809632.md",
       "abstract": "Mesenchymal stem cells (MSCs) have been studied as a potential therapy for a wide range of conditions for approximately 30 years. MSCs have shown promise in treating pathologies of or affecting the central nervous system (CNS), specifically Alzheimer's disease (AD), Parkinson's disease (PD), amyotrophic lateral sclerosis (ALS), multiple sclerosis (MS), stroke, spinal cord injury (SCI), traumatic brain injury (TBI), degenerative disc disease (DDD), and sepsis/meningitis. The therapeutic benefits of MSCs derive primarily from their arsenal of secreted factors that promote anti-inflammatory and pro-survival pathways while attenuating harmful immune responses, thus making them powerful immunomodulatory entities which are also capable of affecting a diverse range of cellular functions to promote endogenous mechanisms of repair. This review summarizes the current state of clinical trials research regarding pathologies of the CNS with a focus on historical progression and upcoming trials. We take a mechanistic approach to explain the therapeutic basis of MSCs and how this has informed clinical trials. We also mention the role of the MSC secretome and MSC exosomes in the treatment of CNS pathologies as well as their increasing use in clinical trials. Finally, we address the challenges inherent to the clinical translation and implementation of MSC therapies along with future directions of the field.",
       "full_text_excerpt": "### Introduction and history\n\n\nStem cells are cells that are capable of self-renewal and differentiation into other cell types. Because of this unique ability, they carry great potential for enhancing the regeneration of damaged tissue and the growth of new tissue (McCulloch and Till, 2005). Common sources of stem cells include embryologic stem cells, fetal stem cells, induced pluripotent stem cells (iPSCs), and mesenchymal stem cells (MSCs) (Bacakova et al., 2018). Stem cells obtained from human embryos are either totipotent or pluripotent depending on when they were collected and are therefore desirable for research and clinical uses. However, there is significant ethical concern surrounding the use of embryologic stem cells (Wertz, 2002). iPSCs offer another source of pluripotent stem cells. They are created through selective expression of specific transcription factors which transform terminally differentiated adult cells back into stem cells (Takahashi et al., 2007;Yu et al., 2007). A major drawback of both iPSCs and embryonic stem cells is their tumorigenicity (Ben-David and Benvenisty, 2011).\n\nMSCs, on the other hand, are promising agents for regenerative therapies due to their convenient methods of procurement, relative lack of tumorigenicity and immunogenicity, and lack of ethical issues that plague embryonic stem cells (Bacakova et al., 2018). Many MSC therapies also benefit from ease of regulation as minimally manipulated cell products (Marks and Gottlieb, 2018). MSCs are a type of multipotent stem cell capable of differentiating into bone, adipose tissue, cartilage, tendon, muscle, and marrow stroma (Pittenger et al., 1999), and have been historically cultured from bone marrow (Pittenger et al., 2019), adipose tissue (Zuk et al., 2001), umbilical cord tissue (Romanov et al., 2003), and placental tissue (In \u2019t Anker et al., 2004).\n\nMSCs were first discovered by James Till and Earnest McColloch in 1961. They observed that populations of bone marrow cells i",
       "retrieval_mode": "legacy",
@@ -1735,7 +1781,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1744,6 +1790,52 @@
       "domain": "",
       "reference_number": 35,
       "citation_text": "PMID:41739474.",
+      "source_phases": [
+        "phase2",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4:tau_proteinopathy_progression"
+      ],
+      "support_roles": [
+        "phase2_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
+      ],
+      "support_statuses": [
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4_tau_proteinopathy_progression"
+      ]
+    },
+    {
+      "pmid": "41893300",
+      "title": "Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease.",
+      "authors": "Huang YQ, Zhong CY, Burley G, Shi YC, Lin S",
+      "journal": "Metabolites",
+      "publication_date": "2026 Feb 24",
+      "doi": "10.3390/metabo16030148",
+      "pmcid": "PMC13027838",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41893300/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13027838/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_YQEtAl_Tissue-DerivedSmallExtracellularVesicles_PMID41893300.md",
+      "abstract": "Small extracellular vesicles (sEVs; commonly referred to as \"exosomes\" in many studies) are nanoscopic messengers released by healthy and diseased cells that mediate intercellular communication by transferring proteins, lipids, and nucleic acids to local or distant recipient cells. In this narrative review, we synthesize recent evidence linking tissue-derived sEVs to neurological disorders (including neurodegeneration and traumatic brain injury), metabolic syndrome, cardiovascular diseases, cancers, and bone diseases, with a particular emphasis on CNS-periphery crosstalk across the blood-brain barrier. Compared with prior reviews that focus on single organ systems, we highlight cross-disease, cross-tissue mechanisms and summarize candidate biomarker cargos and therapeutic strategies in dedicated tables. While accumulating data support brain-body communication via sEVs, the concept of CNS-derived sEVs acting as a \"third central efferent pathway\" is presented here as an emerging hypothesis that complements-rather than replaces-neuronal and endocrine signaling. Overall, tissue-derived sEVs represent a promising but still evolving platform for diagnostic and therapeutic innovation, warranting standardized isolation/characterization and further clinical validation.",
+      "full_text_excerpt": "### 1. Introduction\n\n\nExtracellular vesicles (EVs) are lipid-bilayer nanoparticles released by cells, spanning multiple size ranges and biogenesis routes. In this review, we primarily discuss small EVs (sEVs; commonly 30\u2013150 nm), a category that includes exosomes, but we use the term \u201cexosome\u201d only when endosomal origin is experimentally supported. This terminology follows the Minimal Information for Studies of Extracellular Vesicles (MISEV2023) recommendations, which emphasize rigorous operational definitions based on isolation and characterization rather than assumed biogenesis [1].\n\nsEVs can be classified by source (e.g., cultured cells, specific tissues/organs, or circulating biofluids). Tissue-derived sEVs reflect in vivo states and carry proteins, lipids, and nucleic acids (DNA, mRNA, microRNA, lncRNA), thereby acting as \u2018mini snapshots\u2019 of their parent cells that can modulate recipient-cell metabolism, immunity, and stress responses locally or systemically [2,3]. sEVs are readily detected in plasma/serum and diverse biofluids (urine, saliva, synovial fluid, amniotic and pleural fluids, breast milk), enabling tissue-informed liquid biopsy approaches. Because of their diverse origins and targets, sEVs have been implicated across neurodegenerative diseases, traumatic brain injury (TBI), metabolic disorders, cardiovascular diseases, cancers, and bone diseases [3,4,5,6,7]. However, terminology, isolation methods, and mechanistic interpretations vary substantially across the literature, which can complicate cross-study comparison and clinical translation.\n\nDiseases/conditions discussed in this review were selected based on (i) high clinical burden and prevalence, (ii) evidence that tissue-derived sEV cargos are measurable in accessible biofluids, and (iii) representative mechanistic paradigms of inter-organ communication (CNS\u2013periphery, metabolic\u2013immune, vascular remodeling, tumor microenvironment, and joint/bone remodeling).\n\nHere, we provide a narrative synthesis",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 36,
+      "citation_text": "Huang YQ, Zhong CY, Burley G, Shi YC, Lin S. Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease. Metabolites 2026 Feb 24. doi:10.3390/metabo16030148. PMID:41893300.",
       "source_phases": [
         "phase2",
         "phase4"
@@ -1781,14 +1873,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 36,
+      "reference_number": 37,
       "citation_text": "PMID:41328339.",
       "source_phases": [
         "phase3",
@@ -1829,14 +1921,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 37,
+      "reference_number": 38,
       "citation_text": "PMID:41594797.",
       "source_phases": [
         "phase3",
@@ -1860,8 +1952,7 @@
         "bounded"
       ],
       "supporting_claim_ids": [
-        "phase3_tauopathy_progression",
-        "phase4_tau_proteinopathy_progression"
+        "phase3_tauopathy_progression"
       ]
     },
     {
@@ -1877,14 +1968,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 38,
+      "reference_number": 39,
       "citation_text": "PMID:41132417.",
       "source_phases": [
         "phase3",
@@ -1922,14 +2013,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 39,
+      "reference_number": 40,
       "citation_text": "PMID:41234125.",
       "source_phases": [
         "phase3",
@@ -1967,14 +2058,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 40,
+      "reference_number": 41,
       "citation_text": "PMID:41300163.",
       "source_phases": [
         "phase3",
@@ -2012,14 +2103,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 41,
+      "reference_number": 42,
       "citation_text": "PMID:41513584.",
       "source_phases": [
         "phase3",
@@ -2057,14 +2148,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 42,
+      "reference_number": 43,
       "citation_text": "PMID:41564671.",
       "source_phases": [
         "phase3",
@@ -2102,14 +2193,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 43,
+      "reference_number": 44,
       "citation_text": "PMID:41669533.",
       "source_phases": [
         "phase3",
@@ -2147,14 +2238,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 44,
+      "reference_number": 45,
       "citation_text": "PMID:41709584.",
       "source_phases": [
         "phase3",
@@ -2192,14 +2283,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 45,
+      "reference_number": 46,
       "citation_text": "PMID:41135688.",
       "source_phases": [
         "phase3",
@@ -2237,14 +2328,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 46,
+      "reference_number": 47,
       "citation_text": "PMID:41173520.",
       "source_phases": [
         "phase3",
@@ -2283,14 +2374,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 47,
+      "reference_number": 48,
       "citation_text": "PMID:41197779.",
       "source_phases": [
         "phase3",
@@ -2328,14 +2419,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 48,
+      "reference_number": 49,
       "citation_text": "PMID:41327381.",
       "source_phases": [
         "phase3",
@@ -2373,14 +2464,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 49,
+      "reference_number": 50,
       "citation_text": "PMID:41446731.",
       "source_phases": [
         "phase3",
@@ -2418,14 +2509,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 50,
+      "reference_number": 51,
       "citation_text": "PMID:41394307.",
       "source_phases": [
         "phase4"
@@ -2440,9 +2531,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_tau_proteinopathy_progression"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41618372",
@@ -2457,14 +2546,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 51,
+      "reference_number": 52,
       "citation_text": "PMID:41618372.",
       "source_phases": [
         "phase4"
@@ -2479,9 +2568,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_tau_proteinopathy_progression"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41622461",
@@ -2496,14 +2583,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 52,
+      "reference_number": 53,
       "citation_text": "PMID:41622461.",
       "source_phases": [
         "phase4"
@@ -2518,9 +2605,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_tau_proteinopathy_progression"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41667502",
@@ -2535,21 +2620,20 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 53,
+      "reference_number": 54,
       "citation_text": "PMID:41667502.",
       "source_phases": [
         "phase4"
       ],
       "artifact_refs": [
-        "phase4:tau_proteinopathy_progression",
-        "phase4:glymphatic_astroglial_clearance_failure"
+        "phase4:tau_proteinopathy_progression"
       ],
       "support_roles": [
         "phase4_support"
@@ -2558,9 +2642,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_glymphatic_astroglial_clearance_failure"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41675841",
@@ -2575,14 +2657,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 54,
+      "reference_number": 55,
       "citation_text": "PMID:41675841.",
       "source_phases": [
         "phase4"
@@ -2612,14 +2694,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 55,
+      "reference_number": 56,
       "citation_text": "PMID:41700019.",
       "source_phases": [
         "phase4"
@@ -2649,14 +2731,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 56,
+      "reference_number": 57,
       "citation_text": "PMID:41785317.",
       "source_phases": [
         "phase4"
@@ -2686,14 +2768,14 @@
       "extraction_source": "Publisher HTML",
       "extraction_rank": "3",
       "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_MEtAl_Neuronalandglialnetworks_PMID41826372.md",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_MEtAl_Neuronalandglialnetworks_PMID41826372.md",
       "abstract": "Mild traumatic brain injury (mTBI) disproportionately affects children and adolescents and has been associated with poorer neurocognitive performance, but the biological mechanisms driving symptom variability and severity remain understudied. In accordance with the omnigenic disease model, we integrated gene-by-mTBI interaction genome-wide association studies on neurocognition from the Adolescent Brain Cognitive Development (ABCD) cohort with single-cell RNA sequencing gene regulatory networks to elucidate the cell type-specific key regulators and molecular mechanisms governing neurocognitive outcome of mTBI, specifically learning and memory performance. Our analysis revealed distinct network regulators in neuronal and glial cell types across hippocampal and cortical brain regions to orchestrate key neurodevelopmental pathways. Examples include APP for synaptic signaling in excitatory neurons, COX5A for mitochondrial function in inhibitory neurons, MOG for myelination in oligodendrocytes in the hippocampus; GRM7 for synaptic signaling in excitatory neurons, SV2A for synaptic signaling in inhibitory neurons, and MOG for myelination in oligodendrocytes in the cortex. These mechanisms also associate with learning and memory through pathway-based polygenic risk score modeling in ABCD. Our findings provide brain region- and cell type-specific insights into the complex regulatory network landscape of mTBI pathology and potential therapeutic candidates at the pathway and network levels.",
       "full_text_excerpt": "Abstract\n\nMild traumatic brain injury (mTBI) disproportionately affects children and adolescents and has been associated with poorer neurocognitive performance, but the biological mechanisms driving symptom variability and severity remain understudied. In accordance with the omnigenic disease model, we integrated gene-by-mTBI interaction genome-wide association studies on neurocognition from the Adolescent Brain Cognitive Development (ABCD) cohort with single-cell RNA sequencing gene regulatory networks to elucidate the cell type-specific key regulators and molecular mechanisms governing neurocognitive outcome of mTBI, specifically learning and memory performance. Our analysis revealed distinct network regulators in neuronal and glial cell types across hippocampal and cortical brain regions to orchestrate key neurodevelopmental pathways. Examples include APP for synaptic signaling in excitatory neurons, COX5A for mitochondrial function in inhibitory neurons, MOG for myelination in oligodendrocytes in the hippocampus; GRM7 for synaptic signaling in excitatory neurons, SV2A for synaptic signaling in inhibitory neurons, and MOG for myelination in oligodendrocytes in the cortex. These mechanisms also associate with learning and memory through pathway-based polygenic risk score modeling in ABCD. Our findings provide brain region- and cell type-specific insights into the complex regulatory network landscape of mTBI pathology and potential therapeutic candidates at the pathway and network levels.\n\nSimilar content being viewed by others\n\nData availability\n\nAll data pertaining to ABCD is available through the National Institute of Mental Health Data Archive (NDA). The Gene Ontology biological pathways were downloaded from Molecular Signature Databases (https://www.gsea-msigdb.org/gsea/msigdb/human/collections.jsp#C5). The single-cell RNA-seq data were downloaded from Allen Brain Atlas (https://portal.brain-map.org/atlases-and-data/rnaseq). Data analysis scripts can be found",
       "retrieval_mode": "legacy",
       "source_query": "legacy_query",
       "domain": "legacy_tbi",
-      "reference_number": 57,
+      "reference_number": 58,
       "citation_text": "Cheng M, Mao M, Meng W, Jacobus J, Troyer EA, Delfel EL, Dennis EL, Wilde EA, Abildskov T, de Souza NL, Vaida F, Max JE, Yang X. Neuronal and glial networks interact with traumatic brain injury to modulate cognition in ABCD study. NPJ systems biology and applications 2026 Mar 13. doi:10.1038/s41540-026-00681-8. PMID:41826372.",
       "source_phases": [
         "phase4"
@@ -2711,45 +2793,6 @@
       "supporting_claim_ids": []
     },
     {
-      "pmid": "41642456",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 58,
-      "citation_text": "PMID:41642456.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:glymphatic_astroglial_clearance_failure"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_glymphatic_astroglial_clearance_failure"
-      ]
-    },
-    {
       "pmid": "41301762",
       "title": "",
       "authors": "",
@@ -2762,7 +2805,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2790,26 +2833,26 @@
     },
     {
       "pmid": "41792880",
-      "title": "Glymphatic System Dysfunction in Central Nervous System Diseases.",
-      "authors": "Zahran A, Abu-Khazneh O, Bdair M, Hajjeh O, AbuBaha M, Shehadeh W, Awashra A, Alazizi I, Fuqha R, Saife S, Fuqha H, Milhem F, Hamshary H, Abuzahra D, Shuaib U",
-      "journal": "CNS neuroscience & therapeutics",
-      "publication_date": "2026 Mar",
-      "doi": "10.1002/cns.70810",
-      "pmcid": "PMC12965907",
-      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41792880/",
-      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12965907/",
-      "extraction_source": "PMC XML",
-      "extraction_rank": "5",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_AEtAl_GlymphaticSystemDysfunctionin_PMID41792880.md",
-      "abstract": "**BACKGROUND**: The glymphatic system is a perivascular cerebrospinal fluid (CSF)-interstitial fluid (ISF) exchange pathway that supports brain homeostasis by clearing metabolic waste and neurotoxic proteins. Across central nervous system diseases, converging evidence indicates that glymphatic dysfunction represents a shared pathophysiological axis linking vascular, astroglial, inflammatory, and sleep-related disturbances to impaired solute clearance.\n\n**RESULTS AND CONCLUSION**: In this review, we synthesize mechanistic and clinical evidence for glymphatic impairment in acute brain injury (ischemic and hemorrhagic stroke, traumatic brain injury) and chronic neurological disorders (Alzheimer's disease, Parkinson's disease, cerebral small vessel disease, multiple sclerosis, idiopathic normal pressure hydrocephalus, idiopathic intracranial hypertension, epilepsy, and headache disorders). Major mechanisms include (i) aquaporin-4 (AQP4) depolarization/mislocalization at astrocytic endfeet, reducing perivascular water transport; (ii) perivascular space compression or obstruction from cytotoxic/vasogenic edema, blood-derived products, protein aggregates, or altered extracellular matrix; (iii) loss of arterial pulsatility and vascular stiffening, weakening the driving forces for convective exchange; (iv) blood-brain barrier disruption and neuroinflammation, which remodel perivascular architecture and amplify clearance failure; and (v) sleep and autonomic dysregulation, including altered noradrenergic tone, which suppresses glymphatic activity during periods when clearance is normally maximal. Clinically, glymphatic dysfunction can be probed using diffusion tensor imaging-analysis along the perivascular space (DTI-ALPS), contrast-enhanced MRI approaches, and structural surrogates such as enlarged perivascular spaces, with emerging associations to cognition, mood, and disease severity. Finally, we discuss translational strategies aimed at restoring clearance, including sleep/circadian optimization, vascular risk control, anti-inflammatory approaches, AQP4- and TRPV4-oriented targets, and neuromodulation. Mechanism-guided, standardized imaging and longitudinal interventional studies are needed to establish glymphatic biomarkers as actionable therapeutic and prognostic tools.",
-      "full_text_excerpt": "### Introduction\n\n\nHistorically, the central nervous system (CNS) was considered to be devoid of a system to manage its metabolic waste products, similar to the lymphatic system's role in managing waste products throughout the rest of the body [1,2]. In 2012, the glymphatic system was first described as a glia\u2010dependent clearance pathway that redefined our understanding of neurofluid dynamics and brain homeostasis [3,4,5]. This system functions through a network of perivascular spaces (PVSs) that facilitates the passage of cerebrospinal fluid (CSF) from the subarachnoid space into the brain's interstitium, modulated by aquaporin\u20104 (AQP4) channels in the astrocytes surrounding the PVSs. Mixing with the interstitial fluid (ISF) facilitates the clearance of solutes. Subsequently, the CSF\u2010ISF fluid and the waste products collected along the way get drained into the perivenous spaces, reaching the meningeal lymphatic system and, finally, the cervical lymph nodes [2,3,5,6,7]. (Figure1).\n\nGlymphatic pathway of CSF flow and waste clearance. CSF enters the brain via para\u2010arterial routes, facilitated by aquaporin\u20104 (AQP4) on astrocytes, mixes with interstitial fluid (ISF), and clears solutes through perivenous pathways toward the cervical lymphatics. Created inhttps://BioRender.com.\n\nBeyond its structural uniqueness, the glymphatic system has a pivotal role in physiologically maintaining brain health and clearing neurotoxic waste products from the interstitial space [3]. Some of the most important solutes eliminated through this pathway are amyloid\u2010\u03b2, \u03b1\u2010synuclein, and tau proteins, which are implicated in the pathogenesis of numerous neurodegenerative disorders such as Alzheimer's disease [3,5,8,9,10]. Experimental studies have shown that glymphatic transport is most active during sleep, when the interstitial space expands and CSF influx increases, facilitating more efficient clearance [4,10]. On the other hand, the disruption of aquaporin\u20104 (AQP4) polarization or sleep depri",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "reference_number": 60,
-      "citation_text": "Zahran A, Abu-Khazneh O, Bdair M, Hajjeh O, AbuBaha M, Shehadeh W, Awashra A, Alazizi I, Fuqha R, Saife S, Fuqha H, Milhem F, Hamshary H, Abuzahra D, Shuaib U. Glymphatic System Dysfunction in Central Nervous System Diseases. CNS neuroscience & therapeutics 2026 Mar. doi:10.1002/cns.70810. PMID:41792880.",
+      "citation_text": "PMID:41792880.",
       "source_phases": [
         "phase4"
       ],
@@ -2829,26 +2872,65 @@
     },
     {
       "pmid": "41801080",
-      "title": "Elucidating Trigonelline's Therapeutic Mechanisms for Traumatic Brain Injury Through Integrated Network Pharmacology and In\u00a0Vivo Validation.",
-      "authors": "Zhang Q, Zhang Y, Song Z, Tang Z, Wang G, Yang X, Li J, Li T",
-      "journal": "CNS neuroscience & therapeutics",
-      "publication_date": "2026 Mar",
-      "doi": "10.1002/cns.70803",
-      "pmcid": "PMC12970217",
-      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41801080/",
-      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12970217/",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 61,
+      "citation_text": "PMID:41801080.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:glymphatic_astroglial_clearance_failure"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_glymphatic_astroglial_clearance_failure"
+      ]
+    },
+    {
+      "pmid": "41853701",
+      "title": "Small extracellular vesicle-integrated by herbal hydrogels for spatiotemporal immunomodulation and neurovascular repair following traumatic brain injury.",
+      "authors": "Wu Y, Sun Y, Chen J, Hu M, Zhang X, Xiong X, Yu Z, Yang X, Li H, Wang Y",
+      "journal": "Bioactive materials",
+      "publication_date": "2026 Aug",
+      "doi": "10.1016/j.bioactmat.2026.02.056",
+      "pmcid": "PMC12992974",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41853701/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12992974/",
       "extraction_source": "PMC XML",
       "extraction_rank": "5",
       "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_QEtAl_ElucidatingTrigonellinesTherapeuticMechanisms_PMID41801080.md",
-      "abstract": "**BACKGROUND**: Traumatic brain injury (TBI) triggers complex pathological cascades, including inflammation, oxidative stress, apoptosis, and gliosis, particularly during the acute phase after injury. Trigonelline has been reported to exert neuroprotective effects in experimental models; however, its molecular mechanisms in acute TBI remain insufficiently defined.\n\n**OBJECTIVE**: This study aimed to elucidate the molecular targets and mechanisms by which trigonelline attenuates acute TBI using an integrated network pharmacology and experimental validation approach.\n\n**METHODS**: A trigonelline-target interaction network was constructed based on network pharmacology, followed by GO/KEGG analyses to predict the biological processes and pathways involved. Molecular docking was conducted to validate the binding affinity of trigonelline with key targets. Animal experiments were carried out to confirm the mechanistic predictions.\n\n**RESULTS**: Network pharmacology identified GAPDH, IL6, ALB, TNF, and IL1B as major hub genes associated with trigonelline. GO/KEGG analyses suggested that the neuroprotective effects of trigonelline against TBI primarily involved the MAPK and PI3K-Akt pathways. In\u00a0vivo assays demonstrated that trigonelline treatment significantly reduced brain water content, inflammation, and oxidative stress levels within 72\u2009h post-injury, while ameliorating histopathological damage, as confirmed by ELISA, HE, and LFB staining. TUNEL, NeuN, and FJB staining further revealed that trigonelline attenuated TBI-induced neuronal apoptosis. Western blotting demonstrated that trigonelline suppressed MMP-9 and AQP4 expression and attenuated the triggering of the MAPK signaling pathway.\n\n**CONCLUSION**: By attenuating MAPK signaling and apoptosis, trigonelline mitigates neural damage following TBI. The present findings provide experimental evidence supporting the neuroprotective effects of trigonelline in an acute TBI model.",
-      "full_text_excerpt": "### Introduction\n\n\nTBI is brain damage caused by external mechanical impact or violence. It represents a leading cause of epilepsy, psychiatric disorders, and other chronic neurological conditions, and additionally serves as a principal factor contributing to global mortality and disability [1,2]. Patients with TBI frequently experience motor, sensory, and cognitive impairments, resulting in sustained deterioration in quality of life and imposing substantial social and economic burdens [3]. The pathology of TBI involves both primary injuries, such as cerebral contusion and intracranial hematoma, and secondary injuries characterized by neuroinflammation, oxidative stress, apoptotic cell death, and disruption of the blood\u2013brain barrier (BBB) [4,5]. Despite continuous advances in emergency care and rehabilitation, effective therapeutic strategies for TBI remain limited, underscoring the need for novel therapeutic strategies targeting secondary injury cascades during the acute phase.\n\nIn recent years, natural agents and pharmacologically active molecules derived from traditional Chinese medicine (TCM) have received heightened attention for TBI research owing to their multitarget and multipathway regulatory properties\u00a0[6]. Trigonelline (TG), a major alkaloid found in fenugreek (Trigonella foenum\u2010graecum),Leonurus japonicus(motherwort), and other medicinal and edible plants, has been reported to exhibit diverse biological activities, including anti\u2010apoptotic, anti\u2010inflammatory, antioxidant, neuroprotective, and cognition\u2010enhancing effects [7,8]. TG has been reported to alleviate neuronal injury by modulating inflammatory responses, scavenging reactive oxygen species (ROS), and supporting mitochondrial function [9]. It exhibits pronounced neuroprotective properties in preclinical studies investigating neurodegenerative conditions, such as Alzheimer's and Parkinson's disease [10,11]. Furthermore, TG mitigates lipopolysaccharide (LPS)\u2010induced neuroinflammatory responses by b",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_YEtAl_Smallextracellularvesicle-integratedby_PMID41853701.md",
+      "abstract": "Traumatic brain injury (TBI) causes acute neuronal and vascular damage accompanied by intense neuroinflammation, yet current surgical and pharmacological interventions yield limited long-term benefits. Embryonic stem cell-derived small extracellular vesicles (ESC-sEV) carry potent pro-repair signals but suffer from poor brain targeting and rapid clearance in the acute inflammatory window. To address these critical limitations, we engineered an injectable ESC-sEV-glycyrrhizic acid (GA) co-assembled hydrogel (EG-gel) in which sEVs act as a functional gel factor interpenetrating GA nanoscaffolds. GA molecules were self-assembled into nanoscaffolds via hydrogen bonding, with polar head groups coordinating to sEV membranes while hydrophobic cores insert into lipid bilayers, yielding a robust, hierarchical matrix. EG-gel exhibited brain-compatible mechanical properties, rapid self-healing, shear-thinning injectability, and strong tissue adhesion, which collectively enhance local sEV accumulation at the lesion site. In a mouse TBI model, the EG-gel showed superior neuroprotective effects and functional recovery outcomes compared with the GA-gel. Transcriptomics combined with experimental validation confirmed a spatiotemporal synergistic mechanism: GA mediated early inflammatory suppression and immune microenvironment stabilization, while co-assembled sEVs drove angiogenesis and neuronal repair. Therefore, the EG-gel played a synergistic role in establishing a sequential \"first anti-inflammatory, then vaso-neural regeneration\" microenvironment, thereby promoting neuroprotection after TBI. This work highlights the EG-gel as an up-and-coming candidate for translational therapy in TBI.",
+      "full_text_excerpt": "### Introduction\n\n\nTraumatic brain injury (TBI) is a major global public-health and clinical challenge [1,2]. In the acute window, primary mechanical insult produces widespread neuronal loss and axonal disruption, together with vascular injury, blood-brain barrier breakdown, and focal hemorrhage. This rapidly provokes intense neuroinflammation that amplifies secondary damage and accelerates functional decline [3,4]. Because the central nervous system has limited regenerative capacity and the pathology is multi-targeted and time-dependent, current surgical and pharmacological interventions remain insufficient to restore long-term neurological function [3,5]. There is therefore an urgent need for integrated strategies that combine inflammation control, neuroprotection, and structural repair. Stem-cell therapy has attracted considerable attention in neural repair due to its regenerative potential and multimodal mechanisms. And several cell therapies have advanced into late-stage clinical trials, fuelling substantial industrial investment and market expectations [[6],[7],[8]]. Media-level \u201ccelebrity effects\u201d have further amplified public and capital interest (for example, press reports concerning Rafael Nadal and Michael J. Fox), accelerating clinical and commercial momentum. Stem cell types are diverse and include broadly applied mesenchymal stem cells (MSCs) as well as pluripotent embryonic stem cells (ESCs), induced pluripotent stem cells (iPSCs), and neural stem cells (NSCs). Compared to MSCs, ESCs have significant advantages in terms of in vitro proliferation rate, yield, and abundance of secreted factor profiles. Therefore, they show higher potential for use in indications that require large-scale tissue regeneration and vascular repair, such as TBI. However, direct clinical application of ESCs is constrained by immune rejection, poor lesion retention, uncontrolled differentiation, tumorigenic risk, and ethical concerns [9].\n\nTo address safety and controllability,",
       "retrieval_mode": "legacy",
       "source_query": "legacy_query",
       "domain": "legacy_tbi",
-      "reference_number": 61,
-      "citation_text": "Zhang Q, Zhang Y, Song Z, Tang Z, Wang G, Yang X, Li J, Li T. Elucidating Trigonelline's Therapeutic Mechanisms for Traumatic Brain Injury Through Integrated Network Pharmacology and In\u00a0Vivo Validation. CNS neuroscience & therapeutics 2026 Mar. doi:10.1002/cns.70803. PMID:41801080.",
+      "reference_number": 62,
+      "citation_text": "Wu Y, Sun Y, Chen J, Hu M, Zhang X, Xiong X, Yu Z, Yang X, Li H, Wang Y. Small extracellular vesicle-integrated by herbal hydrogels for spatiotemporal immunomodulation and neurovascular repair following traumatic brain injury. Bioactive materials 2026 Aug. doi:10.1016/j.bioactmat.2026.02.056. PMID:41853701.",
       "source_phases": [
         "phase4"
       ],
@@ -2879,14 +2961,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 62,
+      "reference_number": 63,
       "citation_text": "PMID:41079361.",
       "source_phases": [
         "phase4"
@@ -2901,9 +2983,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_glymphatic_astroglial_clearance_failure"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41177833",
@@ -2918,14 +2998,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 63,
+      "reference_number": 64,
       "citation_text": "PMID:41177833.",
       "source_phases": [
         "phase4"
@@ -2955,14 +3035,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 64,
+      "reference_number": 65,
       "citation_text": "PMID:41183617.",
       "source_phases": [
         "phase4"
@@ -2992,14 +3072,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 65,
+      "reference_number": 66,
       "citation_text": "PMID:41267966.",
       "source_phases": [
         "phase4"
@@ -3017,123 +3097,6 @@
       "supporting_claim_ids": []
     },
     {
-      "pmid": "41612383",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 66,
-      "citation_text": "PMID:41612383.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
-      "pmid": "41803087",
-      "title": "PRMT6 is required for initiating and amplifying macrophage-induced inflammation in heterotopic ossification by increasing CCL2 expression.",
-      "authors": "Chu W, Peng W, Wu Z, Xiong Y, Gao Z, Li Y, Zhang B, Wang L, Wang H, Han C, Lu X",
-      "journal": "Bone research",
-      "publication_date": "2026 Mar 10",
-      "doi": "10.1038/s41413-026-00512-w",
-      "pmcid": "PMC12972138",
-      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41803087/",
-      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12972138/",
-      "extraction_source": "PMC XML",
-      "extraction_rank": "5",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_WEtAl_PRMT6isrequiredfor_PMID41803087.md",
-      "abstract": "Heterotopic ossification (HO) is a debilitating disorder marked by ectopic bone formation in soft tissues, frequently triggered by inflammation after trauma. While macrophage-driven inflammation plays a critical role in HO pathogenesis, the molecular mechanisms governing its initiation, amplification and resolution remain elusive. Using a trauma/burn injury (TBI)-induced mouse model of HO, we identified rapid and sustained macrophage accumulation at the injury site during the early inflammatory phase, and macrophage depletion markedly suppressed HO formation. Transcriptomic profiling identified a pronounced upregulation of protein arginine methyltransferase 6 (PRMT6) in macrophages following injury. Genetic deletion or macrophage-targeted knockdown of Prmt6 reduced macrophage accumulation and significantly attenuated HO, without impairing tendon repair. Consistently, pharmacological inhibition of PRMT6 suppressed HO only when administered during the early inflammatory phase, indicating a restricted therapeutic window. Mechanistically, PRMT6 amplified macrophage chemotactic signaling by transcriptionally and epigenetically upregulating CCL2. Genetic disruption of macrophage-derived CCL2 phenocopied Prmt6 deficiency, whereas CCL2 supplementation rescued macrophage recruitment and partially restored HO in Prmt6-deficient mice. At the molecular level, PRMT6 formed a coactivation complex with NF-\u03baB and catalyzed H3R17 asymmetric dimethylation at the Ccl2 promoter, thereby promoting sustained chemokine expression. Collectively, our findings identify PRMT6 as a central epigenetic amplifier of macrophage-driven inflammation that links early injury responses to ectopic bone formation. Targeting PRMT6 during the early inflammatory phase represents a promising strategy to prevent HO while preserving physiological tissue repair.",
-      "full_text_excerpt": "### Introduction\n\n\nHeterotopic ossification (HO) is characterized by the aberrant formation of bone within soft tissues, typically triggered by traumatic events such as surgical interventions, neurological damage, or severe burns.1This pathological condition affects more than 10% of patients undergoing invasive surgeries, 30% of those following hip arthroplasties, and up to 65% of seriously injured military personnel. The prevalence soars above 90% in cases of severe traumatic amputations.2\u20134The clinical impact of HO is profound, often leading to chronic pain, joint stiffness, mobility impairment, and recurrent infections.2Current therapeutic approaches, including NSAIDs, radiation, and surgical excision, remain largely ineffective, with high recurrence rates post-treatment.3These limitations underscore a critical need for deeper insights into the molecular and cellular mechanisms driving HO pathogenesis.\n\nAlthough the precise mechanisms underlying HO remain incompletely understood, it is well-established that the pathological process mimics endochondral ossification, encompassing phases of inflammation, chondrogenesis, osteogenesis, and bone maturation.5Trauma or surgical injury initiates a localized inflammatory response, recruiting immune cells such as neutrophils, monocytes, and lymphocytes to the site of injury.6,7These immune cells release a cascade of inflammatory mediators, which subsequently drive the recruitment and differentiation of skeletal progenitor cells into chondrocytes. These chondrocytes undergo hypertrophy, vascularization, and mineralization, eventually leading to ectopic bone formation.8\u201310Among the immune cells involved, macrophages play a pivotal role, particularly those derived from monocytes in bone marrow cells. Macrophages are central to both normal tissue repair\u2014such as bone remodeling and angiogenesis\u2014and the pathology of inflammatory disorders like rheumatoid arthritis and HO.11\u201314Their critical role in HO is linked to the inflammator",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
-      "reference_number": 67,
-      "citation_text": "Chu W, Peng W, Wu Z, Xiong Y, Gao Z, Li Y, Zhang B, Wang L, Wang H, Han C, Lu X. PRMT6 is required for initiating and amplifying macrophage-induced inflammation in heterotopic ossification by increasing CCL2 expression. Bone research 2026 Mar 10. doi:10.1038/s41413-026-00512-w. PMID:41803087.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
-      "pmid": "41511466",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 68,
-      "citation_text": "PMID:41511466.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
       "pmid": "41480492",
       "title": "",
       "authors": "",
@@ -3146,7 +3109,85 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 67,
+      "citation_text": "PMID:41480492.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
+    },
+    {
+      "pmid": "41622481",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 68,
+      "citation_text": "PMID:41622481.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
+    },
+    {
+      "pmid": "41659975",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3154,7 +3195,7 @@
       "source_query": "",
       "domain": "",
       "reference_number": 69,
-      "citation_text": "PMID:41480492.",
+      "citation_text": "PMID:41659975.",
       "source_phases": [
         "phase4"
       ],
@@ -3185,7 +3226,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3224,7 +3265,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3263,7 +3304,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3285,9 +3326,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41737534",
@@ -3302,7 +3341,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3324,9 +3363,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41769894",
@@ -3341,7 +3378,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3367,100 +3404,137 @@
     },
     {
       "pmid": "41803953",
-      "title": "Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications.",
-      "authors": "Chen Q, Zhu S, Wu M, Sun J, Kimia M, Mudiyanselage DE, Lee H, Ma D",
-      "journal": "Journal of translational medicine",
-      "publication_date": "2026 Mar 09",
-      "doi": "10.1186/s12967-026-07944-2",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
       "pmcid": "",
-      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41803953/",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 75,
+      "citation_text": "PMID:41803953.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": []
+    },
+    {
+      "pmid": "41880282",
+      "title": "Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives.",
+      "authors": "Wang Y, Yang N, Chen X, Chen X, Ning Y, Yuan R",
+      "journal": "PloS one",
+      "publication_date": "2026",
+      "doi": "10.1371/journal.pone.0344993",
+      "pmcid": "PMC13016288",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41880282/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13016288/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_YEtAl_Impactofblastexposure_PMID41880282.md",
+      "abstract": "Blast-induced traumatic brain injury (bTBI), frequently observed in modern warfare, often presents without overt clinical symptoms initially, yet can involve visual impairment. However, the underlying mechanisms and long-term outcomes of visual dysfunction following blast exposure (BE) remain poorly understood. This study aimed to investigate the potential delayed effects of BE on visual function. A bTBI mouse model was established using a biological shock tube. Neurological deficits were assessed via the modified neurological severity score, while visual function was evaluated at multiple time points using flash visual evoked potentials (F-VEP) and a light-dark shuttle box. Ultrastructural evidence of damage was obtained through transmission electron microscopy (TEM). Inflammatory and pyroptosis markers were localized and quantified via immunofluorescence staining and Western blotting. Neuronal damage was detected by the terminal deoxynucleotidyl transferase-mediated dUTP nick end labeling (TUNEL) staining combined with neuron-specific nuclear protein (NeuN) immunofluorescence labeling. To assess therapeutic potential, MCC950 was administered to bTBI mice, and visual function was re-evaluated. The results demonstrated that visual dysfunction emerged at 24 hours post BE, followed by a transient recovery, and reappeared at 28 days post BE. Early demyelination of the optic nerve and later pyroptosis of neurons in the visual cortex were identified as key pathological features. MCC950 treatment effectively mitigated neuroinflammation and neuronal pyroptosis, thereby ameliorating late-phase visual dysfunction. These findings collectively suggest that BE leads to biphasic visual dysfunction, driven by distinct mechanisms at different stages. Early intervention targeting nucleotide-binding oligomerization domain-like receptor family pyrin domain-containing 3 (NLRP3) inflammasome activation may represent a promising therapeutic strategy to prevent late-phase visual impairment. Moreover, non-invasive F-VEP provides a sensitive and practical approach for assessing visual injury in bTBI.",
+      "full_text_excerpt": "### Introduction\n\n\nBlast-induced traumatic brain injury (bTBI) is a specific type of neurotrauma resulting from exposure to high-speed and high-pressure shock waves that propagate radially from the epicenter of an explosion [1,2]. While this pathological condition can occasionally be observed in civilian settings following chemical or industrial accidents [3], it is predominantly prevalent in military contexts, where it has emerged as a signature injury of modern warfare [4,5]. According to reports, the estimated number of bTBI cases sustained during the conflicts in Iraq and Afghanistan was as high as 320,000 cases [6]. Although it has been demonstrated that bTBI results in systemic damage via multiple distinct pathophysiological mechanisms. Mild traumatic brain injury (mTBI) accounts for a relatively high proportion of bTBI cases [1]. However, mTBI may not exhibit obvious clinical manifestations during the initial phase and remains particularly challenging in clinical diagnosis [7].\n\nThe eyes, often referred to as the \u201cwindow to the brain,\u201d serve as a potential entry point for craniocerebral blast injury due to their direct exposure to shock waves during explosive events [8]. The visual system, as a critical component of the central nervous system (CNS), depends on intricate and precisely organized neural circuits to maintain the integrity of its functions [9]. Blast overpressure is usually complicated by visual dysfunction through injury to several neuroanatomical pathways, including the visual cortex, brainstem structures, optic nerves, or direct eyeball injuries [8]. Longitudinal clinical studies have consistently demonstrated that survivors of bTBI usually suffer from poor visual quality, characterized by visual field defects and diminished contrast sensitivity [10]. It indicates that there may be delayed visual dysfunction after blast exposure (BE). Due to the close anatomical and developmental relationships between the visual system, including the retina and",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 76,
+      "citation_text": "Wang Y, Yang N, Chen X, Chen X, Ning Y, Yuan R. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PloS one 2026. doi:10.1371/journal.pone.0344993. PMID:41880282.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": []
+    },
+    {
+      "pmid": "41918568",
+      "title": "Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI.",
+      "authors": "Ahmed ME, Suhail H, Nematullah M, Viollet B, Giri S, Ahmad AS",
+      "journal": "NeuroImmune pharmacology and therapeutics",
+      "publication_date": "2026 Mar 02",
+      "doi": "10.1515/nipt-2024-0019",
+      "pmcid": "PMC13034800",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41918568/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13034800/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_MEEtAl_LossofAMPKpotentiates_PMID41918568.md",
+      "abstract": "**OBJECTIVES**: Traumatic brain injury (TBI) is a major cause of mortality and long-term neurological disabilities. Adenosine monophosphate-activated protein kinase (AMPK), a key cellular energy sensor, plays a critical role in maintaining energy homeostasis. Loss of AMPK phosphorylation following TBI impairs the restoration of cellular energy homeostasis and promotes inflammation. In this study, we investigated whether post-TBI loss of AMPK worsens functional impairments, amplifies inflammation, and exacerbates tissue damage in a mouse model of TBI.\n\n**METHODS**: Adult male C57BL/6 wild-type (WT) and (AMPK\u03b11-KO) mice were subjected to TBI or sham surgery. Behavioral assessments were performed at 24 h post-TBI, followed by mice were anesthetized, and their brains were rapidly collected for histological and biochemical analyses. To further support our findings, mixed glial cells isolated from WT and AMPK\u03b11-KO pups were treated with lipopolysaccharides and interferon-gamma (LI) (0.1 \u03bcg/ml LPS and 20 ng/ml IFNg) for 6 h to induce an inflammatory response.\n\n**RESULTS**: Our results show that TBI reduces AMPK phosphorylation in WT mice and that AMPK loss correlates with worsened behavioral deficits, enhanced NLRP3 inflammasome activation, and elevated levels of pro-inflammatory mediators, including IL-1\u03b2. Similarly, AMPK\u03b11-KO glial cells exhibited greater activation of NLRP3 inflammasome and higher expression of pro-inflammatory markers, such as IL-1\u03b2, IL-6, TNF-\u03b1, iNOS, and Cox 2, compared with WT cells.\n\n**CONCLUSIONS**: Collectively, our results demonstrate that AMPK\u03b11 is a critical endogenous regulator of glial-driven neuroinflammation and secondary tissue damage following TBI. Restoring AMPK\u03b11 activity after TBI may therefore represent a promising therapeutic strategy to attenuate neuroinflammation and limit TBI-associated neurological damage.",
+      "full_text_excerpt": "### Introduction\n\n\nTraumatic brain injury (TBI) remains a major contributor to mortality and long-term disability in the United States and worldwide. It results from external mechanical forces that damage brain tissue, triggering a cascade of secondary events, including inflammation and neuronal death. TBI imposes significant emotional and financial burdens on patient families, often requiring long-term care [1,2]. Despite advances in clinical care, accurately diagnosing TBI severity and implementing effective treatments remain challenging due to the diverse nature of the injury and the complexity of the secondary process. These challenges underscore the urgent need for improved diagnostic tools and therapeutic strategies to enhance outcomes for TBI patients.\n\nBoth preclinical and clinical studies have demonstrated that TBI leads to a long-lasting reduction in glucose metabolism, which adversely affects brain function [3-5]. Recent advances in metabolic analysis indicate that pathways regulating energy metabolism play a critical role in controlling neuroinflammation after TBI. AMPK is a serine/threonine kinase that acts as a central cellular energy sensor, and is rapidly activated in response to metabolic stress, hypoxia, excitotoxicity, and altered AMP/ATP or ADP/ATP ratios [6-8] and protect cells against energy depletion by inhibiting anabolic pathways and promoting ATP-generation and increase AMP/ATP ratio [9,10]. Following TBI, loss of AMPK\u03b11 activity contributes to impaired bioenergetic homeostasis, which in turn amplifies inflammatory response and neuronal vulnerability [11]. Thus, AMPK\u03b11 represents a key molecular link between metabolic dysfunction and neuroinflammation. Following TBI, AMPK\u03b11 activation typically acts to restore cellular energy balance by promoting ATP-generating pathways and regulating energy consumption [12-14].\n\nRecently, AMPK and the NLRP3 inflammasome have attracted significant attention from both preclinical and clinical researchers. Th",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 77,
+      "citation_text": "Ahmed ME, Suhail H, Nematullah M, Viollet B, Giri S, Ahmad AS. Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI. NeuroImmune pharmacology and therapeutics 2026 Mar 02. doi:10.1515/nipt-2024-0019. PMID:41918568.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": []
+    },
+    {
+      "pmid": "41952146",
+      "title": "Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury.",
+      "authors": "Li L, Lu T, Gao W, Li F, Guo X, Guan S, Gheyret D, Wang J, Li T, Cao Y, Huang C, Jiang R, Zhang S, Liu D, Zhang J, Xu X",
+      "journal": "Cell communication and signaling : CCS",
+      "publication_date": "2026 Apr 09",
+      "doi": "10.1186/s12964-026-02871-7",
+      "pmcid": "",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41952146/",
       "pmc_url": "",
       "extraction_source": "Publisher HTML",
       "extraction_rank": "3",
       "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_QEtAl_Noblegasesxenonand_PMID41803953.md",
-      "abstract": "**BACKGROUND**: Noble gases xenon (Xe) and argon (Ar) emerge as promising therapeutic agents. Extensive studies have validated their efficacy across various models of organ injury, positioning them as novel candidates for clinical translation in critical care and perioperative medicine.\n\n**MAIN BODY**: Xe and Ar exert protective effects through multiple mechanisms, including activation of hypoxia-inducible factor-1 (HIF-1) pathway, inhibition of regulated cell death pathways, such as apoptosis, necroptosis, ferroptosis, and pyroptosis, and suppression of pro-inflammatory signaling. By modulating these key signaling pathways, Xe and Ar have been shown to improve outcomes in neurological, cardiac, renal, and hepatic systems across diverse models of ischemia-reperfusion injury, traumatic brain injury, and systemic inflammation. Clinically, Xe has shown efficacy in anesthesia, neonatal neuroprotection, and cardiac arrest management. Ar, with greater availability and lower costs, holds promise for broader clinical use but remains in the early stage of translational research.\n\n**CONCLUSION**: Xe and Ar represent novel biologically active gases with the potential to provide promising therapies in perioperative and clinical care medicine. Overcoming current limitations, such as a lack of standardized delivery systems and optimized dosing strategies, is key to uncovering their clinical application.",
-      "full_text_excerpt": "Abstract\n\nBackground\n\nNoble gases xenon (Xe) and argon (Ar) emerge as promising therapeutic agents. Extensive studies have validated their efficacy across various models of organ injury, positioning them as novel candidates for clinical translation in critical care and perioperative medicine.\n\nMain Body\n\nXe and Ar exert protective effects through multiple mechanisms, including activation of hypoxia-inducible factor-1 (HIF-1) pathway, inhibition of regulated cell death pathways, such as apoptosis, necroptosis, ferroptosis, and pyroptosis, and suppression of pro-inflammatory signaling. By modulating these key signaling pathways, Xe and Ar have been shown to improve outcomes in neurological, cardiac, renal, and hepatic systems across diverse models of ischemia-reperfusion injury, traumatic brain injury, and systemic inflammation. Clinically, Xe has shown efficacy in anesthesia, neonatal neuroprotection, and cardiac arrest management. Ar, with greater availability and lower costs, holds promise for broader clinical use but remains in the early stage of translational research.\n\nConclusion\n\nXe and Ar represent novel biologically active gases with the potential to provide promising therapies in perioperative and clinical care medicine. Overcoming current limitations, such as a lack of standardized delivery systems and optimized dosing strategies, is key to uncovering their clinical application.\n\nSimilar content being viewed by others\n\nData availability\n\nNot applicable.\n\nAbbreviations\n\n- Xe:\n\n-\n\nXenon\n\n- Ar:\n\n-\n\nArgon\n\n- HIF-1:\n\n-\n\nHypoxia-inducible factor-1\n\n- PHDs:\n\n-\n\nProlyl hydroxylase domains\n\n- HREs:\n\n-\n\nHypoxia-responsive elements\n\n- VEGF:\n\n-\n\nVascular endothelial growth factor\n\n- PKC:\n\n-\n\nProtein kinase C\n\n- MAPK:\n\n-\n\nMitogen-activated protein kinase\n\n- NMDA:\n\n-\n\nN-Methyl-D-aspartic acid\n\n- CNS:\n\n-\n\nCentral nervous system\n\n- TBI:\n\n-\n\nTraumatic brain injury\n\n- COX-2:\n\n-\n\nCycloocygenase-2\n\n- Bcl:\n\n-\n\nB-cell lymphoma\n\n- BDNF:\n\n-\n\nBrain-derived neurotrophic factor\n\n- LP",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_LEtAl_Hematopoieticcellkinaseregulates_PMID41952146.md",
+      "abstract": "*No abstract available.*",
+      "full_text_excerpt": "Abstract\n\nBackground\n\nBrain-resident microglia and infiltrating monocyte-derived macrophages are among the main effectors in regulating innate immunity and mediating neuroinflammation after traumatic brain injury (TBI). Our previous work demonstrated that circulating extracellular vesicles from TBI patients (TEVs) aggravate microglial/macrophage activation and associated neuroinflammatory damage. However, the key molecular regulators governing TBI-induced and TEV-aggravated microglial/macrophage responses remain elusive.\n\nMethods\n\nTo identify key molecular regulators of microglial/macrophage activation during the acute phase after TBI, we first performed RNA-sequencing on mouse TBI brains at multiple acute time points, and on brains from TBI mice treated with TEVs. We then integrated and analyzed a public single-nucleus RNA-sequencing dataset from human TBI brains (GSE209552) to validate and extend our murine findings. After hub gene identification, we used complementary in vivo (TBI and TBI + TEV mice) and in vitro [oxygen-glucose deprivation/re-oxygenation (OGD/R)-stimulated and TEV-stimulated BV2 cells] models for mechanistic investigation.\n\nResults\n\nMulti-dimensional bioinformatics analyses identified six hub genes, including HCK, BLNK, C1QB, CTSC, P2RY6, and VAV1, consistently implicated in microglial/macrophage activation throughout the acute phase after TBI. Subsequent mechanistic investigations focused on hematopoietic cell kinase (HCK), a central node within this hub gene network. Pharmacological inhibition of HCK kinase activity with A-419259 was found to (1) alleviate TBI-induced and TEV-aggravated microglial/macrophage activation and recruitment, (2) promote a phenotypic shift from pro-inflammatory M1 toward anti-inflammatory/reparative M2 polarization, and (3) suppress the activation of microglial/macrophage nucleotide-binding oligomerization domain-like receptor family pyrin domain containing 3 (NLRP3) inflammasome. These effects collectively ameliorat",
       "retrieval_mode": "legacy",
       "source_query": "legacy_query",
       "domain": "legacy_tbi",
-      "reference_number": 75,
-      "citation_text": "Chen Q, Zhu S, Wu M, Sun J, Kimia M, Mudiyanselage DE, Lee H, Ma D. Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications. Journal of translational medicine 2026 Mar 09. doi:10.1186/s12967-026-07944-2. PMID:41803953.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": []
-    },
-    {
-      "pmid": "41622481",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 76,
-      "citation_text": "PMID:41622481.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": []
-    },
-    {
-      "pmid": "41659975",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 77,
-      "citation_text": "PMID:41659975.",
+      "reference_number": 78,
+      "citation_text": "Li L, Lu T, Gao W, Li F, Guo X, Guan S, Gheyret D, Wang J, Li T, Cao Y, Huang C, Jiang R, Zhang S, Liu D, Zhang J, Xu X. Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury. Cell communication and signaling : CCS 2026 Apr 09. doi:10.1186/s12964-026-02871-7. PMID:41952146.",
       "source_phases": [
         "phase4"
       ],
@@ -3489,14 +3563,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 78,
+      "reference_number": 79,
       "citation_text": "PMID:41740873.",
       "source_phases": [
         "phase4"
@@ -3526,14 +3600,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 79,
+      "reference_number": 80,
       "citation_text": "PMID:41069428.",
       "source_phases": [
         "phase4"
@@ -3563,14 +3637,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 80,
+      "reference_number": 81,
       "citation_text": "PMID:41110648.",
       "source_phases": [
         "phase4"
@@ -3600,14 +3674,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 81,
+      "reference_number": 82,
       "citation_text": "PMID:41129987.",
       "source_phases": [
         "phase4"
@@ -3637,14 +3711,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 82,
+      "reference_number": 83,
       "citation_text": "PMID:41157305.",
       "source_phases": [
         "phase4"
@@ -3674,14 +3748,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 83,
+      "reference_number": 84,
       "citation_text": "PMID:41175081.",
       "source_phases": [
         "phase4"

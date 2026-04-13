@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-13T00:52:10.062756+00:00",
+  "updated_at": "2026-04-13T01:24:49.515292+00:00",
   "claims": [
     {
       "claim_id": "phase6_candidate_thesis",
@@ -175,7 +175,9 @@
         "41739474",
         "41747594",
         "41508043",
-        "41683989"
+        "41683989",
+        "41853047",
+        "41893300"
       ],
       "artifact_refs": [
         "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction"
@@ -187,7 +189,7 @@
         "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
         "Upstream lane still needs stronger longitudinal support."
       ],
-      "source_quality_mix": "full_text_like:5; abstract_only:1"
+      "source_quality_mix": "full_text_like:7; abstract_only:1"
     },
     {
       "claim_id": "phase3_tauopathy_progression",
@@ -213,7 +215,7 @@
       "evidence_gaps": [
         "Some supporting rows are abstract-only and should be weighted cautiously."
       ],
-      "source_quality_mix": "full_text_like:40; abstract_only:6"
+      "source_quality_mix": "full_text_like:63; abstract_only:6"
     },
     {
       "claim_id": "phase3_cognitive_decline_phenotype",
@@ -243,7 +245,7 @@
         "Some supporting rows are abstract-only and should be weighted cautiously.",
         "Contradiction-bearing evidence is present and needs adjudication before stronger promotion."
       ],
-      "source_quality_mix": "full_text_like:52; abstract_only:19"
+      "source_quality_mix": "full_text_like:64; abstract_only:19"
     },
     {
       "claim_id": "phase3_microglial_chronic_activation",
@@ -269,7 +271,7 @@
       "evidence_gaps": [
         "Some supporting rows are abstract-only and should be weighted cautiously."
       ],
-      "source_quality_mix": "full_text_like:214; abstract_only:84"
+      "source_quality_mix": "full_text_like:362; abstract_only:84"
     },
     {
       "claim_id": "phase4_tau_proteinopathy_progression",
@@ -281,20 +283,20 @@
       "supporting_pmids": [
         "41651695",
         "41508043",
+        "41723222",
         "41665901",
+        "41853047",
         "41496386",
         "41683989",
         "41179995",
         "41809435",
-        "41328339",
-        "41594797",
-        "41700070",
+        "41953056",
         "41809632",
+        "41700070",
         "41747594",
         "41739474",
-        "41394307",
-        "41618372",
-        "41622461"
+        "41893300",
+        "41328339"
       ],
       "artifact_refs": [
         "phase4:tau_proteinopathy_progression"
@@ -304,7 +306,7 @@
         "Circulating tau can fall without matching tissue or functional improvement, and a single chronic model context is not enough to treat the lane as fully hardened."
       ],
       "evidence_gaps": [],
-      "source_quality_mix": "lane 18 full-text-like / 3 abstract-only; direct target mentions 1 full-text-like / 0 abstract-only"
+      "source_quality_mix": "lane 24 full-text-like / 3 abstract-only; direct target mentions 1 full-text-like / 0 abstract-only"
     },
     {
       "claim_id": "phase4_glymphatic_astroglial_clearance_failure",
@@ -317,19 +319,19 @@
         "41179995",
         "41039850",
         "41648326",
+        "41960329",
         "41700070",
         "41824127",
         "41153827",
         "41795770",
         "41827388",
-        "41642456",
-        "41667502",
+        "41954515",
         "41103638",
         "41301762",
         "41747594",
         "41792880",
         "41801080",
-        "41079361"
+        "41853701"
       ],
       "artifact_refs": [
         "phase4:glymphatic_astroglial_clearance_failure"
@@ -339,7 +341,7 @@
         "no direct compound or trial attachment surfaced in this build"
       ],
       "evidence_gaps": [],
-      "source_quality_mix": "lane 47 full-text-like / 19 abstract-only; direct target mentions 5 full-text-like / 1 abstract-only"
+      "source_quality_mix": "lane 69 full-text-like / 19 abstract-only; direct target mentions 8 full-text-like / 1 abstract-only"
     },
     {
       "claim_id": "phase4_neuroinflammation_microglial_state_change",
@@ -351,20 +353,20 @@
       "supporting_pmids": [
         "41157272",
         "41103638",
+        "41926211",
         "41663365",
         "41734021",
         "41752185",
+        "41756234",
         "41756282",
         "41824127",
-        "41612383",
-        "41803087",
-        "41511466",
+        "41926540",
         "41480492",
+        "41622481",
+        "41659975",
         "41683989",
         "41709060",
-        "41712436",
-        "41726892",
-        "41737534"
+        "41712436"
       ],
       "artifact_refs": [
         "phase4:neuroinflammation_microglial_state_change"
@@ -376,7 +378,7 @@
         "no direct compound or trial attachment surfaced in this build"
       ],
       "evidence_gaps": [],
-      "source_quality_mix": "lane 79 full-text-like / 28 abstract-only; primary target seed 9 full-text-like hits across 11 match(es); direct target mentions 9 full-text-like / 3 abstract-only"
+      "source_quality_mix": "lane 119 full-text-like / 28 abstract-only; direct target mentions 14 full-text-like / 3 abstract-only"
     },
     {
       "claim_id": "phase5_chronic_repetitive_tau_clearance_mixed",

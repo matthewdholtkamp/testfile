@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-13T00:52:10.055036+00:00",
+  "updated_at": "2026-04-13T01:24:49.508493+00:00",
   "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
   "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
   "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
@@ -253,18 +253,20 @@
       "cohort_precision"
     ],
     "needed_enrichment": "Deepen repetitive-impact and CTE-adjacent papers with tau variants, glymphatic readouts, and chronic function.",
-    "rank": 1,
+    "rank": 5,
+    "steering_score": 0.0,
+    "steering_reasons": [],
     "portfolio_role": "hinge_or_task_pick"
   },
   "ready_for_codex_draft": false,
   "evidence_bundle": {
-    "reference_count": 83,
+    "reference_count": 84,
     "claim_count": 14,
     "contradiction_count": 24,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
     "journal_specific_rigor_profile_count": 1,
     "journal_specific_rigor_critical_gaps": 7
   },
@@ -284,7 +286,7 @@
     ]
   },
   "task_execution": {
-    "updated_at": "2026-04-13T00:52:10.054997+00:00",
+    "updated_at": "2026-04-13T01:24:49.508459+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,

@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-04-13T00:52:09.974961+00:00",
+  "updated_at": "2026-04-13T01:24:49.444385+00:00",
   "summary": {
-    "reference_count": 50,
+    "reference_count": 51,
     "claim_count": 10,
     "contradiction_count": 18,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
     "journal_specific_rigor_profile_count": 2,
     "journal_specific_rigor_critical_gaps": 14
   },
@@ -25,7 +25,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -77,7 +77,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -129,7 +129,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -181,7 +181,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -190,6 +190,58 @@
       "domain": "",
       "reference_number": 4,
       "citation_text": "PMID:41649131.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase1:blood_brain_barrier_failure",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_blood_brain_barrier_failure",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
+      "pmid": "41954515",
+      "title": "Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury.",
+      "authors": "Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L",
+      "journal": "CNS neuroscience & therapeutics",
+      "publication_date": "2026 Apr",
+      "doi": "10.1002/cns.70858",
+      "pmcid": "PMC13064413",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41954515/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13064413/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_YEtAl_Astrocyte-DerivedExosomalmiR-211-5pAlleviates_PMID41954515.md",
+      "abstract": "**BACKGROUND**: Traumatic brain injury (TBI) triggers a cascade of secondary damage, including neuroinflammation, astrocyte activation, and disruption of the blood-brain barrier (BBB), all of which contribute to long-term neurological deficits. Astrocyte-derived exosomes have emerged as a promising therapeutic avenue; however, the specific contributions of their molecular cargo remain poorly understood. This study explores whether astrocyte-derived exosomal delivery of microRNA-211-5p (miR-211-5p) can attenuate secondary injury and enhance functional recovery following TBI.\n\n**METHODS**: Primary astrocytes were transfected with AAV-rno-miR-211-5p, and the resulting exosomes were isolated and characterized. TBI was induced in adult rats using a controlled cortical impact (CCI) model. Exosomes (1\u2009\u00d7\u20091011 particles) were administered intravenously 30\u2009min post-injury. Behavioral assessments were conducted to evaluate cognitive function and neurological deficits. Brain edema, glial activation, and the expression of inflammatory cytokines (IL-6, IL-1\u03b2, TNF-\u03b1) and BBB-related markers-including glial fibrillary acidic protein (GFAP), matrix metalloproteinase 9 (MMP9), aquaporin 4 (AQP4), and the tight junction proteins zonula occludens-1 (ZO-1) and claudin-5-were analyzed using quantitative real-time PCR, Western blotting, enzyme-linked immunosorbent assay, and histopathological techniques.\n\n**RESULTS**: Exosomes enriched with miR-211-5p significantly improved cognitive and neurological outcomes, reduced cerebral edema, and downregulated the expression of GFAP, MMP9, and AQP4. Furthermore, the integrity of the BBB was preserved, as evidenced by sustained expression of ZO-1 and claudin-5. Levels of the proinflammatory cytokines IL-6, IL-1\u03b2, and TNF-\u03b1 were also markedly decreased in the injured cortex.\n\n**CONCLUSION**: Astrocyte-derived exosomal miR-211-5p confers neuroprotection in TBI by modulating glial activation, reducing neuroinflammation, and preserving BBB integrity. These findings underscore the therapeutic potential of miR-211-5p-loaded exosomes as a cell-free, targeted intervention for brain trauma.",
+      "full_text_excerpt": "### Introduction\n\n\nTraumatic brain injury (TBI) is a leading cause of mortality and long\u2010term disability, particularly among young adults and the elderly [1,2]. Besides the immediate mechanical insult, TBI initiates a cascade of secondary injury processes, including neuroinflammation, oxidative stress, cerebral edema, and blood\u2013brain barrier (BBB) disruption, which collectively contribute to progressive neurological decline [3]. Despite decades of research, therapeutic options for TBI remain limited, and current clinical interventions are largely supportive rather than curative [2]. A major obstacle in the development of effective treatments is the lack of targeted strategies that address the complex cellular and molecular interactions in the injured brain [4].\n\nAstrocytes, the most abundant glial cell type in the central nervous system, play a pivotal role in modulating the post\u2010injury environment [5]. Upon TBI, astrocytes become reactive, a process characterized by morphological changes and upregulation of glial fibrillary acidic protein (GFAP) [6]. While reactive astrocytes can initially serve protective functions, excessive or prolonged activation contributes to glial scar formation [7], neuroinflammation, and impaired neural regeneration [5]. Although several studies have investigated astrocytic responses following brain injury, the mechanisms by which astrocytes communicate with surrounding cells and influence neuroinflammatory and regenerative processes remain incompletely understood [8].\n\nExosomes\u2014small extracellular vesicles ranging from 30 to 150\u2009nm\u2014have recently gained attention as potent mediators of intercellular communication [9]. Astrocyte\u2010derived exosomes carry diverse cargos, including proteins, lipids, and microRNAs (miRNAs), and can influence neuronal survival, glial activation, and immune responses [10]. However, previous studies exploring the therapeutic potential of exosomes in TBI models have often treated them as homogenous entities without c",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 5,
+      "citation_text": "Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.",
       "source_phases": [
         "phase6",
         "phase1",
@@ -233,14 +285,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 5,
+      "reference_number": 6,
       "citation_text": "PMID:41039850.",
       "source_phases": [
         "phase6",
@@ -282,6 +334,58 @@
       ]
     },
     {
+      "pmid": "41934291",
+      "title": "Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury.",
+      "authors": "Mayer AR, Wick TV, Miller S, Connors KE, Sasi Kumar D, Meier TB, van der Horn HJ, Nathaniel U, Ling JM, Mehos Milliken CJ, Warren K, Patton DA, Gigliotti AP, Zotev V, Kinsler RE, Mannix R",
+      "journal": "Journal of cerebral blood flow and metabolism : official journal of the International Society of Cerebral Blood Flow and Metabolism",
+      "publication_date": "2026 Apr 04",
+      "doi": "10.1177/0271678X261432754",
+      "pmcid": "PMC13050368",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41934291/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13050368/",
+      "extraction_source": "Europe PMC PDF",
+      "extraction_rank": "4",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_AREtAl_Mechanismsandbarriersfor_PMID41934291.md",
+      "abstract": "Quantifying traumatic brain injury (TBI) based on peripheral fluid protein concentrations is increasingly recommended by expert consensus panels. However, critical knowledge gaps remain regarding underlying mechanisms (e.g. de novo protein synthesis, changes in barrier permeabilities and/or glymphatic clearance), especially for \"milder\" injuries. Multiple experiments (N\u2009=\u200952 swine) used precise, biomechanical targeting of three \"mild-to-moderate\" TBI levels, pharmacological manipulation of blood-brain barrier permeability (mannitol bolus), and dense temporal sampling of hyper-acute and acute phases to characterize protein kinetics and underlying mechanisms. Glial fibrillary acidic protein (GFAP) and neurofilament light (NfL) exhibited dose-dependent relationships with precisely quantified biomechanics, which respectively varied in terms of early (minutes to hours post-injury; GFAP) versus late (1-week post-injury; NfL) peak efflux. Mannitol administration replicated trauma-related kinetics of protein release during hyper-acute to acute phases, implicating blood-brain barrier breach as a primary mechanism, and potentially suggesting that efflux timing is partially mediated by molecular weight. Immunohistochemical evidence (Immunoglobulin G) exhibited similar dose-dependent evidence of blood-brain barrier breach, with spatial deposition patterns that varied across TBI (increased in sulcal fundi/deep gray matter) versus mannitol (diffuse deposition) models. Findings collectively suggest multiple, non-exclusive mechanisms which mediate post-traumatic protein efflux, and that commercially available proteomics may dynamically quantify blood-brain barrier integrity.",
+      "full_text_excerpt": "https://doi.org/10.1177/0271678X261432754 Journal of Cerebral Blood Flow & Metabolism 1 \u201313 \u00a9 The Author(s) 2026 Article reuse guidelines: sagepub.com/journals-permissions DOI: 10.1177/0271678X261432754 journals.sagepub.com/home/jcbfm\n\n### Introduction\n\nThe characterization of cellular brain pathology on the basis of neural abundant protein efflux into peripheral fluids (e.g. blood, saliva, and urine) has proliferated over the past decade in the fields of traumatic brain injury Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury Andrew R Mayer1,2,3,4 , Tracey V Wick1, Samuel Miller1, Kristin E Connors5, Divyasree Sasi Kumar1, Timothy B Meier6, Harm J van der Horn1,7, Upasana Nathaniel1, Josef M Ling1, Carissa J Mehos Milliken5, Kaitlyn Warren8, Declan A Patton9, Andrew P Gigliotti1, Vadim Zotev1, Rachel E Kinsler10 and Rebekah Mannix8 Abstract Quantifying traumatic brain injury (TBI) based on peripheral fluid protein concentrations is increasingly recommended by expert consensus panels. However, critical knowledge gaps remain regarding underlying mechanisms (e.g. de novo protein synthesis, changes in barrier permeabilities and/or glymphatic clearance), especially for \u201cmilder\u201d injuries. Multiple experiments (N = 52 swine) used precise, biomechanical targeting of three \u201cmild-to-moderate\u201d TBI levels, pharmacological manipulation of blood\u2013brain barrier permeability (mannitol bolus), and dense temporal sampling of hyper-acute and acute phases to characterize protein kinetics and underlying mechanisms. Glial fibrillary acidic protein (GFAP) and neurofilament light (NfL) exhibited dose-dependent relationships with precisely quantified biomechanics, which respectively varied in terms of early (minutes to hours post-injury; GFAP) versus late (1-week post-injury; NfL) peak efflux. Mannitol administration replicated trauma-related kinetics of protein release during hyper-acute to acute phases, implicating blood\u2013brain barrie",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 7,
+      "citation_text": "Mayer AR, Wick TV, Miller S, Connors KE, Sasi Kumar D, Meier TB, van der Horn HJ, Nathaniel U, Ling JM, Mehos Milliken CJ, Warren K, Patton DA, Gigliotti AP, Zotev V, Kinsler RE, Mannix R. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. Journal of cerebral blood flow and metabolism : official journal of the International Society of Cerebral Blood Flow and Metabolism 2026 Apr 04. doi:10.1177/0271678X261432754. PMID:41934291.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase1:blood_brain_barrier_failure",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_blood_brain_barrier_failure",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
       "pmid": "41465583",
       "title": "",
       "authors": "",
@@ -294,14 +398,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 6,
+      "reference_number": 8,
       "citation_text": "PMID:41465583.",
       "source_phases": [
         "phase6",
@@ -346,14 +450,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 7,
+      "reference_number": 9,
       "citation_text": "Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.",
       "source_phases": [
         "phase6",
@@ -394,48 +498,54 @@
       ]
     },
     {
-      "pmid": "41153827",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
+      "pmid": "41965904",
+      "title": "Blood-brain barrier breakdown in traumatic brain injury: current insights and future directions.",
+      "authors": "Wu H, Zheng J, Xu W, Zhou F, Lenahan C, Giamas G, Wang C, Zhang J, Ji J",
+      "journal": "Cancer gene therapy",
+      "publication_date": "2026 Apr 11",
+      "doi": "10.1038/s41417-026-01027-6",
       "pmcid": "",
-      "pubmed_url": "",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41965904/",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 8,
-      "citation_text": "PMID:41153827.",
+      "extraction_source": "Crossref HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_HEtAl_Blood-brainbarrierbreakdownin_PMID41965904.md",
+      "abstract": "Traumatic brain injury (TBI) is among the most devastating condition and involves primary and secondary injury cascades. The blood-brain barrier (BBB) is a selective, semipermeable membrane that tightly controls the brain's microenvironment for proper neuronal function. Existing evidence demonstrates that TBI impairs the integrity and function of the BBB, leading to not only acute pathological changes but also long-term neuropathological consequences. Multiple BBB-related signaling molecules (e.g., Tie-2, EphB3, and Cav-1) are involved in the pathophysiological processes post-injury. These can result in microcirculatory insufficiency, neurotoxin accumulation, and cerebral edema after TBI. Together, such events synergistically cause axonal damage, neuronal cell death, and neuroinflammatory responses, which underlie the pathogenesis of TBI. In this review, we aim to summarize the pathophysiological roles of BBB breakdown in TBI, survey underlying mechanisms, and discuss therapeutic potential for this notorious disease by regulating the BBB.",
+      "full_text_excerpt": "Abstract\n\nTraumatic brain injury (TBI) is among the most devastating condition and involves primary and secondary injury cascades. The blood-brain barrier (BBB) is a selective, semipermeable membrane that tightly controls the brain\u2019s microenvironment for proper neuronal function. Existing evidence demonstrates that TBI impairs the integrity and function of the BBB, leading to not only acute pathological changes but also long-term neuropathological consequences. Multiple BBB-related signaling molecules (e.g., Tie-2, EphB3, and Cav-1) are involved in the pathophysiological processes post-injury. These can result in microcirculatory insufficiency, neurotoxin accumulation, and cerebral edema after TBI. Together, such events synergistically cause axonal damage, neuronal cell death, and neuroinflammatory responses, which underlie the pathogenesis of TBI. In this review, we aim to summarize the pathophysiological roles of BBB breakdown in TBI, survey underlying mechanisms, and discuss therapeutic potential for this notorious disease by regulating the BBB.\n\nThis is a preview of subscription content, access via your institution\n\nAccess options\n\nSubscribe to this journal\n\nReceive 12 print issues and online access\n\n$259.00 per year\n\nonly $21.58 per issue\n\nBuy this article\n\n- Purchase on SpringerLink\n\n- Instant access to the full article PDF.\n\nUSD 39.95\n\nPrices may be subject to local taxes which are calculated during checkout\n\nSimilar content being viewed by others\n\nData availability\n\nThe authors are unable or have chosen not to specify which data has been used.",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 10,
+      "citation_text": "Wu H, Zheng J, Xu W, Zhou F, Lenahan C, Giamas G, Wang C, Zhang J, Ji J. Blood-brain barrier breakdown in traumatic brain injury: current insights and future directions. Cancer gene therapy 2026 Apr 11. doi:10.1038/s41417-026-01027-6. PMID:41965904.",
       "source_phases": [
         "phase6",
+        "phase1",
         "phase4"
       ],
       "artifact_refs": [
         "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase1:blood_brain_barrier_failure",
         "phase4:blood_brain_barrier_failure"
       ],
       "support_roles": [
         "candidate_anchor",
+        "phase1_support",
         "phase4_support"
       ],
       "support_notes": [
-        "Ranked manuscript candidate support."
+        "Ranked manuscript candidate support.",
+        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
       ],
       "support_statuses": [
         "supported",
+        "longitudinally_supported",
         "bounded"
       ],
       "supporting_claim_ids": [
         "phase6_candidate_thesis",
+        "phase1_blood_brain_barrier_failure",
         "phase4_blood_brain_barrier_failure"
       ]
     },
@@ -452,104 +562,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 9,
-      "citation_text": "PMID:41532955.",
-      "source_phases": [
-        "phase6",
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-        "phase4:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "candidate_anchor",
-        "phase4_support"
-      ],
-      "support_notes": [
-        "Ranked manuscript candidate support."
-      ],
-      "support_statuses": [
-        "supported",
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase6_candidate_thesis",
-        "phase4_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41709060",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 10,
-      "citation_text": "PMID:41709060.",
-      "source_phases": [
-        "phase6",
-        "phase2",
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-        "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "phase4:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "candidate_anchor",
-        "phase2_support",
-        "phase4_support"
-      ],
-      "support_notes": [
-        "Ranked manuscript candidate support.",
-        "Direct directional support is present in 2 causal edge-backed paper(s) and reinforced by 3 claim-backed paper(s)."
-      ],
-      "support_statuses": [
-        "supported",
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase6_candidate_thesis",
-        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "phase4_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41752185",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -557,7 +570,7 @@
       "source_query": "",
       "domain": "",
       "reference_number": 11,
-      "citation_text": "PMID:41752185.",
+      "citation_text": "PMID:41532955.",
       "source_phases": [
         "phase6",
         "phase4"
@@ -595,7 +608,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -641,7 +654,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -675,6 +688,103 @@
       ]
     },
     {
+      "pmid": "41752185",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 14,
+      "citation_text": "PMID:41752185.",
+      "source_phases": [
+        "phase6",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
+      "pmid": "41709060",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 15,
+      "citation_text": "PMID:41709060.",
+      "source_phases": [
+        "phase6",
+        "phase2",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase2_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Direct directional support is present in 2 causal edge-backed paper(s) and reinforced by 3 claim-backed paper(s)."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
       "pmid": "41740873",
       "title": "Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact.",
       "authors": "",
@@ -687,14 +797,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 14,
+      "reference_number": 16,
       "citation_text": "Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. PMID:41740873.",
       "source_phases": [
         "phase6",
@@ -746,14 +856,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 15,
+      "reference_number": 17,
       "citation_text": "PMID:41683989.",
       "source_phases": [
         "phase6",
@@ -780,8 +890,7 @@
       ],
       "supporting_claim_ids": [
         "phase6_candidate_thesis",
-        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "phase4_blood_brain_barrier_failure"
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration"
       ]
     },
     {
@@ -797,14 +906,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 16,
+      "reference_number": 18,
       "citation_text": "PMID:41103638.",
       "source_phases": [
         "phase6",
@@ -835,8 +944,7 @@
       "supporting_claim_ids": [
         "phase6_candidate_thesis",
         "phase3_microglial_chronic_activation",
-        "phase3_neurovascular_uncoupling",
-        "phase4_blood_brain_barrier_failure"
+        "phase3_neurovascular_uncoupling"
       ]
     },
     {
@@ -852,14 +960,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 17,
+      "reference_number": 19,
       "citation_text": "PMID:41135688.",
       "source_phases": [
         "phase6",
@@ -902,14 +1010,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 18,
+      "reference_number": 20,
       "citation_text": "PMID:41157272.",
       "source_phases": [
         "phase6",
@@ -952,14 +1060,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 19,
+      "reference_number": 21,
       "citation_text": "A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction. PMID:41173520.",
       "source_phases": [
         "phase6",
@@ -995,7 +1103,6 @@
         "usable"
       ],
       "supporting_claim_ids": [
-        "phase6_candidate_thesis",
         "phase3_microglial_chronic_activation",
         "phase3_neurovascular_uncoupling",
         "phase5_subacute_repetitive_inflammatory_dominant"
@@ -1014,14 +1121,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 20,
+      "reference_number": 22,
       "citation_text": "PMID:41197779.",
       "source_phases": [
         "phase6",
@@ -1047,7 +1154,6 @@
         "bounded"
       ],
       "supporting_claim_ids": [
-        "phase6_candidate_thesis",
         "phase3_microglial_chronic_activation"
       ]
     },
@@ -1064,14 +1170,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 21,
+      "reference_number": 23,
       "citation_text": "PMID:41327381.",
       "source_phases": [
         "phase6",
@@ -1113,14 +1219,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 22,
+      "reference_number": 24,
       "citation_text": "MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. PMID:41446731.",
       "source_phases": [
         "phase6",
@@ -1170,14 +1276,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 23,
+      "reference_number": 25,
       "citation_text": "PMID:41079361.",
       "source_phases": [
         "phase6",
@@ -1220,14 +1326,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 24,
+      "reference_number": 26,
       "citation_text": "PMID:41177833.",
       "source_phases": [
         "phase6",
@@ -1270,14 +1376,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 25,
+      "reference_number": 27,
       "citation_text": "PMID:41183617.",
       "source_phases": [
         "phase6",
@@ -1320,14 +1426,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 26,
+      "reference_number": 28,
       "citation_text": "PMID:41267966.",
       "source_phases": [
         "phase6",
@@ -1370,14 +1476,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 27,
+      "reference_number": 29,
       "citation_text": "PMID:41328339.",
       "source_phases": [
         "phase6",
@@ -1408,129 +1514,6 @@
       ]
     },
     {
-      "pmid": "41954515",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 28,
-      "citation_text": "PMID:41954515.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
-      ],
-      "support_statuses": [
-        "longitudinally_supported"
-      ],
-      "supporting_claim_ids": [
-        "phase1_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41934291",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 29,
-      "citation_text": "PMID:41934291.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
-      ],
-      "support_statuses": [
-        "longitudinally_supported"
-      ],
-      "supporting_claim_ids": [
-        "phase1_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41965904",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 30,
-      "citation_text": "PMID:41965904.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
-      ],
-      "support_statuses": [
-        "longitudinally_supported"
-      ],
-      "supporting_claim_ids": [
-        "phase1_blood_brain_barrier_failure"
-      ]
-    },
-    {
       "pmid": "41707328",
       "title": "Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients.",
       "authors": "",
@@ -1543,14 +1526,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 31,
+      "reference_number": 30,
       "citation_text": "Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients. PMID:41707328.",
       "source_phases": [
         "phase5"
@@ -1586,14 +1569,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 32,
+      "reference_number": 31,
       "citation_text": "Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers. PMID:41737590.",
       "source_phases": [
         "phase5"
@@ -1629,14 +1612,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 33,
+      "reference_number": 32,
       "citation_text": "Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. PMID:41496386.",
       "source_phases": [
         "phase5"
@@ -1672,14 +1655,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 34,
+      "reference_number": 33,
       "citation_text": "Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries. PMID:41173528.",
       "source_phases": [
         "phase5"
@@ -1715,15 +1698,58 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 35,
+      "reference_number": 34,
       "citation_text": "Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review. PMID:41126936.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_mild_biomarker_imaging_bridge"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the best early endotype packet for not treating all concussive or mild injury as one disease in the first hours to days.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge"
+      ]
+    },
+    {
+      "pmid": "41893603",
+      "title": "Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation.",
+      "authors": "Stavitz J, Swan K, Eckart A, Koc T, Tucker J, Gentile JT, Ghimire PS, Porcelli R",
+      "journal": "Sports (Basel, Switzerland)",
+      "publication_date": "2026 Mar 13",
+      "doi": "10.3390/sports14030112",
+      "pmcid": "PMC13030034",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41893603/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13030034/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_JEtAl_EvolutionofMultifacetedSport-Related_PMID41893603.md",
+      "abstract": "**CONTEXT**: Sport-related concussion (SRC) management has evolved substantially over the past 25 years. Early paradigms emphasized prolonged physical and cognitive rest; however, growing evidence has demonstrated that recovery following SRC is multidimensional and influenced by interacting neurological, vestibular, autonomic, cervical, cognitive, and psychological systems. Consequently, contemporary clinical practice has shifted toward active, multifaceted rehabilitation approaches.\n\n**OBJECTIVE**: We aimed to synthesize and contextualize the evidence supporting a multifaceted approach to sport-related concussion management from 2000 through 2025, with emphasis on implications for athletic training practice.\n\n**DATA SOURCES**: A structured literature search was conducted using PubMed, SPORTDiscus, CINAHL, and Web of Science to identify peer-reviewed publications related to SRC evaluation, management, and rehabilitation.\n\n**STUDY SELECTION**: Studies published between 1 January 2000, and 31 December 2025 involving human participants with sport-related concussion or sport-like mechanisms of mild traumatic brain injury were included. Evidence from randomized controlled trials, cohort studies, systematic and narrative reviews, and major consensus or position statements was considered.\n\n**DATA EXTRACTION**: Relevant studies were reviewed and synthesized across key domains of SRC management, including aerobic exercise, vestibular and oculomotor rehabilitation, cervical spine management, multimodal and profile-based rehabilitation, return-to-learn strategies, psychological and behavioral health considerations, and implementation patterns within athletic training settings.\n\n**RESULTS**: A total of 182 publications contributed evidence to one or more components of multifaceted SRC management. Across domains, evidence supports early, symptom-limited aerobic exercise; targeted vestibular and cervical rehabilitation; structured return-to-learn planning; and the integration of psychological support. Multimodal rehabilitation and profile-based clinical categorization approaches were associated with shorter recovery timelines and improved functional outcomes compared with rest-only strategies. Despite strong evidence, implementation variability persists across athletic training settings.\n\n**CONCLUSIONS**: Evidence accumulated over the past 25 years supports a shift toward active, individualized, and multidisciplinary approaches to SRC management. Athletic trainers are uniquely positioned to coordinate multifaceted care addressing the diverse contributors to concussion recovery.",
+      "full_text_excerpt": "### 1. Introduction\n\n\nSport-related concussion (SRC) remains one of the most common injuries managed by athletic trainers across all levels of sport. Epidemiological estimates suggest that approximately 1.1\u20131.9 million sport- and recreation-related concussions occur annually among U.S. youth, based on national surveillance data and emergency department\u2013derived estimates from studies conducted in the mid-2010s [1]. However, true incidence is likely underestimated due to underreporting, variability in injury recognition, and differences in access to medical evaluation across sport settings. SRC incidence also varies by age, sex, and level of participation, with higher rates observed in adolescent and collegiate athletes participating in contact and collision sports.\n\nOver the last 25 years, SRC has evolved substantially. Earlier models characterized concussion as a condition managed primarily through symptom monitoring and physical rest. It is now recognized as a complex, multidimensional injury involving neurological, vestibular, cervical, cognitive, and psychological components [2,3,4]. Early management strategies in the 2000s relied heavily on prolonged rest and the expectation that spontaneous neurological recovery would occur without targeted intervention [3,4]. However, growing evidence has demonstrated that strict rest may prolong recovery, exacerbate emotional symptoms, and delay return to normal functioning. As a result, clinical practice and consensus recommendations have shifted steadily. Contemporary management now emphasizes an active, multifaceted rehabilitation model [2].\n\n\n### 1.1. Evolution of SRC Management Paradigms\n\n\nThis evolution has been driven by several key developments in research and practice. First, advancements in pathophysiological understanding have highlighted the interdependence of multiple systems in SRC recovery [2,3,4]. These include autonomic regulation, vestibular-ocular function, cervical spine mechanics, and psychological well-b",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 35,
+      "citation_text": "Stavitz J, Swan K, Eckart A, Koc T, Tucker J, Gentile JT, Ghimire PS, Porcelli R. Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation. Sports (Basel, Switzerland) 2026 Mar 13. doi:10.3390/sports14030112. PMID:41893603.",
       "source_phases": [
         "phase5"
       ],
@@ -1758,7 +1784,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1801,7 +1827,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1844,7 +1870,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1887,7 +1913,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1930,7 +1956,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1973,7 +1999,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2004,27 +2030,27 @@
       ]
     },
     {
-      "pmid": "41604614",
-      "title": "Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "pmid": "41896418",
+      "title": "Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury.",
+      "authors": "Cela E, Tweddell D, Daley M, Morello M, Cepinskas G, Fraser DD",
+      "journal": "Inflammation research : official journal of the European Histamine Research Society ... [et al.]",
+      "publication_date": "2026 Mar 27",
+      "doi": "10.1007/s00011-026-02209-6",
+      "pmcid": "PMC13031234",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41896418/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13031234/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_EEtAl_Multi-dimensionalplasmaproteomicprofiling_PMID41896418.md",
+      "abstract": "**BACKGROUND**: Severe traumatic brain injury (sTBI) is a leading cause of trauma-related mortality and morbidity in pediatric populations. The heterogeneous progression of sTBI presents significant challenges for prognosis and pathophysiological investigation, necessitating advances beyond traditional approaches. This study utilized plasma proteomic profiling to identify sTBI-specific protein alterations and functional pathways correlating with clinical variables in pediatric patients.\n\n**METHODS**: We performed plasma proteomic analysis on 20 matched pairs of pediatric sTBI patients and healthy controls. Proximity extension assays quantified 1,472 proteins. Gene set enrichment analysis identified enriched Reactome pathways and Gene Ontology terms among differentially expressed proteins. Pathway-clinical variable associations were calculated using weighted correlation sums between pathway proteins and clinical variables. Protein-protein interaction networks were analyzed using STRING.\n\n**RESULTS**: Using significance thresholds of FDR-adjusted P\u2009<\u20090.05 and fold change\u2009\u2265\u20094, we identified 65 differentially expressed proteins between sTBI samples and controls. Analysis revealed proteins involved in neuroinflammation and upregulated pathways related to cytokine and receptor/ligand signaling. Altered protein expression indicated structural and functional changes in neurons, glial cells, and vasculature. Upregulated pathways positively correlated with injury severity score, hyperglycemia, and coagulopathy, while negatively correlating with vault skull fractures and acidosis. IL-6 emerged as a central hub in protein-protein interactions, with distinct clusters representing opsonization, TNF family signaling, amidation, neuronal/astrocyte injury, and multifaceted sTBI responses.\n\n**CONCLUSIONS**: These findings identify differentially expressed plasma proteins and enriched signaling pathways associated with clinical features, providing novel insights into pediatric sTBI pathophysiology. The identification of IL-6 as a central hub protein and the correlation of specific pathways with injury severity, metabolic dysfunction, and coagulopathy suggest potential targets for therapeutic intervention and prognostic biomarker development. This proteomic approach advances our understanding of the complex molecular cascades underlying pediatric sTBI and may inform precision medicine strategies for improved patient outcomes.",
+      "full_text_excerpt": "### Introduction\n\n\nSevere traumatic brain injury (sTBI) represents a leading cause of mortality in children, accounting for two thirds of deaths at a level 1 pediatric trauma center between 2009 and 2019 [1]. Surviving patients frequently experience persistent neurological deficits, with over half demonstrating functional impairments one-year post-rehabilitation [2,3]. sTBI results from external mechanical forces that immediately cause permanent or temporary neurological deficits, decreased consciousness, memory loss, and altered mental state [4,5]. Beyond initial structural damage, cellular function becomes further compromised through secondary injuries including cerebral edema, hemorrhage, and hypoxia [6].\n\nThe evolving anatomy of the pediatric brain and skull manifests distinct pathological responses with unique neurological symptoms compared to adults [7\u20139]. The high plasticity of the pediatric skull and disproportionate head-to-body weight ratio increase children\u2019s susceptibility to external forces affecting both brain parenchyma and vasculature. Additionally, reduced myelin abundance and distribution result in differential absorption of traumatic forces, with increased vulnerability in unmyelinated regions. Distinct pathophysiological mechanisms in the pediatric brain, arising from developmental differences compared to the adult brain, cannot be adequately investigated through adult proteomic screening alone. The heterogeneous progression of sTBI, particularly in pediatric populations, presents significant challenges for outcome prediction, necessitating comprehensive approaches to prognosis and pathophysiological investigation [10,11].\n\nBlood-based injury biomarkers represent a major advancement in sTBI research, utilizing differentially abundant molecules to better characterize injury pathophysiology and disease mechanisms [12\u201314]. Previous studies have identified biomarkers associated with inflammatory and stress responses, including glial fibrillary acidic",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 42,
-      "citation_text": "Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury. PMID:41604614.",
+      "citation_text": "Cela E, Tweddell D, Daley M, Morello M, Cepinskas G, Fraser DD. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. Inflammation research : official journal of the European Histamine Research Society ... [et al.] 2026 Mar 27. doi:10.1007/s00011-026-02209-6. PMID:41896418.",
       "source_phases": [
         "phase5"
       ],
@@ -2059,8 +2085,8 @@
       "extraction_source": "PMC XML",
       "extraction_rank": "5",
       "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_TKEtAl_Oneisnotlike_PMID41809238.md",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_TKEtAl_Oneisnotlike_PMID41809238.md",
       "abstract": "**BACKGROUND**: Military members often report concussion-like symptoms from repetitive low-level blast (LLB) exposure, defined as overpressure from outgoing munitions like rifles and explosive breaching. Typically, the early stages of concussion and other neurological conditions (e.g., Alzheimer's Disease) lead to hyperconnectivity which is a transient and adaptive brain response to strengthen and establish neural connections to restore brain function. Over time, however, chronic hyperconnectivity can contribute to neurodegeneration. To determine whether LLB exposure also exhibits this connectivity trajectory, this study investigated the neural signature of LLB at two time points: At the chronic stage extrapolated from the duration of an individual's occupational career, and following a recent and concentrated blast regimen.\n\n**METHODS**: Forty-six military breachers and snipers underwent a resting state functional magnetic resonance imaging brain scan before and after a training course. Graph theory was used to study the whole-brain network, cross-validated by a principal components analysis (PCA) conducted post-hoc. The pre-course scan was analyzed separately to examine the neural effects of chronic LLB exposure. The pre- and post-course scans were compared to examine the neural effects of recent blast exposure. Military controls without occupational breaching and/or sniping experience underwent the same protocol.\n\n**RESULTS**: At pre-course, breachers and snipers exhibited hyperconnectivity compared to controls. However, after undergoing a recent LLB regimen, only breachers showed hypoconnectivity post-course relative to pre-course compared to controls.\n\n**CONCLUSION**: The mechanism of repeated LLB overpressure and its associated neural response to this exposure appear to be specific to this condition. Characterizing LLB exposure can help refine assessment and treatment.",
       "full_text_excerpt": "### Introduction\n\n\nMilitary members are often exposed to blast during combat [Gondusky and Reiter, 2005]. Combat-related blasts are typically classified as high-level blast, which is overpressure generated from incoming munitions, such as rocket-propelled grenades or improvised explosive devices (IEDs) [Belding et al., 2021], and is associated with serious health outcomes including amputations [Mamczak and Elster, 2012], hearing deficits [Ballivet de R\u00e9gloix et al., 2017;Joseph et al., 2018], and traumatic brain injury (TBI), including concussions (mild TBI) [Garber et al., 2014;Regasa et al., 2019]. Research has often focused on high-level blast, yet considerably less is known about the health impacts of occupational exposure to low-level blast (LLB) [Simmons et al., 2020], which is overpressure generated from outgoing munitions, such as heavy weapons (e.g., artillery), rifles (e.g., 0.50 caliber guns), and explosive breaching [Belding et al., 2021]. LLBs are typically found in the context of training and operations, with the repetitive nature of these blasts leading to a cumulative effect on health over time [Elder et al., 2014;Carr et al., 2015,2016]. Repeated LLB exposure is associated with tinnitus [Nakashima et al., 2022], neurocognitive deficits [Carr et al., 2016], vestibular dysfunction [Littlefield et al., 2016], and alterations in serum biomarkers of neurological injury [Tate et al., 2013;Boutt\u00e9 et al., 2019]. Collectively, the evidence suggests that repetitive LLB negatively impacts brain health and performance.\n\nIn contrast to high-level blast, the symptoms of LLB are more subtle, arising from repeated chronic exposure rather than a single blast event. While military personnel exposed to LLB frequently report concussion-like symptoms, such as headaches, memory deficits, and mood changes [Carr et al., 2015;Vartanian et al., 2020,2022;Di Battista et al., 2025], research on LLB exposure has also shown outcomes across other dimensions, including alterations",
       "retrieval_mode": "legacy",
@@ -2102,7 +2128,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2145,7 +2171,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2188,7 +2214,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2197,6 +2223,49 @@
       "domain": "",
       "reference_number": 46,
       "citation_text": "Pituitary hormone abnormalities following military-related traumatic brain injuries. PMID:41723947.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_blast_vascular_inflammatory_mixed"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "Blast cohorts are easy to lump into generic TBI groups, but they may represent the clearest case where mixed dominant-process labels are necessary.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_blast_vascular_inflammatory_mixed"
+      ]
+    },
+    {
+      "pmid": "41880282",
+      "title": "Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives.",
+      "authors": "Wang Y, Yang N, Chen X, Chen X, Ning Y, Yuan R",
+      "journal": "PloS one",
+      "publication_date": "2026",
+      "doi": "10.1371/journal.pone.0344993",
+      "pmcid": "PMC13016288",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41880282/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC13016288/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_YEtAl_Impactofblastexposure_PMID41880282.md",
+      "abstract": "Blast-induced traumatic brain injury (bTBI), frequently observed in modern warfare, often presents without overt clinical symptoms initially, yet can involve visual impairment. However, the underlying mechanisms and long-term outcomes of visual dysfunction following blast exposure (BE) remain poorly understood. This study aimed to investigate the potential delayed effects of BE on visual function. A bTBI mouse model was established using a biological shock tube. Neurological deficits were assessed via the modified neurological severity score, while visual function was evaluated at multiple time points using flash visual evoked potentials (F-VEP) and a light-dark shuttle box. Ultrastructural evidence of damage was obtained through transmission electron microscopy (TEM). Inflammatory and pyroptosis markers were localized and quantified via immunofluorescence staining and Western blotting. Neuronal damage was detected by the terminal deoxynucleotidyl transferase-mediated dUTP nick end labeling (TUNEL) staining combined with neuron-specific nuclear protein (NeuN) immunofluorescence labeling. To assess therapeutic potential, MCC950 was administered to bTBI mice, and visual function was re-evaluated. The results demonstrated that visual dysfunction emerged at 24 hours post BE, followed by a transient recovery, and reappeared at 28 days post BE. Early demyelination of the optic nerve and later pyroptosis of neurons in the visual cortex were identified as key pathological features. MCC950 treatment effectively mitigated neuroinflammation and neuronal pyroptosis, thereby ameliorating late-phase visual dysfunction. These findings collectively suggest that BE leads to biphasic visual dysfunction, driven by distinct mechanisms at different stages. Early intervention targeting nucleotide-binding oligomerization domain-like receptor family pyrin domain-containing 3 (NLRP3) inflammasome activation may represent a promising therapeutic strategy to prevent late-phase visual impairment. Moreover, non-invasive F-VEP provides a sensitive and practical approach for assessing visual injury in bTBI.",
+      "full_text_excerpt": "### Introduction\n\n\nBlast-induced traumatic brain injury (bTBI) is a specific type of neurotrauma resulting from exposure to high-speed and high-pressure shock waves that propagate radially from the epicenter of an explosion [1,2]. While this pathological condition can occasionally be observed in civilian settings following chemical or industrial accidents [3], it is predominantly prevalent in military contexts, where it has emerged as a signature injury of modern warfare [4,5]. According to reports, the estimated number of bTBI cases sustained during the conflicts in Iraq and Afghanistan was as high as 320,000 cases [6]. Although it has been demonstrated that bTBI results in systemic damage via multiple distinct pathophysiological mechanisms. Mild traumatic brain injury (mTBI) accounts for a relatively high proportion of bTBI cases [1]. However, mTBI may not exhibit obvious clinical manifestations during the initial phase and remains particularly challenging in clinical diagnosis [7].\n\nThe eyes, often referred to as the \u201cwindow to the brain,\u201d serve as a potential entry point for craniocerebral blast injury due to their direct exposure to shock waves during explosive events [8]. The visual system, as a critical component of the central nervous system (CNS), depends on intricate and precisely organized neural circuits to maintain the integrity of its functions [9]. Blast overpressure is usually complicated by visual dysfunction through injury to several neuroanatomical pathways, including the visual cortex, brainstem structures, optic nerves, or direct eyeball injuries [8]. Longitudinal clinical studies have consistently demonstrated that survivors of bTBI usually suffer from poor visual quality, characterized by visual field defects and diminished contrast sensitivity [10]. It indicates that there may be delayed visual dysfunction after blast exposure (BE). Due to the close anatomical and developmental relationships between the visual system, including the retina and",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 47,
+      "citation_text": "Wang Y, Yang N, Chen X, Chen X, Ning Y, Yuan R. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PloS one 2026. doi:10.1371/journal.pone.0344993. PMID:41880282.",
       "source_phases": [
         "phase5"
       ],
@@ -2231,14 +2300,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 47,
+      "reference_number": 48,
       "citation_text": "Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. PMID:41740080.",
       "source_phases": [
         "phase5"
@@ -2263,26 +2332,26 @@
     },
     {
       "pmid": "41847037",
-      "title": "PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 48,
-      "citation_text": "PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.",
+      "title": "PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury.",
+      "authors": "Criado-Marrero M, Ravi S, Barroso D, Garza TN, Cuestas Torres DM, Lessard C, Castano JP, Bolen ML, Rubinovich U, Prokop S, Chakrabarty P, Ranum LPW, Febo M, Abisambra JF",
+      "journal": "bioRxiv : the preprint server for biology",
+      "publication_date": "2026 Mar 06",
+      "doi": "10.64898/2026.03.04.709563",
+      "pmcid": "PMC12991129",
+      "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/41847037/",
+      "pmc_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12991129/",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
+      "source_markdown_path": "output/2026-04-13_MEtAl_PERKDeficiencyAmplifiesMolecular_PMID41847037.md",
+      "abstract": "Repetitive mild traumatic brain injury (rmTBI) produces cumulative cellular stress that can lead to progressive brain dysfunction, yet the mechanisms governing vulnerability to repeated injury remain unclear. Protein kinase RNA-like endoplasmic reticulum kinase (PERK) regulates cellular proteostasis through the unfolded protein response and is implicated in neurodegeneration and acute brain injury. Here, we directly tested the role of PERK deficiency in shaping the brain's response to rmTBI. Using a mouse model of neuronal PERK deficiency, we combined spatial proteomics and tissue analyses with resting-state functional MRI and diffusion tensor imaging to assess molecular, functional, and structural outcomes after rmTBI. PERK deficiency increased susceptibility to rmTBI-induced disruption of protein homeostasis, altered large-scale functional connectivity, and exacerbated white matter microstructural changes consistent with axonal and myelin damage. Molecular alterations were spatially aligned with imaging-defined network and white matter abnormalities. These findings identify PERK signaling as a key determinant of brain resilience to repetitive mild injury and link ER stress dysregulation to network-level dysfunction following rmTBI.",
+      "full_text_excerpt": "### Introduction\n\n\nTraumatic brain injury (TBI) initiates both immediate mechanical disruption and delayed secondary biochemical cascades that compromise neuronal survival. These secondary processes include oxidative stress, neuroinflammation, mitochondrial dysfunction, and activation of the endoplasmic reticulum (ER) stress response, a central regulator of cellular proteostasis (reviewed in1\u20133). The unfolded protein response (UPR) is engaged to restore ER homeostasis by transiently reducing global protein synthesis while enhancing chaperone activity and protein degradation pathways (reviewed in4). This response is coordinated by three ER-resident stress sensors\u2014protein kinase RNA-like endoplasmic reticulum kinase (PERK), inositol-requiring enzyme 1 (IRE1), and activating transcription factor 6 (ATF6)\u2014which collectively determine cellular fate under proteostatic stress5. However, when ER stress is prolonged or recurrent, sustained UPR activation shifts from an adaptive to a pro-degenerative cascade6.\n\nAmong the UPR branches, chronic PERK signaling is particularly detrimental to neuronal function. Persistent PERK\u2013eIF2\u03b1 activation enforces translational repression, leading to synaptic dysfunction, impaired plasticity, and neuronal loss7\u201310. Dysregulated PERK activity has been extensively implicated in neurodegenerative disorders, including Alzheimer\u2019s disease, multiple sclerosis, progressive supranuclear palsy (PSP), Parkinson\u2019s disease, and tauopathies11\u201316, positioning PERK as a convergent stress node linking proteostasis failure to synaptic and network-level degeneration. However, PERK signaling is not uniformly deleterious; its impact is highly dependent on developmental stage, cell type, and duration of activation. Transient or moderate PERK activation can support proteostatic adaptation and neuronal survival17,18, whereas insufficient PERK signaling, such as that conferred by hypomorphic EIF2AK3 variants, fails to prevent tau accumulation under stress and increa",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 49,
+      "citation_text": "Criado-Marrero M, Ravi S, Barroso D, Garza TN, Cuestas Torres DM, Lessard C, Castano JP, Bolen ML, Rubinovich U, Prokop S, Chakrabarty P, Ranum LPW, Febo M, Abisambra JF. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv : the preprint server for biology 2026 Mar 06. doi:10.64898/2026.03.04.709563. PMID:41847037.",
       "source_phases": [
         "phase5"
       ],
@@ -2317,14 +2386,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 49,
+      "reference_number": 50,
       "citation_text": "Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.",
       "source_phases": [
         "phase5"
@@ -2360,14 +2429,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-13_005920.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 50,
+      "reference_number": 51,
       "citation_text": "Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. PMID:41709584.",
       "source_phases": [
         "phase5"

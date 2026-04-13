@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-13T00:52:09.980410+00:00",
+  "updated_at": "2026-04-13T01:24:49.448610+00:00",
   "data_points": {
     "biomarker_panel": [
       "OCLN",
@@ -11,20 +11,20 @@
       "Evans blue",
       "gadolinium leakage",
       "Nf-L",
-      "FITC-labeled mNGF fluorescence",
-      "Optical density (OD) readings",
-      "MBP protein expression",
-      "NF-200 protein expression",
-      "PSD-95 protein expression",
-      "Cerebral blood flow (CBF)",
-      "IL-1 (91)",
-      "TNF (53)",
-      "IL-6 (50)",
-      "NLRP3 (38)",
-      "GFAP (22)",
-      "HMGB1 (17)",
-      "CBF (14)",
-      "AQP4 (5)"
+      "ZO-1",
+      "claudin-5",
+      "UCH-L1",
+      "MMP-9",
+      "IgG",
+      "IL-1 (127)",
+      "NLRP3 (70)",
+      "IL-6 (64)",
+      "TNF (57)",
+      "HMGB1 (40)",
+      "GFAP (26)",
+      "CBF (17)",
+      "AQP4 (8)",
+      "MMP9 (3)"
     ],
     "expected_readouts": [
       "Barrier leakage",
