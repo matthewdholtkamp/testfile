@@ -15,6 +15,10 @@
 - Translation maturity is within the journal requirements bounds.
 - Scientific strength clears the minimum threshold recorded for this journal.
 - Requirements snapshot: `config/journal_requirements/journal-of-neurotrauma.json`
+- Article-type-specific rigor profiles: 1
+- Critical rigor gaps still open: 7
+- Top rigor gaps: Fluid biomarker papers: Study registration and analytic plan disclosure | Fluid biomarker papers: Participant and sample accounting | Fluid biomarker papers: Biofluid sample handling, batching, and blinding
+- Full checklist: `journal_specific_rigor_checklist.md`
 
 ## Backup Journals
 

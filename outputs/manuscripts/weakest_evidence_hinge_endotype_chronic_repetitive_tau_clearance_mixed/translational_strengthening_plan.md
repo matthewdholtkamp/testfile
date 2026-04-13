@@ -20,6 +20,11 @@
 - Prefer evidence that connects target movement to permeability, inflammatory spillover, or downstream burden rather than isolated marker motion.
 - Keep the manuscript framed as a bounded mechanistic biomarker paper until compound or trial attachment becomes stronger.
 
+## Journal-specific emphasis from Neurotrauma guidance
+
+- Show how the lead experiment will document target engagement, assay reliability, and the validity of the paired mechanistic readouts.
+- Make the bounded translation explicit, but still state what replication, controls, and downstream validation would move the story forward.
+
 ## Manuscript-safe translational framing
 
 - Treat the packet as a translational anchor for readout selection, not as proof of intervention-ready efficacy.

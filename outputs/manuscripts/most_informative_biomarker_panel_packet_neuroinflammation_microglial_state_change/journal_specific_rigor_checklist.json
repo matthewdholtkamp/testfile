@@ -1,0 +1,205 @@
+{
+  "updated_at": "2026-04-13T00:52:10.037528+00:00",
+  "journal_specific_rigor": {
+    "applicable": true,
+    "journal_name": "Journal of Neurotrauma",
+    "profiles": [
+      {
+        "profile_id": "fluid_biomarker_papers",
+        "label": "Fluid biomarker papers",
+        "definition": "Human or other living-organism studies that collect biofluids and evaluate biomarker utility for clinically relevant or pre-clinically informative purposes.",
+        "must_address": [
+          "study registration and analytic-plan disclosure",
+          "power and planned versus actual sample size",
+          "participant accounting for screened, collected, analyzed, quality-passed, and clinically assessed samples",
+          "blinding of biomarker measurement, handling, quality control, and analysis roles",
+          "sample timing, collection state, handling conditions, storage, batch assignment, lot bridging, and technical failures",
+          "assay validation, replicates, coefficient of variation, lower and upper limits, dilutional linearity, specificity, and spike-recovery",
+          "validity and reliability of the clinically relevant assessments paired to the biomarker",
+          "statistical assumptions, outlier handling, missing-data handling, effect sizes, confidence intervals, and multiple-comparison management",
+          "replication or external validation status",
+          "data availability, analytic code availability, biofluid sample availability, and open/public availability plan"
+        ],
+        "critical_for_readiness": [
+          "participant accounting",
+          "sample handling and assay-performance disclosure",
+          "clinically relevant assessment validity",
+          "multiple-comparison management",
+          "replication or external validation status",
+          "data or code availability statement"
+        ],
+        "checklist": [
+          {
+            "item_id": "registration_and_plan",
+            "label": "Study registration and analytic plan disclosure",
+            "status": "missing",
+            "evidence": "The current manuscript pack does not yet name a registry, preregistration record, or pre-specified analytic plan.",
+            "recommendation": "Prepare the Transparency, Rigor and Reproducibility Summary to state the actual registration status and whether the analytic plan was pre-specified.",
+            "critical": true
+          },
+          {
+            "item_id": "participant_accounting",
+            "label": "Participant and sample accounting",
+            "status": "partial",
+            "evidence": "The pack already names endotype context and clinically relevant readouts, but it does not yet enumerate screened, sampled, analyzed, quality-passed, and outcome-assessed participants.",
+            "recommendation": "Add a CONSORT-style accounting block for screened, sampled, analyzed, QC-passed, and clinically assessed participants.",
+            "critical": true
+          },
+          {
+            "item_id": "sample_handling_and_blinding",
+            "label": "Biofluid sample handling, batching, and blinding",
+            "status": "partial",
+            "evidence": "The pack records sample types and the planned readout lane, but it does not yet capture acquisition timing, handling conditions, batch assignment, freeze-thaw history, or blinded QC roles.",
+            "recommendation": "Capture collection timing, subject state, handling/storage conditions, batch assignment, technical failures, and who was blinded during sample handling and quality control.",
+            "critical": true
+          },
+          {
+            "item_id": "assay_performance",
+            "label": "Assay validation and analytical performance",
+            "status": "partial",
+            "evidence": "The biomarker panel and readout spine are defined, but assay CV, LLOQ/LLOD, batch reproducibility, dilutional linearity, specificity, and spike-recovery are not yet in the manuscript pack.",
+            "recommendation": "Name the assay platform, validation status, replicates, CV, quantitation limits, linearity, specificity, and lot-bridging behavior for the primary biomarker measurements.",
+            "critical": true
+          },
+          {
+            "item_id": "clinical_outcome_validity",
+            "label": "Clinically relevant assessment validity",
+            "status": "partial",
+            "evidence": "The pack ties the biomarker lane to endotypes and downstream burden, but it does not yet document the validity and reliability of the paired clinical assessments.",
+            "recommendation": "State which inclusion criteria and outcome measures are established standards, emerging standards, or still provisional, and cite the validation basis.",
+            "critical": true
+          },
+          {
+            "item_id": "statistics_and_replication",
+            "label": "Statistics, multiple comparisons, and replication",
+            "status": "missing",
+            "evidence": "No manuscript-facing declaration yet covers statistical assumptions, multiple-comparison handling, or the status of internal/external replication.",
+            "recommendation": "Add the planned statistical assumptions, multiple-comparison correction path, outlier/missing-data handling, and the current replication or external-validation status.",
+            "critical": true
+          },
+          {
+            "item_id": "availability",
+            "label": "Data, code, and sample availability",
+            "status": "missing",
+            "evidence": "The pack has a source manifest, but it does not yet state repository, DOI, code availability, or future-use permissions for biofluid samples.",
+            "recommendation": "Draft the data-availability, analytic-code, and sample-availability statements expected by the JNT biomarker checklist.",
+            "critical": true
+          }
+        ],
+        "status": "needs_work",
+        "summary": {
+          "supported_count": 0,
+          "partial_count": 4,
+          "missing_count": 3,
+          "critical_gap_count": 7
+        }
+      },
+      {
+        "profile_id": "pathophysiological_mechanistic_studies",
+        "label": "Pathophysiological mechanistic studies",
+        "definition": "Systematic, controlled in vivo or in vitro experimental manipulations intended to advance fundamental mechanistic knowledge relevant to traumatic brain or spinal cord injury.",
+        "must_address": [
+          "study registration and analytic-plan disclosure",
+          "power and planned versus actual sample size",
+          "subject accounting for inclusion, manipulation, analysis, interpretability, deaths, and incomplete assessments",
+          "randomization method and adequacy assessment",
+          "blinding of manipulations, materials handling, analyses, and labeling",
+          "experimental-manipulation timing, state, devices, storage, batching, technical failures, and unexpected events",
+          "target engagement, dose response, cross validation, specificity controls, lesion or stimulation verification, and positive/negative controls",
+          "primary-analysis accuracy, assay characteristics, statistical assumptions, outlier handling, missing-data handling, and multiple-comparison management",
+          "replication or external validation status",
+          "data availability, analytic code availability, sample availability, and open/public availability plan"
+        ],
+        "critical_for_readiness": [
+          "randomization or explicit rationale for non-randomization",
+          "blinding and material-labeling disclosure",
+          "experimental-manipulation reproducibility details",
+          "target-engagement or specificity controls",
+          "multiple-comparison management",
+          "replication or external validation status",
+          "data or code availability statement"
+        ],
+        "checklist": [
+          {
+            "item_id": "registration_and_plan",
+            "label": "Study registration and analytic plan disclosure",
+            "status": "missing",
+            "evidence": "The current manuscript pack does not yet identify a preregistration record or explicit analytic-plan declaration.",
+            "recommendation": "Prepare the Transparency, Rigor and Reproducibility Summary to state whether the mechanistic study was preregistered and whether the analytic plan was pre-specified.",
+            "critical": true
+          },
+          {
+            "item_id": "subject_accounting_randomization_blinding",
+            "label": "Subject accounting, randomization, and blinding",
+            "status": "missing",
+            "evidence": "The pack does not yet describe subject accounting, randomization adequacy, or who was blinded during manipulations and analyses.",
+            "recommendation": "Add subject accounting plus explicit randomization and blinding language, or state clearly why those elements were not used.",
+            "critical": true
+          },
+          {
+            "item_id": "experimental_manipulation_details",
+            "label": "Experimental manipulation and batching details",
+            "status": "partial",
+            "evidence": "The current pack names the mechanistic next test (Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.) and translational target (NLRP3), but it does not yet capture timing, state, devices, batching, or technical-failure details.",
+            "recommendation": "Capture manipulation timing, subject state, devices or assays used, batching rules, storage conditions, and unexpected events for the lead mechanistic experiment.",
+            "critical": true
+          },
+          {
+            "item_id": "target_engagement_and_specificity",
+            "label": "Target engagement, specificity, and control logic",
+            "status": "partial",
+            "evidence": "The current packet already points at NLRP3 and the next experimental move, but target engagement, specificity controls, cross-validation, and positive/negative controls are not yet explicit.",
+            "recommendation": "Add target-engagement readouts, specificity controls, cross-validation, and negative/positive control language to the mechanistic plan.",
+            "critical": true
+          },
+          {
+            "item_id": "analysis_and_multiple_comparisons",
+            "label": "Primary-analysis assumptions and multiple-comparison management",
+            "status": "missing",
+            "evidence": "The manuscript pack does not yet state assumptions, outlier rules, missing-data handling, or how multiple comparisons will be controlled.",
+            "recommendation": "Document statistical assumptions, independence handling, outlier and missing-data rules, and the multiple-comparison strategy for the mechanistic analyses.",
+            "critical": true
+          },
+          {
+            "item_id": "replication_and_validation",
+            "label": "Replication and external validation status",
+            "status": "missing",
+            "evidence": "The pack does not yet say whether the mechanistic result has internal replication, external validation, or only a planned replication path.",
+            "recommendation": "State whether replication is complete, ongoing, planned, or absent, and register that plan when possible.",
+            "critical": true
+          },
+          {
+            "item_id": "availability",
+            "label": "Data, code, and sample availability",
+            "status": "missing",
+            "evidence": "The current pack does not yet declare where data, code, or residual samples will be shared or requested.",
+            "recommendation": "Draft the data-availability, analytic-code, and sample-availability statements expected by the JNT mechanistic checklist.",
+            "critical": true
+          }
+        ],
+        "status": "needs_work",
+        "summary": {
+          "supported_count": 0,
+          "partial_count": 2,
+          "missing_count": 5,
+          "critical_gap_count": 7
+        }
+      }
+    ],
+    "summary": {
+      "profile_count": 2,
+      "supported_count": 0,
+      "partial_count": 6,
+      "missing_count": 8,
+      "critical_gap_count": 14,
+      "top_gaps": [
+        "Fluid biomarker papers: Study registration and analytic plan disclosure",
+        "Fluid biomarker papers: Participant and sample accounting",
+        "Fluid biomarker papers: Biofluid sample handling, batching, and blinding",
+        "Fluid biomarker papers: Assay validation and analytical performance",
+        "Fluid biomarker papers: Clinically relevant assessment validity",
+        "Fluid biomarker papers: Statistics, multiple comparisons, and replication"
+      ]
+    }
+  }
+}

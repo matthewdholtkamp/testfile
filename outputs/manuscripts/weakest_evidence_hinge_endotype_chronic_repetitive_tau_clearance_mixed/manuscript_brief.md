@@ -13,6 +13,7 @@
 - **Statement:** A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.
 - **Readouts:** not specified
 - **Best next test:** Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?
+- **Journal-specific rigor gaps:** 7 critical gap(s)
 
 ## Improvement Window
 

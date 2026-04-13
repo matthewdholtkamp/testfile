@@ -830,6 +830,7 @@ def build_task_ledger(row, candidate, journal_targets):
     if primary:
         journal_name = primary['journal']['name']
         requirements = primary.get('requirements') or {}
+        applicable_guidance = journal_specific_profiles(requirements.get('snapshot') or {}, candidate)
         if not requirements.get('checked'):
             tasks.append(task_record(
                 'capture_primary_journal_requirements',
@@ -852,6 +853,15 @@ def build_task_ledger(row, candidate, journal_targets):
                     requirements.get('translation_match'),
                     requirements.get('scientific_strength_match'),
                 ]),
+            ))
+        if applicable_guidance:
+            tasks.append(task_record(
+                'prepare_journal_specific_rigor_packet',
+                f'Prepare the {journal_name} article-type-specific rigor packet',
+                'The primary journal carries article-type-specific Transparency, Rigor and Reproducibility expectations that still need a manuscript-facing checklist and response plan.',
+                'A journal-specific rigor checklist exists and the main gaps are mapped into an executable manuscript plan.',
+                critical=False,
+                satisfied=False,
             ))
     else:
         tasks.append(task_record(
@@ -1316,6 +1326,7 @@ def build_section_packets(candidate, row, state, phase_entries, claims, contradi
         f'- Phase artifacts used: {artifact_paths or "not recorded"}.',
         f'- Corpus manifest used: `{corpus_manifest_path or "not recorded"}`.',
         '- Manuscript package rules: keep mechanistic claims tied to source artifacts, treat bounded translation as non-clinical, and preserve contradiction language rather than smoothing it away.',
+        '- For Journal of Neurotrauma drafting, use `journal_specific_rigor_checklist.md` to build the 500-word Transparency, Rigor and Reproducibility Summary rather than improvising those disclosures later.',
         '',
     ]
     intro_lines = [
@@ -1482,6 +1493,280 @@ def build_data_points_markdown(data_points):
     return '\n'.join(lines)
 
 
+def rigor_check_item(item_id, label, status, evidence, recommendation, critical=False):
+    return {
+        'item_id': item_id,
+        'label': label,
+        'status': status,
+        'evidence': normalize(evidence),
+        'recommendation': normalize(recommendation),
+        'critical': bool(critical),
+    }
+
+
+def journal_specific_profiles(snapshot, candidate):
+    guidance = snapshot.get('article_type_specific_guidance') or {}
+    candidate_modes = {normalize(item) for item in candidate.get('manuscript_modes') or [] if normalize(item)}
+    applicable = []
+    for guidance_id, spec in guidance.items():
+        modes = {normalize(item) for item in spec.get('applies_to_manuscript_modes') or [] if normalize(item)}
+        if not modes or candidate_modes.intersection(modes):
+            applicable.append((guidance_id, spec))
+    return applicable
+
+
+def summarize_journal_specific_rigor(profiles):
+    summary = {
+        'profile_count': len(profiles),
+        'supported_count': 0,
+        'partial_count': 0,
+        'missing_count': 0,
+        'critical_gap_count': 0,
+        'top_gaps': [],
+    }
+    for profile in profiles:
+        for item in profile.get('checklist') or []:
+            status = normalize(item.get('status'))
+            if status == 'supported':
+                summary['supported_count'] += 1
+            elif status == 'partial':
+                summary['partial_count'] += 1
+            else:
+                summary['missing_count'] += 1
+            if item.get('critical') and status != 'supported':
+                summary['critical_gap_count'] += 1
+                summary['top_gaps'].append(f"{profile['label']}: {item['label']}")
+    summary['top_gaps'] = summary['top_gaps'][:6]
+    return summary
+
+
+def build_journal_specific_rigor_checklist(candidate, row, phase_entries, snapshot):
+    if not snapshot or not snapshot.get('verified'):
+        return {
+            'applicable': False,
+            'journal_name': normalize(snapshot.get('journal_name')) or '',
+            'profiles': [],
+            'summary': {
+                'profile_count': 0,
+                'supported_count': 0,
+                'partial_count': 0,
+                'missing_count': 0,
+                'critical_gap_count': 0,
+                'top_gaps': [],
+            },
+        }
+
+    applicable = journal_specific_profiles(snapshot, candidate)
+    if not applicable:
+        return {
+            'applicable': False,
+            'journal_name': normalize(snapshot.get('journal_name')) or '',
+            'profiles': [],
+            'summary': {
+                'profile_count': 0,
+                'supported_count': 0,
+                'partial_count': 0,
+                'missing_count': 0,
+                'critical_gap_count': 0,
+                'top_gaps': [],
+            },
+        }
+
+    phase4_row = next((entry.get('row') or {} for entry in phase_entries if entry['phase_key'] == 'phase4'), {})
+    has_expected_readouts = bool(row.get('expected_readouts'))
+    has_next_test = bool(normalize(row.get('next_test')))
+    has_sample_types = bool(row.get('sample_type'))
+    has_time_context = bool(row.get('time_window') or row.get('readout_time_horizon'))
+    has_biomarker_panel = bool(row.get('biomarker_panel') or row.get('panel_members'))
+    has_phase4 = bool(row.get('linked_phase4_packet_ids'))
+    has_phase5 = bool(row.get('linked_phase5_endotype_ids'))
+    has_progression = bool(row.get('linked_phase3_object_ids'))
+    primary_target = normalize(phase4_row.get('primary_target'))
+    best_next_experiment = normalize(phase4_row.get('best_next_experiment'))
+    disconfirming = split_notes(phase4_row.get('disconfirming_evidence'))
+
+    profiles = []
+    for guidance_id, spec in applicable:
+        if guidance_id == 'fluid_biomarker_papers':
+            checklist = [
+                rigor_check_item(
+                    'registration_and_plan',
+                    'Study registration and analytic plan disclosure',
+                    'missing',
+                    'The current manuscript pack does not yet name a registry, preregistration record, or pre-specified analytic plan.',
+                    'Prepare the Transparency, Rigor and Reproducibility Summary to state the actual registration status and whether the analytic plan was pre-specified.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'participant_accounting',
+                    'Participant and sample accounting',
+                    'partial' if has_phase5 and has_expected_readouts else 'missing',
+                    'The pack already names endotype context and clinically relevant readouts, but it does not yet enumerate screened, sampled, analyzed, quality-passed, and outcome-assessed participants.',
+                    'Add a CONSORT-style accounting block for screened, sampled, analyzed, QC-passed, and clinically assessed participants.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'sample_handling_and_blinding',
+                    'Biofluid sample handling, batching, and blinding',
+                    'partial' if has_sample_types or has_time_context else 'missing',
+                    'The pack records sample types and the planned readout lane, but it does not yet capture acquisition timing, handling conditions, batch assignment, freeze-thaw history, or blinded QC roles.',
+                    'Capture collection timing, subject state, handling/storage conditions, batch assignment, technical failures, and who was blinded during sample handling and quality control.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'assay_performance',
+                    'Assay validation and analytical performance',
+                    'partial' if has_biomarker_panel and has_expected_readouts else 'missing',
+                    'The biomarker panel and readout spine are defined, but assay CV, LLOQ/LLOD, batch reproducibility, dilutional linearity, specificity, and spike-recovery are not yet in the manuscript pack.',
+                    'Name the assay platform, validation status, replicates, CV, quantitation limits, linearity, specificity, and lot-bridging behavior for the primary biomarker measurements.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'clinical_outcome_validity',
+                    'Clinically relevant assessment validity',
+                    'partial' if has_phase5 and (has_expected_readouts or has_progression) else 'missing',
+                    'The pack ties the biomarker lane to endotypes and downstream burden, but it does not yet document the validity and reliability of the paired clinical assessments.',
+                    'State which inclusion criteria and outcome measures are established standards, emerging standards, or still provisional, and cite the validation basis.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'statistics_and_replication',
+                    'Statistics, multiple comparisons, and replication',
+                    'missing',
+                    'No manuscript-facing declaration yet covers statistical assumptions, multiple-comparison handling, or the status of internal/external replication.',
+                    'Add the planned statistical assumptions, multiple-comparison correction path, outlier/missing-data handling, and the current replication or external-validation status.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'availability',
+                    'Data, code, and sample availability',
+                    'missing',
+                    'The pack has a source manifest, but it does not yet state repository, DOI, code availability, or future-use permissions for biofluid samples.',
+                    'Draft the data-availability, analytic-code, and sample-availability statements expected by the JNT biomarker checklist.',
+                    critical=True,
+                ),
+            ]
+        else:
+            checklist = [
+                rigor_check_item(
+                    'registration_and_plan',
+                    'Study registration and analytic plan disclosure',
+                    'missing',
+                    'The current manuscript pack does not yet identify a preregistration record or explicit analytic-plan declaration.',
+                    'Prepare the Transparency, Rigor and Reproducibility Summary to state whether the mechanistic study was preregistered and whether the analytic plan was pre-specified.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'subject_accounting_randomization_blinding',
+                    'Subject accounting, randomization, and blinding',
+                    'missing',
+                    'The pack does not yet describe subject accounting, randomization adequacy, or who was blinded during manipulations and analyses.',
+                    'Add subject accounting plus explicit randomization and blinding language, or state clearly why those elements were not used.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'experimental_manipulation_details',
+                    'Experimental manipulation and batching details',
+                    'partial' if has_phase4 or has_next_test else 'missing',
+                    f"The current pack names the mechanistic next test ({normalize(row.get('next_test')) or 'not specified'}) and translational target ({primary_target or 'not specified'}), but it does not yet capture timing, state, devices, batching, or technical-failure details.",
+                    'Capture manipulation timing, subject state, devices or assays used, batching rules, storage conditions, and unexpected events for the lead mechanistic experiment.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'target_engagement_and_specificity',
+                    'Target engagement, specificity, and control logic',
+                    'partial' if primary_target or best_next_experiment or disconfirming else 'missing',
+                    f"The current packet already points at {primary_target or 'the lead target'} and the next experimental move, but target engagement, specificity controls, cross-validation, and positive/negative controls are not yet explicit.",
+                    'Add target-engagement readouts, specificity controls, cross-validation, and negative/positive control language to the mechanistic plan.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'analysis_and_multiple_comparisons',
+                    'Primary-analysis assumptions and multiple-comparison management',
+                    'missing',
+                    'The manuscript pack does not yet state assumptions, outlier rules, missing-data handling, or how multiple comparisons will be controlled.',
+                    'Document statistical assumptions, independence handling, outlier and missing-data rules, and the multiple-comparison strategy for the mechanistic analyses.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'replication_and_validation',
+                    'Replication and external validation status',
+                    'missing',
+                    'The pack does not yet say whether the mechanistic result has internal replication, external validation, or only a planned replication path.',
+                    'State whether replication is complete, ongoing, planned, or absent, and register that plan when possible.',
+                    critical=True,
+                ),
+                rigor_check_item(
+                    'availability',
+                    'Data, code, and sample availability',
+                    'missing',
+                    'The current pack does not yet declare where data, code, or residual samples will be shared or requested.',
+                    'Draft the data-availability, analytic-code, and sample-availability statements expected by the JNT mechanistic checklist.',
+                    critical=True,
+                ),
+            ]
+        profile_summary = {
+            'supported_count': sum(1 for item in checklist if item['status'] == 'supported'),
+            'partial_count': sum(1 for item in checklist if item['status'] == 'partial'),
+            'missing_count': sum(1 for item in checklist if item['status'] == 'missing'),
+            'critical_gap_count': sum(1 for item in checklist if item['critical'] and item['status'] != 'supported'),
+        }
+        profiles.append({
+            'profile_id': guidance_id,
+            'label': spec.get('label') or pretty_label(guidance_id),
+            'definition': normalize(spec.get('definition')),
+            'must_address': spec.get('must_address') or [],
+            'critical_for_readiness': spec.get('critical_for_readiness') or [],
+            'checklist': checklist,
+            'status': 'supported' if profile_summary['critical_gap_count'] == 0 else 'needs_work',
+            'summary': profile_summary,
+        })
+
+    summary = summarize_journal_specific_rigor(profiles)
+    return {
+        'applicable': True,
+        'journal_name': normalize(snapshot.get('journal_name')) or '',
+        'profiles': profiles,
+        'summary': summary,
+    }
+
+
+def build_journal_specific_rigor_markdown(journal_specific_rigor):
+    lines = ['# Journal-Specific Rigor Checklist', '']
+    if not journal_specific_rigor.get('applicable'):
+        lines.append('- No article-type-specific journal rigor checklist applies to this manuscript candidate yet.')
+        lines.append('')
+        return '\n'.join(lines)
+    summary = journal_specific_rigor.get('summary') or {}
+    lines.extend([
+        f"- **Journal:** {journal_specific_rigor.get('journal_name') or 'not recorded'}",
+        f"- **Applicable profiles:** {len(journal_specific_rigor.get('profiles') or [])}",
+        f"- **Critical gaps still open:** {summary.get('critical_gap_count', 0)}",
+        '',
+    ])
+    top_gaps = summary.get('top_gaps') or []
+    if top_gaps:
+        lines.extend(['## Top Gaps', ''])
+        for gap in top_gaps[:6]:
+            lines.append(f'- {gap}')
+        lines.append('')
+    for profile in journal_specific_rigor.get('profiles') or []:
+        lines.extend([
+            f"## {profile['label']}",
+            '',
+            f"- **Why it applies:** {profile.get('definition') or 'Profile-specific rigor guidance applies to this manuscript mode.'}",
+            f"- **Status:** {profile.get('status')}",
+            '',
+        ])
+        for item in profile.get('checklist') or []:
+            critical_tag = ' critical' if item.get('critical') else ''
+            lines.append(f"- **{item['label']}** [{item['status']}{critical_tag}]")
+            lines.append(f"  - Evidence in current pack: {item.get('evidence') or 'not recorded'}")
+            lines.append(f"  - Needed next: {item.get('recommendation') or 'not recorded'}")
+        lines.append('')
+    return '\n'.join(lines)
+
+
 def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
     references = collect_reference_records(candidate, row, phase_entries, corpus_index)
     references_by_pmid = {record['pmid']: record for record in references}
@@ -1515,6 +1800,8 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
         'shortlist_journal_fit_score': candidate['journal_targets'].get('shortlist_journal_fit_score', 0),
         'verified_journal_fit_score': candidate['journal_targets'].get('verified_journal_fit_score', 0),
     }
+    primary_snapshot = ((candidate['journal_targets'].get('primary') or {}).get('requirements') or {}).get('snapshot') or {}
+    journal_specific_rigor = build_journal_specific_rigor_checklist(candidate, row, phase_entries, primary_snapshot)
     data_points = {
         'biomarker_panel': row.get('biomarker_panel') or row.get('panel_members') or [],
         'expected_readouts': row.get('expected_readouts') or [],
@@ -1535,6 +1822,8 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
         'section_packet_count': len(section_packets),
         'primary_journal_verified': bool(candidate['journal_targets'].get('requirements_checked')),
         'corpus_manifest_path': corpus_index.get('manifest_path', ''),
+        'journal_specific_rigor_profile_count': journal_specific_rigor.get('summary', {}).get('profile_count', 0),
+        'journal_specific_rigor_critical_gaps': journal_specific_rigor.get('summary', {}).get('critical_gap_count', 0),
     }
     return {
         'references': references,
@@ -1544,6 +1833,7 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
         'figures': figures,
         'section_packets': section_packets,
         'journal_snapshot': journal_snapshot,
+        'journal_specific_rigor': journal_specific_rigor,
         'data_points': data_points,
         'summary': summary,
         'reference_markdown': build_reference_markdown(references),
@@ -1552,6 +1842,7 @@ def build_evidence_bundle(candidate, row, state, phase_entries, corpus_index):
         'figure_plan_markdown': build_figure_plan_markdown(figures),
         'source_artifact_markdown': build_source_artifact_markdown(source_artifacts),
         'data_points_markdown': build_data_points_markdown(data_points),
+        'journal_specific_rigor_markdown': build_journal_specific_rigor_markdown(journal_specific_rigor),
     }
 
 
@@ -1579,6 +1870,8 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
     primary = candidate.get('journal_targets', {}).get('primary') or {}
     primary_journal = primary.get('journal', {}) or {}
     requirements = primary.get('requirements') or {}
+    journal_specific_rigor = evidence_bundle.get('journal_specific_rigor') or {}
+    journal_specific_summary = journal_specific_rigor.get('summary') or {}
     phase4_entries = [entry for entry in phase_entries if entry['phase_key'] == 'phase4']
     missing_phases = [
         phase_key for phase_key, links in [
@@ -1689,6 +1982,11 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
                     '- Prefer evidence that connects target movement to permeability, inflammatory spillover, or downstream burden rather than isolated marker motion.',
                     '- Keep the manuscript framed as a bounded mechanistic biomarker paper until compound or trial attachment becomes stronger.',
                     '',
+                    '## Journal-specific emphasis from Neurotrauma guidance',
+                    '',
+                    '- Show how the lead experiment will document target engagement, assay reliability, and the validity of the paired mechanistic readouts.',
+                    '- Make the bounded translation explicit, but still state what replication, controls, and downstream validation would move the story forward.',
+                    '',
                     '## Manuscript-safe translational framing',
                     '',
                     '- Treat the packet as a translational anchor for readout selection, not as proof of intervention-ready efficacy.',
@@ -1758,6 +2056,53 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
                 if requirements.get('reasons'):
                     sections.extend(['', '## Notes', ''])
                     sections.extend([f"- {reason}" for reason in requirements['reasons'][:8]])
+                if journal_specific_summary.get('profile_count'):
+                    sections.extend([
+                        '',
+                        '## Article-type-specific rigor watchlist',
+                        '',
+                        f"- Applicable rigor profiles: {journal_specific_summary.get('profile_count', 0)}",
+                        f"- Critical rigor gaps still open: {journal_specific_summary.get('critical_gap_count', 0)}",
+                    ])
+                    for gap in journal_specific_summary.get('top_gaps', [])[:5]:
+                        sections.append(f"- {gap}")
+                    sections.append('- Full checklist: `journal_specific_rigor_checklist.md`')
+        elif task_id == 'prepare_journal_specific_rigor_packet':
+            if not journal_specific_rigor.get('applicable'):
+                status = 'satisfied'
+                note = 'No article-type-specific journal rigor checklist applies to this manuscript candidate.'
+                sections.extend([
+                    '## Outcome',
+                    '',
+                    '- No journal-specific rigor packet is needed beyond the base author instructions.',
+                ])
+            else:
+                status = 'running' if journal_specific_summary.get('critical_gap_count', 0) else 'satisfied'
+                note = (
+                    f"Journal-specific rigor checklist is active with {journal_specific_summary.get('critical_gap_count', 0)} critical gap(s) "
+                    f"across {journal_specific_summary.get('profile_count', 0)} profile(s)."
+                )
+                sections.extend([
+                    '## Applicable profiles',
+                    '',
+                ])
+                for profile in journal_specific_rigor.get('profiles') or []:
+                    sections.append(f"- {profile['label']}: {profile['summary'].get('critical_gap_count', 0)} critical gap(s)")
+                top_gaps = journal_specific_summary.get('top_gaps') or []
+                if top_gaps:
+                    sections.extend([
+                        '',
+                        '## Top gaps to close next',
+                        '',
+                    ])
+                    for gap in top_gaps[:6]:
+                        sections.append(f"- {gap}")
+                sections.extend([
+                    '',
+                    '## Drafting rule',
+                    '',
+                    '- Use `journal_specific_rigor_checklist.md` to write the JNT Transparency, Rigor and Reproducibility Summary instead of improvising it late.',
+                ])
         elif task_id == 'select_primary_journal':
             if primary_journal:
                 status = 'satisfied'
@@ -1805,10 +2150,13 @@ def build_review_memo(candidate, row):
     primary_journal = primary['journal']['name'] if primary else 'No primary journal selected yet'
     requirements = primary.get('requirements') if primary else {}
     blockers = split_notes(row.get('blockers')) + split_notes(row.get('contradiction_notes')) + split_notes(row.get('evidence_gaps'))
+    journal_specific_summary = candidate.get('journal_specific_rigor_summary') or {}
     weakest = normalize(candidate.get('top_blocker')) or (blockers[0] if blockers else 'No explicit blocker is recorded, but the packet still needs a cautious read.')
     likely_attack = 'Reviewers are likely to press on bounded Phase 4 support and whether the evidence chain justifies the article type.'
     if any('no significant correlation' in item.lower() for item in blockers):
         likely_attack = 'Reviewers are likely to focus on contradiction rows that report no significant correlation or weak cumulative-damage support.'
+    elif journal_specific_summary.get('critical_gap_count'):
+        likely_attack = 'Reviewers are likely to press on the journal-specific biomarker and mechanistic rigor disclosures, especially sample handling, assay detail, and replication language.'
     heading = 'Why This Is Worth Developing'
     if candidate['manuscript_gate_state'] == 'ready to build phase 8 pack':
         heading = 'Why This May Be Publishable'
@@ -1817,7 +2165,10 @@ def build_review_memo(candidate, row):
     journal_note = 'Primary journal requirements have not been captured yet, so journal fit is still provisional.'
     if requirements and requirements.get('checked'):
         journal_note = 'Primary journal requirements have been captured locally and checked against the current pack.'
-    return f"""# Review Memo\n\n## {heading}\n- The candidate has a named paper path with scientific strength currently at **{candidate['scientific_strength']} / 4**.\n- The current primary target journal is **{primary_journal}**.\n- {journal_note}\n\n## Biggest Weakness\n- {weakest}\n\n## Likely Reviewer Attack\n- {likely_attack}\n\n## Check Before Approval\n- Make sure the title, article type, and main claims stay bounded to what the current artifact chain actually proves.\n- Read `blocking_resolution_plan.md` and `translational_strengthening_plan.md` before treating the pack as close to submission-ready.\n"""
+    rigor_note = ''
+    if journal_specific_summary.get('profile_count'):
+        rigor_note = f"\n- The journal-specific rigor checklist is active with **{journal_specific_summary.get('critical_gap_count', 0)}** critical gap(s) still open in `journal_specific_rigor_checklist.md`."
+    return f"""# Review Memo\n\n## {heading}\n- The candidate has a named paper path with scientific strength currently at **{candidate['scientific_strength']} / 4**.\n- The current primary target journal is **{primary_journal}**.\n- {journal_note}{rigor_note}\n\n## Biggest Weakness\n- {weakest}\n\n## Likely Reviewer Attack\n- {likely_attack}\n\n## Check Before Approval\n- Make sure the title, article type, and main claims stay bounded to what the current artifact chain actually proves.\n- Read `blocking_resolution_plan.md`, `translational_strengthening_plan.md`, and `journal_specific_rigor_checklist.md` before treating the pack as close to submission-ready.\n"""
 
 
 def build_claim_evidence_map(candidate, row):
@@ -1855,6 +2206,7 @@ def build_journal_fit_markdown(candidate):
     primary = candidate['journal_targets'].get('primary')
     backups = candidate['journal_targets'].get('backups') or []
     scored = candidate['journal_targets'].get('scored') or []
+    journal_specific_summary = candidate.get('journal_specific_rigor_summary') or {}
     lines = ['# Journal Fit', '']
     if primary:
         lines.extend([
@@ -1875,6 +2227,12 @@ def build_journal_fit_markdown(candidate):
             requirements_path = normalize(primary['requirements'].get('requirements_path'))
             if requirements_path:
                 lines.append(f'- Requirements snapshot: `{requirements_path}`')
+            if journal_specific_summary.get('profile_count'):
+                lines.append(f"- Article-type-specific rigor profiles: {journal_specific_summary.get('profile_count', 0)}")
+                lines.append(f"- Critical rigor gaps still open: {journal_specific_summary.get('critical_gap_count', 0)}")
+                if journal_specific_summary.get('top_gaps'):
+                    lines.append(f"- Top rigor gaps: {' | '.join(journal_specific_summary.get('top_gaps', [])[:3])}")
+                lines.append('- Full checklist: `journal_specific_rigor_checklist.md`')
             lines.append('')
     if backups:
         lines.extend(['## Backup Journals', ''])
@@ -1890,6 +2248,7 @@ def build_journal_fit_markdown(candidate):
 
 
 def build_manuscript_brief(candidate, row):
+    journal_specific_summary = candidate.get('journal_specific_rigor_summary') or {}
     lines = [
         '# Manuscript Brief',
         '',
@@ -1906,6 +2265,7 @@ def build_manuscript_brief(candidate, row):
         f"- **Statement:** {normalize(row.get('statement') or row.get('why_now') or row.get('decision_rationale') or 'No statement emitted.')}",
         f"- **Readouts:** {summarize_list(row.get('expected_readouts') or [])}",
         f"- **Best next test:** {normalize(row.get('next_test') or 'Not yet specified.')}",
+        f"- **Journal-specific rigor gaps:** {journal_specific_summary.get('critical_gap_count', 0)} critical gap(s)",
         '',
         '## Improvement Window',
         '',
@@ -1920,6 +2280,7 @@ def build_manuscript_brief(candidate, row):
 def build_codex_handoff_markdown(candidate):
     primary = candidate['journal_targets'].get('primary')
     backups = candidate['journal_targets'].get('backups') or []
+    journal_specific_summary = candidate.get('journal_specific_rigor_summary') or {}
     lines = [
         '# Codex Draft Handoff',
         '',
@@ -1928,11 +2289,13 @@ def build_codex_handoff_markdown(candidate):
         f"- **Primary journal:** {primary['journal']['name'] if primary else 'Not selected'}",
         f"- **Backups:** {', '.join(item['journal']['name'] for item in backups) if backups else 'None selected yet'}",
         f"- **Article types in play:** {', '.join(candidate['article_type_candidates'])}",
+        f"- **Journal-specific rigor gaps:** {journal_specific_summary.get('critical_gap_count', 0)} critical gap(s)",
         '',
         '## Drafting Rules',
         '',
         '- Use the evidence bundle first: references, claim support matrix, contradiction register, source artifact manifest, data points bundle, and section packets.',
         '- Read blocking_resolution_plan.md and translational_strengthening_plan.md before writing Results or Discussion.',
+        '- Read journal_specific_rigor_checklist.md before drafting the Transparency, Rigor and Reproducibility Summary or Methods language.',
         '- Use the claim-evidence map and review memo before drafting any narrative section.',
         '- Keep all claims bounded to the current artifact chain.',
         '- Re-check the current journal instructions before final formatting.',
@@ -1981,6 +2344,7 @@ def build_pack_manifest(candidate, row, publication_entry):
         'source_row': row,
         'ready_for_codex_draft': candidate['ready_for_codex_draft'],
         'evidence_bundle': candidate.get('evidence_bundle_summary', {}),
+        'journal_specific_rigor': candidate.get('journal_specific_rigor_summary', {}),
         'task_execution': candidate.get('task_execution_summary', {}),
         'improvement_window': {
             'default_pass_target': 3,
@@ -2022,6 +2386,7 @@ def build_candidate_payload(row, state, direction_registry, journal_registry, pu
     phase_entries = phase_entries_for_candidate(row, state, indexes)
     evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
     candidate['evidence_bundle_summary'] = evidence_bundle['summary']
+    candidate['journal_specific_rigor_summary'] = evidence_bundle.get('journal_specific_rigor', {}).get('summary', {})
     candidate['task_ledger'] = build_task_ledger(row, candidate, journal_targets)
     candidate['task_ledger'], _, candidate['task_execution_summary'] = execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle)
     candidate['top_blocker'] = derive_top_blocker(row, candidate['task_ledger'], evidence_bundle.get('contradictions'))
@@ -2184,6 +2549,7 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         phase_entries = phase_entries_for_candidate(row, state, indexes)
         evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
         candidate['evidence_bundle_summary'] = evidence_bundle['summary']
+        candidate['journal_specific_rigor_summary'] = evidence_bundle.get('journal_specific_rigor', {}).get('summary', {})
         candidate['task_ledger'], task_outputs, candidate['task_execution_summary'] = execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle)
         candidate['top_blocker'] = derive_top_blocker(row, candidate['task_ledger'], evidence_bundle.get('contradictions'))
         candidate['draft_readiness'] = score_draft_readiness(
@@ -2255,6 +2621,11 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
             'updated_at': iso_now(),
             'journal_snapshot': evidence_bundle['journal_snapshot'],
         })
+        write_json(folder / 'journal_specific_rigor_checklist.json', {
+            'updated_at': iso_now(),
+            'journal_specific_rigor': evidence_bundle['journal_specific_rigor'],
+        })
+        write_text(folder / 'journal_specific_rigor_checklist.md', evidence_bundle['journal_specific_rigor_markdown'])
         write_json(folder / 'evidence_bundle_summary.json', {
             'updated_at': iso_now(),
             'summary': evidence_bundle['summary'],
@@ -2285,6 +2656,8 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
                     'source_artifact_manifest.json',
                     'data_points.json',
                     'journal_requirements_snapshot.json',
+                    'journal_specific_rigor_checklist.json',
+                    'journal_specific_rigor_checklist.md',
                     'blocking_resolution_plan.md',
                     'translational_strengthening_plan.md',
                     'review_memo.md',

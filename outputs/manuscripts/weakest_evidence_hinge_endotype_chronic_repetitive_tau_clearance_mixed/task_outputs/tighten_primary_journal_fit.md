@@ -20,3 +20,14 @@
 - Current evidence chain meets the journal requirements snapshot.
 - Translation maturity is within the journal requirements bounds.
 - Scientific strength clears the minimum threshold recorded for this journal.
+
+## Article-type-specific rigor watchlist
+
+- Applicable rigor profiles: 1
+- Critical rigor gaps still open: 7
+- Fluid biomarker papers: Study registration and analytic plan disclosure
+- Fluid biomarker papers: Participant and sample accounting
+- Fluid biomarker papers: Biofluid sample handling, batching, and blinding
+- Fluid biomarker papers: Assay validation and analytical performance
+- Fluid biomarker papers: Clinically relevant assessment validity
+- Full checklist: `journal_specific_rigor_checklist.md`

@@ -49,7 +49,7 @@
 
 - Claim: Current TBI evidence suggests that tau and related proteinopathy progression contribute to chronic network dysfunction and cognitive decline.
 - Allowed wording: Use cautious, hypothesis-oriented wording and explicitly note boundedness.
-- Support PMIDs: 41496386, 41739474, 41747594, 41508043, 41683989, 41853047, 41893300
+- Support PMIDs: 41496386, 41739474, 41747594, 41508043, 41683989
 - Evidence gaps: Transition still needs denser direct support before it should be treated as hardened. | Some supporting rows are abstract-only and should be weighted cautiously. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Tauopathy Progression
@@ -78,21 +78,21 @@
 
 - Claim: Use the direct DYRK1A perturbation anchor, but keep tau claims bounded until the lane itself is less seeded.
 - Allowed wording: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-- Support PMIDs: 41651695, 41508043, 41723222, 41665901, 41853047, 41496386, 41683989, 41179995, 41809435, 41953056, 41809632, 41700070, 41747594, 41739474, 41893300, 41328339
+- Support PMIDs: 41651695, 41508043, 41665901, 41496386, 41683989, 41179995, 41809435, 41328339, 41594797, 41700070, 41809632, 41747594, 41739474, 41394307, 41618372, 41622461
 - Contradictions: After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury. | Circulating tau can fall without matching tissue or functional improvement, and a single chronic model context is not enough to treat the lane as fully hardened.
 
 ## Glymphatic / Astroglial Clearance Failure
 
 - Claim: Focus on the AQP4 clearance module and require a real clearance readout, not just astroglial stress markers.
 - Allowed wording: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-- Support PMIDs: 41179995, 41039850, 41648326, 41960329, 41700070, 41824127, 41153827, 41795770, 41827388, 41954515, 41103638, 41301762, 41747594, 41792880, 41801080, 41853701
+- Support PMIDs: 41179995, 41039850, 41648326, 41700070, 41824127, 41153827, 41795770, 41827388, 41642456, 41667502, 41103638, 41301762, 41747594, 41792880, 41801080, 41079361
 - Contradictions: AQP4 abundance can rise while polarization remains abnormal, and glial-stress markers can shift without any real movement in clearance readouts or tau burden. | no direct compound or trial attachment surfaced in this build
 
 ## Neuroinflammation / Microglial State Change
 
 - Claim: Blunt the inflammasome and cytokine network without pretending one marker equals the whole inflammatory state.
 - Allowed wording: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-- Support PMIDs: 41157272, 41103638, 41926211, 41663365, 41734021, 41752185, 41756234, 41756282, 41824127, 41926540, 41480492, 41622481, 41659975, 41683989, 41709060, 41712436
+- Support PMIDs: 41157272, 41103638, 41663365, 41734021, 41752185, 41756282, 41824127, 41612383, 41803087, 41511466, 41480492, 41683989, 41709060, 41712436, 41726892, 41737534
 - Contradictions: Study found no significant correlation, contradicting the hypothesis of cumulative damage. | Single-cytokine changes can overstate inflammatory control | keep this packet tied to a network-level cytokine plus glial-stress readout panel. | no direct compound or trial attachment surfaced in this build
 
 ## Chronic Repetitive Tau / Clearance Mixed

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T19:38:19.112711+00:00",
+  "updated_at": "2026-04-13T00:52:10.055036+00:00",
   "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
   "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
   "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
@@ -253,28 +253,43 @@
       "cohort_precision"
     ],
     "needed_enrichment": "Deepen repetitive-impact and CTE-adjacent papers with tau variants, glymphatic readouts, and chronic function.",
-    "rank": 5,
-    "steering_score": 0.0,
-    "steering_reasons": [],
+    "rank": 1,
     "portfolio_role": "hinge_or_task_pick"
   },
   "ready_for_codex_draft": false,
   "evidence_bundle": {
-    "reference_count": 84,
+    "reference_count": 83,
     "claim_count": 14,
     "contradiction_count": 24,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": ""
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+    "journal_specific_rigor_profile_count": 1,
+    "journal_specific_rigor_critical_gaps": 7
+  },
+  "journal_specific_rigor": {
+    "profile_count": 1,
+    "supported_count": 0,
+    "partial_count": 1,
+    "missing_count": 6,
+    "critical_gap_count": 7,
+    "top_gaps": [
+      "Fluid biomarker papers: Study registration and analytic plan disclosure",
+      "Fluid biomarker papers: Participant and sample accounting",
+      "Fluid biomarker papers: Biofluid sample handling, batching, and blinding",
+      "Fluid biomarker papers: Assay validation and analytical performance",
+      "Fluid biomarker papers: Clinically relevant assessment validity",
+      "Fluid biomarker papers: Statistics, multiple comparisons, and replication"
+    ]
   },
   "task_execution": {
-    "updated_at": "2026-04-12T19:38:19.112677+00:00",
-    "total_tasks": 3,
+    "updated_at": "2026-04-13T00:52:10.054997+00:00",
+    "total_tasks": 4,
     "status_counts": {
       "proposed": 0,
       "queued": 0,
-      "running": 2,
+      "running": 3,
       "satisfied": 1,
       "blocked": 0,
       "stale": 0,
@@ -282,7 +297,7 @@
     },
     "open_critical_tasks": 2,
     "blocking_tasks": 0,
-    "running_tasks": 2
+    "running_tasks": 3
   },
   "improvement_window": {
     "default_pass_target": 3,

@@ -1,0 +1,16 @@
+{
+  "updated_at": "2026-04-13T00:52:10.026124+00:00",
+  "total_tasks": 4,
+  "status_counts": {
+    "proposed": 0,
+    "queued": 0,
+    "running": 3,
+    "satisfied": 1,
+    "blocked": 0,
+    "stale": 0,
+    "reopened": 0
+  },
+  "open_critical_tasks": 2,
+  "blocking_tasks": 0,
+  "running_tasks": 3
+}

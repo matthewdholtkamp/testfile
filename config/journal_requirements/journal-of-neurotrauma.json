@@ -1,7 +1,7 @@
 {
   "journal_name": "Journal of Neurotrauma",
   "verified": true,
-  "checked_at": "2026-04-12T19:15:00Z",
+  "checked_at": "2026-04-13T00:09:39Z",
   "source_url": "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50",
   "source_urls": [
     "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50"
@@ -66,7 +66,74 @@
   "transparency_rigor_reproducibility": {
     "required": true,
     "word_limit": 500,
-    "placement": "after conclusion"
+    "placement": "after conclusion",
+    "article_specific_guidance_captured": true
+  },
+  "manual_capture_sources": [
+    "official author instructions supplied manually on April 12, 2026",
+    "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for FLUID BIOMARKERS Papers (01/05/22)",
+    "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for PATHOPHYSIOLOGICAL MECHANISTIC STUDIES Papers (01/05/22)"
+  ],
+  "article_type_specific_guidance": {
+    "fluid_biomarker_papers": {
+      "label": "Fluid biomarker papers",
+      "applies_to_manuscript_modes": [
+        "mechanistic_biomarker",
+        "endotype_discriminator",
+        "translational_tbi"
+      ],
+      "definition": "Human or other living-organism studies that collect biofluids and evaluate biomarker utility for clinically relevant or pre-clinically informative purposes.",
+      "must_address": [
+        "study registration and analytic-plan disclosure",
+        "power and planned versus actual sample size",
+        "participant accounting for screened, collected, analyzed, quality-passed, and clinically assessed samples",
+        "blinding of biomarker measurement, handling, quality control, and analysis roles",
+        "sample timing, collection state, handling conditions, storage, batch assignment, lot bridging, and technical failures",
+        "assay validation, replicates, coefficient of variation, lower and upper limits, dilutional linearity, specificity, and spike-recovery",
+        "validity and reliability of the clinically relevant assessments paired to the biomarker",
+        "statistical assumptions, outlier handling, missing-data handling, effect sizes, confidence intervals, and multiple-comparison management",
+        "replication or external validation status",
+        "data availability, analytic code availability, biofluid sample availability, and open/public availability plan"
+      ],
+      "critical_for_readiness": [
+        "participant accounting",
+        "sample handling and assay-performance disclosure",
+        "clinically relevant assessment validity",
+        "multiple-comparison management",
+        "replication or external validation status",
+        "data or code availability statement"
+      ]
+    },
+    "pathophysiological_mechanistic_studies": {
+      "label": "Pathophysiological mechanistic studies",
+      "applies_to_manuscript_modes": [
+        "mechanistic_biomarker",
+        "mechanistic_bridge",
+        "translational_tbi"
+      ],
+      "definition": "Systematic, controlled in vivo or in vitro experimental manipulations intended to advance fundamental mechanistic knowledge relevant to traumatic brain or spinal cord injury.",
+      "must_address": [
+        "study registration and analytic-plan disclosure",
+        "power and planned versus actual sample size",
+        "subject accounting for inclusion, manipulation, analysis, interpretability, deaths, and incomplete assessments",
+        "randomization method and adequacy assessment",
+        "blinding of manipulations, materials handling, analyses, and labeling",
+        "experimental-manipulation timing, state, devices, storage, batching, technical failures, and unexpected events",
+        "target engagement, dose response, cross validation, specificity controls, lesion or stimulation verification, and positive/negative controls",
+        "primary-analysis accuracy, assay characteristics, statistical assumptions, outlier handling, missing-data handling, and multiple-comparison management",
+        "replication or external validation status",
+        "data availability, analytic code availability, sample availability, and open/public availability plan"
+      ],
+      "critical_for_readiness": [
+        "randomization or explicit rationale for non-randomization",
+        "blinding and material-labeling disclosure",
+        "experimental-manipulation reproducibility details",
+        "target-engagement or specificity controls",
+        "multiple-comparison management",
+        "replication or external validation status",
+        "data or code availability statement"
+      ]
+    }
   },
   "clinical_trial_registration_required": true,
   "reference_style": "Sage Vancouver",
@@ -92,5 +159,5 @@
   "requires_full_evidence_chain": true,
   "allows_bounded_translation": true,
   "minimum_scientific_strength": 2,
-  "notes": "Manual capture from the official Journal of Neurotrauma instructions supplied on April 12, 2026. This journal explicitly considers original research, reviews, short communications, and letters to the editor; case reports are not accepted. It accepts format-neutral first submissions but still requires IRB/disclosure elements and a 500-word Transparency, Rigor, and Reproducibility Summary after the conclusion. Operational fit rule: mechanistic biomarker and pathophysiological studies can remain bounded in translational maturity if claims are explicitly limited and the evidence chain, declarations, and reproducibility summary are complete. Additional useful but non-blocking follow-up would be the linked article-type-specific rigor pages for pathophysiological mechanistic studies and fluid biomarker papers."
+  "notes": "Manual capture from the official Journal of Neurotrauma instructions plus the supplied April 2026 article-type-specific transparency statements for fluid biomarker papers and pathophysiological mechanistic studies. This journal explicitly considers original research, reviews, short communications, and letters to the editor; case reports are not accepted. It accepts format-neutral first submissions but still requires IRB/disclosure elements and a 500-word Transparency, Rigor, and Reproducibility Summary after the conclusion. Operational fit rule: mechanistic biomarker and pathophysiological studies can remain bounded in translational maturity if claims are explicitly limited and the evidence chain, declarations, article-type-specific transparency checklist, and reproducibility summary are complete."
 }
