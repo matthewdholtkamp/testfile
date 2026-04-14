@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import json
 import os
@@ -45,17 +47,92 @@ def write_response(path: str, payload: Dict[str, Any]) -> None:
     write_json(path, payload)
 
 
+def refresh_snapshot_from_existing(snapshot: Dict[str, Any] | None = None) -> None:
+    base_snapshot = json.loads(json.dumps(snapshot or load_command_snapshot()))
+    refreshed = hydrate_snapshot_payload(base_snapshot)
+    registry = load_direction_registry()
+    action_status = read_json_if_exists(ACTION_STATUS_PATH, default={})
+    active_decision_id = normalize(registry.get('active_path_id'))
+    active_label = normalize(registry.get('active_path_label'))
+
+    decisions = []
+    seen_ids = set()
+    for candidate in [refreshed.get('primary_decision')] + list(refreshed.get('secondary_decisions') or []):
+        if not isinstance(candidate, dict) or not candidate:
+            continue
+        decision_id = normalize(candidate.get('decision_id'))
+        dedupe_key = decision_id or normalize(candidate.get('decision_title') or candidate.get('title'))
+        if dedupe_key in seen_ids:
+            continue
+        if dedupe_key:
+            seen_ids.add(dedupe_key)
+        decisions.append(candidate)
+
+    if active_decision_id:
+        active_decision = find_decision_in_payload(refreshed, active_decision_id)
+        if active_decision:
+            decisions = [active_decision] + [
+                candidate
+                for candidate in decisions
+                if normalize(candidate.get('decision_id')) != active_decision_id
+            ]
+
+    if decisions:
+        refreshed['primary_decision'] = decisions[0]
+        refreshed['secondary_decisions'] = decisions[1:3]
+
+    visible_decisions = [
+        candidate
+        for candidate in [refreshed.get('primary_decision')] + list(refreshed.get('secondary_decisions') or [])
+        if isinstance(candidate, dict) and candidate
+    ]
+    visible_ids = [
+        normalize(candidate.get('decision_id'))
+        for candidate in visible_decisions
+        if normalize(candidate.get('decision_id'))
+    ]
+
+    board_state = refreshed.get('board_state') or {}
+    board_state.update({
+        'snapshot_generated_at': utc_now_iso(),
+        'steering_registry_last_updated': normalize(registry.get('last_updated')),
+        'action_status_timestamp': normalize(action_status.get('timestamp')),
+        'steering_aware_automation': True,
+        'active_decision_id': active_decision_id,
+        'active_decision_label': active_label,
+        'active_decision_in_visible_slate': active_decision_id in visible_ids if active_decision_id else False,
+        'visible_decision_ids': visible_ids,
+    })
+    refreshed['board_state'] = board_state
+
+    program_status = refreshed.get('program_status') or {}
+    if active_label:
+        program_status['current_direction_line'] = f'Current direction: {active_label}.'
+    refreshed['program_status'] = program_status
+
+    write_json(COMMAND_SNAPSHOT_PATH, refreshed)
+
+
 def refresh_board_snapshot() -> None:
-    subprocess.run(
-        ['python', 'scripts/build_portal_page.py', '--output-path', 'docs/index.html'],
-        cwd=REPO_ROOT,
-        check=True,
-    )
-    subprocess.run(
-        ['python', 'scripts/validate_board_state.py'],
-        cwd=REPO_ROOT,
-        check=True,
-    )
+    prior_snapshot = load_command_snapshot()
+    try:
+        subprocess.run(
+            ['python', 'scripts/build_portal_page.py', '--output-path', 'docs/index.html'],
+            cwd=REPO_ROOT,
+            check=True,
+        )
+        subprocess.run(
+            ['python', 'scripts/validate_board_state.py'],
+            cwd=REPO_ROOT,
+            check=True,
+        )
+    except subprocess.CalledProcessError:
+        refresh_snapshot_from_existing(prior_snapshot)
+        subprocess.run(
+            ['python', 'scripts/validate_board_state.py'],
+            cwd=REPO_ROOT,
+            check=True,
+        )
 
 
 def git_commit_and_push(message: str, paths: list[str] | None = None) -> None:
