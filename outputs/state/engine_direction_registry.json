@@ -25,9 +25,9 @@
     "story": "Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology."
   },
   "last_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-  "last_updated": "2026-04-05T17:52:32.024523+00:00",
+  "last_updated": "2026-04-14T11:31:39.556035+00:00",
   "pending_machine_actions": [
     "dispatch_refresh_public_enrichment"
   ],
-  "operator_note": ""
+  "operator_note": "Refresh live steering state after QC hardening and keep BBB as the active default panel."
 }
