@@ -143,7 +143,7 @@ def git_commit_and_push(message: str, paths: list[str] | None = None) -> None:
     if diff.returncode == 0:
         return
     subprocess.run(['git', '-C', REPO_ROOT, 'commit', '-m', message], check=True)
-    subprocess.run(['git', '-C', REPO_ROOT, 'pull', '--rebase', 'origin', 'main'], check=True)
+    subprocess.run(['git', '-C', REPO_ROOT, 'pull', '--rebase', '--autostash', 'origin', 'main'], check=True)
     subprocess.run(['git', '-C', REPO_ROOT, 'push', 'origin', 'HEAD:main'], cwd=REPO_ROOT, check=True)
 
 
