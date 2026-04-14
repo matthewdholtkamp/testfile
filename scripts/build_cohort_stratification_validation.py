@@ -27,7 +27,12 @@ REQUIRED_CORE_PATTERNS = {'vascular_dominant', 'inflammatory_dominant', 'metabol
 PLACEHOLDER_VALUES = {'', 'unknown', 'tbd', 'not_yet_mapped', 'not_available'}
 
 
-def latest_report(pattern):
+def latest_report(pattern, preferred_dirs=None):
+    preferred_dirs = preferred_dirs or []
+    for directory in preferred_dirs:
+        candidates = sorted(glob(os.path.join(REPO_ROOT, directory, pattern)))
+        if candidates:
+            return candidates[-1]
     candidates = glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True)
     if not candidates:
         raise FileNotFoundError(f'No reports matched {pattern}')
@@ -123,11 +128,11 @@ def main():
     parser.add_argument('--output-dir', default='reports/cohort_stratification_validation', help='Validation output directory.')
     args = parser.parse_args()
 
-    cohort_json = args.cohort_json or latest_report('cohort_stratification_index_*.json')
-    process_json = args.process_json or latest_report('process_lane_index_*.json')
-    transition_json = args.transition_json or latest_report('causal_transition_index_*.json')
-    object_json = args.object_json or latest_report('progression_object_index_*.json')
-    translational_json = args.translational_json or latest_report('translational_perturbation_index_*.json')
+    cohort_json = args.cohort_json or latest_report('cohort_stratification_index_*.json', preferred_dirs=['reports/cohort_stratification'])
+    process_json = args.process_json or latest_report('process_lane_index_*.json', preferred_dirs=['reports/process_lanes'])
+    transition_json = args.transition_json or latest_report('causal_transition_index_*.json', preferred_dirs=['reports/causal_transitions'])
+    object_json = args.object_json or latest_report('progression_object_index_*.json', preferred_dirs=['reports/progression_objects'])
+    translational_json = args.translational_json or latest_report('translational_perturbation_index_*.json', preferred_dirs=['reports/translational_perturbation'])
 
     payload = read_json(cohort_json)
     process_payload = read_json(process_json)
@@ -462,6 +467,8 @@ def main():
     md_path = os.path.join(output_dir, f'cohort_stratification_validation_{timestamp}.md')
     write_json(json_path, report)
     write_text(md_path, render_markdown(report))
+    if errors:
+        raise SystemExit(1)
     print(json_path)
     print(md_path)
 

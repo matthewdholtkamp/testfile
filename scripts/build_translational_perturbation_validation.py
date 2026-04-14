@@ -19,7 +19,12 @@ PLACEHOLDER_VALUES = {'', 'tbd', 'unknown', 'not_yet_mapped'}
 ATTACHMENT_ORDER = {'not_available': -1, 'weak': 0, 'provisional': 1, 'supported': 2}
 
 
-def latest_report(pattern):
+def latest_report(pattern, preferred_dirs=None):
+    preferred_dirs = preferred_dirs or []
+    for directory in preferred_dirs:
+        candidates = sorted(glob(os.path.join(REPO_ROOT, directory, pattern)))
+        if candidates:
+            return candidates[-1]
     candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
     if not candidates:
         raise FileNotFoundError(f'No reports matched {pattern}')
@@ -137,10 +142,10 @@ def main():
     parser.add_argument('--output-dir', default='reports/translational_perturbation_validation', help='Validation output directory.')
     args = parser.parse_args()
 
-    translational_json = args.translational_json or latest_report('translational_perturbation_index_*.json')
-    process_json = args.process_json or latest_report('process_lane_index_*.json')
-    transition_json = args.transition_json or latest_report('causal_transition_index_*.json')
-    object_json = args.object_json or latest_report('progression_object_index_*.json')
+    translational_json = args.translational_json or latest_report('translational_perturbation_index_*.json', preferred_dirs=['reports/translational_perturbation'])
+    process_json = args.process_json or latest_report('process_lane_index_*.json', preferred_dirs=['reports/process_lanes'])
+    transition_json = args.transition_json or latest_report('causal_transition_index_*.json', preferred_dirs=['reports/causal_transitions'])
+    object_json = args.object_json or latest_report('progression_object_index_*.json', preferred_dirs=['reports/progression_objects'])
 
     payload = read_json(translational_json)
     process_payload = read_json(process_json)
@@ -469,6 +474,8 @@ def main():
     md_path = os.path.join(output_dir, f'translational_perturbation_validation_{timestamp}.md')
     write_json(json_path, report)
     write_text(md_path, render_markdown(report))
+    if errors:
+        raise SystemExit(1)
     print(json_path)
     print(md_path)
 

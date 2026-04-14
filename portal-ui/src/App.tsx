@@ -35,11 +35,14 @@ const GITHUB_TOKEN_KEY = "atlas-github-token";
 const GITHUB_STATE_FILES = {
   commandSnapshot: "docs/command_snapshot.json",
   directionRegistry: "outputs/state/engine_direction_registry.json",
-  decisionLog: "outputs/state/decision_log.jsonl",
+  decisionLog: "outputs/state/engine_decision_log.jsonl",
+  legacyDecisionLog: "outputs/state/decision_log.jsonl",
   actionStatus: "outputs/state/engine_action_status.json",
   lastApply: "outputs/state/engine_last_apply_response.json",
   lastClarify: "outputs/state/engine_last_clarify_response.json",
 };
+const LIVE_STATE_STALE_DAYS = 7;
+const LIVE_STATE_STALE_MS = LIVE_STATE_STALE_DAYS * 24 * 60 * 60 * 1000;
 
 type AnyRecord = Record<string, any>;
 type RemoteState = {
@@ -63,11 +66,14 @@ type PendingConfirmation = {
 type BoardRuntimeState = {
   mismatch: boolean;
   mismatchReasons: string[];
+  staleReasons: string[];
   snapshotAge: string;
   liveSteeringAge: string;
   liveActionAge: string;
+  decisionHistoryAge: string;
   steeringAwareAutomation: boolean;
   liveActionsEnabled: boolean;
+  liveActionStateLabel: string;
 };
 
 type DispatchState = "idle" | "working" | "success" | "error";
@@ -139,6 +145,20 @@ function formatAge(value: unknown): string {
   if (diffHours < 24) return `${diffHours}h ago`;
   const diffDays = Math.floor(diffHours / 24);
   return `${diffDays}d ago`;
+}
+
+function parseTimestamp(value: unknown): number | null {
+  if (!value) return null;
+  const parsed = Date.parse(String(value));
+  return Number.isNaN(parsed) ? null : parsed;
+}
+
+function newestDecisionHistoryTimestamp(history: AnyRecord[]): number | null {
+  const timestamps = history
+    .map((row) => parseTimestamp(row?.timestamp))
+    .filter((value): value is number => typeof value === "number");
+  if (!timestamps.length) return null;
+  return Math.max(...timestamps);
 }
 
 function freezeDecisionPacket(decision: AnyRecord | null): string {
@@ -349,6 +369,11 @@ function computeBoardRuntimeState(
   const registry = remoteState?.directionRegistry || {};
   const liveAction =
     remoteState?.actionStatus || payload?.live_action_status || {};
+  const decisionHistory = Array.isArray(remoteState?.decisionHistory)
+    ? remoteState.decisionHistory
+    : Array.isArray(payload?.decision_history)
+      ? payload.decision_history
+      : [];
   const visibleIds = Array.isArray(boardState.visible_decision_ids)
     ? boardState.visible_decision_ids.map(normalizeText)
     : buildDecisionList(payload).map((decision) =>
@@ -358,6 +383,12 @@ function computeBoardRuntimeState(
   const liveDirection = normalizeText(registry.active_path_label);
   const liveActiveId = normalizeText(registry.active_path_id);
   const mismatchReasons: string[] = [];
+  const staleReasons: string[] = [];
+  const snapshotTimestamp = parseTimestamp(boardState.snapshot_generated_at);
+  const actionTimestamp = parseTimestamp(
+    boardState.action_status_timestamp || liveAction.timestamp,
+  );
+  const historyTimestamp = newestDecisionHistoryTimestamp(decisionHistory);
 
   if (controlMode === "github") {
     if (
@@ -378,11 +409,45 @@ function computeBoardRuntimeState(
         "The live active decision is not visible in the published three-card slate.",
       );
     }
+    if (!decisionHistory.length || historyTimestamp === null) {
+      staleReasons.push("No live decision history is available from GitHub.");
+    } else if (
+      snapshotTimestamp !== null &&
+      historyTimestamp < snapshotTimestamp - LIVE_STATE_STALE_MS
+    ) {
+      staleReasons.push(
+        `The live decision history is more than ${LIVE_STATE_STALE_DAYS} days older than the published snapshot.`,
+      );
+    }
+    if (actionTimestamp === null) {
+      staleReasons.push("No live action status timestamp is available from GitHub.");
+    } else if (
+      snapshotTimestamp !== null &&
+      actionTimestamp < snapshotTimestamp - LIVE_STATE_STALE_MS
+    ) {
+      staleReasons.push(
+        `The live action status is more than ${LIVE_STATE_STALE_DAYS} days older than the published snapshot.`,
+      );
+    }
+  }
+
+  const liveActionsEnabled =
+    controlMode === "github" &&
+    mismatchReasons.length === 0 &&
+    staleReasons.length === 0;
+  let liveActionStateLabel = "Snapshot mode only";
+  if (controlMode === "github") {
+    liveActionStateLabel = liveActionsEnabled
+      ? "Live actions enabled"
+      : staleReasons.length > 0
+        ? "Read-only until live state is fresh"
+        : "Read-only until sync is clean";
   }
 
   return {
     mismatch: mismatchReasons.length > 0,
     mismatchReasons,
+    staleReasons,
     snapshotAge: formatAge(boardState.snapshot_generated_at),
     liveSteeringAge: formatAge(
       boardState.steering_registry_last_updated || registry.last_updated,
@@ -390,9 +455,11 @@ function computeBoardRuntimeState(
     liveActionAge: formatAge(
       boardState.action_status_timestamp || liveAction.timestamp,
     ),
+    decisionHistoryAge:
+      historyTimestamp === null ? "Not available" : formatAge(historyTimestamp),
     steeringAwareAutomation: Boolean(boardState.steering_aware_automation),
-    liveActionsEnabled:
-      controlMode === "github" && mismatchReasons.length === 0,
+    liveActionsEnabled,
+    liveActionStateLabel,
   };
 }
 
@@ -447,23 +514,27 @@ async function fetchGitHubJson(
 
 async function fetchGitHubJsonl(
   token: string,
-  path: string,
+  path: string | string[],
   fallbackValue: AnyRecord[] = [],
 ): Promise<AnyRecord[]> {
-  try {
-    const response = await githubApi(
-      token,
-      `/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/contents/${path}?ref=${encodeURIComponent(GITHUB_REF)}`,
-    );
-    const data = await response.json();
-    return decodeBase64(data.content)
-      .split(/\n+/)
-      .map((line) => line.trim())
-      .filter(Boolean)
-      .map((line) => JSON.parse(line));
-  } catch {
-    return fallbackValue;
+  const paths = Array.isArray(path) ? path : [path];
+  for (const candidatePath of paths) {
+    try {
+      const response = await githubApi(
+        token,
+        `/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/contents/${candidatePath}?ref=${encodeURIComponent(GITHUB_REF)}`,
+      );
+      const data = await response.json();
+      return decodeBase64(data.content)
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => JSON.parse(line));
+    } catch {
+      continue;
+    }
   }
+  return fallbackValue;
 }
 
 async function loadGitHubRemoteState(token: string): Promise<RemoteState> {
@@ -477,7 +548,11 @@ async function loadGitHubRemoteState(token: string): Promise<RemoteState> {
   ] = await Promise.all([
     fetchGitHubJson(token, GITHUB_STATE_FILES.commandSnapshot, {}),
     fetchGitHubJson(token, GITHUB_STATE_FILES.directionRegistry, {}),
-    fetchGitHubJsonl(token, GITHUB_STATE_FILES.decisionLog, []),
+    fetchGitHubJsonl(
+      token,
+      [GITHUB_STATE_FILES.decisionLog, GITHUB_STATE_FILES.legacyDecisionLog],
+      [],
+    ),
     fetchGitHubJson(token, GITHUB_STATE_FILES.actionStatus, {}),
     fetchGitHubJson(token, GITHUB_STATE_FILES.lastApply, {}),
     fetchGitHubJson(token, GITHUB_STATE_FILES.lastClarify, {}),
@@ -1183,14 +1258,21 @@ export default function App() {
                     </p>
                   </div>
 
-                  {runtimeState.mismatch && (
+                  {(runtimeState.mismatch ||
+                    runtimeState.staleReasons.length > 0) && (
                     <div className="rounded-2xl border border-rose-200/20 bg-rose-200/8 p-5">
                       <div className="flex items-center gap-2 text-sm font-bold text-rose-100">
                         <ShieldAlert className="h-4 w-4" />
-                        Board mismatch detected
+                        Live control blocked
                       </div>
                       <ul className="mt-3 space-y-2 text-sm leading-6 text-[#d9e4ef]">
                         {runtimeState.mismatchReasons.map((reason) => (
+                          <li key={reason} className="flex gap-2">
+                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-200" />
+                            <span>{reason}</span>
+                          </li>
+                        ))}
+                        {runtimeState.staleReasons.map((reason) => (
                           <li key={reason} className="flex gap-2">
                             <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-200" />
                             <span>{reason}</span>
@@ -1239,12 +1321,18 @@ export default function App() {
                       </div>
                       <div>
                         <div className="text-sm text-[#9fb4c8]">
+                          Decision history age
+                        </div>
+                        <div className="mt-1 text-lg font-semibold text-white">
+                          {runtimeState.decisionHistoryAge}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-sm text-[#9fb4c8]">
                           Action state
                         </div>
                         <div className="mt-1 text-lg font-semibold text-white">
-                          {runtimeState.liveActionsEnabled
-                            ? "Live actions enabled"
-                            : "Read-only until sync is clean"}
+                          {runtimeState.liveActionStateLabel}
                         </div>
                       </div>
                     </div>

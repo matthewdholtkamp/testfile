@@ -7,16 +7,16 @@
 - **Support status:** supported
 - **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
 - **Artifact refs:** phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure
-- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904, 41532955, 41622772, 41751210, 41752185, 41709060, 41740873, 41683989, 41103638, 41135688, 41157272
+- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41752185, 41622772, 41751210, 41740873, 41683989, 41103638, 41135688, 41157272, 41173520, 41197779
 - **Reference details:**
   - PMID:41663365.
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
-  - PMID:41954515.
   - PMID:41039850.
-  - PMID:41934291.
   - PMID:41465583.
+  - Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.
+  - PMID:41153827.
 - **Contradictions:** Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone.
 
 ## Blood-Brain Barrier Failure
@@ -97,16 +97,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:blood_brain_barrier_failure
-- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904, 41532955, 41622772, 41751210, 41752185, 41709060, 41740873
+- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41752185, 41622772, 41751210, 41740873, 41683989, 41103638
 - **Reference details:**
   - PMID:41663365.
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
-  - PMID:41954515.
   - PMID:41039850.
-  - PMID:41934291.
   - PMID:41465583.
+  - Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.
+  - PMID:41153827.
 - **Contradictions:** Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone. | no direct compound or trial attachment surfaced in this build
 
 ## Acute Mild Biomarker / Imaging Bridge
@@ -116,14 +116,13 @@
 - **Support status:** bounded
 - **Allowed language:** Use cohort-language as suggestive context only, not as a locked endotype claim.
 - **Artifact refs:** phase5:acute_mild_biomarker_imaging_bridge
-- **Support PMIDs:** 41707328, 41737590, 41496386, 41173528, 41126936, 41893603
+- **Support PMIDs:** 41707328, 41737590, 41496386, 41173528, 41126936
 - **Reference details:**
   - Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients. PMID:41707328.
   - Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers. PMID:41737590.
   - Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. PMID:41496386.
   - Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries. PMID:41173528.
   - Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review. PMID:41126936.
-  - Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation. PMID:41893603.
 - **Contradictions:** Acute biomarker spikes can reflect injury burden without resolving the dominant process, and imaging can remain subtle despite strong circulating markers.
 - **Evidence gaps:** Subacute conversion rules are still thin | the current packet is strongest at triage and early follow-up.
 
@@ -134,7 +133,7 @@
 - **Support status:** usable
 - **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
 - **Artifact refs:** phase5:acute_severe_vascular_dominant
-- **Support PMIDs:** 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41896418
+- **Support PMIDs:** 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41604614
 - **Reference details:**
   - Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury. PMID:41700282.
   - Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.
@@ -143,7 +142,7 @@
   - Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study. PMID:41714686.
   - Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience. PMID:41731737.
   - Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use. PMID:41722498.
-  - Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. PMID:41896418.
+  - Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury. PMID:41604614.
 - **Contradictions:** Severe acute cohorts can look inflammatory quickly, but that does not mean inflammation is the dominant upstream driver in the first window.
 - **Evidence gaps:** The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.
 
@@ -154,13 +153,12 @@
 - **Support status:** bounded
 - **Allowed language:** Use cohort-language as suggestive context only, not as a locked endotype claim.
 - **Artifact refs:** phase5:acute_blast_vascular_inflammatory_mixed
-- **Support PMIDs:** 41809238, 41794317, 41596245, 41723947, 41880282
+- **Support PMIDs:** 41809238, 41794317, 41596245, 41723947
 - **Reference details:**
-  - One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel. PMID:41809238.
+  - Lam TK, Rhind SG, Tenn C, Nakashima A, Shiu MY, King K, Caddy N, Vallikanthan J, Crouzat M, Lester L, Vartanian O. One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel. Neuroimage. Reports 2026 Mar. doi:10.1016/j.ynirp.2026.100335. PMID:41809238.
   - Identification of immune cell subsets involved in retinal ganglion cell damage following blast exposure. PMID:41794317.
   - Integrated Blood Biomarker and Neurobehavioural Signatures of Latent Neuroinjury in Experienced Military Breachers Exposed to Repetitive Low-Intensity Blast. PMID:41596245.
   - Pituitary hormone abnormalities following military-related traumatic brain injuries. PMID:41723947.
-  - Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PMID:41880282.
 - **Contradictions:** Blast cohorts often mix repetitive exposure, endocrine injury, and vascular stress, so clean one-driver interpretations are likely to overstate certainty.
 - **Evidence gaps:** Cohort granularity is still thin, and the current packet needs better direct imaging anchors.
 

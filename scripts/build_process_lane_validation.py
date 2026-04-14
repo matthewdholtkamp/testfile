@@ -17,7 +17,12 @@ REQUIRED_BUCKETS = ['acute', 'subacute', 'chronic']
 VALID_STATUSES = {'supported', 'provisional', 'weak'}
 
 
-def latest_report(pattern):
+def latest_report(pattern, preferred_dirs=None):
+    preferred_dirs = preferred_dirs or []
+    for directory in preferred_dirs:
+        candidates = sorted(glob(os.path.join(REPO_ROOT, directory, pattern)))
+        if candidates:
+            return candidates[-1]
     candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
     if not candidates:
         raise FileNotFoundError(f'No reports matched {pattern}')
@@ -52,10 +57,10 @@ def main():
     parser.add_argument('--output-dir', default='reports/process_lane_validation', help='Output directory for validation reports.')
     args = parser.parse_args()
 
-    process_json = args.process_json or latest_report('process_lane_index_*.json')
+    process_json = args.process_json or latest_report('process_lane_index_*.json', preferred_dirs=['reports/process_lanes'])
     payload = read_json(process_json)
     lanes = payload.get('lanes', [])
-    summary = payload.get('summary', {})
+    summary_snapshot = payload.get('summary', {})
     lane_map = {normalize(lane.get('lane_id')): lane for lane in lanes}
 
     errors = []
@@ -76,16 +81,16 @@ def main():
             if bucket not in buckets:
                 errors.append(f'{lane_id} missing required bucket: {bucket}')
                 continue
-            summary = buckets[bucket]
-            status = normalize(summary.get('status'))
+            bucket_summary = buckets[bucket]
+            status = normalize(bucket_summary.get('status'))
             if status not in VALID_STATUSES:
                 errors.append(f'{lane_id} {bucket} has invalid status: {status}')
-            paper_count = int(summary.get('paper_count', 0) or 0)
+            paper_count = int(bucket_summary.get('paper_count', 0) or 0)
             if status == 'supported' and paper_count == 0:
                 errors.append(f'{lane_id} {bucket} is supported with zero papers')
             if status == 'weak' and paper_count > 0:
                 warnings.append(f'{lane_id} {bucket} is weak despite {paper_count} papers; verify thresholding')
-            if paper_count > 0 and not summary.get('anchor_pmids'):
+            if paper_count > 0 and not bucket_summary.get('anchor_pmids'):
                 warnings.append(f'{lane_id} {bucket} has papers but no anchor PMIDs')
         if not lane.get('current_mechanism_overlap'):
             warnings.append(f'{lane_id} has no mapped overlap with current atlas mechanisms')
@@ -102,32 +107,41 @@ def main():
             errors.append(f'Metadata missing provenance field: {field}')
 
     generated_at = datetime.utcnow().strftime('%Y-%m-%d_%H%M%S')
-    result = {
+    report = {
+        'validated_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
+        'valid': not errors,
         'process_json': os.path.relpath(process_json, REPO_ROOT),
-        'summary': summary,
+        'summary': summary_snapshot,
+        'summary_snapshot': summary_snapshot,
         'error_count': len(errors),
         'warning_count': len(warnings),
         'errors': errors,
         'warnings': warnings,
+        'validated_paths': {
+            'process_json': os.path.relpath(process_json, REPO_ROOT),
+        },
     }
 
     output_dir = os.path.join(REPO_ROOT, args.output_dir)
-    write_json(os.path.join(output_dir, f'process_lane_validation_{generated_at}.json'), result)
+    json_path = os.path.join(output_dir, f'process_lane_validation_{generated_at}.json')
+    md_path = os.path.join(output_dir, f'process_lane_validation_{generated_at}.md')
+    write_json(json_path, report)
     md_lines = [
         '# Process Lane Validation',
         '',
-        f'- Source: `{result["process_json"]}`',
-        f'- Lane count: `{summary.get("lane_count", 0)}`',
+        f'- Valid: `{report["valid"]}`',
+        f'- Source: `{report["process_json"]}`',
+        f'- Lane count: `{summary_snapshot.get("lane_count", 0)}`',
         f'- Errors: `{len(errors)}`',
         f'- Warnings: `{len(warnings)}`',
         '',
         '## Summary',
         '',
-        f'- Supported buckets: `{summary.get("supported_buckets", 0)}`',
-        f'- Provisional buckets: `{summary.get("provisional_buckets", 0)}`',
-        f'- Weak buckets: `{summary.get("weak_buckets", 0)}`',
-        f'- Longitudinally supported lanes: `{summary.get("longitudinally_supported_lanes", 0)}`',
-        f'- Longitudinally seeded lanes: `{summary.get("longitudinally_seeded_lanes", 0)}`',
+        f'- Supported buckets: `{summary_snapshot.get("supported_buckets", 0)}`',
+        f'- Provisional buckets: `{summary_snapshot.get("provisional_buckets", 0)}`',
+        f'- Weak buckets: `{summary_snapshot.get("weak_buckets", 0)}`',
+        f'- Longitudinally supported lanes: `{summary_snapshot.get("longitudinally_supported_lanes", 0)}`',
+        f'- Longitudinally seeded lanes: `{summary_snapshot.get("longitudinally_seeded_lanes", 0)}`',
         '',
         '## Errors',
         '',
@@ -141,11 +155,11 @@ def main():
         md_lines.extend(f'- {item}' for item in warnings)
     else:
         md_lines.append('- None')
-    write_text(os.path.join(output_dir, f'process_lane_validation_{generated_at}.md'), '\n'.join(md_lines) + '\n')
+    write_text(md_path, '\n'.join(md_lines) + '\n')
 
     if errors:
         raise SystemExit(1)
-    print(os.path.join(output_dir, f'process_lane_validation_{generated_at}.json'))
+    print(json_path)
 
 
 if __name__ == '__main__':

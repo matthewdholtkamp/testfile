@@ -27,7 +27,12 @@ VALID_OBJECT_TYPES = {'pathology_object', 'state_object', 'outcome_object'}
 SUPPORT_ORDER = {'weak': 0, 'provisional': 1, 'supported': 2}
 
 
-def latest_report(pattern):
+def latest_report(pattern, preferred_dirs=None):
+    preferred_dirs = preferred_dirs or []
+    for directory in preferred_dirs:
+        candidates = sorted(glob(os.path.join(REPO_ROOT, directory, pattern)))
+        if candidates:
+            return candidates[-1]
     candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
     if not candidates:
         raise FileNotFoundError(f'No reports matched {pattern}')
@@ -81,9 +86,9 @@ def main():
     parser.add_argument('--output-dir', default='reports/progression_object_validation', help='Validation output directory.')
     args = parser.parse_args()
 
-    object_json = args.object_json or latest_report('progression_object_index_*.json')
-    process_json = args.process_json or latest_report('process_lane_index_*.json')
-    transition_json = args.transition_json or latest_report('causal_transition_index_*.json')
+    object_json = args.object_json or latest_report('progression_object_index_*.json', preferred_dirs=['reports/progression_objects'])
+    process_json = args.process_json or latest_report('process_lane_index_*.json', preferred_dirs=['reports/process_lanes'])
+    transition_json = args.transition_json or latest_report('causal_transition_index_*.json', preferred_dirs=['reports/causal_transitions'])
 
     payload = read_json(object_json)
     process_payload = read_json(process_json)
@@ -260,11 +265,14 @@ def main():
         )
 
     generated_at = datetime.utcnow().strftime('%Y-%m-%d_%H%M%S')
-    result = {
+    report = {
+        'validated_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
+        'valid': not errors,
         'object_json': os.path.relpath(object_json, REPO_ROOT),
         'transition_json': os.path.relpath(transition_json, REPO_ROOT),
         'process_json': os.path.relpath(process_json, REPO_ROOT),
         'summary': summary,
+        'summary_snapshot': summary,
         'object_count': len(rows),
         'error_count': len(errors),
         'warning_count': len(warnings),
@@ -274,18 +282,24 @@ def main():
         'orphan_transition_parents': sorted(orphan_transition_parents),
         'referenced_lane_ids': sorted(referenced_lanes),
         'referenced_transition_ids': sorted(referenced_transitions),
+        'validated_paths': {
+            'object_json': os.path.relpath(object_json, REPO_ROOT),
+            'process_json': os.path.relpath(process_json, REPO_ROOT),
+            'transition_json': os.path.relpath(transition_json, REPO_ROOT),
+        },
     }
 
     output_dir = os.path.join(REPO_ROOT, args.output_dir)
     json_path = os.path.join(output_dir, f'progression_object_validation_{generated_at}.json')
     md_path = os.path.join(output_dir, f'progression_object_validation_{generated_at}.md')
-    write_json(json_path, result)
+    write_json(json_path, report)
     lines = [
         '# Progression Object Validation',
         '',
-        f"- Object count: `{result['object_count']}`",
-        f"- Error count: `{result['error_count']}`",
-        f"- Warning count: `{result['warning_count']}`",
+        f"- Valid: `{report['valid']}`",
+        f"- Object count: `{report['object_count']}`",
+        f"- Error count: `{report['error_count']}`",
+        f"- Warning count: `{report['warning_count']}`",
         '',
         '## Summary',
         '',
@@ -313,6 +327,8 @@ def main():
     else:
         lines.append('- none')
     write_text(md_path, '\n'.join(lines) + '\n')
+    if errors:
+        raise SystemExit(1)
     print(json_path)
 
 

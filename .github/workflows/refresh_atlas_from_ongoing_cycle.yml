@@ -186,6 +186,7 @@ jobs:
           python scripts/build_idea_generation_gate.py \
             --output-dir reports/idea_generation_gate \
             --release-manifest-csv "$latest_release_manifest"
+          latest_idea_gate_json=$(ls -1t reports/idea_generation_gate/idea_generation_gate_*.json | head -n1)
           python scripts/build_process_lanes.py \
             --claims-csv "$latest_claims" \
             --edges-csv "$latest_edges" \
@@ -212,8 +213,24 @@ jobs:
           python scripts/build_process_model_page.py \
             --transition-json "$latest_transition_json" \
             --output-dir docs/process-model
-          python scripts/build_progression_objects.py \
+          latest_target_seed=$(ls -1t reports/manual_enrichment_seed_pack/target_seed_pack_*.csv 2>/dev/null | head -n1 || true)
+          progression_args=(
+            python scripts/build_progression_objects.py
+            --claims-csv "$latest_claims"
+            --edges-csv "$latest_edges"
+            --paper-qa-csv "$latest_paper_qa"
+            --process-json "$latest_process_json"
+            --transition-json "$latest_transition_json"
+            --synthesis-csv "$latest_synthesis"
             --output-dir reports/progression_objects
+          )
+          if [ -n "$latest_target_seed" ]; then
+            progression_args+=(--target-seed-csv "$latest_target_seed")
+          fi
+          if [ -n "$latest_bridge" ]; then
+            progression_args+=(--translational-bridge-csv "$latest_bridge")
+          fi
+          "${progression_args[@]}"
           latest_progression_json=$(ls -1t reports/progression_objects/progression_object_index_*.json | head -n1)
           python scripts/build_progression_object_validation.py \
             --object-json "$latest_progression_json" \
@@ -223,11 +240,30 @@ jobs:
           python scripts/build_progression_object_page.py \
             --object-json "$latest_progression_json" \
             --output-dir docs/progression-objects
-          python scripts/build_translational_perturbation_logic.py \
-            --process-json "$latest_process_json" \
-            --transition-json "$latest_transition_json" \
-            --object-json "$latest_progression_json" \
+          latest_connector_enrichment=$(find reports -type f -name 'connector_enrichment_*.csv' | sort | tail -n1)
+          translational_args=(
+            python scripts/build_translational_perturbation_logic.py
+            --process-json "$latest_process_json"
+            --transition-json "$latest_transition_json"
+            --object-json "$latest_progression_json"
+            --claims-csv "$latest_claims"
+            --edges-csv "$latest_edges"
+            --paper-qa-csv "$latest_paper_qa"
             --output-dir reports/translational_perturbation
+          )
+          if [ -n "$latest_target_seed" ]; then
+            translational_args+=(--target-seed-csv "$latest_target_seed")
+          fi
+          if [ -n "$latest_bridge" ]; then
+            translational_args+=(--translational-bridge-csv "$latest_bridge")
+          fi
+          if [ -n "$latest_connector_enrichment" ]; then
+            translational_args+=(--connector-enrichment-csv "$latest_connector_enrichment")
+          fi
+          if [ -n "$latest_connector_manifest" ]; then
+            translational_args+=(--connector-manifest-csv "$latest_connector_manifest")
+          fi
+          "${translational_args[@]}"
           latest_translational_json=$(ls -1t reports/translational_perturbation/translational_perturbation_index_*.json | head -n1)
           python scripts/build_translational_perturbation_validation.py \
             --translational-json "$latest_translational_json" \
@@ -264,7 +300,7 @@ jobs:
             --object-json "$latest_progression_json" \
             --translational-json "$latest_translational_json" \
             --cohort-json "$latest_cohort_json" \
-            --idea-gate-json "$(ls -1t reports/idea_generation_gate/idea_generation_gate_*.json | head -n1)" \
+            --idea-gate-json "$latest_idea_gate_json" \
             --output-dir reports/hypothesis_candidates
           latest_hypothesis_candidate_json=$(ls -1t reports/hypothesis_candidates/hypothesis_candidates_*.json | head -n1)
           python scripts/build_hypothesis_rankings.py \

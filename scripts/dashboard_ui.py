@@ -1253,10 +1253,28 @@ def next_paper_opportunity(primary_packet, secondary_packets, state, direction_r
     return {'title': 'No secondary paper opportunity yet', 'story': 'A future paper opportunity will appear once the slate emits more than one strong path.'}
 
 
-def build_goal_progress(state, primary_packet, secondary_packets, direction_registry):
-    process_ok = bool(state.get('process') and not read_json_if_exists(latest_optional_report('process_lane_validation_*.json'), default={}).get('errors'))
-    transition_ok = bool(state.get('transition') and not read_json_if_exists(latest_optional_report('causal_transition_validation_*.json'), default={}).get('errors'))
-    progression_ok = bool(state.get('progression') and not read_json_if_exists(latest_optional_report('progression_object_validation_*.json'), default={}).get('errors'))
+def validation_ok(pattern):
+    validation = read_json_if_exists(latest_optional_report(pattern), default={})
+    if not validation:
+        return False
+    if 'valid' in validation:
+        return bool(validation.get('valid'))
+    return not validation.get('errors')
+
+
+def selected_manuscript_candidate(manuscript_queue, direction_registry):
+    selected_title = normalize(direction_registry.get('current_manuscript_candidate', {}).get('title'))
+    candidates = list(manuscript_queue.get('active_candidates', []) or []) + list(manuscript_queue.get('watchlist', []) or [])
+    for candidate in candidates:
+        if selected_title and normalize(candidate.get('title')) == selected_title:
+            return candidate
+    return candidates[0] if candidates else {}
+
+
+def build_goal_progress(state, primary_packet, secondary_packets, direction_registry, manuscript_queue):
+    process_ok = bool(state.get('process') and validation_ok('process_lane_validation_*.json'))
+    transition_ok = bool(state.get('transition') and validation_ok('causal_transition_validation_*.json'))
+    progression_ok = bool(state.get('progression') and validation_ok('progression_object_validation_*.json'))
 
     context_packet = select_context_packet(primary_packet, secondary_packets, direction_registry)
     primary_row = context_packet.get('source_row', {}) if context_packet else {}
@@ -1265,18 +1283,33 @@ def build_goal_progress(state, primary_packet, secondary_packets, direction_regi
         bool(state.get('cohort')) and bool(primary_row.get('linked_phase5_endotype_ids')),
         bool(state.get('hypothesis')) and bool(context_packet),
     ]
-    manuscript_selected = bool(normalize(direction_registry.get('current_manuscript_candidate', {}).get('title')))
-    evidence_chain_complete = bool(primary_row.get('linked_phase1_lane_ids') and primary_row.get('linked_phase2_transition_ids') and primary_row.get('linked_phase3_object_ids') and primary_row.get('linked_phase4_packet_ids') and primary_row.get('linked_phase5_endotype_ids'))
-    figure_path_defined = bool(normalize(primary_row.get('next_test') or primary_row.get('best_next_experiment') or primary_row.get('best_next_task') or primary_row.get('expected_readouts')))
-    blockers_named = bool(normalize(primary_row.get('blockers') or primary_row.get('contradiction_notes') or primary_row.get('evidence_gaps')))
+    manuscript_candidate = selected_manuscript_candidate(manuscript_queue, direction_registry)
+    evidence_bundle = manuscript_candidate.get('evidence_bundle_summary', {}) if manuscript_candidate else {}
+    primary_requirements = manuscript_candidate.get('journal_targets', {}).get('primary', {}).get('requirements', {}) if manuscript_candidate else {}
+    manuscript_selected = bool(normalize(manuscript_candidate.get('title')) or normalize(direction_registry.get('current_manuscript_candidate', {}).get('title')))
+    evidence_bundle_ready = bool(
+        manuscript_candidate.get('evidence_chain_complete')
+        and int(evidence_bundle.get('reference_count', 0) or 0) > 0
+        and int(evidence_bundle.get('claim_count', 0) or 0) > 0
+        and int(evidence_bundle.get('figure_count', 0) or 0) > 0
+        and int(evidence_bundle.get('section_packet_count', 0) or 0) > 0
+    )
+    journal_requirements_verified = bool(primary_requirements.get('checked') or evidence_bundle.get('primary_journal_verified'))
+    draft_gate_passed = bool(
+        manuscript_candidate.get('ready_for_codex_draft')
+        or normalize(manuscript_candidate.get('manuscript_gate_state')) == 'ready to build phase 8 pack'
+    )
 
     selected_candidate = direction_registry.get('current_manuscript_candidate') or {}
     current_manuscript_candidate = (
         {
-            'title': normalize(selected_candidate.get('title')),
+            'title': normalize(manuscript_candidate.get('title') or selected_candidate.get('title')),
             'story': normalize(selected_candidate.get('story')),
+            'manuscript_gate_state': normalize(manuscript_candidate.get('manuscript_gate_state')),
+            'draft_readiness': manuscript_candidate.get('draft_readiness'),
+            'ready_for_codex_draft': bool(manuscript_candidate.get('ready_for_codex_draft')),
         }
-        if normalize(selected_candidate.get('title'))
+        if normalize(manuscript_candidate.get('title') or selected_candidate.get('title'))
         else {
             'title': 'Not selected yet',
             'story': 'If you approve the primary decision, it becomes the current manuscript path.',
@@ -1305,13 +1338,13 @@ def build_goal_progress(state, primary_packet, secondary_packets, direction_regi
         },
         {
             'label': 'Paper Readiness',
-            'completed': sum(1 for item in [manuscript_selected, evidence_chain_complete, figure_path_defined, blockers_named] if item),
+            'completed': sum(1 for item in [manuscript_selected, evidence_bundle_ready, journal_requirements_verified, draft_gate_passed] if item),
             'total': 4,
             'checkpoints': [
                 {'label': 'Manuscript candidate selected', 'complete': manuscript_selected},
-                {'label': 'Evidence chain complete', 'complete': evidence_chain_complete},
-                {'label': 'Figure path defined', 'complete': figure_path_defined},
-                {'label': 'Blockers named', 'complete': blockers_named},
+                {'label': 'Evidence bundle assembled', 'complete': evidence_bundle_ready},
+                {'label': 'Primary journal requirements verified', 'complete': journal_requirements_verified},
+                {'label': 'Draft gate passed', 'complete': draft_gate_passed},
             ],
         },
     ]
@@ -1481,12 +1514,12 @@ def build_command_page_payload(state, root_prefix='./', direction_registry=None,
     secondary_packets = [build_decision_packet(row, 'secondary', root_prefix) for row in secondary_rows]
     context_packet = select_context_packet(primary_packet, secondary_packets, direction_registry)
     direction_summary = current_direction_summary(primary_packet, direction_registry)
-    goal_progress = build_goal_progress(state, primary_packet, secondary_packets, direction_registry)
     manuscript_queue = build_manuscript_queue_payload(
         state,
         direction_registry=direction_registry,
         publication_tracker=publication_tracker,
     )
+    goal_progress = build_goal_progress(state, primary_packet, secondary_packets, direction_registry, manuscript_queue)
     return {
         'program_status': build_program_status(state, primary_packet, direction_summary),
         'goal_progress': goal_progress,

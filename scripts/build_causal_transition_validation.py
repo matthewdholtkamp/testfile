@@ -81,7 +81,12 @@ LANE_ALIASES = {
 }
 
 
-def latest_report(pattern):
+def latest_report(pattern, preferred_dirs=None):
+    preferred_dirs = preferred_dirs or []
+    for directory in preferred_dirs:
+        candidates = sorted(glob(os.path.join(REPO_ROOT, directory, pattern)))
+        if candidates:
+            return candidates[-1]
     candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
     if not candidates:
         raise FileNotFoundError(f'No reports matched {pattern}')
@@ -182,7 +187,7 @@ def main():
     )
     args = parser.parse_args()
 
-    transition_json = args.transition_json or latest_report('causal_transition_index_*.json')
+    transition_json = args.transition_json or latest_report('causal_transition_index_*.json', preferred_dirs=['reports/causal_transitions'])
     payload = read_json(transition_json)
     transitions = payload.get('rows', [])
     summary = payload.get('summary', {})
@@ -296,28 +301,35 @@ def main():
             warnings.append(f'{lane_id} is still longitudinally_seeded even though its strongest related transition is supported; keep downstream claims bounded')
 
     generated_at = datetime.utcnow().strftime('%Y-%m-%d_%H%M%S')
-    result = {
+    report = {
+        'validated_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
+        'valid': not errors,
         'transition_json': os.path.relpath(transition_json, REPO_ROOT),
         'summary': summary,
+        'summary_snapshot': summary,
         'transition_count': len(transitions),
         'error_count': len(errors),
         'warning_count': len(warnings),
         'errors': errors,
         'warnings': warnings,
+        'validated_paths': {
+            'transition_json': os.path.relpath(transition_json, REPO_ROOT),
+        },
     }
 
     output_dir = os.path.join(REPO_ROOT, args.output_dir)
     json_path = os.path.join(output_dir, f'causal_transition_validation_{generated_at}.json')
     md_path = os.path.join(output_dir, f'causal_transition_validation_{generated_at}.md')
-    write_json(json_path, result)
+    write_json(json_path, report)
 
     md_lines = [
         '# Causal Transition Validation',
         '',
-        f'- Source: `{result["transition_json"]}`',
-        f'- Transition count: `{result["transition_count"]}`',
-        f'- Errors: `{result["error_count"]}`',
-        f'- Warnings: `{result["warning_count"]}`',
+        f'- Valid: `{report["valid"]}`',
+        f'- Source: `{report["transition_json"]}`',
+        f'- Transition count: `{report["transition_count"]}`',
+        f'- Errors: `{report["error_count"]}`',
+        f'- Warnings: `{report["warning_count"]}`',
         '',
         '## Summary',
         '',

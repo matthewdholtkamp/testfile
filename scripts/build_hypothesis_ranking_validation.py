@@ -65,7 +65,12 @@ FAMILY_FIELD_RULES = {
 }
 
 
-def latest_report(pattern):
+def latest_report(pattern, preferred_dirs=None):
+    preferred_dirs = preferred_dirs or []
+    for directory in preferred_dirs:
+        candidates = sorted(glob(os.path.join(REPO_ROOT, directory, pattern)))
+        if candidates:
+            return candidates[-1]
     candidates = sorted(glob(os.path.join(REPO_ROOT, 'reports', '**', pattern), recursive=True))
     if not candidates:
         raise FileNotFoundError(f'No reports matched {pattern}')
@@ -162,13 +167,13 @@ def main():
     parser.add_argument('--output-dir', default='reports/hypothesis_ranking_validation', help='Validation output directory.')
     args = parser.parse_args()
 
-    ranking_json = args.ranking_json or latest_report('hypothesis_rankings_*.json')
-    process_json = args.process_json or latest_report('process_lane_index_*.json')
-    transition_json = args.transition_json or latest_report('causal_transition_index_*.json')
-    object_json = args.object_json or latest_report('progression_object_index_*.json')
-    translational_json = args.translational_json or latest_report('translational_perturbation_index_*.json')
-    cohort_json = args.cohort_json or latest_report('cohort_stratification_index_*.json')
-    candidate_json = args.candidate_json or latest_report('hypothesis_candidates_*.json')
+    ranking_json = args.ranking_json or latest_report('hypothesis_rankings_*.json', preferred_dirs=['reports/hypothesis_rankings'])
+    process_json = args.process_json or latest_report('process_lane_index_*.json', preferred_dirs=['reports/process_lanes'])
+    transition_json = args.transition_json or latest_report('causal_transition_index_*.json', preferred_dirs=['reports/causal_transitions'])
+    object_json = args.object_json or latest_report('progression_object_index_*.json', preferred_dirs=['reports/progression_objects'])
+    translational_json = args.translational_json or latest_report('translational_perturbation_index_*.json', preferred_dirs=['reports/translational_perturbation'])
+    cohort_json = args.cohort_json or latest_report('cohort_stratification_index_*.json', preferred_dirs=['reports/cohort_stratification'])
+    candidate_json = args.candidate_json or latest_report('hypothesis_candidates_*.json', preferred_dirs=['reports/hypothesis_candidates'])
 
     ranking_payload = read_json(ranking_json)
     process_payload = read_json(process_json)
@@ -404,6 +409,8 @@ def main():
     md_path = os.path.join(args.output_dir, f'hypothesis_ranking_validation_{ts}.md')
     write_json(json_path, report)
     write_text(md_path, render_markdown(report))
+    if errors:
+        raise SystemExit(1)
     print(f'Hypothesis ranking validation JSON written: {json_path}')
     print(f'Hypothesis ranking validation Markdown written: {md_path}')
 

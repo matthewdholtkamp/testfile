@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-04-13T15:10:33.618342+00:00",
+  "updated_at": "2026-04-13T23:29:50.866595+00:00",
   "summary": {
-    "updated_at": "2026-04-13T15:10:33.617856+00:00",
+    "updated_at": "2026-04-13T23:29:50.865368+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,
@@ -34,7 +34,7 @@
         "reopened"
       ],
       "execution_note": "Lead contradiction still active: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.. 4 issue(s) remain blocking.",
-      "last_executed_at": "2026-04-13T15:10:33.617754+00:00",
+      "last_executed_at": "2026-04-13T23:29:50.865246+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -54,7 +54,7 @@
         "reopened"
       ],
       "execution_note": "Translational packet remains bounded around DYRK1A; strengthening brief updated.",
-      "last_executed_at": "2026-04-13T15:10:33.617798+00:00",
+      "last_executed_at": "2026-04-13T23:29:50.865299+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -74,7 +74,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-13T15:10:33.617825+00:00",
+      "last_executed_at": "2026-04-13T23:29:50.865331+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     },
     {
@@ -94,7 +94,7 @@
         "reopened"
       ],
       "execution_note": "Journal-specific rigor checklist is active with 7 critical gap(s) across 1 profile(s).",
-      "last_executed_at": "2026-04-13T15:10:33.617849+00:00",
+      "last_executed_at": "2026-04-13T23:29:50.865360+00:00",
       "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ]
