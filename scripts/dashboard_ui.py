@@ -6,7 +6,11 @@ import subprocess
 from datetime import datetime, timezone
 from glob import glob
 
-from manuscript_phase8 import build_manuscript_queue_payload, load_publication_tracker
+from manuscript_phase8 import (
+    build_connector_dashboard_payload,
+    build_manuscript_queue_payload,
+    load_publication_tracker,
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATE_DIR = os.path.join(REPO_ROOT, 'outputs', 'state')
@@ -1519,6 +1523,7 @@ def build_command_page_payload(state, root_prefix='./', direction_registry=None,
         direction_registry=direction_registry,
         publication_tracker=publication_tracker,
     )
+    connector_status = manuscript_queue.get('connector_status') or build_connector_dashboard_payload()
     goal_progress = build_goal_progress(state, primary_packet, secondary_packets, direction_registry, manuscript_queue)
     return {
         'program_status': build_program_status(state, primary_packet, direction_summary),
@@ -1531,6 +1536,7 @@ def build_command_page_payload(state, root_prefix='./', direction_registry=None,
         'phase_timeline': build_phase_timeline(state, root_prefix),
         'current_direction': direction_summary,
         'board_state': build_board_state(state, direction_registry, action_status, primary_packet, secondary_packets),
+        'connector_status': connector_status,
         'manuscript_queue': manuscript_queue,
         'support_links': build_support_links(root_prefix),
         'control_state': {

@@ -1085,6 +1085,42 @@
     "requirements_checked": true
   },
   "journal_fit": 4,
+  "connector_summary": {
+    "data_state": "connector_data_attached",
+    "matched_row_count": 6,
+    "latest_attached_at": "2026-03-26T01:43:46Z",
+    "sources": [
+      {
+        "key": "open_targets",
+        "label": "Open Targets",
+        "count": 6
+      }
+    ],
+    "source_labels": [
+      "Open Targets"
+    ],
+    "target_context": {
+      "status": "provisional",
+      "source": "Open Targets + repo target-seed pack",
+      "detail": "Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem."
+    },
+    "trial_context": {
+      "status": "not_available",
+      "source": "No trial connector attached",
+      "detail": "no trial attachment surfaced in this build"
+    },
+    "genomics_context": {
+      "status": "not_available",
+      "source": "No imported genomics evidence",
+      "detail": "no exported genomics support in this build"
+    },
+    "tenx": {
+      "state": "not_prepared",
+      "imported_row_count": 0,
+      "template_row_count": 0,
+      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-03-25_211811.csv"
+    }
+  },
   "evidence_bundle_summary": {
     "reference_count": 83,
     "claim_count": 14,
@@ -1130,7 +1166,7 @@
         "reopened"
       ],
       "execution_note": "Lead contradiction still active: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.. 4 issue(s) remain blocking.",
-      "last_executed_at": "2026-04-13T23:29:50.865246+00:00",
+      "last_executed_at": "2026-04-14T11:16:57.266232+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -1150,7 +1186,7 @@
         "reopened"
       ],
       "execution_note": "Translational packet remains bounded around DYRK1A; strengthening brief updated.",
-      "last_executed_at": "2026-04-13T23:29:50.865299+00:00",
+      "last_executed_at": "2026-04-14T11:16:57.266291+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -1170,7 +1206,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-13T23:29:50.865331+00:00",
+      "last_executed_at": "2026-04-14T11:16:57.266329+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     },
     {
@@ -1190,12 +1226,12 @@
         "reopened"
       ],
       "execution_note": "Journal-specific rigor checklist is active with 7 critical gap(s) across 1 profile(s).",
-      "last_executed_at": "2026-04-13T23:29:50.865360+00:00",
+      "last_executed_at": "2026-04-14T11:16:57.266363+00:00",
       "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-13T23:29:50.865368+00:00",
+    "updated_at": "2026-04-14T11:16:57.266373+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,

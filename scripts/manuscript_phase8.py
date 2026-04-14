@@ -32,6 +32,25 @@ QUEUE_STATUSES = [
 SUBMISSION_TRACKER_EXIT_STATUSES = {'submitted', 'under review', 'accepted', 'published', 'rejected / retargeting'}
 ACTIVE_APPROVAL_STATUSES = {'awaiting your approval', 'approved for submission'}
 TASK_STATES = ['proposed', 'queued', 'running', 'satisfied', 'blocked', 'stale', 'reopened']
+CONNECTOR_SOURCE_LABELS = {
+    'open_targets': 'Open Targets',
+    'clinicaltrials_gov': 'ClinicalTrials.gov',
+    'biorxiv_medrxiv': 'bioRxiv / medRxiv',
+    'tenx_genomics': '10x Genomics',
+    'chembl': 'ChEMBL',
+}
+CONNECTOR_MATCH_STOPWORDS = {
+    'most',
+    'informative',
+    'biomarker',
+    'panel',
+    'packet',
+    'candidate',
+    'paper',
+    'manuscript',
+    'path',
+    'lead',
+}
 
 
 def normalize(value):
@@ -80,6 +99,14 @@ def write_text(path, text):
     path.write_text(text)
 
 
+def read_csv(path):
+    path = Path(path)
+    if not path.exists():
+        return []
+    with path.open(newline='', encoding='utf-8') as handle:
+        return list(csv.DictReader(handle))
+
+
 def iso_now():
     return datetime.now(timezone.utc).isoformat()
 
@@ -122,6 +149,142 @@ def summarize_list(values, limit=4):
     if len(clean) <= limit:
         return ', '.join(clean)
     return ', '.join(clean[:limit]) + f', and {len(clean) - limit} more'
+
+
+def connector_source_label(source):
+    source = normalize(source)
+    return CONNECTOR_SOURCE_LABELS.get(source, pretty_label(source))
+
+
+def latest_matching_path(patterns):
+    candidates = []
+    for pattern in patterns:
+        candidates.extend(REPO_ROOT.glob(pattern))
+    if not candidates:
+        return None
+    return sorted(candidates)[-1]
+
+
+def relative_path_or_blank(path):
+    if not path:
+        return ''
+    try:
+        return str(Path(path).resolve().relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path)
+
+
+def tokenize_for_connector_match(*values):
+    tokens = set()
+    for value in values:
+        for token in re.findall(r'[a-z0-9]+', normalize(value).lower()):
+            if len(token) < 3 or token in CONNECTOR_MATCH_STOPWORDS:
+                continue
+            tokens.add(token)
+    return tokens
+
+
+def connector_match_score(candidate, value):
+    candidate_tokens = tokenize_for_connector_match(
+        candidate.get('theme_key'),
+        candidate.get('theme_label'),
+        candidate.get('title'),
+    )
+    value_tokens = tokenize_for_connector_match(value)
+    return len(candidate_tokens.intersection(value_tokens))
+
+
+def count_csv_rows(path):
+    if not path or not Path(path).exists():
+        return 0
+    with Path(path).open(newline='', encoding='utf-8') as handle:
+        return sum(1 for _ in csv.DictReader(handle))
+
+
+def sorted_counter_rows(counter):
+    return [
+        {
+            'key': key,
+            'label': connector_source_label(key),
+            'count': counter[key],
+        }
+        for key in sorted(counter)
+    ]
+
+
+def build_connector_context():
+    enrichment_path = latest_matching_path([
+        'reports/connector_enrichment_curated/connector_enrichment_curated_*.csv',
+        'reports/connector_enrichment/connector_enrichment_records_*.csv',
+        'reports/connector_enrichment/connector_enrichment_*.csv',
+    ])
+    manifest_path = latest_matching_path([
+        'reports/connector_candidate_manifest/connector_candidate_manifest_*.csv',
+    ])
+    tenx_template_path = latest_matching_path([
+        'reports/connector_candidate_manifest/templates/tenx_genomics_import_template_*.csv',
+        'local_connector_inputs/templates/tenx_genomics_import_template_*.csv',
+    ])
+
+    enrichment_rows = read_csv(enrichment_path) if enrichment_path else []
+    manifest_rows = read_csv(manifest_path) if manifest_path else []
+    tenx_template_rows = read_csv(tenx_template_path) if tenx_template_path else []
+    latest_retrieved_at = max(
+        (normalize(row.get('retrieved_at')) for row in enrichment_rows if normalize(row.get('retrieved_at'))),
+        default='',
+    )
+    return {
+        'enrichment_path': enrichment_path,
+        'enrichment_rows': enrichment_rows,
+        'manifest_path': manifest_path,
+        'manifest_rows': manifest_rows,
+        'tenx_template_path': tenx_template_path,
+        'tenx_template_rows': tenx_template_rows,
+        'latest_retrieved_at': latest_retrieved_at,
+    }
+
+
+def build_connector_dashboard_payload(connector_context=None):
+    connector_context = connector_context or build_connector_context()
+    enrichment_rows = connector_context.get('enrichment_rows') or []
+    by_source = {}
+    by_tier = {}
+    tenx_rows = 0
+    for row in enrichment_rows:
+        source = normalize(row.get('connector_source'))
+        tier = normalize(row.get('evidence_tier'))
+        if source:
+            by_source[source] = by_source.get(source, 0) + 1
+        if tier:
+            by_tier[tier] = by_tier.get(tier, 0) + 1
+        if source == 'tenx_genomics' or tier == 'genomics_expression':
+            tenx_rows += 1
+    tenx_template_rows = connector_context.get('tenx_template_rows') or []
+    tenx_state = 'no_10x_template_prepared'
+    if tenx_rows:
+        tenx_state = 'real_10x_evidence_attached'
+    elif tenx_template_rows:
+        tenx_state = 'template_only'
+    return {
+        'latest_enrichment_path': relative_path_or_blank(connector_context.get('enrichment_path')),
+        'latest_enrichment_at': connector_context.get('latest_retrieved_at') or '',
+        'row_count': len(enrichment_rows),
+        'by_source': sorted_counter_rows(by_source),
+        'by_evidence_tier': [
+            {
+                'key': key,
+                'label': pretty_label(key),
+                'count': by_tier[key],
+            }
+            for key in sorted(by_tier)
+        ],
+        'tenx': {
+            'state': tenx_state,
+            'imported_row_count': tenx_rows,
+            'template_row_count': len(tenx_template_rows),
+            'template_path': relative_path_or_blank(connector_context.get('tenx_template_path')),
+        },
+    }
 
 
 def split_notes(value):
@@ -1017,6 +1180,196 @@ def phase_entries_for_candidate(row, state, indexes):
                 'source_path': artifact_source_path(state, phase_key),
             })
     return entries
+
+
+def candidate_target_labels(phase_entries):
+    labels = []
+    for entry in phase_entries:
+        phase_key = normalize(entry.get('phase_key'))
+        phase_row = entry.get('row') or {}
+        if phase_key == 'phase4':
+            labels.append(normalize(phase_row.get('primary_target')))
+            labels.extend(normalize(item) for item in (phase_row.get('challenger_targets') or []))
+            labels.extend(normalize(item) for item in (phase_row.get('biomarker_panel') or []))
+        elif phase_key == 'phase5':
+            labels.extend(normalize(item) for item in (phase_row.get('linked_primary_targets') or []))
+    return [label for label in ordered_unique(labels) if label]
+
+
+def row_matches_candidate_targets(row, targets):
+    if not targets:
+        return False
+    fields = {
+        normalize(row.get('entity_label')).upper(),
+        normalize(row.get('entity_id')).upper(),
+        normalize(row.get('query_seed')).upper(),
+    }
+    return any(target.upper() in fields for target in targets if target)
+
+
+def row_matches_candidate_connector(candidate, row, targets):
+    if row_matches_candidate_targets(row, targets):
+        return True
+    haystack = ' '.join([
+        normalize(row.get('canonical_mechanism')),
+        normalize(row.get('query_seed')),
+        normalize(row.get('title')),
+    ])
+    return connector_match_score(candidate, haystack) >= 2
+
+
+def candidate_connector_rows(candidate, phase_entries, connector_context):
+    enrichment_rows = connector_context.get('enrichment_rows') or []
+    manifest_rows = connector_context.get('manifest_rows') or []
+    tenx_template_rows = connector_context.get('tenx_template_rows') or []
+    targets = candidate_target_labels(phase_entries)
+    matched_enrichment = [
+        row for row in enrichment_rows if row_matches_candidate_connector(candidate, row, targets)
+    ]
+    matched_manifest = [
+        row for row in manifest_rows if row_matches_candidate_connector(candidate, row, targets)
+    ]
+    matched_tenx_template = [
+        row
+        for row in tenx_template_rows
+        if connector_match_score(
+            candidate,
+            ' '.join([normalize(row.get('canonical_mechanism')), normalize(row.get('query_seed'))]),
+        ) >= 2
+    ]
+    return matched_enrichment, matched_manifest, matched_tenx_template
+
+
+def summarize_connector_sources(rows):
+    counts = {}
+    for row in rows:
+        source = normalize(row.get('connector_source'))
+        if not source:
+            continue
+        counts[source] = counts.get(source, 0) + 1
+    return sorted_counter_rows(counts)
+
+
+def candidate_connector_summary(candidate, phase_entries, connector_context):
+    matched_enrichment, matched_manifest, matched_tenx_template = candidate_connector_rows(
+        candidate,
+        phase_entries,
+        connector_context,
+    )
+    phase4_entry = next((entry for entry in phase_entries if entry.get('phase_key') == 'phase4'), {})
+    phase4_row = phase4_entry.get('row') or {}
+    phase5_rows = [entry.get('row') or {} for entry in phase_entries if entry.get('phase_key') == 'phase5']
+
+    source_rows = summarize_connector_sources(matched_enrichment)
+    source_labels = [row['label'] for row in source_rows]
+    latest_attached_at = max(
+        (normalize(row.get('retrieved_at')) for row in matched_enrichment if normalize(row.get('retrieved_at'))),
+        default='',
+    )
+    target_rows = [
+        row for row in matched_enrichment if normalize(row.get('evidence_tier')) == 'target_association'
+    ]
+    trial_rows = [
+        row for row in matched_enrichment if normalize(row.get('evidence_tier')) == 'trial_landscape'
+    ]
+    genomics_rows = [
+        row
+        for row in matched_enrichment
+        if normalize(row.get('evidence_tier')) == 'genomics_expression'
+        or normalize(row.get('connector_source')) == 'tenx_genomics'
+    ]
+    supportive_phase5_row = next(
+        (
+            row
+            for row in phase5_rows
+            if normalize(row.get('genomics_support_status')) == 'supportive'
+        ),
+        {},
+    )
+
+    target_sources = []
+    if target_rows:
+        target_sources.append('Open Targets')
+    if normalize(phase4_row.get('primary_target')):
+        target_sources.append('repo target-seed pack')
+    trial_sources = []
+    if trial_rows:
+        trial_sources.append('ClinicalTrials.gov')
+    if normalize((phase4_row.get('trial_support') or {}).get('status')) in {'supported', 'provisional'}:
+        trial_sources.append('translational bridge')
+    genomics_sources = []
+    if genomics_rows:
+        genomics_sources.append('10x Genomics')
+    if supportive_phase5_row:
+        genomics_sources.append('cohort genomics layer')
+
+    tenx_state = 'not_prepared'
+    if genomics_rows:
+        tenx_state = 'real_evidence_attached'
+    elif matched_tenx_template or any(normalize(row.get('requested_connector')) == 'tenx_genomics' for row in matched_manifest):
+        tenx_state = 'template_only'
+
+    data_state = 'no_connector_data_attached'
+    if matched_enrichment:
+        data_state = 'connector_data_attached'
+    elif tenx_state == 'template_only':
+        data_state = 'template_only'
+
+    phase4_genomics_status = normalize(phase4_row.get('genomics_support_status'))
+    phase4_genomics_detail = normalize(phase4_row.get('genomics_support_detail'))
+    supportive_phase5_detail = normalize(
+        supportive_phase5_row.get('genomics_signature_detail')
+        or supportive_phase5_row.get('genomics_support_detail')
+    )
+    fallback_phase5_detail = next(
+        (
+            normalize(row.get('genomics_signature_detail') or row.get('genomics_support_detail'))
+            for row in phase5_rows
+            if normalize(row.get('genomics_signature_detail') or row.get('genomics_support_detail'))
+        ),
+        '',
+    )
+    if genomics_rows:
+        genomics_status = 'supported'
+        genomics_detail = 'Imported genomics-expression evidence is attached through the connector layer.'
+    elif phase4_genomics_status == 'supportive':
+        genomics_status = 'supported'
+        genomics_detail = phase4_genomics_detail or supportive_phase5_detail or 'Genomics support is attached in the current translational packet.'
+    elif supportive_phase5_row:
+        genomics_status = 'provisional'
+        genomics_detail = supportive_phase5_detail or 'Indirect cohort-level genomics support is present, but no clean 10x packet is attached yet.'
+    else:
+        genomics_status = phase4_genomics_status or 'not_available'
+        genomics_detail = phase4_genomics_detail or fallback_phase5_detail or 'no genomics support attached in this build'
+
+    return {
+        'data_state': data_state,
+        'matched_row_count': len(matched_enrichment),
+        'latest_attached_at': latest_attached_at or connector_context.get('latest_retrieved_at') or '',
+        'sources': source_rows,
+        'source_labels': source_labels,
+        'target_context': {
+            'status': normalize(phase4_row.get('target_support')) or ('supported' if target_rows else 'not_available'),
+            'source': ' + '.join(ordered_unique(target_sources)) or 'No external target context attached',
+            'detail': normalize(phase4_row.get('target_rationale')) or 'No target-support detail attached yet.',
+        },
+        'trial_context': {
+            'status': normalize((phase4_row.get('trial_support') or {}).get('status')) or 'not_available',
+            'source': ' + '.join(ordered_unique(trial_sources)) or 'No trial connector attached',
+            'detail': normalize((phase4_row.get('trial_support') or {}).get('evidence')) or 'no trial attachment surfaced in this build',
+        },
+        'genomics_context': {
+            'status': genomics_status or 'not_available',
+            'source': ' + '.join(ordered_unique(genomics_sources)) or 'No imported genomics evidence',
+            'detail': genomics_detail,
+        },
+        'tenx': {
+            'state': tenx_state,
+            'imported_row_count': len(genomics_rows),
+            'template_row_count': len(matched_tenx_template),
+            'template_path': relative_path_or_blank(connector_context.get('tenx_template_path')),
+        },
+    }
 
 
 def supporting_pmids_for_phase_entry(entry):
@@ -2536,6 +2889,7 @@ def build_journal_fit_markdown(candidate):
 
 def build_manuscript_brief(candidate, row):
     journal_specific_summary = candidate.get('journal_specific_rigor_summary') or {}
+    connector_summary = candidate.get('connector_summary') or {}
     lines = [
         '# Manuscript Brief',
         '',
@@ -2546,6 +2900,8 @@ def build_manuscript_brief(candidate, row):
         f"- **Journal fit:** {candidate['journal_fit']} / 4",
         f"- **Draft readiness:** {candidate['draft_readiness']} / 4",
         f"- **Current path:** {'Yes' if candidate['is_active_path'] else 'No'}",
+        f"- **Connector data state:** {pretty_label(connector_summary.get('data_state'))}",
+        f"- **Connector sources:** {', '.join(connector_summary.get('source_labels') or []) or 'none attached'}",
         '',
         '## Story Spine',
         '',
@@ -2632,6 +2988,7 @@ def build_pack_manifest(candidate, row, publication_entry):
         'source_row': row,
         'ready_for_codex_draft': candidate['ready_for_codex_draft'],
         'evidence_bundle': candidate.get('evidence_bundle_summary', {}),
+        'connector_summary': candidate.get('connector_summary', {}),
         'journal_specific_rigor': candidate.get('journal_specific_rigor_summary', {}),
         'journal_specific_rigor_fill_packet': {
             'open_entry_count': candidate.get('evidence_bundle_summary', {}).get('journal_specific_rigor_fill_entries', 0),
@@ -2645,7 +3002,8 @@ def build_pack_manifest(candidate, row, publication_entry):
     }
 
 
-def build_candidate_payload(row, state, direction_registry, journal_registry, publication_tracker, indexes, corpus_index):
+def build_candidate_payload(row, state, direction_registry, journal_registry, publication_tracker, indexes, corpus_index, connector_context=None):
+    connector_context = connector_context or build_connector_context()
     candidate_id = canonical_candidate_id(row.get('candidate_id') or row.get('title'))
     title = normalize(row.get('title') or row.get('display_name') or candidate_id)
     theme = theme_key(row)
@@ -2675,6 +3033,7 @@ def build_candidate_payload(row, state, direction_registry, journal_registry, pu
     candidate['journal_targets'] = journal_targets
     candidate['journal_fit'] = journal_targets['display_journal_fit_score']
     phase_entries = phase_entries_for_candidate(row, state, indexes)
+    candidate['connector_summary'] = candidate_connector_summary(candidate, phase_entries, connector_context)
     evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
     candidate['evidence_bundle_summary'] = evidence_bundle['summary']
     candidate['journal_specific_rigor_summary'] = evidence_bundle.get('journal_specific_rigor', {}).get('summary', {})
@@ -2763,10 +3122,20 @@ def build_manuscript_queue_payload(state, direction_registry=None, publication_t
     journal_registry = journal_registry or load_journal_registry()
     indexes = build_phase_indexes(state)
     corpus_index = load_corpus_reference_index()
+    connector_context = build_connector_context()
     candidates = []
     publication_entries = {}
     for row in representative_candidate_rows(state, direction_registry):
-        candidate, publication_entry = build_candidate_payload(row, state, direction_registry, journal_registry, publication_tracker, indexes, corpus_index)
+        candidate, publication_entry = build_candidate_payload(
+            row,
+            state,
+            direction_registry,
+            journal_registry,
+            publication_tracker,
+            indexes,
+            corpus_index,
+            connector_context=connector_context,
+        )
         publication_entries[candidate['candidate_id']] = publication_entry
         candidates.append(candidate)
     candidates.sort(key=lambda item: candidate_priority_key(item, item.get('publication_status')))
@@ -2786,6 +3155,7 @@ def build_manuscript_queue_payload(state, direction_registry=None, publication_t
     return {
         'generated_at': iso_now(),
         'summary': queue_summary(active, watchlist, publication_tracker),
+        'connector_status': build_connector_dashboard_payload(connector_context),
         'active_candidates': active,
         'watchlist': watchlist,
         'publication_tracker': tracker_rows,
@@ -2816,6 +3186,7 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
     row_lookup = candidate_row_lookup(state, direction_registry=direction_registry)
     indexes = build_phase_indexes(state)
     corpus_index = load_corpus_reference_index()
+    connector_context = build_connector_context()
     root = Path(manuscript_root)
     root.mkdir(parents=True, exist_ok=True)
 
@@ -2838,6 +3209,7 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         task_outputs_dir.mkdir(parents=True, exist_ok=True)
 
         phase_entries = phase_entries_for_candidate(row, state, indexes)
+        candidate['connector_summary'] = candidate_connector_summary(candidate, phase_entries, connector_context)
         evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
         candidate['evidence_bundle_summary'] = evidence_bundle['summary']
         candidate['journal_specific_rigor_summary'] = evidence_bundle.get('journal_specific_rigor', {}).get('summary', {})

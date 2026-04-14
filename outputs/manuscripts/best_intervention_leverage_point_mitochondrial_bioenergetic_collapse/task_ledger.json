@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-04-13T23:29:50.796735+00:00",
+  "updated_at": "2026-04-14T11:16:57.130410+00:00",
   "summary": {
-    "updated_at": "2026-04-13T23:29:50.795856+00:00",
+    "updated_at": "2026-04-14T11:16:57.129051+00:00",
     "total_tasks": 3,
     "status_counts": {
       "proposed": 0,
@@ -34,7 +34,7 @@
         "reopened"
       ],
       "execution_note": "Translational packet remains bounded around PRKN; strengthening brief updated.",
-      "last_executed_at": "2026-04-13T23:29:50.795777+00:00",
+      "last_executed_at": "2026-04-14T11:16:57.128871+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -54,7 +54,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-13T23:29:50.795818+00:00",
+      "last_executed_at": "2026-04-14T11:16:57.128931+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     },
     {
@@ -74,7 +74,7 @@
         "reopened"
       ],
       "execution_note": "Journal-specific rigor checklist is active with 14 critical gap(s) across 2 profile(s).",
-      "last_executed_at": "2026-04-13T23:29:50.795847+00:00",
+      "last_executed_at": "2026-04-14T11:16:57.129031+00:00",
       "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ]

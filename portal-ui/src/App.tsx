@@ -203,6 +203,59 @@ function journalStateLabel(candidate: AnyRecord): string {
     : "Shortlist only";
 }
 
+function connectorDataStateLabel(candidate: AnyRecord): string {
+  const state = normalizeText(candidate?.connector_summary?.data_state);
+  if (state === "connector_data_attached") return "Connector data attached";
+  if (state === "template_only") return "Template only";
+  return "No connector data attached";
+}
+
+function tenxStateLabel(value: AnyRecord | null | undefined): string {
+  const state = normalizeText(value?.state);
+  if (
+    state === "real_evidence_attached" ||
+    state === "real_10x_evidence_attached"
+  ) {
+    return "Real 10x evidence attached";
+  }
+  if (state === "template_only") return "Template only";
+  return "Not prepared";
+}
+
+function connectorTone(
+  value: string,
+): "muted" | "accent" | "success" | "warning" | "danger" {
+  const state = normalizeText(value);
+  if (
+    state === "connector_data_attached" ||
+    state === "real_evidence_attached" ||
+    state === "real_10x_evidence_attached" ||
+    state === "supported"
+  ) {
+    return "success";
+  }
+  if (state === "template_only" || state === "provisional") return "warning";
+  return "muted";
+}
+
+function formatConnectorSources(candidate: AnyRecord): string {
+  const sources = Array.isArray(candidate?.connector_summary?.sources)
+    ? candidate.connector_summary.sources
+    : [];
+  if (!sources.length) return "None attached yet";
+  return sources
+    .map((row: AnyRecord) => `${row.label || row.key} (${row.count || 0})`)
+    .join(" · ");
+}
+
+function connectorContextStatusLabel(value: unknown): string {
+  const state = normalizeText(value);
+  if (!state || state === "not_available") return "None attached";
+  if (state === "supported") return "Attached";
+  if (state === "provisional") return "Provisional";
+  return String(value || "Not specified").replace(/_/g, " ");
+}
+
 function taskTone(status: string): "muted" | "accent" | "success" | "warning" | "danger" {
   if (status === "satisfied") return "success";
   if (status === "running" || status === "queued") return "accent";
@@ -778,6 +831,8 @@ export default function App() {
     watchlist: [],
     publication_tracker: [],
   };
+  const connectorState =
+    payload.connector_status || manuscriptQueue.connector_status || {};
   const presetQuestions = payload.control_state?.preset_questions || [];
   const publishedCandidate =
     payload.goal_progress?.current_manuscript_candidate;
@@ -1384,6 +1439,78 @@ export default function App() {
                 </div>
               </div>
 
+              <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+                <div className="rounded-[24px] border border-white/10 bg-black/15 p-5">
+                  <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
+                    <Activity className="h-4 w-4" />
+                    Connector layer
+                    <StatusPill
+                      tone={
+                        (connectorState.by_source || []).length
+                          ? "success"
+                          : "muted"
+                      }
+                    >
+                      {connectorState.row_count || 0} attached rows
+                    </StatusPill>
+                  </div>
+                  <p className="mt-3 text-sm leading-7 text-[#9fb4c8]">
+                    This is the external connector evidence currently making it
+                    into the build, not just what is queued in the manifest.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {(connectorState.by_source || []).length ? (
+                      (connectorState.by_source || []).map((row: AnyRecord) => (
+                        <span
+                          key={row.key || row.label}
+                          className="inline-flex items-center rounded-full border border-[#9fd7bd]/20 bg-[#9fd7bd]/12 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#9fd7bd]"
+                        >
+                          {row.label} · {row.count}
+                        </span>
+                      ))
+                    ) : (
+                      <StatusPill tone="muted">No attached connector rows</StatusPill>
+                    )}
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-[#9fb4c8]">
+                    Latest attached connector data{" "}
+                    {connectorState.latest_enrichment_at
+                      ? formatAge(connectorState.latest_enrichment_at)
+                      : "is not timestamped yet"}
+                    .
+                  </p>
+                </div>
+
+                <div className="rounded-[24px] border border-white/10 bg-black/15 p-5">
+                  <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
+                    <Target className="h-4 w-4" />
+                    10x state
+                    <StatusPill tone={connectorTone(connectorState.tenx?.state)}>
+                      {tenxStateLabel(connectorState.tenx)}
+                    </StatusPill>
+                  </div>
+                  <div className="mt-4 space-y-2 text-sm leading-7 text-[#9fb4c8]">
+                    <p>
+                      Imported 10x/genomics rows:{" "}
+                      <span className="font-semibold text-white">
+                        {connectorState.tenx?.imported_row_count || 0}
+                      </span>
+                    </p>
+                    <p>
+                      Seeded template rows:{" "}
+                      <span className="font-semibold text-white">
+                        {connectorState.tenx?.template_row_count || 0}
+                      </span>
+                    </p>
+                    <p>
+                      {connectorState.tenx?.template_path
+                        ? `Latest template: ${connectorState.tenx.template_path}`
+                        : "No 10x template path recorded yet."}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="rounded-[24px] border border-white/10 bg-black/15 p-5 text-sm leading-7 text-[#9fb4c8]">
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
                   <Target className="h-4 w-4" />
@@ -1499,6 +1626,84 @@ export default function App() {
                             )}
                             .
                           </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
+                            Connector data for this paper
+                          </div>
+                          <StatusPill
+                            tone={connectorTone(
+                              candidate.connector_summary?.data_state,
+                            )}
+                          >
+                            {connectorDataStateLabel(candidate)}
+                          </StatusPill>
+                          <StatusPill
+                            tone={connectorTone(
+                              candidate.connector_summary?.tenx?.state,
+                            )}
+                          >
+                            {tenxStateLabel(candidate.connector_summary?.tenx)}
+                          </StatusPill>
+                        </div>
+                        <p className="mt-3 text-sm leading-7 text-[#9fb4c8]">
+                          Sources: {formatConnectorSources(candidate)}
+                        </p>
+                        <p className="mt-2 text-sm leading-7 text-[#9fb4c8]">
+                          Latest attached connector data{" "}
+                          {candidate.connector_summary?.latest_attached_at
+                            ? formatAge(
+                                candidate.connector_summary.latest_attached_at,
+                              )
+                            : "has not been attached yet"}
+                          .
+                        </p>
+                        <div className="mt-4 grid gap-3 md:grid-cols-3">
+                          <div className="rounded-2xl border border-white/8 bg-white/5 p-3">
+                            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9fb4c8]">
+                              Target context
+                            </div>
+                            <div className="mt-2 text-sm font-semibold text-white">
+                              {connectorContextStatusLabel(
+                                candidate.connector_summary?.target_context?.status,
+                              )}
+                            </div>
+                            <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
+                              {candidate.connector_summary?.target_context
+                                ?.source || "No target connector source recorded."}
+                            </p>
+                          </div>
+                          <div className="rounded-2xl border border-white/8 bg-white/5 p-3">
+                            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9fb4c8]">
+                              Trial context
+                            </div>
+                            <div className="mt-2 text-sm font-semibold text-white">
+                              {connectorContextStatusLabel(
+                                candidate.connector_summary?.trial_context?.status,
+                              )}
+                            </div>
+                            <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
+                              {candidate.connector_summary?.trial_context
+                                ?.source || "No trial connector source recorded."}
+                            </p>
+                          </div>
+                          <div className="rounded-2xl border border-white/8 bg-white/5 p-3">
+                            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9fb4c8]">
+                              Genomics / 10x
+                            </div>
+                            <div className="mt-2 text-sm font-semibold text-white">
+                              {connectorContextStatusLabel(
+                                candidate.connector_summary?.genomics_context?.status,
+                              )}
+                            </div>
+                            <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
+                              {candidate.connector_summary?.genomics_context
+                                ?.source || "No genomics source recorded."}
+                            </p>
+                          </div>
                         </div>
                       </div>
 
@@ -1704,6 +1909,13 @@ export default function App() {
                               candidate.last_pack_refresh,
                           )}
                           .
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
+                          Connector data: {connectorDataStateLabel(candidate)} ·{" "}
+                          {formatConnectorSources(candidate)}
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
+                          10x state: {tenxStateLabel(candidate.connector_summary?.tenx)}
                         </p>
                         <div className="mt-4 space-y-3">
                           <ScoreRail
