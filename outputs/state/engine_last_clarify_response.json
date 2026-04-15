@@ -1,15 +1,15 @@
 {
   "ok": true,
-  "request_id": "clarify-1776021953129-yrlhkh",
+  "request_id": "clarify-1776211526144-dzo5t5",
   "source": "fallback",
   "model": "gemini-2.0-flash-lite-001",
-  "answer": "Blood-Brain Barrier Failure biomarker panel is on the page because it is one of the few choices that changes what the engine does next.",
+  "answer": "So far the engine has found a stable mechanism map, a small set of supported causal bridges, and a clear front-running decision path for the next paper.",
   "evidence_chain": [
-    "Phase 1 mapped the live mechanism lane as Blood Brain Barrier Failure.",
-    "Phase 2 connected that lane through BBB Permeability Increase To Peripheral Immune Infiltration.",
-    "Phase 3 says the downstream burden shows up as Microglial Chronic Activation, Neurovascular Uncoupling."
+    "The lead mechanism in the live atlas is Mitochondrial Dysfunction.",
+    "The strongest supported bridge right now is BBB permeability increase -> peripheral immune infiltration.",
+    "The current lead insight is that Blood-Brain Barrier Failure biomarker panel is the best readout set to carry the next paper story, because this panel is already attached to a translational packet and can be tested against 4 endotype packet(s)."
   ],
-  "implication": "Blood-Brain Barrier Failure biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
-  "recommended_follow_up": "If you want the shortest route forward, use the recommended option on the card.",
+  "implication": "We are no longer searching for the basic structure. We are choosing which path deserves commitment now.",
+  "recommended_follow_up": "Use the primary decision card first. It is the shortest path to stronger decision confidence.",
   "warning": "HTTP Error 429: Too Many Requests"
 }
