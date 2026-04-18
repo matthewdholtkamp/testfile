@@ -165,8 +165,10 @@ def send_via_gmail_api(sender_email: str, recipient_email: str, subject: str, bo
 
 def send_via_smtp(sender_email: str, recipient_email: str, subject: str, body: str):
     app_password = os.environ.get('READY_METADATA_EMAIL_APP_PASSWORD', '').strip()
-    if not app_password:
-        raise RuntimeError('READY_METADATA_EMAIL_APP_PASSWORD is not set.')
+    fallback_password = os.environ.get('READY_METADATA_EMAIL_APP_PASSWORD1', '').strip()
+    passwords = [password for password in (app_password, fallback_password) if password]
+    if not passwords:
+        raise RuntimeError('READY_METADATA_EMAIL_APP_PASSWORD or READY_METADATA_EMAIL_APP_PASSWORD1 must be set.')
 
     message = EmailMessage()
     message['To'] = recipient_email
@@ -174,9 +176,21 @@ def send_via_smtp(sender_email: str, recipient_email: str, subject: str, body: s
     message['Subject'] = subject
     message.set_content(body)
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login(sender_email, app_password)
-        smtp.send_message(message)
+    last_error = None
+    for password in passwords:
+        try:
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                smtp.login(sender_email, password)
+                smtp.send_message(message)
+                return
+        except smtplib.SMTPAuthenticationError as exc:
+            last_error = exc
+            continue
+
+    raise RuntimeError(
+        'Gmail rejected the configured app password secrets. '
+        'Check READY_METADATA_EMAIL_APP_PASSWORD and READY_METADATA_EMAIL_APP_PASSWORD1.'
+    ) from last_error
 
 
 def send_email(sender_email: str, recipient_email: str, subject: str, body: str):

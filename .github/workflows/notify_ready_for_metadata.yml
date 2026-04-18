@@ -46,6 +46,7 @@ jobs:
           READY_METADATA_NOTIFY_EMAIL: ${{ secrets.READY_METADATA_NOTIFY_EMAIL }}
           READY_METADATA_NOTIFY_FROM_EMAIL: ${{ secrets.READY_METADATA_NOTIFY_FROM_EMAIL }}
           READY_METADATA_EMAIL_APP_PASSWORD: ${{ secrets.READY_METADATA_EMAIL_APP_PASSWORD }}
+          READY_METADATA_EMAIL_APP_PASSWORD1: ${{ secrets.READY_METADATA_EMAIL_APP_PASSWORD1 }}
           MANUSCRIPT_READY_FOR_METADATA_DRIVE_PATH: manuscript_outputs/ready_for_metadata_only
         run: |
           test_flag=""
