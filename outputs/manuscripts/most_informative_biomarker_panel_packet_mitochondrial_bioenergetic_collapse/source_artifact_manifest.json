@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-04-18T12:49:10.500757+00:00",
+  "updated_at": "2026-04-18T12:51:36.978958+00:00",
   "artifacts": [
     {
       "phase_key": "phase6",
       "artifact_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
       "label": "Mitochondrial / Bioenergetic Collapse biomarker panel",
-      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_124909.json",
-      "support_status": "supported",
+      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_125136.json",
+      "support_status": "provisional",
       "anchor_pmids": [
         "41651694",
         "41926540",
@@ -54,7 +54,7 @@
       "phase_key": "phase2",
       "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
       "label": "Mitochondrial ROS -> inflammasome activation",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_124907.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_125134.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41480492",
@@ -67,7 +67,7 @@
       "phase_key": "phase3",
       "artifact_id": "persistent_metabolic_dysfunction",
       "label": "Persistent Metabolic Dysfunction",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_124908.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_125134.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41069428",
@@ -85,7 +85,7 @@
       "phase_key": "phase3",
       "artifact_id": "microglial_chronic_activation",
       "label": "Microglial Chronic Activation",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_124908.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_125134.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41039850",
@@ -103,7 +103,7 @@
       "phase_key": "phase4",
       "artifact_id": "mitochondrial_bioenergetic_collapse",
       "label": "Mitochondrial / Bioenergetic Collapse",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_124909.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_125135.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41651694",
@@ -129,7 +129,7 @@
       "phase_key": "phase5",
       "artifact_id": "acute_severe_vascular_dominant",
       "label": "Acute Severe Vascular-Dominant",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_124909.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_125136.json",
       "support_status": "usable",
       "anchor_pmids": [
         "41700282",
@@ -147,7 +147,7 @@
       "phase_key": "phase5",
       "artifact_id": "chronic_mild_metabolic_white_matter_dominant",
       "label": "Chronic Mild Metabolic / White Matter Dominant",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_124909.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_125136.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41203427",
@@ -165,7 +165,7 @@
       "phase_key": "phase5",
       "artifact_id": "chronic_severe_axonal_network_decline",
       "label": "Chronic Severe Axonal / Network Decline",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_124909.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_125136.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41761716",

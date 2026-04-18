@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-18T12:49:10.529647+00:00",
+  "updated_at": "2026-04-18T12:51:36.998525+00:00",
   "artifacts": [
     {
       "phase_key": "phase6",
       "artifact_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
       "label": "Clarify Chronic Repetitive Tau / Clearance Mixed",
-      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_124909.json",
+      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_125136.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41508043",
@@ -82,7 +82,7 @@
       "phase_key": "phase2",
       "artifact_id": "glymphatic_failure_to_tau_protein_accumulation",
       "label": "Glymphatic failure -> tau / protein accumulation",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_124907.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_125134.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41179995",
@@ -95,7 +95,7 @@
       "phase_key": "phase2",
       "artifact_id": "neuroinflammation_to_tau_proteinopathy_progression",
       "label": "Neuroinflammation / microglial state change -> tau / proteinopathy progression",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_124907.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_125134.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41683989",
@@ -107,7 +107,7 @@
       "phase_key": "phase2",
       "artifact_id": "tau_proteinopathy_progression_to_chronic_network_dysfunction",
       "label": "Tau / proteinopathy progression -> chronic network dysfunction",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_124907.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_125134.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41496386",
@@ -124,7 +124,7 @@
       "phase_key": "phase3",
       "artifact_id": "tauopathy_progression",
       "label": "Tauopathy Progression",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_124908.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_125134.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41179995",
@@ -142,7 +142,7 @@
       "phase_key": "phase3",
       "artifact_id": "cognitive_decline_phenotype",
       "label": "Cognitive Decline Phenotype",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_124908.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_125134.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41132417",
@@ -160,7 +160,7 @@
       "phase_key": "phase3",
       "artifact_id": "microglial_chronic_activation",
       "label": "Microglial Chronic Activation",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_124908.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_125134.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41039850",
@@ -178,7 +178,7 @@
       "phase_key": "phase4",
       "artifact_id": "tau_proteinopathy_progression",
       "label": "Tau / Proteinopathy Progression",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_124909.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_125135.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41651695",
@@ -204,7 +204,7 @@
       "phase_key": "phase4",
       "artifact_id": "glymphatic_astroglial_clearance_failure",
       "label": "Glymphatic / Astroglial Clearance Failure",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_124909.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_125135.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41179995",
@@ -230,7 +230,7 @@
       "phase_key": "phase4",
       "artifact_id": "neuroinflammation_microglial_state_change",
       "label": "Neuroinflammation / Microglial State Change",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_124909.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_125135.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41157272",
@@ -256,7 +256,7 @@
       "phase_key": "phase5",
       "artifact_id": "chronic_repetitive_tau_clearance_mixed",
       "label": "Chronic Repetitive Tau / Clearance Mixed",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_124909.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_125136.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41508043",
