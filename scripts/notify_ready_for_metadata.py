@@ -61,6 +61,15 @@ def github_blob_url(relative_path: str) -> str:
     return f'{server_url}/{repository}/blob/main/{encoded}'
 
 
+def github_download_url(relative_path: str) -> str:
+    repository = os.environ.get('GITHUB_REPOSITORY', '').strip()
+    server_url = os.environ.get('GITHUB_SERVER_URL', 'https://github.com').strip()
+    if not repository or not relative_path:
+        return ''
+    encoded = '/'.join(part.replace(' ', '%20') for part in Path(relative_path).parts)
+    return f'{server_url}/{repository}/raw/main/{encoded}'
+
+
 def drive_location(relative_path: str) -> str:
     drive_root = os.environ.get('MANUSCRIPT_READY_FOR_METADATA_DRIVE_PATH', '').strip()
     filename = Path(relative_path).name if relative_path else ''
@@ -84,16 +93,17 @@ def format_candidate_block(item: Dict, candidate: Dict) -> str:
     journal = candidate.get('primary_journal') or 'Not set'
     relative_path = item.get('docx_relative_path') or ''
     github_url = github_blob_url(relative_path)
+    github_download = github_download_url(relative_path)
     drive_path = drive_location(relative_path)
     lines = [
         f'Title: {title}',
         f'Candidate ID: {candidate_id or "Unknown"}',
         f'Primary journal: {journal}',
+        f'Manuscript link: {github_url or "Unavailable"}',
+        f'Download link: {github_download or "Unavailable"}',
         f'DOCX path: {relative_path or "Unavailable"}',
         f'Google Drive path: {drive_path or "Unavailable"}',
     ]
-    if github_url:
-        lines.append(f'GitHub link: {github_url}')
     return '\n'.join(lines)
 
 
