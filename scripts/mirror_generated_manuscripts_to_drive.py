@@ -24,6 +24,7 @@ READY_ROOT = REPO_ROOT / 'Manuscript Drafts' / 'Ready for Metadata Only'
 QUEUE_PATH = STATE_ROOT / 'manuscript_queue.json'
 PUBLICATION_TRACKER_PATH = STATE_ROOT / 'publication_tracker.json'
 READY_INDEX_PATH = STATE_ROOT / 'ready_for_metadata_only_index.json'
+NOTIFICATION_STATE_PATH = STATE_ROOT / 'ready_for_metadata_notification_state.json'
 SUMMARY_PATH = STATE_ROOT / 'manuscript_drive_mirror_summary.json'
 FOLDER_MIME = 'application/vnd.google-apps.folder'
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -153,7 +154,13 @@ def build_local_plan():
         'evidence_pack_folders': evidence_pack_folders,
         'state_files': [
             relative_to_repo(path)
-            for path in (QUEUE_PATH, PUBLICATION_TRACKER_PATH, READY_INDEX_PATH, GENERATED_ROOT / 'generated_draft_index.json')
+            for path in (
+                QUEUE_PATH,
+                PUBLICATION_TRACKER_PATH,
+                READY_INDEX_PATH,
+                NOTIFICATION_STATE_PATH,
+                GENERATED_ROOT / 'generated_draft_index.json',
+            )
             if path.exists()
         ],
     }
@@ -200,7 +207,7 @@ def mirror_all_outputs(service, drive_folder_id, routing):
     ready_docx_files = unique_paths(iter_matching_files(READY_ROOT, ALLOWED_READY_SUFFIXES, recursive=False))
     evidence_pack_files = unique_paths(iter_matching_files(PACK_ROOT, ALLOWED_PACK_SUFFIXES, recursive=True))
     state_files = [
-        path for path in [QUEUE_PATH, PUBLICATION_TRACKER_PATH, READY_INDEX_PATH]
+        path for path in [QUEUE_PATH, PUBLICATION_TRACKER_PATH, READY_INDEX_PATH, NOTIFICATION_STATE_PATH]
         if path.exists() and path.suffix.lower() in ALLOWED_STATE_SUFFIXES
     ]
     state_files = unique_paths(state_files)

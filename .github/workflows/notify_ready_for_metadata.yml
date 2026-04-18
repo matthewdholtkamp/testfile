@@ -1,0 +1,68 @@
+name: Notify Ready For Metadata
+
+on:
+  workflow_run:
+    workflows: ["Mirror Manuscript Drafts To Drive"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      test_email:
+        description: Send a test email even if no new ready manuscripts exist
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: notify-ready-for-metadata
+  cancel-in-progress: true
+
+jobs:
+  notify:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch || github.ref_name }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Send ready-for-metadata email
+        env:
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          READY_METADATA_NOTIFY_EMAIL: ${{ secrets.READY_METADATA_NOTIFY_EMAIL }}
+          READY_METADATA_NOTIFY_FROM_EMAIL: ${{ secrets.READY_METADATA_NOTIFY_FROM_EMAIL }}
+          READY_METADATA_EMAIL_APP_PASSWORD: ${{ secrets.READY_METADATA_EMAIL_APP_PASSWORD }}
+          MANUSCRIPT_READY_FOR_METADATA_DRIVE_PATH: manuscript_outputs/ready_for_metadata_only
+        run: |
+          test_flag=""
+          if [ "${{ github.event.inputs.test_email }}" = "true" ]; then
+            test_flag="--test-email"
+          fi
+          python scripts/notify_ready_for_metadata.py $test_flag
+
+      - name: Commit notification state
+        run: |
+          if git diff --quiet -- outputs/state/ready_for_metadata_notification_state.json; then
+            echo "No notification state changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs/state/ready_for_metadata_notification_state.json
+          git commit -m "Update ready metadata notification state"
+          git pull --rebase origin main
+          git push origin HEAD:main
