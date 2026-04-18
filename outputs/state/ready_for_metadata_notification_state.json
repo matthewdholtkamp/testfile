@@ -1,8 +1,8 @@
 {
-  "updated_at": "",
+  "updated_at": "2026-04-18T20:59:42.012497+00:00",
   "notified_docx_relative_paths": [],
   "last_email_sent_at": "",
-  "last_email_subject": "",
-  "last_email_transport": "",
-  "last_test_email_sent_at": ""
+  "last_email_subject": "[TBI Engine] Ready-for-metadata email test",
+  "last_email_transport": "smtp",
+  "last_test_email_sent_at": "2026-04-18T20:59:42.012497+00:00"
 }
