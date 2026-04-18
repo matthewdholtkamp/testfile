@@ -24,9 +24,9 @@
    - Artifact refs: phase6:most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant, phase5:subacute_repetitive_inflammatory_dominant
    - Why included: Ranked manuscript candidate support. | This is the best current packet for distinguishing repetitive-TBI cohorts that may respond to inflammasome or glial-state perturbation before chronic tau biology hardens.
 
-5. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.
+5. Criado-Marrero M, Ravi S, Barroso D, Garza TN, Cuestas Torres DM, Lessard C, Castano JP, Bolen ML, Rubinovich U, Prokop S, Chakrabarty P, Ranum LPW, Febo M, Abisambra JF. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv : the preprint server for biology 2026 Mar 06. doi:10.64898/2026.03.04.709563. PMID:41847037.
    - Source phases: phase6, phase5
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant, phase5:subacute_repetitive_inflammatory_dominant
    - Why included: Ranked manuscript candidate support. | This is the best current packet for distinguishing repetitive-TBI cohorts that may respond to inflammasome or glial-state perturbation before chronic tau biology hardens.
 
@@ -54,9 +54,9 @@
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase2:mitochondrial_ros_to_inflammasome_activation, phase3:microglial_chronic_activation, phase4:neuroinflammation_microglial_state_change, phase4:blood_brain_barrier_failure
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI. | Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.
 
-10. PMID:41926211.
+10. Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. The Journal of clinical investigation 2026 Apr 02. doi:10.1172/JCI196112. PMID:41926211.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
@@ -96,15 +96,15 @@
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
-17. PMID:41926540.
+17. Marcatti M, Labastida JA, Tang TZ, Ahmad A, Payne C, Schwartz N, Villarreal P, Solomon OD, Vargas G, Wu P, Szczesny B. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. Proceedings of the National Academy of Sciences of the United States of America 2026 Apr 07. doi:10.1073/pnas.2527009123. PMID:41926540.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
-18. PMID:41969524.
+18. Bai B, Feng H, Yang H, Huang M, Wang Y. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Frontiers in cellular neuroscience 2026. doi:10.3389/fncel.2026.1757822. PMID:41969524.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -126,15 +126,15 @@
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
-22. PMID:41954515.
+22. Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
-23. PMID:41994141.
+23. de Jager C, Ju J, Corbo M, Patel K, Theus M. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Research square 2026 Apr 09. doi:10.21203/rs.3.rs-9261231/v1. PMID:41994141.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -144,15 +144,15 @@
    - Artifact refs: phase1:blood_brain_barrier_failure, phase3:microglial_chronic_activation, phase4:neuroinflammation_microglial_state_change, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories. | Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration.
 
-25. PMID:41973273.
+25. Wu J, Tang Y, Wang Y, Liu B, Xu M, Tan Y, Cai D, Chen Y, Zeng J, Liu K, Liu Y. Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization. Journal of neuroimmune pharmacology : the official journal of the Society on NeuroImmune Pharmacology 2026 Apr 13. doi:10.1007/s11481-026-10289-8. PMID:41973273.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
-26. PMID:41934291.
+26. Mayer AR, Wick TV, Miller S, Connors KE, Sasi Kumar D, Meier TB, van der Horn HJ, Nathaniel U, Ling JM, Mehos Milliken CJ, Warren K, Patton DA, Gigliotti AP, Zotev V, Kinsler RE, Mannix R. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. Journal of cerebral blood flow and metabolism : official journal of the International Society of Cerebral Blood Flow and Metabolism 2026 Apr 04. doi:10.1177/0271678X261432754. PMID:41934291.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -227,19 +227,19 @@
    - Quality: unknown
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
-40. PMID:41880282.
+40. Wang Y, Yang N, Chen X, Chen X, Ning Y, Yuan R. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PloS one 2026. doi:10.1371/journal.pone.0344993. PMID:41880282.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
-41. PMID:41918568.
+41. Ahmed ME, Suhail H, Nematullah M, Viollet B, Giri S, Ahmad AS. Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI. NeuroImmune pharmacology and therapeutics 2026 Mar 02. doi:10.1515/nipt-2024-0019. PMID:41918568.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
-42. PMID:41952146.
+42. Li L, Lu T, Gao W, Li F, Guo X, Guan S, Gheyret D, Wang J, Li T, Cao Y, Huang C, Jiang R, Zhang S, Liu D, Zhang J, Xu X. Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury. Cell communication and signaling : CCS 2026 Apr 09. doi:10.1186/s12964-026-02871-7. PMID:41952146.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
 43. PMID:41809632.
@@ -327,9 +327,9 @@
    - Quality: unknown
    - Artifact refs: phase4:blood_brain_barrier_failure
 
-60. PMID:41968392.
+60. Wu D, Ma Y, Wang B, Zheng Y, Ren J, Sun Q, Bian L, Sun Y. Pathological Roles of Astrocytes in Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70856. PMID:41968392.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:blood_brain_barrier_failure
 
 61. PMID:41079361.
