@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T12:51:36.971937+00:00",
+  "updated_at": "2026-04-18T14:31:51.430233+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
   "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
   "pack_key": "most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse",
@@ -159,15 +159,15 @@
     "display_name": "Mitochondrial / Bioenergetic Collapse",
     "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
     "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
-    "support_status": "provisional",
+    "support_status": "supported",
     "novelty_status": "cross_disease_analog",
-    "strength_tag": "moderate",
-    "operator_decision": "Needs adjudication",
-    "confidence_score": 0.733,
-    "value_score": 0.853,
-    "core_family_score": 0.733,
+    "strength_tag": "assertive",
+    "operator_decision": "Write now",
+    "confidence_score": 0.885,
+    "value_score": 1.0,
+    "core_family_score": 0.885,
     "novelty_bonus": 0.12,
-    "family_score": 0.853,
+    "family_score": 1.005,
     "target_lane_ids": [
       "mitochondrial_bioenergetic_collapse"
     ],
@@ -317,10 +317,11 @@
     "feasibility_score": 0.72,
     "redundancy_penalty": 0.0,
     "rank": 7,
-    "steering_score": 0.32,
+    "steering_score": 0.37,
     "steering_reasons": [
       "favored_family",
-      "favored_endotype"
+      "favored_endotype",
+      "advance_supported"
     ],
     "portfolio_role": "novelty_watch"
   },
@@ -332,28 +333,20 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
     "journal_specific_rigor_profile_count": 2,
     "journal_specific_rigor_critical_gaps": 14,
     "journal_specific_rigor_fill_entries": 14
   },
   "connector_summary": {
-    "data_state": "connector_data_attached",
-    "matched_row_count": 6,
-    "latest_attached_at": "2026-04-18T12:49:47Z",
-    "sources": [
-      {
-        "key": "open_targets",
-        "label": "Open Targets",
-        "count": 6
-      }
-    ],
-    "source_labels": [
-      "Open Targets"
-    ],
+    "data_state": "template_only",
+    "matched_row_count": 0,
+    "latest_attached_at": "",
+    "sources": [],
+    "source_labels": [],
     "target_context": {
-      "status": "provisional",
-      "source": "Open Targets + repo target-seed pack",
+      "status": "supported",
+      "source": "repo target-seed pack",
       "detail": "Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Direct corpus signal: UC-MSC-derived exosomes reduce neuronal apoptosis via PINK1/Parkin-mediated mitophagy."
     },
     "trial_context": {
@@ -370,7 +363,7 @@
       "state": "template_only",
       "imported_row_count": 0,
       "template_row_count": 1,
-      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_125133.csv"
+      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143146.csv"
     }
   },
   "journal_specific_rigor": {
@@ -392,7 +385,7 @@
     "open_entry_count": 14
   },
   "task_execution": {
-    "updated_at": "2026-04-18T12:51:36.971898+00:00",
+    "updated_at": "2026-04-18T14:31:51.428994+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,

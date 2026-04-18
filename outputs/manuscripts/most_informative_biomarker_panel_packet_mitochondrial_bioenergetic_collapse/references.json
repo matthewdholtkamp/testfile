@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T12:51:36.975233+00:00",
+  "updated_at": "2026-04-18T14:31:51.433279+00:00",
   "summary": {
     "reference_count": 47,
     "claim_count": 9,
@@ -7,7 +7,7 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
     "journal_specific_rigor_profile_count": 2,
     "journal_specific_rigor_critical_gaps": 14,
     "journal_specific_rigor_fill_entries": 14
@@ -26,7 +26,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -55,7 +55,7 @@
         "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
         "bounded"
       ],
@@ -67,26 +67,26 @@
     },
     {
       "pmid": "41926540",
-      "title": "",
+      "title": "Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
-      "pmcid": "",
+      "doi": "10.1073/pnas.2527009123",
+      "pmcid": "PMC13056099",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
+      "source_markdown_path": "output/2026-04-18_MEtAl_Neuron-derivedmitochondrialDNAmtDNA_PMID41926540.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 2,
-      "citation_text": "PMID:41926540.",
+      "citation_text": "Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. doi:10.1073/pnas.2527009123. PMID:41926540.",
       "source_phases": [
         "phase6",
         "phase1",
@@ -107,7 +107,7 @@
         "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
         "bounded"
       ],
@@ -130,7 +130,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -163,8 +163,9 @@
         "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
+        "provisional",
         "bounded"
       ],
       "supporting_claim_ids": [
@@ -187,7 +188,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -216,7 +217,7 @@
         "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
         "bounded"
       ],
@@ -239,7 +240,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -268,7 +269,7 @@
         "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
         "bounded"
       ],
@@ -291,7 +292,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -320,7 +321,7 @@
         "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
         "bounded"
       ],
@@ -343,7 +344,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -378,7 +379,7 @@
         "Cohort-supporting paper in linked endotype packet."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
         "bounded"
       ],
@@ -391,26 +392,26 @@
     },
     {
       "pmid": "41876825",
-      "title": "",
+      "title": "Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
+      "doi": "10.1007/s12035-026-05818-8",
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "Crossref HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
+      "source_markdown_path": "output/2026-04-18_HEtAl_EndoplasmicReticulum-MitochondrialCrosstalkin_PMID41876825.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 8,
-      "citation_text": "PMID:41876825.",
+      "citation_text": "Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury. doi:10.1007/s12035-026-05818-8. PMID:41876825.",
       "source_phases": [
         "phase6",
         "phase1",
@@ -431,7 +432,7 @@
         "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
         "bounded"
       ],
@@ -454,7 +455,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -483,7 +484,7 @@
         "Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
         "bounded"
       ],
@@ -506,7 +507,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -539,8 +540,9 @@
         "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "longitudinally_seeded",
+        "provisional",
         "bounded"
       ],
       "supporting_claim_ids": [
@@ -563,7 +565,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -588,7 +590,7 @@
         "Ranked manuscript candidate support."
       ],
       "support_statuses": [
-        "provisional",
+        "supported",
         "bounded"
       ],
       "supporting_claim_ids": [
@@ -609,7 +611,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -644,8 +646,8 @@
         "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
       ],
       "support_statuses": [
-        "provisional",
         "supported",
+        "provisional",
         "bounded"
       ],
       "supporting_claim_ids": [
@@ -669,7 +671,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -698,6 +700,7 @@
         "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
       ],
       "support_statuses": [
+        "supported",
         "provisional",
         "bounded"
       ],
@@ -720,7 +723,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -749,6 +752,7 @@
         "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
       ],
       "support_statuses": [
+        "supported",
         "provisional",
         "bounded"
       ],
@@ -771,7 +775,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -800,6 +804,7 @@
         "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
       ],
       "support_statuses": [
+        "supported",
         "provisional",
         "bounded"
       ],
@@ -822,7 +827,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -851,6 +856,7 @@
         "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
       ],
       "support_statuses": [
+        "supported",
         "provisional",
         "bounded"
       ],
@@ -873,7 +879,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -902,6 +908,7 @@
         "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
       ],
       "support_statuses": [
+        "supported",
         "provisional",
         "bounded"
       ],
@@ -923,7 +930,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -952,6 +959,7 @@
         "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
       ],
       "support_statuses": [
+        "supported",
         "provisional",
         "bounded"
       ],
@@ -973,7 +981,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1002,6 +1010,7 @@
         "Persistent metabolic dysfunction is where intracellular stress may become self-sustaining instead of resolving after the acute phase."
       ],
       "support_statuses": [
+        "supported",
         "provisional",
         "bounded"
       ],
@@ -1023,7 +1032,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1052,7 +1061,6 @@
         "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
       ],
       "support_statuses": [
-        "provisional",
         "supported",
         "bounded"
       ],
@@ -1074,7 +1082,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1103,7 +1111,6 @@
         "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
       ],
       "support_statuses": [
-        "provisional",
         "supported",
         "bounded"
       ],
@@ -1124,7 +1131,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1153,7 +1160,6 @@
         "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
       ],
       "support_statuses": [
-        "provisional",
         "supported",
         "bounded"
       ],
@@ -1174,7 +1180,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1203,7 +1209,6 @@
         "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
       ],
       "support_statuses": [
-        "provisional",
         "supported",
         "bounded"
       ],
@@ -1224,7 +1229,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1253,7 +1258,6 @@
         "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
       ],
       "support_statuses": [
-        "provisional",
         "supported",
         "bounded"
       ],
@@ -1274,7 +1278,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1303,7 +1307,6 @@
         "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
       ],
       "support_statuses": [
-        "provisional",
         "supported",
         "bounded"
       ],
@@ -1324,7 +1327,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1353,7 +1356,6 @@
         "Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration."
       ],
       "support_statuses": [
-        "provisional",
         "supported",
         "bounded"
       ],
@@ -1374,7 +1376,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1417,7 +1419,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1460,7 +1462,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1503,7 +1505,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1546,7 +1548,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1589,7 +1591,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1636,7 +1638,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1672,26 +1674,26 @@
     },
     {
       "pmid": "41896418",
-      "title": "Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury",
+      "title": "Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
-      "pmcid": "",
+      "doi": "10.1007/s00011-026-02209-6",
+      "pmcid": "PMC13031234",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
+      "source_markdown_path": "output/2026-04-18_EEtAl_Multi-dimensionalplasmaproteomicprofiling_PMID41896418.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 34,
-      "citation_text": "Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. PMID:41896418.",
+      "citation_text": "Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. doi:10.1007/s00011-026-02209-6. PMID:41896418.",
       "source_phases": [
         "phase5"
       ],
@@ -1726,7 +1728,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1769,7 +1771,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1812,7 +1814,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1855,7 +1857,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1898,7 +1900,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1930,26 +1932,26 @@
     },
     {
       "pmid": "41907798",
-      "title": "A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities",
+      "title": "A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
-      "pmcid": "",
+      "doi": "10.3389/fnhum.2026.1800956",
+      "pmcid": "PMC13021673",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
+      "source_markdown_path": "output/2026-04-18_IEtAl_Astructuralnetworkfingerprint_PMID41907798.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 40,
-      "citation_text": "A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities. PMID:41907798.",
+      "citation_text": "A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities. doi:10.3389/fnhum.2026.1800956. PMID:41907798.",
       "source_phases": [
         "phase5"
       ],
@@ -1984,7 +1986,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2027,7 +2029,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2070,7 +2072,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2113,7 +2115,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2156,7 +2158,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2199,7 +2201,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2242,7 +2244,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",

@@ -6,9 +6,9 @@
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse, phase1:mitochondrial_bioenergetic_collapse, phase4:mitochondrial_bioenergetic_collapse
    - Why included: Ranked manuscript candidate support. | Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.
 
-2. PMID:41926540.
+2. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. doi:10.1073/pnas.2527009123. PMID:41926540.
    - Source phases: phase6, phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse, phase1:mitochondrial_bioenergetic_collapse, phase4:mitochondrial_bioenergetic_collapse
    - Why included: Ranked manuscript candidate support. | Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.
 
@@ -42,9 +42,9 @@
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse, phase1:mitochondrial_bioenergetic_collapse, phase4:mitochondrial_bioenergetic_collapse, phase5:chronic_mild_metabolic_white_matter_dominant
    - Why included: Ranked manuscript candidate support. | Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.
 
-8. PMID:41876825.
+8. Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury. doi:10.1007/s12035-026-05818-8. PMID:41876825.
    - Source phases: phase6, phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse, phase1:mitochondrial_bioenergetic_collapse, phase4:mitochondrial_bioenergetic_collapse
    - Why included: Ranked manuscript candidate support. | Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.
 
@@ -198,9 +198,9 @@
    - Artifact refs: phase5:acute_severe_vascular_dominant, phase5:chronic_severe_axonal_network_decline
    - Why included: This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI. | Cohort-supporting paper in linked endotype packet.
 
-34. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. PMID:41896418.
+34. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. doi:10.1007/s00011-026-02209-6. PMID:41896418.
    - Source phases: phase5
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase5:acute_severe_vascular_dominant
    - Why included: This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI. | Cohort-supporting paper in linked endotype packet.
 
@@ -234,9 +234,9 @@
    - Artifact refs: phase5:chronic_mild_metabolic_white_matter_dominant
    - Why included: This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias. | Cohort-supporting paper in linked endotype packet.
 
-40. A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities. PMID:41907798.
+40. A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities. doi:10.3389/fnhum.2026.1800956. PMID:41907798.
    - Source phases: phase5
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase5:chronic_mild_metabolic_white_matter_dominant
    - Why included: This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias. | Cohort-supporting paper in linked endotype packet.
 
