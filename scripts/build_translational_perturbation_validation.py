@@ -101,11 +101,10 @@ def parse_attachment(value):
 
 
 def allowed_support(row):
-    target_support = normalize(row.get('target_support')) or 'weak'
     support_ceiling = normalize(row.get('support_ceiling')) or 'weak'
-    if target_support not in SUPPORT_ORDER or support_ceiling not in SUPPORT_ORDER:
+    if support_ceiling not in SUPPORT_ORDER:
         return 'weak'
-    return target_support if SUPPORT_ORDER[target_support] <= SUPPORT_ORDER[support_ceiling] else support_ceiling
+    return support_ceiling
 
 
 def render_markdown(report):

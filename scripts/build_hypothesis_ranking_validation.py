@@ -99,6 +99,13 @@ def normalize(value):
     return ' '.join(str(value if value is not None else '').split()).strip()
 
 
+def steering_score(value):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
+
+
 def listify(value):
     if isinstance(value, list):
         flattened = []
@@ -349,6 +356,7 @@ def main():
         expected_order = sorted(
             ordered,
             key=lambda row: (
+                -steering_score(row.get('steering_score')),
                 -float(row.get('core_family_score', 0)),
                 -SUPPORT_ORDER.get(normalize(row.get('support_status')), -1),
                 -float(row.get('novelty_bonus', 0)),
@@ -356,7 +364,7 @@ def main():
             ),
         )
         if [row.get('candidate_id') for row in ordered] != [row.get('candidate_id') for row in expected_order]:
-            errors.append(f'Family {family_id} is not ranked by core score, support status, and novelty tie-breaks')
+            errors.append(f'Family {family_id} is not ranked by steering score, core score, support status, and novelty tie-breaks')
         if len(ordered) == 1:
             warnings.append(f'Family {family_id} has only one ranked row.')
 
