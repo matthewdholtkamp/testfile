@@ -202,7 +202,8 @@ def send_via_smtp(sender_email: str, recipient_email: str, subject: str, body: s
 
 def send_email(sender_email: str, recipient_email: str, subject: str, body: str):
     smtp_password = os.environ.get('READY_METADATA_EMAIL_APP_PASSWORD', '').strip()
-    if smtp_password:
+    smtp_password_fallback = os.environ.get('READY_METADATA_EMAIL_APP_PASSWORD1', '').strip()
+    if smtp_password or smtp_password_fallback:
         send_via_smtp(sender_email, recipient_email, subject, body)
         return 'smtp'
     send_via_gmail_api(sender_email, recipient_email, subject, body)
