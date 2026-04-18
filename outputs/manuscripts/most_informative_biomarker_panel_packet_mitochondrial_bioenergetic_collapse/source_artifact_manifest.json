@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T14:34:16.269908+00:00",
+  "updated_at": "2026-04-18T15:08:28.680534+00:00",
   "artifacts": [
     {
       "phase_key": "phase6",
@@ -54,7 +54,7 @@
       "phase_key": "phase2",
       "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
       "label": "Mitochondrial ROS -> inflammasome activation",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_143413.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_150827.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41480492",

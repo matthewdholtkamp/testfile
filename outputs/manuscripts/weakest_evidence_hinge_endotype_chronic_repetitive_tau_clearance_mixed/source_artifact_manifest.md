@@ -37,7 +37,7 @@
 - **Phase:** phase2
 - **Artifact ID:** glymphatic_failure_to_tau_protein_accumulation
 - **Support status:** supported
-- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_143413.json`
+- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_150827.json`
 - **Anchor PMIDs:** 41179995, 41700070, 41747594
 - **Source quality mix:** full_text_like:3; abstract_only:1
 
@@ -46,7 +46,7 @@
 - **Phase:** phase2
 - **Artifact ID:** neuroinflammation_to_tau_proteinopathy_progression
 - **Support status:** provisional
-- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_143413.json`
+- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_150827.json`
 - **Anchor PMIDs:** 41683989, 41809632
 - **Source quality mix:** full_text_like:3
 
@@ -55,7 +55,7 @@
 - **Phase:** phase2
 - **Artifact ID:** tau_proteinopathy_progression_to_chronic_network_dysfunction
 - **Support status:** provisional
-- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_143413.json`
+- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_150827.json`
 - **Anchor PMIDs:** 41496386, 41739474, 41747594, 41508043, 41683989, 41853047, 41893300
 - **Source quality mix:** full_text_like:7; abstract_only:1
 

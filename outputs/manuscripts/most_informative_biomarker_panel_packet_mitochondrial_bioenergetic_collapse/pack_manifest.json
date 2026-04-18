@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T14:34:16.263010+00:00",
+  "updated_at": "2026-04-18T15:08:28.673797+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
   "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
   "pack_key": "most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse",
@@ -392,7 +392,7 @@
     "open_entry_count": 14
   },
   "task_execution": {
-    "updated_at": "2026-04-18T14:34:16.261822+00:00",
+    "updated_at": "2026-04-18T15:08:28.672532+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,

@@ -21,7 +21,7 @@
 - **Phase:** phase2
 - **Artifact ID:** mitochondrial_ros_to_inflammasome_activation
 - **Support status:** provisional
-- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_143413.json`
+- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_150827.json`
 - **Anchor PMIDs:** 41480492, 41103638, 41709060
 - **Source quality mix:** full_text_like:4
 

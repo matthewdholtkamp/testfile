@@ -21,7 +21,7 @@
 - **Phase:** phase2
 - **Artifact ID:** bbb_permeability_increase_to_peripheral_immune_infiltration
 - **Support status:** supported
-- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_143413.json`
+- **Source path:** `reports/causal_transitions/causal_transition_index_2026-04-18_150827.json`
 - **Anchor PMIDs:** 41709060, 41740873, 41683989
 - **Source quality mix:** full_text_like:3; abstract_only:2
 

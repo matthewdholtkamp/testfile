@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T14:34:16.231108+00:00",
+  "updated_at": "2026-04-18T15:08:28.642100+00:00",
   "artifacts": [
     {
       "phase_key": "phase6",
@@ -54,7 +54,7 @@
       "phase_key": "phase2",
       "artifact_id": "bbb_permeability_increase_to_peripheral_immune_infiltration",
       "label": "BBB permeability increase -> peripheral immune infiltration",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_143413.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_150827.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41709060",

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T14:34:16.223912+00:00",
+  "updated_at": "2026-04-18T15:08:28.635050+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
   "title": "Blood-Brain Barrier Failure biomarker panel",
   "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
@@ -400,7 +400,7 @@
     "open_entry_count": 14
   },
   "task_execution": {
-    "updated_at": "2026-04-18T14:34:16.222763+00:00",
+    "updated_at": "2026-04-18T15:08:28.633862+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,
