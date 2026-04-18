@@ -11,3 +11,4 @@ fetched_connector_inputs/
 *.swp
 
 node_modules/
+outputs/state/manuscript_drive_mirror_summary.json

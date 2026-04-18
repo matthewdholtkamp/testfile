@@ -1,0 +1,51 @@
+name: Mirror Manuscript Drafts To Drive
+
+on:
+  workflow_run:
+    workflows: ["Refresh Public Enrichment", "Weekly Human Review Packet"]
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mirror-manuscript-drafts-to-drive
+  cancel-in-progress: true
+
+jobs:
+  mirror-manuscripts:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Mirror generated manuscripts into Google Drive
+        env:
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_TOKEN_JSON: ${{ secrets.GOOGLE_TOKEN_JSON }}
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          python scripts/mirror_generated_manuscripts_to_drive.py
+
+      - name: Upload mirror summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manuscript_drive_mirror_summary
+          path: |
+            outputs/state/manuscript_drive_mirror_summary.json

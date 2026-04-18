@@ -30,3 +30,7 @@ extraction_routing:
   gaps: "extraction_outputs/gap_reports"
   edges: "extraction_outputs/graph_edges"
   state: "extraction_outputs/state"
+
+# Google Drive destination for generated manuscript-first outputs.
+manuscript_drive_routing:
+  root: "manuscript_outputs/generated_drafts"
