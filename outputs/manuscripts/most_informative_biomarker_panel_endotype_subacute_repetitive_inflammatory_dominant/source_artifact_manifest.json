@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-18T14:31:51.418385+00:00",
+  "updated_at": "2026-04-18T14:34:16.250922+00:00",
   "artifacts": [
     {
       "phase_key": "phase6",
       "artifact_id": "most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
       "label": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
-      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_143150.json",
+      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_143415.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41173520",
@@ -61,7 +61,7 @@
       "phase_key": "phase2",
       "artifact_id": "bbb_permeability_increase_to_peripheral_immune_infiltration",
       "label": "BBB permeability increase -> peripheral immune infiltration",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_143148.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_143413.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41709060",
@@ -74,7 +74,7 @@
       "phase_key": "phase2",
       "artifact_id": "mitochondrial_ros_to_inflammasome_activation",
       "label": "Mitochondrial ROS -> inflammasome activation",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_143148.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_143413.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41480492",
@@ -87,7 +87,7 @@
       "phase_key": "phase3",
       "artifact_id": "microglial_chronic_activation",
       "label": "Microglial Chronic Activation",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_143149.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_143413.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41039850",
@@ -105,7 +105,7 @@
       "phase_key": "phase4",
       "artifact_id": "neuroinflammation_microglial_state_change",
       "label": "Neuroinflammation / Microglial State Change",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_143150.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_143415.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41157272",
@@ -131,7 +131,7 @@
       "phase_key": "phase4",
       "artifact_id": "blood_brain_barrier_failure",
       "label": "Blood-Brain Barrier Failure",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_143150.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_143415.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41969524",
@@ -157,7 +157,7 @@
       "phase_key": "phase5",
       "artifact_id": "subacute_repetitive_inflammatory_dominant",
       "label": "Subacute Repetitive Inflammatory-Dominant",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_143150.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_143415.json",
       "support_status": "usable",
       "anchor_pmids": [
         "41173520",

@@ -4,19 +4,19 @@
 
 - **Phase:** phase6
 - **Claim:** Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.
-- **Support status:** supported
-- **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
+- **Support status:** provisional
+- **Allowed language:** Use cautious, hypothesis-oriented wording and explicitly note boundedness.
 - **Artifact refs:** phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse
 - **Support PMIDs:** 41651694, 41926540, 41480492, 41576094, 41764101, 41648326, 41267966, 41876825, 41735605, 41153827, 41625091, 41103638, 41709060, 41069428, 41110648, 41129987, 41157305, 41175081, 41179995, 41039850
 - **Reference details:**
   - PMID:41651694.
-  - Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. doi:10.1073/pnas.2527009123. PMID:41926540.
+  - PMID:41926540.
   - PMID:41480492.
   - PMID:41576094.
   - PMID:41764101.
   - PMID:41648326.
   - Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. PMID:41267966.
-  - Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury. doi:10.1007/s12035-026-05818-8. PMID:41876825.
+  - PMID:41876825.
 - **Contradictions:** Study found no significant correlation, contradicting the hypothesis of cumulative damage. | Oxidative-stress markers may improve without real ATP rescue or downstream inflammasome relief | keep this packet tied to both mitochondrial and inflammatory readouts.
 
 ## Mitochondrial / Bioenergetic Collapse
@@ -29,13 +29,13 @@
 - **Support PMIDs:** 41651694, 41926540, 41480492, 41576094, 41764101, 41648326, 41267966, 41876825, 41735605, 41153827
 - **Reference details:**
   - PMID:41651694.
-  - Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. doi:10.1073/pnas.2527009123. PMID:41926540.
+  - PMID:41926540.
   - PMID:41480492.
   - PMID:41576094.
   - PMID:41764101.
   - PMID:41648326.
   - Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. PMID:41267966.
-  - Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury. doi:10.1007/s12035-026-05818-8. PMID:41876825.
+  - PMID:41876825.
 - **Evidence gaps:** Acute bucket is only provisionally supported. | Subacute bucket is only provisionally supported. | Chronic bucket is only provisionally supported.
 
 ## Mitochondrial ROS -> inflammasome activation
@@ -101,13 +101,13 @@
 - **Support PMIDs:** 41651694, 41926540, 41480492, 41576094, 41764101, 41648326, 41267966, 41876825, 41735605, 41153827, 41625091, 41103638, 41709060, 41069428, 41110648, 41129987
 - **Reference details:**
   - PMID:41651694.
-  - Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. doi:10.1073/pnas.2527009123. PMID:41926540.
+  - PMID:41926540.
   - PMID:41480492.
   - PMID:41576094.
   - PMID:41764101.
   - PMID:41648326.
   - Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. PMID:41267966.
-  - Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury. doi:10.1007/s12035-026-05818-8. PMID:41876825.
+  - PMID:41876825.
 - **Contradictions:** Study found no significant correlation, contradicting the hypothesis of cumulative damage. | Oxidative-stress markers may improve without real ATP rescue or downstream inflammasome relief | keep this packet tied to both mitochondrial and inflammatory readouts. | no direct compound or trial attachment surfaced in this build
 
 ## Acute Severe Vascular-Dominant
@@ -126,7 +126,7 @@
   - Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study. PMID:41714686.
   - Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience. PMID:41731737.
   - Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use. PMID:41722498.
-  - Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. doi:10.1007/s00011-026-02209-6. PMID:41896418.
+  - Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. PMID:41896418.
 - **Contradictions:** Severe acute cohorts can look inflammatory quickly, but that does not mean inflammation is the dominant upstream driver in the first window.
 - **Evidence gaps:** The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.
 
@@ -145,7 +145,7 @@
   - Neuroimaging correlates of symptom burden and functional recovery following mild traumatic brain injury: A systematic review. PMID:41496379.
   - Diffusion Tensor Imaging Along the Perivascular Space in Veterans with Remote Mild Traumatic Brain Injuries. PMID:41701552.
   - A Bioinformatic Study of Genetics Involved in Determining Mild Traumatic Brain Injury Severity and Recovery. PMID:41301762.
-  - A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities. doi:10.3389/fnhum.2026.1800956. PMID:41907798.
+  - A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities. PMID:41907798.
   - Application of Machine Learning in the Diagnosis and Prognosis of Mild Traumatic Brain Injury Using Diffusion Tensor Imaging: A Systematic Review. PMID:41026543.
 - **Contradictions:** White matter and metabolic signals can remain abnormal without proving that metabolism is upstream | keep axonal and vascular alternatives visible.
 - **Evidence gaps:** The packet still needs stronger direct chronic metabolomic and transcriptomic cohort anchors.

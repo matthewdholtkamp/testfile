@@ -32,7 +32,7 @@
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - PMID:41723222.
   - PMID:41665901.
-  - Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. doi:10.1093/braincomms/fcag070. PMID:41853047.
+  - PMID:41853047.
   - PMID:41496386.
   - PMID:41683989.
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
@@ -50,8 +50,8 @@
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
   - A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. PMID:41039850.
   - PMID:41648326.
-  - Pathological Roles of Astrocytes in Traumatic Brain Injury. doi:10.1002/cns.70856. PMID:41968392.
-  - Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. doi:10.21203/rs.3.rs-9152535/v1. PMID:41960329.
+  - PMID:41968392.
+  - PMID:41960329.
   - MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease. PMID:41700070.
   - PMID:41824127.
   - PMID:41153827.
@@ -68,7 +68,7 @@
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. doi:10.1172/JCI196112. PMID:41926211.
+  - PMID:41926211.
   - PMID:41663365.
   - PMID:41734021.
   - PMID:41752185.
@@ -117,8 +117,8 @@
   - PMID:41747594.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - PMID:41683989.
-  - Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. doi:10.1093/braincomms/fcag070. PMID:41853047.
-  - Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease. doi:10.3390/metabo16030148. PMID:41893300.
+  - PMID:41853047.
+  - PMID:41893300.
 - **Evidence gaps:** Transition still needs denser direct support before it should be treated as hardened. | Some supporting rows are abstract-only and should be weighted cautiously. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Tauopathy Progression
@@ -192,7 +192,7 @@
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - PMID:41723222.
   - PMID:41665901.
-  - Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. doi:10.1093/braincomms/fcag070. PMID:41853047.
+  - PMID:41853047.
   - PMID:41496386.
   - PMID:41683989.
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
@@ -210,8 +210,8 @@
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
   - A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. PMID:41039850.
   - PMID:41648326.
-  - Pathological Roles of Astrocytes in Traumatic Brain Injury. doi:10.1002/cns.70856. PMID:41968392.
-  - Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. doi:10.21203/rs.3.rs-9152535/v1. PMID:41960329.
+  - PMID:41968392.
+  - PMID:41960329.
   - MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease. PMID:41700070.
   - PMID:41824127.
   - PMID:41153827.
@@ -228,7 +228,7 @@
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. doi:10.1172/JCI196112. PMID:41926211.
+  - PMID:41926211.
   - PMID:41663365.
   - PMID:41734021.
   - PMID:41752185.

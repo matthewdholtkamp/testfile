@@ -628,7 +628,7 @@
       "human_question": "Do you want this to become the default panel for the next readout pass?",
       "why_now": "This panel is already attached to a translational packet and can be tested against 3 endotype packet(s).",
       "what_we_know": [
-        "Mitochondrial / Bioenergetic Collapse is currently rated supported.",
+        "Mitochondrial / Bioenergetic Collapse is currently rated provisional.",
         "It is tied to 1 Phase 2 transition(s) and 2 downstream object(s).",
         "It already maps to 3 endotype packet(s)."
       ],
@@ -673,14 +673,14 @@
           "immediate_action_mode": "record_only"
         }
       ],
-      "recommended_option_id": "adopt_as_default_panel",
-      "recommended_reason": "Mitochondrial / Bioenergetic Collapse biomarker panel already links mechanism, translation, and endotype context, so it is the strongest default panel to carry into the paper path.",
+      "recommended_option_id": "validate_against_challenger_panel",
+      "recommended_reason": "Mitochondrial / Bioenergetic Collapse biomarker panel is recommended now because this panel is already attached to a translational packet and can be tested against 3 endotype packet(s)..",
       "write_in_allowed": true,
-      "current_manuscript_effect": "If you choose Adopt as the default panel, Mitochondrial / Bioenergetic Collapse biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
-      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse biomarker panel will steer future machine runs and slates this way: Future slates use this panel as the default operator readout set.",
-      "immediate_action_mode": "dispatch_refresh_public_enrichment",
+      "current_manuscript_effect": "If you choose Validate against a challenger panel, Mitochondrial / Bioenergetic Collapse biomarker panel becomes part of the current manuscript path instead of staying only on the background slate.",
+      "future_engine_effect": "Mitochondrial / Bioenergetic Collapse biomarker panel will steer future machine runs and slates this way: Future slates surface competing panels until one wins.",
+      "immediate_action_mode": "run_manual_enrichment_cycle",
       "detail_link": "./idea-briefs/index.html",
-      "support_status": "supported",
+      "support_status": "provisional",
       "novelty_status": "cross_disease_analog",
       "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
       "source_row": {
@@ -693,15 +693,15 @@
         "display_name": "Mitochondrial / Bioenergetic Collapse",
         "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
         "statement": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
-        "support_status": "supported",
+        "support_status": "provisional",
         "novelty_status": "cross_disease_analog",
-        "strength_tag": "assertive",
-        "operator_decision": "Write now",
-        "confidence_score": 0.885,
-        "value_score": 1.0,
-        "core_family_score": 0.885,
+        "strength_tag": "moderate",
+        "operator_decision": "Needs adjudication",
+        "confidence_score": 0.733,
+        "value_score": 0.853,
+        "core_family_score": 0.733,
         "novelty_bonus": 0.12,
-        "family_score": 1.005,
+        "family_score": 0.853,
         "target_lane_ids": [
           "mitochondrial_bioenergetic_collapse"
         ],
@@ -851,11 +851,10 @@
         "feasibility_score": 0.72,
         "redundancy_penalty": 0.0,
         "rank": 7,
-        "steering_score": 0.37,
+        "steering_score": 0.32,
         "steering_reasons": [
           "favored_family",
-          "favored_endotype",
-          "advance_supported"
+          "favored_endotype"
         ],
         "portfolio_role": "novelty_watch"
       }
@@ -935,7 +934,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-18 14:31:48",
+      "date": "2026-04-18 14:34:13",
       "title": "Phase 2 \u00b7 Causal Transitions",
       "status": "supported",
       "summary": "The engine converted lane-level mechanisms into explicit causal bridges, so the system can say what likely drives what next.",
@@ -944,7 +943,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-18 14:31:49",
+      "date": "2026-04-18 14:34:13",
       "title": "Phase 3 \u00b7 Progression Objects",
       "status": "supported",
       "summary": "The engine grouped recurring downstream damage states into progression objects such as chronic network dysfunction and neurovascular uncoupling.",
@@ -953,7 +952,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-18 14:31:50",
+      "date": "2026-04-18 14:34:15",
       "title": "Phase 4 \u00b7 Translational Logic",
       "status": "bounded",
       "summary": "The engine attached translational packets to each lane so targets, readouts, and intervention logic sit on top of the mechanism map.",
@@ -962,7 +961,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-18 14:31:50",
+      "date": "2026-04-18 14:34:15",
       "title": "Phase 5 \u00b7 Cohort Stratification",
       "status": "usable",
       "summary": "The engine split TBI into cohort and endotype patterns so mild, repetitive, blast, severe, acute, and chronic states stop collapsing into one disease bucket.",
@@ -971,7 +970,7 @@
     },
     {
       "kind": "phase",
-      "date": "2026-04-18 14:31:50",
+      "date": "2026-04-18 14:34:15",
       "title": "Phase 6 \u00b7 Hypothesis Rankings",
       "status": "live",
       "summary": "The engine ranked the strongest bridges, weakest hinges, biomarker panels, leverage points, and next tasks into a weekly decision slate.",
@@ -984,29 +983,29 @@
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-18T14:31:51.511142+00:00",
+    "snapshot_generated_at": "2026-04-18T14:34:16.342362+00:00",
     "source_artifact_timestamps": {
       "process": "2026-04-18 14:31:48",
-      "transition": "2026-04-18 14:31:48",
-      "progression": "2026-04-18 14:31:49",
-      "translational": "2026-04-18 14:31:50",
-      "cohort": "2026-04-18 14:31:50",
-      "hypothesis": "2026-04-18 14:31:50",
-      "idea_briefs": "2026-04-18 14:31:51"
+      "transition": "2026-04-18 14:34:13",
+      "progression": "2026-04-18 14:34:13",
+      "translational": "2026-04-18 14:34:15",
+      "cohort": "2026-04-18 14:34:15",
+      "hypothesis": "2026-04-18 14:34:15",
+      "idea_briefs": "2026-04-18 14:34:15"
     },
     "source_artifact_paths": {
       "process": "/home/runner/work/testfile/testfile/reports/process_lanes/process_lane_index_2026-04-18_143148.json",
-      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-18_143148.json",
-      "progression": "/home/runner/work/testfile/testfile/reports/progression_objects/progression_object_index_2026-04-18_143149.json",
-      "translational": "/home/runner/work/testfile/testfile/reports/translational_perturbation/translational_perturbation_index_2026-04-18_143150.json",
-      "cohort": "/home/runner/work/testfile/testfile/reports/cohort_stratification/cohort_stratification_index_2026-04-18_143150.json",
-      "hypothesis": "/home/runner/work/testfile/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_143150.json",
-      "idea_briefs": "/home/runner/work/testfile/testfile/reports/idea_briefs/idea_briefs_2026-04-18_143151.json"
+      "transition": "/home/runner/work/testfile/testfile/reports/causal_transitions/causal_transition_index_2026-04-18_143413.json",
+      "progression": "/home/runner/work/testfile/testfile/reports/progression_objects/progression_object_index_2026-04-18_143413.json",
+      "translational": "/home/runner/work/testfile/testfile/reports/translational_perturbation/translational_perturbation_index_2026-04-18_143415.json",
+      "cohort": "/home/runner/work/testfile/testfile/reports/cohort_stratification/cohort_stratification_index_2026-04-18_143415.json",
+      "hypothesis": "/home/runner/work/testfile/testfile/reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_143415.json",
+      "idea_briefs": "/home/runner/work/testfile/testfile/reports/idea_briefs/idea_briefs_2026-04-18_143415.json"
     },
     "steering_registry_last_updated": "2026-04-14T11:31:39.556035+00:00",
     "action_status_timestamp": "2026-04-14T11:31:43.789397+00:00",
-    "build_run_id": "24606817796",
-    "build_sha": "f8db506fce403f6490f3814bbacb8b29b7225188",
+    "build_run_id": "24606827489",
+    "build_sha": "258d23f343658069b017e6e3c41e06435dd664cb",
     "steering_aware_automation": true,
     "active_decision_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
     "active_decision_label": "Blood-Brain Barrier Failure biomarker panel",
@@ -1025,20 +1024,32 @@
     ]
   },
   "connector_status": {
-    "latest_enrichment_path": "",
-    "latest_enrichment_at": "",
-    "row_count": 0,
-    "by_source": [],
-    "by_evidence_tier": [],
+    "latest_enrichment_path": "reports/connector_enrichment/connector_enrichment_records_2026-04-18_143412.csv",
+    "latest_enrichment_at": "2026-04-18T14:32:23Z",
+    "row_count": 15,
+    "by_source": [
+      {
+        "key": "open_targets",
+        "label": "Open Targets",
+        "count": 15
+      }
+    ],
+    "by_evidence_tier": [
+      {
+        "key": "target_association",
+        "label": "Target Association",
+        "count": 15
+      }
+    ],
     "tenx": {
       "state": "template_only",
       "imported_row_count": 0,
       "template_row_count": 3,
-      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143146.csv"
+      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143412.csv"
     }
   },
   "manuscript_queue": {
-    "generated_at": "2026-04-18T14:31:51.505348+00:00",
+    "generated_at": "2026-04-18T14:34:16.335818+00:00",
     "summary": {
       "active_count": 2,
       "watchlist_count": 2,
@@ -1047,16 +1058,28 @@
       "ready_for_metadata_only_count": 0
     },
     "connector_status": {
-      "latest_enrichment_path": "",
-      "latest_enrichment_at": "",
-      "row_count": 0,
-      "by_source": [],
-      "by_evidence_tier": [],
+      "latest_enrichment_path": "reports/connector_enrichment/connector_enrichment_records_2026-04-18_143412.csv",
+      "latest_enrichment_at": "2026-04-18T14:32:23Z",
+      "row_count": 15,
+      "by_source": [
+        {
+          "key": "open_targets",
+          "label": "Open Targets",
+          "count": 15
+        }
+      ],
+      "by_evidence_tier": [
+        {
+          "key": "target_association",
+          "label": "Target Association",
+          "count": 15
+        }
+      ],
       "tenx": {
         "state": "template_only",
         "imported_row_count": 0,
         "template_row_count": 3,
-        "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143146.csv"
+        "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143412.csv"
       }
     },
     "active_candidates": [
@@ -1092,7 +1115,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": true,
-        "last_pack_refresh": "2026-04-18 14:31:50",
+        "last_pack_refresh": "2026-04-18 14:34:15",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -2179,14 +2202,22 @@
         },
         "journal_fit": 4,
         "connector_summary": {
-          "data_state": "template_only",
-          "matched_row_count": 0,
-          "latest_attached_at": "",
-          "sources": [],
-          "source_labels": [],
+          "data_state": "connector_data_attached",
+          "matched_row_count": 9,
+          "latest_attached_at": "2026-04-18T14:32:23Z",
+          "sources": [
+            {
+              "key": "open_targets",
+              "label": "Open Targets",
+              "count": 9
+            }
+          ],
+          "source_labels": [
+            "Open Targets"
+          ],
           "target_context": {
-            "status": "supported",
-            "source": "repo target-seed pack",
+            "status": "provisional",
+            "source": "Open Targets + repo target-seed pack",
             "detail": "Prioritize an OCLN-centered barrier-repair packet first because the current BBB target packets are strongest around OCLN, CLDN5, and TJP1, and this lane already anchors the BBB-to-immune-infiltration bridge. Direct corpus signal: The treatment repaired BBB structure and function."
           },
           "trial_context": {
@@ -2203,7 +2234,7 @@
             "state": "template_only",
             "imported_row_count": 0,
             "template_row_count": 1,
-            "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143146.csv"
+            "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143412.csv"
           }
         },
         "evidence_bundle_summary": {
@@ -2213,7 +2244,7 @@
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": true,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
+          "corpus_manifest_path": "",
           "journal_specific_rigor_profile_count": 2,
           "journal_specific_rigor_critical_gaps": 14,
           "journal_specific_rigor_fill_entries": 14
@@ -2251,7 +2282,7 @@
               "reopened"
             ],
             "execution_note": "Lead contradiction still active: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover. 3 issue(s) remain blocking.",
-            "last_executed_at": "2026-04-18T14:31:51.483830+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.315298+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -2271,7 +2302,7 @@
               "reopened"
             ],
             "execution_note": "Translational packet remains bounded around OCLN; strengthening brief updated.",
-            "last_executed_at": "2026-04-18T14:31:51.483875+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.315336+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -2291,7 +2322,7 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-18T14:31:51.483900+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.315359+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           },
           {
@@ -2311,12 +2342,12 @@
               "reopened"
             ],
             "execution_note": "Journal-specific rigor checklist is active with 14 critical gap(s) across 2 profile(s).",
-            "last_executed_at": "2026-04-18T14:31:51.483923+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.315381+00:00",
             "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-18T14:31:51.483931+00:00",
+          "updated_at": "2026-04-18T14:34:16.315388+00:00",
           "total_tasks": 4,
           "status_counts": {
             "proposed": 0,
@@ -2431,7 +2462,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-04-18 14:31:50",
+        "last_pack_refresh": "2026-04-18 14:34:15",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -3518,14 +3549,22 @@
         },
         "journal_fit": 4,
         "connector_summary": {
-          "data_state": "no_connector_data_attached",
-          "matched_row_count": 0,
-          "latest_attached_at": "",
-          "sources": [],
-          "source_labels": [],
+          "data_state": "connector_data_attached",
+          "matched_row_count": 9,
+          "latest_attached_at": "2026-04-18T14:32:22Z",
+          "sources": [
+            {
+              "key": "open_targets",
+              "label": "Open Targets",
+              "count": 9
+            }
+          ],
+          "source_labels": [
+            "Open Targets"
+          ],
           "target_context": {
-            "status": "supported",
-            "source": "repo target-seed pack",
+            "status": "provisional",
+            "source": "Open Targets + repo target-seed pack",
             "detail": "Use NLRP3 as the primary perturbation node because it is the strongest inflammatory target packet in the repo, links directly to the mito-to-inflammasome transition, and gives a cleaner perturbation frame than chasing one downstream cytokine at a time. Direct corpus signal: Extracellular ATP (eATP) exhibits dual roles in TBI: high concentrations activate P2X7R, leading to NLRP3 inflammasome activation and pyroptosis, while low concentrations activate SUR1\u2013TRPM4\u2013AQP4 complexes, contributing to cerebral edema."
           },
           "trial_context": {
@@ -3542,7 +3581,7 @@
             "state": "not_prepared",
             "imported_row_count": 0,
             "template_row_count": 0,
-            "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143146.csv"
+            "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143412.csv"
           }
         },
         "evidence_bundle_summary": {
@@ -3552,7 +3591,7 @@
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": true,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
+          "corpus_manifest_path": "",
           "journal_specific_rigor_profile_count": 2,
           "journal_specific_rigor_critical_gaps": 14,
           "journal_specific_rigor_fill_entries": 14
@@ -3590,7 +3629,7 @@
               "reopened"
             ],
             "execution_note": "Lead contradiction still active: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.. 4 issue(s) remain blocking.",
-            "last_executed_at": "2026-04-18T14:31:51.490029+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.321181+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -3610,7 +3649,7 @@
               "reopened"
             ],
             "execution_note": "Translational packet remains bounded around NLRP3; strengthening brief updated.",
-            "last_executed_at": "2026-04-18T14:31:51.490071+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.321219+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -3630,7 +3669,7 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-18T14:31:51.490096+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.321242+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           },
           {
@@ -3650,12 +3689,12 @@
               "reopened"
             ],
             "execution_note": "Journal-specific rigor checklist is active with 14 critical gap(s) across 2 profile(s).",
-            "last_executed_at": "2026-04-18T14:31:51.490120+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.321264+00:00",
             "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-18T14:31:51.490128+00:00",
+          "updated_at": "2026-04-18T14:34:16.321271+00:00",
           "total_tasks": 4,
           "status_counts": {
             "proposed": 0,
@@ -3748,10 +3787,10 @@
         "theme_label": "Mitochondrial / Bioenergetic Collapse",
         "family_id": "most_informative_biomarker_panel",
         "family_preference": 4,
-        "family_score": 1.005,
-        "confidence_score": 0.885,
-        "value_score": 1.0,
-        "support_status": "supported",
+        "family_score": 0.853,
+        "confidence_score": 0.733,
+        "value_score": 0.853,
+        "support_status": "provisional",
         "translation_maturity": "bounded",
         "article_type_candidates": [
           "review",
@@ -3772,7 +3811,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-04-18 14:31:50",
+        "last_pack_refresh": "2026-04-18 14:34:15",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -4859,14 +4898,22 @@
         },
         "journal_fit": 4,
         "connector_summary": {
-          "data_state": "template_only",
-          "matched_row_count": 0,
-          "latest_attached_at": "",
-          "sources": [],
-          "source_labels": [],
+          "data_state": "connector_data_attached",
+          "matched_row_count": 6,
+          "latest_attached_at": "2026-04-18T14:32:23Z",
+          "sources": [
+            {
+              "key": "open_targets",
+              "label": "Open Targets",
+              "count": 6
+            }
+          ],
+          "source_labels": [
+            "Open Targets"
+          ],
           "target_context": {
-            "status": "supported",
-            "source": "repo target-seed pack",
+            "status": "provisional",
+            "source": "Open Targets + repo target-seed pack",
             "detail": "Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Direct corpus signal: UC-MSC-derived exosomes reduce neuronal apoptosis via PINK1/Parkin-mediated mitophagy."
           },
           "trial_context": {
@@ -4883,7 +4930,7 @@
             "state": "template_only",
             "imported_row_count": 0,
             "template_row_count": 1,
-            "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143146.csv"
+            "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143412.csv"
           }
         },
         "evidence_bundle_summary": {
@@ -4893,7 +4940,7 @@
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": true,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
+          "corpus_manifest_path": "",
           "journal_specific_rigor_profile_count": 2,
           "journal_specific_rigor_critical_gaps": 14,
           "journal_specific_rigor_fill_entries": 14
@@ -4931,7 +4978,7 @@
               "reopened"
             ],
             "execution_note": "Lead contradiction still active: Study found no significant correlation, contradicting the hypothesis of cumulative damage.. 4 issue(s) remain blocking.",
-            "last_executed_at": "2026-04-18T14:31:51.496422+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.327236+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -4951,7 +4998,7 @@
               "reopened"
             ],
             "execution_note": "Translational packet remains bounded around PRKN; strengthening brief updated.",
-            "last_executed_at": "2026-04-18T14:31:51.496461+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.327273+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -4971,7 +5018,7 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-18T14:31:51.496487+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.327296+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           },
           {
@@ -4991,12 +5038,12 @@
               "reopened"
             ],
             "execution_note": "Journal-specific rigor checklist is active with 14 critical gap(s) across 2 profile(s).",
-            "last_executed_at": "2026-04-18T14:31:51.496510+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.327317+00:00",
             "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-18T14:31:51.496517+00:00",
+          "updated_at": "2026-04-18T14:34:16.327324+00:00",
           "total_tasks": 4,
           "status_counts": {
             "proposed": 0,
@@ -5108,7 +5155,7 @@
         ],
         "evidence_chain_complete": true,
         "is_active_path": false,
-        "last_pack_refresh": "2026-04-18 14:31:50",
+        "last_pack_refresh": "2026-04-18 14:34:15",
         "scientific_strength": 2,
         "journal_targets": {
           "primary": {
@@ -6167,14 +6214,22 @@
         },
         "journal_fit": 4,
         "connector_summary": {
-          "data_state": "no_connector_data_attached",
-          "matched_row_count": 0,
-          "latest_attached_at": "",
-          "sources": [],
-          "source_labels": [],
+          "data_state": "connector_data_attached",
+          "matched_row_count": 8,
+          "latest_attached_at": "2026-04-18T14:32:22Z",
+          "sources": [
+            {
+              "key": "open_targets",
+              "label": "Open Targets",
+              "count": 8
+            }
+          ],
+          "source_labels": [
+            "Open Targets"
+          ],
           "target_context": {
             "status": "provisional",
-            "source": "repo target-seed pack",
+            "source": "Open Targets + repo target-seed pack",
             "detail": "Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem."
           },
           "trial_context": {
@@ -6191,7 +6246,7 @@
             "state": "not_prepared",
             "imported_row_count": 0,
             "template_row_count": 0,
-            "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143146.csv"
+            "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_143412.csv"
           }
         },
         "evidence_bundle_summary": {
@@ -6201,7 +6256,7 @@
           "figure_count": 4,
           "section_packet_count": 5,
           "primary_journal_verified": true,
-          "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-18_135958.csv",
+          "corpus_manifest_path": "",
           "journal_specific_rigor_profile_count": 1,
           "journal_specific_rigor_critical_gaps": 7,
           "journal_specific_rigor_fill_entries": 7
@@ -6239,7 +6294,7 @@
               "reopened"
             ],
             "execution_note": "Lead contradiction still active: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.. 4 issue(s) remain blocking.",
-            "last_executed_at": "2026-04-18T14:31:51.503717+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.334203+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -6259,7 +6314,7 @@
               "reopened"
             ],
             "execution_note": "Translational packet remains bounded around DYRK1A; strengthening brief updated.",
-            "last_executed_at": "2026-04-18T14:31:51.503757+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.334241+00:00",
             "output_file": "task_outputs/strengthen_translational_packet.md"
           },
           {
@@ -6279,7 +6334,7 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-18T14:31:51.503782+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.334264+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           },
           {
@@ -6299,12 +6354,12 @@
               "reopened"
             ],
             "execution_note": "Journal-specific rigor checklist is active with 7 critical gap(s) across 1 profile(s).",
-            "last_executed_at": "2026-04-18T14:31:51.503804+00:00",
+            "last_executed_at": "2026-04-18T14:34:16.334284+00:00",
             "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-18T14:31:51.503811+00:00",
+          "updated_at": "2026-04-18T14:34:16.334291+00:00",
           "total_tasks": 4,
           "status_counts": {
             "proposed": 0,

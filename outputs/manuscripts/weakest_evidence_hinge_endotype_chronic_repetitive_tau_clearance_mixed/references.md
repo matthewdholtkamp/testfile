@@ -66,9 +66,9 @@
    - Artifact refs: phase1:tau_proteinopathy_progression, phase3:tauopathy_progression, phase4:tau_proteinopathy_progression, phase4:glymphatic_astroglial_clearance_failure, phase4:neuroinflammation_microglial_state_change
    - Why included: Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline. | Tauopathy progression is one of the clearest bridges from repeated injury biology into chronic neurodegenerative trajectory risk.
 
-12. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. doi:10.1093/braincomms/fcag070. PMID:41853047.
+12. PMID:41853047.
    - Source phases: phase1, phase2, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:tau_proteinopathy_progression, phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction, phase4:tau_proteinopathy_progression
    - Why included: Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline. | Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.
 
@@ -90,9 +90,9 @@
    - Artifact refs: phase1:tau_proteinopathy_progression, phase4:tau_proteinopathy_progression
    - Why included: Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.
 
-16. Post-traumatic stress disorder: pathogenesis, epidemiological characteristics, animal models, and potential therapeutic strategies. doi:10.1016/j.mmr.2026.100005. PMID:41953056.
+16. PMID:41953056.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:tau_proteinopathy_progression, phase4:tau_proteinopathy_progression
    - Why included: Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.
 
@@ -102,15 +102,15 @@
    - Artifact refs: phase1:glymphatic_astroglial_clearance_failure, phase4:glymphatic_astroglial_clearance_failure
    - Why included: AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.
 
-18. Pathological Roles of Astrocytes in Traumatic Brain Injury. doi:10.1002/cns.70856. PMID:41968392.
+18. PMID:41968392.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:glymphatic_astroglial_clearance_failure, phase4:glymphatic_astroglial_clearance_failure
    - Why included: AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.
 
-19. Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. doi:10.21203/rs.3.rs-9152535/v1. PMID:41960329.
+19. PMID:41960329.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:glymphatic_astroglial_clearance_failure, phase4:glymphatic_astroglial_clearance_failure
    - Why included: AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.
 
@@ -150,9 +150,9 @@
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase3:microglial_chronic_activation, phase4:glymphatic_astroglial_clearance_failure, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI. | Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration.
 
-26. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. doi:10.1172/JCI196112. PMID:41926211.
+26. PMID:41926211.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
@@ -186,9 +186,9 @@
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
-32. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. doi:10.1073/pnas.2527009123. PMID:41926540.
+32. PMID:41926540.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
@@ -210,9 +210,9 @@
    - Artifact refs: phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction, phase4:tau_proteinopathy_progression
    - Why included: Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.
 
-36. Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease. doi:10.3390/metabo16030148. PMID:41893300.
+36. PMID:41893300.
    - Source phases: phase2, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction, phase4:tau_proteinopathy_progression
    - Why included: Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.
 
@@ -355,14 +355,14 @@
    - Quality: unknown
    - Artifact refs: phase4:glymphatic_astroglial_clearance_failure
 
-62. Small extracellular vesicle-integrated by herbal hydrogels for spatiotemporal immunomodulation and neurovascular repair following traumatic brain injury. doi:10.1016/j.bioactmat.2026.02.056. PMID:41853701.
+62. PMID:41853701.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:glymphatic_astroglial_clearance_failure
 
-63. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. doi:10.1002/cns.70858. PMID:41954515.
+63. PMID:41954515.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:glymphatic_astroglial_clearance_failure
 
 64. PMID:41079361.
@@ -430,19 +430,19 @@
    - Quality: unknown
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
-77. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. doi:10.1371/journal.pone.0344993. PMID:41880282.
+77. PMID:41880282.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
-78. Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI. doi:10.1515/nipt-2024-0019. PMID:41918568.
+78. PMID:41918568.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
-79. Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury. doi:10.1186/s12964-026-02871-7. PMID:41952146.
+79. PMID:41952146.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
 80. PMID:41740873.

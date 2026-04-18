@@ -1,8 +1,8 @@
 # References Bundle
 
-1. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. doi:10.3389/fncel.2026.1757822. PMID:41969524.
+1. PMID:41969524.
    - Source phases: phase6, phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -30,15 +30,15 @@
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
-6. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. doi:10.1002/cns.70858. PMID:41954515.
+6. PMID:41954515.
    - Source phases: phase6, phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
-7. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. doi:10.21203/rs.3.rs-9261231/v1. PMID:41994141.
+7. PMID:41994141.
    - Source phases: phase6, phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -48,15 +48,15 @@
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase3:microglial_chronic_activation, phase3:neurovascular_uncoupling, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
-9. Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization. doi:10.1007/s11481-026-10289-8. PMID:41973273.
+9. PMID:41973273.
    - Source phases: phase6, phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
-10. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. doi:10.1177/0271678X261432754. PMID:41934291.
+10. PMID:41934291.
    - Source phases: phase6, phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -84,9 +84,9 @@
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support.
 
-15. Pathological Roles of Astrocytes in Traumatic Brain Injury. doi:10.1002/cns.70856. PMID:41968392.
+15. PMID:41968392.
    - Source phases: phase6, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support.
 
@@ -210,9 +210,9 @@
    - Artifact refs: phase5:acute_mild_biomarker_imaging_bridge
    - Why included: This is the best early endotype packet for not treating all concussive or mild injury as one disease in the first hours to days. | Cohort-supporting paper in linked endotype packet.
 
-36. Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation. doi:10.3390/sports14030112. PMID:41893603.
+36. Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation. PMID:41893603.
    - Source phases: phase5
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase5:acute_mild_biomarker_imaging_bridge
    - Why included: This is the best early endotype packet for not treating all concussive or mild injury as one disease in the first hours to days. | Cohort-supporting paper in linked endotype packet.
 
@@ -258,9 +258,9 @@
    - Artifact refs: phase5:acute_severe_vascular_dominant
    - Why included: This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI. | Cohort-supporting paper in linked endotype packet.
 
-44. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. doi:10.1007/s00011-026-02209-6. PMID:41896418.
+44. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. PMID:41896418.
    - Source phases: phase5
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase5:acute_severe_vascular_dominant
    - Why included: This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI. | Cohort-supporting paper in linked endotype packet.
 
@@ -288,9 +288,9 @@
    - Artifact refs: phase5:acute_blast_vascular_inflammatory_mixed
    - Why included: Blast cohorts are easy to lump into generic TBI groups, but they may represent the clearest case where mixed dominant-process labels are necessary. | Cohort-supporting paper in linked endotype packet.
 
-49. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. doi:10.1371/journal.pone.0344993. PMID:41880282.
+49. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PMID:41880282.
    - Source phases: phase5
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase5:acute_blast_vascular_inflammatory_mixed
    - Why included: Blast cohorts are easy to lump into generic TBI groups, but they may represent the clearest case where mixed dominant-process labels are necessary. | Cohort-supporting paper in linked endotype packet.
 
@@ -300,9 +300,9 @@
    - Artifact refs: phase5:subacute_repetitive_inflammatory_dominant
    - Why included: This is the best current packet for distinguishing repetitive-TBI cohorts that may respond to inflammasome or glial-state perturbation before chronic tau biology hardens. | Cohort-supporting paper in linked endotype packet.
 
-51. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. doi:10.64898/2026.03.04.709563. PMID:41847037.
+51. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.
    - Source phases: phase5
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase5:subacute_repetitive_inflammatory_dominant
    - Why included: This is the best current packet for distinguishing repetitive-TBI cohorts that may respond to inflammasome or glial-state perturbation before chronic tau biology hardens. | Cohort-supporting paper in linked endotype packet.
 
