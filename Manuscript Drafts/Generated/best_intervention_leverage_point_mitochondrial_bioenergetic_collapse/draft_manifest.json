@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T13:15:22.662573+00:00",
+  "updated_at": "2026-04-18T20:18:14.509375+00:00",
   "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
   "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
   "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
@@ -245,6 +245,8 @@
     "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
     "manifest_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
+    "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
+    "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
     "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
     "ready_for_metadata_only": false,
     "missing_metadata_item_count": 12,

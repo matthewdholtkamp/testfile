@@ -2,8 +2,8 @@ import argparse
 import json
 import mimetypes
 import os
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 import yaml
 from google.oauth2 import service_account
@@ -17,12 +17,26 @@ except ModuleNotFoundError:
     import drive_corpus_utils as dcu
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_GENERATED_ROOT = REPO_ROOT / 'Manuscript Drafts' / 'Generated'
-DEFAULT_QUEUE_PATH = REPO_ROOT / 'outputs' / 'state' / 'manuscript_queue.json'
-DEFAULT_SUMMARY_PATH = REPO_ROOT / 'outputs' / 'state' / 'manuscript_drive_mirror_summary.json'
-DEFAULT_DRIVE_ROOT = 'manuscript_outputs/generated_drafts'
+STATE_ROOT = REPO_ROOT / 'outputs' / 'state'
+PACK_ROOT = REPO_ROOT / 'outputs' / 'manuscripts'
+GENERATED_ROOT = REPO_ROOT / 'Manuscript Drafts' / 'Generated'
+READY_ROOT = REPO_ROOT / 'Manuscript Drafts' / 'Ready for Metadata Only'
+QUEUE_PATH = STATE_ROOT / 'manuscript_queue.json'
+PUBLICATION_TRACKER_PATH = STATE_ROOT / 'publication_tracker.json'
+READY_INDEX_PATH = STATE_ROOT / 'ready_for_metadata_only_index.json'
+SUMMARY_PATH = STATE_ROOT / 'manuscript_drive_mirror_summary.json'
 FOLDER_MIME = 'application/vnd.google-apps.folder'
 SCOPES = ['https://www.googleapis.com/auth/drive']
+DEFAULT_ROUTING = {
+    'generated_drafts': 'manuscript_outputs/generated_drafts',
+    'ready_for_metadata_only': 'manuscript_outputs/ready_for_metadata_only',
+    'evidence_packs': 'manuscript_outputs/evidence_packs',
+    'state': 'manuscript_outputs/state',
+}
+ALLOWED_PACK_SUFFIXES = {'.md', '.json'}
+ALLOWED_DRAFT_SUFFIXES = {'.md', '.json'}
+ALLOWED_READY_SUFFIXES = {'.docx'}
+ALLOWED_STATE_SUFFIXES = {'.json'}
 
 
 def load_config():
@@ -31,12 +45,18 @@ def load_config():
         return yaml.safe_load(handle) or {}
 
 
-def manuscript_drive_root(config):
-    env_override = os.environ.get('MANUSCRIPT_DRIVE_ROUTING_ROOT', '').strip()
-    if env_override:
-        return env_override
-    routing = config.get('manuscript_drive_routing', {}) or {}
-    return str(routing.get('root') or DEFAULT_DRIVE_ROOT)
+def manuscript_drive_routing(config):
+    routing = dict(DEFAULT_ROUTING)
+    configured = (config.get('manuscript_drive_routing') or {})
+    for key in routing:
+        override = os.environ.get(f'MANUSCRIPT_DRIVE_{key.upper()}_PATH', '').strip()
+        if override:
+            routing[key] = override
+            continue
+        value = str(configured.get(key) or '').strip()
+        if value:
+            routing[key] = value
+    return routing
 
 
 def get_drive_service():
@@ -86,112 +106,180 @@ def upload_or_update_file(service, parent_id, local_path):
     return {'action': 'created', 'file_id': result.get('id'), 'name': local_path.name, 'mimetype': mimetype}
 
 
-def iter_files(folder):
-    for path in sorted(Path(folder).iterdir()):
-        if path.is_file() and path.suffix.lower() in {'.md', '.json'}:
-            yield path
+def relative_to_repo(path):
+    try:
+        return str(Path(path).resolve().relative_to(REPO_ROOT))
+    except Exception:
+        return str(path)
 
 
-def build_local_plan(generated_root, queue_path):
-    generated_root = Path(generated_root)
-    queue_path = Path(queue_path)
-    folders = [path for path in sorted(generated_root.iterdir()) if path.is_dir()]
-    index_path = generated_root / 'generated_draft_index.json'
-    plan = {
-        'generated_root': str(generated_root),
-        'queue_path': str(queue_path),
-        'generated_index_path': str(index_path),
-        'draft_folders': [folder.name for folder in folders],
-        'draft_files': {folder.name: [item.name for item in iter_files(folder)] for folder in folders},
-    }
-    return plan
-
-
-def mirror_generated_manuscripts(service, drive_folder_id, drive_root_path, generated_root, queue_path):
-    generated_root = Path(generated_root)
-    queue_path = Path(queue_path)
-    root_id = dcu.ensure_folder_path(service, drive_folder_id, [part for part in drive_root_path.split('/') if part])
-
-    uploads = []
-    root_files = []
-    for path in [generated_root / 'generated_draft_index.json', queue_path]:
-        if path.exists():
-            result = upload_or_update_file(service, root_id, path)
-            root_files.append({'path': str(path), **result})
-            uploads.append(result)
-
-    draft_folders = []
-    for folder in sorted(generated_root.iterdir()):
-        if not folder.is_dir():
+def iter_matching_files(root, suffixes, recursive=True):
+    root = Path(root)
+    if not root.exists():
+        return []
+    iterator = root.rglob('*') if recursive else root.glob('*')
+    matches = []
+    for path in iterator:
+        if not path.is_file():
             continue
-        drive_draft_folder_id = dcu.ensure_folder_path(service, root_id, [folder.name])
-        mirrored = []
-        for file_path in iter_files(folder):
-            result = upload_or_update_file(service, drive_draft_folder_id, file_path)
-            mirrored.append({'path': str(file_path), **result})
-            uploads.append(result)
-        draft_folders.append({
-            'folder': folder.name,
-            'drive_folder_id': drive_draft_folder_id,
-            'files': mirrored,
-        })
+        if path.suffix.lower() not in suffixes:
+            continue
+        matches.append(path)
+    return sorted(matches)
 
+
+def unique_paths(paths):
+    seen = set()
+    ordered = []
+    for path in paths:
+        key = str(Path(path))
+        if key in seen:
+            continue
+        seen.add(key)
+        ordered.append(Path(path))
+    return ordered
+
+
+def build_local_plan():
+    generated_folders = [path.name for path in sorted(GENERATED_ROOT.iterdir()) if path.is_dir()] if GENERATED_ROOT.exists() else []
+    ready_docx_files = [path.name for path in iter_matching_files(READY_ROOT, ALLOWED_READY_SUFFIXES, recursive=False)]
+    evidence_pack_folders = [path.name for path in sorted(PACK_ROOT.iterdir()) if path.is_dir()] if PACK_ROOT.exists() else []
+    return {
+        'generated_root': relative_to_repo(GENERATED_ROOT),
+        'generated_folders': generated_folders,
+        'ready_root': relative_to_repo(READY_ROOT),
+        'ready_docx_files': ready_docx_files,
+        'evidence_pack_root': relative_to_repo(PACK_ROOT),
+        'evidence_pack_folders': evidence_pack_folders,
+        'state_files': [
+            relative_to_repo(path)
+            for path in (QUEUE_PATH, PUBLICATION_TRACKER_PATH, READY_INDEX_PATH, GENERATED_ROOT / 'generated_draft_index.json')
+            if path.exists()
+        ],
+    }
+
+
+def mirror_file_group(service, drive_folder_id, drive_root_path, file_paths, root_for_relative=None):
+    root_id = dcu.ensure_folder_path(service, drive_folder_id, [part for part in drive_root_path.split('/') if part])
+    mirrored = []
+    root_for_relative = Path(root_for_relative).resolve() if root_for_relative else None
+    for file_path in file_paths:
+        file_path = Path(file_path)
+        parent_id = root_id
+        relative_parent = ''
+        if root_for_relative:
+            relative_parent = str(file_path.resolve().relative_to(root_for_relative).parent)
+            if relative_parent not in {'', '.'}:
+                parent_id = dcu.ensure_folder_path(service, root_id, list(Path(relative_parent).parts))
+        result = upload_or_update_file(service, parent_id, file_path)
+        mirrored.append({
+            'path': relative_to_repo(file_path),
+            'relative_parent': '' if relative_parent in {'', '.'} else relative_parent,
+            **result,
+        })
     return {
         'drive_root_id': root_id,
         'drive_root_path': drive_root_path,
-        'root_files': root_files,
-        'draft_folders': draft_folders,
+        'files': mirrored,
         'upload_counts': {
-            'created': sum(1 for item in uploads if item['action'] == 'created'),
-            'updated': sum(1 for item in uploads if item['action'] == 'updated'),
-            'total': len(uploads),
+            'created': sum(1 for item in mirrored if item['action'] == 'created'),
+            'updated': sum(1 for item in mirrored if item['action'] == 'updated'),
+            'total': len(mirrored),
+        },
+    }
+
+
+def mirror_all_outputs(service, drive_folder_id, routing):
+    generated_files = []
+    generated_index = GENERATED_ROOT / 'generated_draft_index.json'
+    if generated_index.exists():
+        generated_files.append(generated_index)
+    generated_files.extend(iter_matching_files(GENERATED_ROOT, ALLOWED_DRAFT_SUFFIXES, recursive=True))
+    generated_files = unique_paths(generated_files)
+
+    ready_docx_files = unique_paths(iter_matching_files(READY_ROOT, ALLOWED_READY_SUFFIXES, recursive=False))
+    evidence_pack_files = unique_paths(iter_matching_files(PACK_ROOT, ALLOWED_PACK_SUFFIXES, recursive=True))
+    state_files = [
+        path for path in [QUEUE_PATH, PUBLICATION_TRACKER_PATH, READY_INDEX_PATH]
+        if path.exists() and path.suffix.lower() in ALLOWED_STATE_SUFFIXES
+    ]
+    state_files = unique_paths(state_files)
+
+    generated_result = mirror_file_group(
+        service,
+        drive_folder_id,
+        routing['generated_drafts'],
+        generated_files,
+        root_for_relative=GENERATED_ROOT,
+    )
+    ready_result = mirror_file_group(
+        service,
+        drive_folder_id,
+        routing['ready_for_metadata_only'],
+        ready_docx_files,
+        root_for_relative=READY_ROOT,
+    )
+    evidence_result = mirror_file_group(
+        service,
+        drive_folder_id,
+        routing['evidence_packs'],
+        evidence_pack_files,
+        root_for_relative=PACK_ROOT,
+    )
+    state_result = mirror_file_group(
+        service,
+        drive_folder_id,
+        routing['state'],
+        state_files,
+        root_for_relative=STATE_ROOT,
+    )
+
+    groups = {
+        'generated_drafts': generated_result,
+        'ready_for_metadata_only': ready_result,
+        'evidence_packs': evidence_result,
+        'state': state_result,
+    }
+    all_files = [item for group in groups.values() for item in group['files']]
+    return {
+        'groups': groups,
+        'upload_counts': {
+            'created': sum(1 for item in all_files if item['action'] == 'created'),
+            'updated': sum(1 for item in all_files if item['action'] == 'updated'),
+            'total': len(all_files),
         },
     }
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Mirror generated manuscript drafts into Google Drive.')
-    parser.add_argument('--generated-root', default=str(DEFAULT_GENERATED_ROOT))
-    parser.add_argument('--queue-path', default=str(DEFAULT_QUEUE_PATH))
-    parser.add_argument('--summary-path', default=str(DEFAULT_SUMMARY_PATH))
+    parser = argparse.ArgumentParser(description='Mirror manuscript-first outputs into Google Drive.')
+    parser.add_argument('--summary-path', default=str(SUMMARY_PATH))
     parser.add_argument('--drive-folder-id', default=os.environ.get('DRIVE_FOLDER_ID', ''))
-    parser.add_argument('--drive-root-path', default='')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
 
-    config = load_config()
-    drive_root_path = args.drive_root_path or manuscript_drive_root(config)
-    generated_root = Path(args.generated_root)
-    queue_path = Path(args.queue_path)
-    summary_path = Path(args.summary_path)
-
-    if not generated_root.exists():
-        raise SystemExit(f'Generated manuscript root not found: {generated_root}')
+    if not GENERATED_ROOT.exists():
+        raise SystemExit(f'Generated manuscript root not found: {GENERATED_ROOT}')
     if not args.dry_run and not args.drive_folder_id:
         raise SystemExit('DRIVE_FOLDER_ID is required unless --dry-run is used')
 
+    config = load_config()
+    routing = manuscript_drive_routing(config)
     summary = {
         'generated_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
-        'generated_root': str(generated_root),
-        'queue_path': str(queue_path),
         'drive_folder_id': args.drive_folder_id,
-        'drive_root_path': drive_root_path,
+        'routing': routing,
         'dry_run': bool(args.dry_run),
-        'local_plan': build_local_plan(generated_root, queue_path),
+        'local_plan': build_local_plan(),
     }
 
     if args.dry_run:
         summary['result'] = 'dry_run_only'
     else:
         service = get_drive_service()
-        summary['result'] = mirror_generated_manuscripts(
-            service,
-            args.drive_folder_id,
-            drive_root_path,
-            generated_root,
-            queue_path,
-        )
+        summary['result'] = mirror_all_outputs(service, args.drive_folder_id, routing)
 
+    summary_path = Path(args.summary_path)
     summary_path.parent.mkdir(parents=True, exist_ok=True)
     summary_path.write_text(json.dumps(summary, indent=2), encoding='utf-8')
     print(json.dumps(summary, indent=2))

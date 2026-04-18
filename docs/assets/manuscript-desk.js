@@ -21883,6 +21883,7 @@ var GITHUB_REPO = "testfile";
 var GITHUB_REF = "main";
 var GITHUB_TOKEN_KEY = "atlas-github-token";
 var GITHUB_STATE_FILE = "docs/command_snapshot.json";
+var DRIVE_MIRROR_WORKFLOW_FILE = "mirror_manuscript_drafts_to_drive.yml";
 function getInjectedPayload() {
   const globalValue = window.EMBEDDED_PAYLOAD;
   return globalValue && typeof globalValue === "object" ? globalValue : null;
@@ -21955,6 +21956,21 @@ async function fetchGitHubSnapshot(token) {
   const data = await response.json();
   return JSON.parse(decodeBase64(data.content || ""));
 }
+async function fetchLatestDriveMirrorRun(token = "") {
+  const response = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/actions/workflows/${encodeURIComponent(DRIVE_MIRROR_WORKFLOW_FILE)}/runs?branch=${encodeURIComponent(GITHUB_REF)}&per_page=1`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        ...token ? { Authorization: `Bearer ${token}` } : {}
+      }
+    }
+  );
+  if (!response.ok) return null;
+  const data = await response.json().catch(() => null);
+  const runs = Array.isArray(data?.workflow_runs) ? data.workflow_runs : [];
+  return runs[0] || null;
+}
 function encodeRepoPath(path) {
   return path.split("/").filter(Boolean).map((segment) => encodeURIComponent(segment)).join("/");
 }
@@ -21977,6 +21993,10 @@ function getPackUrl(packKey) {
   return getRepoTreeUrl(`outputs/manuscripts/${packKey}`);
 }
 function getDraftUrl(candidate) {
+  const readyDocxPath = candidate?.draft_output?.ready_metadata_docx_relative_path;
+  if (candidate?.ready_for_metadata_only && readyDocxPath) {
+    return getRepoBlobUrl(readyDocxPath);
+  }
   const draftPath = candidate?.draft_output?.manuscript_draft_relative_path;
   if (draftPath) return getRepoBlobUrl(draftPath);
   const folderPath = candidate?.draft_output?.folder_relative_path;
@@ -22109,6 +22129,7 @@ function App() {
   const [errorMessage, setErrorMessage] = (0, import_react3.useState)("");
   const [githubToken, setGithubToken] = (0, import_react3.useState)("");
   const [tokenDraft, setTokenDraft] = (0, import_react3.useState)("");
+  const [driveMirrorRun, setDriveMirrorRun] = (0, import_react3.useState)(null);
   async function refreshSnapshot(nextToken = githubToken) {
     setRefreshing(true);
     setErrorMessage("");
@@ -22128,6 +22149,10 @@ function App() {
         setPayload(githubSnapshot);
         setSource("github");
       }
+      const latestDriveMirrorRun = await fetchLatestDriveMirrorRun(nextToken).catch(
+        () => null
+      );
+      setDriveMirrorRun(latestDriveMirrorRun);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unable to refresh the manuscript snapshot.";
       setErrorMessage(message);
@@ -22215,6 +22240,10 @@ function App() {
   ];
   const summary = manuscriptQueue?.summary || {};
   const snapshotUpdatedAt = manuscriptQueue?.generated_at || payload?.board_state?.snapshot_generated_at;
+  const driveMirrorTone = !driveMirrorRun ? "neutral" : driveMirrorRun?.status !== "completed" ? "warning" : driveMirrorRun?.conclusion === "success" ? "accent" : "danger";
+  const driveMirrorSummary = driveMirrorRun ? `Drive sync ${humanize(
+    driveMirrorRun?.status === "completed" ? driveMirrorRun?.conclusion || driveMirrorRun?.status : driveMirrorRun?.status
+  )} \xB7 ${formatRelativeTime(driveMirrorRun?.updated_at || driveMirrorRun?.created_at)}` : "Drive sync status unavailable";
   if (loading) {
     return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "desk-shell", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "desk-wrap flex min-h-screen items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex items-center gap-3 text-sm tracking-[0.12em] uppercase text-[var(--muted)]", children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LoaderCircle, { className: "h-5 w-5 animate-spin text-[var(--accent)]" }),
@@ -22233,8 +22262,21 @@ function App() {
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "desk-sync-panel", children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "flex flex-wrap items-center gap-2", children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusChip, { tone: source === "github" ? "accent" : "neutral", children: sourceLabel(source) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusChip, { children: formatRelativeTime(snapshotUpdatedAt) })
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusChip, { children: formatRelativeTime(snapshotUpdatedAt) }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusChip, { tone: driveMirrorTone, children: driveMirrorRun ? humanize(
+            driveMirrorRun?.status === "completed" ? driveMirrorRun?.conclusion || driveMirrorRun?.status : driveMirrorRun?.status
+          ) : "Drive sync unknown" })
         ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "text-sm leading-6 text-[var(--muted)]", children: driveMirrorRun?.html_url ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+          "a",
+          {
+            className: "desk-link",
+            href: driveMirrorRun.html_url,
+            target: "_blank",
+            rel: "noreferrer",
+            children: driveMirrorSummary
+          }
+        ) : driveMirrorSummary }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
           "button",
           {

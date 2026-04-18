@@ -12,6 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 STATE_DIR = REPO_ROOT / 'outputs' / 'state'
 MANUSCRIPT_ROOT = REPO_ROOT / 'outputs' / 'manuscripts'
 MANUSCRIPT_DRAFTS_ROOT = REPO_ROOT / 'Manuscript Drafts' / 'Generated'
+READY_FOR_METADATA_DRAFTS_ROOT = REPO_ROOT / 'Manuscript Drafts' / 'Ready for Metadata Only'
 OUTPUT_ROOT = REPO_ROOT / 'output'
 JOURNAL_REGISTRY_PATH = REPO_ROOT / 'config' / 'manuscript_journal_registry.json'
 JOURNAL_REQUIREMENTS_DIR = REPO_ROOT / 'config' / 'journal_requirements'
@@ -20,6 +21,7 @@ PUBLICATION_TRACKER_STATE_PATH = STATE_DIR / 'publication_tracker.json'
 READY_FOR_CODEX_FILENAME = 'ready_for_codex_draft.json'
 GENERATED_DRAFT_INDEX_FILENAME = 'generated_draft_index.json'
 GENERATED_DRAFT_MANIFEST_FILENAME = 'draft_manifest.json'
+READY_FOR_METADATA_INDEX_FILENAME = 'ready_for_metadata_only_index.json'
 ACTIVE_LANE_LIMIT = 2
 MANUSCRIPT_CANDIDATE_EVALUATION_LIMIT = 12
 PROCESS_ENGINE_DOC_PATH = REPO_ROOT / 'docs' / 'process-engine' / 'process_engine.json'
@@ -3084,6 +3086,107 @@ def candidate_draft_folder(root, candidate):
     return Path(root) / candidate['pack_key']
 
 
+def ready_for_metadata_docx_path(root, candidate):
+    return Path(root) / f"{candidate['pack_key']}.docx"
+
+
+def strip_markdown_formatting(text):
+    text = normalize(text)
+    if not text:
+        return ''
+    text = re.sub(r'`([^`]*)`', r'\1', text)
+    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
+    text = text.replace('**', '').replace('__', '').replace('*', '').replace('_', '')
+    return text.strip()
+
+
+def apply_inline_markdown_runs(paragraph, text):
+    text = normalize(text)
+    if not text:
+        return
+    parts = re.split(r'(\*\*[^*]+\*\*|__[^_]+__|`[^`]+`)', text)
+    for part in parts:
+        if not part:
+            continue
+        bold = (part.startswith('**') and part.endswith('**')) or (part.startswith('__') and part.endswith('__'))
+        code = part.startswith('`') and part.endswith('`')
+        content = strip_markdown_formatting(part)
+        if not content:
+            continue
+        run = paragraph.add_run(content)
+        if bold:
+            run.bold = True
+        if code:
+            run.font.name = 'Courier New'
+
+
+def write_ready_metadata_docx(manuscript_markdown, output_path, candidate):
+    try:
+        from docx import Document
+        from docx.shared import Inches, Pt
+    except ImportError as exc:
+        raise RuntimeError('python-docx is required to build ready-for-metadata DOCX files') from exc
+
+    document = Document()
+    section = document.sections[0]
+    section.top_margin = Inches(1)
+    section.bottom_margin = Inches(1)
+    section.left_margin = Inches(1)
+    section.right_margin = Inches(1)
+
+    styles = document.styles
+    if 'Normal' in styles:
+        styles['Normal'].font.name = 'Times New Roman'
+        styles['Normal'].font.size = Pt(12)
+    if 'Title' in styles:
+        styles['Title'].font.name = 'Times New Roman'
+    if 'Heading 1' in styles:
+        styles['Heading 1'].font.name = 'Times New Roman'
+    if 'Heading 2' in styles:
+        styles['Heading 2'].font.name = 'Times New Roman'
+    if 'Heading 3' in styles:
+        styles['Heading 3'].font.name = 'Times New Roman'
+
+    lines = manuscript_markdown.splitlines()
+    for raw_line in lines:
+        line = raw_line.rstrip()
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith('# '):
+            paragraph = document.add_paragraph(style='Title')
+            apply_inline_markdown_runs(paragraph, stripped[2:])
+            continue
+        if stripped.startswith('## '):
+            paragraph = document.add_paragraph(style='Heading 1')
+            apply_inline_markdown_runs(paragraph, stripped[3:])
+            continue
+        if stripped.startswith('### '):
+            paragraph = document.add_paragraph(style='Heading 2')
+            apply_inline_markdown_runs(paragraph, stripped[4:])
+            continue
+        if stripped.startswith('#### '):
+            paragraph = document.add_paragraph(style='Heading 3')
+            apply_inline_markdown_runs(paragraph, stripped[5:])
+            continue
+        if stripped.startswith('- '):
+            paragraph = document.add_paragraph(style='List Bullet')
+            apply_inline_markdown_runs(paragraph, stripped[2:])
+            continue
+        if stripped.startswith('> '):
+            paragraph = document.add_paragraph()
+            run = paragraph.add_run(strip_markdown_formatting(stripped[2:]))
+            run.italic = True
+            continue
+        paragraph = document.add_paragraph()
+        apply_inline_markdown_runs(paragraph, stripped)
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    document.save(output_path)
+    return output_path
+
+
 def candidate_draft_output_paths(candidate, root=MANUSCRIPT_DRAFTS_ROOT):
     folder = candidate_draft_folder(root, candidate)
     status_path = folder / 'draft_status.md'
@@ -3093,6 +3196,7 @@ def candidate_draft_output_paths(candidate, root=MANUSCRIPT_DRAFTS_ROOT):
     manuscript_draft_path = folder / 'manuscript_draft.md'
     manifest_path = folder / GENERATED_DRAFT_MANIFEST_FILENAME
     source_pack_folder = candidate_folder(MANUSCRIPT_ROOT, candidate)
+    ready_docx_path = ready_for_metadata_docx_path(READY_FOR_METADATA_DRAFTS_ROOT, candidate)
     return {
         'folder_relative_path': relative_path_or_blank(folder),
         'folder_absolute_path': absolute_path_or_blank(folder),
@@ -3110,6 +3214,8 @@ def candidate_draft_output_paths(candidate, root=MANUSCRIPT_DRAFTS_ROOT):
         'manuscript_draft_absolute_path': absolute_path_or_blank(manuscript_draft_path),
         'manifest_relative_path': relative_path_or_blank(manifest_path),
         'manifest_absolute_path': absolute_path_or_blank(manifest_path),
+        'ready_metadata_docx_relative_path': relative_path_or_blank(ready_docx_path),
+        'ready_metadata_docx_absolute_path': absolute_path_or_blank(ready_docx_path),
     }
 
 
@@ -3642,6 +3748,8 @@ def draft_queue_entry(candidate):
         'missing_items_absolute_path': draft_output.get('missing_items_absolute_path', ''),
         'manuscript_draft_relative_path': draft_output.get('manuscript_draft_relative_path', ''),
         'manuscript_draft_absolute_path': draft_output.get('manuscript_draft_absolute_path', ''),
+        'ready_metadata_docx_relative_path': draft_output.get('ready_metadata_docx_relative_path', ''),
+        'ready_metadata_docx_absolute_path': draft_output.get('ready_metadata_docx_absolute_path', ''),
         'manifest_relative_path': draft_output.get('manifest_relative_path', ''),
         'manifest_absolute_path': draft_output.get('manifest_absolute_path', ''),
         'missing_metadata_item_count': draft_output.get('missing_metadata_item_count', 0),
@@ -3649,8 +3757,9 @@ def draft_queue_entry(candidate):
     }
 
 
-def build_generated_draft_summary(candidates, root=MANUSCRIPT_DRAFTS_ROOT):
+def build_generated_draft_summary(candidates, root=MANUSCRIPT_DRAFTS_ROOT, ready_root=READY_FOR_METADATA_DRAFTS_ROOT):
     root = Path(root)
+    ready_root = Path(ready_root)
     entries = [draft_queue_entry(candidate) for candidate in candidates]
     ready = [entry for entry in entries if entry.get('ready_for_metadata_only')]
     return {
@@ -3658,6 +3767,8 @@ def build_generated_draft_summary(candidates, root=MANUSCRIPT_DRAFTS_ROOT):
         'root_absolute_path': absolute_path_or_blank(root),
         'index_relative_path': relative_path_or_blank(root / GENERATED_DRAFT_INDEX_FILENAME),
         'index_absolute_path': absolute_path_or_blank(root / GENERATED_DRAFT_INDEX_FILENAME),
+        'ready_metadata_root_relative_path': relative_path_or_blank(ready_root),
+        'ready_metadata_root_absolute_path': absolute_path_or_blank(ready_root),
         'entries': entries,
         'ready_for_metadata_only': ready,
     }
@@ -3852,7 +3963,7 @@ def candidate_row_lookup(state, direction_registry=None):
     return lookup
 
 
-def materialize_manuscript_outputs(state, direction_registry=None, publication_tracker=None, journal_registry=None, manuscript_root=MANUSCRIPT_ROOT, manuscript_drafts_root=MANUSCRIPT_DRAFTS_ROOT, queue_state_path=MANUSCRIPT_QUEUE_STATE_PATH, publication_state_path=PUBLICATION_TRACKER_STATE_PATH):
+def materialize_manuscript_outputs(state, direction_registry=None, publication_tracker=None, journal_registry=None, manuscript_root=MANUSCRIPT_ROOT, manuscript_drafts_root=MANUSCRIPT_DRAFTS_ROOT, ready_for_metadata_root=READY_FOR_METADATA_DRAFTS_ROOT, queue_state_path=MANUSCRIPT_QUEUE_STATE_PATH, publication_state_path=PUBLICATION_TRACKER_STATE_PATH):
     direction_registry = direction_registry or {}
     publication_tracker = publication_tracker or load_publication_tracker(publication_state_path)
     journal_registry = journal_registry or load_journal_registry()
@@ -3867,11 +3978,14 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
     root.mkdir(parents=True, exist_ok=True)
     drafts_root = Path(manuscript_drafts_root)
     drafts_root.mkdir(parents=True, exist_ok=True)
+    ready_root = Path(ready_for_metadata_root)
+    ready_root.mkdir(parents=True, exist_ok=True)
 
     manifests = []
     draft_manifests = []
     expected_folder_names = set()
     expected_draft_folder_names = set()
+    expected_ready_docx_names = set()
     for candidate in queue['active_candidates'] + queue['watchlist']:
         row = row_lookup.get(candidate['candidate_id'])
         if not row:
@@ -4034,7 +4148,8 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         write_text(draft_folder / 'target_journal.md', build_target_journal_markdown(candidate))
         write_text(draft_folder / 'comprehensive_outline.md', build_comprehensive_outline_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet))
         write_text(draft_folder / 'missing_metadata_and_items.md', build_missing_metadata_markdown(candidate, missing_packet))
-        write_text(draft_folder / 'manuscript_draft.md', build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet))
+        manuscript_markdown = build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet)
+        write_text(draft_folder / 'manuscript_draft.md', manuscript_markdown)
         draft_manifest = {
             'updated_at': iso_now(),
             'candidate_id': candidate['candidate_id'],
@@ -4052,6 +4167,13 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         }
         write_json(draft_folder / GENERATED_DRAFT_MANIFEST_FILENAME, draft_manifest)
         draft_manifests.append(draft_manifest)
+
+        ready_docx_path = Path(candidate.get('draft_output', {}).get('ready_metadata_docx_absolute_path') or ready_for_metadata_docx_path(ready_root, candidate))
+        if candidate.get('ready_for_metadata_only'):
+            write_ready_metadata_docx(manuscript_markdown, ready_docx_path, candidate)
+            expected_ready_docx_names.add(ready_docx_path.name)
+        elif ready_docx_path.exists():
+            ready_docx_path.unlink()
 
     prune_stale_outputs = os.environ.get('PHASE8_PRUNE_STALE_OUTPUTS', '').strip() == '1'
     if prune_stale_outputs:
@@ -4074,7 +4196,14 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
                 except FileNotFoundError:
                     pass
 
-    queue['draft_outputs'] = build_generated_draft_summary(queue['active_candidates'] + queue['watchlist'], root=drafts_root)
+    for existing_docx in ready_root.glob('*.docx'):
+        if existing_docx.name not in expected_ready_docx_names:
+            try:
+                existing_docx.unlink()
+            except FileNotFoundError:
+                pass
+
+    queue['draft_outputs'] = build_generated_draft_summary(queue['active_candidates'] + queue['watchlist'], root=drafts_root, ready_root=ready_root)
     queue['ready_for_metadata_only_candidates'] = [
         candidate
         for candidate in queue['active_candidates'] + queue['watchlist']
@@ -4086,6 +4215,20 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         'summary': queue.get('summary', {}),
         'draft_outputs': queue.get('draft_outputs', {}),
         'draft_manifests': draft_manifests,
+    })
+    write_json(STATE_DIR / READY_FOR_METADATA_INDEX_FILENAME, {
+        'updated_at': iso_now(),
+        'ready_for_metadata_root_relative_path': relative_path_or_blank(ready_root),
+        'ready_for_metadata_root_absolute_path': absolute_path_or_blank(ready_root),
+        'docx_files': [
+            {
+                'candidate_id': candidate.get('candidate_id'),
+                'title': candidate.get('title'),
+                'docx_relative_path': candidate.get('draft_output', {}).get('ready_metadata_docx_relative_path', ''),
+                'docx_absolute_path': candidate.get('draft_output', {}).get('ready_metadata_docx_absolute_path', ''),
+            }
+            for candidate in queue['ready_for_metadata_only_candidates']
+        ],
     })
     write_json(queue_state_path, queue)
     return queue

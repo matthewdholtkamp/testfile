@@ -301,7 +301,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs outputs/manuscripts outputs/state/manuscript_queue.json outputs/state/publication_tracker.json
+          git add docs outputs/manuscripts "Manuscript Drafts/Generated" "Manuscript Drafts/Ready for Metadata Only" outputs/state/manuscript_queue.json outputs/state/publication_tracker.json outputs/state/ready_for_metadata_only_index.json
           if git diff --cached --quiet; then
             echo "No docs changes to publish."
             exit 0
@@ -318,6 +318,9 @@ jobs:
             reports/
             docs/
             outputs/manuscripts/
+            Manuscript Drafts/Generated/
+            Manuscript Drafts/Ready for Metadata Only/
             outputs/state/manuscript_queue.json
             outputs/state/publication_tracker.json
+            outputs/state/ready_for_metadata_only_index.json
           retention-days: 7

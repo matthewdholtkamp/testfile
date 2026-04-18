@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T13:15:22.787366+00:00",
+  "updated_at": "2026-04-18T20:18:14.581550+00:00",
   "summary": {
     "active_count": 2,
     "watchlist_count": 2,
@@ -12,6 +12,8 @@
     "root_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated",
     "index_relative_path": "Manuscript Drafts/Generated/generated_draft_index.json",
     "index_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/generated_draft_index.json",
+    "ready_metadata_root_relative_path": "Manuscript Drafts/Ready for Metadata Only",
+    "ready_metadata_root_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only",
     "entries": [
       {
         "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
@@ -34,6 +36,8 @@
         "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/missing_metadata_and_items.md",
         "manuscript_draft_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/manuscript_draft.md",
         "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/manuscript_draft.md",
+        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_blood_brain_barrier_failure.docx",
+        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_blood_brain_barrier_failure.docx",
         "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
         "missing_metadata_item_count": 12,
@@ -60,6 +64,8 @@
         "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
         "manuscript_draft_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
         "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
+        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
+        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
         "manifest_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
         "missing_metadata_item_count": 12,
@@ -86,6 +92,8 @@
         "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
         "manuscript_draft_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
         "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
+        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
+        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
         "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
         "missing_metadata_item_count": 12,
@@ -112,6 +120,8 @@
         "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
         "manuscript_draft_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
         "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
+        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
+        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
         "manifest_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
         "missing_metadata_item_count": 12,
@@ -122,7 +132,7 @@
   },
   "draft_manifests": [
     {
-      "updated_at": "2026-04-18T13:15:22.625530+00:00",
+      "updated_at": "2026-04-18T20:18:14.449398+00:00",
       "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
       "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
       "title": "Blood-Brain Barrier Failure biomarker panel",
@@ -368,6 +378,8 @@
         "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/manuscript_draft.md",
         "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
+        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_blood_brain_barrier_failure.docx",
+        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_blood_brain_barrier_failure.docx",
         "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
         "ready_for_metadata_only": false,
         "missing_metadata_item_count": 12,
@@ -394,7 +406,7 @@
       "manuscript_gate_state": "almost ready"
     },
     {
-      "updated_at": "2026-04-18T13:15:22.662573+00:00",
+      "updated_at": "2026-04-18T20:18:14.509267+00:00",
       "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
       "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
       "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
@@ -640,6 +652,8 @@
         "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
         "manifest_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
+        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
+        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
         "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
         "ready_for_metadata_only": false,
         "missing_metadata_item_count": 12,
@@ -666,7 +680,7 @@
       "manuscript_gate_state": "almost ready"
     },
     {
-      "updated_at": "2026-04-18T13:15:22.745922+00:00",
+      "updated_at": "2026-04-18T20:18:14.544252+00:00",
       "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
       "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
       "title": "Neuroinflammation / Microglial State Change biomarker panel",
@@ -912,6 +926,8 @@
         "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
         "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
+        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
+        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
         "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
         "ready_for_metadata_only": false,
         "missing_metadata_item_count": 12,
@@ -938,7 +954,7 @@
       "manuscript_gate_state": "almost ready"
     },
     {
-      "updated_at": "2026-04-18T13:15:22.786207+00:00",
+      "updated_at": "2026-04-18T20:18:14.580222+00:00",
       "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
       "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
       "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
@@ -1182,6 +1198,8 @@
         "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
         "manifest_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
+        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
+        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
         "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
         "ready_for_metadata_only": false,
         "missing_metadata_item_count": 12,

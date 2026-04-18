@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T13:15:22.676570+00:00",
+  "updated_at": "2026-04-18T20:18:14.520729+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
   "title": "Neuroinflammation / Microglial State Change biomarker panel",
   "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
@@ -424,7 +424,7 @@
     "open_entry_count": 14
   },
   "task_execution": {
-    "updated_at": "2026-04-18T13:15:22.674838+00:00",
+    "updated_at": "2026-04-18T20:18:14.519314+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,

@@ -33,4 +33,7 @@ extraction_routing:
 
 # Google Drive destination for generated manuscript-first outputs.
 manuscript_drive_routing:
-  root: "manuscript_outputs/generated_drafts"
+  generated_drafts: "manuscript_outputs/generated_drafts"
+  ready_for_metadata_only: "manuscript_outputs/ready_for_metadata_only"
+  evidence_packs: "manuscript_outputs/evidence_packs"
+  state: "manuscript_outputs/state"

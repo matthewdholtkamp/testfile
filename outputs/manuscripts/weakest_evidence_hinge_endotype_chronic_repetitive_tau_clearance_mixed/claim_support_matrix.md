@@ -53,7 +53,7 @@
   - PMID:41968392.
   - PMID:41960329.
   - MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease. PMID:41700070.
-  - PMID:41824127.
+  - Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1. doi:10.1007/s11064-026-04724-8. PMID:41824127.
   - PMID:41153827.
 - **Evidence gaps:** Acute bucket is only provisionally supported. | Subacute bucket is only provisionally supported. | Chronic bucket is only provisionally supported.
 
@@ -70,7 +70,7 @@
   - PMID:41103638.
   - PMID:41926211.
   - PMID:41663365.
-  - PMID:41734021.
+  - Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model. doi:10.1172/JCI199818. PMID:41734021.
   - PMID:41752185.
   - PMID:41756234.
   - PMID:41756282.
@@ -87,7 +87,7 @@
 - **Reference details:**
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
   - MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease. PMID:41700070.
-  - PMID:41747594.
+  - Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. doi:10.1016/j.intimp.2026.116415. PMID:41747594.
 - **Evidence gaps:** Some supporting rows are abstract-only and should be weighted cautiously. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Neuroinflammation / microglial state change -> tau / proteinopathy progression
@@ -100,7 +100,7 @@
 - **Support PMIDs:** 41683989, 41809632
 - **Reference details:**
   - PMID:41683989.
-  - PMID:41809632.
+  - Mesenchymal stem cells and the central nervous system: historical perspectives and future directions. doi:10.3389/fnmol.2026.1742864. PMID:41809632.
 - **Evidence gaps:** Transition still needs denser direct support before it should be treated as hardened. | Timing support is incomplete or only partially aligned with the expected transition window. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Tau / proteinopathy progression -> chronic network dysfunction
@@ -110,15 +110,13 @@
 - **Support status:** provisional
 - **Allowed language:** Use cautious, hypothesis-oriented wording and explicitly note boundedness.
 - **Artifact refs:** phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction
-- **Support PMIDs:** 41496386, 41739474, 41747594, 41508043, 41683989, 41853047, 41893300
+- **Support PMIDs:** 41496386, 41739474, 41747594, 41508043, 41683989
 - **Reference details:**
   - PMID:41496386.
   - PMID:41739474.
-  - PMID:41747594.
+  - Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. doi:10.1016/j.intimp.2026.116415. PMID:41747594.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - PMID:41683989.
-  - PMID:41853047.
-  - PMID:41893300.
 - **Evidence gaps:** Transition still needs denser direct support before it should be treated as hardened. | Some supporting rows are abstract-only and should be weighted cautiously. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Tauopathy Progression
@@ -186,16 +184,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:tau_proteinopathy_progression
-- **Support PMIDs:** 41651695, 41508043, 41723222, 41665901, 41853047, 41496386, 41683989, 41179995, 41809435, 41953056, 41809632, 41700070, 41747594, 41739474, 41893300, 41328339
+- **Support PMIDs:** 41651695, 41508043, 41665901, 41496386, 41683989, 41179995, 41809435, 41328339, 41594797, 41700070, 41809632, 41747594, 41739474, 41394307, 41618372, 41622461
 - **Reference details:**
   - PMID:41651695.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
-  - PMID:41723222.
   - PMID:41665901.
-  - PMID:41853047.
   - PMID:41496386.
   - PMID:41683989.
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
+  - PMID:41809435.
+  - PMID:41328339.
 - **Contradictions:** After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury. | Circulating tau can fall without matching tissue or functional improvement, and a single chronic model context is not enough to treat the lane as fully hardened.
 
 ## Glymphatic / Astroglial Clearance Failure
@@ -205,16 +203,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:glymphatic_astroglial_clearance_failure
-- **Support PMIDs:** 41179995, 41039850, 41648326, 41968392, 41960329, 41700070, 41824127, 41153827, 41795770, 41827388, 41103638, 41301762, 41747594, 41792880, 41801080, 41853701
+- **Support PMIDs:** 41179995, 41039850, 41648326, 41700070, 41824127, 41153827, 41795770, 41827388, 41642456, 41667502, 41103638, 41301762, 41747594, 41792880, 41801080, 41079361
 - **Reference details:**
   - Glymphatic system and mild traumatic brain injury: a mini review. PMID:41179995.
   - A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. PMID:41039850.
   - PMID:41648326.
-  - PMID:41968392.
-  - PMID:41960329.
   - MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease. PMID:41700070.
-  - PMID:41824127.
+  - Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1. doi:10.1007/s11064-026-04724-8. PMID:41824127.
   - PMID:41153827.
+  - β-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury. doi:10.1007/s12035-026-05759-2. PMID:41795770.
+  - PMID:41827388.
 - **Contradictions:** AQP4 abundance can rise while polarization remains abnormal, and glial-stress markers can shift without any real movement in clearance readouts or tau burden. | no direct compound or trial attachment surfaced in this build
 
 ## Neuroinflammation / Microglial State Change
@@ -224,16 +222,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:neuroinflammation_microglial_state_change
-- **Support PMIDs:** 41157272, 41103638, 41926211, 41663365, 41734021, 41752185, 41756234, 41756282, 41824127, 41926540, 41480492, 41622481, 41659975, 41683989, 41709060, 41712436
+- **Support PMIDs:** 41157272, 41103638, 41663365, 41734021, 41752185, 41756282, 41824127, 41612383, 41803087, 41511466, 41480492, 41683989, 41709060, 41712436, 41726892, 41737534
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - PMID:41926211.
   - PMID:41663365.
-  - PMID:41734021.
+  - Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model. doi:10.1172/JCI199818. PMID:41734021.
   - PMID:41752185.
-  - PMID:41756234.
   - PMID:41756282.
+  - Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1. doi:10.1007/s11064-026-04724-8. PMID:41824127.
+  - PMID:41612383.
 - **Contradictions:** Study found no significant correlation, contradicting the hypothesis of cumulative damage. | Single-cytokine changes can overstate inflammatory control | keep this packet tied to a network-level cytokine plus glial-stress readout panel. | no direct compound or trial attachment surfaced in this build
 
 ## Chronic Repetitive Tau / Clearance Mixed

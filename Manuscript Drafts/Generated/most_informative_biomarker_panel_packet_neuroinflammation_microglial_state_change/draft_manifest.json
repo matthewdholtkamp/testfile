@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-18T13:15:22.745922+00:00",
+  "updated_at": "2026-04-18T20:18:14.544252+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
   "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
   "title": "Neuroinflammation / Microglial State Change biomarker panel",
@@ -245,6 +245,8 @@
     "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
     "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
+    "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
+    "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
     "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
     "ready_for_metadata_only": false,
     "missing_metadata_item_count": 12,

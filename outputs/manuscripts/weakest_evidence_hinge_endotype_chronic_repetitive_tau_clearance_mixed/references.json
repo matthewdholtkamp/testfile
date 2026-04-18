@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-04-18T15:08:28.697350+00:00",
+  "updated_at": "2026-04-18T20:18:14.561771+00:00",
   "summary": {
-    "reference_count": 85,
+    "reference_count": 83,
     "claim_count": 14,
     "contradiction_count": 24,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
     "journal_specific_rigor_profile_count": 1,
     "journal_specific_rigor_critical_gaps": 7,
     "journal_specific_rigor_fill_entries": 7
@@ -26,7 +26,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -90,7 +90,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -139,7 +139,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -188,7 +188,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -261,7 +261,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -337,7 +337,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -403,7 +403,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -452,7 +452,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -501,7 +501,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -555,7 +555,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -565,27 +565,22 @@
       "reference_number": 10,
       "citation_text": "PMID:41723222.",
       "source_phases": [
-        "phase1",
-        "phase4"
+        "phase1"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression",
-        "phase4:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support",
-        "phase4_support"
+        "phase1_support"
       ],
       "support_notes": [
         "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded",
-        "bounded"
+        "longitudinally_seeded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression",
-        "phase4_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression"
       ]
     },
     {
@@ -601,7 +596,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -655,7 +650,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -665,33 +660,22 @@
       "reference_number": 12,
       "citation_text": "PMID:41853047.",
       "source_phases": [
-        "phase1",
-        "phase2",
-        "phase4"
+        "phase1"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression",
-        "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
-        "phase4:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support",
-        "phase2_support",
-        "phase4_support"
+        "phase1_support"
       ],
       "support_notes": [
-        "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.",
-        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
+        "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded",
-        "provisional",
-        "bounded"
+        "longitudinally_seeded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression",
-        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction",
-        "phase4_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression"
       ]
     },
     {
@@ -707,7 +691,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -767,7 +751,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -830,7 +814,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -876,7 +860,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -886,27 +870,22 @@
       "reference_number": 16,
       "citation_text": "PMID:41953056.",
       "source_phases": [
-        "phase1",
-        "phase4"
+        "phase1"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression",
-        "phase4:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support",
-        "phase4_support"
+        "phase1_support"
       ],
       "support_notes": [
         "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded",
-        "bounded"
+        "longitudinally_seeded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression",
-        "phase4_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression"
       ]
     },
     {
@@ -922,7 +901,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -968,7 +947,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -978,27 +957,22 @@
       "reference_number": 18,
       "citation_text": "PMID:41968392.",
       "source_phases": [
-        "phase1",
-        "phase4"
+        "phase1"
       ],
       "artifact_refs": [
-        "phase1:glymphatic_astroglial_clearance_failure",
-        "phase4:glymphatic_astroglial_clearance_failure"
+        "phase1:glymphatic_astroglial_clearance_failure"
       ],
       "support_roles": [
-        "phase1_support",
-        "phase4_support"
+        "phase1_support"
       ],
       "support_notes": [
         "AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded",
-        "bounded"
+        "longitudinally_seeded"
       ],
       "supporting_claim_ids": [
-        "phase1_glymphatic_astroglial_clearance_failure",
-        "phase4_glymphatic_astroglial_clearance_failure"
+        "phase1_glymphatic_astroglial_clearance_failure"
       ]
     },
     {
@@ -1014,7 +988,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1024,51 +998,46 @@
       "reference_number": 19,
       "citation_text": "PMID:41960329.",
       "source_phases": [
-        "phase1",
-        "phase4"
+        "phase1"
       ],
       "artifact_refs": [
-        "phase1:glymphatic_astroglial_clearance_failure",
-        "phase4:glymphatic_astroglial_clearance_failure"
+        "phase1:glymphatic_astroglial_clearance_failure"
       ],
       "support_roles": [
-        "phase1_support",
-        "phase4_support"
+        "phase1_support"
       ],
       "support_notes": [
         "AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded",
-        "bounded"
+        "longitudinally_seeded"
       ],
       "supporting_claim_ids": [
-        "phase1_glymphatic_astroglial_clearance_failure",
-        "phase4_glymphatic_astroglial_clearance_failure"
+        "phase1_glymphatic_astroglial_clearance_failure"
       ]
     },
     {
       "pmid": "41824127",
-      "title": "",
+      "title": "Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
-      "pmcid": "",
+      "doi": "10.1007/s11064-026-04724-8",
+      "pmcid": "PMC12987875",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_LEtAl_EsketamineSuppressesAstrocyte-DrivenNeuroinflammation_PMID41824127.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 20,
-      "citation_text": "PMID:41824127.",
+      "citation_text": "Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1. doi:10.1007/s11064-026-04724-8. PMID:41824127.",
       "source_phases": [
         "phase1",
         "phase4"
@@ -1111,7 +1080,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1147,26 +1116,26 @@
     },
     {
       "pmid": "41795770",
-      "title": "",
+      "title": "\u03b2-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
+      "doi": "10.1007/s12035-026-05759-2",
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "Abstract only",
+      "extraction_rank": "1",
+      "source_quality_tier": "abstract_only",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_ZEtAl_-hydroxybutyrateModulatesNeuroinflammatoryResponses_PMID41795770.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 22,
-      "citation_text": "PMID:41795770.",
+      "citation_text": "\u03b2-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury. doi:10.1007/s12035-026-05759-2. PMID:41795770.",
       "source_phases": [
         "phase1",
         "phase4"
@@ -1204,7 +1173,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1250,7 +1219,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1307,7 +1276,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1361,7 +1330,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1371,27 +1340,22 @@
       "reference_number": 26,
       "citation_text": "PMID:41926211.",
       "source_phases": [
-        "phase1",
-        "phase4"
+        "phase1"
       ],
       "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change",
-        "phase4:neuroinflammation_microglial_state_change"
+        "phase1:neuroinflammation_microglial_state_change"
       ],
       "support_roles": [
-        "phase1_support",
-        "phase4_support"
+        "phase1_support"
       ],
       "support_notes": [
         "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
       ],
       "support_statuses": [
-        "longitudinally_seeded",
-        "bounded"
+        "longitudinally_seeded"
       ],
       "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change",
-        "phase4_neuroinflammation_microglial_state_change"
+        "phase1_neuroinflammation_microglial_state_change"
       ]
     },
     {
@@ -1407,7 +1371,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1442,26 +1406,26 @@
     },
     {
       "pmid": "41734021",
-      "title": "",
+      "title": "Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
+      "doi": "10.1172/JCI199818",
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "Crossref PDF",
+      "extraction_rank": "2",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_TEtAl_InflammasomeadaptorASCpromotes_PMID41734021.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 28,
-      "citation_text": "PMID:41734021.",
+      "citation_text": "Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model. doi:10.1172/JCI199818. PMID:41734021.",
       "source_phases": [
         "phase1",
         "phase4"
@@ -1499,7 +1463,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1545,7 +1509,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1555,27 +1519,22 @@
       "reference_number": 30,
       "citation_text": "PMID:41756234.",
       "source_phases": [
-        "phase1",
-        "phase4"
+        "phase1"
       ],
       "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change",
-        "phase4:neuroinflammation_microglial_state_change"
+        "phase1:neuroinflammation_microglial_state_change"
       ],
       "support_roles": [
-        "phase1_support",
-        "phase4_support"
+        "phase1_support"
       ],
       "support_notes": [
         "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
       ],
       "support_statuses": [
-        "longitudinally_seeded",
-        "bounded"
+        "longitudinally_seeded"
       ],
       "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change",
-        "phase4_neuroinflammation_microglial_state_change"
+        "phase1_neuroinflammation_microglial_state_change"
       ]
     },
     {
@@ -1591,7 +1550,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1637,7 +1596,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1647,51 +1606,46 @@
       "reference_number": 32,
       "citation_text": "PMID:41926540.",
       "source_phases": [
-        "phase1",
-        "phase4"
+        "phase1"
       ],
       "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change",
-        "phase4:neuroinflammation_microglial_state_change"
+        "phase1:neuroinflammation_microglial_state_change"
       ],
       "support_roles": [
-        "phase1_support",
-        "phase4_support"
+        "phase1_support"
       ],
       "support_notes": [
         "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
       ],
       "support_statuses": [
-        "longitudinally_seeded",
-        "bounded"
+        "longitudinally_seeded"
       ],
       "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change",
-        "phase4_neuroinflammation_microglial_state_change"
+        "phase1_neuroinflammation_microglial_state_change"
       ]
     },
     {
       "pmid": "41747594",
-      "title": "",
+      "title": "Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
+      "doi": "10.1016/j.intimp.2026.116415",
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "Abstract only",
+      "extraction_rank": "1",
+      "source_quality_tier": "abstract_only",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_WEtAl_Effectofintranasaltreatment_PMID41747594.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 33,
-      "citation_text": "PMID:41747594.",
+      "citation_text": "Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. doi:10.1016/j.intimp.2026.116415. PMID:41747594.",
       "source_phases": [
         "phase2",
         "phase4"
@@ -1724,26 +1678,26 @@
     },
     {
       "pmid": "41809632",
-      "title": "",
+      "title": "Mesenchymal stem cells and the central nervous system: historical perspectives and future directions.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
-      "pmcid": "",
+      "doi": "10.3389/fnmol.2026.1742864",
+      "pmcid": "PMC12968201",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_CYEtAl_Mesenchymalstemcellsand_PMID41809632.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 34,
-      "citation_text": "PMID:41809632.",
+      "citation_text": "Mesenchymal stem cells and the central nervous system: historical perspectives and future directions. doi:10.3389/fnmol.2026.1742864. PMID:41809632.",
       "source_phases": [
         "phase2",
         "phase4"
@@ -1782,7 +1736,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1791,52 +1745,6 @@
       "domain": "",
       "reference_number": 35,
       "citation_text": "PMID:41739474.",
-      "source_phases": [
-        "phase2",
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
-        "phase4:tau_proteinopathy_progression"
-      ],
-      "support_roles": [
-        "phase2_support",
-        "phase4_support"
-      ],
-      "support_notes": [
-        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
-      ],
-      "support_statuses": [
-        "provisional",
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction",
-        "phase4_tau_proteinopathy_progression"
-      ]
-    },
-    {
-      "pmid": "41893300",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 36,
-      "citation_text": "PMID:41893300.",
       "source_phases": [
         "phase2",
         "phase4"
@@ -1874,14 +1782,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 37,
+      "reference_number": 36,
       "citation_text": "PMID:41328339.",
       "source_phases": [
         "phase3",
@@ -1922,14 +1830,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 38,
+      "reference_number": 37,
       "citation_text": "PMID:41594797.",
       "source_phases": [
         "phase3",
@@ -1953,7 +1861,8 @@
         "bounded"
       ],
       "supporting_claim_ids": [
-        "phase3_tauopathy_progression"
+        "phase3_tauopathy_progression",
+        "phase4_tau_proteinopathy_progression"
       ]
     },
     {
@@ -1969,14 +1878,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 39,
+      "reference_number": 38,
       "citation_text": "PMID:41132417.",
       "source_phases": [
         "phase3",
@@ -2014,14 +1923,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 40,
+      "reference_number": 39,
       "citation_text": "PMID:41234125.",
       "source_phases": [
         "phase3",
@@ -2059,14 +1968,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 41,
+      "reference_number": 40,
       "citation_text": "PMID:41300163.",
       "source_phases": [
         "phase3",
@@ -2104,14 +2013,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 42,
+      "reference_number": 41,
       "citation_text": "PMID:41513584.",
       "source_phases": [
         "phase3",
@@ -2149,14 +2058,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 43,
+      "reference_number": 42,
       "citation_text": "PMID:41564671.",
       "source_phases": [
         "phase3",
@@ -2194,14 +2103,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 44,
+      "reference_number": 43,
       "citation_text": "PMID:41669533.",
       "source_phases": [
         "phase3",
@@ -2239,14 +2148,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 45,
+      "reference_number": 44,
       "citation_text": "PMID:41709584.",
       "source_phases": [
         "phase3",
@@ -2284,14 +2193,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 46,
+      "reference_number": 45,
       "citation_text": "PMID:41135688.",
       "source_phases": [
         "phase3",
@@ -2329,14 +2238,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 47,
+      "reference_number": 46,
       "citation_text": "PMID:41173520.",
       "source_phases": [
         "phase3",
@@ -2375,14 +2284,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 48,
+      "reference_number": 47,
       "citation_text": "PMID:41197779.",
       "source_phases": [
         "phase3",
@@ -2420,14 +2329,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 49,
+      "reference_number": 48,
       "citation_text": "PMID:41327381.",
       "source_phases": [
         "phase3",
@@ -2465,14 +2374,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 50,
+      "reference_number": 49,
       "citation_text": "PMID:41446731.",
       "source_phases": [
         "phase3",
@@ -2510,14 +2419,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 51,
+      "reference_number": 50,
       "citation_text": "PMID:41394307.",
       "source_phases": [
         "phase4"
@@ -2532,7 +2441,9 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": []
+      "supporting_claim_ids": [
+        "phase4_tau_proteinopathy_progression"
+      ]
     },
     {
       "pmid": "41618372",
@@ -2547,14 +2458,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 52,
+      "reference_number": 51,
       "citation_text": "PMID:41618372.",
       "source_phases": [
         "phase4"
@@ -2569,7 +2480,9 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": []
+      "supporting_claim_ids": [
+        "phase4_tau_proteinopathy_progression"
+      ]
     },
     {
       "pmid": "41622461",
@@ -2584,14 +2497,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 53,
+      "reference_number": 52,
       "citation_text": "PMID:41622461.",
       "source_phases": [
         "phase4"
@@ -2606,7 +2519,9 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": []
+      "supporting_claim_ids": [
+        "phase4_tau_proteinopathy_progression"
+      ]
     },
     {
       "pmid": "41667502",
@@ -2621,20 +2536,21 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 54,
+      "reference_number": 53,
       "citation_text": "PMID:41667502.",
       "source_phases": [
         "phase4"
       ],
       "artifact_refs": [
-        "phase4:tau_proteinopathy_progression"
+        "phase4:tau_proteinopathy_progression",
+        "phase4:glymphatic_astroglial_clearance_failure"
       ],
       "support_roles": [
         "phase4_support"
@@ -2643,7 +2559,9 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": []
+      "supporting_claim_ids": [
+        "phase4_glymphatic_astroglial_clearance_failure"
+      ]
     },
     {
       "pmid": "41675841",
@@ -2658,14 +2576,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 55,
+      "reference_number": 54,
       "citation_text": "PMID:41675841.",
       "source_phases": [
         "phase4"
@@ -2695,14 +2613,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 56,
+      "reference_number": 55,
       "citation_text": "PMID:41700019.",
       "source_phases": [
         "phase4"
@@ -2732,14 +2650,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 57,
+      "reference_number": 56,
       "citation_text": "PMID:41785317.",
       "source_phases": [
         "phase4"
@@ -2758,26 +2676,26 @@
     },
     {
       "pmid": "41826372",
-      "title": "",
+      "title": "Neuronal and glial networks interact with traumatic brain injury to modulate cognition in ABCD study.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
+      "doi": "10.1038/s41540-026-00681-8",
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "Publisher HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_MEtAl_Neuronalandglialnetworks_PMID41826372.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 58,
-      "citation_text": "PMID:41826372.",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 57,
+      "citation_text": "Neuronal and glial networks interact with traumatic brain injury to modulate cognition in ABCD study. doi:10.1038/s41540-026-00681-8. PMID:41826372.",
       "source_phases": [
         "phase4"
       ],
@@ -2794,6 +2712,45 @@
       "supporting_claim_ids": []
     },
     {
+      "pmid": "41642456",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 58,
+      "citation_text": "PMID:41642456.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:glymphatic_astroglial_clearance_failure"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_glymphatic_astroglial_clearance_failure"
+      ]
+    },
+    {
       "pmid": "41301762",
       "title": "",
       "authors": "",
@@ -2806,7 +2763,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2834,26 +2791,26 @@
     },
     {
       "pmid": "41792880",
-      "title": "",
+      "title": "Glymphatic System Dysfunction in Central Nervous System Diseases.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
-      "pmcid": "",
+      "doi": "10.1002/cns.70810",
+      "pmcid": "PMC12965907",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_AEtAl_GlymphaticSystemDysfunctionin_PMID41792880.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 60,
-      "citation_text": "PMID:41792880.",
+      "citation_text": "Glymphatic System Dysfunction in Central Nervous System Diseases. doi:10.1002/cns.70810. PMID:41792880.",
       "source_phases": [
         "phase4"
       ],
@@ -2873,26 +2830,26 @@
     },
     {
       "pmid": "41801080",
-      "title": "",
+      "title": "Elucidating Trigonelline's Therapeutic Mechanisms for Traumatic Brain Injury Through Integrated Network Pharmacology and In\u00a0Vivo Validation.",
       "authors": "",
       "journal": "",
       "publication_date": "",
-      "doi": "",
-      "pmcid": "",
+      "doi": "10.1002/cns.70803",
+      "pmcid": "PMC12970217",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_QEtAl_ElucidatingTrigonellinesTherapeuticMechanisms_PMID41801080.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "reference_number": 61,
-      "citation_text": "PMID:41801080.",
+      "citation_text": "Elucidating Trigonelline's Therapeutic Mechanisms for Traumatic Brain Injury Through Integrated Network Pharmacology and In\u00a0Vivo Validation. doi:10.1002/cns.70803. PMID:41801080.",
       "source_phases": [
         "phase4"
       ],
@@ -2909,82 +2866,6 @@
       "supporting_claim_ids": [
         "phase4_glymphatic_astroglial_clearance_failure"
       ]
-    },
-    {
-      "pmid": "41853701",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 62,
-      "citation_text": "PMID:41853701.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:glymphatic_astroglial_clearance_failure"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_glymphatic_astroglial_clearance_failure"
-      ]
-    },
-    {
-      "pmid": "41954515",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 63,
-      "citation_text": "PMID:41954515.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:glymphatic_astroglial_clearance_failure"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": []
     },
     {
       "pmid": "41079361",
@@ -2999,14 +2880,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 64,
+      "reference_number": 62,
       "citation_text": "PMID:41079361.",
       "source_phases": [
         "phase4"
@@ -3021,7 +2902,9 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": []
+      "supporting_claim_ids": [
+        "phase4_glymphatic_astroglial_clearance_failure"
+      ]
     },
     {
       "pmid": "41177833",
@@ -3036,14 +2919,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 65,
+      "reference_number": 63,
       "citation_text": "PMID:41177833.",
       "source_phases": [
         "phase4"
@@ -3073,14 +2956,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 66,
+      "reference_number": 64,
       "citation_text": "PMID:41183617.",
       "source_phases": [
         "phase4"
@@ -3110,14 +2993,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 67,
+      "reference_number": 65,
       "citation_text": "PMID:41267966.",
       "source_phases": [
         "phase4"
@@ -3135,6 +3018,123 @@
       "supporting_claim_ids": []
     },
     {
+      "pmid": "41612383",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 66,
+      "citation_text": "PMID:41612383.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
+    },
+    {
+      "pmid": "41803087",
+      "title": "PRMT6 is required for initiating and amplifying macrophage-induced inflammation in heterotopic ossification by increasing CCL2 expression.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "10.1038/s41413-026-00512-w",
+      "pmcid": "PMC12972138",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_WEtAl_PRMT6isrequiredfor_PMID41803087.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 67,
+      "citation_text": "PRMT6 is required for initiating and amplifying macrophage-induced inflammation in heterotopic ossification by increasing CCL2 expression. doi:10.1038/s41413-026-00512-w. PMID:41803087.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
+    },
+    {
+      "pmid": "41511466",
+      "title": "",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "reference_number": 68,
+      "citation_text": "PMID:41511466.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
+    },
+    {
       "pmid": "41480492",
       "title": "",
       "authors": "",
@@ -3147,46 +3147,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 68,
-      "citation_text": "PMID:41480492.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
-      "pmid": "41622481",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3194,46 +3155,7 @@
       "source_query": "",
       "domain": "",
       "reference_number": 69,
-      "citation_text": "PMID:41622481.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
-      "pmid": "41659975",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 70,
-      "citation_text": "PMID:41659975.",
+      "citation_text": "PMID:41480492.",
       "source_phases": [
         "phase4"
       ],
@@ -3264,14 +3186,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 71,
+      "reference_number": 70,
       "citation_text": "PMID:41709060.",
       "source_phases": [
         "phase4"
@@ -3303,14 +3225,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 72,
+      "reference_number": 71,
       "citation_text": "PMID:41712436.",
       "source_phases": [
         "phase4"
@@ -3342,14 +3264,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 73,
+      "reference_number": 72,
       "citation_text": "PMID:41726892.",
       "source_phases": [
         "phase4"
@@ -3364,7 +3286,9 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": []
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
     },
     {
       "pmid": "41737534",
@@ -3379,14 +3303,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 74,
+      "reference_number": 73,
       "citation_text": "PMID:41737534.",
       "source_phases": [
         "phase4"
@@ -3401,7 +3325,9 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": []
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
     },
     {
       "pmid": "41769894",
@@ -3416,14 +3342,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 75,
+      "reference_number": 74,
       "citation_text": "PMID:41769894.",
       "source_phases": [
         "phase4"
@@ -3442,6 +3368,43 @@
     },
     {
       "pmid": "41803953",
+      "title": "Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications.",
+      "authors": "",
+      "journal": "",
+      "publication_date": "",
+      "doi": "10.1186/s12967-026-07944-2",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "Publisher HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "source_markdown_path": "output/2026-03-16_QEtAl_Noblegasesxenonand_PMID41803953.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "reference_number": 75,
+      "citation_text": "Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications. doi:10.1186/s12967-026-07944-2. PMID:41803953.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": []
+    },
+    {
+      "pmid": "41622481",
       "title": "",
       "authors": "",
       "journal": "",
@@ -3453,7 +3416,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3461,7 +3424,7 @@
       "source_query": "",
       "domain": "",
       "reference_number": 76,
-      "citation_text": "PMID:41803953.",
+      "citation_text": "PMID:41622481.",
       "source_phases": [
         "phase4"
       ],
@@ -3478,7 +3441,7 @@
       "supporting_claim_ids": []
     },
     {
-      "pmid": "41880282",
+      "pmid": "41659975",
       "title": "",
       "authors": "",
       "journal": "",
@@ -3490,7 +3453,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3498,81 +3461,7 @@
       "source_query": "",
       "domain": "",
       "reference_number": 77,
-      "citation_text": "PMID:41880282.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": []
-    },
-    {
-      "pmid": "41918568",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 78,
-      "citation_text": "PMID:41918568.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": []
-    },
-    {
-      "pmid": "41952146",
-      "title": "",
-      "authors": "",
-      "journal": "",
-      "publication_date": "",
-      "doi": "",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "reference_number": 79,
-      "citation_text": "PMID:41952146.",
+      "citation_text": "PMID:41659975.",
       "source_phases": [
         "phase4"
       ],
@@ -3601,14 +3490,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 80,
+      "reference_number": 78,
       "citation_text": "PMID:41740873.",
       "source_phases": [
         "phase4"
@@ -3638,14 +3527,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 81,
+      "reference_number": 79,
       "citation_text": "PMID:41069428.",
       "source_phases": [
         "phase4"
@@ -3675,14 +3564,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 82,
+      "reference_number": 80,
       "citation_text": "PMID:41110648.",
       "source_phases": [
         "phase4"
@@ -3712,14 +3601,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 83,
+      "reference_number": 81,
       "citation_text": "PMID:41129987.",
       "source_phases": [
         "phase4"
@@ -3749,14 +3638,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 84,
+      "reference_number": 82,
       "citation_text": "PMID:41157305.",
       "source_phases": [
         "phase4"
@@ -3786,14 +3675,14 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
       "retrieval_mode": "",
       "source_query": "",
       "domain": "",
-      "reference_number": 85,
+      "reference_number": 83,
       "citation_text": "PMID:41175081.",
       "source_phases": [
         "phase4"

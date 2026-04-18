@@ -15,6 +15,7 @@ const GITHUB_REPO = "testfile";
 const GITHUB_REF = "main";
 const GITHUB_TOKEN_KEY = "atlas-github-token";
 const GITHUB_STATE_FILE = "docs/command_snapshot.json";
+const DRIVE_MIRROR_WORKFLOW_FILE = "mirror_manuscript_drafts_to_drive.yml";
 
 type AnyRecord = Record<string, any>;
 type SnapshotSource = "embedded" | "local" | "github";
@@ -110,6 +111,23 @@ async function fetchGitHubSnapshot(token: string): Promise<AnyRecord> {
   return JSON.parse(decodeBase64(data.content || ""));
 }
 
+async function fetchLatestDriveMirrorRun(token = ""): Promise<AnyRecord | null> {
+  const response = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/actions/workflows/${encodeURIComponent(DRIVE_MIRROR_WORKFLOW_FILE)}/runs?branch=${encodeURIComponent(GITHUB_REF)}&per_page=1`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    },
+  );
+
+  if (!response.ok) return null;
+  const data = await response.json().catch(() => null);
+  const runs = Array.isArray(data?.workflow_runs) ? data.workflow_runs : [];
+  return runs[0] || null;
+}
+
 function encodeRepoPath(path: string): string {
   return path
     .split("/")
@@ -143,6 +161,11 @@ function getPackUrl(packKey?: string): string {
 }
 
 function getDraftUrl(candidate: AnyRecord | null): string {
+  const readyDocxPath = candidate?.draft_output?.ready_metadata_docx_relative_path;
+  if (candidate?.ready_for_metadata_only && readyDocxPath) {
+    return getRepoBlobUrl(readyDocxPath);
+  }
+
   const draftPath = candidate?.draft_output?.manuscript_draft_relative_path;
   if (draftPath) return getRepoBlobUrl(draftPath);
 
@@ -313,6 +336,7 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [githubToken, setGithubToken] = useState("");
   const [tokenDraft, setTokenDraft] = useState("");
+  const [driveMirrorRun, setDriveMirrorRun] = useState<AnyRecord | null>(null);
 
   async function refreshSnapshot(nextToken = githubToken): Promise<void> {
     setRefreshing(true);
@@ -337,6 +361,11 @@ export default function App() {
         setPayload(githubSnapshot);
         setSource("github");
       }
+
+      const latestDriveMirrorRun = await fetchLatestDriveMirrorRun(nextToken).catch(
+        () => null,
+      );
+      setDriveMirrorRun(latestDriveMirrorRun);
     } catch (error) {
       const message =
         error instanceof Error
@@ -464,6 +493,21 @@ export default function App() {
   const summary = manuscriptQueue?.summary || {};
   const snapshotUpdatedAt =
     manuscriptQueue?.generated_at || payload?.board_state?.snapshot_generated_at;
+  const driveMirrorTone =
+    !driveMirrorRun
+      ? "neutral"
+      : driveMirrorRun?.status !== "completed"
+      ? "warning"
+      : driveMirrorRun?.conclusion === "success"
+        ? "accent"
+        : "danger";
+  const driveMirrorSummary = driveMirrorRun
+    ? `Drive sync ${humanize(
+        driveMirrorRun?.status === "completed"
+          ? driveMirrorRun?.conclusion || driveMirrorRun?.status
+          : driveMirrorRun?.status,
+      )} · ${formatRelativeTime(driveMirrorRun?.updated_at || driveMirrorRun?.created_at)}`
+    : "Drive sync status unavailable";
 
   if (loading) {
     return (
@@ -502,6 +546,30 @@ export default function App() {
                   {sourceLabel(source)}
                 </StatusChip>
                 <StatusChip>{formatRelativeTime(snapshotUpdatedAt)}</StatusChip>
+                <StatusChip tone={driveMirrorTone as "neutral" | "accent" | "warning" | "danger"}>
+                  {driveMirrorRun
+                    ? humanize(
+                        driveMirrorRun?.status === "completed"
+                          ? driveMirrorRun?.conclusion || driveMirrorRun?.status
+                          : driveMirrorRun?.status,
+                      )
+                    : "Drive sync unknown"}
+                </StatusChip>
+              </div>
+
+              <div className="text-sm leading-6 text-[var(--muted)]">
+                {driveMirrorRun?.html_url ? (
+                  <a
+                    className="desk-link"
+                    href={driveMirrorRun.html_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {driveMirrorSummary}
+                  </a>
+                ) : (
+                  driveMirrorSummary
+                )}
               </div>
 
               <button
