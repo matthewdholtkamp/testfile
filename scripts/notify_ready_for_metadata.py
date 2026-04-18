@@ -166,7 +166,14 @@ def send_via_gmail_api(sender_email: str, recipient_email: str, subject: str, bo
 def send_via_smtp(sender_email: str, recipient_email: str, subject: str, body: str):
     app_password = os.environ.get('READY_METADATA_EMAIL_APP_PASSWORD', '').strip()
     fallback_password = os.environ.get('READY_METADATA_EMAIL_APP_PASSWORD1', '').strip()
-    passwords = [password for password in (app_password, fallback_password) if password]
+    passwords = []
+    for candidate in (app_password, fallback_password):
+        if not candidate:
+            continue
+        normalized_variants = [candidate, candidate.replace(' ', '')]
+        for password in normalized_variants:
+            if password and password not in passwords:
+                passwords.append(password)
     if not passwords:
         raise RuntimeError('READY_METADATA_EMAIL_APP_PASSWORD or READY_METADATA_EMAIL_APP_PASSWORD1 must be set.')
 
