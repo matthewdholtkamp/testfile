@@ -30,7 +30,7 @@
   ],
   "evidence_chain_complete": true,
   "is_active_path": false,
-  "last_pack_refresh": "2026-04-13 15:10:33",
+  "last_pack_refresh": "2026-04-18 11:56:02",
   "scientific_strength": 2,
   "journal_targets": {
     "primary": {
@@ -1116,14 +1116,42 @@
     "requirements_checked": true
   },
   "journal_fit": 4,
+  "connector_summary": {
+    "data_state": "no_connector_data_attached",
+    "matched_row_count": 0,
+    "latest_attached_at": "",
+    "sources": [],
+    "source_labels": [],
+    "target_context": {
+      "status": "supported",
+      "source": "repo target-seed pack",
+      "detail": "Use NLRP3 as the primary perturbation node because it is the strongest inflammatory target packet in the repo, links directly to the mito-to-inflammasome transition, and gives a cleaner perturbation frame than chasing one downstream cytokine at a time. Direct corpus signal: Extracellular ATP (eATP) exhibits dual roles in TBI: high concentrations activate P2X7R, leading to NLRP3 inflammasome activation and pyroptosis, while low concentrations activate SUR1\u2013TRPM4\u2013AQP4 complexes, contributing to cerebral edema."
+    },
+    "trial_context": {
+      "status": "not_available",
+      "source": "No trial connector attached",
+      "detail": "no trial attachment surfaced in this build"
+    },
+    "genomics_context": {
+      "status": "provisional",
+      "source": "cohort genomics layer",
+      "detail": "Current genomics support is bounded and indirect: transcriptomic or single-cell-like inflammatory signals exist in the repo, but there is no clean endotype-specific 10x packet yet."
+    },
+    "tenx": {
+      "state": "not_prepared",
+      "imported_row_count": 0,
+      "template_row_count": 0,
+      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-18_115558.csv"
+    }
+  },
   "evidence_bundle_summary": {
-    "reference_count": 63,
+    "reference_count": 64,
     "claim_count": 9,
     "contradiction_count": 19,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-17_233359.csv",
     "journal_specific_rigor_profile_count": 2,
     "journal_specific_rigor_critical_gaps": 14,
     "journal_specific_rigor_fill_entries": 14
@@ -1161,7 +1189,7 @@
         "reopened"
       ],
       "execution_note": "Lead contradiction still active: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.. 4 issue(s) remain blocking.",
-      "last_executed_at": "2026-04-13T15:10:33.586053+00:00",
+      "last_executed_at": "2026-04-18T11:56:03.372666+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -1181,7 +1209,7 @@
         "reopened"
       ],
       "execution_note": "Translational packet remains bounded around NLRP3; strengthening brief updated.",
-      "last_executed_at": "2026-04-13T15:10:33.586097+00:00",
+      "last_executed_at": "2026-04-18T11:56:03.372715+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -1201,7 +1229,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-13T15:10:33.586124+00:00",
+      "last_executed_at": "2026-04-18T11:56:03.372743+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     },
     {
@@ -1221,12 +1249,12 @@
         "reopened"
       ],
       "execution_note": "Journal-specific rigor checklist is active with 14 critical gap(s) across 2 profile(s).",
-      "last_executed_at": "2026-04-13T15:10:33.586149+00:00",
+      "last_executed_at": "2026-04-18T11:56:03.372769+00:00",
       "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-13T15:10:33.586155+00:00",
+    "updated_at": "2026-04-18T11:56:03.372776+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,

@@ -1,6 +1,6 @@
 # Data Points Bundle
 
-- **Biomarker Panel:** Atp, ROS, NfL, Bcl 2, Tunel+/neun+, Cerebral oxygen saturation, NLRP3, Nf L, Bcl 2 expression, Neun expression, Tunel+/neun+ cells, Cerebral blood flow, Eatp, Ros (154), Ros (32), Atp (23), Atp (3), Pink1 (1), IL 1 (127), Nlrp3 (70), IL 6 (64), Tnf (57), Hmgb1 (40), Gfap (26)
+- **Biomarker Panel:** Atp, ROS, NfL, Bcl 2, Tunel+/neun+, Cerebral oxygen saturation, NLRP3, Nf L, Bcl 2 expression, Neun expression, Tunel+/neun+ cells, Cerebral blood flow, Eatp, Ros (156), Ros (34), Atp (24), Atp (3), Pink1 (1), IL 1 (127), Nlrp3 (70), IL 6 (66), Tnf (57), Hmgb1 (41), Gfap (26)
 - **Expected Readouts:** Atp / bioenergetic rescue, Ros burden, Apoptosis pressure, Inflammasome spillover
 - **Sample Type:** ['tissue', 'plasma', 'blood_cell_or_platelet_assay']
 - **Time Window:** ['acute', 'subacute']

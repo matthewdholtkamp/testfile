@@ -21,7 +21,7 @@
 
 - Claim: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 - Allowed wording: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
-- Support PMIDs: 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904
+- Support PMIDs: 41969524, 41663365, 41673382, 41642456, 41649131, 41954515, 41994141, 41039850, 41973273, 41934291
 - Evidence gaps: All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.
 
 ## BBB permeability increase -> peripheral immune infiltration
@@ -56,7 +56,7 @@
 
 - Claim: Tight-junction repair and barrier stabilization before inflammatory spillover compounds the injury.
 - Allowed wording: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-- Support PMIDs: 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904, 41532955, 41622772, 41751210, 41752185, 41709060, 41740873
+- Support PMIDs: 41969524, 41663365, 41673382, 41642456, 41649131, 41954515, 41994141, 41039850, 41973273, 41934291, 41532955, 41622772, 41751210, 41752185, 41968392, 41709060
 - Contradictions: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone. | no direct compound or trial attachment surfaced in this build
 
 ## Subacute Repetitive Inflammatory-Dominant

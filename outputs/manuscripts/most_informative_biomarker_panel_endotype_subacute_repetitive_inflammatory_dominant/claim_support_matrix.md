@@ -13,7 +13,7 @@
   - MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. PMID:41446731.
   - Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. PMID:41740873.
   - Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. PMID:41740080.
-  - PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.
+  - Criado-Marrero M, Ravi S, Barroso D, Garza TN, Cuestas Torres DM, Lessard C, Castano JP, Bolen ML, Rubinovich U, Prokop S, Chakrabarty P, Ranum LPW, Febo M, Abisambra JF. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv : the preprint server for biology 2026 Mar 06. doi:10.64898/2026.03.04.709563. PMID:41847037.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. PMID:41709584.
 - **Contradictions:** The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.
@@ -29,7 +29,7 @@
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - PMID:41926211.
+  - Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. The Journal of clinical investigation 2026 Apr 02. doi:10.1172/JCI196112. PMID:41926211.
   - PMID:41663365.
   - PMID:41734021.
   - PMID:41752185.
@@ -44,16 +44,16 @@
 - **Support status:** longitudinally_supported
 - **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
 - **Artifact refs:** phase1:blood_brain_barrier_failure
-- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904
+- **Support PMIDs:** 41969524, 41663365, 41673382, 41642456, 41649131, 41954515, 41994141, 41039850, 41973273, 41934291
 - **Reference details:**
+  - Bai B, Feng H, Yang H, Huang M, Wang Y. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Frontiers in cellular neuroscience 2026. doi:10.3389/fncel.2026.1757822. PMID:41969524.
   - PMID:41663365.
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
-  - PMID:41954515.
+  - Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.
+  - de Jager C, Ju J, Corbo M, Patel K, Theus M. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Research square 2026 Apr 09. doi:10.21203/rs.3.rs-9261231/v1. PMID:41994141.
   - PMID:41039850.
-  - PMID:41934291.
-  - PMID:41465583.
 - **Evidence gaps:** All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.
 
 ## BBB permeability increase -> peripheral immune infiltration
@@ -114,7 +114,7 @@
 - **Reference details:**
   - PMID:41157272.
   - PMID:41103638.
-  - PMID:41926211.
+  - Lu Z, Shuai Y, Wang C, Liu Z, Wang Z, Liu Q, Jiang R, Zhu J, Zhu Y, Liao W, Zhu X, Zhao J, Shi K, Shi W, Gong P. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. The Journal of clinical investigation 2026 Apr 02. doi:10.1172/JCI196112. PMID:41926211.
   - PMID:41663365.
   - PMID:41734021.
   - PMID:41752185.
@@ -129,16 +129,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:blood_brain_barrier_failure
-- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41954515, 41039850, 41934291, 41465583, 41725719, 41965904, 41532955, 41622772, 41751210, 41752185, 41709060, 41740873
+- **Support PMIDs:** 41969524, 41663365, 41673382, 41642456, 41649131, 41954515, 41994141, 41039850, 41973273, 41934291, 41532955, 41622772, 41751210, 41752185, 41968392, 41709060
 - **Reference details:**
+  - Bai B, Feng H, Yang H, Huang M, Wang Y. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Frontiers in cellular neuroscience 2026. doi:10.3389/fncel.2026.1757822. PMID:41969524.
   - PMID:41663365.
   - PMID:41673382.
   - PMID:41642456.
   - PMID:41649131.
-  - PMID:41954515.
+  - Chen Y, Yin X, Zhang E, Li B, Yu H, Qi J, Liu M, Wang M, Fan Z, Yang L. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS neuroscience & therapeutics 2026 Apr. doi:10.1002/cns.70858. PMID:41954515.
+  - de Jager C, Ju J, Corbo M, Patel K, Theus M. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Research square 2026 Apr 09. doi:10.21203/rs.3.rs-9261231/v1. PMID:41994141.
   - PMID:41039850.
-  - PMID:41934291.
-  - PMID:41465583.
 - **Contradictions:** Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone. | no direct compound or trial attachment surfaced in this build
 
 ## Subacute Repetitive Inflammatory-Dominant
@@ -154,7 +154,7 @@
   - MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. PMID:41446731.
   - Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. PMID:41740873.
   - Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. PMID:41740080.
-  - PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.
+  - Criado-Marrero M, Ravi S, Barroso D, Garza TN, Cuestas Torres DM, Lessard C, Castano JP, Bolen ML, Rubinovich U, Prokop S, Chakrabarty P, Ranum LPW, Febo M, Abisambra JF. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv : the preprint server for biology 2026 Mar 06. doi:10.64898/2026.03.04.709563. PMID:41847037.
   - Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
   - Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. PMID:41709584.
 - **Contradictions:** Repetitive cohorts can still carry unresolved vascular pressure, so an inflammatory label should stay bounded unless barrier readouts are also tracked.

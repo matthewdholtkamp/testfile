@@ -7,6 +7,8 @@
 - **Journal fit:** 4 / 4
 - **Draft readiness:** 3 / 4
 - **Current path:** No
+- **Connector data state:** No Connector Data Attached
+- **Connector sources:** none attached
 
 ## Story Spine
 

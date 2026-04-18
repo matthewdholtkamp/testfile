@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-04-13T15:10:33.607177+00:00",
+  "updated_at": "2026-04-18T11:56:03.397974+00:00",
   "claims": [
     {
       "claim_id": "phase6_candidate_thesis",
       "phase_key": "phase6",
       "claim_title": "Candidate manuscript thesis",
       "claim_text": "Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.",
-      "support_status": "provisional",
-      "allowed_language": "Use cautious, hypothesis-oriented wording and explicitly note boundedness.",
+      "support_status": "supported",
+      "allowed_language": "Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.",
       "supporting_pmids": [
         "41651694",
         "41926540",
@@ -39,7 +39,7 @@
         "keep this packet tied to both mitochondrial and inflammatory readouts."
       ],
       "evidence_gaps": [],
-      "source_quality_mix": "lane 57 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only"
+      "source_quality_mix": "lane 63 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only"
     },
     {
       "claim_id": "phase1_mitochondrial_bioenergetic_collapse",
@@ -123,7 +123,7 @@
         "Some supporting rows are abstract-only and should be weighted cautiously.",
         "Contradiction-bearing evidence is present and needs adjudication before stronger promotion."
       ],
-      "source_quality_mix": "full_text_like:241; abstract_only:59; unknown:4"
+      "source_quality_mix": "full_text_like:254; abstract_only:59; unknown:4"
     },
     {
       "claim_id": "phase3_microglial_chronic_activation",
@@ -149,7 +149,7 @@
       "evidence_gaps": [
         "Some supporting rows are abstract-only and should be weighted cautiously."
       ],
-      "source_quality_mix": "full_text_like:362; abstract_only:84"
+      "source_quality_mix": "full_text_like:372; abstract_only:84"
     },
     {
       "claim_id": "phase4_mitochondrial_bioenergetic_collapse",
@@ -186,7 +186,7 @@
         "no direct compound or trial attachment surfaced in this build"
       ],
       "evidence_gaps": [],
-      "source_quality_mix": "lane 57 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only"
+      "source_quality_mix": "lane 63 full-text-like / 11 abstract-only; direct target mentions 2 full-text-like / 0 abstract-only"
     },
     {
       "claim_id": "phase5_acute_severe_vascular_dominant",

@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-04-13T15:10:33.586678+00:00",
+  "updated_at": "2026-04-18T11:56:03.373360+00:00",
   "summary": {
-    "updated_at": "2026-04-13T15:10:33.586155+00:00",
+    "updated_at": "2026-04-18T11:56:03.372776+00:00",
     "total_tasks": 4,
     "status_counts": {
       "proposed": 0,
@@ -34,7 +34,7 @@
         "reopened"
       ],
       "execution_note": "Lead contradiction still active: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.. 4 issue(s) remain blocking.",
-      "last_executed_at": "2026-04-13T15:10:33.586053+00:00",
+      "last_executed_at": "2026-04-18T11:56:03.372666+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -54,7 +54,7 @@
         "reopened"
       ],
       "execution_note": "Translational packet remains bounded around NLRP3; strengthening brief updated.",
-      "last_executed_at": "2026-04-13T15:10:33.586097+00:00",
+      "last_executed_at": "2026-04-18T11:56:03.372715+00:00",
       "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
@@ -74,7 +74,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-13T15:10:33.586124+00:00",
+      "last_executed_at": "2026-04-18T11:56:03.372743+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     },
     {
@@ -94,7 +94,7 @@
         "reopened"
       ],
       "execution_note": "Journal-specific rigor checklist is active with 14 critical gap(s) across 2 profile(s).",
-      "last_executed_at": "2026-04-13T15:10:33.586149+00:00",
+      "last_executed_at": "2026-04-18T11:56:03.372769+00:00",
       "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ]
