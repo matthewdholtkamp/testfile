@@ -1,26 +1,254 @@
 @import "tailwindcss";
 
-@theme {
-  --color-bg: #0b1117;
-  --color-bg-soft: #101924;
-  --color-panel: #121c26;
-  --color-panel-soft: #172430;
-  --color-ink: #edf4fb;
-  --color-muted: #9fb4c8;
-  --color-accent: #9fd7bd;
-  --color-positive: #9be3c0;
-  --color-warning: #ffd37c;
-  --color-danger: #ffb6b6;
-  --color-line: rgba(159, 215, 189, 0.16);
-  --color-soft-line: rgba(255, 255, 255, 0.08);
+:root {
+  --paper: #f6f0e3;
+  --paper-deep: #ebe2cf;
+  --paper-wash: rgba(255, 252, 245, 0.72);
+  --ink: #1f1b17;
+  --muted: #6f675a;
+  --muted-strong: #4d473f;
+  --accent: #26594c;
+  --accent-soft: rgba(38, 89, 76, 0.1);
+  --line: rgba(31, 27, 23, 0.12);
+  --line-strong: rgba(31, 27, 23, 0.2);
+  --danger-soft: rgba(139, 63, 63, 0.1);
+  --danger-line: rgba(139, 63, 63, 0.22);
+  --danger-ink: #6e2828;
 }
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: var(--color-bg);
-    color: var(--color-ink);
-    font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
-    background-image: radial-gradient(circle at top right, rgba(159, 215, 189, 0.14), transparent 28%), linear-gradient(180deg, #090e13 0%, var(--color-bg) 100%);
+    margin: 0;
     min-height: 100vh;
+    color: var(--ink);
+    font-family: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(38, 89, 76, 0.14), transparent 28%),
+      radial-gradient(circle at top right, rgba(166, 118, 63, 0.12), transparent 22%),
+      linear-gradient(180deg, #fcf9f2 0%, var(--paper) 38%, #f1e8d8 100%);
+    background-attachment: fixed;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  summary {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .desk-shell {
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .desk-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      transparent calc(50% - 1px),
+      rgba(31, 27, 23, 0.035) calc(50% - 1px),
+      rgba(31, 27, 23, 0.035) calc(50% + 1px),
+      transparent calc(50% + 1px),
+      transparent
+    );
+    opacity: 0.6;
+  }
+
+  .desk-wrap {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
+    max-width: 1400px;
+    padding: 2.75rem clamp(1.25rem, 2vw, 2.5rem) 4rem;
+  }
+
+  .desk-title {
+    font-family: "Iowan Old Style", "Book Antiqua", "Palatino Linotype", serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .desk-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-strong);
+  }
+
+  .desk-sync-panel {
+    display: flex;
+    min-width: min(100%, 21rem);
+    flex-direction: column;
+    gap: 0.85rem;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.68), var(--paper-wash));
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .desk-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--line);
+    padding: 0.42rem 0.72rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .desk-chip-neutral {
+    background: rgba(255, 255, 255, 0.48);
+    color: var(--muted-strong);
+  }
+
+  .desk-chip-accent {
+    border-color: rgba(38, 89, 76, 0.24);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .desk-chip-warning {
+    border-color: rgba(145, 102, 35, 0.25);
+    background: rgba(145, 102, 35, 0.1);
+    color: #7a4d18;
+  }
+
+  .desk-chip-danger {
+    border-color: rgba(139, 63, 63, 0.24);
+    background: rgba(139, 63, 63, 0.12);
+    color: #7a2f2f;
+  }
+
+  .desk-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    border: 1px solid var(--line-strong);
+    background: var(--ink);
+    color: #f8f3eb;
+    padding: 0.78rem 1rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .desk-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    background: #11100f;
+  }
+
+  .desk-button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+  }
+
+  .desk-button-muted {
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--ink);
+  }
+
+  .desk-button-muted:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  .desk-details {
+    border-top: 1px solid var(--line);
+    padding-top: 0.8rem;
+  }
+
+  .desk-details summary {
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-strong);
+  }
+
+  .desk-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .desk-input {
+    width: 100%;
+    border: 1px solid var(--line-strong);
+    background: rgba(255, 255, 255, 0.72);
+    padding: 0.82rem 0.9rem;
+    color: var(--ink);
+  }
+
+  .desk-input:focus {
+    outline: 2px solid rgba(38, 89, 76, 0.18);
+    outline-offset: 1px;
+  }
+
+  .desk-lead-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .desk-link {
+    text-decoration: underline;
+    text-decoration-color: rgba(38, 89, 76, 0.32);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition: color 160ms ease, text-decoration-color 160ms ease;
+  }
+
+  .desk-link:hover {
+    color: var(--accent);
+    text-decoration-color: rgba(38, 89, 76, 0.72);
+  }
+
+  .desk-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .desk-list-row {
+    border-top: 1px solid var(--line);
+    padding: 1.15rem 0 1.35rem;
+  }
+
+  .desk-empty-state {
+    border-top: 1px solid var(--line);
+    padding-top: 1.25rem;
+    color: var(--muted);
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desk-lead-grid {
+    grid-template-columns: minmax(0, 1.45fr) minmax(22rem, 0.75fr);
+    align-items: start;
   }
 }

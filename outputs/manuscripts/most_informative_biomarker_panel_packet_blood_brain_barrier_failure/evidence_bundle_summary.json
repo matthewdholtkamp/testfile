@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-04-18T12:51:36.946861+00:00",
+  "updated_at": "2026-04-18T13:15:22.613327+00:00",
   "summary": {
-    "reference_count": 53,
+    "reference_count": 52,
     "claim_count": 10,
     "contradiction_count": 18,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
     "journal_specific_rigor_profile_count": 2,
     "journal_specific_rigor_critical_gaps": 14,
     "journal_specific_rigor_fill_entries": 14

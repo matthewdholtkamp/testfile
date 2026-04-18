@@ -1,0 +1,54 @@
+{
+  "updated_at": "2026-04-18T13:15:22.650273+00:00",
+  "data_points": {
+    "biomarker_panel": [
+      "ATP",
+      "ROS",
+      "NfL",
+      "Bcl-2",
+      "TUNEL+/NeuN+",
+      "cerebral oxygen saturation",
+      "NLRP3",
+      "Nf-L",
+      "Bcl-2 expression",
+      "NeuN expression",
+      "TUNEL+/NeuN+ cells",
+      "Cerebral blood flow",
+      "eATP",
+      "ros (134)",
+      "ROS (21)",
+      "ATP (19)",
+      "PINK1 (1)",
+      "IL-1 (91)",
+      "TNF (53)",
+      "IL-6 (50)",
+      "NLRP3 (38)",
+      "GFAP (22)",
+      "HMGB1 (17)"
+    ],
+    "expected_readouts": [
+      "ATP / bioenergetic rescue",
+      "ROS burden",
+      "Apoptosis pressure",
+      "Inflammasome spillover"
+    ],
+    "sample_type": "['tissue', 'plasma', 'blood_cell_or_platelet_assay']",
+    "time_window": [],
+    "readout_time_horizon": "['hours_to_days', 'hours_to_days', 'days', 'days_to_weeks']",
+    "expected_direction": [],
+    "linked_endotypes": [
+      "acute_severe_vascular_dominant",
+      "chronic_mild_metabolic_white_matter_dominant",
+      "chronic_severe_axonal_network_decline"
+    ],
+    "linked_translational_packets": [
+      "mitochondrial_bioenergetic_collapse"
+    ],
+    "primary_target": "PRKN",
+    "challenger_targets": [
+      "CYBB",
+      "CAT",
+      "PINK1"
+    ]
+  }
+}

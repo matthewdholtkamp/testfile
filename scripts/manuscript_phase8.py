@@ -11,13 +11,17 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 STATE_DIR = REPO_ROOT / 'outputs' / 'state'
 MANUSCRIPT_ROOT = REPO_ROOT / 'outputs' / 'manuscripts'
+MANUSCRIPT_DRAFTS_ROOT = REPO_ROOT / 'Manuscript Drafts' / 'Generated'
 OUTPUT_ROOT = REPO_ROOT / 'output'
 JOURNAL_REGISTRY_PATH = REPO_ROOT / 'config' / 'manuscript_journal_registry.json'
 JOURNAL_REQUIREMENTS_DIR = REPO_ROOT / 'config' / 'journal_requirements'
 MANUSCRIPT_QUEUE_STATE_PATH = STATE_DIR / 'manuscript_queue.json'
 PUBLICATION_TRACKER_STATE_PATH = STATE_DIR / 'publication_tracker.json'
 READY_FOR_CODEX_FILENAME = 'ready_for_codex_draft.json'
+GENERATED_DRAFT_INDEX_FILENAME = 'generated_draft_index.json'
+GENERATED_DRAFT_MANIFEST_FILENAME = 'draft_manifest.json'
 ACTIVE_LANE_LIMIT = 2
+MANUSCRIPT_CANDIDATE_EVALUATION_LIMIT = 12
 PROCESS_ENGINE_DOC_PATH = REPO_ROOT / 'docs' / 'process-engine' / 'process_engine.json'
 
 QUEUE_STATUSES = [
@@ -172,6 +176,12 @@ def relative_path_or_blank(path):
         return str(Path(path).resolve().relative_to(REPO_ROOT))
     except ValueError:
         return str(path)
+
+
+def absolute_path_or_blank(path):
+    if not path:
+        return ''
+    return str(Path(path).resolve())
 
 
 def tokenize_for_connector_match(*values):
@@ -407,6 +417,12 @@ def parse_source_markdown_metadata(path):
     path = Path(path)
     if not path.exists():
         return {}
+    relative_path = str(path.relative_to(REPO_ROOT))
+    if os.environ.get('PHASE8_PARSE_SOURCE_MARKDOWN', '').strip() != '1':
+        return {
+            'source_markdown_path': relative_path,
+        }
+
     text = path.read_text()
 
     def capture(label):
@@ -437,7 +453,7 @@ def parse_source_markdown_metadata(path):
         'extraction_rank': capture('Extraction Rank'),
         'abstract': abstract,
         'full_text_excerpt': full_text_excerpt,
-        'source_markdown_path': str(path.relative_to(REPO_ROOT)),
+        'source_markdown_path': relative_path,
     }
 
 
@@ -3002,6 +3018,651 @@ def build_pack_manifest(candidate, row, publication_entry):
     }
 
 
+def recommended_article_type(candidate):
+    primary = candidate.get('journal_targets', {}).get('primary') or {}
+    overlap = [normalize(item) for item in primary.get('article_type_overlap') or [] if normalize(item)]
+    if overlap:
+        return overlap[0]
+    article_types = [normalize(item) for item in candidate.get('article_type_candidates') or [] if normalize(item)]
+    return article_types[0] if article_types else 'review'
+
+
+def article_type_requirements(snapshot, article_type):
+    target = normalize(article_type)
+    for key, value in (snapshot.get('article_type_requirements') or {}).items():
+        if normalize(key) == target:
+            return value
+    return {}
+
+
+def manuscript_draft_title(candidate, row, phase_entries):
+    theme_label = normalize(candidate.get('theme_label') or candidate.get('title'))
+    family = normalize(candidate.get('family_id'))
+    if family == 'most_informative_biomarker_panel':
+        return f'{theme_label} as a biomarker-guided manuscript path in traumatic brain injury'
+    if family == 'strongest_causal_bridge':
+        return f'{theme_label} as a mechanistic bridge in traumatic brain injury'
+    if family == 'best_intervention_leverage_point':
+        return f'{theme_label} as a bounded translational target in traumatic brain injury'
+    if family == 'highest_value_next_task':
+        return f'{theme_label} as a methods-guided manuscript path in traumatic brain injury'
+    lead_phase4 = next((entry.get('row') or {} for entry in phase_entries if entry.get('phase_key') == 'phase4'), {})
+    primary_target = normalize(lead_phase4.get('primary_target'))
+    if primary_target:
+        return f'{theme_label} with {primary_target}-centered readouts in traumatic brain injury'
+    return f'{theme_label} as an evidence-guided manuscript path in traumatic brain injury'
+
+
+def manuscript_keywords(candidate, row, phase_entries):
+    primary_target = next(
+        (
+            normalize((entry.get('row') or {}).get('primary_target'))
+            for entry in phase_entries
+            if entry.get('phase_key') == 'phase4' and normalize((entry.get('row') or {}).get('primary_target'))
+        ),
+        '',
+    )
+    values = [
+        normalize(candidate.get('theme_label')),
+        normalize(candidate.get('title')),
+        primary_target,
+    ]
+    values.extend(normalize(item) for item in (row.get('expected_readouts') or [])[:4])
+    values.extend(entry.get('label') for entry in phase_entries if entry.get('phase_key') in {'phase3', 'phase5'})
+    keywords = []
+    for value in values:
+        text = normalize(value)
+        if not text or text in keywords:
+            continue
+        keywords.append(text)
+        if len(keywords) == 8:
+            break
+    return keywords
+
+
+def candidate_draft_folder(root, candidate):
+    return Path(root) / candidate['pack_key']
+
+
+def candidate_draft_output_paths(candidate, root=MANUSCRIPT_DRAFTS_ROOT):
+    folder = candidate_draft_folder(root, candidate)
+    status_path = folder / 'draft_status.md'
+    target_journal_path = folder / 'target_journal.md'
+    outline_path = folder / 'comprehensive_outline.md'
+    missing_items_path = folder / 'missing_metadata_and_items.md'
+    manuscript_draft_path = folder / 'manuscript_draft.md'
+    manifest_path = folder / GENERATED_DRAFT_MANIFEST_FILENAME
+    source_pack_folder = candidate_folder(MANUSCRIPT_ROOT, candidate)
+    return {
+        'folder_relative_path': relative_path_or_blank(folder),
+        'folder_absolute_path': absolute_path_or_blank(folder),
+        'source_pack_relative_path': relative_path_or_blank(source_pack_folder),
+        'source_pack_absolute_path': absolute_path_or_blank(source_pack_folder),
+        'status_relative_path': relative_path_or_blank(status_path),
+        'status_absolute_path': absolute_path_or_blank(status_path),
+        'target_journal_relative_path': relative_path_or_blank(target_journal_path),
+        'target_journal_absolute_path': absolute_path_or_blank(target_journal_path),
+        'outline_relative_path': relative_path_or_blank(outline_path),
+        'outline_absolute_path': absolute_path_or_blank(outline_path),
+        'missing_items_relative_path': relative_path_or_blank(missing_items_path),
+        'missing_items_absolute_path': absolute_path_or_blank(missing_items_path),
+        'manuscript_draft_relative_path': relative_path_or_blank(manuscript_draft_path),
+        'manuscript_draft_absolute_path': absolute_path_or_blank(manuscript_draft_path),
+        'manifest_relative_path': relative_path_or_blank(manifest_path),
+        'manifest_absolute_path': absolute_path_or_blank(manifest_path),
+    }
+
+
+def operator_metadata_items(candidate):
+    primary = candidate.get('journal_targets', {}).get('primary') or {}
+    snapshot = (primary.get('requirements') or {}).get('snapshot') or {}
+    required_elements = {normalize(item) for item in snapshot.get('required_manuscript_elements') or [] if normalize(item)}
+    minimum_keywords = 'Add at least 4 keywords.' if 'minimum 4 keywords' in required_elements else 'Add final keyword set.'
+    items = [
+        {
+            'item_id': 'title_page',
+            'label': 'Title page, author list, and affiliations',
+            'detail': 'Insert the final title page with author order, affiliations, and corresponding-author contact details.',
+        },
+        {
+            'item_id': 'running_title',
+            'label': 'Running title and author metadata',
+            'detail': 'Add the short running title, email addresses, ORCID IDs, and any author-note metadata required for submission.',
+        },
+        {
+            'item_id': 'keywords',
+            'label': 'Keywords',
+            'detail': minimum_keywords,
+        },
+        {
+            'item_id': 'funding',
+            'label': 'Funding statement',
+            'detail': 'Add the exact funding sources, grant numbers, and sponsor-role statement.',
+        },
+        {
+            'item_id': 'conflicts',
+            'label': 'Conflict-of-interest statement',
+            'detail': 'Add the final conflict-of-interest declaration for all authors.',
+        },
+        {
+            'item_id': 'author_contributions',
+            'label': 'Author contributions',
+            'detail': 'Insert the author-contributions section with the final role mapping.',
+        },
+        {
+            'item_id': 'data_availability',
+            'label': 'Data and code availability statement',
+            'detail': 'Add the final data/code availability statement with repository, DOI, or access process details.',
+        },
+        {
+            'item_id': 'ethics',
+            'label': 'Ethics / approvals / consent statement',
+            'detail': 'Insert the correct IRB/IACUC, consent, or no-new-human-subjects statement for this manuscript type.',
+        },
+        {
+            'item_id': 'acknowledgements',
+            'label': 'Acknowledgements and non-author contributions',
+            'detail': 'Add acknowledgements, editorial support disclosures, and any contributor credits.',
+        },
+        {
+            'item_id': 'figure_exports',
+            'label': 'Figure files and table exports',
+            'detail': 'Export the final figures/tables and align filenames, legends, and callouts with the manuscript draft.',
+        },
+        {
+            'item_id': 'submission_package',
+            'label': 'Submission package metadata',
+            'detail': 'Prepare the cover letter, suggested reviewers if needed, and journal-form metadata not stored in the engine.',
+        },
+    ]
+    if 'transparency rigor and reproducibility summary' in required_elements:
+        items.append({
+            'item_id': 'trr_packaging',
+            'label': 'Transparency, Rigor and Reproducibility Summary packaging',
+            'detail': 'Insert the final journal-positioned Transparency, Rigor and Reproducibility Summary after the conclusion once the content gaps below are closed.',
+        })
+    return items
+
+
+def build_missing_metadata_packet(candidate, evidence_bundle):
+    metadata_items = operator_metadata_items(candidate)
+    open_tasks = []
+    for task in candidate.get('task_ledger') or []:
+        if normalize(task.get('status')) == 'satisfied' or normalize(task.get('task_id')) == 'monitor_candidate':
+            continue
+        open_tasks.append({
+            'item_id': normalize(task.get('task_id')),
+            'label': normalize(task.get('label')),
+            'status': normalize(task.get('status')),
+            'detail': normalize(task.get('execution_note')) or normalize(task.get('rationale')) or normalize(task.get('success_signal')),
+            'critical': bool(task.get('critical')),
+        })
+    rigor_entries = []
+    for entry in (evidence_bundle.get('journal_specific_rigor_fill_packet') or {}).get('entries') or []:
+        rigor_entries.append({
+            'entry_id': normalize(entry.get('entry_id')),
+            'label': normalize(entry.get('gap_label')),
+            'status': normalize(entry.get('status')),
+            'detail': normalize(entry.get('needed_next')) or normalize(entry.get('current_pack_evidence')),
+            'critical': bool(entry.get('critical')),
+            'manuscript_sections': entry.get('manuscript_sections') or [],
+        })
+    content_gap_count = len(open_tasks) + len(rigor_entries)
+    ready_for_metadata_only = (
+        normalize(candidate.get('manuscript_gate_state')) == 'ready to build phase 8 pack'
+        and content_gap_count == 0
+    )
+    return {
+        'metadata_items': metadata_items,
+        'content_items': open_tasks,
+        'rigor_items': rigor_entries,
+        'ready_for_metadata_only': ready_for_metadata_only,
+        'summary': {
+            'metadata_item_count': len(metadata_items),
+            'content_gap_count': content_gap_count,
+            'task_gap_count': len(open_tasks),
+            'rigor_gap_count': len(rigor_entries),
+        },
+    }
+
+
+def build_missing_metadata_markdown(candidate, missing_packet):
+    lines = ['# Missing Metadata and Items', '']
+    lines.extend([
+        f"- **Generated draft status:** {candidate.get('generated_draft_status') or 'draft_generated'}",
+        f"- **Ready for metadata only:** {'yes' if missing_packet.get('ready_for_metadata_only') else 'no'}",
+        '',
+        '## Operator-Supplied Metadata Still Needed',
+        '',
+    ])
+    for item in missing_packet.get('metadata_items') or []:
+        lines.append(f"- **{item['label']}:** {item['detail']}")
+    lines.append('')
+    lines.extend(['## Evidence / Content Gaps Still Open', ''])
+    content_items = missing_packet.get('content_items') or []
+    if not content_items:
+        lines.append('- No open engine-side task gaps remain.')
+    else:
+        for item in content_items:
+            critical_tag = 'critical' if item.get('critical') else 'non-critical'
+            lines.append(f"- **{item['label']}** [{item.get('status')}, {critical_tag}]")
+            lines.append(f"  - {item.get('detail') or 'No detail recorded.'}")
+    lines.append('')
+    lines.extend(['## Journal-Specific Rigor Gaps', ''])
+    rigor_items = missing_packet.get('rigor_items') or []
+    if not rigor_items:
+        lines.append('- No journal-specific rigor fill entries remain open.')
+    else:
+        for item in rigor_items:
+            critical_tag = 'critical' if item.get('critical') else 'non-critical'
+            lines.append(f"- **{item['label']}** [{item.get('status')}, {critical_tag}]")
+            if item.get('manuscript_sections'):
+                lines.append(f"  - Manuscript sections: {', '.join(item['manuscript_sections'])}")
+            lines.append(f"  - {item.get('detail') or 'No detail recorded.'}")
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def generated_draft_status(candidate, missing_packet):
+    if missing_packet.get('ready_for_metadata_only'):
+        return 'ready_for_metadata_only'
+    if missing_packet.get('summary', {}).get('content_gap_count', 0):
+        return 'draft_generated_needs_content_or_rigor_fill'
+    return 'draft_generated_needs_metadata'
+
+
+def hydrate_candidate_draft_output(candidate, evidence_bundle, manuscript_drafts_root=MANUSCRIPT_DRAFTS_ROOT):
+    missing_packet = build_missing_metadata_packet(candidate, evidence_bundle)
+    candidate['missing_metadata_summary'] = missing_packet.get('summary') or {}
+    candidate['ready_for_metadata_only'] = bool(missing_packet.get('ready_for_metadata_only'))
+    candidate['generated_draft_status'] = generated_draft_status(candidate, missing_packet)
+    candidate['draft_output'] = candidate_draft_output_paths(candidate, root=manuscript_drafts_root)
+    candidate['draft_output']['generated_draft_status'] = candidate['generated_draft_status']
+    candidate['draft_output']['ready_for_metadata_only'] = candidate['ready_for_metadata_only']
+    candidate['draft_output']['missing_metadata_item_count'] = candidate['missing_metadata_summary'].get('metadata_item_count', 0)
+    candidate['draft_output']['content_gap_count'] = candidate['missing_metadata_summary'].get('content_gap_count', 0)
+    return missing_packet
+
+
+def build_draft_status_markdown(candidate, row, phase_entries, missing_packet):
+    primary = candidate.get('journal_targets', {}).get('primary') or {}
+    primary_journal = primary.get('journal', {}) or {}
+    lines = [
+        '# Draft Status',
+        '',
+        f"- **Title:** {candidate.get('manuscript_draft_title') or candidate.get('title')}",
+        f"- **Candidate:** {candidate.get('title')}",
+        f"- **Pack key:** {candidate.get('pack_key')}",
+        f"- **Generated status:** {candidate.get('generated_draft_status')}",
+        f"- **Ready for metadata only:** {'yes' if candidate.get('ready_for_metadata_only') else 'no'}",
+        f"- **Gate state:** {candidate.get('manuscript_gate_state')}",
+        f"- **Primary journal:** {primary_journal.get('name') or 'not selected'}",
+        f"- **Recommended article type:** {candidate.get('recommended_article_type') or 'not specified'}",
+        f"- **Scientific strength:** {candidate.get('scientific_strength')} / 4",
+        f"- **Journal fit:** {candidate.get('journal_fit')} / 4",
+        f"- **Draft readiness:** {candidate.get('draft_readiness')} / 4",
+        f"- **Current top blocker:** {candidate.get('top_blocker') or 'none recorded'}",
+        f"- **Expected readouts:** {summarize_list(row.get('expected_readouts') or [])}",
+        f"- **Next test:** {normalize(row.get('next_test')) or 'not recorded'}",
+        '',
+        '## Linked Evidence Chain',
+        '',
+        f"- Phase 1: {summarize_list(row.get('linked_phase1_lane_ids') or [])}",
+        f"- Phase 2: {summarize_list(row.get('linked_phase2_transition_ids') or [])}",
+        f"- Phase 3: {summarize_list(row.get('linked_phase3_object_ids') or [])}",
+        f"- Phase 4: {summarize_list(row.get('linked_phase4_packet_ids') or [])}",
+        f"- Phase 5: {summarize_list(row.get('linked_phase5_endotype_ids') or [])}",
+        '',
+        '## Remaining Work',
+        '',
+        f"- Operator metadata items: {missing_packet.get('summary', {}).get('metadata_item_count', 0)}",
+        f"- Content or rigor gaps: {missing_packet.get('summary', {}).get('content_gap_count', 0)}",
+    ]
+    if phase_entries:
+        lines.extend(['', '## Phase Artifacts In Scope', ''])
+        for entry in phase_entries:
+            lines.append(f"- {entry['phase_key']}: {entry['label']} ({entry.get('support_status') or 'not specified'})")
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def build_target_journal_markdown(candidate):
+    primary = candidate.get('journal_targets', {}).get('primary') or {}
+    backups = candidate.get('journal_targets', {}).get('backups') or []
+    journal = primary.get('journal', {}) or {}
+    requirements = primary.get('requirements', {}) or {}
+    snapshot = requirements.get('snapshot') or {}
+    article_type = candidate.get('recommended_article_type') or recommended_article_type(candidate)
+    article_requirements = article_type_requirements(snapshot, article_type)
+    lines = ['# Target Journal', '']
+    if not journal:
+        lines.append('- No primary journal is selected yet.')
+        lines.append('')
+        return '\n'.join(lines)
+    lines.extend([
+        f"- **Primary journal:** {journal.get('name')}",
+        f"- **Homepage:** {journal.get('homepage') or 'not recorded'}",
+        f"- **Submission tier:** {pretty_label(journal.get('submission_tier'))}",
+        f"- **Recommended article type:** {article_type or 'not specified'}",
+        f"- **Requirements snapshot verified:** {'yes' if requirements.get('checked') else 'no'}",
+        '',
+        '## Why This Journal',
+        '',
+    ])
+    for reason in primary.get('reasons') or []:
+        lines.append(f'- {reason}')
+    lines.append('')
+    if requirements.get('reasons'):
+        lines.extend(['## Requirements Check', ''])
+        for reason in requirements.get('reasons') or []:
+            lines.append(f'- {reason}')
+        requirement_path = normalize(requirements.get('requirements_path'))
+        if requirement_path:
+            lines.append(f'- Requirements snapshot path: `{requirement_path}`')
+        lines.append('')
+    if article_requirements:
+        lines.extend(['## Article-Type Constraints', ''])
+        for key, value in article_requirements.items():
+            lines.append(f"- **{pretty_label(key)}:** {value}")
+        lines.append('')
+    required_elements = snapshot.get('required_manuscript_elements') or []
+    if required_elements:
+        lines.extend(['## Required Manuscript Elements', ''])
+        for item in required_elements:
+            lines.append(f'- {item}')
+        lines.append('')
+    if backups:
+        lines.extend(['## Backup Journals', ''])
+        for item in backups:
+            backup = item.get('journal', {}) or {}
+            checked = 'checked' if (item.get('requirements') or {}).get('checked') else 'shortlist only'
+            lines.append(f"- **{backup.get('name') or 'Unnamed backup'}** ({checked}): {' '.join(item.get('reasons') or [])}")
+        lines.append('')
+    return '\n'.join(lines)
+
+
+def claim_support_suffix(claim):
+    pmids = [normalize(item) for item in claim.get('supporting_pmids') or [] if normalize(item)]
+    if not pmids:
+        return ''
+    return f" (PMIDs: {', '.join(pmids[:4])})"
+
+
+def build_comprehensive_outline_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet):
+    figures = evidence_bundle.get('figures') or []
+    claims = evidence_bundle.get('claims') or []
+    primary = candidate.get('journal_targets', {}).get('primary') or {}
+    lines = [
+        '# Comprehensive Outline',
+        '',
+        '## Positioning',
+        '',
+        f"- **Draft title:** {candidate.get('manuscript_draft_title') or candidate.get('title')}",
+        f"- **Primary journal:** {(primary.get('journal') or {}).get('name') or 'not selected'}",
+        f"- **Recommended article type:** {candidate.get('recommended_article_type') or 'not specified'}",
+        f"- **Core thesis:** {normalize(row.get('statement') or row.get('why_now') or row.get('decision_rationale')) or 'No thesis recorded.'}",
+        '',
+        '## Front Matter',
+        '',
+        '- Title page and author metadata',
+        '- Unstructured abstract',
+        '- Keywords',
+        '- Transparency, Rigor and Reproducibility Summary',
+        '- Statements and declarations',
+        '',
+        '## Main Body Outline',
+        '',
+        '### 1. Introduction',
+        '',
+        f"- Open with the current thesis: {normalize(row.get('statement') or row.get('why_now') or row.get('decision_rationale')) or 'No thesis recorded.'}",
+        f"- Establish the lead mechanism lane(s): {summarize_list(row.get('linked_phase1_lane_ids') or [])}",
+        f"- Set up the directional bridge(s): {summarize_list(row.get('linked_phase2_transition_ids') or [])}",
+        '',
+        '### 2. Results / Evidence Synthesis',
+        '',
+    ]
+    for claim in claims:
+        lines.extend([
+            f"#### {claim['claim_title']}",
+            '',
+            f"- Claim to carry: {claim['claim_text']}",
+            f"- Allowed wording: {claim['allowed_language']}",
+            f"- Support anchors: {', '.join(claim.get('supporting_pmids') or []) or 'none recorded'}",
+            '',
+        ])
+    lines.extend([
+        '### 3. Discussion',
+        '',
+        f"- Frame the journal fit: {(primary.get('journal') or {}).get('name') or 'not selected'}",
+        f"- Carry the translational maturity boundary: {candidate.get('translation_maturity') or 'not specified'}",
+        f"- Keep the top blocker explicit: {candidate.get('top_blocker') or 'none recorded'}",
+        '',
+        '### 4. Limitations',
+        '',
+    ])
+    contradictions = evidence_bundle.get('contradictions') or []
+    if contradictions:
+        for issue in contradictions[:8]:
+            lines.append(f"- {issue['statement']}")
+    else:
+        lines.append('- No contradiction register items are currently attached.')
+    lines.extend([
+        '',
+        '### 5. Statements and Declarations',
+        '',
+        '- Funding',
+        '- Conflict of interest',
+        '- Author contributions',
+        '- Data availability',
+        '- Ethics / approvals',
+        '',
+        '## Figure and Table Plan',
+        '',
+    ])
+    for figure in figures:
+        lines.append(f"- **{figure['title']}:** {figure['purpose']}")
+    lines.extend([
+        '',
+        '## Remaining Work Before Submission Packaging',
+        '',
+        f"- Metadata items still needed: {missing_packet.get('summary', {}).get('metadata_item_count', 0)}",
+        f"- Content or rigor gaps still open: {missing_packet.get('summary', {}).get('content_gap_count', 0)}",
+        '',
+    ])
+    return '\n'.join(lines)
+
+
+def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet):
+    primary = candidate.get('journal_targets', {}).get('primary') or {}
+    primary_journal = primary.get('journal', {}) or {}
+    claims = evidence_bundle.get('claims') or []
+    contradictions = evidence_bundle.get('contradictions') or []
+    figures = evidence_bundle.get('figures') or []
+    references = evidence_bundle.get('references') or []
+    keywords = candidate.get('manuscript_keywords') or []
+    statement = normalize(row.get('statement') or row.get('why_now') or row.get('decision_rationale')) or 'No thesis statement is recorded in the current pack.'
+    rationale = normalize(row.get('decision_rationale') or row.get('rationale')) or 'No explicit decision rationale is recorded.'
+    readouts = summarize_list(row.get('expected_readouts') or [])
+    next_test = normalize(row.get('next_test')) or 'not recorded'
+    lead_phase1 = next((entry for entry in phase_entries if entry.get('phase_key') == 'phase1'), {})
+    lead_phase2 = next((entry for entry in phase_entries if entry.get('phase_key') == 'phase2'), {})
+    lead_phase4 = next((entry for entry in phase_entries if entry.get('phase_key') == 'phase4'), {})
+    phase3_labels = ', '.join(entry['label'] for entry in phase_entries if entry.get('phase_key') == 'phase3') or 'no linked downstream objects'
+    phase5_labels = ', '.join(entry['label'] for entry in phase_entries if entry.get('phase_key') == 'phase5') or 'no linked endotypes'
+    primary_target = normalize((lead_phase4.get('row') or {}).get('primary_target')) or 'the linked Phase 4 packet'
+    abstract_lines = [
+        f"{candidate.get('theme_label') or candidate.get('title')} is the current manuscript path selected from the Phase 8 evidence pack.",
+        f"The current thesis is: {statement}",
+        f"The evidence chain links {lead_phase1.get('label') or 'the linked Phase 1 lane'} to {lead_phase2.get('label') or 'the linked Phase 2 bridge'}, with downstream burden in {phase3_labels}.",
+        f"The translational readout spine centers on {primary_target} with expected readouts {readouts}.",
+        f"The manuscript remains intentionally bounded: translation maturity is {candidate.get('translation_maturity') or 'not specified'}, and the leading boundary is {candidate.get('top_blocker') or 'not specified'}.",
+    ]
+    lines = [
+        f"# {candidate.get('manuscript_draft_title') or candidate.get('title')}",
+        '',
+        '> Draft-first manuscript generated directly from the current Phase 8 evidence pack. Replace bracketed metadata placeholders manually and keep all claims bounded to the cited pack content.',
+        '',
+        '## Title Page',
+        '',
+        '- Full title: [Confirm final journal-facing title]',
+        '- Running title: [Needed]',
+        '- Authors: [Needed]',
+        '- Affiliations: [Needed]',
+        '- Corresponding author: [Needed]',
+        '',
+        '## Abstract',
+        '',
+        ' '.join(abstract_lines),
+        '',
+        '## Keywords',
+        '',
+        f"- {', '.join(keywords) if keywords else '[Add final keyword list]'}",
+        '',
+        '## Introduction',
+        '',
+        f"{statement} This draft is anchored to {lead_phase1.get('label') or 'the linked Phase 1 lane'} because that lane provides the current biological entry point into the manuscript path.",
+        '',
+        f"The linked rationale in the Phase 8 pack is straightforward: {rationale} The directional bridge into {lead_phase2.get('label') or 'the linked Phase 2 transition'} gives the manuscript a mechanistic spine, while the linked Phase 3 and Phase 5 artifacts keep the story tied to downstream burden and cohort context rather than to generic TBI language.",
+        '',
+        '## Results / Evidence Synthesis',
+        '',
+    ]
+    for claim in claims:
+        lines.extend([
+            f"### {claim['claim_title']}",
+            '',
+            f"{claim['claim_text']}{claim_support_suffix(claim)}",
+            '',
+            f"Drafting rule: {claim['allowed_language']}",
+            '',
+        ])
+        if claim.get('contradiction_notes'):
+            lines.append(f"Current contradiction notes: {' | '.join(claim['contradiction_notes'])}")
+            lines.append('')
+        if claim.get('evidence_gaps'):
+            lines.append(f"Current evidence gaps: {' | '.join(claim['evidence_gaps'])}")
+            lines.append('')
+    lines.extend([
+        '## Discussion',
+        '',
+        f"This manuscript is currently targeted to {primary_journal.get('name') or 'the current primary journal'} as a {candidate.get('recommended_article_type') or 'draft manuscript'} because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around {readouts}.",
+        '',
+        f"The draft should still remain bounded. Translation maturity is {candidate.get('translation_maturity') or 'not specified'}, the next experimental move is {next_test}, and the current top blocker is {candidate.get('top_blocker') or 'not specified'}. These constraints should remain explicit rather than being smoothed away during prose cleanup.",
+        '',
+        f"The cohort and endotype context currently in scope is {phase5_labels}. Use that context to keep the narrative specific about where the manuscript path appears strongest and where it remains only provisional.",
+        '',
+        '## Limitations',
+        '',
+    ])
+    if contradictions:
+        for issue in contradictions[:10]:
+            lines.append(f"- {issue['statement']}")
+    else:
+        lines.append('- No explicit contradiction register items are attached in the current pack.')
+    lines.extend([
+        '',
+        '## Transparency, Rigor and Reproducibility Summary Starter',
+        '',
+    ])
+    rigor_entries = (evidence_bundle.get('journal_specific_rigor_fill_packet') or {}).get('entries') or []
+    if rigor_entries:
+        for entry in rigor_entries[:6]:
+            lines.append(f"- {entry.get('draft_stub') or entry.get('needed_next') or entry.get('gap_label')}")
+    else:
+        lines.append('- No open journal-specific rigor fill packet entries are currently attached to this pack.')
+    lines.extend([
+        '',
+        '## Statements and Declarations',
+        '',
+        '### Funding',
+        '',
+        '[Needed]',
+        '',
+        '### Conflict of Interest',
+        '',
+        '[Needed]',
+        '',
+        '### Author Contributions',
+        '',
+        '[Needed]',
+        '',
+        '### Data Availability',
+        '',
+        '[Needed]',
+        '',
+        '### Ethics / Approvals',
+        '',
+        '[Needed]',
+        '',
+        '## Figure and Table Plan',
+        '',
+    ])
+    for figure in figures:
+        lines.append(f"- **{figure['title']}:** {figure['purpose']}")
+    lines.extend([
+        '',
+        '## Missing Metadata and Packaging Items',
+        '',
+        f"- Operator metadata items still needed: {missing_packet.get('summary', {}).get('metadata_item_count', 0)}",
+        f"- Content or rigor gaps still open: {missing_packet.get('summary', {}).get('content_gap_count', 0)}",
+        f"- See `{Path(candidate.get('draft_output', {}).get('missing_items_relative_path') or '').name or 'missing_metadata_and_items.md'}` for the detailed working list.",
+        '',
+        '## References',
+        '',
+    ])
+    if references:
+        for record in references:
+            lines.append(f"{record['reference_number']}. {record['citation_text']}")
+    else:
+        lines.append('[No references were emitted in the current evidence bundle.]')
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def draft_queue_entry(candidate):
+    draft_output = candidate.get('draft_output') or {}
+    return {
+        'candidate_id': candidate.get('candidate_id'),
+        'pack_key': candidate.get('pack_key'),
+        'title': candidate.get('title'),
+        'manuscript_gate_state': candidate.get('manuscript_gate_state'),
+        'generated_draft_status': candidate.get('generated_draft_status'),
+        'ready_for_metadata_only': bool(candidate.get('ready_for_metadata_only')),
+        'active_lane': bool(candidate.get('active_lane')),
+        'watchlist_rank': candidate.get('watchlist_rank'),
+        'folder_relative_path': draft_output.get('folder_relative_path', ''),
+        'folder_absolute_path': draft_output.get('folder_absolute_path', ''),
+        'status_relative_path': draft_output.get('status_relative_path', ''),
+        'status_absolute_path': draft_output.get('status_absolute_path', ''),
+        'target_journal_relative_path': draft_output.get('target_journal_relative_path', ''),
+        'target_journal_absolute_path': draft_output.get('target_journal_absolute_path', ''),
+        'outline_relative_path': draft_output.get('outline_relative_path', ''),
+        'outline_absolute_path': draft_output.get('outline_absolute_path', ''),
+        'missing_items_relative_path': draft_output.get('missing_items_relative_path', ''),
+        'missing_items_absolute_path': draft_output.get('missing_items_absolute_path', ''),
+        'manuscript_draft_relative_path': draft_output.get('manuscript_draft_relative_path', ''),
+        'manuscript_draft_absolute_path': draft_output.get('manuscript_draft_absolute_path', ''),
+        'manifest_relative_path': draft_output.get('manifest_relative_path', ''),
+        'manifest_absolute_path': draft_output.get('manifest_absolute_path', ''),
+        'missing_metadata_item_count': draft_output.get('missing_metadata_item_count', 0),
+        'content_gap_count': draft_output.get('content_gap_count', 0),
+    }
+
+
+def build_generated_draft_summary(candidates, root=MANUSCRIPT_DRAFTS_ROOT):
+    root = Path(root)
+    entries = [draft_queue_entry(candidate) for candidate in candidates]
+    ready = [entry for entry in entries if entry.get('ready_for_metadata_only')]
+    return {
+        'root_relative_path': relative_path_or_blank(root),
+        'root_absolute_path': absolute_path_or_blank(root),
+        'index_relative_path': relative_path_or_blank(root / GENERATED_DRAFT_INDEX_FILENAME),
+        'index_absolute_path': absolute_path_or_blank(root / GENERATED_DRAFT_INDEX_FILENAME),
+        'entries': entries,
+        'ready_for_metadata_only': ready,
+    }
+
+
 def build_candidate_payload(row, state, direction_registry, journal_registry, publication_tracker, indexes, corpus_index, connector_context=None):
     connector_context = connector_context or build_connector_context()
     candidate_id = canonical_candidate_id(row.get('candidate_id') or row.get('title'))
@@ -3058,6 +3719,10 @@ def build_candidate_payload(row, state, direction_registry, journal_registry, pu
     candidate['draft_status'] = 'ready_for_codex_draft' if candidate['ready_for_codex_draft'] else ('pack_ready' if candidate['manuscript_gate_state'] == 'ready to build phase 8 pack' else 'gathering evidence')
     candidate['review_memo_status'] = 'available' if candidate['manuscript_gate_state'] != 'not ready' else 'early warning'
     candidate['queue_status'] = 'submitted_track' if candidate['publication_status'] in SUBMISSION_TRACKER_EXIT_STATUSES else ('active_review' if candidate['publication_status'] in ACTIVE_APPROVAL_STATUSES else 'candidate')
+    candidate['recommended_article_type'] = recommended_article_type(candidate)
+    candidate['manuscript_draft_title'] = manuscript_draft_title(candidate, row, phase_entries)
+    candidate['manuscript_keywords'] = manuscript_keywords(candidate, row, phase_entries)
+    hydrate_candidate_draft_output(candidate, evidence_bundle)
     return candidate, publication_entry
 
 
@@ -3088,6 +3753,13 @@ def representative_candidate_rows(state, direction_registry):
     return sorted(representatives, key=row_key)
 
 
+def candidate_rows_for_full_evaluation(state, direction_registry, limit=MANUSCRIPT_CANDIDATE_EVALUATION_LIMIT):
+    rows = representative_candidate_rows(state, direction_registry)
+    if not limit or len(rows) <= limit:
+        return rows
+    return rows[:limit]
+
+
 def active_and_watchlist_candidates(candidates):
     active = []
     watchlist = []
@@ -3113,6 +3785,7 @@ def queue_summary(active, watchlist, publication_tracker):
         'watchlist_count': len(watchlist),
         'tracked_publications': len(tracker_entries),
         'ready_for_codex_draft_count': sum(1 for item in active + watchlist if item.get('ready_for_codex_draft')),
+        'ready_for_metadata_only_count': sum(1 for item in active + watchlist if item.get('ready_for_metadata_only')),
     }
 
 
@@ -3125,7 +3798,7 @@ def build_manuscript_queue_payload(state, direction_registry=None, publication_t
     connector_context = build_connector_context()
     candidates = []
     publication_entries = {}
-    for row in representative_candidate_rows(state, direction_registry):
+    for row in candidate_rows_for_full_evaluation(state, direction_registry):
         candidate, publication_entry = build_candidate_payload(
             row,
             state,
@@ -3152,6 +3825,7 @@ def build_manuscript_queue_payload(state, direction_registry=None, publication_t
             'updated_at': normalize(entry.get('updated_at')),
             'note': normalize(entry.get('note')),
         })
+    draft_outputs = build_generated_draft_summary(active + watchlist)
     return {
         'generated_at': iso_now(),
         'summary': queue_summary(active, watchlist, publication_tracker),
@@ -3160,6 +3834,8 @@ def build_manuscript_queue_payload(state, direction_registry=None, publication_t
         'watchlist': watchlist,
         'publication_tracker': tracker_rows,
         'publication_statuses': QUEUE_STATUSES,
+        'draft_outputs': draft_outputs,
+        'ready_for_metadata_only_candidates': draft_outputs.get('ready_for_metadata_only', []),
     }
 
 
@@ -3168,7 +3844,7 @@ def candidate_folder(root, candidate):
 
 
 def candidate_row_lookup(state, direction_registry=None):
-    rows = representative_candidate_rows(state, direction_registry or {})
+    rows = candidate_rows_for_full_evaluation(state, direction_registry or {})
     lookup = {}
     for row in rows:
         candidate_id = canonical_candidate_id(row.get('candidate_id') or row.get('title'))
@@ -3176,7 +3852,7 @@ def candidate_row_lookup(state, direction_registry=None):
     return lookup
 
 
-def materialize_manuscript_outputs(state, direction_registry=None, publication_tracker=None, journal_registry=None, manuscript_root=MANUSCRIPT_ROOT, queue_state_path=MANUSCRIPT_QUEUE_STATE_PATH, publication_state_path=PUBLICATION_TRACKER_STATE_PATH):
+def materialize_manuscript_outputs(state, direction_registry=None, publication_tracker=None, journal_registry=None, manuscript_root=MANUSCRIPT_ROOT, manuscript_drafts_root=MANUSCRIPT_DRAFTS_ROOT, queue_state_path=MANUSCRIPT_QUEUE_STATE_PATH, publication_state_path=PUBLICATION_TRACKER_STATE_PATH):
     direction_registry = direction_registry or {}
     publication_tracker = publication_tracker or load_publication_tracker(publication_state_path)
     journal_registry = journal_registry or load_journal_registry()
@@ -3189,16 +3865,22 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
     connector_context = build_connector_context()
     root = Path(manuscript_root)
     root.mkdir(parents=True, exist_ok=True)
+    drafts_root = Path(manuscript_drafts_root)
+    drafts_root.mkdir(parents=True, exist_ok=True)
 
     manifests = []
+    draft_manifests = []
     expected_folder_names = set()
+    expected_draft_folder_names = set()
     for candidate in queue['active_candidates'] + queue['watchlist']:
         row = row_lookup.get(candidate['candidate_id'])
         if not row:
             continue
         publication_entry = publication_entry_for_candidate(publication_tracker, candidate['candidate_id'])
         folder = candidate_folder(root, candidate)
+        draft_folder = candidate_draft_folder(drafts_root, candidate)
         expected_folder_names.add(folder.name)
+        expected_draft_folder_names.add(draft_folder.name)
         artifacts_dir = folder / 'artifacts'
         drafts_dir = folder / 'drafts'
         section_packets_dir = folder / 'section_packets'
@@ -3207,6 +3889,7 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         drafts_dir.mkdir(parents=True, exist_ok=True)
         section_packets_dir.mkdir(parents=True, exist_ok=True)
         task_outputs_dir.mkdir(parents=True, exist_ok=True)
+        draft_folder.mkdir(parents=True, exist_ok=True)
 
         phase_entries = phase_entries_for_candidate(row, state, indexes)
         candidate['connector_summary'] = candidate_connector_summary(candidate, phase_entries, connector_context)
@@ -3228,6 +3911,10 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         candidate['ready_for_codex_draft'] = ready_for_codex_draft(candidate['scientific_strength'], candidate['journal_targets'], candidate['draft_readiness'], candidate['task_ledger'], candidate['manuscript_gate_state'])
         candidate['draft_status'] = 'ready_for_codex_draft' if candidate['ready_for_codex_draft'] else ('pack_ready' if candidate['manuscript_gate_state'] == 'ready to build phase 8 pack' else 'gathering evidence')
         candidate['review_memo_status'] = 'available' if candidate['manuscript_gate_state'] != 'not ready' else 'early warning'
+        candidate['recommended_article_type'] = recommended_article_type(candidate)
+        candidate['manuscript_draft_title'] = manuscript_draft_title(candidate, row, phase_entries)
+        candidate['manuscript_keywords'] = manuscript_keywords(candidate, row, phase_entries)
+        missing_packet = hydrate_candidate_draft_output(candidate, evidence_bundle, manuscript_drafts_root=drafts_root)
 
         manifest = build_pack_manifest(candidate, row, publication_entry)
         manifests.append({'candidate_id': candidate['candidate_id'], 'folder': str(folder.relative_to(REPO_ROOT)), 'gate_state': candidate['manuscript_gate_state']})
@@ -3343,16 +4030,62 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         elif ready_path.exists():
             ready_path.unlink()
 
-    for child in root.iterdir():
-        if not child.is_dir() or child.name in expected_folder_names:
-            continue
-        if (child / 'pack_manifest.json').exists() and (child / 'candidate_snapshot.json').exists():
-            try:
-                shutil.rmtree(child)
-            except FileNotFoundError:
-                # Another rebuild pass may have already removed the stale folder.
-                pass
+        write_text(draft_folder / 'draft_status.md', build_draft_status_markdown(candidate, row, phase_entries, missing_packet))
+        write_text(draft_folder / 'target_journal.md', build_target_journal_markdown(candidate))
+        write_text(draft_folder / 'comprehensive_outline.md', build_comprehensive_outline_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet))
+        write_text(draft_folder / 'missing_metadata_and_items.md', build_missing_metadata_markdown(candidate, missing_packet))
+        write_text(draft_folder / 'manuscript_draft.md', build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet))
+        draft_manifest = {
+            'updated_at': iso_now(),
+            'candidate_id': candidate['candidate_id'],
+            'pack_key': candidate['pack_key'],
+            'title': candidate['title'],
+            'draft_title': candidate.get('manuscript_draft_title'),
+            'generated_draft_status': candidate.get('generated_draft_status'),
+            'ready_for_metadata_only': bool(candidate.get('ready_for_metadata_only')),
+            'primary_journal': candidate['journal_targets'].get('primary'),
+            'recommended_article_type': candidate.get('recommended_article_type'),
+            'draft_output': candidate.get('draft_output', {}),
+            'missing_metadata_summary': candidate.get('missing_metadata_summary', {}),
+            'evidence_bundle_summary': evidence_bundle.get('summary', {}),
+            'manuscript_gate_state': candidate.get('manuscript_gate_state'),
+        }
+        write_json(draft_folder / GENERATED_DRAFT_MANIFEST_FILENAME, draft_manifest)
+        draft_manifests.append(draft_manifest)
 
+    prune_stale_outputs = os.environ.get('PHASE8_PRUNE_STALE_OUTPUTS', '').strip() == '1'
+    if prune_stale_outputs:
+        for child in root.iterdir():
+            if not child.is_dir() or child.name in expected_folder_names:
+                continue
+            if (child / 'pack_manifest.json').exists() and (child / 'candidate_snapshot.json').exists():
+                try:
+                    shutil.rmtree(child)
+                except FileNotFoundError:
+                    # Another rebuild pass may have already removed the stale folder.
+                    pass
+
+        for child in drafts_root.iterdir():
+            if not child.is_dir() or child.name in expected_draft_folder_names:
+                continue
+            if (child / GENERATED_DRAFT_MANIFEST_FILENAME).exists():
+                try:
+                    shutil.rmtree(child)
+                except FileNotFoundError:
+                    pass
+
+    queue['draft_outputs'] = build_generated_draft_summary(queue['active_candidates'] + queue['watchlist'], root=drafts_root)
+    queue['ready_for_metadata_only_candidates'] = [
+        candidate
+        for candidate in queue['active_candidates'] + queue['watchlist']
+        if candidate.get('ready_for_metadata_only')
+    ]
     queue['artifact_manifest'] = manifests
+    write_json(drafts_root / GENERATED_DRAFT_INDEX_FILENAME, {
+        'updated_at': iso_now(),
+        'summary': queue.get('summary', {}),
+        'draft_outputs': queue.get('draft_outputs', {}),
+        'draft_manifests': draft_manifests,
+    })
     write_json(queue_state_path, queue)
     return queue

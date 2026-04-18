@@ -1312,6 +1312,11 @@ def build_goal_progress(state, primary_packet, secondary_packets, direction_regi
             'manuscript_gate_state': normalize(manuscript_candidate.get('manuscript_gate_state')),
             'draft_readiness': manuscript_candidate.get('draft_readiness'),
             'ready_for_codex_draft': bool(manuscript_candidate.get('ready_for_codex_draft')),
+            'ready_for_metadata_only': bool(manuscript_candidate.get('ready_for_metadata_only')),
+            'generated_draft_status': normalize(manuscript_candidate.get('generated_draft_status')),
+            'recommended_article_type': normalize(manuscript_candidate.get('recommended_article_type')),
+            'draft_output': manuscript_candidate.get('draft_output') or {},
+            'missing_metadata_summary': manuscript_candidate.get('missing_metadata_summary') or {},
         }
         if normalize(manuscript_candidate.get('title') or selected_candidate.get('title'))
         else {

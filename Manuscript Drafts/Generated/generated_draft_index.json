@@ -1,0 +1,1211 @@
+{
+  "updated_at": "2026-04-18T13:15:22.787366+00:00",
+  "summary": {
+    "active_count": 2,
+    "watchlist_count": 2,
+    "tracked_publications": 0,
+    "ready_for_codex_draft_count": 0,
+    "ready_for_metadata_only_count": 0
+  },
+  "draft_outputs": {
+    "root_relative_path": "Manuscript Drafts/Generated",
+    "root_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated",
+    "index_relative_path": "Manuscript Drafts/Generated/generated_draft_index.json",
+    "index_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/generated_draft_index.json",
+    "entries": [
+      {
+        "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+        "title": "Blood-Brain Barrier Failure biomarker panel",
+        "manuscript_gate_state": "almost ready",
+        "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+        "ready_for_metadata_only": false,
+        "active_lane": true,
+        "watchlist_rank": null,
+        "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+        "status_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_status.md",
+        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_status.md",
+        "target_journal_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/target_journal.md",
+        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/target_journal.md",
+        "outline_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/comprehensive_outline.md",
+        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/comprehensive_outline.md",
+        "missing_items_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/missing_metadata_and_items.md",
+        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/missing_metadata_and_items.md",
+        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/manuscript_draft.md",
+        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/manuscript_draft.md",
+        "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
+        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
+        "missing_metadata_item_count": 12,
+        "content_gap_count": 17
+      },
+      {
+        "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
+        "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
+        "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
+        "manuscript_gate_state": "almost ready",
+        "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+        "ready_for_metadata_only": false,
+        "active_lane": true,
+        "watchlist_rank": null,
+        "folder_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
+        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
+        "status_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_status.md",
+        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_status.md",
+        "target_journal_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/target_journal.md",
+        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/target_journal.md",
+        "outline_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/comprehensive_outline.md",
+        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/comprehensive_outline.md",
+        "missing_items_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
+        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
+        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
+        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
+        "manifest_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
+        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
+        "missing_metadata_item_count": 12,
+        "content_gap_count": 16
+      },
+      {
+        "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+        "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
+        "title": "Neuroinflammation / Microglial State Change biomarker panel",
+        "manuscript_gate_state": "almost ready",
+        "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+        "ready_for_metadata_only": false,
+        "active_lane": false,
+        "watchlist_rank": 1,
+        "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
+        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
+        "status_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_status.md",
+        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_status.md",
+        "target_journal_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/target_journal.md",
+        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/target_journal.md",
+        "outline_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/comprehensive_outline.md",
+        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/comprehensive_outline.md",
+        "missing_items_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
+        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
+        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
+        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
+        "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
+        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
+        "missing_metadata_item_count": 12,
+        "content_gap_count": 17
+      },
+      {
+        "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+        "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
+        "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+        "manuscript_gate_state": "almost ready",
+        "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+        "ready_for_metadata_only": false,
+        "active_lane": false,
+        "watchlist_rank": 2,
+        "folder_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
+        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
+        "status_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_status.md",
+        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_status.md",
+        "target_journal_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/target_journal.md",
+        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/target_journal.md",
+        "outline_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/comprehensive_outline.md",
+        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/comprehensive_outline.md",
+        "missing_items_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
+        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
+        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
+        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
+        "manifest_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
+        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
+        "missing_metadata_item_count": 12,
+        "content_gap_count": 10
+      }
+    ],
+    "ready_for_metadata_only": []
+  },
+  "draft_manifests": [
+    {
+      "updated_at": "2026-04-18T13:15:22.625530+00:00",
+      "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+      "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+      "title": "Blood-Brain Barrier Failure biomarker panel",
+      "draft_title": "Blood-Brain Barrier Failure as a biomarker-guided manuscript path in traumatic brain injury",
+      "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+      "ready_for_metadata_only": false,
+      "primary_journal": {
+        "journal": {
+          "id": "journal-of-neurotrauma",
+          "name": "Journal of Neurotrauma",
+          "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
+          "submission_tier": "realistic",
+          "registry_role": "core",
+          "audiences": [
+            "neurotrauma",
+            "mechanism",
+            "biomarker",
+            "translational"
+          ],
+          "manuscript_modes": [
+            "mechanistic_biomarker",
+            "mechanistic_bridge",
+            "translational_tbi",
+            "endotype_discriminator"
+          ],
+          "preferred_article_types": [
+            "original research",
+            "review",
+            "commentary"
+          ],
+          "primary_fit_families": [
+            "most_informative_biomarker_panel",
+            "strongest_causal_bridge",
+            "best_intervention_leverage_point"
+          ],
+          "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
+        },
+        "score": 7,
+        "reasons": [
+          "Audience overlap: Biomarker, Mechanism, Neurotrauma",
+          "Manuscript mode fit: Endotype Discriminator, Mechanistic Biomarker",
+          "Article-type overlap: original research, review",
+          "Family fit: journal often suits this manuscript family."
+        ],
+        "article_type_overlap": [
+          "original research",
+          "review"
+        ],
+        "requirements": {
+          "checked": true,
+          "score": 4,
+          "article_type_match": true,
+          "evidence_chain_match": true,
+          "translation_match": true,
+          "scientific_strength_match": true,
+          "reasons": [
+            "Article type is compatible with the captured journal requirements.",
+            "Current evidence chain meets the journal requirements snapshot.",
+            "Translation maturity is within the journal requirements bounds.",
+            "Scientific strength clears the minimum threshold recorded for this journal."
+          ],
+          "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
+          "snapshot": {
+            "journal_name": "Journal of Neurotrauma",
+            "verified": true,
+            "checked_at": "2026-04-13T00:09:39Z",
+            "source_url": "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50",
+            "source_urls": [
+              "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50"
+            ],
+            "access": "subscription",
+            "accepts_preprints": true,
+            "peer_review": {
+              "identity_transparency": "single anonymized"
+            },
+            "format_neutral_first_submission": true,
+            "allowed_article_types": [
+              "original research",
+              "review",
+              "short communication",
+              "letter to the editor"
+            ],
+            "preferred_article_types": [
+              "original research",
+              "review"
+            ],
+            "article_type_requirements": {
+              "original research": {
+                "word_limit": 6000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 450,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "review": {
+                "word_limit_range": [
+                  8000,
+                  12000
+                ],
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "short communication": {
+                "word_limit": 2000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_tables_and_or_figures": 2
+              },
+              "letter to the editor": {
+                "word_limit": 500,
+                "max_figures_or_tables": 1,
+                "max_references": 5
+              }
+            },
+            "required_manuscript_elements": [
+              "unstructured abstract",
+              "minimum 4 keywords",
+              "title page before abstract",
+              "author contributions section",
+              "statements and declarations section",
+              "transparency rigor and reproducibility summary",
+              "funding statement",
+              "conflict of interest statement",
+              "data availability statement"
+            ],
+            "transparency_rigor_reproducibility": {
+              "required": true,
+              "word_limit": 500,
+              "placement": "after conclusion",
+              "article_specific_guidance_captured": true
+            },
+            "manual_capture_sources": [
+              "official author instructions supplied manually on April 12, 2026",
+              "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for FLUID BIOMARKERS Papers (01/05/22)",
+              "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for PATHOPHYSIOLOGICAL MECHANISTIC STUDIES Papers (01/05/22)"
+            ],
+            "article_type_specific_guidance": {
+              "fluid_biomarker_papers": {
+                "label": "Fluid biomarker papers",
+                "applies_to_manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "endotype_discriminator",
+                  "translational_tbi"
+                ],
+                "definition": "Human or other living-organism studies that collect biofluids and evaluate biomarker utility for clinically relevant or pre-clinically informative purposes.",
+                "must_address": [
+                  "study registration and analytic-plan disclosure",
+                  "power and planned versus actual sample size",
+                  "participant accounting for screened, collected, analyzed, quality-passed, and clinically assessed samples",
+                  "blinding of biomarker measurement, handling, quality control, and analysis roles",
+                  "sample timing, collection state, handling conditions, storage, batch assignment, lot bridging, and technical failures",
+                  "assay validation, replicates, coefficient of variation, lower and upper limits, dilutional linearity, specificity, and spike-recovery",
+                  "validity and reliability of the clinically relevant assessments paired to the biomarker",
+                  "statistical assumptions, outlier handling, missing-data handling, effect sizes, confidence intervals, and multiple-comparison management",
+                  "replication or external validation status",
+                  "data availability, analytic code availability, biofluid sample availability, and open/public availability plan"
+                ],
+                "critical_for_readiness": [
+                  "participant accounting",
+                  "sample handling and assay-performance disclosure",
+                  "clinically relevant assessment validity",
+                  "multiple-comparison management",
+                  "replication or external validation status",
+                  "data or code availability statement"
+                ]
+              },
+              "pathophysiological_mechanistic_studies": {
+                "label": "Pathophysiological mechanistic studies",
+                "applies_to_manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "translational_tbi"
+                ],
+                "definition": "Systematic, controlled in vivo or in vitro experimental manipulations intended to advance fundamental mechanistic knowledge relevant to traumatic brain or spinal cord injury.",
+                "must_address": [
+                  "study registration and analytic-plan disclosure",
+                  "power and planned versus actual sample size",
+                  "subject accounting for inclusion, manipulation, analysis, interpretability, deaths, and incomplete assessments",
+                  "randomization method and adequacy assessment",
+                  "blinding of manipulations, materials handling, analyses, and labeling",
+                  "experimental-manipulation timing, state, devices, storage, batching, technical failures, and unexpected events",
+                  "target engagement, dose response, cross validation, specificity controls, lesion or stimulation verification, and positive/negative controls",
+                  "primary-analysis accuracy, assay characteristics, statistical assumptions, outlier handling, missing-data handling, and multiple-comparison management",
+                  "replication or external validation status",
+                  "data availability, analytic code availability, sample availability, and open/public availability plan"
+                ],
+                "critical_for_readiness": [
+                  "randomization or explicit rationale for non-randomization",
+                  "blinding and material-labeling disclosure",
+                  "experimental-manipulation reproducibility details",
+                  "target-engagement or specificity controls",
+                  "multiple-comparison management",
+                  "replication or external validation status",
+                  "data or code availability statement"
+                ]
+              }
+            },
+            "clinical_trial_registration_required": true,
+            "reference_style": "Sage Vancouver",
+            "title_page_requirements": {
+              "full_contact_for_each_author": true,
+              "corresponding_author_required": true,
+              "placement": "within manuscript before abstract"
+            },
+            "submission_requirements": {
+              "orcid_required_for_submitting_author": true,
+              "coauthor_orcid_strongly_encouraged": true,
+              "visual_abstract_encouraged": true,
+              "word_figure_table_counts_required": true,
+              "funder_information_required": true,
+              "keywords_required": true
+            },
+            "publishing_fees": {
+              "submission_fee_usd": 49,
+              "page_charge_usd_per_page": 90,
+              "print_color_first_image_usd": 800,
+              "print_color_additional_image_usd": 200
+            },
+            "requires_full_evidence_chain": true,
+            "allows_bounded_translation": true,
+            "minimum_scientific_strength": 2,
+            "notes": "Manual capture from the official Journal of Neurotrauma instructions plus the supplied April 2026 article-type-specific transparency statements for fluid biomarker papers and pathophysiological mechanistic studies. This journal explicitly considers original research, reviews, short communications, and letters to the editor; case reports are not accepted. It accepts format-neutral first submissions but still requires IRB/disclosure elements and a 500-word Transparency, Rigor, and Reproducibility Summary after the conclusion. Operational fit rule: mechanistic biomarker and pathophysiological studies can remain bounded in translational maturity if claims are explicitly limited and the evidence chain, declarations, article-type-specific transparency checklist, and reproducibility summary are complete."
+          }
+        }
+      },
+      "recommended_article_type": "original research",
+      "draft_output": {
+        "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+        "source_pack_relative_path": "outputs/manuscripts/most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+        "source_pack_absolute_path": "/Users/matthewholtkamp/Documents/testfile/outputs/manuscripts/most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
+        "status_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_status.md",
+        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_status.md",
+        "target_journal_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/target_journal.md",
+        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/target_journal.md",
+        "outline_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/comprehensive_outline.md",
+        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/comprehensive_outline.md",
+        "missing_items_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/missing_metadata_and_items.md",
+        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/missing_metadata_and_items.md",
+        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/manuscript_draft.md",
+        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/manuscript_draft.md",
+        "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
+        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
+        "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+        "ready_for_metadata_only": false,
+        "missing_metadata_item_count": 12,
+        "content_gap_count": 17
+      },
+      "missing_metadata_summary": {
+        "metadata_item_count": 12,
+        "content_gap_count": 17,
+        "task_gap_count": 3,
+        "rigor_gap_count": 14
+      },
+      "evidence_bundle_summary": {
+        "reference_count": 52,
+        "claim_count": 10,
+        "contradiction_count": 18,
+        "figure_count": 4,
+        "section_packet_count": 5,
+        "primary_journal_verified": true,
+        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+        "journal_specific_rigor_profile_count": 2,
+        "journal_specific_rigor_critical_gaps": 14,
+        "journal_specific_rigor_fill_entries": 14
+      },
+      "manuscript_gate_state": "almost ready"
+    },
+    {
+      "updated_at": "2026-04-18T13:15:22.662573+00:00",
+      "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
+      "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
+      "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
+      "draft_title": "Mitochondrial / Bioenergetic Collapse as a bounded translational target in traumatic brain injury",
+      "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+      "ready_for_metadata_only": false,
+      "primary_journal": {
+        "journal": {
+          "id": "journal-of-neurotrauma",
+          "name": "Journal of Neurotrauma",
+          "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
+          "submission_tier": "realistic",
+          "registry_role": "core",
+          "audiences": [
+            "neurotrauma",
+            "mechanism",
+            "biomarker",
+            "translational"
+          ],
+          "manuscript_modes": [
+            "mechanistic_biomarker",
+            "mechanistic_bridge",
+            "translational_tbi",
+            "endotype_discriminator"
+          ],
+          "preferred_article_types": [
+            "original research",
+            "review",
+            "commentary"
+          ],
+          "primary_fit_families": [
+            "most_informative_biomarker_panel",
+            "strongest_causal_bridge",
+            "best_intervention_leverage_point"
+          ],
+          "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
+        },
+        "score": 7,
+        "reasons": [
+          "Audience overlap: Biomarker, Mechanism, Neurotrauma",
+          "Manuscript mode fit: Endotype Discriminator, Translational Tbi",
+          "Article-type overlap: original research, review",
+          "Family fit: journal often suits this manuscript family."
+        ],
+        "article_type_overlap": [
+          "original research",
+          "review"
+        ],
+        "requirements": {
+          "checked": true,
+          "score": 4,
+          "article_type_match": true,
+          "evidence_chain_match": true,
+          "translation_match": true,
+          "scientific_strength_match": true,
+          "reasons": [
+            "Article type is compatible with the captured journal requirements.",
+            "Current evidence chain meets the journal requirements snapshot.",
+            "Translation maturity is within the journal requirements bounds.",
+            "Scientific strength clears the minimum threshold recorded for this journal."
+          ],
+          "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
+          "snapshot": {
+            "journal_name": "Journal of Neurotrauma",
+            "verified": true,
+            "checked_at": "2026-04-13T00:09:39Z",
+            "source_url": "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50",
+            "source_urls": [
+              "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50"
+            ],
+            "access": "subscription",
+            "accepts_preprints": true,
+            "peer_review": {
+              "identity_transparency": "single anonymized"
+            },
+            "format_neutral_first_submission": true,
+            "allowed_article_types": [
+              "original research",
+              "review",
+              "short communication",
+              "letter to the editor"
+            ],
+            "preferred_article_types": [
+              "original research",
+              "review"
+            ],
+            "article_type_requirements": {
+              "original research": {
+                "word_limit": 6000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 450,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "review": {
+                "word_limit_range": [
+                  8000,
+                  12000
+                ],
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "short communication": {
+                "word_limit": 2000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_tables_and_or_figures": 2
+              },
+              "letter to the editor": {
+                "word_limit": 500,
+                "max_figures_or_tables": 1,
+                "max_references": 5
+              }
+            },
+            "required_manuscript_elements": [
+              "unstructured abstract",
+              "minimum 4 keywords",
+              "title page before abstract",
+              "author contributions section",
+              "statements and declarations section",
+              "transparency rigor and reproducibility summary",
+              "funding statement",
+              "conflict of interest statement",
+              "data availability statement"
+            ],
+            "transparency_rigor_reproducibility": {
+              "required": true,
+              "word_limit": 500,
+              "placement": "after conclusion",
+              "article_specific_guidance_captured": true
+            },
+            "manual_capture_sources": [
+              "official author instructions supplied manually on April 12, 2026",
+              "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for FLUID BIOMARKERS Papers (01/05/22)",
+              "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for PATHOPHYSIOLOGICAL MECHANISTIC STUDIES Papers (01/05/22)"
+            ],
+            "article_type_specific_guidance": {
+              "fluid_biomarker_papers": {
+                "label": "Fluid biomarker papers",
+                "applies_to_manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "endotype_discriminator",
+                  "translational_tbi"
+                ],
+                "definition": "Human or other living-organism studies that collect biofluids and evaluate biomarker utility for clinically relevant or pre-clinically informative purposes.",
+                "must_address": [
+                  "study registration and analytic-plan disclosure",
+                  "power and planned versus actual sample size",
+                  "participant accounting for screened, collected, analyzed, quality-passed, and clinically assessed samples",
+                  "blinding of biomarker measurement, handling, quality control, and analysis roles",
+                  "sample timing, collection state, handling conditions, storage, batch assignment, lot bridging, and technical failures",
+                  "assay validation, replicates, coefficient of variation, lower and upper limits, dilutional linearity, specificity, and spike-recovery",
+                  "validity and reliability of the clinically relevant assessments paired to the biomarker",
+                  "statistical assumptions, outlier handling, missing-data handling, effect sizes, confidence intervals, and multiple-comparison management",
+                  "replication or external validation status",
+                  "data availability, analytic code availability, biofluid sample availability, and open/public availability plan"
+                ],
+                "critical_for_readiness": [
+                  "participant accounting",
+                  "sample handling and assay-performance disclosure",
+                  "clinically relevant assessment validity",
+                  "multiple-comparison management",
+                  "replication or external validation status",
+                  "data or code availability statement"
+                ]
+              },
+              "pathophysiological_mechanistic_studies": {
+                "label": "Pathophysiological mechanistic studies",
+                "applies_to_manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "translational_tbi"
+                ],
+                "definition": "Systematic, controlled in vivo or in vitro experimental manipulations intended to advance fundamental mechanistic knowledge relevant to traumatic brain or spinal cord injury.",
+                "must_address": [
+                  "study registration and analytic-plan disclosure",
+                  "power and planned versus actual sample size",
+                  "subject accounting for inclusion, manipulation, analysis, interpretability, deaths, and incomplete assessments",
+                  "randomization method and adequacy assessment",
+                  "blinding of manipulations, materials handling, analyses, and labeling",
+                  "experimental-manipulation timing, state, devices, storage, batching, technical failures, and unexpected events",
+                  "target engagement, dose response, cross validation, specificity controls, lesion or stimulation verification, and positive/negative controls",
+                  "primary-analysis accuracy, assay characteristics, statistical assumptions, outlier handling, missing-data handling, and multiple-comparison management",
+                  "replication or external validation status",
+                  "data availability, analytic code availability, sample availability, and open/public availability plan"
+                ],
+                "critical_for_readiness": [
+                  "randomization or explicit rationale for non-randomization",
+                  "blinding and material-labeling disclosure",
+                  "experimental-manipulation reproducibility details",
+                  "target-engagement or specificity controls",
+                  "multiple-comparison management",
+                  "replication or external validation status",
+                  "data or code availability statement"
+                ]
+              }
+            },
+            "clinical_trial_registration_required": true,
+            "reference_style": "Sage Vancouver",
+            "title_page_requirements": {
+              "full_contact_for_each_author": true,
+              "corresponding_author_required": true,
+              "placement": "within manuscript before abstract"
+            },
+            "submission_requirements": {
+              "orcid_required_for_submitting_author": true,
+              "coauthor_orcid_strongly_encouraged": true,
+              "visual_abstract_encouraged": true,
+              "word_figure_table_counts_required": true,
+              "funder_information_required": true,
+              "keywords_required": true
+            },
+            "publishing_fees": {
+              "submission_fee_usd": 49,
+              "page_charge_usd_per_page": 90,
+              "print_color_first_image_usd": 800,
+              "print_color_additional_image_usd": 200
+            },
+            "requires_full_evidence_chain": true,
+            "allows_bounded_translation": true,
+            "minimum_scientific_strength": 2,
+            "notes": "Manual capture from the official Journal of Neurotrauma instructions plus the supplied April 2026 article-type-specific transparency statements for fluid biomarker papers and pathophysiological mechanistic studies. This journal explicitly considers original research, reviews, short communications, and letters to the editor; case reports are not accepted. It accepts format-neutral first submissions but still requires IRB/disclosure elements and a 500-word Transparency, Rigor, and Reproducibility Summary after the conclusion. Operational fit rule: mechanistic biomarker and pathophysiological studies can remain bounded in translational maturity if claims are explicitly limited and the evidence chain, declarations, article-type-specific transparency checklist, and reproducibility summary are complete."
+          }
+        }
+      },
+      "recommended_article_type": "original research",
+      "draft_output": {
+        "folder_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
+        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
+        "source_pack_relative_path": "outputs/manuscripts/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
+        "source_pack_absolute_path": "/Users/matthewholtkamp/Documents/testfile/outputs/manuscripts/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
+        "status_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_status.md",
+        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_status.md",
+        "target_journal_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/target_journal.md",
+        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/target_journal.md",
+        "outline_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/comprehensive_outline.md",
+        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/comprehensive_outline.md",
+        "missing_items_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
+        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
+        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
+        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
+        "manifest_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
+        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
+        "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+        "ready_for_metadata_only": false,
+        "missing_metadata_item_count": 12,
+        "content_gap_count": 16
+      },
+      "missing_metadata_summary": {
+        "metadata_item_count": 12,
+        "content_gap_count": 16,
+        "task_gap_count": 2,
+        "rigor_gap_count": 14
+      },
+      "evidence_bundle_summary": {
+        "reference_count": 47,
+        "claim_count": 9,
+        "contradiction_count": 21,
+        "figure_count": 4,
+        "section_packet_count": 5,
+        "primary_journal_verified": true,
+        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+        "journal_specific_rigor_profile_count": 2,
+        "journal_specific_rigor_critical_gaps": 14,
+        "journal_specific_rigor_fill_entries": 14
+      },
+      "manuscript_gate_state": "almost ready"
+    },
+    {
+      "updated_at": "2026-04-18T13:15:22.745922+00:00",
+      "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+      "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
+      "title": "Neuroinflammation / Microglial State Change biomarker panel",
+      "draft_title": "Neuroinflammation / Microglial State Change as a biomarker-guided manuscript path in traumatic brain injury",
+      "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+      "ready_for_metadata_only": false,
+      "primary_journal": {
+        "journal": {
+          "id": "journal-of-neurotrauma",
+          "name": "Journal of Neurotrauma",
+          "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
+          "submission_tier": "realistic",
+          "registry_role": "core",
+          "audiences": [
+            "neurotrauma",
+            "mechanism",
+            "biomarker",
+            "translational"
+          ],
+          "manuscript_modes": [
+            "mechanistic_biomarker",
+            "mechanistic_bridge",
+            "translational_tbi",
+            "endotype_discriminator"
+          ],
+          "preferred_article_types": [
+            "original research",
+            "review",
+            "commentary"
+          ],
+          "primary_fit_families": [
+            "most_informative_biomarker_panel",
+            "strongest_causal_bridge",
+            "best_intervention_leverage_point"
+          ],
+          "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
+        },
+        "score": 7,
+        "reasons": [
+          "Audience overlap: Biomarker, Mechanism, Neurotrauma",
+          "Manuscript mode fit: Endotype Discriminator, Mechanistic Biomarker",
+          "Article-type overlap: original research, review",
+          "Family fit: journal often suits this manuscript family."
+        ],
+        "article_type_overlap": [
+          "original research",
+          "review"
+        ],
+        "requirements": {
+          "checked": true,
+          "score": 4,
+          "article_type_match": true,
+          "evidence_chain_match": true,
+          "translation_match": true,
+          "scientific_strength_match": true,
+          "reasons": [
+            "Article type is compatible with the captured journal requirements.",
+            "Current evidence chain meets the journal requirements snapshot.",
+            "Translation maturity is within the journal requirements bounds.",
+            "Scientific strength clears the minimum threshold recorded for this journal."
+          ],
+          "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
+          "snapshot": {
+            "journal_name": "Journal of Neurotrauma",
+            "verified": true,
+            "checked_at": "2026-04-13T00:09:39Z",
+            "source_url": "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50",
+            "source_urls": [
+              "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50"
+            ],
+            "access": "subscription",
+            "accepts_preprints": true,
+            "peer_review": {
+              "identity_transparency": "single anonymized"
+            },
+            "format_neutral_first_submission": true,
+            "allowed_article_types": [
+              "original research",
+              "review",
+              "short communication",
+              "letter to the editor"
+            ],
+            "preferred_article_types": [
+              "original research",
+              "review"
+            ],
+            "article_type_requirements": {
+              "original research": {
+                "word_limit": 6000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 450,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "review": {
+                "word_limit_range": [
+                  8000,
+                  12000
+                ],
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "short communication": {
+                "word_limit": 2000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_tables_and_or_figures": 2
+              },
+              "letter to the editor": {
+                "word_limit": 500,
+                "max_figures_or_tables": 1,
+                "max_references": 5
+              }
+            },
+            "required_manuscript_elements": [
+              "unstructured abstract",
+              "minimum 4 keywords",
+              "title page before abstract",
+              "author contributions section",
+              "statements and declarations section",
+              "transparency rigor and reproducibility summary",
+              "funding statement",
+              "conflict of interest statement",
+              "data availability statement"
+            ],
+            "transparency_rigor_reproducibility": {
+              "required": true,
+              "word_limit": 500,
+              "placement": "after conclusion",
+              "article_specific_guidance_captured": true
+            },
+            "manual_capture_sources": [
+              "official author instructions supplied manually on April 12, 2026",
+              "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for FLUID BIOMARKERS Papers (01/05/22)",
+              "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for PATHOPHYSIOLOGICAL MECHANISTIC STUDIES Papers (01/05/22)"
+            ],
+            "article_type_specific_guidance": {
+              "fluid_biomarker_papers": {
+                "label": "Fluid biomarker papers",
+                "applies_to_manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "endotype_discriminator",
+                  "translational_tbi"
+                ],
+                "definition": "Human or other living-organism studies that collect biofluids and evaluate biomarker utility for clinically relevant or pre-clinically informative purposes.",
+                "must_address": [
+                  "study registration and analytic-plan disclosure",
+                  "power and planned versus actual sample size",
+                  "participant accounting for screened, collected, analyzed, quality-passed, and clinically assessed samples",
+                  "blinding of biomarker measurement, handling, quality control, and analysis roles",
+                  "sample timing, collection state, handling conditions, storage, batch assignment, lot bridging, and technical failures",
+                  "assay validation, replicates, coefficient of variation, lower and upper limits, dilutional linearity, specificity, and spike-recovery",
+                  "validity and reliability of the clinically relevant assessments paired to the biomarker",
+                  "statistical assumptions, outlier handling, missing-data handling, effect sizes, confidence intervals, and multiple-comparison management",
+                  "replication or external validation status",
+                  "data availability, analytic code availability, biofluid sample availability, and open/public availability plan"
+                ],
+                "critical_for_readiness": [
+                  "participant accounting",
+                  "sample handling and assay-performance disclosure",
+                  "clinically relevant assessment validity",
+                  "multiple-comparison management",
+                  "replication or external validation status",
+                  "data or code availability statement"
+                ]
+              },
+              "pathophysiological_mechanistic_studies": {
+                "label": "Pathophysiological mechanistic studies",
+                "applies_to_manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "translational_tbi"
+                ],
+                "definition": "Systematic, controlled in vivo or in vitro experimental manipulations intended to advance fundamental mechanistic knowledge relevant to traumatic brain or spinal cord injury.",
+                "must_address": [
+                  "study registration and analytic-plan disclosure",
+                  "power and planned versus actual sample size",
+                  "subject accounting for inclusion, manipulation, analysis, interpretability, deaths, and incomplete assessments",
+                  "randomization method and adequacy assessment",
+                  "blinding of manipulations, materials handling, analyses, and labeling",
+                  "experimental-manipulation timing, state, devices, storage, batching, technical failures, and unexpected events",
+                  "target engagement, dose response, cross validation, specificity controls, lesion or stimulation verification, and positive/negative controls",
+                  "primary-analysis accuracy, assay characteristics, statistical assumptions, outlier handling, missing-data handling, and multiple-comparison management",
+                  "replication or external validation status",
+                  "data availability, analytic code availability, sample availability, and open/public availability plan"
+                ],
+                "critical_for_readiness": [
+                  "randomization or explicit rationale for non-randomization",
+                  "blinding and material-labeling disclosure",
+                  "experimental-manipulation reproducibility details",
+                  "target-engagement or specificity controls",
+                  "multiple-comparison management",
+                  "replication or external validation status",
+                  "data or code availability statement"
+                ]
+              }
+            },
+            "clinical_trial_registration_required": true,
+            "reference_style": "Sage Vancouver",
+            "title_page_requirements": {
+              "full_contact_for_each_author": true,
+              "corresponding_author_required": true,
+              "placement": "within manuscript before abstract"
+            },
+            "submission_requirements": {
+              "orcid_required_for_submitting_author": true,
+              "coauthor_orcid_strongly_encouraged": true,
+              "visual_abstract_encouraged": true,
+              "word_figure_table_counts_required": true,
+              "funder_information_required": true,
+              "keywords_required": true
+            },
+            "publishing_fees": {
+              "submission_fee_usd": 49,
+              "page_charge_usd_per_page": 90,
+              "print_color_first_image_usd": 800,
+              "print_color_additional_image_usd": 200
+            },
+            "requires_full_evidence_chain": true,
+            "allows_bounded_translation": true,
+            "minimum_scientific_strength": 2,
+            "notes": "Manual capture from the official Journal of Neurotrauma instructions plus the supplied April 2026 article-type-specific transparency statements for fluid biomarker papers and pathophysiological mechanistic studies. This journal explicitly considers original research, reviews, short communications, and letters to the editor; case reports are not accepted. It accepts format-neutral first submissions but still requires IRB/disclosure elements and a 500-word Transparency, Rigor, and Reproducibility Summary after the conclusion. Operational fit rule: mechanistic biomarker and pathophysiological studies can remain bounded in translational maturity if claims are explicitly limited and the evidence chain, declarations, article-type-specific transparency checklist, and reproducibility summary are complete."
+          }
+        }
+      },
+      "recommended_article_type": "original research",
+      "draft_output": {
+        "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
+        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
+        "source_pack_relative_path": "outputs/manuscripts/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
+        "source_pack_absolute_path": "/Users/matthewholtkamp/Documents/testfile/outputs/manuscripts/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
+        "status_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_status.md",
+        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_status.md",
+        "target_journal_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/target_journal.md",
+        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/target_journal.md",
+        "outline_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/comprehensive_outline.md",
+        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/comprehensive_outline.md",
+        "missing_items_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
+        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
+        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
+        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
+        "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
+        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
+        "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+        "ready_for_metadata_only": false,
+        "missing_metadata_item_count": 12,
+        "content_gap_count": 17
+      },
+      "missing_metadata_summary": {
+        "metadata_item_count": 12,
+        "content_gap_count": 17,
+        "task_gap_count": 3,
+        "rigor_gap_count": 14
+      },
+      "evidence_bundle_summary": {
+        "reference_count": 60,
+        "claim_count": 13,
+        "contradiction_count": 24,
+        "figure_count": 4,
+        "section_packet_count": 5,
+        "primary_journal_verified": true,
+        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+        "journal_specific_rigor_profile_count": 2,
+        "journal_specific_rigor_critical_gaps": 14,
+        "journal_specific_rigor_fill_entries": 14
+      },
+      "manuscript_gate_state": "almost ready"
+    },
+    {
+      "updated_at": "2026-04-18T13:15:22.786207+00:00",
+      "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+      "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
+      "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+      "draft_title": "Tau / Proteinopathy Progression with DYRK1A-centered readouts in traumatic brain injury",
+      "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+      "ready_for_metadata_only": false,
+      "primary_journal": {
+        "journal": {
+          "id": "journal-of-neurotrauma",
+          "name": "Journal of Neurotrauma",
+          "homepage": "https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview",
+          "submission_tier": "realistic",
+          "registry_role": "core",
+          "audiences": [
+            "neurotrauma",
+            "mechanism",
+            "biomarker",
+            "translational"
+          ],
+          "manuscript_modes": [
+            "mechanistic_biomarker",
+            "mechanistic_bridge",
+            "translational_tbi",
+            "endotype_discriminator"
+          ],
+          "preferred_article_types": [
+            "original research",
+            "review",
+            "commentary"
+          ],
+          "primary_fit_families": [
+            "most_informative_biomarker_panel",
+            "strongest_causal_bridge",
+            "best_intervention_leverage_point"
+          ],
+          "notes": "Strong home for TBI mechanism, biomarker, and translational synthesis if the evidence chain is explicit and bounded."
+        },
+        "score": 5,
+        "reasons": [
+          "Audience overlap: Biomarker, Mechanism, Neurotrauma",
+          "Manuscript mode fit: Endotype Discriminator",
+          "Article-type overlap: review"
+        ],
+        "article_type_overlap": [
+          "review"
+        ],
+        "requirements": {
+          "checked": true,
+          "score": 4,
+          "article_type_match": true,
+          "evidence_chain_match": true,
+          "translation_match": true,
+          "scientific_strength_match": true,
+          "reasons": [
+            "Article type is compatible with the captured journal requirements.",
+            "Current evidence chain meets the journal requirements snapshot.",
+            "Translation maturity is within the journal requirements bounds.",
+            "Scientific strength clears the minimum threshold recorded for this journal."
+          ],
+          "requirements_path": "config/journal_requirements/journal-of-neurotrauma.json",
+          "snapshot": {
+            "journal_name": "Journal of Neurotrauma",
+            "verified": true,
+            "checked_at": "2026-04-13T00:09:39Z",
+            "source_url": "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50",
+            "source_urls": [
+              "https://www.liebertpub.com/guidelines/journal-of-neurotrauma/50"
+            ],
+            "access": "subscription",
+            "accepts_preprints": true,
+            "peer_review": {
+              "identity_transparency": "single anonymized"
+            },
+            "format_neutral_first_submission": true,
+            "allowed_article_types": [
+              "original research",
+              "review",
+              "short communication",
+              "letter to the editor"
+            ],
+            "preferred_article_types": [
+              "original research",
+              "review"
+            ],
+            "article_type_requirements": {
+              "original research": {
+                "word_limit": 6000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 450,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "review": {
+                "word_limit_range": [
+                  8000,
+                  12000
+                ],
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_figures": 10,
+                "max_tables": 6
+              },
+              "short communication": {
+                "word_limit": 2000,
+                "abstract_type": "unstructured",
+                "abstract_word_limit": 250,
+                "max_tables_and_or_figures": 2
+              },
+              "letter to the editor": {
+                "word_limit": 500,
+                "max_figures_or_tables": 1,
+                "max_references": 5
+              }
+            },
+            "required_manuscript_elements": [
+              "unstructured abstract",
+              "minimum 4 keywords",
+              "title page before abstract",
+              "author contributions section",
+              "statements and declarations section",
+              "transparency rigor and reproducibility summary",
+              "funding statement",
+              "conflict of interest statement",
+              "data availability statement"
+            ],
+            "transparency_rigor_reproducibility": {
+              "required": true,
+              "word_limit": 500,
+              "placement": "after conclusion",
+              "article_specific_guidance_captured": true
+            },
+            "manual_capture_sources": [
+              "official author instructions supplied manually on April 12, 2026",
+              "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for FLUID BIOMARKERS Papers (01/05/22)",
+              "Journal of Neurotrauma Transparency, Rigor and Reproducibility Statement for PATHOPHYSIOLOGICAL MECHANISTIC STUDIES Papers (01/05/22)"
+            ],
+            "article_type_specific_guidance": {
+              "fluid_biomarker_papers": {
+                "label": "Fluid biomarker papers",
+                "applies_to_manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "endotype_discriminator",
+                  "translational_tbi"
+                ],
+                "definition": "Human or other living-organism studies that collect biofluids and evaluate biomarker utility for clinically relevant or pre-clinically informative purposes.",
+                "must_address": [
+                  "study registration and analytic-plan disclosure",
+                  "power and planned versus actual sample size",
+                  "participant accounting for screened, collected, analyzed, quality-passed, and clinically assessed samples",
+                  "blinding of biomarker measurement, handling, quality control, and analysis roles",
+                  "sample timing, collection state, handling conditions, storage, batch assignment, lot bridging, and technical failures",
+                  "assay validation, replicates, coefficient of variation, lower and upper limits, dilutional linearity, specificity, and spike-recovery",
+                  "validity and reliability of the clinically relevant assessments paired to the biomarker",
+                  "statistical assumptions, outlier handling, missing-data handling, effect sizes, confidence intervals, and multiple-comparison management",
+                  "replication or external validation status",
+                  "data availability, analytic code availability, biofluid sample availability, and open/public availability plan"
+                ],
+                "critical_for_readiness": [
+                  "participant accounting",
+                  "sample handling and assay-performance disclosure",
+                  "clinically relevant assessment validity",
+                  "multiple-comparison management",
+                  "replication or external validation status",
+                  "data or code availability statement"
+                ]
+              },
+              "pathophysiological_mechanistic_studies": {
+                "label": "Pathophysiological mechanistic studies",
+                "applies_to_manuscript_modes": [
+                  "mechanistic_biomarker",
+                  "mechanistic_bridge",
+                  "translational_tbi"
+                ],
+                "definition": "Systematic, controlled in vivo or in vitro experimental manipulations intended to advance fundamental mechanistic knowledge relevant to traumatic brain or spinal cord injury.",
+                "must_address": [
+                  "study registration and analytic-plan disclosure",
+                  "power and planned versus actual sample size",
+                  "subject accounting for inclusion, manipulation, analysis, interpretability, deaths, and incomplete assessments",
+                  "randomization method and adequacy assessment",
+                  "blinding of manipulations, materials handling, analyses, and labeling",
+                  "experimental-manipulation timing, state, devices, storage, batching, technical failures, and unexpected events",
+                  "target engagement, dose response, cross validation, specificity controls, lesion or stimulation verification, and positive/negative controls",
+                  "primary-analysis accuracy, assay characteristics, statistical assumptions, outlier handling, missing-data handling, and multiple-comparison management",
+                  "replication or external validation status",
+                  "data availability, analytic code availability, sample availability, and open/public availability plan"
+                ],
+                "critical_for_readiness": [
+                  "randomization or explicit rationale for non-randomization",
+                  "blinding and material-labeling disclosure",
+                  "experimental-manipulation reproducibility details",
+                  "target-engagement or specificity controls",
+                  "multiple-comparison management",
+                  "replication or external validation status",
+                  "data or code availability statement"
+                ]
+              }
+            },
+            "clinical_trial_registration_required": true,
+            "reference_style": "Sage Vancouver",
+            "title_page_requirements": {
+              "full_contact_for_each_author": true,
+              "corresponding_author_required": true,
+              "placement": "within manuscript before abstract"
+            },
+            "submission_requirements": {
+              "orcid_required_for_submitting_author": true,
+              "coauthor_orcid_strongly_encouraged": true,
+              "visual_abstract_encouraged": true,
+              "word_figure_table_counts_required": true,
+              "funder_information_required": true,
+              "keywords_required": true
+            },
+            "publishing_fees": {
+              "submission_fee_usd": 49,
+              "page_charge_usd_per_page": 90,
+              "print_color_first_image_usd": 800,
+              "print_color_additional_image_usd": 200
+            },
+            "requires_full_evidence_chain": true,
+            "allows_bounded_translation": true,
+            "minimum_scientific_strength": 2,
+            "notes": "Manual capture from the official Journal of Neurotrauma instructions plus the supplied April 2026 article-type-specific transparency statements for fluid biomarker papers and pathophysiological mechanistic studies. This journal explicitly considers original research, reviews, short communications, and letters to the editor; case reports are not accepted. It accepts format-neutral first submissions but still requires IRB/disclosure elements and a 500-word Transparency, Rigor, and Reproducibility Summary after the conclusion. Operational fit rule: mechanistic biomarker and pathophysiological studies can remain bounded in translational maturity if claims are explicitly limited and the evidence chain, declarations, article-type-specific transparency checklist, and reproducibility summary are complete."
+          }
+        }
+      },
+      "recommended_article_type": "review",
+      "draft_output": {
+        "folder_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
+        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
+        "source_pack_relative_path": "outputs/manuscripts/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
+        "source_pack_absolute_path": "/Users/matthewholtkamp/Documents/testfile/outputs/manuscripts/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
+        "status_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_status.md",
+        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_status.md",
+        "target_journal_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/target_journal.md",
+        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/target_journal.md",
+        "outline_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/comprehensive_outline.md",
+        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/comprehensive_outline.md",
+        "missing_items_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
+        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
+        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
+        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
+        "manifest_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
+        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
+        "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+        "ready_for_metadata_only": false,
+        "missing_metadata_item_count": 12,
+        "content_gap_count": 10
+      },
+      "missing_metadata_summary": {
+        "metadata_item_count": 12,
+        "content_gap_count": 10,
+        "task_gap_count": 3,
+        "rigor_gap_count": 7
+      },
+      "evidence_bundle_summary": {
+        "reference_count": 83,
+        "claim_count": 14,
+        "contradiction_count": 24,
+        "figure_count": 4,
+        "section_packet_count": 5,
+        "primary_journal_verified": true,
+        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+        "journal_specific_rigor_profile_count": 1,
+        "journal_specific_rigor_critical_gaps": 7,
+        "journal_specific_rigor_fill_entries": 7
+      },
+      "manuscript_gate_state": "almost ready"
+    }
+  ]
+}

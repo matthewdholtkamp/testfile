@@ -1,82 +1,23 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
-  Activity,
-  ArrowRight,
-  BookOpen,
-  CheckCircle2,
-  ChevronRight,
-  Circle,
+  ArrowUpRight,
+  CircleAlert,
   Clock3,
-  ExternalLink,
   FileText,
-  KeyRound,
-  LayoutDashboard,
-  Loader2,
-  MessageSquareText,
+  LoaderCircle,
   RefreshCw,
-  ShieldAlert,
-  ShieldCheck,
-  Sparkles,
-  Target,
-  X,
-  Zap,
+  ScrollText,
 } from "lucide-react";
-import { cn } from "./lib/utils";
 import fallbackData from "./data.json";
 
 const GITHUB_OWNER = "matthewdholtkamp";
 const GITHUB_REPO = "testfile";
 const GITHUB_REF = "main";
-const GITHUB_APPLY_WORKFLOW = "cockpit_apply_decision.yml";
-const GITHUB_CLARIFY_WORKFLOW = "cockpit_clarify_question.yml";
-const GITHUB_EVIDENCE_WORKFLOW = "ongoing_literature_cycle.yml";
 const GITHUB_TOKEN_KEY = "atlas-github-token";
-
-const GITHUB_STATE_FILES = {
-  commandSnapshot: "docs/command_snapshot.json",
-  directionRegistry: "outputs/state/engine_direction_registry.json",
-  decisionLog: "outputs/state/engine_decision_log.jsonl",
-  legacyDecisionLog: "outputs/state/decision_log.jsonl",
-  actionStatus: "outputs/state/engine_action_status.json",
-  lastApply: "outputs/state/engine_last_apply_response.json",
-  lastClarify: "outputs/state/engine_last_clarify_response.json",
-};
-const LIVE_STATE_STALE_DAYS = 7;
-const LIVE_STATE_STALE_MS = LIVE_STATE_STALE_DAYS * 24 * 60 * 60 * 1000;
+const GITHUB_STATE_FILE = "docs/command_snapshot.json";
 
 type AnyRecord = Record<string, any>;
-type RemoteState = {
-  commandSnapshot: AnyRecord;
-  directionRegistry: AnyRecord;
-  decisionHistory: AnyRecord[];
-  actionStatus: AnyRecord;
-  lastApplyResponse: AnyRecord;
-  lastClarifyResponse: AnyRecord;
-};
-
-type PendingConfirmation = {
-  decisionId: string;
-  decisionJson: string;
-  freeText: string;
-  note: string;
-  explanation: string;
-  summary: string;
-};
-
-type BoardRuntimeState = {
-  mismatch: boolean;
-  mismatchReasons: string[];
-  staleReasons: string[];
-  snapshotAge: string;
-  liveSteeringAge: string;
-  liveActionAge: string;
-  decisionHistoryAge: string;
-  steeringAwareAutomation: boolean;
-  liveActionsEnabled: boolean;
-  liveActionStateLabel: string;
-};
-
-type DispatchState = "idle" | "working" | "success" | "error";
+type SnapshotSource = "embedded" | "local" | "github";
 
 function getInjectedPayload(): AnyRecord | null {
   const globalValue = (
@@ -85,2528 +26,773 @@ function getInjectedPayload(): AnyRecord | null {
   return globalValue && typeof globalValue === "object" ? globalValue : null;
 }
 
-function deepClone<T>(value: T): T {
-  return JSON.parse(JSON.stringify(value));
-}
-
 function normalizeText(value: unknown): string {
   return String(value || "")
     .trim()
     .toLowerCase();
 }
 
-function createRequestId(prefix: string): string {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => window.setTimeout(resolve, ms));
-}
-
 function decodeBase64(value: string): string {
   return window.atob(value.replace(/\n/g, ""));
 }
 
-function buildDecisionList(payload: AnyRecord | null): AnyRecord[] {
-  if (!payload) return [];
-  const primary = payload.primary_decision ? [payload.primary_decision] : [];
-  const secondary = Array.isArray(payload.secondary_decisions)
-    ? payload.secondary_decisions
-    : [];
-  return primary
-    .concat(secondary)
-    .filter((decision) => decision && decision.decision_id);
-}
-
-function buildSelectedOptions(
-  payload: AnyRecord | null,
-  previous: Record<string, string> = {},
-): Record<string, string> {
-  const next = { ...previous };
-  for (const decision of buildDecisionList(payload)) {
-    if (!next[decision.decision_id]) {
-      next[decision.decision_id] =
-        decision.recommended_option_id || decision.options?.[0]?.id || "";
-    }
-  }
-  return next;
-}
-
-function formatAge(value: unknown): string {
+function formatRelativeTime(value: unknown): string {
   if (!value) return "Not available";
-  const text = String(value);
-  const parsed = Date.parse(text);
-  if (Number.isNaN(parsed)) return text;
+  const parsed = Date.parse(String(value));
+  if (Number.isNaN(parsed)) return String(value);
+
   const diffMs = Date.now() - parsed;
-  if (diffMs < 60_000) return "Just now";
   const diffMinutes = Math.floor(diffMs / 60_000);
+  if (diffMinutes <= 1) return "Just now";
   if (diffMinutes < 60) return `${diffMinutes}m ago`;
+
   const diffHours = Math.floor(diffMinutes / 60);
   if (diffHours < 24) return `${diffHours}h ago`;
+
   const diffDays = Math.floor(diffHours / 24);
-  return `${diffDays}d ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
+
+  return new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+  }).format(parsed);
 }
 
-function parseTimestamp(value: unknown): number | null {
-  if (!value) return null;
+function formatDateTime(value: unknown): string {
+  if (!value) return "Not available";
   const parsed = Date.parse(String(value));
-  return Number.isNaN(parsed) ? null : parsed;
+  if (Number.isNaN(parsed)) return String(value);
+
+  return new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(parsed);
 }
 
-function newestDecisionHistoryTimestamp(history: AnyRecord[]): number | null {
-  const timestamps = history
-    .map((row) => parseTimestamp(row?.timestamp))
-    .filter((value): value is number => typeof value === "number");
-  if (!timestamps.length) return null;
-  return Math.max(...timestamps);
+function humanize(value: unknown): string {
+  const text = String(value || "").replace(/[_-]+/g, " ").trim();
+  if (!text) return "Not available";
+  return text.replace(/\b\w/g, (character) => character.toUpperCase());
 }
 
-function freezeDecisionPacket(decision: AnyRecord | null): string {
-  if (!decision) return "";
-  try {
-    return JSON.stringify(decision);
-  } catch {
-    return "";
+function fetchLocalSnapshot(): Promise<AnyRecord> {
+  return fetch(`./command_snapshot.json?v=${Date.now()}`, {
+    cache: "no-store",
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Could not load command snapshot (${response.status}).`);
+    }
+    return response.json();
+  });
+}
+
+async function fetchGitHubSnapshot(token: string): Promise<AnyRecord> {
+  const response = await fetch(
+    `https://api.github.com/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/contents/${encodeURIComponent(GITHUB_STATE_FILE)}?ref=${encodeURIComponent(GITHUB_REF)}`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.message || `GitHub API error (${response.status}).`,
+    );
   }
+
+  const data = await response.json();
+  return JSON.parse(decodeBase64(data.content || ""));
 }
 
-function getPackUrl(packKey: string): string {
-  return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/tree/${GITHUB_REF}/outputs/manuscripts/${packKey}`;
+function encodeRepoPath(path: string): string {
+  return path
+    .split("/")
+    .filter(Boolean)
+    .map((segment) => encodeURIComponent(segment))
+    .join("/");
 }
 
-function getTaskSummary(candidate: AnyRecord): string {
+function getRepoTreeUrl(relativePath?: string): string {
+  if (!relativePath) {
+    return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/tree/${GITHUB_REF}`;
+  }
+
+  return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/tree/${GITHUB_REF}/${encodeRepoPath(relativePath)}`;
+}
+
+function getRepoBlobUrl(relativePath?: string): string {
+  if (!relativePath) {
+    return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_REF}`;
+  }
+
+  return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/${GITHUB_REF}/${encodeRepoPath(relativePath)}`;
+}
+
+function getPackUrl(packKey?: string): string {
+  if (!packKey) {
+    return getRepoTreeUrl("outputs/manuscripts");
+  }
+
+  return getRepoTreeUrl(`outputs/manuscripts/${packKey}`);
+}
+
+function getDraftUrl(candidate: AnyRecord | null): string {
+  const draftPath = candidate?.draft_output?.manuscript_draft_relative_path;
+  if (draftPath) return getRepoBlobUrl(draftPath);
+
+  const folderPath = candidate?.draft_output?.folder_relative_path;
+  if (folderPath) return getRepoTreeUrl(folderPath);
+
+  return getPackUrl(candidate?.pack_key);
+}
+
+function getPrimaryJournal(candidate: AnyRecord | null): AnyRecord | null {
+  return candidate?.journal_targets?.primary?.journal || null;
+}
+
+function getLeadBlocker(candidate: AnyRecord | null): string {
+  if (!candidate) return "No blocker named yet.";
+
+  if (candidate?.top_blocker) return candidate.top_blocker;
+
+  const blockedTask = Array.isArray(candidate?.task_ledger)
+    ? candidate.task_ledger.find(
+        (task: AnyRecord) => normalizeText(task?.status) === "blocked",
+      )
+    : null;
+
+  return (
+    blockedTask?.execution_note ||
+    blockedTask?.rationale ||
+    candidate?.journal_targets?.primary?.requirements?.reasons?.[0] ||
+    "No blocker named yet."
+  );
+}
+
+function getTaskStatusLine(candidate: AnyRecord | null): string {
+  if (!candidate) return "No active manuscript status available.";
+
   const counts = candidate?.task_execution_summary?.status_counts || {};
   const parts = [
+    candidate?.draft_status ? humanize(candidate.draft_status) : "Draft status not set",
     counts.running ? `${counts.running} running` : "",
     counts.blocked ? `${counts.blocked} blocked` : "",
     counts.satisfied ? `${counts.satisfied} satisfied` : "",
   ].filter(Boolean);
-  return parts.length ? parts.join(" · ") : "No manuscript tasks emitted yet";
+
+  return parts.join(" · ");
 }
 
-function getTopBlocker(candidate: AnyRecord): string {
-  const blockedTask = Array.isArray(candidate?.task_ledger)
-    ? candidate.task_ledger.find((task: AnyRecord) => task.status === "blocked")
-    : null;
-  if (blockedTask?.execution_note) return blockedTask.execution_note;
-  if (blockedTask?.rationale) return blockedTask.rationale;
-  return (
-    candidate?.journal_targets?.primary?.requirements?.reasons?.[0] ||
-    candidate?.source_row?.blockers ||
-    "No active blocker named yet."
-  );
-}
+function getMetadataSummary(candidate: AnyRecord): string {
+  const parts = [];
 
-function journalStateLabel(candidate: AnyRecord): string {
-  return candidate?.journal_targets?.primary?.requirements?.checked
-    ? "Verified requirements"
-    : "Shortlist only";
-}
-
-function connectorDataStateLabel(candidate: AnyRecord): string {
-  const state = normalizeText(candidate?.connector_summary?.data_state);
-  if (state === "connector_data_attached") return "Connector data attached";
-  if (state === "template_only") return "Template only";
-  return "No connector data attached";
-}
-
-function tenxStateLabel(value: AnyRecord | null | undefined): string {
-  const state = normalizeText(value?.state);
-  if (
-    state === "real_evidence_attached" ||
-    state === "real_10x_evidence_attached"
-  ) {
-    return "Real 10x evidence attached";
-  }
-  if (state === "template_only") return "Template only";
-  return "Not prepared";
-}
-
-function connectorTone(
-  value: string,
-): "muted" | "accent" | "success" | "warning" | "danger" {
-  const state = normalizeText(value);
-  if (
-    state === "connector_data_attached" ||
-    state === "real_evidence_attached" ||
-    state === "real_10x_evidence_attached" ||
-    state === "supported"
-  ) {
-    return "success";
-  }
-  if (state === "template_only" || state === "provisional") return "warning";
-  return "muted";
-}
-
-function formatConnectorSources(candidate: AnyRecord): string {
-  const sources = Array.isArray(candidate?.connector_summary?.sources)
-    ? candidate.connector_summary.sources
-    : [];
-  if (!sources.length) return "None attached yet";
-  return sources
-    .map((row: AnyRecord) => `${row.label || row.key} (${row.count || 0})`)
-    .join(" · ");
-}
-
-function connectorContextStatusLabel(value: unknown): string {
-  const state = normalizeText(value);
-  if (!state || state === "not_available") return "None attached";
-  if (state === "supported") return "Attached";
-  if (state === "provisional") return "Provisional";
-  return String(value || "Not specified").replace(/_/g, " ");
-}
-
-function taskTone(status: string): "muted" | "accent" | "success" | "warning" | "danger" {
-  if (status === "satisfied") return "success";
-  if (status === "running" || status === "queued") return "accent";
-  if (status === "blocked") return "danger";
-  if (status === "reopened") return "warning";
-  return "muted";
-}
-
-function candidatePriorityMode(candidate: AnyRecord): string {
-  const theme = normalizeText(candidate?.theme_key);
-  if (theme.includes("blood_brain_barrier") || theme === "bbb") {
-    return "bbb_first";
-  }
-  if (theme.includes("neuroinflammation")) {
-    return "neuroinflammation_first";
-  }
-  if (theme.includes("mitochondrial")) {
-    return "mitochondrial_first";
-  }
-  return "default";
-}
-
-function candidatePendingActions(candidate: AnyRecord): string {
-  const tasks = Array.isArray(candidate?.task_ledger) ? candidate.task_ledger : [];
-  return tasks
-    .filter((task: AnyRecord) => task.status !== "satisfied" && task.status !== "stale")
-    .map((task: AnyRecord) => task.task_id)
-    .slice(0, 5)
-    .join(",");
-}
-
-function actionableManuscriptTasks(candidate: AnyRecord): AnyRecord[] {
-  const tasks = Array.isArray(candidate?.task_ledger) ? candidate.task_ledger : [];
-  return tasks
-    .filter(
-      (task: AnyRecord) =>
-        task &&
-        task.task_id &&
-        task.status !== "satisfied" &&
-        task.status !== "stale",
-    )
-    .sort((left: AnyRecord, right: AnyRecord) => {
-      const criticalWeight =
-        Number(Boolean(right.critical)) - Number(Boolean(left.critical));
-      if (criticalWeight !== 0) return criticalWeight;
-      const runningWeight =
-        Number(normalizeText(right.status) === "running") -
-        Number(normalizeText(left.status) === "running");
-      if (runningWeight !== 0) return runningWeight;
-      return normalizeText(left.label).localeCompare(normalizeText(right.label));
-    })
-    .slice(0, 3);
-}
-
-function manuscriptTaskActionLabel(task: AnyRecord): string {
-  const taskId = normalizeText(task?.task_id);
-  if (taskId === "resolve_lead_contradiction") return "Resolve contradiction";
-  if (taskId === "strengthen_translational_packet") return "Strengthen Phase 4";
-  if (taskId === "prepare_journal_specific_rigor_packet") {
-    return "Burn down JNT rigor gaps";
-  }
-  if (taskId === "tighten_primary_journal_fit") return "Re-check journal fit";
-  return task?.label || "Run task";
-}
-
-function manuscriptTaskActionNote(task: AnyRecord): string {
-  const taskId = normalizeText(task?.task_id);
-  if (taskId === "resolve_lead_contradiction") {
-    return "Queue a focused run against the lead contradiction rather than the whole pack.";
-  }
-  if (taskId === "strengthen_translational_packet") {
-    return "Push the cycle toward unbounding the Phase 4 packet and tightening translational support.";
-  }
-  if (taskId === "prepare_journal_specific_rigor_packet") {
-    return "Focus the next run on closing the JNT-specific rigor gaps instead of just refreshing the checklist.";
-  }
-  return "Queue a focused run with this Phase 8 task at the front of the steering context.";
-}
-
-function manuscriptQuestion(candidate: AnyRecord, mode: "missing" | "stronger" | "working"): string {
-  const title = candidate?.title || "this manuscript candidate";
-  if (mode === "missing") {
-    return `For the manuscript candidate "${title}", what is missing before it is ready for a draft? Answer from the current Phase 8 pack, task ledger, journal fit, and blocker state.`;
-  }
-  if (mode === "stronger") {
-    return `For the manuscript candidate "${title}", how do we make this stronger from the current repo state? Prioritize the highest-value moves from the current Phase 8 blocker set, translational maturity, and journal-fit gaps.`;
-  }
-  return `For the manuscript candidate "${title}", what manuscript-hardening work is the engine already doing automatically right now, and what is still not happening automatically?`;
-}
-
-function overlayPayloadWithGitHubState(
-  basePayload: AnyRecord | null,
-  remoteState: RemoteState,
-): AnyRecord {
-  const payload: AnyRecord = deepClone(
-    (basePayload || getInjectedPayload() || fallbackData) as AnyRecord,
-  );
-  const registry = remoteState.directionRegistry || {};
-  const history = Array.isArray(remoteState.decisionHistory)
-    ? remoteState.decisionHistory.slice().reverse().slice(0, 8)
-    : [];
-  const actionStatus = remoteState.actionStatus || null;
-
-  payload.board_state = payload.board_state || {};
-  payload.control_state = payload.control_state || {};
-  payload.control_state.actionable = true;
-  payload.control_state.preset_questions = payload.control_state
-    .preset_questions || [
-    "What have we discovered so far?",
-    "Why is this recommended?",
-    "What happens if I choose the second option?",
-    "What paper story is emerging?",
-  ];
-
-  if (registry.active_path_label) {
-    payload.current_direction = {
-      label: registry.active_path_label,
-      reason:
-        registry.active_direction_reason ||
-        payload.current_direction?.reason ||
-        payload.program_status?.current_direction_line ||
-        "",
-    };
-  }
-  if (registry.active_path_id) {
-    payload.board_state.active_decision_id = registry.active_path_id;
-    payload.board_state.active_decision_label =
-      registry.active_path_label ||
-      payload.board_state.active_decision_label ||
-      "";
-  }
-  if (registry.last_updated) {
-    payload.board_state.steering_registry_last_updated = registry.last_updated;
-  }
-  if (registry.current_manuscript_candidate?.title) {
-    payload.goal_progress = payload.goal_progress || {};
-    payload.goal_progress.current_manuscript_candidate =
-      registry.current_manuscript_candidate;
-  }
-  if (registry.next_paper_opportunity?.title) {
-    payload.goal_progress = payload.goal_progress || {};
-    payload.goal_progress.next_paper_opportunity =
-      registry.next_paper_opportunity;
-  }
-  if (history.length) {
-    payload.decision_history = history;
-  }
-  if (actionStatus) {
-    payload.live_action_status = actionStatus;
-    payload.board_state.action_status_timestamp =
-      actionStatus.timestamp ||
-      payload.board_state.action_status_timestamp ||
-      "";
-  }
-  return payload;
-}
-
-function computeBoardRuntimeState(
-  payload: AnyRecord | null,
-  remoteState: RemoteState | null,
-  controlMode: "snapshot" | "github",
-): BoardRuntimeState {
-  const boardState = payload?.board_state || {};
-  const registry = remoteState?.directionRegistry || {};
-  const liveAction =
-    remoteState?.actionStatus || payload?.live_action_status || {};
-  const decisionHistory = Array.isArray(remoteState?.decisionHistory)
-    ? remoteState.decisionHistory
-    : Array.isArray(payload?.decision_history)
-      ? payload.decision_history
-      : [];
-  const visibleIds = Array.isArray(boardState.visible_decision_ids)
-    ? boardState.visible_decision_ids.map(normalizeText)
-    : buildDecisionList(payload).map((decision) =>
-        normalizeText(decision.decision_id),
-      );
-  const publishedDirection = normalizeText(payload?.current_direction?.label);
-  const liveDirection = normalizeText(registry.active_path_label);
-  const liveActiveId = normalizeText(registry.active_path_id);
-  const mismatchReasons: string[] = [];
-  const staleReasons: string[] = [];
-  const snapshotTimestamp = parseTimestamp(boardState.snapshot_generated_at);
-  const actionTimestamp = parseTimestamp(
-    boardState.action_status_timestamp || liveAction.timestamp,
-  );
-  const historyTimestamp = newestDecisionHistoryTimestamp(decisionHistory);
-
-  if (controlMode === "github") {
-    if (
-      publishedDirection &&
-      liveDirection &&
-      publishedDirection !== liveDirection
-    ) {
-      mismatchReasons.push(
-        `Published direction is ${payload?.current_direction?.label || "unknown"}, but live steering says ${registry.active_path_label || "unknown"}.`,
-      );
-    }
-    if (
-      liveActiveId &&
-      visibleIds.length &&
-      !visibleIds.includes(liveActiveId)
-    ) {
-      mismatchReasons.push(
-        "The live active decision is not visible in the published three-card slate.",
-      );
-    }
-    if (!decisionHistory.length || historyTimestamp === null) {
-      staleReasons.push("No live decision history is available from GitHub.");
-    } else if (
-      snapshotTimestamp !== null &&
-      historyTimestamp < snapshotTimestamp - LIVE_STATE_STALE_MS
-    ) {
-      staleReasons.push(
-        `The live decision history is more than ${LIVE_STATE_STALE_DAYS} days older than the published snapshot.`,
-      );
-    }
-    if (actionTimestamp === null) {
-      staleReasons.push("No live action status timestamp is available from GitHub.");
-    } else if (
-      snapshotTimestamp !== null &&
-      actionTimestamp < snapshotTimestamp - LIVE_STATE_STALE_MS
-    ) {
-      staleReasons.push(
-        `The live action status is more than ${LIVE_STATE_STALE_DAYS} days older than the published snapshot.`,
-      );
-    }
-  }
-
-  const liveActionsEnabled =
-    controlMode === "github" &&
-    mismatchReasons.length === 0 &&
-    staleReasons.length === 0;
-  let liveActionStateLabel = "Snapshot mode only";
-  if (controlMode === "github") {
-    liveActionStateLabel = liveActionsEnabled
-      ? "Live actions enabled"
-      : staleReasons.length > 0
-        ? "Read-only until live state is fresh"
-        : "Read-only until sync is clean";
-  }
-
-  return {
-    mismatch: mismatchReasons.length > 0,
-    mismatchReasons,
-    staleReasons,
-    snapshotAge: formatAge(boardState.snapshot_generated_at),
-    liveSteeringAge: formatAge(
-      boardState.steering_registry_last_updated || registry.last_updated,
-    ),
-    liveActionAge: formatAge(
-      boardState.action_status_timestamp || liveAction.timestamp,
-    ),
-    decisionHistoryAge:
-      historyTimestamp === null ? "Not available" : formatAge(historyTimestamp),
-    steeringAwareAutomation: Boolean(boardState.steering_aware_automation),
-    liveActionsEnabled,
-    liveActionStateLabel,
-  };
-}
-
-async function fetchLocalSnapshot(): Promise<AnyRecord> {
-  const response = await fetch(`./command_snapshot.json?v=${Date.now()}`, {
-    cache: "no-store",
-  });
-  if (!response.ok) {
-    throw new Error(`Could not load command snapshot (${response.status}).`);
-  }
-  return response.json();
-}
-
-async function githubApi(
-  token: string,
-  path: string,
-  init: RequestInit = {},
-): Promise<Response> {
-  const headers = new Headers(init.headers || {});
-  headers.set("Accept", "application/vnd.github+json");
-  headers.set("Authorization", `Bearer ${token}`);
-  const response = await fetch(`https://api.github.com${path}`, {
-    ...init,
-    headers,
-  });
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(
-      errorData.message || `GitHub API error (${response.status})`,
+  if (candidate?.ready_for_metadata_only) parts.push("Only metadata remains");
+  if (candidate?.missing_metadata_summary?.metadata_item_count) {
+    parts.push(
+      `${candidate.missing_metadata_summary.metadata_item_count} metadata items to finish`,
     );
   }
-  return response;
-}
-
-async function fetchGitHubJson(
-  token: string,
-  path: string,
-  fallbackValue: AnyRecord | null = null,
-): Promise<AnyRecord> {
-  try {
-    const response = await githubApi(
-      token,
-      `/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/contents/${path}?ref=${encodeURIComponent(GITHUB_REF)}`,
-    );
-    const data = await response.json();
-    return JSON.parse(decodeBase64(data.content));
-  } catch (error) {
-    if (fallbackValue !== null) return fallbackValue;
-    throw error;
+  parts.push(humanize(candidate?.generated_draft_status || "draft_generated"));
+  if (candidate?.journal_targets?.primary?.requirements?.checked) {
+    parts.push("Journal requirements verified");
   }
+
+  return parts.join(" · ") || "Waiting on metadata prep";
 }
 
-async function fetchGitHubJsonl(
-  token: string,
-  path: string | string[],
-  fallbackValue: AnyRecord[] = [],
-): Promise<AnyRecord[]> {
-  const paths = Array.isArray(path) ? path : [path];
-  for (const candidatePath of paths) {
-    try {
-      const response = await githubApi(
-        token,
-        `/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/contents/${candidatePath}?ref=${encodeURIComponent(GITHUB_REF)}`,
-      );
-      const data = await response.json();
-      return decodeBase64(data.content)
-        .split(/\n+/)
-        .map((line) => line.trim())
-        .filter(Boolean)
-        .map((line) => JSON.parse(line));
-    } catch {
-      continue;
-    }
-  }
-  return fallbackValue;
+function isMetadataReady(candidate: AnyRecord): boolean {
+  return Boolean(candidate?.ready_for_metadata_only);
 }
 
-async function loadGitHubRemoteState(token: string): Promise<RemoteState> {
-  const [
-    commandSnapshot,
-    directionRegistry,
-    decisionHistory,
-    actionStatus,
-    lastApplyResponse,
-    lastClarifyResponse,
-  ] = await Promise.all([
-    fetchGitHubJson(token, GITHUB_STATE_FILES.commandSnapshot, {}),
-    fetchGitHubJson(token, GITHUB_STATE_FILES.directionRegistry, {}),
-    fetchGitHubJsonl(
-      token,
-      [GITHUB_STATE_FILES.decisionLog, GITHUB_STATE_FILES.legacyDecisionLog],
-      [],
-    ),
-    fetchGitHubJson(token, GITHUB_STATE_FILES.actionStatus, {}),
-    fetchGitHubJson(token, GITHUB_STATE_FILES.lastApply, {}),
-    fetchGitHubJson(token, GITHUB_STATE_FILES.lastClarify, {}),
-  ]);
+function dedupeCandidates(candidates: AnyRecord[]): AnyRecord[] {
+  const seen = new Set<string>();
+  return candidates.filter((candidate) => {
+    const key = candidate?.candidate_id || candidate?.title;
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
 
+function sourceLabel(source: SnapshotSource): string {
+  if (source === "github") return `GitHub live · ${GITHUB_REF}`;
+  if (source === "embedded") return "Embedded snapshot";
+  return "Local snapshot";
+}
+
+function chipTone(
+  tone: "neutral" | "accent" | "warning" | "danger" = "neutral",
+): string {
   return {
-    commandSnapshot,
-    directionRegistry,
-    decisionHistory,
-    actionStatus,
-    lastApplyResponse,
-    lastClarifyResponse,
-  };
+    neutral: "desk-chip desk-chip-neutral",
+    accent: "desk-chip desk-chip-accent",
+    warning: "desk-chip desk-chip-warning",
+    danger: "desk-chip desk-chip-danger",
+  }[tone];
 }
 
-async function dispatchGitHubWorkflow(
-  token: string,
-  workflowFile: string,
-  inputs: Record<string, string>,
-): Promise<void> {
-  await githubApi(
-    token,
-    `/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/actions/workflows/${encodeURIComponent(workflowFile)}/dispatches`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ref: GITHUB_REF,
-        inputs,
-      }),
-    },
-  );
-}
-
-async function waitForGitHubResponse(
-  token: string,
-  path: string,
-  requestId: string,
-  timeoutMs = 120000,
-): Promise<AnyRecord> {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    const response = await fetchGitHubJson(token, path, {});
-    if (response && response.request_id === requestId) {
-      return response;
-    }
-    await sleep(4000);
-  }
-  throw new Error(
-    "GitHub control timed out while waiting for the workflow response.",
-  );
-}
-
-function statusTone(score: number): string {
-  if (score >= 3) return "bg-emerald-400";
-  if (score >= 2) return "bg-amber-300";
-  return "bg-slate-500";
-}
-
-function ScoreRail({
-  label,
-  score,
-  percent,
-}: {
-  label: string;
-  score?: number;
-  percent?: number;
-}) {
-  const safeScore = typeof score === "number" ? score : 0;
-  const safePercent =
-    typeof percent === "number" ? percent : (safeScore / 4) * 100;
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between text-xs uppercase tracking-[0.24em] text-[#9fb4c8]">
-        <span>{label}</span>
-        <span className="font-bold text-white">{safeScore}/4</span>
-      </div>
-      <div className="h-2 overflow-hidden rounded-full bg-white/8">
-        <div
-          className={cn(
-            "h-full rounded-full transition-all duration-500",
-            statusTone(safeScore),
-          )}
-          style={{ width: `${safePercent}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-function StatusPill({
+function StatusChip({
   children,
-  tone = "muted",
+  tone = "neutral",
 }: {
   children: ReactNode;
-  tone?: "muted" | "accent" | "success" | "warning" | "danger";
+  tone?: "neutral" | "accent" | "warning" | "danger";
 }) {
-  const toneClass = {
-    muted: "bg-white/6 text-[#9fb4c8] border-white/10",
-    accent: "bg-[#9fd7bd]/12 text-[#9fd7bd] border-[#9fd7bd]/20",
-    success: "bg-emerald-400/12 text-emerald-200 border-emerald-300/20",
-    warning: "bg-amber-300/12 text-amber-100 border-amber-200/20",
-    danger: "bg-rose-300/12 text-rose-100 border-rose-200/20",
-  }[tone];
+  return <span className={chipTone(tone)}>{children}</span>;
+}
+
+function ManuscriptRow({
+  candidate,
+  eyebrow,
+  summary,
+  secondaryLinks,
+}: {
+  candidate: AnyRecord;
+  eyebrow: string;
+  summary: string;
+  secondaryLinks?: Array<{ href: string; label: string }>;
+}) {
+  const journal = getPrimaryJournal(candidate);
+  const links = secondaryLinks?.filter(Boolean) || [];
 
   return (
-    <span
-      className={cn(
-        "inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em]",
-        toneClass,
-      )}
-    >
-      {children}
-    </span>
+    <li className="desk-list-row">
+      <div className="flex items-start justify-between gap-5">
+        <div className="min-w-0 space-y-2">
+          <div className="desk-eyebrow">{eyebrow}</div>
+          <a
+            className="desk-link text-[1.1rem] font-semibold text-[var(--ink)]"
+            href={getDraftUrl(candidate)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {candidate?.title || "Untitled manuscript"}
+          </a>
+          <p className="max-w-3xl text-sm leading-6 text-[var(--muted)]">
+            {summary}
+          </p>
+        </div>
+        <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-[var(--accent)]" />
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs tracking-[0.08em] text-[var(--muted)] uppercase">
+        <span>{humanize(candidate?.manuscript_gate_state || candidate?.queue_status)}</span>
+        <span>{humanize(candidate?.draft_status)}</span>
+        {journal?.name ? <span>{journal.name}</span> : null}
+        <span>Updated {formatRelativeTime(candidate?.last_pack_refresh)}</span>
+        {links.map((link) => (
+          <a
+            key={`${candidate?.candidate_id || candidate?.title}-${link.href}-${link.label}`}
+            className="desk-link"
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </li>
   );
 }
 
 export default function App() {
-  const [basePayload, setBasePayload] = useState<AnyRecord>(
-    getInjectedPayload() || fallbackData,
-  );
-  const [payload, setPayload] = useState<AnyRecord>(
-    getInjectedPayload() || fallbackData,
-  );
-  const [remoteState, setRemoteState] = useState<RemoteState | null>(null);
-  const [controlMode, setControlMode] = useState<"snapshot" | "github">(
-    "snapshot",
+  const initialPayload = (getInjectedPayload() || fallbackData) as AnyRecord;
+  const [payload, setPayload] = useState<AnyRecord>(initialPayload);
+  const [source, setSource] = useState<SnapshotSource>(
+    getInjectedPayload() ? "embedded" : "local",
   );
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-
-  const [activeDecisionId, setActiveDecisionId] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState<
-    Record<string, string>
-  >({});
-  const [actionNote, setActionNote] = useState("");
-  const [freeTextInstruction, setFreeTextInstruction] = useState("");
-  const [pendingConfirmation, setPendingConfirmation] =
-    useState<PendingConfirmation | null>(null);
-
+  const [errorMessage, setErrorMessage] = useState("");
   const [githubToken, setGithubToken] = useState("");
   const [tokenDraft, setTokenDraft] = useState("");
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const [dispatchState, setDispatchState] = useState<DispatchState>("idle");
-  const [actionMessage, setActionMessage] = useState("");
+  async function refreshSnapshot(nextToken = githubToken): Promise<void> {
+    setRefreshing(true);
+    setErrorMessage("");
 
-  const [question, setQuestion] = useState("");
-  const [clarifyState, setClarifyState] = useState<DispatchState>("idle");
-  const [clarifyResponse, setClarifyResponse] = useState<AnyRecord | null>(
-    null,
-  );
-  const [manuscriptRunCandidateId, setManuscriptRunCandidateId] = useState("");
-  const [manuscriptRunState, setManuscriptRunState] =
-    useState<DispatchState>("idle");
-  const [manuscriptRunMessage, setManuscriptRunMessage] = useState("");
+    try {
+      let nextPayload = initialPayload;
+      let nextSource: SnapshotSource = getInjectedPayload() ? "embedded" : "local";
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function initialize() {
-      setLoading(true);
       try {
-        const snapshot = await fetchLocalSnapshot().catch(
-          () => getInjectedPayload() || fallbackData,
-        );
-        if (cancelled) return;
-        setBasePayload(snapshot);
-        setPayload(snapshot);
-        setActionMessage(
-          "Using the published command snapshot. Connect GitHub control to apply decisions from the page.",
-        );
-        const savedToken = window.localStorage.getItem(GITHUB_TOKEN_KEY) || "";
-        setGithubToken(savedToken);
-        setTokenDraft(savedToken);
-        if (savedToken) {
-          await refreshGitHubState(savedToken, snapshot, cancelled);
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        nextPayload = await fetchLocalSnapshot();
+        nextSource = "local";
+      } catch {
+        nextPayload = initialPayload;
       }
-    }
 
-    void initialize();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+      setPayload(nextPayload);
+      setSource(nextSource);
 
-  useEffect(() => {
-    const decisions = buildDecisionList(payload);
-    if (!decisions.length) {
-      setActiveDecisionId("");
-      return;
-    }
-    setSelectedOptions((previous) => buildSelectedOptions(payload, previous));
-    setActiveDecisionId((previous) =>
-      decisions.some((decision) => decision.decision_id === previous)
-        ? previous
-        : decisions[0].decision_id,
-    );
-  }, [payload]);
-
-  const decisions = useMemo(() => buildDecisionList(payload), [payload]);
-  const activeDecision = useMemo(
-    () =>
-      decisions.find((decision) => decision.decision_id === activeDecisionId) ||
-      decisions[0] ||
-      null,
-    [decisions, activeDecisionId],
-  );
-  const otherDecisions = decisions.filter(
-    (decision) => decision.decision_id !== activeDecision?.decision_id,
-  );
-  const runtimeState = useMemo(
-    () => computeBoardRuntimeState(payload, remoteState, controlMode),
-    [payload, remoteState, controlMode],
-  );
-  const manuscriptQueue = payload.manuscript_queue || {
-    active_candidates: [],
-    watchlist: [],
-    publication_tracker: [],
-  };
-  const connectorState =
-    payload.connector_status || manuscriptQueue.connector_status || {};
-  const presetQuestions = payload.control_state?.preset_questions || [];
-  const publishedCandidate =
-    payload.goal_progress?.current_manuscript_candidate;
-  const boardModeLabel =
-    controlMode === "github" ? "GitHub control" : "Published snapshot";
-
-  async function refreshGitHubState(
-    token: string,
-    preferredBase?: AnyRecord,
-    cancelled = false,
-  ) {
-    setRefreshing(true);
-    try {
-      const remote = await loadGitHubRemoteState(token);
-      if (cancelled) return;
-      const nextBase = remote.commandSnapshot?.primary_decision
-        ? remote.commandSnapshot
-        : preferredBase || basePayload;
-      const overlaid = overlayPayloadWithGitHubState(nextBase, remote);
-      setBasePayload(nextBase);
-      setRemoteState(remote);
-      setPayload(overlaid);
-      setControlMode("github");
-      const runtime = computeBoardRuntimeState(overlaid, remote, "github");
-      setActionMessage(
-        runtime.mismatch
-          ? "GitHub control is connected, but the published board is behind the live steering state. Wait for publish or refresh before applying a new action."
-          : "GitHub control is connected. Decisions and clarify questions now dispatch through GitHub Actions.",
-      );
+      if (nextToken) {
+        const githubSnapshot = await fetchGitHubSnapshot(nextToken);
+        setPayload(githubSnapshot);
+        setSource("github");
+      }
     } catch (error) {
-      if (!cancelled) {
-        setRemoteState(null);
-        setControlMode("snapshot");
-        setActionMessage(
-          error instanceof Error
-            ? error.message
-            : "GitHub control could not be loaded. Staying on the published snapshot.",
-        );
-      }
-    } finally {
-      if (!cancelled) {
-        setRefreshing(false);
-      }
-    }
-  }
-
-  async function handleRefresh() {
-    if (githubToken) {
-      await refreshGitHubState(githubToken);
-      return;
-    }
-    setRefreshing(true);
-    try {
-      const snapshot = await fetchLocalSnapshot().catch(
-        () => getInjectedPayload() || fallbackData,
-      );
-      setBasePayload(snapshot);
-      setPayload(snapshot);
-      setRemoteState(null);
-      setControlMode("snapshot");
-      setActionMessage("Published snapshot refreshed.");
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Unable to refresh the manuscript snapshot.";
+      setErrorMessage(message);
     } finally {
       setRefreshing(false);
+      setLoading(false);
     }
   }
 
-  function handleSaveToken() {
-    const nextToken = tokenDraft.trim();
-    if (!nextToken) return;
-    setGithubToken(nextToken);
-    window.localStorage.setItem(GITHUB_TOKEN_KEY, nextToken);
-    setSettingsOpen(false);
-    void refreshGitHubState(nextToken);
+  useEffect(() => {
+    const storedToken = window.localStorage.getItem(GITHUB_TOKEN_KEY) || "";
+    setGithubToken(storedToken);
+    setTokenDraft(storedToken);
+    async function initialize() {
+      await refreshSnapshot(storedToken);
+    }
+    void initialize();
+  }, []);
+
+  async function handleTokenSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmedToken = tokenDraft.trim();
+
+    if (!trimmedToken) {
+      window.localStorage.removeItem(GITHUB_TOKEN_KEY);
+      setGithubToken("");
+      await refreshSnapshot("");
+      return;
+    }
+
+    window.localStorage.setItem(GITHUB_TOKEN_KEY, trimmedToken);
+    setGithubToken(trimmedToken);
+    await refreshSnapshot(trimmedToken);
   }
 
-  function handleDisconnectGitHub() {
+  async function handleUseLocalOnly() {
     window.localStorage.removeItem(GITHUB_TOKEN_KEY);
     setGithubToken("");
     setTokenDraft("");
-    setRemoteState(null);
-    setControlMode("snapshot");
-    setPayload(basePayload);
-    setActionMessage(
-      "GitHub control disconnected. The page is back to snapshot-only mode.",
+    await refreshSnapshot("");
+  }
+
+  const manuscriptQueue = payload?.manuscript_queue || {};
+  const activeCandidates = Array.isArray(manuscriptQueue?.active_candidates)
+    ? manuscriptQueue.active_candidates
+    : [];
+  const watchlist = Array.isArray(manuscriptQueue?.watchlist)
+    ? manuscriptQueue.watchlist
+    : [];
+
+  const allCandidates = useMemo(
+    () => dedupeCandidates([...activeCandidates, ...watchlist]),
+    [activeCandidates, watchlist],
+  );
+
+  const leadCandidate = useMemo(() => {
+    const preferredTitle = payload?.goal_progress?.current_manuscript_candidate?.title;
+
+    return (
+      activeCandidates.find((candidate: AnyRecord) => candidate?.is_active_path) ||
+      activeCandidates.find((candidate: AnyRecord) => candidate?.title === preferredTitle) ||
+      allCandidates.find((candidate: AnyRecord) => candidate?.title === preferredTitle) ||
+      activeCandidates[0] ||
+      allCandidates[0] ||
+      null
     );
-  }
+  }, [activeCandidates, allCandidates, payload]);
 
-  async function handleApplySelectedOption() {
-    if (!activeDecision) return;
-    if (!githubToken) {
-      setSettingsOpen(true);
-      return;
-    }
-    if (!runtimeState.liveActionsEnabled) {
-      setActionMessage(
-        "Live actions are disabled while the board is out of sync. Refresh and wait for publish before applying another change.",
-      );
-      return;
+  const metadataCandidates = useMemo(() => {
+    const explicit = Array.isArray(manuscriptQueue?.ready_for_metadata_only_candidates)
+      ? manuscriptQueue.ready_for_metadata_only_candidates
+      : [];
+
+    if (explicit.length) {
+      return dedupeCandidates(explicit);
     }
 
-    const optionId = selectedOptions[activeDecision.decision_id];
-    const selectedOption = activeDecision.options?.find(
-      (option: AnyRecord) => option.id === optionId,
-    );
-    if (!selectedOption) return;
+    return dedupeCandidates(allCandidates).filter(isMetadataReady);
+  }, [allCandidates, manuscriptQueue]);
 
-    setDispatchState("working");
-    setActionMessage("Dispatching the selected option through GitHub Actions…");
-    setPendingConfirmation(null);
+  const queueCandidates = useMemo(() => {
+    const leadId = leadCandidate?.candidate_id;
+    return dedupeCandidates([
+      ...activeCandidates.filter((candidate: AnyRecord) => candidate?.candidate_id !== leadId),
+      ...watchlist,
+    ]);
+  }, [activeCandidates, leadCandidate, watchlist]);
 
-    try {
-      const requestId = createRequestId("apply");
-      await dispatchGitHubWorkflow(githubToken, GITHUB_APPLY_WORKFLOW, {
-        request_id: requestId,
-        decision_id: activeDecision.decision_id,
-        decision_json: freezeDecisionPacket(activeDecision),
-        option_id: selectedOption.id,
-        free_text: "",
-        note: actionNote,
-        confirmed: "false",
-      });
-      const result = await waitForGitHubResponse(
-        githubToken,
-        GITHUB_STATE_FILES.lastApply,
-        requestId,
-      );
-      if (result?.ok === false) {
-        throw new Error(
-          result.error_message ||
-            result.error ||
-            "The decision could not be applied.",
-        );
-      }
-      await refreshGitHubState(githubToken, result.payload || payload);
-      setDispatchState("success");
-      setActionNote("");
-      setFreeTextInstruction("");
-      setActionMessage(
-        result?.triggered_action?.message || "Decision applied successfully.",
-      );
-    } catch (error) {
-      setDispatchState("error");
-      setActionMessage(
-        error instanceof Error
-          ? error.message
-          : "The decision could not be applied.",
-      );
-    }
-  }
+  const activeCandidateIds = useMemo(
+    () => new Set(activeCandidates.map((candidate: AnyRecord) => candidate?.candidate_id)),
+    [activeCandidates],
+  );
 
-  async function handleApplyFreeText(
-    confirmed = false,
-    pending = pendingConfirmation,
-  ) {
-    if (!activeDecision || !githubToken) {
-      setSettingsOpen(true);
-      return;
-    }
-    const instruction = confirmed
-      ? pending?.freeText || ""
-      : freeTextInstruction.trim();
-    const note = confirmed ? pending?.note || "" : actionNote;
-    if (!instruction) return;
-    if (!runtimeState.liveActionsEnabled) {
-      setActionMessage(
-        "Live actions are disabled while the board is out of sync. Refresh and wait for publish before applying another change.",
-      );
-      return;
-    }
+  const leadJournal = getPrimaryJournal(leadCandidate);
+  const leadStory =
+    payload?.goal_progress?.current_manuscript_candidate?.story ||
+    payload?.current_direction?.reason ||
+    leadCandidate?.theme_label ||
+    "No lead manuscript story has been attached yet.";
+  const leadSignals = [
+    {
+      label: "Manuscript gate",
+      value: humanize(leadCandidate?.manuscript_gate_state),
+    },
+    {
+      label: "Primary journal",
+      value: leadJournal?.name || "Not set",
+    },
+    {
+      label: "Draft readiness",
+      value:
+        typeof leadCandidate?.draft_readiness_bar?.score === "number"
+          ? `${leadCandidate.draft_readiness_bar.score}/4`
+          : "Not scored",
+    },
+    {
+      label: "Last pack refresh",
+      value: formatDateTime(leadCandidate?.last_pack_refresh),
+    },
+  ];
 
-    setDispatchState("working");
-    setActionMessage(
-      confirmed
-        ? "Applying the confirmed interpretation…"
-        : "Interpreting and dispatching your instruction…",
-    );
-
-    try {
-      const requestId = createRequestId("apply");
-      await dispatchGitHubWorkflow(githubToken, GITHUB_APPLY_WORKFLOW, {
-        request_id: requestId,
-        decision_id: confirmed
-          ? pending?.decisionId || activeDecision.decision_id
-          : activeDecision.decision_id,
-        decision_json: confirmed
-          ? pending?.decisionJson || freezeDecisionPacket(activeDecision)
-          : freezeDecisionPacket(activeDecision),
-        option_id: "",
-        free_text: instruction,
-        note,
-        confirmed: confirmed ? "true" : "false",
-      });
-      const result = await waitForGitHubResponse(
-        githubToken,
-        GITHUB_STATE_FILES.lastApply,
-        requestId,
-      );
-      if (result?.ok === false) {
-        throw new Error(
-          result.error_message ||
-            result.error ||
-            "The instruction could not be applied.",
-        );
-      }
-      if (result?.needs_confirmation && !confirmed) {
-        const proposed = result?.interpreted_decision?.matched_option_id || "";
-        if (proposed) {
-          setSelectedOptions((previous) => ({
-            ...previous,
-            [activeDecision.decision_id]: proposed,
-          }));
-        }
-        setPendingConfirmation({
-          decisionId: activeDecision.decision_id,
-          decisionJson: freezeDecisionPacket(activeDecision),
-          freeText: instruction,
-          note,
-          explanation:
-            result?.interpreted_decision?.explanation ||
-            "The machine needs confirmation before acting on that write-in.",
-          summary: proposed
-            ? `The board thinks you mean “${proposed}.”`
-            : "The board could not map that instruction cleanly enough to act without confirmation.",
-        });
-        setDispatchState("idle");
-        setActionMessage(
-          result?.interpreted_decision?.explanation ||
-            "The instruction needs confirmation before it can be applied.",
-        );
-        return;
-      }
-      await refreshGitHubState(githubToken, result.payload || payload);
-      setPendingConfirmation(null);
-      setFreeTextInstruction("");
-      setActionNote("");
-      setDispatchState("success");
-      setActionMessage(
-        result?.triggered_action?.message ||
-          "Instruction applied successfully.",
-      );
-    } catch (error) {
-      setDispatchState("error");
-      setActionMessage(
-        error instanceof Error
-          ? error.message
-          : "The instruction could not be applied.",
-      );
-    }
-  }
-
-  async function handleClarify(nextQuestion: string) {
-    const trimmed = nextQuestion.trim();
-    if (!trimmed) return;
-    if (!githubToken) {
-      setSettingsOpen(true);
-      return;
-    }
-
-    setClarifyState("working");
-    setClarifyResponse({
-      answer: "Working through the current repo state…",
-      evidence_chain: [
-        "The clarify workflow is running through GitHub Actions.",
-      ],
-      implication:
-        "This answer will stay tied to the current decision context.",
-      recommended_follow_up:
-        "Use the result to decide whether you want to apply the current option or shift lanes.",
-    });
-
-    try {
-      const requestId = createRequestId("clarify");
-      await dispatchGitHubWorkflow(githubToken, GITHUB_CLARIFY_WORKFLOW, {
-        request_id: requestId,
-        question: trimmed,
-        decision_id: activeDecision?.decision_id || "",
-      });
-      const result = await waitForGitHubResponse(
-        githubToken,
-        GITHUB_STATE_FILES.lastClarify,
-        requestId,
-      );
-      setClarifyResponse(result);
-      setClarifyState("success");
-      await refreshGitHubState(githubToken);
-    } catch (error) {
-      setClarifyState("error");
-      setClarifyResponse({
-        answer:
-          error instanceof Error
-            ? error.message
-            : "The clarify workflow could not complete.",
-        evidence_chain: [
-          "GitHub control did not return a clarification response in time.",
-        ],
-        implication: "The decision state did not change.",
-        recommended_follow_up:
-          "Try again after checking the Actions tab or reconnecting GitHub control.",
-      });
-    }
-  }
-
-  async function handleManuscriptQuestion(
-    candidate: AnyRecord,
-    mode: "missing" | "stronger" | "working",
-  ) {
-    const nextQuestion = manuscriptQuestion(candidate, mode);
-    setQuestion(nextQuestion);
-    await handleClarify(nextQuestion);
-  }
-
-  async function runManuscriptEvidenceCycle(
-    candidate: AnyRecord,
-    pendingActions: string,
-    loadingMessage: string,
-    successMessage: string,
-    actionMessageText: string,
-  ) {
-    if (!githubToken) {
-      setSettingsOpen(true);
-      return;
-    }
-
-    const priorityMode = candidatePriorityMode(candidate);
-
-    setManuscriptRunCandidateId(candidate.candidate_id || "");
-    setManuscriptRunState("working");
-    setManuscriptRunMessage(loadingMessage);
-
-    try {
-      await dispatchGitHubWorkflow(githubToken, GITHUB_EVIDENCE_WORKFLOW, {
-        max_articles_per_run: "5",
-        target_full_text_per_run: "4",
-        upgrade_max_chunks: "2",
-        extraction_max_passes: "4",
-        steering_priority_mode: priorityMode,
-        steering_focus_mechanisms: candidate.theme_key || "",
-        steering_focus_endotypes: "",
-        steering_evidence_mode: "advance",
-        steering_pending_actions: pendingActions,
-      });
-      setManuscriptRunState("success");
-      setManuscriptRunMessage(successMessage);
-      setActionMessage(actionMessageText);
-      await refreshGitHubState(githubToken);
-    } catch (error) {
-      setManuscriptRunState("error");
-      setManuscriptRunMessage(
-        error instanceof Error
-          ? error.message
-          : "The focused evidence cycle could not be dispatched.",
-        );
-    }
-  }
-
-  async function handleRunFocusedEvidenceCycle(candidate: AnyRecord) {
-    const pendingActions = candidatePendingActions(candidate);
-    await runManuscriptEvidenceCycle(
-      candidate,
-      pendingActions,
-      `Dispatching a focused evidence cycle for ${candidate.title}…`,
-      `Focused evidence cycle queued for ${candidate.title}. The cycle will run with ${candidatePriorityMode(candidate)} steering and the current open manuscript tasks as pending actions.`,
-      `Focused evidence cycle queued for ${candidate.title}. Refresh after the workflow runs to see updated manuscript hardening output.`,
-    );
-  }
-
-  async function handleRunManuscriptTask(candidate: AnyRecord, task: AnyRecord) {
-    const pendingAction = normalizeText(task?.task_id);
-    if (!pendingAction) return;
-    await runManuscriptEvidenceCycle(
-      candidate,
-      pendingAction,
-      `Dispatching ${manuscriptTaskActionLabel(task).toLowerCase()} for ${candidate.title}…`,
-      `${manuscriptTaskActionLabel(task)} queued for ${candidate.title}. The next cycle will prioritize this specific Phase 8 task first.`,
-      `${manuscriptTaskActionLabel(task)} queued for ${candidate.title}. Refresh after the workflow runs to see whether the blocker state changed.`,
-    );
-  }
+  const summary = manuscriptQueue?.summary || {};
+  const snapshotUpdatedAt =
+    manuscriptQueue?.generated_at || payload?.board_state?.snapshot_generated_at;
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0b1117] text-[#edf4fb]">
-        <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-[#9fb4c8]">
-          <Loader2 className="h-5 w-5 animate-spin text-[#9fd7bd]" />
-          Loading command cockpit…
+      <div className="desk-shell">
+        <div className="desk-wrap flex min-h-screen items-center justify-center">
+          <div className="flex items-center gap-3 text-sm tracking-[0.12em] uppercase text-[var(--muted)]">
+            <LoaderCircle className="h-5 w-5 animate-spin text-[var(--accent)]" />
+            Loading manuscript desk
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0b1117] px-6 py-8 text-[#edf4fb] md:px-10">
-      <div className="mx-auto max-w-7xl space-y-8">
-        <header className="flex flex-col gap-5 border-b border-white/8 pb-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-3">
-              <StatusPill tone={controlMode === "github" ? "success" : "muted"}>
-                {boardModeLabel}
-              </StatusPill>
-              <StatusPill
-                tone={
-                  runtimeState.steeringAwareAutomation ? "accent" : "warning"
-                }
-              >
-                {runtimeState.steeringAwareAutomation
-                  ? "Steering-aware automation"
-                  : "Snapshot only"}
-              </StatusPill>
-              {runtimeState.mismatch && (
-                <StatusPill tone="danger">Board mismatch</StatusPill>
-              )}
+    <div className="desk-shell">
+      <div className="desk-wrap">
+        <header className="border-b border-[var(--line)] pb-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl space-y-4">
+              <div className="desk-eyebrow">Portal UI · Manuscript-first desk</div>
+              <div className="space-y-3">
+                <h1 className="desk-title text-4xl leading-none sm:text-5xl lg:text-6xl">
+                  Current lead manuscript, without the cockpit.
+                </h1>
+                <p className="max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg">
+                  {payload?.program_status?.line ||
+                    "This surface stays focused on the manuscript path, the blocker state, and the next papers moving through the queue."}
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="bg-gradient-to-r from-white via-[#edf4fb] to-[#9fd7bd] bg-clip-text text-3xl font-extrabold tracking-tight text-transparent md:text-4xl">
-                TBI Engine Command Cockpit
-              </h1>
-              <p className="mt-2 max-w-3xl text-sm leading-7 text-[#9fb4c8]">
-                The engine state is still coming from the repo. This frontend is
-                only the presentation layer, now wired directly to the live
-                command snapshot and GitHub control path.
-              </p>
-            </div>
-          </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => void handleRefresh()}
-              className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-[#9fd7bd]/40 hover:bg-white/10"
-            >
-              {refreshing ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <RefreshCw className="h-4 w-4" />
-              )}
-              Refresh state
-            </button>
-            {githubToken ? (
+            <div className="desk-sync-panel">
+              <div className="flex flex-wrap items-center gap-2">
+                <StatusChip tone={source === "github" ? "accent" : "neutral"}>
+                  {sourceLabel(source)}
+                </StatusChip>
+                <StatusChip>{formatRelativeTime(snapshotUpdatedAt)}</StatusChip>
+              </div>
+
               <button
-                onClick={handleDisconnectGitHub}
-                className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:border-rose-200/40 hover:bg-rose-200/10"
+                className="desk-button"
+                type="button"
+                onClick={() => void refreshSnapshot()}
+                disabled={refreshing}
               >
-                <X className="h-4 w-4" />
-                Disconnect GitHub control
+                <RefreshCw className={refreshing ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
+                Refresh snapshot
               </button>
-            ) : (
-              <button
-                onClick={() => setSettingsOpen(true)}
-                className="inline-flex items-center gap-2 rounded-2xl border border-[#9fd7bd]/20 bg-[#9fd7bd]/10 px-4 py-3 text-sm font-semibold text-[#9fd7bd] transition hover:bg-[#9fd7bd]/16"
-              >
-                <KeyRound className="h-4 w-4" />
-                Connect GitHub control
-              </button>
-            )}
+
+              <details className="desk-details">
+                <summary>GitHub sync</summary>
+                <form className="mt-4 space-y-3" onSubmit={(event) => void handleTokenSubmit(event)}>
+                  <label className="space-y-2 text-sm text-[var(--muted)]">
+                    <span className="block uppercase tracking-[0.14em] text-[11px] text-[var(--muted-strong)]">
+                      Personal access token
+                    </span>
+                    <input
+                      className="desk-input"
+                      type="password"
+                      value={tokenDraft}
+                      onChange={(event) => setTokenDraft(event.target.value)}
+                      placeholder="Paste token to load docs/command_snapshot.json from GitHub"
+                    />
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    <button className="desk-button" type="submit" disabled={refreshing}>
+                      Save and load
+                    </button>
+                    {githubToken ? (
+                      <button
+                        className="desk-button desk-button-muted"
+                        type="button"
+                        onClick={() => void handleUseLocalOnly()}
+                        disabled={refreshing}
+                      >
+                        Use local snapshot
+                      </button>
+                    ) : null}
+                  </div>
+                </form>
+              </details>
+            </div>
           </div>
         </header>
 
-        <div className="grid gap-8 xl:grid-cols-[1.45fr_0.75fr]">
-          <main className="space-y-8">
-            <section className="overflow-hidden rounded-[28px] border border-[#9fd7bd]/18 bg-gradient-to-br from-[#121c26] via-[#172430] to-[#121c26] p-8 shadow-[0_28px_80px_rgba(0,0,0,0.35)]">
-              <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-                <div className="space-y-5">
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                    <span>Program status</span>
-                    <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 tracking-[0.18em] text-[#9fb4c8]">
-                      Snapshot age {runtimeState.snapshotAge}
-                    </span>
-                    {controlMode === "github" && (
-                      <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 tracking-[0.18em] text-[#9fb4c8]">
-                        Live steering {runtimeState.liveSteeringAge}
-                      </span>
-                    )}
-                  </div>
-                  <div>
-                    <h2 className="max-w-3xl text-3xl font-bold leading-tight text-white md:text-4xl">
-                      {payload.program_status?.line}
-                    </h2>
-                    <p className="mt-4 max-w-3xl text-base leading-8 text-[#9fb4c8]">
-                      {payload.program_status?.paragraph}
-                    </p>
-                  </div>
+        {errorMessage ? (
+          <div className="mt-6 flex items-start gap-3 border border-[var(--danger-line)] bg-[var(--danger-soft)] px-4 py-3 text-sm text-[var(--danger-ink)]">
+            <CircleAlert className="mt-0.5 h-4 w-4 shrink-0" />
+            <p>{errorMessage}</p>
+          </div>
+        ) : null}
 
-                  {(runtimeState.mismatch ||
-                    runtimeState.staleReasons.length > 0) && (
-                    <div className="rounded-2xl border border-rose-200/20 bg-rose-200/8 p-5">
-                      <div className="flex items-center gap-2 text-sm font-bold text-rose-100">
-                        <ShieldAlert className="h-4 w-4" />
-                        Live control blocked
-                      </div>
-                      <ul className="mt-3 space-y-2 text-sm leading-6 text-[#d9e4ef]">
-                        {runtimeState.mismatchReasons.map((reason) => (
-                          <li key={reason} className="flex gap-2">
-                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-200" />
-                            <span>{reason}</span>
-                          </li>
-                        ))}
-                        {runtimeState.staleReasons.map((reason) => (
-                          <li key={reason} className="flex gap-2">
-                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-200" />
-                            <span>{reason}</span>
-                          </li>
-                        ))}
-                        <li className="flex gap-2">
-                          <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-200" />
-                          <span>
-                            Hard refresh the page, reconnect GitHub control if
-                            needed, and wait for the publish workflow to finish.
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-
-                  <div className="rounded-2xl border border-white/10 bg-black/15 p-5">
-                    <div className="text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
-                      Current direction
-                    </div>
-                    <div className="mt-3 text-xl font-bold text-white">
-                      {payload.current_direction?.label ||
-                        "No active direction emitted"}
-                    </div>
-                    <p className="mt-2 text-sm leading-7 text-[#9fb4c8]">
-                      {payload.current_direction?.reason ||
-                        payload.program_status?.current_direction_line ||
-                        "No direction rationale is available in the current snapshot."}
-                    </p>
-                  </div>
+        <main className="space-y-12 py-10">
+          <section className="desk-lead-grid">
+            <div className="space-y-8 border-b border-[var(--line)] pb-8 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <StatusChip tone="accent">Current lead manuscript</StatusChip>
+                  <StatusChip>{humanize(leadCandidate?.support_status)}</StatusChip>
+                  <StatusChip>
+                    {summary?.active_count || activeCandidates.length} active drafts
+                  </StatusChip>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="rounded-2xl border border-white/10 bg-black/15 p-5">
-                    <div className="text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
-                      Board health
-                    </div>
-                    <div className="mt-4 space-y-4">
-                      <div>
-                        <div className="text-sm text-[#9fb4c8]">
-                          Live action age
-                        </div>
-                        <div className="mt-1 text-lg font-semibold text-white">
-                          {runtimeState.liveActionAge}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-[#9fb4c8]">
-                          Decision history age
-                        </div>
-                        <div className="mt-1 text-lg font-semibold text-white">
-                          {runtimeState.decisionHistoryAge}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-[#9fb4c8]">
-                          Action state
-                        </div>
-                        <div className="mt-1 text-lg font-semibold text-white">
-                          {runtimeState.liveActionStateLabel}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-black/15 p-5">
-                    <div className="text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
-                      Current manuscript target
-                    </div>
-                    <div className="mt-3 text-lg font-semibold text-white">
-                      {publishedCandidate?.title ||
-                        "No manuscript target emitted"}
-                    </div>
-                    <p className="mt-2 text-sm leading-7 text-[#9fb4c8]">
-                      {publishedCandidate?.story ||
-                        "The steering registry has not attached a manuscript story to this path yet."}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="space-y-5 rounded-[28px] border border-white/10 bg-[#121c26] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
-              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                    <BookOpen className="h-4 w-4" />
-                    Manuscript queue
-                  </div>
-                  <h3 className="mt-3 text-2xl font-bold text-white">
-                    Output lanes forming under the current engine state
-                  </h3>
-                  <p className="mt-2 max-w-3xl text-sm leading-7 text-[#9fb4c8]">
-                    The queue is reading directly from Phase 8. It shows which
-                    papers are active now, what journal each one is leaning
-                    toward, and what is still blocking the pack from becoming
-                    draft-ready.
+                <div className="space-y-3">
+                  <h2 className="desk-title text-3xl leading-tight sm:text-4xl">
+                    {leadCandidate?.title || "No lead manuscript emitted"}
+                  </h2>
+                  <p className="max-w-3xl text-lg leading-8 text-[var(--muted)]">
+                    {leadStory}
                   </p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-right">
-                  <div className="text-xs uppercase tracking-[0.22em] text-[#9fb4c8]">
-                    Queue status
-                  </div>
-                  <div className="mt-1 text-lg font-bold text-white">
-                    {manuscriptQueue.summary?.active_count || 0} active ·{" "}
-                    {manuscriptQueue.summary?.watchlist_count || 0} watchlist ·{" "}
-                    {manuscriptQueue.summary?.ready_for_codex_draft_count || 0}{" "}
-                    draft-ready
-                  </div>
                 </div>
               </div>
 
-              <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-                <div className="rounded-[24px] border border-white/10 bg-black/15 p-5">
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
-                    <Activity className="h-4 w-4" />
-                    Connector layer
-                    <StatusPill
-                      tone={
-                        (connectorState.by_source || []).length
-                          ? "success"
-                          : "muted"
-                      }
-                    >
-                      {connectorState.row_count || 0} attached rows
-                    </StatusPill>
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-[#9fb4c8]">
-                    This is the external connector evidence currently making it
-                    into the build, not just what is queued in the manifest.
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {(connectorState.by_source || []).length ? (
-                      (connectorState.by_source || []).map((row: AnyRecord) => (
-                        <span
-                          key={row.key || row.label}
-                          className="inline-flex items-center rounded-full border border-[#9fd7bd]/20 bg-[#9fd7bd]/12 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#9fd7bd]"
-                        >
-                          {row.label} · {row.count}
-                        </span>
-                      ))
-                    ) : (
-                      <StatusPill tone="muted">No attached connector rows</StatusPill>
-                    )}
-                  </div>
-                  <p className="mt-4 text-sm leading-6 text-[#9fb4c8]">
-                    Latest attached connector data{" "}
-                    {connectorState.latest_enrichment_at
-                      ? formatAge(connectorState.latest_enrichment_at)
-                      : "is not timestamped yet"}
-                    .
-                  </p>
-                </div>
-
-                <div className="rounded-[24px] border border-white/10 bg-black/15 p-5">
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
-                    <Target className="h-4 w-4" />
-                    10x state
-                    <StatusPill tone={connectorTone(connectorState.tenx?.state)}>
-                      {tenxStateLabel(connectorState.tenx)}
-                    </StatusPill>
-                  </div>
-                  <div className="mt-4 space-y-2 text-sm leading-7 text-[#9fb4c8]">
-                    <p>
-                      Imported 10x/genomics rows:{" "}
-                      <span className="font-semibold text-white">
-                        {connectorState.tenx?.imported_row_count || 0}
-                      </span>
-                    </p>
-                    <p>
-                      Seeded template rows:{" "}
-                      <span className="font-semibold text-white">
-                        {connectorState.tenx?.template_row_count || 0}
-                      </span>
-                    </p>
-                    <p>
-                      {connectorState.tenx?.template_path
-                        ? `Latest template: ${connectorState.tenx.template_path}`
-                        : "No 10x template path recorded yet."}
-                    </p>
-                  </div>
-                </div>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  className="desk-button"
+                  href={getDraftUrl(leadCandidate)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FileText className="h-4 w-4" />
+                  Open generated draft
+                </a>
+                <a
+                  className="desk-button desk-button-muted"
+                  href={getPackUrl(leadCandidate?.pack_key)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <ScrollText className="h-4 w-4" />
+                  Open evidence pack
+                </a>
+                {leadJournal?.homepage ? (
+                  <a
+                    className="desk-button desk-button-muted"
+                    href={leadJournal.homepage}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <ArrowUpRight className="h-4 w-4" />
+                    Open journal target
+                  </a>
+                ) : null}
               </div>
 
-              <div className="rounded-[24px] border border-white/10 bg-black/15 p-5 text-sm leading-7 text-[#9fb4c8]">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
-                  <Target className="h-4 w-4" />
-                  Manuscript steering from here
-                </div>
-                <p className="mt-3">
-                  Phase 8 is already auto-hardening these packs whenever the repo
-                  refresh workflows run. That means the task ledger, blocker
-                  summaries, and evidence bundle all refresh automatically.
-                  What is <span className="font-semibold text-white">not</span>{" "}
-                  fully automatic yet is direct blocker resolution. The buttons
-                  below let you ask manuscript-specific questions, run the whole
-                  focused evidence cycle, or push one named Phase 8 task to the
-                  front of the queue.
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {leadSignals.map((signal) => (
+                  <div key={signal.label} className="border-t border-[var(--line)] pt-4">
+                    <div className="desk-eyebrow">{signal.label}</div>
+                    <p className="mt-2 text-base leading-7 text-[var(--ink)]">
+                      {signal.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-6 lg:pl-2">
+              <article className="border-t border-[var(--line)] pt-4">
+                <div className="desk-eyebrow">Current status</div>
+                <p className="mt-3 text-lg leading-8 text-[var(--ink)]">
+                  {getTaskStatusLine(leadCandidate)}
                 </p>
+                <div className="mt-4 flex items-center gap-2 text-sm text-[var(--muted)]">
+                  <Clock3 className="h-4 w-4" />
+                  Task ledger updated {formatRelativeTime(leadCandidate?.task_execution_summary?.updated_at)}
+                </div>
+              </article>
+
+              <article className="border-t border-[var(--line)] pt-4">
+                <div className="desk-eyebrow">Current blocker</div>
+                <p className="mt-3 text-lg leading-8 text-[var(--ink)]">
+                  {getLeadBlocker(leadCandidate)}
+                </p>
+              </article>
+
+              <article className="border-t border-[var(--line)] pt-4">
+                <div className="desk-eyebrow">System note</div>
+                <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+                  The system keeps running automatically from the repository snapshot. This desk is only for reading the manuscript state, not steering workflows.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section className="grid gap-10 lg:grid-cols-[1.2fr_0.85fr]">
+            <div className="space-y-4">
+              <div className="flex items-end justify-between gap-4 border-b border-[var(--line)] pb-3">
+                <div>
+                  <div className="desk-eyebrow">Active manuscript drafts</div>
+                  <h3 className="mt-2 text-2xl leading-tight text-[var(--ink)]">
+                    Papers already in motion.
+                  </h3>
+                </div>
+                <div className="text-sm text-[var(--muted)]">
+                  {summary?.active_count || activeCandidates.length} total
+                </div>
               </div>
 
-              <div className="grid gap-5 xl:grid-cols-2">
-                {(manuscriptQueue.active_candidates || []).map(
-                  (candidate: AnyRecord) => (
-                    <article
-                      key={candidate.candidate_id}
-                      className="rounded-[24px] border border-[#9fd7bd]/16 bg-gradient-to-b from-[#172430] to-[#121c26] p-6"
-                    >
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <StatusPill
-                              tone={
-                                candidate.is_active_path ? "success" : "accent"
-                              }
-                            >
-                              {candidate.is_active_path
-                                ? "Active path"
-                                : "Candidate"}
-                            </StatusPill>
-                            <StatusPill
-                              tone={
-                                journalStateLabel(candidate) ===
-                                "Verified requirements"
-                                  ? "success"
-                                  : "warning"
-                              }
-                            >
-                              {journalStateLabel(candidate)}
-                            </StatusPill>
-                          </div>
-                          <h4 className="mt-4 text-xl font-bold text-white">
-                            {candidate.title}
-                          </h4>
-                          <p className="mt-2 text-sm leading-7 text-[#9fb4c8]">
-                            Gate state:{" "}
-                            <span className="font-semibold text-white">
-                              {candidate.manuscript_gate_state || "not scored"}
-                            </span>
-                          </p>
-                        </div>
-                        <a
-                          href={getPackUrl(candidate.pack_key)}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-[#9fd7bd]/40 hover:bg-white/10"
-                        >
-                          Open pack
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </div>
-
-                      <div className="mt-6 space-y-4">
-                        <ScoreRail
-                          label="Scientific strength"
-                          score={candidate.scientific_strength_bar?.score}
-                          percent={candidate.scientific_strength_bar?.percent}
-                        />
-                        <ScoreRail
-                          label="Journal fit"
-                          score={candidate.journal_fit_bar?.score}
-                          percent={candidate.journal_fit_bar?.percent}
-                        />
-                        <ScoreRail
-                          label="Draft readiness"
-                          score={candidate.draft_readiness_bar?.score}
-                          percent={candidate.draft_readiness_bar?.percent}
-                        />
-                      </div>
-
-                      <div className="mt-6 grid gap-4 md:grid-cols-2">
-                        <div className="rounded-2xl border border-white/8 bg-black/15 p-4">
-                          <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
-                            Primary journal
-                          </div>
-                          <div className="mt-2 text-base font-semibold text-white">
-                            {candidate.journal_targets?.primary?.journal
-                              ?.name || "Not selected"}
-                          </div>
-                          <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                            {candidate.draft_status ||
-                              "No draft status emitted."}
-                          </p>
-                        </div>
-                        <div className="rounded-2xl border border-white/8 bg-black/15 p-4">
-                          <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
-                            Automatic hardening
-                          </div>
-                          <div className="mt-2 text-base font-semibold text-white">
-                            {getTaskSummary(candidate)}
-                          </div>
-                          <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                            Last executor update{" "}
-                            {formatAge(
-                              candidate.task_execution_summary?.updated_at ||
-                                candidate.last_pack_refresh,
-                            )}
-                            .
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4">
-                        <div className="flex flex-wrap items-center gap-3">
-                          <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
-                            Connector data for this paper
-                          </div>
-                          <StatusPill
-                            tone={connectorTone(
-                              candidate.connector_summary?.data_state,
-                            )}
-                          >
-                            {connectorDataStateLabel(candidate)}
-                          </StatusPill>
-                          <StatusPill
-                            tone={connectorTone(
-                              candidate.connector_summary?.tenx?.state,
-                            )}
-                          >
-                            {tenxStateLabel(candidate.connector_summary?.tenx)}
-                          </StatusPill>
-                        </div>
-                        <p className="mt-3 text-sm leading-7 text-[#9fb4c8]">
-                          Sources: {formatConnectorSources(candidate)}
-                        </p>
-                        <p className="mt-2 text-sm leading-7 text-[#9fb4c8]">
-                          Latest attached connector data{" "}
-                          {candidate.connector_summary?.latest_attached_at
-                            ? formatAge(
-                                candidate.connector_summary.latest_attached_at,
-                              )
-                            : "has not been attached yet"}
-                          .
-                        </p>
-                        <div className="mt-4 grid gap-3 md:grid-cols-3">
-                          <div className="rounded-2xl border border-white/8 bg-white/5 p-3">
-                            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9fb4c8]">
-                              Target context
-                            </div>
-                            <div className="mt-2 text-sm font-semibold text-white">
-                              {connectorContextStatusLabel(
-                                candidate.connector_summary?.target_context?.status,
-                              )}
-                            </div>
-                            <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                              {candidate.connector_summary?.target_context
-                                ?.source || "No target connector source recorded."}
-                            </p>
-                          </div>
-                          <div className="rounded-2xl border border-white/8 bg-white/5 p-3">
-                            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9fb4c8]">
-                              Trial context
-                            </div>
-                            <div className="mt-2 text-sm font-semibold text-white">
-                              {connectorContextStatusLabel(
-                                candidate.connector_summary?.trial_context?.status,
-                              )}
-                            </div>
-                            <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                              {candidate.connector_summary?.trial_context
-                                ?.source || "No trial connector source recorded."}
-                            </p>
-                          </div>
-                          <div className="rounded-2xl border border-white/8 bg-white/5 p-3">
-                            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9fb4c8]">
-                              Genomics / 10x
-                            </div>
-                            <div className="mt-2 text-sm font-semibold text-white">
-                              {connectorContextStatusLabel(
-                                candidate.connector_summary?.genomics_context?.status,
-                              )}
-                            </div>
-                            <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                              {candidate.connector_summary?.genomics_context
-                                ?.source || "No genomics source recorded."}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 rounded-2xl border border-rose-200/12 bg-rose-200/5 p-4">
-                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-rose-100">
-                          <ShieldAlert className="h-4 w-4" />
-                          Top blocker
-                        </div>
-                        <p className="mt-2 text-sm leading-7 text-[#d9e4ef]">
-                          {getTopBlocker(candidate)}
-                        </p>
-                      </div>
-
-                      <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4">
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
-                          Task ledger
-                        </div>
-                        <div className="mt-3 space-y-3">
-                          {(candidate.task_ledger || [])
-                            .slice(0, 3)
-                            .map((task: AnyRecord) => (
-                              <div
-                                key={task.task_id}
-                                className="rounded-2xl border border-white/8 bg-white/5 p-3"
-                              >
-                                <div className="flex flex-wrap items-center justify-between gap-2">
-                                  <div className="font-semibold text-white">
-                                    {task.label}
-                                  </div>
-                                  <StatusPill tone={taskTone(task.status)}>
-                                    {task.status}
-                                  </StatusPill>
-                                </div>
-                                <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                                  {task.execution_note ||
-                                    task.rationale ||
-                                    "No execution note emitted yet."}
-                                </p>
-                              </div>
-                            ))}
-                        </div>
-                      </div>
-
-                      {actionableManuscriptTasks(candidate).length > 0 && (
-                        <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4">
-                          <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
-                            Drive from here
-                          </div>
-                          <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                            Queue one named manuscript task instead of a broader cycle.
-                          </p>
-                          <div className="mt-3 flex flex-wrap gap-3">
-                            {actionableManuscriptTasks(candidate).map((task: AnyRecord) => (
-                              <button
-                                key={task.task_id}
-                                onClick={() => void handleRunManuscriptTask(candidate, task)}
-                                disabled={
-                                  manuscriptRunState === "working" &&
-                                  manuscriptRunCandidateId === candidate.candidate_id
-                                }
-                                title={manuscriptTaskActionNote(task)}
-                                className={cn(
-                                  "inline-flex items-center gap-2 rounded-2xl border px-4 py-2 text-sm font-semibold transition",
-                                  manuscriptRunState === "working" &&
-                                    manuscriptRunCandidateId === candidate.candidate_id
-                                    ? "cursor-not-allowed border-white/8 bg-white/5 text-white/35"
-                                    : "border-white/10 bg-white/5 text-white hover:border-[#9fd7bd]/35 hover:bg-white/10",
-                                )}
-                              >
-                                {manuscriptRunState === "working" &&
-                                manuscriptRunCandidateId === candidate.candidate_id ? (
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                ) : (
-                                  <ChevronRight className="h-4 w-4" />
-                                )}
-                                {manuscriptTaskActionLabel(task)}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="mt-4 flex flex-wrap gap-3">
-                        <button
-                          onClick={() =>
-                            void handleManuscriptQuestion(candidate, "missing")
-                          }
-                          className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-[#9fd7bd]/35 hover:bg-white/10"
-                        >
-                          <Sparkles className="h-4 w-4" />
-                          What is missing?
-                        </button>
-                        <button
-                          onClick={() =>
-                            void handleManuscriptQuestion(candidate, "stronger")
-                          }
-                          className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-[#9fd7bd]/35 hover:bg-white/10"
-                        >
-                          <ArrowRight className="h-4 w-4" />
-                          How do we make it stronger?
-                        </button>
-                        <button
-                          onClick={() =>
-                            void handleManuscriptQuestion(candidate, "working")
-                          }
-                          className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-[#9fd7bd]/35 hover:bg-white/10"
-                        >
-                          <Activity className="h-4 w-4" />
-                          Is the engine already working on this?
-                        </button>
-                        <button
-                          onClick={() => void handleRunFocusedEvidenceCycle(candidate)}
-                          disabled={
-                            manuscriptRunState === "working" &&
-                            manuscriptRunCandidateId === candidate.candidate_id
-                          }
-                          className={cn(
-                            "inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold transition",
-                            manuscriptRunState === "working" &&
-                              manuscriptRunCandidateId === candidate.candidate_id
-                              ? "cursor-not-allowed bg-white/5 text-white/35"
-                              : "bg-[#9fd7bd] text-[#071017] hover:bg-[#b0e8ce]",
-                          )}
-                        >
-                          {manuscriptRunState === "working" &&
-                          manuscriptRunCandidateId === candidate.candidate_id ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <Zap className="h-4 w-4" />
-                          )}
-                          Run focused evidence cycle
-                        </button>
-                      </div>
-
-                      {manuscriptRunCandidateId === candidate.candidate_id &&
-                        manuscriptRunMessage && (
-                          <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4 text-sm leading-7 text-[#9fb4c8]">
-                            <div className="font-semibold text-white">
-                              Manuscript run status
-                            </div>
-                            <p className="mt-2">{manuscriptRunMessage}</p>
-                          </div>
-                        )}
-
-                      <div className="mt-4 rounded-2xl border border-white/8 bg-black/15 p-4 text-sm text-[#9fb4c8]">
-                        Evidence bundle:{" "}
-                        {candidate.evidence_bundle_summary?.reference_count ||
-                          0}{" "}
-                        references ·{" "}
-                        {candidate.evidence_bundle_summary?.claim_count || 0}{" "}
-                        claims ·{" "}
-                        {candidate.evidence_bundle_summary?.figure_count || 0}{" "}
-                        figures ·{" "}
-                        {candidate.evidence_bundle_summary
-                          ?.section_packet_count || 0}{" "}
-                        section packets ·{" "}
-                        {candidate.journal_specific_rigor_summary
-                          ?.critical_gap_count || 0}{" "}
-                        rigor gaps.
-                      </div>
-                    </article>
-                  ),
+              <ul className="desk-list divide-y divide-transparent">
+                {activeCandidates.length ? (
+                  activeCandidates.map((candidate: AnyRecord, index: number) => (
+                    <ManuscriptRow
+                      key={candidate?.candidate_id || candidate?.title || index}
+                      candidate={candidate}
+                      eyebrow={candidate?.is_active_path ? "Lead path" : `Draft ${index + 1}`}
+                      summary={
+                        getTaskStatusLine(candidate) +
+                        (getLeadBlocker(candidate)
+                          ? ` · Blocker: ${getLeadBlocker(candidate)}`
+                          : "")
+                      }
+                      secondaryLinks={[
+                        { href: getPackUrl(candidate?.pack_key), label: "Evidence pack" },
+                      ]}
+                    />
+                  ))
+                ) : (
+                  <li className="desk-empty-state">
+                    No active manuscript drafts are attached in the latest snapshot.
+                  </li>
                 )}
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <div className="border-b border-[var(--line)] pb-3">
+                <div className="desk-eyebrow">Ready for metadata</div>
+                <h3 className="mt-2 text-2xl leading-tight text-[var(--ink)]">
+                  Files with enough structure to link out now.
+                </h3>
               </div>
 
-              <details className="rounded-[24px] border border-white/10 bg-black/10 p-5">
-                <summary className="cursor-pointer list-none text-sm font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
-                  Watchlist
-                </summary>
-                <div className="mt-5 grid gap-4 md:grid-cols-2">
-                  {(manuscriptQueue.watchlist || []).map(
-                    (candidate: AnyRecord) => (
-                      <div
-                        key={candidate.candidate_id}
-                        className="rounded-2xl border border-white/8 bg-[#172430]/70 p-5"
-                      >
+              <ul className="desk-list">
+                {metadataCandidates.length ? (
+                  metadataCandidates.map((candidate: AnyRecord, index: number) => {
+                    const journal = getPrimaryJournal(candidate);
+                    return (
+                      <ManuscriptRow
+                        key={candidate?.candidate_id || candidate?.title || index}
+                        candidate={candidate}
+                        eyebrow="Ready for metadata"
+                        summary={getMetadataSummary(candidate)}
+                        secondaryLinks={[
+                          { href: getPackUrl(candidate?.pack_key), label: "Evidence pack" },
+                          ...(journal?.homepage
+                            ? [{ href: journal.homepage, label: journal.name }]
+                            : []),
+                        ]}
+                      />
+                    );
+                  })
+                ) : (
+                  <li className="desk-empty-state">
+                    No manuscript has crossed into metadata prep yet.
+                  </li>
+                )}
+              </ul>
+            </div>
+          </section>
+
+          <section className="space-y-4 border-t border-[var(--line)] pt-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="desk-eyebrow">Queue and watchlist</div>
+                <h3 className="mt-2 text-2xl leading-tight text-[var(--ink)]">
+                  Keep the manuscript line readable.
+                </h3>
+              </div>
+              <div className="flex flex-wrap gap-2 text-sm text-[var(--muted)]">
+                <span>{summary?.watchlist_count || watchlist.length} watchlist</span>
+                <span>·</span>
+                <span>{metadataCandidates.length} metadata-ready</span>
+                <span>·</span>
+                <span>
+                  {summary?.ready_for_codex_draft_count || 0} draft-ready
+                </span>
+              </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              {queueCandidates.length ? (
+                queueCandidates.map((candidate: AnyRecord, index: number) => (
+                  <article key={candidate?.candidate_id || candidate?.title || index} className="border-t border-[var(--line)] pt-4">
+                    <div className="flex items-start justify-between gap-5">
+                      <div className="min-w-0 space-y-2">
                         <div className="flex flex-wrap items-center gap-2">
-                          <StatusPill tone="muted">Watchlist</StatusPill>
-                          <StatusPill
+                          <StatusChip
                             tone={
-                              journalStateLabel(candidate) ===
-                              "Verified requirements"
-                                ? "success"
+                              activeCandidateIds.has(candidate?.candidate_id)
+                                ? "accent"
                                 : "warning"
                             }
                           >
-                            {journalStateLabel(candidate)}
-                          </StatusPill>
+                            {activeCandidateIds.has(candidate?.candidate_id)
+                              ? "Active draft"
+                              : "Watchlist"}
+                          </StatusChip>
+                          <StatusChip>{humanize(candidate?.manuscript_gate_state)}</StatusChip>
                         </div>
-                        <h4 className="mt-4 text-lg font-semibold text-white">
-                          {candidate.title}
-                        </h4>
-                        <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                          Primary journal:{" "}
-                          {candidate.journal_targets?.primary?.journal?.name ||
-                            "Not selected"}
-                          .
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                          {getTaskSummary(candidate)} · last executor update{" "}
-                          {formatAge(
-                            candidate.task_execution_summary?.updated_at ||
-                              candidate.last_pack_refresh,
-                          )}
-                          .
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                          Connector data: {connectorDataStateLabel(candidate)} ·{" "}
-                          {formatConnectorSources(candidate)}
-                        </p>
-                        <p className="mt-2 text-sm leading-6 text-[#9fb4c8]">
-                          10x state: {tenxStateLabel(candidate.connector_summary?.tenx)}
-                        </p>
-                        <div className="mt-4 space-y-3">
-                          <ScoreRail
-                            label="Scientific strength"
-                            score={candidate.scientific_strength_bar?.score}
-                            percent={candidate.scientific_strength_bar?.percent}
-                          />
-                          <ScoreRail
-                            label="Journal fit"
-                            score={candidate.journal_fit_bar?.score}
-                            percent={candidate.journal_fit_bar?.percent}
-                          />
-                          <ScoreRail
-                            label="Draft readiness"
-                            score={candidate.draft_readiness_bar?.score}
-                            percent={candidate.draft_readiness_bar?.percent}
-                          />
-                        </div>
-                        <div className="mt-4 flex flex-wrap gap-3">
-                          <button
-                            onClick={() =>
-                              void handleManuscriptQuestion(candidate, "missing")
-                            }
-                            className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:border-[#9fd7bd]/35 hover:bg-white/10"
-                          >
-                            <Sparkles className="h-3.5 w-3.5" />
-                            What is missing?
-                          </button>
-                          <button
-                            onClick={() =>
-                              void handleRunFocusedEvidenceCycle(candidate)
-                            }
-                            disabled={
-                              manuscriptRunState === "working" &&
-                              manuscriptRunCandidateId === candidate.candidate_id
-                            }
-                            className={cn(
-                              "inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold transition",
-                              manuscriptRunState === "working" &&
-                                manuscriptRunCandidateId === candidate.candidate_id
-                                ? "cursor-not-allowed bg-white/5 text-white/35"
-                                : "bg-[#9fd7bd] text-[#071017] hover:bg-[#b0e8ce]",
-                            )}
-                          >
-                            {manuscriptRunState === "working" &&
-                            manuscriptRunCandidateId === candidate.candidate_id ? (
-                              <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                            ) : (
-                              <Zap className="h-3.5 w-3.5" />
-                            )}
-                            Run focused evidence cycle
-                          </button>
-                        </div>
-                      </div>
-                    ),
-                  )}
-                </div>
-              </details>
-
-              <details className="rounded-[24px] border border-white/10 bg-black/10 p-5">
-                <summary className="cursor-pointer list-none text-sm font-bold uppercase tracking-[0.22em] text-[#9fd7bd]">
-                  Publication tracker
-                </summary>
-                <div className="mt-4 space-y-3 text-sm text-[#9fb4c8]">
-                  {(manuscriptQueue.publication_tracker || []).length ? (
-                    (manuscriptQueue.publication_tracker || []).map(
-                      (item: AnyRecord) => (
-                        <div
-                          key={`${item.candidate_id}-${item.status || "status"}`}
-                          className="rounded-2xl border border-white/8 bg-[#172430]/70 p-4"
-                        >
-                          <div className="font-semibold text-white">
-                            {item.title || item.candidate_id}
-                          </div>
-                          <div className="mt-1">
-                            {item.status || "Status not set yet"}
-                          </div>
-                        </div>
-                      ),
-                    )
-                  ) : (
-                    <div className="rounded-2xl border border-white/8 bg-[#172430]/70 p-4">
-                      No manuscripts have been moved into the submission tracker
-                      yet. Once a paper leaves the active queue, it will show
-                      here with its manual publication status.
-                    </div>
-                  )}
-                </div>
-              </details>
-            </section>
-
-            {activeDecision && (
-              <section className="overflow-hidden rounded-[28px] border border-[#9fd7bd]/18 bg-gradient-to-b from-[#121c26] to-[#172430] shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
-                <div className="border-b border-white/8 px-8 py-6">
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                    <LayoutDashboard className="h-4 w-4" />
-                    Active decision
-                    <StatusPill tone="accent">
-                      {activeDecision.decision_family_label}
-                    </StatusPill>
-                    <StatusPill
-                      tone={
-                        activeDecision.support_status === "supported"
-                          ? "success"
-                          : "warning"
-                      }
-                    >
-                      {activeDecision.support_status || "not specified"}
-                    </StatusPill>
-                  </div>
-                  <h3 className="mt-4 text-2xl font-bold text-white md:text-3xl">
-                    {activeDecision.title}
-                  </h3>
-                  <p className="mt-3 max-w-4xl text-base leading-8 text-[#9fb4c8]">
-                    {activeDecision.human_question}
-                  </p>
-                </div>
-
-                <div className="grid gap-6 px-8 py-8 lg:grid-cols-2">
-                  <div className="rounded-2xl border border-[#9fd7bd]/15 bg-[#9fd7bd]/6 p-5">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#9fd7bd]">
-                      <CheckCircle2 className="h-4 w-4" />
-                      What we know
-                    </div>
-                    <ul className="mt-4 space-y-3 text-sm leading-7 text-[#d9e4ef]">
-                      {(activeDecision.what_we_know || []).map(
-                        (item: string) => (
-                          <li key={item} className="flex gap-3">
-                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#9fd7bd]" />
-                            <span>{item}</span>
-                          </li>
-                        ),
-                      )}
-                    </ul>
-                  </div>
-                  <div className="rounded-2xl border border-amber-200/15 bg-amber-200/5 p-5">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-amber-100">
-                      <ShieldAlert className="h-4 w-4" />
-                      What is uncertain
-                    </div>
-                    <ul className="mt-4 space-y-3 text-sm leading-7 text-[#d9e4ef]">
-                      {(activeDecision.what_is_uncertain || []).map(
-                        (item: string) => (
-                          <li key={item} className="flex gap-3">
-                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-amber-200" />
-                            <span>{item}</span>
-                          </li>
-                        ),
-                      )}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="space-y-4 px-8 pb-8">
-                  <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fd7bd]">
-                    Choose an option
-                  </div>
-                  {(activeDecision.options || []).map((option: AnyRecord) => {
-                    const selected =
-                      selectedOptions[activeDecision.decision_id] === option.id;
-                    const recommended =
-                      option.id === activeDecision.recommended_option_id;
-                    return (
-                      <button
-                        key={option.id}
-                        onClick={() =>
-                          setSelectedOptions((previous) => ({
-                            ...previous,
-                            [activeDecision.decision_id]: option.id,
-                          }))
-                        }
-                        className={cn(
-                          "w-full rounded-[22px] border px-5 py-5 text-left transition",
-                          selected
-                            ? "border-[#9fd7bd]/45 bg-[#9fd7bd]/12 shadow-[0_0_30px_rgba(159,215,189,0.08)]"
-                            : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/7",
-                        )}
-                      >
-                        <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                          <div className="flex items-start gap-4">
-                            <div
-                              className={cn(
-                                "mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2",
-                                selected
-                                  ? "border-[#9fd7bd]"
-                                  : "border-white/30",
-                              )}
-                            >
-                              {selected && (
-                                <div className="h-2.5 w-2.5 rounded-full bg-[#9fd7bd]" />
-                              )}
-                            </div>
-                            <div>
-                              <div className="flex flex-wrap items-center gap-2">
-                                <h4 className="text-lg font-bold text-white">
-                                  {option.label}
-                                </h4>
-                                {recommended && (
-                                  <StatusPill tone="accent">
-                                    Recommended
-                                  </StatusPill>
-                                )}
-                              </div>
-                              <p className="mt-2 text-sm leading-7 text-[#9fb4c8]">
-                                {option.what_it_steers}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="rounded-2xl border border-white/8 bg-black/15 px-4 py-3 text-sm text-[#9fb4c8] md:max-w-sm">
-                            <div>
-                              <span className="font-semibold text-white">
-                                Immediate action:
-                              </span>{" "}
-                              {option.immediate_action}
-                            </div>
-                            <div className="mt-2">
-                              <span className="font-semibold text-white">
-                                Mode:
-                              </span>{" "}
-                              <code className="rounded bg-white/8 px-2 py-1 text-[#9fd7bd]">
-                                {option.immediate_action_mode}
-                              </code>
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <div className="border-t border-white/8 bg-[#121c26]/85 px-8 py-6 backdrop-blur-xl">
-                  <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-                    <div className="space-y-4">
-                      <div>
-                        <label className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fd7bd]">
-                          Operator note
-                        </label>
-                        <textarea
-                          value={actionNote}
-                          onChange={(event) =>
-                            setActionNote(event.target.value)
-                          }
-                          rows={3}
-                          className="mt-3 w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-[#9fd7bd]/35"
-                          placeholder="Optional note to attach to the workflow dispatch."
-                        />
-                      </div>
-                      {activeDecision.write_in_allowed && (
-                        <div>
-                          <label className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fd7bd]">
-                            Custom instruction
-                          </label>
-                          <textarea
-                            value={freeTextInstruction}
-                            onChange={(event) =>
-                              setFreeTextInstruction(event.target.value)
-                            }
-                            rows={3}
-                            className="mt-3 w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-[#9fd7bd]/35"
-                            placeholder="Write a custom instruction if none of the canonical options capture what you want."
-                          />
-                        </div>
-                      )}
-                      {pendingConfirmation && (
-                        <div className="rounded-2xl border border-amber-200/20 bg-amber-200/8 p-4 text-sm text-[#d9e4ef]">
-                          <div className="font-semibold text-amber-100">
-                            Confirmation needed
-                          </div>
-                          <p className="mt-2 leading-7">
-                            {pendingConfirmation.summary}
-                          </p>
-                          <p className="mt-2 leading-7 text-[#9fb4c8]">
-                            {pendingConfirmation.explanation}
-                          </p>
-                          <button
-                            onClick={() => void handleApplyFreeText(true)}
-                            className="mt-4 inline-flex items-center gap-2 rounded-2xl border border-amber-200/20 bg-amber-200/12 px-4 py-2 text-sm font-semibold text-amber-50 transition hover:bg-amber-200/18"
-                          >
-                            Confirm and apply
-                            <ArrowRight className="h-4 w-4" />
-                          </button>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="flex flex-col justify-between gap-4 rounded-[24px] border border-white/10 bg-black/15 p-5">
-                      <div>
-                        <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fd7bd]">
-                          Ready state
-                        </div>
-                        <p className="mt-3 text-sm leading-7 text-[#9fb4c8]">
-                          {selectedOptions[activeDecision.decision_id]
-                            ? `Ready to dispatch ${selectedOptions[activeDecision.decision_id]} for ${activeDecision.title}.`
-                            : "Select one of the options above before dispatching."}
-                        </p>
-                        <p className="mt-3 text-sm leading-7 text-[#d9e4ef]">
-                          {actionMessage}
-                        </p>
-                      </div>
-
-                      <div className="space-y-3">
-                        <button
-                          onClick={() => void handleApplySelectedOption()}
-                          disabled={
-                            !selectedOptions[activeDecision.decision_id] ||
-                            dispatchState === "working"
-                          }
-                          className={cn(
-                            "flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold transition",
-                            !selectedOptions[activeDecision.decision_id] ||
-                              dispatchState === "working"
-                              ? "cursor-not-allowed bg-white/5 text-white/35"
-                              : "bg-[#9fd7bd] text-[#071017] hover:bg-[#b0e8ce]",
-                          )}
-                        >
-                          {dispatchState === "working" ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <Zap className="h-4 w-4" />
-                          )}
-                          Apply selected option
-                        </button>
-                        <button
-                          onClick={() => void handleApplyFreeText(false)}
-                          disabled={
-                            !freeTextInstruction.trim() ||
-                            dispatchState === "working"
-                          }
-                          className={cn(
-                            "flex w-full items-center justify-center gap-2 rounded-2xl border px-5 py-3 text-sm font-bold transition",
-                            !freeTextInstruction.trim() ||
-                              dispatchState === "working"
-                              ? "cursor-not-allowed border-white/8 bg-white/5 text-white/35"
-                              : "border-white/10 bg-white/6 text-white hover:border-[#9fd7bd]/35 hover:bg-white/10",
-                          )}
-                        >
-                          <Sparkles className="h-4 w-4" />
-                          Interpret custom instruction
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            )}
-
-            <section className="space-y-5 rounded-[28px] border border-white/10 bg-[#121c26] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
-              <div>
-                <div className="text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                  Other decisions
-                </div>
-                <h3 className="mt-3 text-2xl font-bold text-white">
-                  Nearby choices that still matter
-                </h3>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                {otherDecisions.map((decision) => (
-                  <button
-                    key={decision.decision_id}
-                    onClick={() => setActiveDecisionId(decision.decision_id)}
-                    className="rounded-[22px] border border-white/10 bg-[#172430]/70 p-5 text-left transition hover:border-[#9fd7bd]/28 hover:bg-[#172430]"
-                  >
-                    <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#9fb4c8]">
-                      {decision.decision_family_label}
-                    </div>
-                    <div className="mt-3 text-lg font-semibold text-white">
-                      {decision.title}
-                    </div>
-                    <p className="mt-2 text-sm leading-7 text-[#9fb4c8]">
-                      {decision.why_now}
-                    </p>
-                    <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#9fd7bd]">
-                      Load decision
-                      <ChevronRight className="h-4 w-4" />
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </section>
-          </main>
-
-          <aside className="space-y-6">
-            <section className="rounded-[28px] border border-white/10 bg-[#121c26] p-6 shadow-[0_18px_44px_rgba(0,0,0,0.24)]">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                <ShieldCheck className="h-4 w-4" />
-                Control state
-              </div>
-              <div className="mt-4 space-y-4 text-sm leading-7 text-[#9fb4c8]">
-                <div>
-                  <div className="font-semibold text-white">
-                    {controlMode === "github"
-                      ? "Connected to GitHub control"
-                      : "Reading the published snapshot"}
-                  </div>
-                  <div className="mt-1">
-                    {runtimeState.liveActionsEnabled
-                      ? "The board is in sync, so apply and clarify actions are available."
-                      : "Actions stay disabled until GitHub control is connected and the board is not mismatched."}
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-white/8 bg-black/15 p-4">
-                  <div className="text-xs uppercase tracking-[0.18em] text-[#9fb4c8]">
-                    Current direction
-                  </div>
-                  <div className="mt-2 text-base font-semibold text-white">
-                    {payload.current_direction?.label || "No direction emitted"}
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-white/8 bg-black/15 p-4">
-                  <div className="text-xs uppercase tracking-[0.18em] text-[#9fb4c8]">
-                    Support links
-                  </div>
-                  <div className="mt-3 space-y-3">
-                    {(payload.support_links || [])
-                      .slice(0, 4)
-                      .map((link: AnyRecord) => (
                         <a
-                          key={link.href}
-                          href={link.href}
-                          className="block rounded-2xl border border-white/8 bg-white/5 p-3 transition hover:border-[#9fd7bd]/25 hover:bg-white/8"
+                          className="desk-link text-xl leading-tight text-[var(--ink)]"
+                          href={getPackUrl(candidate?.pack_key)}
+                          target="_blank"
+                          rel="noreferrer"
                         >
-                          <div className="flex items-center justify-between gap-3 text-sm font-semibold text-white">
-                            <span>{link.label}</span>
-                            <ExternalLink className="h-4 w-4 text-[#9fd7bd]" />
-                          </div>
-                          <div className="mt-1 text-xs leading-6 text-[#9fb4c8]">
-                            {link.detail}
-                          </div>
+                          {candidate?.title || "Untitled manuscript"}
                         </a>
-                      ))}
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="rounded-[28px] border border-white/10 bg-[#121c26] p-6 shadow-[0_18px_44px_rgba(0,0,0,0.24)]">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                <MessageSquareText className="h-4 w-4" />
-                Ask the board
-              </div>
-              <div className="mt-4 space-y-3">
-                <textarea
-                  value={question}
-                  onChange={(event) => setQuestion(event.target.value)}
-                  rows={4}
-                  className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-[#9fd7bd]/35"
-                  placeholder="Ask a plain-English question about the current state, decision, or paper path."
-                />
-                <div className="flex flex-wrap gap-2">
-                  {presetQuestions.slice(0, 4).map((preset: string) => (
-                    <button
-                      key={preset}
-                      onClick={() => {
-                        setQuestion(preset);
-                        void handleClarify(preset);
-                      }}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-[#9fb4c8] transition hover:border-[#9fd7bd]/25 hover:bg-white/10 hover:text-white"
-                    >
-                      {preset}
-                    </button>
-                  ))}
-                </div>
-                <button
-                  onClick={() => void handleClarify(question)}
-                  disabled={!question.trim() || clarifyState === "working"}
-                  className={cn(
-                    "flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold transition",
-                    !question.trim() || clarifyState === "working"
-                      ? "cursor-not-allowed bg-white/5 text-white/35"
-                      : "bg-[#9fd7bd] text-[#071017] hover:bg-[#b0e8ce]",
-                  )}
-                >
-                  {clarifyState === "working" ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Sparkles className="h-4 w-4" />
-                  )}
-                  Run clarify workflow
-                </button>
-              </div>
-
-              {clarifyResponse && (
-                <div className="mt-5 rounded-2xl border border-white/8 bg-black/15 p-4 text-sm leading-7 text-[#9fb4c8]">
-                  <div className="font-semibold text-white">
-                    {clarifyResponse.answer}
-                  </div>
-                  {Array.isArray(clarifyResponse.evidence_chain) &&
-                    clarifyResponse.evidence_chain.length > 0 && (
-                      <ul className="mt-3 space-y-2">
-                        {clarifyResponse.evidence_chain.map((item: string) => (
-                          <li key={item} className="flex gap-2">
-                            <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#9fd7bd]" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  {clarifyResponse.implication && (
-                    <p className="mt-3">
-                      Implication: {clarifyResponse.implication}
-                    </p>
-                  )}
-                  {clarifyResponse.recommended_follow_up && (
-                    <p className="mt-2">
-                      Follow-up: {clarifyResponse.recommended_follow_up}
-                    </p>
-                  )}
-                </div>
-              )}
-            </section>
-
-            {Array.isArray(payload.decision_history) &&
-              payload.decision_history.length > 0 && (
-                <section className="rounded-[28px] border border-white/10 bg-[#121c26] p-6 shadow-[0_18px_44px_rgba(0,0,0,0.24)]">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                    <Clock3 className="h-4 w-4" />
-                    System log
-                  </div>
-                  <div className="mt-5 space-y-4 border-l border-white/8 pl-5">
-                    {payload.decision_history
-                      .slice(0, 5)
-                      .map((item: AnyRecord) => (
-                        <div
-                          key={`${item.timestamp}-${item.decision_id}`}
-                          className="relative"
-                        >
-                          <span className="absolute -left-[1.62rem] top-2 h-2.5 w-2.5 rounded-full bg-[#9fd7bd] ring-4 ring-[#121c26]" />
-                          <div className="text-[11px] font-mono uppercase tracking-[0.16em] text-[#9fb4c8]">
-                            {formatAge(item.timestamp)}
-                          </div>
-                          <div className="mt-1 font-semibold text-white">
-                            {item.decision_title}
-                          </div>
-                          <div className="mt-1 text-xs text-[#9fd7bd]">
-                            {item.interpreted_intent}
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </section>
-              )}
-
-            <section className="rounded-[28px] border border-white/10 bg-[#121c26] p-6 shadow-[0_18px_44px_rgba(0,0,0,0.24)]">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                <Activity className="h-4 w-4" />
-                Goal progress
-              </div>
-              <div className="mt-5 space-y-5">
-                {(payload.goal_progress?.stages || []).map(
-                  (stage: AnyRecord) => (
-                    <div
-                      key={stage.label}
-                      className="rounded-2xl border border-white/8 bg-black/15 p-4"
-                    >
-                      <div className="flex items-end justify-between gap-3">
-                        <div className="font-semibold text-white">
-                          {stage.label}
-                        </div>
-                        <div className="text-xs text-[#9fb4c8]">
-                          {stage.completed}/{stage.total}
-                        </div>
+                        <p className="text-sm leading-6 text-[var(--muted)]">
+                          {candidate?.top_blocker ||
+                            getLeadBlocker(candidate) ||
+                            "No blocker named yet."}
+                        </p>
                       </div>
-                      <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/8">
-                        <div
-                          className="h-full rounded-full bg-[#9fd7bd]"
-                          style={{ width: `${stage.percent || 0}%` }}
-                        />
-                      </div>
-                      <div className="mt-4 space-y-2 text-sm text-[#9fb4c8]">
-                        {(stage.checkpoints || [])
-                          .slice(0, 4)
-                          .map((checkpoint: AnyRecord) => (
-                            <div
-                              key={checkpoint.label}
-                              className="flex items-center gap-2"
-                            >
-                              {checkpoint.complete ? (
-                                <CheckCircle2 className="h-4 w-4 text-[#9fd7bd]" />
-                              ) : (
-                                <Circle className="h-4 w-4 opacity-40" />
-                              )}
-                              <span>{checkpoint.label}</span>
-                            </div>
-                          ))}
-                      </div>
+                      <ScrollText className="mt-1 h-4 w-4 shrink-0 text-[var(--accent)]" />
                     </div>
-                  ),
-                )}
-              </div>
-            </section>
-
-            <section className="rounded-[28px] border border-white/10 bg-[#121c26] p-6 shadow-[0_18px_44px_rgba(0,0,0,0.24)]">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                <FileText className="h-4 w-4" />
-                Discovery summary
-              </div>
-              <div className="mt-4 space-y-4 text-sm leading-7 text-[#9fb4c8]">
-                <div>
-                  <div className="font-semibold text-white">Major findings</div>
-                  <ul className="mt-2 space-y-2">
-                    {(payload.discovery_summary?.major_findings || [])
-                      .slice(0, 3)
-                      .map((item: string) => (
-                        <li key={item} className="flex gap-2">
-                          <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#9fd7bd]" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                  </ul>
+                  </article>
+                ))
+              ) : (
+                <div className="desk-empty-state lg:col-span-2">
+                  The queue is clear right now. New watchlist items will appear here when the snapshot emits them.
                 </div>
-                <div className="border-t border-white/8 pt-4">
-                  <div className="font-semibold text-white">
-                    Current unknowns
-                  </div>
-                  <ul className="mt-2 space-y-2">
-                    {(payload.discovery_summary?.current_unknowns || [])
-                      .slice(0, 3)
-                      .map((item: string) => (
-                        <li key={item} className="flex gap-2">
-                          <span className="mt-2 h-1.5 w-1.5 rounded-full bg-amber-200" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              </div>
-            </section>
-          </aside>
-        </div>
+              )}
+            </div>
+          </section>
+        </main>
       </div>
-
-      {settingsOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#071017]/80 px-4 backdrop-blur-sm">
-          <div className="w-full max-w-xl rounded-[28px] border border-white/10 bg-[#121c26] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.24em] text-[#9fd7bd]">
-                  <KeyRound className="h-4 w-4" />
-                  GitHub control
-                </div>
-                <h3 className="mt-3 text-2xl font-bold text-white">
-                  Connect the public cockpit to GitHub Actions
-                </h3>
-                <p className="mt-2 text-sm leading-7 text-[#9fb4c8]">
-                  Use a fine-grained personal access token with Actions
-                  read/write and Contents read/write on{" "}
-                  <code className="rounded bg-white/8 px-1.5 py-0.5 text-[#9fd7bd]">
-                    {GITHUB_OWNER}/{GITHUB_REPO}
-                  </code>
-                  . The token stays in this browser only.
-                </p>
-              </div>
-              <button
-                onClick={() => setSettingsOpen(false)}
-                className="rounded-full border border-white/10 bg-white/5 p-2 text-[#9fb4c8] transition hover:bg-white/10 hover:text-white"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="mt-6 space-y-4">
-              <input
-                type="password"
-                value={tokenDraft}
-                onChange={(event) => setTokenDraft(event.target.value)}
-                className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none transition focus:border-[#9fd7bd]/35"
-                placeholder="Paste your fine-grained GitHub token"
-              />
-              <div className="flex flex-wrap justify-end gap-3">
-                <button
-                  onClick={() => setSettingsOpen(false)}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSaveToken}
-                  disabled={!tokenDraft.trim()}
-                  className={cn(
-                    "rounded-2xl px-4 py-3 text-sm font-semibold transition",
-                    tokenDraft.trim()
-                      ? "bg-[#9fd7bd] text-[#071017] hover:bg-[#b0e8ce]"
-                      : "cursor-not-allowed bg-white/5 text-white/35",
-                  )}
-                >
-                  Save and connect
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
