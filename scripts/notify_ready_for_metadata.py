@@ -8,6 +8,7 @@ from email.message import EmailMessage
 from pathlib import Path
 from typing import Dict, List
 
+from google.auth.exceptions import RefreshError
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
@@ -152,7 +153,14 @@ def send_via_gmail_api(sender_email: str, recipient_email: str, subject: str, bo
     message.set_content(body)
 
     raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode('utf-8')
-    service.users().messages().send(userId='me', body={'raw': raw_message}).execute()
+    try:
+        service.users().messages().send(userId='me', body={'raw': raw_message}).execute()
+    except RefreshError as exc:
+        raise RuntimeError(
+            'GOOGLE_TOKEN_JSON is present, but it does not include Gmail send scope. '
+            'Refresh GOOGLE_TOKEN_JSON with gmail.send access or add READY_METADATA_EMAIL_APP_PASSWORD '
+            'for SMTP delivery.'
+        ) from exc
 
 
 def send_via_smtp(sender_email: str, recipient_email: str, subject: str, body: str):
