@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-18T11:56:03.354187+00:00",
+  "updated_at": "2026-04-18T11:58:04.452475+00:00",
   "artifacts": [
     {
       "phase_key": "phase6",
       "artifact_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
       "label": "Blood-Brain Barrier Failure biomarker panel",
-      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_115602.json",
+      "source_path": "reports/hypothesis_rankings/hypothesis_rankings_2026-04-18_115803.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41969524",
@@ -54,7 +54,7 @@
       "phase_key": "phase2",
       "artifact_id": "bbb_permeability_increase_to_peripheral_immune_infiltration",
       "label": "BBB permeability increase -> peripheral immune infiltration",
-      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_115600.json",
+      "source_path": "reports/causal_transitions/causal_transition_index_2026-04-18_115801.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41709060",
@@ -67,7 +67,7 @@
       "phase_key": "phase3",
       "artifact_id": "microglial_chronic_activation",
       "label": "Microglial Chronic Activation",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_115601.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_115802.json",
       "support_status": "supported",
       "anchor_pmids": [
         "41039850",
@@ -85,7 +85,7 @@
       "phase_key": "phase3",
       "artifact_id": "neurovascular_uncoupling",
       "label": "Neurovascular Uncoupling",
-      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_115601.json",
+      "source_path": "reports/progression_objects/progression_object_index_2026-04-18_115802.json",
       "support_status": "provisional",
       "anchor_pmids": [
         "41039850",
@@ -103,7 +103,7 @@
       "phase_key": "phase4",
       "artifact_id": "blood_brain_barrier_failure",
       "label": "Blood-Brain Barrier Failure",
-      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_115602.json",
+      "source_path": "reports/translational_perturbation/translational_perturbation_index_2026-04-18_115803.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41969524",
@@ -129,7 +129,7 @@
       "phase_key": "phase5",
       "artifact_id": "acute_mild_biomarker_imaging_bridge",
       "label": "Acute Mild Biomarker / Imaging Bridge",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_115602.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_115803.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41707328",
@@ -145,7 +145,7 @@
       "phase_key": "phase5",
       "artifact_id": "acute_severe_vascular_dominant",
       "label": "Acute Severe Vascular-Dominant",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_115602.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_115803.json",
       "support_status": "usable",
       "anchor_pmids": [
         "41700282",
@@ -163,7 +163,7 @@
       "phase_key": "phase5",
       "artifact_id": "acute_blast_vascular_inflammatory_mixed",
       "label": "Acute Blast Vascular / Inflammatory Mixed",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_115602.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_115803.json",
       "support_status": "bounded",
       "anchor_pmids": [
         "41809238",
@@ -178,7 +178,7 @@
       "phase_key": "phase5",
       "artifact_id": "subacute_repetitive_inflammatory_dominant",
       "label": "Subacute Repetitive Inflammatory-Dominant",
-      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_115602.json",
+      "source_path": "reports/cohort_stratification/cohort_stratification_index_2026-04-18_115803.json",
       "support_status": "usable",
       "anchor_pmids": [
         "41173520",
