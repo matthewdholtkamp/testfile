@@ -1,18 +1,81 @@
 {
-  "updated_at": "2026-04-19T12:08:37.594032+00:00",
+  "updated_at": "2026-04-19T14:29:22.364066+00:00",
   "summary": {
-    "reference_count": 52,
+    "reference_count": 53,
     "claim_count": 10,
     "contradiction_count": 18,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
     "journal_specific_rigor_profile_count": 0,
     "journal_specific_rigor_critical_gaps": 0,
     "journal_specific_rigor_fill_entries": 0
   },
   "references": [
+    {
+      "pmid": "41969524",
+      "title": "The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise.",
+      "authors": "Bai B, Feng H, Yang H, et al",
+      "journal": "Front Cell Neurosci",
+      "publication_date": "2026",
+      "doi": "10.3389/fncel.2026.1757822",
+      "pmcid": "PMC13065505",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_BEtAl_TheGPR68-NINJ1axisan_PMID41969524.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "Bai B",
+        "Feng H",
+        "Yang H",
+        "Huang M",
+        "Wang Y"
+      ],
+      "year": "2026",
+      "volume": "20",
+      "issue": "",
+      "pages": "1757822",
+      "reference_number": 1,
+      "citation_text": "Bai B, Feng H, Yang H, et al. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Front Cell Neurosci 2026; 20: 1757822.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase1:blood_brain_barrier_failure",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_blood_brain_barrier_failure",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
     {
       "pmid": "41663365",
       "title": "Endothelial IRE1 signaling maintains blood-brain barrier integrity and limits neuroinflammation after traumatic brain injury",
@@ -26,7 +89,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -52,7 +115,7 @@
       "volume": "17",
       "issue": "1",
       "pages": "210",
-      "reference_number": 1,
+      "reference_number": 2,
       "citation_text": "Fan Q, Takarada-Iemata M, Tanaka T, et al. Endothelial IRE1 signaling maintains blood-brain barrier integrity and limits neuroinflammation after traumatic brain injury. Cell Death Dis 2026; 17: 210.",
       "source_phases": [
         "phase6",
@@ -97,7 +160,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -116,7 +179,7 @@
       "volume": "",
       "issue": "",
       "pages": "",
-      "reference_number": 2,
+      "reference_number": 3,
       "citation_text": "Lin XY, Usman M, Ai L, et al. Experimental Study on Changes in the Structure of the Blood-Brain Barrier after Treatment with Bevacizumab for Traumatic Cerebral Edema. Neurocrit Care. Epub ahead of print 2026 Feb 11. DOI: 10.1007/s12028-026-02458-7.",
       "source_phases": [
         "phase6",
@@ -161,7 +224,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -185,7 +248,7 @@
       "volume": "",
       "issue": "",
       "pages": "",
-      "reference_number": 3,
+      "reference_number": 4,
       "citation_text": "Shiravi S, Chakka A, Xiao X, et al. Mechanical Stretch Disrupts Calcium Dynamics and Redistributes Piezo1 in Human Astrocytes. Ann Biomed Eng. Epub ahead of print 2026 Feb 5. DOI: 10.1007/s10439-026-03995-0.",
       "source_phases": [
         "phase6",
@@ -230,7 +293,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -246,8 +309,139 @@
       "volume": "14",
       "issue": "5",
       "pages": "1206-1218",
-      "reference_number": 4,
+      "reference_number": 5,
       "citation_text": "Lee S, Lee J and Lee K. Translational roadmap of BBB-targeted nanoparticle strategies for neuroregenerative therapy in neurodegenerative diseases. Biomater Sci 2026; 14: 1206-1218.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase1:blood_brain_barrier_failure",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_blood_brain_barrier_failure",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
+      "pmid": "41954515",
+      "title": "Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury.",
+      "authors": "Chen Y, Yin X, Zhang E, et al",
+      "journal": "CNS Neurosci Ther",
+      "publication_date": "2026 Apr",
+      "doi": "10.1002/cns.70858",
+      "pmcid": "PMC13064413",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_YEtAl_Astrocyte-DerivedExosomalmiR-211-5pAlleviates_PMID41954515.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "Chen Y",
+        "Yin X",
+        "Zhang E",
+        "Li B",
+        "Yu H",
+        "Qi J",
+        "Liu M",
+        "Wang M",
+        "Fan Z",
+        "Yang L"
+      ],
+      "year": "2026",
+      "volume": "32",
+      "issue": "4",
+      "pages": "e70858",
+      "reference_number": 6,
+      "citation_text": "Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.",
+      "source_phases": [
+        "phase6",
+        "phase1",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase1:blood_brain_barrier_failure",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase1_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
+      ],
+      "support_statuses": [
+        "supported",
+        "longitudinally_supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase1_blood_brain_barrier_failure",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
+      "pmid": "41994141",
+      "title": "Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency.",
+      "authors": "de Jager C, Ju J, Corbo M, et al",
+      "journal": "Res Sq",
+      "publication_date": "2026 Apr 9",
+      "doi": "10.21203/rs.3.rs-9261231/v1",
+      "pmcid": "PMC13082128",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "Crossref HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_CEtAl_SpatialTranscriptomicsandDual_PMID41994141.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "de Jager C",
+        "Ju J",
+        "Corbo M",
+        "Patel K",
+        "Theus M"
+      ],
+      "year": "2026",
+      "volume": "",
+      "issue": "",
+      "pages": "",
+      "reference_number": 7,
+      "citation_text": "de Jager C, Ju J, Corbo M, et al. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Res Sq. Epub ahead of print 2026 Apr 9. DOI: 10.21203/rs.3.rs-9261231/v1.",
       "source_phases": [
         "phase6",
         "phase1",
@@ -291,7 +485,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -313,7 +507,7 @@
       "volume": "31",
       "issue": "10",
       "pages": "e70603",
-      "reference_number": 5,
+      "reference_number": 8,
       "citation_text": "Zhao R, Dong S, Wu D, et al. A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. CNS Neurosci Ther 2025; 31: e70603.",
       "source_phases": [
         "phase6",
@@ -355,184 +549,145 @@
       ]
     },
     {
-      "pmid": "41465583",
-      "title": "Blood-Based Biomarkers for Traumatic Brain Injury: A New Era in Diagnosis and Prognosis",
-      "authors": "Pignataro G, Sacco Fernandez M, Candelli M, et al",
-      "journal": "Int J Mol Sci",
-      "publication_date": "2025 Dec 18",
-      "doi": "10.3390/ijms262412158",
+      "pmid": "41973273",
+      "title": "Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization.",
+      "authors": "Wu J, Tang Y, Wang Y, et al",
+      "journal": "J Neuroimmune Pharmacol",
+      "publication_date": "2026 Apr 13",
+      "doi": "10.1007/s11481-026-10289-8",
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "Crossref HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_JEtAl_GanodericAcidaPromotes_PMID41973273.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
-        "Pignataro G",
-        "Sacco Fernandez M",
-        "Candelli M",
-        "Rozzi G",
-        "Piccioni A",
-        "Forte E",
-        "Franceschi F"
+        "Wu J",
+        "Tang Y",
+        "Wang Y",
+        "Liu B",
+        "Xu M",
+        "Tan Y",
+        "Cai D",
+        "Chen Y",
+        "Zeng J",
+        "Liu K",
+        "Liu Y"
       ],
-      "year": "2025",
-      "volume": "26",
-      "issue": "24",
+      "year": "2026",
+      "volume": "21",
+      "issue": "1",
       "pages": "",
-      "reference_number": 6,
-      "citation_text": "Pignataro G, Sacco Fernandez M, Candelli M, et al. Blood-Based Biomarkers for Traumatic Brain Injury: A New Era in Diagnosis and Prognosis. Int J Mol Sci 2025; 26. DOI: 10.3390/ijms262412158.",
+      "reference_number": 9,
+      "citation_text": "Wu J, Tang Y, Wang Y, et al. Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization. J Neuroimmune Pharmacol 2026; 21. DOI: 10.1007/s11481-026-10289-8.",
       "source_phases": [
         "phase6",
+        "phase1",
         "phase4"
       ],
       "artifact_refs": [
         "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase1:blood_brain_barrier_failure",
         "phase4:blood_brain_barrier_failure"
       ],
       "support_roles": [
         "candidate_anchor",
+        "phase1_support",
         "phase4_support"
       ],
       "support_notes": [
-        "Ranked manuscript candidate support."
+        "Ranked manuscript candidate support.",
+        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
       ],
       "support_statuses": [
         "supported",
+        "longitudinally_supported",
         "bounded"
       ],
       "supporting_claim_ids": [
         "phase6_candidate_thesis",
+        "phase1_blood_brain_barrier_failure",
         "phase4_blood_brain_barrier_failure"
       ]
     },
     {
-      "pmid": "41725719",
-      "title": "Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram",
-      "authors": "Wang X, Xie R, Li M, et al",
-      "journal": "Front Neurol",
-      "publication_date": "2026",
-      "doi": "10.3389/fneur.2026.1718794",
-      "pmcid": "",
+      "pmid": "41934291",
+      "title": "Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury.",
+      "authors": "Mayer AR, Wick TV, Miller S, et al",
+      "journal": "J Cereb Blood Flow Metab",
+      "publication_date": "2026 Apr 4",
+      "doi": "10.1177/0271678X261432754",
+      "pmcid": "PMC13050368",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "Europe PMC PDF",
+      "extraction_rank": "4",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_AREtAl_Mechanismsandbarriersfor_PMID41934291.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
-        "Wang X",
-        "Xie R",
-        "Li M",
-        "Zhao Z",
-        "Liu Z",
-        "Wang B",
-        "Liu X"
+        "Mayer AR",
+        "Wick TV",
+        "Miller S",
+        "Connors KE",
+        "Sasi Kumar D",
+        "Meier TB",
+        "van der Horn HJ",
+        "Nathaniel U",
+        "Ling JM",
+        "Mehos Milliken CJ",
+        "Warren K",
+        "Patton DA",
+        "Gigliotti AP",
+        "Zotev V",
+        "Kinsler RE",
+        "Mannix R"
       ],
       "year": "2026",
-      "volume": "17",
+      "volume": "",
       "issue": "",
-      "pages": "1718794",
-      "reference_number": 7,
-      "citation_text": "Wang X, Xie R, Li M, et al. Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. Front Neurol 2026; 17: 1718794.",
+      "pages": "271678X261432754",
+      "reference_number": 10,
+      "citation_text": "Mayer AR, Wick TV, Miller S, et al. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. J Cereb Blood Flow Metab. Epub ahead of print 2026 Apr 4. DOI: 10.1177/0271678X261432754.",
       "source_phases": [
         "phase6",
-        "phase4",
-        "phase5"
-      ],
-      "artifact_refs": [
-        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-        "phase4:blood_brain_barrier_failure",
-        "phase5:acute_severe_vascular_dominant"
-      ],
-      "support_roles": [
-        "candidate_anchor",
-        "phase4_support",
-        "phase5_support",
-        "phase5_supporting_paper"
-      ],
-      "support_notes": [
-        "Ranked manuscript candidate support.",
-        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
-        "Cohort-supporting paper in linked endotype packet."
-      ],
-      "support_statuses": [
-        "supported",
-        "bounded",
-        "usable"
-      ],
-      "supporting_claim_ids": [
-        "phase6_candidate_thesis",
-        "phase4_blood_brain_barrier_failure",
-        "phase5_acute_severe_vascular_dominant"
-      ]
-    },
-    {
-      "pmid": "41153827",
-      "title": "Short-Term Cyclosporin A Treatment Reduced Serum Neurofilament-Light Levels in Diffuse but Not Focal Traumatic Brain Injury in a Piglet Model",
-      "authors": "Huber CM, Thakore AD, Oeur A, et al",
-      "journal": "Biomedicines",
-      "publication_date": "2025 Oct 18",
-      "doi": "10.3390/biomedicines13102547",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Huber CM",
-        "Thakore AD",
-        "Oeur A",
-        "Margulies SS"
-      ],
-      "year": "2025",
-      "volume": "13",
-      "issue": "10",
-      "pages": "",
-      "reference_number": 8,
-      "citation_text": "Huber CM, Thakore AD, Oeur A, et al. Short-Term Cyclosporin A Treatment Reduced Serum Neurofilament-Light Levels in Diffuse but Not Focal Traumatic Brain Injury in a Piglet Model. Biomedicines 2025; 13. DOI: 10.3390/biomedicines13102547.",
-      "source_phases": [
-        "phase6",
+        "phase1",
         "phase4"
       ],
       "artifact_refs": [
         "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase1:blood_brain_barrier_failure",
         "phase4:blood_brain_barrier_failure"
       ],
       "support_roles": [
         "candidate_anchor",
+        "phase1_support",
         "phase4_support"
       ],
       "support_notes": [
-        "Ranked manuscript candidate support."
+        "Ranked manuscript candidate support.",
+        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
       ],
       "support_statuses": [
         "supported",
+        "longitudinally_supported",
         "bounded"
       ],
       "supporting_claim_ids": [
         "phase6_candidate_thesis",
+        "phase1_blood_brain_barrier_failure",
         "phase4_blood_brain_barrier_failure"
       ]
     },
@@ -549,7 +704,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -567,125 +722,8 @@
       "volume": "170",
       "issue": "1",
       "pages": "e70350",
-      "reference_number": 9,
-      "citation_text": "Bernal-Vicente BN, Ponce I, R\u00edos-Castro E, et al. Unveiling the Proteomic Landscape of Extracellular Vesicles: Implications for Neurodegeneration and Neuroprotection. J Neurochem 2026; 170: e70350.",
-      "source_phases": [
-        "phase6",
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-        "phase4:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "candidate_anchor",
-        "phase4_support"
-      ],
-      "support_notes": [
-        "Ranked manuscript candidate support."
-      ],
-      "support_statuses": [
-        "supported",
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase6_candidate_thesis",
-        "phase4_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41709060",
-      "title": "Molecular insights into glial neuroimmune cross reactivity with CNS antigens and its role in neuroinflammation",
-      "authors": "Yadav AK, Verma P, Srivastava A, et al",
-      "journal": "Inflammopharmacology",
-      "publication_date": "2026 Mar",
-      "doi": "10.1007/s10787-026-02113-9",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Yadav AK",
-        "Verma P",
-        "Srivastava A",
-        "Srivastava P",
-        "Rai R",
-        "Rathour S"
-      ],
-      "year": "2026",
-      "volume": "34",
-      "issue": "3",
-      "pages": "1399-1424",
-      "reference_number": 10,
-      "citation_text": "Yadav AK, Verma P, Srivastava A, et al. Molecular insights into glial neuroimmune cross reactivity with CNS antigens and its role in neuroinflammation. Inflammopharmacology 2026; 34: 1399-1424.",
-      "source_phases": [
-        "phase6",
-        "phase2",
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
-        "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "phase4:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "candidate_anchor",
-        "phase2_support",
-        "phase4_support"
-      ],
-      "support_notes": [
-        "Ranked manuscript candidate support.",
-        "Direct directional support is present in 2 causal edge-backed paper(s) and reinforced by 3 claim-backed paper(s)."
-      ],
-      "support_statuses": [
-        "supported",
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase6_candidate_thesis",
-        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "phase4_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41752185",
-      "title": "The Dynamics of Neuroinflammation in Traumatic Brain Injury: Molecular Markers Useful for Establishing the Post-Traumatic Interval in Forensic Practice",
-      "authors": "Hostiuc S and Rusu MC",
-      "journal": "Int J Mol Sci",
-      "publication_date": "2026 Feb 22",
-      "doi": "10.3390/ijms27042049",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Hostiuc S",
-        "Rusu MC"
-      ],
-      "year": "2026",
-      "volume": "27",
-      "issue": "4",
-      "pages": "",
       "reference_number": 11,
-      "citation_text": "Hostiuc S and Rusu MC. The Dynamics of Neuroinflammation in Traumatic Brain Injury: Molecular Markers Useful for Establishing the Post-Traumatic Interval in Forensic Practice. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27042049.",
+      "citation_text": "Bernal-Vicente BN, Ponce I, R\u00edos-Castro E, et al. Unveiling the Proteomic Landscape of Extracellular Vesicles: Implications for Neurodegeneration and Neuroprotection. J Neurochem 2026; 170: e70350.",
       "source_phases": [
         "phase6",
         "phase4"
@@ -723,7 +761,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -780,7 +818,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -828,6 +866,183 @@
       ]
     },
     {
+      "pmid": "41752185",
+      "title": "The Dynamics of Neuroinflammation in Traumatic Brain Injury: Molecular Markers Useful for Establishing the Post-Traumatic Interval in Forensic Practice",
+      "authors": "Hostiuc S and Rusu MC",
+      "journal": "Int J Mol Sci",
+      "publication_date": "2026 Feb 22",
+      "doi": "10.3390/ijms27042049",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "authors_list": [
+        "Hostiuc S",
+        "Rusu MC"
+      ],
+      "year": "2026",
+      "volume": "27",
+      "issue": "4",
+      "pages": "",
+      "reference_number": 14,
+      "citation_text": "Hostiuc S and Rusu MC. The Dynamics of Neuroinflammation in Traumatic Brain Injury: Molecular Markers Useful for Establishing the Post-Traumatic Interval in Forensic Practice. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27042049.",
+      "source_phases": [
+        "phase6",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
+      "pmid": "41968392",
+      "title": "Pathological Roles of Astrocytes in Traumatic Brain Injury.",
+      "authors": "Wu D, Ma Y, Wang B, et al",
+      "journal": "CNS Neurosci Ther",
+      "publication_date": "2026 Apr",
+      "doi": "10.1002/cns.70856",
+      "pmcid": "PMC13070886",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_DEtAl_PathologicalRolesofAstrocytes_PMID41968392.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "Wu D",
+        "Ma Y",
+        "Wang B",
+        "Zheng Y",
+        "Ren J",
+        "Sun Q",
+        "Bian L",
+        "Sun Y"
+      ],
+      "year": "2026",
+      "volume": "32",
+      "issue": "4",
+      "pages": "e70856",
+      "reference_number": 15,
+      "citation_text": "Wu D, Ma Y, Wang B, et al. Pathological Roles of Astrocytes in Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70856.",
+      "source_phases": [
+        "phase6",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
+      "pmid": "41709060",
+      "title": "Molecular insights into glial neuroimmune cross reactivity with CNS antigens and its role in neuroinflammation",
+      "authors": "Yadav AK, Verma P, Srivastava A, et al",
+      "journal": "Inflammopharmacology",
+      "publication_date": "2026 Mar",
+      "doi": "10.1007/s10787-026-02113-9",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "authors_list": [
+        "Yadav AK",
+        "Verma P",
+        "Srivastava A",
+        "Srivastava P",
+        "Rai R",
+        "Rathour S"
+      ],
+      "year": "2026",
+      "volume": "34",
+      "issue": "3",
+      "pages": "1399-1424",
+      "reference_number": 16,
+      "citation_text": "Yadav AK, Verma P, Srivastava A, et al. Molecular insights into glial neuroimmune cross reactivity with CNS antigens and its role in neuroinflammation. Inflammopharmacology 2026; 34: 1399-1424.",
+      "source_phases": [
+        "phase6",
+        "phase2",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+        "phase2:bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase4:blood_brain_barrier_failure"
+      ],
+      "support_roles": [
+        "candidate_anchor",
+        "phase2_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Ranked manuscript candidate support.",
+        "Direct directional support is present in 2 causal edge-backed paper(s) and reinforced by 3 claim-backed paper(s)."
+      ],
+      "support_statuses": [
+        "supported",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase6_candidate_thesis",
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
+        "phase4_blood_brain_barrier_failure"
+      ]
+    },
+    {
       "pmid": "41740873",
       "title": "Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact",
       "authors": "Main BS, Villapol S, Buenaventura RG, et al",
@@ -840,7 +1055,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -867,7 +1082,7 @@
       "volume": "135",
       "issue": "",
       "pages": "106511",
-      "reference_number": 14,
+      "reference_number": 17,
       "citation_text": "Main BS, Villapol S, Buenaventura RG, et al. Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. Brain Behav Immun 2026; 135: 106511.",
       "source_phases": [
         "phase6",
@@ -902,7 +1117,6 @@
       "supporting_claim_ids": [
         "phase6_candidate_thesis",
         "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "phase4_blood_brain_barrier_failure",
         "phase5_subacute_repetitive_inflammatory_dominant"
       ]
     },
@@ -919,7 +1133,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -935,7 +1149,7 @@
       "volume": "27",
       "issue": "3",
       "pages": "",
-      "reference_number": 15,
+      "reference_number": 18,
       "citation_text": "Katramadou A, Bender ES and Kanakis D. From Traumatic Brain Injury to Alzheimer's Disease: Multilevel Biomechanical, Neurovascular, and Molecular Mechanisms with Emerging Therapeutic Directions. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27031570.",
       "source_phases": [
         "phase6",
@@ -962,8 +1176,7 @@
       ],
       "supporting_claim_ids": [
         "phase6_candidate_thesis",
-        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration",
-        "phase4_blood_brain_barrier_failure"
+        "phase2_bbb_permeability_increase_to_peripheral_immune_infiltration"
       ]
     },
     {
@@ -979,7 +1192,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -998,7 +1211,7 @@
       "volume": "13",
       "issue": "",
       "pages": "tkaf043",
-      "reference_number": 16,
+      "reference_number": 19,
       "citation_text": "Sun B, Zhang J, Li Z, et al. Role of damage-associated molecular patterns in the pathogenesis and therapeutics of traumatic brain injury. Burns Trauma 2025; 13: tkaf043.",
       "source_phases": [
         "phase6",
@@ -1029,8 +1242,7 @@
       "supporting_claim_ids": [
         "phase6_candidate_thesis",
         "phase3_microglial_chronic_activation",
-        "phase3_neurovascular_uncoupling",
-        "phase4_blood_brain_barrier_failure"
+        "phase3_neurovascular_uncoupling"
       ]
     },
     {
@@ -1046,7 +1258,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1065,7 +1277,7 @@
       "volume": "396",
       "issue": "",
       "pages": "115520",
-      "reference_number": 17,
+      "reference_number": 20,
       "citation_text": "Doust YV, Rowe RK, Langley RC, et al. Worsened axonal injury and gliosis following diffuse brain injury in male and female mice with neurofilament light gene deletion. Exp Neurol 2026; 396: 115520.",
       "source_phases": [
         "phase6",
@@ -1108,7 +1320,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1122,7 +1334,7 @@
       "volume": "15",
       "issue": "10",
       "pages": "",
-      "reference_number": 18,
+      "reference_number": 21,
       "citation_text": "K\u00e9ri S. Diffusion Basis Restricted Fraction as a Putative Magnetic Resonance Imaging Marker of Neuroinflammation: Histological Evidence, Diagnostic Accuracy, and Translational Potential. Life (Basel) 2025; 15. DOI: 10.3390/life15101599.",
       "source_phases": [
         "phase6",
@@ -1148,7 +1360,6 @@
         "bounded"
       ],
       "supporting_claim_ids": [
-        "phase6_candidate_thesis",
         "phase3_microglial_chronic_activation"
       ]
     },
@@ -1165,7 +1376,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1185,7 +1396,7 @@
       "volume": "43",
       "issue": "5-6",
       "pages": "485-500",
-      "reference_number": 19,
+      "reference_number": 22,
       "citation_text": "Fadon-Padilla L, Chu C, Liang Y, et al. A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction. J Neurotrauma 2026; 43: 485-500.",
       "source_phases": [
         "phase6",
@@ -1221,7 +1432,6 @@
         "usable"
       ],
       "supporting_claim_ids": [
-        "phase6_candidate_thesis",
         "phase3_microglial_chronic_activation",
         "phase3_neurovascular_uncoupling",
         "phase5_subacute_repetitive_inflammatory_dominant"
@@ -1240,7 +1450,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1258,7 +1468,7 @@
       "volume": "233",
       "issue": "",
       "pages": "111617",
-      "reference_number": 20,
+      "reference_number": 23,
       "citation_text": "Wang L, Zhou Q, Chen J, et al. NSUN6 promotes neuronal axon regeneration after traumatic brain injury by enhancing HMGB1 expression via m5C modification. Brain Res Bull 2025; 233: 111617.",
       "source_phases": [
         "phase6",
@@ -1284,7 +1494,6 @@
         "bounded"
       ],
       "supporting_claim_ids": [
-        "phase6_candidate_thesis",
         "phase3_microglial_chronic_activation"
       ]
     },
@@ -1301,7 +1510,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1323,7 +1532,7 @@
       "volume": "14",
       "issue": "1",
       "pages": "8",
-      "reference_number": 21,
+      "reference_number": 24,
       "citation_text": "Eed A, Hamilton J, Xu X, et al. MRI investigation of orientation-dependent changes in microstructure and function in a mouse model of mild traumatic brain injury. Acta Neuropathol Commun 2025; 14: 8.",
       "source_phases": [
         "phase6",
@@ -1365,7 +1574,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1385,7 +1594,7 @@
       "volume": "28",
       "issue": "12",
       "pages": "114221",
-      "reference_number": 22,
+      "reference_number": 25,
       "citation_text": "Li M, Wang Y, Zhang Z, et al. MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. iScience 2025; 28: 114221.",
       "source_phases": [
         "phase6",
@@ -1435,7 +1644,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1451,7 +1660,7 @@
       "volume": "16",
       "issue": "",
       "pages": "1669136",
-      "reference_number": 23,
+      "reference_number": 26,
       "citation_text": "Wang Z, Zhang Z and Liu Z. Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude. Front Neurol 2025; 16: 1669136.",
       "source_phases": [
         "phase6",
@@ -1494,7 +1703,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1511,7 +1720,7 @@
       "volume": "32",
       "issue": "6",
       "pages": "909-920",
-      "reference_number": 24,
+      "reference_number": 27,
       "citation_text": "Charan SPG, Parmar S, Saini J, et al. Isolated oculomotor nerve palsy following mild traumatic brain injury: diagnostic challenges and insights from High-Resolution MRI. Emerg Radiol 2025; 32: 909-920.",
       "source_phases": [
         "phase6",
@@ -1554,7 +1763,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1569,7 +1778,7 @@
       "volume": "221",
       "issue": "",
       "pages": "104979",
-      "reference_number": 25,
+      "reference_number": 28,
       "citation_text": "Zhao X and He Z. Traumatic brain injury and Alzheimer's disease related neurodegenerative diseases: Insights from animal models. Neurosci Res 2025; 221: 104979.",
       "source_phases": [
         "phase6",
@@ -1612,7 +1821,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1634,7 +1843,7 @@
       "volume": "16",
       "issue": "",
       "pages": "1677730",
-      "reference_number": 26,
+      "reference_number": 29,
       "citation_text": "Chen W, Li S, Zhang T, et al. Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. Front Neurol 2025; 16: 1677730.",
       "source_phases": [
         "phase6",
@@ -1677,7 +1886,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1704,7 +1913,7 @@
       "volume": "16",
       "issue": "1",
       "pages": "193-219",
-      "reference_number": 27,
+      "reference_number": 30,
       "citation_text": "Yang S, Kim S, Park U, et al. Quantitatively controlled and measured-traumatic brain injury impairs adult neurogenesis and alters neuropathological signatures in mice. Theranostics 2026; 16: 193-219.",
       "source_phases": [
         "phase6",
@@ -1735,288 +1944,6 @@
       ]
     },
     {
-      "pmid": "41969524",
-      "title": "The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise",
-      "authors": "Bai B, Feng H, Yang H, et al",
-      "journal": "Front Cell Neurosci",
-      "publication_date": "2026",
-      "doi": "10.3389/fncel.2026.1757822",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Bai B",
-        "Feng H",
-        "Yang H",
-        "Huang M",
-        "Wang Y"
-      ],
-      "year": "2026",
-      "volume": "20",
-      "issue": "",
-      "pages": "1757822",
-      "reference_number": 28,
-      "citation_text": "Bai B, Feng H, Yang H, et al. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Front Cell Neurosci 2026; 20: 1757822.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
-      ],
-      "support_statuses": [
-        "longitudinally_supported"
-      ],
-      "supporting_claim_ids": [
-        "phase1_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41954515",
-      "title": "Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury",
-      "authors": "Chen Y, Yin X, Zhang E, et al",
-      "journal": "CNS Neurosci Ther",
-      "publication_date": "2026 Apr",
-      "doi": "10.1002/cns.70858",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Chen Y",
-        "Yin X",
-        "Zhang E",
-        "Li B",
-        "Yu H",
-        "Qi J",
-        "Liu M",
-        "Wang M",
-        "Fan Z",
-        "Yang L"
-      ],
-      "year": "2026",
-      "volume": "32",
-      "issue": "4",
-      "pages": "e70858",
-      "reference_number": 29,
-      "citation_text": "Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
-      ],
-      "support_statuses": [
-        "longitudinally_supported"
-      ],
-      "supporting_claim_ids": [
-        "phase1_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41994141",
-      "title": "Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency",
-      "authors": "de Jager C, Ju J, Corbo M, et al",
-      "journal": "Res Sq",
-      "publication_date": "2026 Apr 9",
-      "doi": "10.21203/rs.3.rs-9261231/v1",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "de Jager C",
-        "Ju J",
-        "Corbo M",
-        "Patel K",
-        "Theus M"
-      ],
-      "year": "2026",
-      "volume": "",
-      "issue": "",
-      "pages": "",
-      "reference_number": 30,
-      "citation_text": "de Jager C, Ju J, Corbo M, et al. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Res Sq. Epub ahead of print 2026 Apr 9. DOI: 10.21203/rs.3.rs-9261231/v1.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
-      ],
-      "support_statuses": [
-        "longitudinally_supported"
-      ],
-      "supporting_claim_ids": [
-        "phase1_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41973273",
-      "title": "Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization",
-      "authors": "Wu J, Tang Y, Wang Y, et al",
-      "journal": "J Neuroimmune Pharmacol",
-      "publication_date": "2026 Apr 13",
-      "doi": "10.1007/s11481-026-10289-8",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Wu J",
-        "Tang Y",
-        "Wang Y",
-        "Liu B",
-        "Xu M",
-        "Tan Y",
-        "Cai D",
-        "Chen Y",
-        "Zeng J",
-        "Liu K",
-        "Liu Y"
-      ],
-      "year": "2026",
-      "volume": "21",
-      "issue": "1",
-      "pages": "",
-      "reference_number": 31,
-      "citation_text": "Wu J, Tang Y, Wang Y, et al. Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization. J Neuroimmune Pharmacol 2026; 21. DOI: 10.1007/s11481-026-10289-8.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
-      ],
-      "support_statuses": [
-        "longitudinally_supported"
-      ],
-      "supporting_claim_ids": [
-        "phase1_blood_brain_barrier_failure"
-      ]
-    },
-    {
-      "pmid": "41934291",
-      "title": "Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury",
-      "authors": "Mayer AR, Wick TV, Miller S, et al",
-      "journal": "J Cereb Blood Flow Metab",
-      "publication_date": "2026 Apr 4",
-      "doi": "10.1177/0271678X261432754",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Mayer AR",
-        "Wick TV",
-        "Miller S",
-        "Connors KE",
-        "Sasi Kumar D",
-        "Meier TB",
-        "van der Horn HJ",
-        "Nathaniel U",
-        "Ling JM",
-        "Mehos Milliken CJ",
-        "Warren K",
-        "Patton DA",
-        "Gigliotti AP",
-        "Zotev V",
-        "Kinsler RE",
-        "Mannix R"
-      ],
-      "year": "2026",
-      "volume": "",
-      "issue": "",
-      "pages": "271678X261432754",
-      "reference_number": 32,
-      "citation_text": "Mayer AR, Wick TV, Miller S, et al. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. J Cereb Blood Flow Metab. Epub ahead of print 2026 Apr 4. DOI: 10.1177/0271678X261432754.",
-      "source_phases": [
-        "phase1"
-      ],
-      "artifact_refs": [
-        "phase1:blood_brain_barrier_failure"
-      ],
-      "support_roles": [
-        "phase1_support"
-      ],
-      "support_notes": [
-        "Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories."
-      ],
-      "support_statuses": [
-        "longitudinally_supported"
-      ],
-      "supporting_claim_ids": [
-        "phase1_blood_brain_barrier_failure"
-      ]
-    },
-    {
       "pmid": "41707328",
       "title": "Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients",
       "authors": "Elkhodair S, Lalor J, Altaher M, et al",
@@ -2029,7 +1956,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2051,7 +1978,7 @@
       "volume": "103",
       "issue": "",
       "pages": "152-156",
-      "reference_number": 33,
+      "reference_number": 31,
       "citation_text": "Elkhodair S, Lalor J, Altaher M, et al. Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients. Am J Emerg Med 2026; 103: 152-156.",
       "source_phases": [
         "phase5"
@@ -2087,7 +2014,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2106,7 +2033,7 @@
       "volume": "8",
       "issue": "2",
       "pages": "119-127",
-      "reference_number": 34,
+      "reference_number": 32,
       "citation_text": "Ahn S, Prock M, Seo JW, et al. Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers. Sports Med Health Sci 2026; 8: 119-127.",
       "source_phases": [
         "phase5"
@@ -2142,7 +2069,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2174,7 +2101,7 @@
       "volume": "49",
       "issue": "",
       "pages": "103934",
-      "reference_number": 35,
+      "reference_number": 33,
       "citation_text": "Mononen M, Mohammadian M, Hossain I, et al. Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. Neuroimage Clin 2026; 49: 103934.",
       "source_phases": [
         "phase5"
@@ -2210,7 +2137,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2229,7 +2156,7 @@
       "volume": "43",
       "issue": "5-6",
       "pages": "363-372",
-      "reference_number": 36,
+      "reference_number": 34,
       "citation_text": "Junkkari A, Korvenoja A, Huovinen A, et al. Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries. J Neurotrauma 2026; 43: 363-372.",
       "source_phases": [
         "phase5"
@@ -2265,7 +2192,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2284,8 +2211,65 @@
       "volume": "7",
       "issue": "1",
       "pages": "tzaf024",
-      "reference_number": 37,
+      "reference_number": 35,
       "citation_text": "Patil S, Kata R, Aydin S, et al. Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review. BJR Open 2025; 7: tzaf024.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_mild_biomarker_imaging_bridge"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the best early endotype packet for not treating all concussive or mild injury as one disease in the first hours to days.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_mild_biomarker_imaging_bridge"
+      ]
+    },
+    {
+      "pmid": "41893603",
+      "title": "Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation.",
+      "authors": "Stavitz J, Swan K Jr, Eckart A, et al",
+      "journal": "Sports (Basel)",
+      "publication_date": "2026 Mar 13",
+      "doi": "10.3390/sports14030112",
+      "pmcid": "PMC13030034",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_JEtAl_EvolutionofMultifacetedSport-Related_PMID41893603.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "Stavitz J",
+        "Swan K Jr",
+        "Eckart A",
+        "Koc T",
+        "Tucker J",
+        "Gentile JT",
+        "Ghimire PS",
+        "Porcelli R"
+      ],
+      "year": "2026",
+      "volume": "14",
+      "issue": "3",
+      "pages": "",
+      "reference_number": 36,
+      "citation_text": "Stavitz J, Swan K Jr, Eckart A, et al. Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation. Sports (Basel) 2026; 14. DOI: 10.3390/sports14030112.",
       "source_phases": [
         "phase5"
       ],
@@ -2320,7 +2304,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2338,8 +2322,64 @@
       "volume": "18",
       "issue": "1",
       "pages": "e101649",
-      "reference_number": 38,
+      "reference_number": 37,
       "citation_text": "De Beir J, C\u00e9sar A, Moinho R, et al. Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury. Cureus 2026; 18: e101649.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_severe_vascular_dominant"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "usable"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_severe_vascular_dominant"
+      ]
+    },
+    {
+      "pmid": "41725719",
+      "title": "Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram",
+      "authors": "Wang X, Xie R, Li M, et al",
+      "journal": "Front Neurol",
+      "publication_date": "2026",
+      "doi": "10.3389/fneur.2026.1718794",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "authors_list": [
+        "Wang X",
+        "Xie R",
+        "Li M",
+        "Zhao Z",
+        "Liu Z",
+        "Wang B",
+        "Liu X"
+      ],
+      "year": "2026",
+      "volume": "17",
+      "issue": "",
+      "pages": "1718794",
+      "reference_number": 38,
+      "citation_text": "Wang X, Xie R, Li M, et al. Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. Front Neurol 2026; 17: 1718794.",
       "source_phases": [
         "phase5"
       ],
@@ -2374,7 +2414,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2458,7 +2498,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2515,7 +2555,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2569,7 +2609,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2624,7 +2664,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2666,46 +2706,39 @@
       ]
     },
     {
-      "pmid": "41604614",
-      "title": "Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury",
-      "authors": "Malhotra AK, Nathens AB, Shakil H, et al",
-      "journal": "Neurology",
-      "publication_date": "2026 Feb 24",
-      "doi": "10.1212/WNL.0000000000214571",
-      "pmcid": "",
+      "pmid": "41896418",
+      "title": "Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury.",
+      "authors": "Cela E, Tweddell D, Daley M, et al",
+      "journal": "Inflamm Res",
+      "publication_date": "2026 Mar 27",
+      "doi": "10.1007/s00011-026-02209-6",
+      "pmcid": "PMC13031234",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_EEtAl_Multi-dimensionalplasmaproteomicprofiling_PMID41896418.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
-        "Malhotra AK",
-        "Nathens AB",
-        "Shakil H",
-        "Karthikeyan V",
-        "Lozano CS",
-        "Badhiwala JH",
-        "Mathieu F",
-        "Davidson B",
-        "He Y",
-        "Kulkarni AV",
-        "Witiw CD",
-        "Thorpe K",
-        "Wilson JR"
+        "Cela E",
+        "Tweddell D",
+        "Daley M",
+        "Morello M",
+        "Cepinskas G",
+        "Fraser DD"
       ],
       "year": "2026",
-      "volume": "106",
-      "issue": "4",
-      "pages": "e214571",
+      "volume": "75",
+      "issue": "1",
+      "pages": "",
       "reference_number": 44,
-      "citation_text": "Malhotra AK, Nathens AB, Shakil H, et al. Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury. Neurology 2026; 106: e214571.",
+      "citation_text": "Cela E, Tweddell D, Daley M, et al. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. Inflamm Res 2026; 75. DOI: 10.1007/s00011-026-02209-6.",
       "source_phases": [
         "phase5"
       ],
@@ -2729,24 +2762,24 @@
     },
     {
       "pmid": "41809238",
-      "title": "One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel.",
+      "title": "One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel",
       "authors": "Lam TK, Rhind SG, Tenn C, et al",
       "journal": "Neuroimage Rep",
       "publication_date": "2026 Mar",
       "doi": "10.1016/j.ynirp.2026.100335",
-      "pmcid": "PMC12969305",
+      "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "PMC XML",
-      "extraction_rank": "5",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_TKEtAl_Oneisnotlike_PMID41809238.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Lam TK",
         "Rhind SG",
@@ -2800,7 +2833,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2857,7 +2890,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2914,7 +2947,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2953,6 +2986,61 @@
       ]
     },
     {
+      "pmid": "41880282",
+      "title": "Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives.",
+      "authors": "Wang Y, Yang N, Chen X, et al",
+      "journal": "PLoS One",
+      "publication_date": "2026",
+      "doi": "10.1371/journal.pone.0344993",
+      "pmcid": "PMC13016288",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_YEtAl_Impactofblastexposure_PMID41880282.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "Wang Y",
+        "Yang N",
+        "Chen X",
+        "Chen X",
+        "Ning Y",
+        "Yuan R"
+      ],
+      "year": "2026",
+      "volume": "21",
+      "issue": "3",
+      "pages": "e0344993",
+      "reference_number": 49,
+      "citation_text": "Wang Y, Yang N, Chen X, et al. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PLoS One 2026; 21: e0344993.",
+      "source_phases": [
+        "phase5"
+      ],
+      "artifact_refs": [
+        "phase5:acute_blast_vascular_inflammatory_mixed"
+      ],
+      "support_roles": [
+        "phase5_support",
+        "phase5_supporting_paper"
+      ],
+      "support_notes": [
+        "Blast cohorts are easy to lump into generic TBI groups, but they may represent the clearest case where mixed dominant-process labels are necessary.",
+        "Cohort-supporting paper in linked endotype packet."
+      ],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase5_acute_blast_vascular_inflammatory_mixed"
+      ]
+    },
+    {
       "pmid": "41740080",
       "title": "Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts",
       "authors": "Emanuel OM, Miner AE, Lee SY, et al",
@@ -2965,7 +3053,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3015,7 +3103,7 @@
       "volume": "106",
       "issue": "6",
       "pages": "e214646",
-      "reference_number": 49,
+      "reference_number": 50,
       "citation_text": "Emanuel OM, Miner AE, Lee SY, et al. Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. Neurology 2026; 106: e214646.",
       "source_phases": [
         "phase5"
@@ -3040,24 +3128,24 @@
     },
     {
       "pmid": "41847037",
-      "title": "PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury",
+      "title": "PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury.",
       "authors": "Criado-Marrero M, Ravi S, Barroso D, et al",
       "journal": "bioRxiv",
       "publication_date": "2026 Mar 6",
       "doi": "10.64898/2026.03.04.709563",
-      "pmcid": "",
+      "pmcid": "PMC12991129",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_MEtAl_PERKDeficiencyAmplifiesMolecular_PMID41847037.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
         "Criado-Marrero M",
         "Ravi S",
@@ -3078,7 +3166,7 @@
       "volume": "",
       "issue": "",
       "pages": "",
-      "reference_number": 50,
+      "reference_number": 51,
       "citation_text": "Criado-Marrero M, Ravi S, Barroso D, et al. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv. Epub ahead of print 2026 Mar 6. DOI: 10.64898/2026.03.04.709563.",
       "source_phases": [
         "phase5"
@@ -3114,7 +3202,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3136,7 +3224,7 @@
       "volume": "14",
       "issue": "1",
       "pages": "13",
-      "reference_number": 51,
+      "reference_number": 52,
       "citation_text": "Kimura T, Masuda-Suzukake M, Hashimoto M, et al. Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. Acta Neuropathol Commun 2026; 14: 13.",
       "source_phases": [
         "phase5"
@@ -3172,7 +3260,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3197,7 +3285,7 @@
       "volume": "",
       "issue": "",
       "pages": "21580014261425220",
-      "reference_number": 52,
+      "reference_number": 53,
       "citation_text": "Bell NM, Xi Y, Cardoso da Fonseca N, et al. Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. Brain Connect. Epub ahead of print 2026 Feb 18. DOI: 10.1177/21580014261425220.",
       "source_phases": [
         "phase5"

@@ -110,13 +110,15 @@
 - **Support status:** provisional
 - **Allowed language:** Use cautious, hypothesis-oriented wording and explicitly note boundedness.
 - **Artifact refs:** phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction
-- **Support PMIDs:** 41496386, 41739474, 41747594, 41508043, 41683989
+- **Support PMIDs:** 41496386, 41739474, 41747594, 41508043, 41683989, 41853047, 41893300
 - **Reference details:**
   - Mononen M, Mohammadian M, Hossain I, et al. Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. Neuroimage Clin 2026; 49: 103934.
   - Dark HE, Kenney K, de Souza NL, et al. Plasma Biomarkers, Brain Volume, and Cognitive Performance in Service Members and Veterans With mTBI: A LIMBIC-CENC Study. JAMA Netw Open 2026; 9: e2559596.
   - Chen W, Wu ZC, Lin L, et al. Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. Int Immunopharmacol 2026; 175: 116415.
   - Kimura T, Masuda-Suzukake M, Hashimoto M, et al. Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. Acta Neuropathol Commun 2026; 14: 13.
   - Katramadou A, Bender ES and Kanakis D. From Traumatic Brain Injury to Alzheimer's Disease: Multilevel Biomechanical, Neurovascular, and Molecular Mechanisms with Emerging Therapeutic Directions. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27031570.
+  - Lora SJ, Rhind SG, Watling SE, et al. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain Commun 2026; 8: fcag070.
+  - Huang YQ, Zhong CY, Burley G, et al. Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease. Metabolites 2026; 16. DOI: 10.3390/metabo16030148.
 - **Evidence gaps:** Transition still needs denser direct support before it should be treated as hardened. | Some supporting rows are abstract-only and should be weighted cautiously. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Tauopathy Progression
@@ -184,16 +186,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:tau_proteinopathy_progression
-- **Support PMIDs:** 41651695, 41508043, 41665901, 41496386, 41683989, 41179995, 41809435, 41328339, 41594797, 41700070, 41809632, 41747594, 41739474, 41394307, 41618372, 41622461
+- **Support PMIDs:** 41651695, 41508043, 41723222, 41665901, 41853047, 41496386, 41683989, 41179995, 41809435, 41953056, 41809632, 41700070, 41747594, 41739474, 41893300, 41328339
 - **Reference details:**
   - Melchior B, Browning M, McCartan R, et al. Targeting dual specificity tyrosine-phosphorylation-regulated kinase 1A mitigates tauopathy and enhances recovery after repetitive head injury. Neurotherapeutics 2026; 23: e00843.
   - Kimura T, Masuda-Suzukake M, Hashimoto M, et al. Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. Acta Neuropathol Commun 2026; 14: 13.
+  - Nafash MN, Svirsky SE, Zeng X, et al. Plasma brain-derived tau: analytical and clinical validation of the first commercial immunoassay. Sci Rep 2026; 16. DOI: 10.1038/s41598-026-40271-6.
   - Halbgebauer R, Gonzalez-Ortiz F, Mayer B, et al. Blood-Based Analysis of Different Tau Variants in Patients With Multiple Traumatic Injuries. JAMA Netw Open 2026; 9: e2558573.
+  - Lora SJ, Rhind SG, Watling SE, et al. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain Commun 2026; 8: fcag070.
   - Mononen M, Mohammadian M, Hossain I, et al. Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. Neuroimage Clin 2026; 49: 103934.
   - Katramadou A, Bender ES and Kanakis D. From Traumatic Brain Injury to Alzheimer's Disease: Multilevel Biomechanical, Neurovascular, and Molecular Mechanisms with Emerging Therapeutic Directions. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27031570.
   - Miettinen P, Utz B, Bañuelos-Cabrera I, et al. Glymphatic system and mild traumatic brain injury: a mini review. Front Neurosci 2025; 19: 1705690.
-  - Do TS, Carnes C, Yang Z, et al. Serum biomarker trajectory clusters predict functional outcome and quality of life for traumatic brain injury. Brain Commun 2026; 8: fcag055.
-  - Yang S, Kim S, Park U, et al. Quantitatively controlled and measured-traumatic brain injury impairs adult neurogenesis and alters neuropathological signatures in mice. Theranostics 2026; 16: 193-219.
 - **Contradictions:** After adjusting for pre-injury baseline differences, mTBI did *not* decrease neurocognitive outcomes compared to controls within a year post-injury. | Circulating tau can fall without matching tissue or functional improvement, and a single chronic model context is not enough to treat the lane as fully hardened.
 
 ## Glymphatic / Astroglial Clearance Failure
@@ -203,16 +205,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:glymphatic_astroglial_clearance_failure
-- **Support PMIDs:** 41179995, 41039850, 41648326, 41700070, 41824127, 41153827, 41795770, 41827388, 41642456, 41667502, 41103638, 41301762, 41747594, 41792880, 41801080, 41079361
+- **Support PMIDs:** 41179995, 41039850, 41648326, 41968392, 41960329, 41700070, 41824127, 41153827, 41795770, 41827388, 41103638, 41301762, 41747594, 41792880, 41801080, 41853701
 - **Reference details:**
   - Miettinen P, Utz B, Bañuelos-Cabrera I, et al. Glymphatic system and mild traumatic brain injury: a mini review. Front Neurosci 2025; 19: 1705690.
   - Zhao R, Dong S, Wu D, et al. A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. CNS Neurosci Ther 2025; 31: e70603.
   - Velmurugan GV, Vekaria HJ, Rabchevsky AG, et al. Astrocytic response to traumatic brain injury to rescue neuronal mitochondrial dysfunction through mitochondrial transfer. bioRxiv. Epub ahead of print 2026 Jan 23. DOI: 10.64898/2026.01.22.701145.
+  - Wu D, Ma Y, Wang B, et al. Pathological Roles of Astrocytes in Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70856.
+  - Lilova RL, Bernas T, Ryu J, et al. Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. Res Sq. Epub ahead of print 2026 Mar 30. DOI: 10.21203/rs.3.rs-9152535/v1.
   - Miyata M. [MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease]. Brain Nerve 2026; 78: 159-167.
   - Luo L, Yu M, Li X, et al. Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1. Neurochem Res 2026; 51. DOI: 10.1007/s11064-026-04724-8.
   - Huber CM, Thakore AD, Oeur A, et al. Short-Term Cyclosporin A Treatment Reduced Serum Neurofilament-Light Levels in Diffuse but Not Focal Traumatic Brain Injury in a Piglet Model. Biomedicines 2025; 13. DOI: 10.3390/biomedicines13102547.
-  - Rauk Z, Maciak P, Setkowicz Z, et al. β-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury. Mol Neurobiol 2026; 63. DOI: 10.1007/s12035-026-05759-2.
-  - Agnello L, Ciaccio AM, Del Ben F, et al. Diagnostic and Prognostic Value of Serum Glial Fibrillary Acidic Protein in Acute Ischemic Stroke. J Clin Med 2026; 15. DOI: 10.3390/jcm15051971.
 - **Contradictions:** AQP4 abundance can rise while polarization remains abnormal, and glial-stress markers can shift without any real movement in clearance readouts or tau burden. | no direct compound or trial attachment surfaced in this build
 
 ## Neuroinflammation / Microglial State Change
@@ -222,16 +224,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:neuroinflammation_microglial_state_change
-- **Support PMIDs:** 41157272, 41103638, 41663365, 41734021, 41752185, 41756282, 41824127, 41612383, 41803087, 41511466, 41480492, 41683989, 41709060, 41712436, 41726892, 41737534
+- **Support PMIDs:** 41157272, 41103638, 41926211, 41663365, 41734021, 41752185, 41756234, 41756282, 41824127, 41926540, 41480492, 41622481, 41659975, 41683989, 41709060, 41712436
 - **Reference details:**
   - Kéri S. Diffusion Basis Restricted Fraction as a Putative Magnetic Resonance Imaging Marker of Neuroinflammation: Histological Evidence, Diagnostic Accuracy, and Translational Potential. Life (Basel) 2025; 15. DOI: 10.3390/life15101599.
   - Sun B, Zhang J, Li Z, et al. Role of damage-associated molecular patterns in the pathogenesis and therapeutics of traumatic brain injury. Burns Trauma 2025; 13: tkaf043.
+  - Lu Z, Shuai Y, Wang C, et al. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. J Clin Invest. Epub ahead of print 2026 Apr 2. DOI: 10.1172/JCI196112.
   - Fan Q, Takarada-Iemata M, Tanaka T, et al. Endothelial IRE1 signaling maintains blood-brain barrier integrity and limits neuroinflammation after traumatic brain injury. Cell Death Dis 2026; 17: 210.
   - Li T, Castro-Gomez S, Botella Lucena P, et al. Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model. J Clin Invest 2026; 136. DOI: 10.1172/JCI199818.
   - Hostiuc S and Rusu MC. The Dynamics of Neuroinflammation in Traumatic Brain Injury: Molecular Markers Useful for Establishing the Post-Traumatic Interval in Forensic Practice. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27042049.
+  - Arias-Carrión O, Rodríguez de Ita J and Yu P. Innate immune signalling, neuroinflammation and network plasticity in temporal lobe epilepsy. Front Pharmacol 2026; 17: 1770964.
   - Zhu L, Huang S, Chen W, et al. Cytokines and related signaling pathways in traumatic brain injury. Front Immunol 2026; 17: 1738589.
-  - Luo L, Yu M, Li X, et al. Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1. Neurochem Res 2026; 51. DOI: 10.1007/s11064-026-04724-8.
-  - Zhang Q, Chen T, Chen J, et al. 3D-bioprinted adipose-derived stem cell-secreted GAS6(+)-sEVs reprogram microglia polarization and alleviate neuroinflammation in traumatic brain injury. J Nanobiotechnology 2026; 24. DOI: 10.1186/s12951-026-04064-3.
 - **Contradictions:** Study found no significant correlation, contradicting the hypothesis of cumulative damage. | Single-cytokine changes can overstate inflammatory control | keep this packet tied to a network-level cytokine plus glial-stress readout panel. | no direct compound or trial attachment surfaced in this build
 
 ## Chronic Repetitive Tau / Clearance Mixed

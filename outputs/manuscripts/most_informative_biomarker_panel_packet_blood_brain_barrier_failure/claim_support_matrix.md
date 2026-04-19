@@ -7,16 +7,16 @@
 - **Support status:** supported
 - **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
 - **Artifact refs:** phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure
-- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41752185, 41622772, 41751210, 41740873, 41683989, 41103638, 41135688, 41157272, 41173520, 41197779
+- **Support PMIDs:** 41969524, 41663365, 41673382, 41642456, 41649131, 41954515, 41994141, 41039850, 41973273, 41934291, 41532955, 41622772, 41751210, 41752185, 41968392, 41709060, 41740873, 41683989, 41103638, 41135688
 - **Reference details:**
+  - Bai B, Feng H, Yang H, et al. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Front Cell Neurosci 2026; 20: 1757822.
   - Fan Q, Takarada-Iemata M, Tanaka T, et al. Endothelial IRE1 signaling maintains blood-brain barrier integrity and limits neuroinflammation after traumatic brain injury. Cell Death Dis 2026; 17: 210.
   - Lin XY, Usman M, Ai L, et al. Experimental Study on Changes in the Structure of the Blood-Brain Barrier after Treatment with Bevacizumab for Traumatic Cerebral Edema. Neurocrit Care. Epub ahead of print 2026 Feb 11. DOI: 10.1007/s12028-026-02458-7.
   - Shiravi S, Chakka A, Xiao X, et al. Mechanical Stretch Disrupts Calcium Dynamics and Redistributes Piezo1 in Human Astrocytes. Ann Biomed Eng. Epub ahead of print 2026 Feb 5. DOI: 10.1007/s10439-026-03995-0.
   - Lee S, Lee J and Lee K. Translational roadmap of BBB-targeted nanoparticle strategies for neuroregenerative therapy in neurodegenerative diseases. Biomater Sci 2026; 14: 1206-1218.
+  - Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.
+  - de Jager C, Ju J, Corbo M, et al. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Res Sq. Epub ahead of print 2026 Apr 9. DOI: 10.21203/rs.3.rs-9261231/v1.
   - Zhao R, Dong S, Wu D, et al. A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. CNS Neurosci Ther 2025; 31: e70603.
-  - Pignataro G, Sacco Fernandez M, Candelli M, et al. Blood-Based Biomarkers for Traumatic Brain Injury: A New Era in Diagnosis and Prognosis. Int J Mol Sci 2025; 26. DOI: 10.3390/ijms262412158.
-  - Wang X, Xie R, Li M, et al. Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. Front Neurol 2026; 17: 1718794.
-  - Huber CM, Thakore AD, Oeur A, et al. Short-Term Cyclosporin A Treatment Reduced Serum Neurofilament-Light Levels in Diffuse but Not Focal Traumatic Brain Injury in a Piglet Model. Biomedicines 2025; 13. DOI: 10.3390/biomedicines13102547.
 - **Contradictions:** Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone.
 
 ## Blood-Brain Barrier Failure
@@ -97,16 +97,16 @@
 - **Support status:** bounded
 - **Allowed language:** Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 - **Artifact refs:** phase4:blood_brain_barrier_failure
-- **Support PMIDs:** 41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41752185, 41622772, 41751210, 41740873, 41683989, 41103638
+- **Support PMIDs:** 41969524, 41663365, 41673382, 41642456, 41649131, 41954515, 41994141, 41039850, 41973273, 41934291, 41532955, 41622772, 41751210, 41752185, 41968392, 41709060
 - **Reference details:**
+  - Bai B, Feng H, Yang H, et al. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Front Cell Neurosci 2026; 20: 1757822.
   - Fan Q, Takarada-Iemata M, Tanaka T, et al. Endothelial IRE1 signaling maintains blood-brain barrier integrity and limits neuroinflammation after traumatic brain injury. Cell Death Dis 2026; 17: 210.
   - Lin XY, Usman M, Ai L, et al. Experimental Study on Changes in the Structure of the Blood-Brain Barrier after Treatment with Bevacizumab for Traumatic Cerebral Edema. Neurocrit Care. Epub ahead of print 2026 Feb 11. DOI: 10.1007/s12028-026-02458-7.
   - Shiravi S, Chakka A, Xiao X, et al. Mechanical Stretch Disrupts Calcium Dynamics and Redistributes Piezo1 in Human Astrocytes. Ann Biomed Eng. Epub ahead of print 2026 Feb 5. DOI: 10.1007/s10439-026-03995-0.
   - Lee S, Lee J and Lee K. Translational roadmap of BBB-targeted nanoparticle strategies for neuroregenerative therapy in neurodegenerative diseases. Biomater Sci 2026; 14: 1206-1218.
+  - Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.
+  - de Jager C, Ju J, Corbo M, et al. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Res Sq. Epub ahead of print 2026 Apr 9. DOI: 10.21203/rs.3.rs-9261231/v1.
   - Zhao R, Dong S, Wu D, et al. A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. CNS Neurosci Ther 2025; 31: e70603.
-  - Pignataro G, Sacco Fernandez M, Candelli M, et al. Blood-Based Biomarkers for Traumatic Brain Injury: A New Era in Diagnosis and Prognosis. Int J Mol Sci 2025; 26. DOI: 10.3390/ijms262412158.
-  - Wang X, Xie R, Li M, et al. Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. Front Neurol 2026; 17: 1718794.
-  - Huber CM, Thakore AD, Oeur A, et al. Short-Term Cyclosporin A Treatment Reduced Serum Neurofilament-Light Levels in Diffuse but Not Focal Traumatic Brain Injury in a Piglet Model. Biomedicines 2025; 13. DOI: 10.3390/biomedicines13102547.
 - **Contradictions:** Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone. | no direct compound or trial attachment surfaced in this build
 
 ## Acute Mild Biomarker / Imaging Bridge
@@ -116,13 +116,14 @@
 - **Support status:** bounded
 - **Allowed language:** Use cohort-language as suggestive context only, not as a locked endotype claim.
 - **Artifact refs:** phase5:acute_mild_biomarker_imaging_bridge
-- **Support PMIDs:** 41707328, 41737590, 41496386, 41173528, 41126936
+- **Support PMIDs:** 41707328, 41737590, 41496386, 41173528, 41126936, 41893603
 - **Reference details:**
   - Elkhodair S, Lalor J, Altaher M, et al. Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients. Am J Emerg Med 2026; 103: 152-156.
   - Ahn S, Prock M, Seo JW, et al. Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers. Sports Med Health Sci 2026; 8: 119-127.
   - Mononen M, Mohammadian M, Hossain I, et al. Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. Neuroimage Clin 2026; 49: 103934.
   - Junkkari A, Korvenoja A, Huovinen A, et al. Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries. J Neurotrauma 2026; 43: 363-372.
   - Patil S, Kata R, Aydin S, et al. Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review. BJR Open 2025; 7: tzaf024.
+  - Stavitz J, Swan K Jr, Eckart A, et al. Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation. Sports (Basel) 2026; 14. DOI: 10.3390/sports14030112.
 - **Contradictions:** Acute biomarker spikes can reflect injury burden without resolving the dominant process, and imaging can remain subtle despite strong circulating markers.
 - **Evidence gaps:** Subacute conversion rules are still thin | the current packet is strongest at triage and early follow-up.
 
@@ -133,7 +134,7 @@
 - **Support status:** usable
 - **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
 - **Artifact refs:** phase5:acute_severe_vascular_dominant
-- **Support PMIDs:** 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41604614
+- **Support PMIDs:** 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41896418
 - **Reference details:**
   - De Beir J, César A, Moinho R, et al. Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury. Cureus 2026; 18: e101649.
   - Wang X, Xie R, Li M, et al. Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. Front Neurol 2026; 17: 1718794.
@@ -142,7 +143,7 @@
   - De Souza BJ, Wolf MS, Leonard JR, et al. Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study. Pediatr Res. Epub ahead of print 2026 Feb 19. DOI: 10.1038/s41390-026-04798-8.
   - Narayan PA, Dutta G, Mayank R, et al. Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience. Ann Afr Med. Epub ahead of print 2026 Feb 20. DOI: 10.4103/aam.aam_668_25.
   - Lord KM, Kekes-Szabo S, Sherlock P, et al. Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use. Cortex 2026; 197: 13-33.
-  - Malhotra AK, Nathens AB, Shakil H, et al. Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury. Neurology 2026; 106: e214571.
+  - Cela E, Tweddell D, Daley M, et al. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. Inflamm Res 2026; 75. DOI: 10.1007/s00011-026-02209-6.
 - **Contradictions:** Severe acute cohorts can look inflammatory quickly, but that does not mean inflammation is the dominant upstream driver in the first window.
 - **Evidence gaps:** The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.
 
@@ -153,12 +154,13 @@
 - **Support status:** bounded
 - **Allowed language:** Use cohort-language as suggestive context only, not as a locked endotype claim.
 - **Artifact refs:** phase5:acute_blast_vascular_inflammatory_mixed
-- **Support PMIDs:** 41809238, 41794317, 41596245, 41723947
+- **Support PMIDs:** 41809238, 41794317, 41596245, 41723947, 41880282
 - **Reference details:**
   - Lam TK, Rhind SG, Tenn C, et al. One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel. Neuroimage Rep 2026; 6: 100335.
   - Harper MM, Jones MG, Gramlich OW, et al. Identification of immune cell subsets involved in retinal ganglion cell damage following blast exposure. Exp Eye Res 2026; 267: 110961.
   - Di Battista AP, Shiu MY, Vartanian O, et al. Integrated Blood Biomarker and Neurobehavioural Signatures of Latent Neuroinjury in Experienced Military Breachers Exposed to Repetitive Low-Intensity Blast. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27020592.
   - Herodes M and Garcia JM. Pituitary hormone abnormalities following military-related traumatic brain injuries. Growth Horm IGF Res 2026; 83: 101687.
+  - Wang Y, Yang N, Chen X, et al. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PLoS One 2026; 21: e0344993.
 - **Contradictions:** Blast cohorts often mix repetitive exposure, endocrine injury, and vascular stress, so clean one-driver interpretations are likely to overstate certainty.
 - **Evidence gaps:** Cohort granularity is still thin, and the current packet needs better direct imaging anchors.
 

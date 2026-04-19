@@ -1,10 +1,9 @@
 # Review Memo
 
-## Why This Is Worth Developing
+## Why This May Be Publishable
 - The candidate has a named paper path with scientific strength currently at **2 / 4**.
 - The current primary target journal is **Journal of Neurotrauma**.
 - Primary journal requirements have been captured locally and checked against the current pack.
-- The journal-specific rigor checklist is active with **14** critical gap(s) still open in `journal_specific_rigor_checklist.md`.
 
 ## Biggest Weakness
 - Study found no significant correlation, contradicting the hypothesis of cumulative damage.

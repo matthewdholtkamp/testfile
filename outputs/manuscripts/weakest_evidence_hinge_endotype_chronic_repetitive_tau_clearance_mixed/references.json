@@ -1,13 +1,13 @@
 {
-  "updated_at": "2026-04-19T12:08:37.883216+00:00",
+  "updated_at": "2026-04-19T14:29:22.990428+00:00",
   "summary": {
-    "reference_count": 83,
+    "reference_count": 85,
     "claim_count": 14,
     "contradiction_count": 24,
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
     "journal_specific_rigor_profile_count": 0,
     "journal_specific_rigor_critical_gaps": 0,
     "journal_specific_rigor_fill_entries": 0
@@ -26,7 +26,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -105,7 +105,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -185,7 +185,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -249,7 +249,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -329,7 +329,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -419,7 +419,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -500,7 +500,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -563,7 +563,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -630,7 +630,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -701,7 +701,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -727,22 +727,27 @@
       "reference_number": 10,
       "citation_text": "Nafash MN, Svirsky SE, Zeng X, et al. Plasma brain-derived tau: analytical and clinical validation of the first commercial immunoassay. Sci Rep 2026; 16. DOI: 10.1038/s41598-026-40271-6.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression",
+        "phase4:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression",
+        "phase4_tau_proteinopathy_progression"
       ]
     },
     {
@@ -758,7 +763,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -824,24 +829,24 @@
     },
     {
       "pmid": "41853047",
-      "title": "Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast",
+      "title": "Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast.",
       "authors": "Lora SJ, Rhind SG, Watling SE, et al",
       "journal": "Brain Commun",
       "publication_date": "2026",
       "doi": "10.1093/braincomms/fcag070",
-      "pmcid": "",
+      "pmcid": "PMC12993815",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_SJEtAl_Tau-PETimagingandblood_PMID41853047.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
         "Lora SJ",
         "Rhind SG",
@@ -866,22 +871,33 @@
       "reference_number": 12,
       "citation_text": "Lora SJ, Rhind SG, Watling SE, et al. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain Commun 2026; 8: fcag070.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase2",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression",
+        "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase2_support",
+        "phase4_support"
       ],
       "support_notes": [
-        "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
+        "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.",
+        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "provisional",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression",
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4_tau_proteinopathy_progression"
       ]
     },
     {
@@ -897,7 +913,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -982,7 +998,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1054,7 +1070,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1112,24 +1128,24 @@
     },
     {
       "pmid": "41953056",
-      "title": "Post-traumatic stress disorder: pathogenesis, epidemiological characteristics, animal models, and potential therapeutic strategies",
+      "title": "Post-traumatic stress disorder: pathogenesis, epidemiological characteristics, animal models, and potential therapeutic strategies.",
       "authors": "Nguyen F and Shetty AK",
       "journal": "Mil Med Res",
       "publication_date": "2026 Dec",
       "doi": "10.1016/j.mmr.2026.100005",
-      "pmcid": "",
+      "pmcid": "PMC13054577",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_FEtAl_Post-traumaticstressdisorderpathogenesis_PMID41953056.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
         "Nguyen F",
         "Shetty AK"
@@ -1141,22 +1157,27 @@
       "reference_number": 16,
       "citation_text": "Nguyen F and Shetty AK. Post-traumatic stress disorder: pathogenesis, epidemiological characteristics, animal models, and potential therapeutic strategies. Mil Med Res 2026; 13: 100005.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:tau_proteinopathy_progression"
+        "phase1:tau_proteinopathy_progression",
+        "phase4:tau_proteinopathy_progression"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_tau_proteinopathy_progression"
+        "phase1_tau_proteinopathy_progression",
+        "phase4_tau_proteinopathy_progression"
       ]
     },
     {
@@ -1172,7 +1193,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1221,24 +1242,24 @@
     },
     {
       "pmid": "41968392",
-      "title": "Pathological Roles of Astrocytes in Traumatic Brain Injury",
+      "title": "Pathological Roles of Astrocytes in Traumatic Brain Injury.",
       "authors": "Wu D, Ma Y, Wang B, et al",
       "journal": "CNS Neurosci Ther",
       "publication_date": "2026 Apr",
       "doi": "10.1002/cns.70856",
-      "pmcid": "",
+      "pmcid": "PMC13070886",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_DEtAl_PathologicalRolesofAstrocytes_PMID41968392.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
         "Wu D",
         "Ma Y",
@@ -1256,44 +1277,49 @@
       "reference_number": 18,
       "citation_text": "Wu D, Ma Y, Wang B, et al. Pathological Roles of Astrocytes in Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70856.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:glymphatic_astroglial_clearance_failure"
+        "phase1:glymphatic_astroglial_clearance_failure",
+        "phase4:glymphatic_astroglial_clearance_failure"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_glymphatic_astroglial_clearance_failure"
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase4_glymphatic_astroglial_clearance_failure"
       ]
     },
     {
       "pmid": "41960329",
-      "title": "Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury",
+      "title": "Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury.",
       "authors": "Lilova RL, Bernas T, Ryu J, et al",
       "journal": "Res Sq",
       "publication_date": "2026 Mar 30",
       "doi": "10.21203/rs.3.rs-9152535/v1",
-      "pmcid": "",
+      "pmcid": "PMC13060523",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "Crossref HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_RLEtAl_Waterchannelchangesin_PMID41960329.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
         "Lilova RL",
         "Bernas T",
@@ -1308,44 +1334,49 @@
       "reference_number": 19,
       "citation_text": "Lilova RL, Bernas T, Ryu J, et al. Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. Res Sq. Epub ahead of print 2026 Mar 30. DOI: 10.21203/rs.3.rs-9152535/v1.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:glymphatic_astroglial_clearance_failure"
+        "phase1:glymphatic_astroglial_clearance_failure",
+        "phase4:glymphatic_astroglial_clearance_failure"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_glymphatic_astroglial_clearance_failure"
+        "phase1_glymphatic_astroglial_clearance_failure",
+        "phase4_glymphatic_astroglial_clearance_failure"
       ]
     },
     {
       "pmid": "41824127",
-      "title": "Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1.",
+      "title": "Esketamine Suppresses Astrocyte-Driven Neuroinflammation in Traumatic Brain Injury via the METTL5/c-Myc/PD-L1",
       "authors": "Luo L, Yu M, Li X, et al",
       "journal": "Neurochem Res",
       "publication_date": "2026 Mar 13",
       "doi": "10.1007/s11064-026-04724-8",
-      "pmcid": "PMC12987875",
+      "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "PMC XML",
-      "extraction_rank": "5",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_LEtAl_EsketamineSuppressesAstrocyte-DrivenNeuroinflammation_PMID41824127.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Luo L",
         "Yu M",
@@ -1408,7 +1439,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1454,7 +1485,7 @@
     },
     {
       "pmid": "41795770",
-      "title": "\u03b2-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury.",
+      "title": "\u03b2-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury",
       "authors": "Rauk Z, Maciak P, Setkowicz Z, et al",
       "journal": "Mol Neurobiol",
       "publication_date": "2026 Mar 8",
@@ -1462,16 +1493,16 @@
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "Abstract only",
-      "extraction_rank": "1",
-      "source_quality_tier": "abstract_only",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_ZEtAl_-hydroxybutyrateModulatesNeuroinflammatoryResponses_PMID41795770.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Rauk Z",
         "Maciak P",
@@ -1525,7 +1556,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1587,7 +1618,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1651,7 +1682,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1706,7 +1737,7 @@
     },
     {
       "pmid": "41926211",
-      "title": "Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury",
+      "title": "Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury.",
       "authors": "Lu Z, Shuai Y, Wang C, et al",
       "journal": "J Clin Invest",
       "publication_date": "2026 Apr 2",
@@ -1714,16 +1745,16 @@
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "Crossref PDF",
+      "extraction_rank": "2",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_ZEtAl_Aging-dependentmicroglialheterogeneityworsens_PMID41926211.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
         "Lu Z",
         "Shuai Y",
@@ -1748,22 +1779,27 @@
       "reference_number": 26,
       "citation_text": "Lu Z, Shuai Y, Wang C, et al. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. J Clin Invest. Epub ahead of print 2026 Apr 2. DOI: 10.1172/JCI196112.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change"
+        "phase1:neuroinflammation_microglial_state_change",
+        "phase4:neuroinflammation_microglial_state_change"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change"
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase4_neuroinflammation_microglial_state_change"
       ]
     },
     {
@@ -1779,7 +1815,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1833,7 +1869,7 @@
     },
     {
       "pmid": "41734021",
-      "title": "Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model.",
+      "title": "Inflammasome adaptor ASC promotes sustained neuroinflammation and mild cognitive impairment in a closed-head injury model",
       "authors": "Li T, Castro-Gomez S, Botella Lucena P, et al",
       "journal": "J Clin Invest",
       "publication_date": "2026 Apr 1",
@@ -1841,16 +1877,16 @@
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "Crossref PDF",
-      "extraction_rank": "2",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_TEtAl_InflammasomeadaptorASCpromotes_PMID41734021.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Li T",
         "Castro-Gomez S",
@@ -1908,7 +1944,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1962,7 +1998,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -1981,22 +2017,27 @@
       "reference_number": 30,
       "citation_text": "Arias-Carri\u00f3n O, Rodr\u00edguez de Ita J and Yu P. Innate immune signalling, neuroinflammation and network plasticity in temporal lobe epilepsy. Front Pharmacol 2026; 17: 1770964.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change"
+        "phase1:neuroinflammation_microglial_state_change",
+        "phase4:neuroinflammation_microglial_state_change"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change"
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase4_neuroinflammation_microglial_state_change"
       ]
     },
     {
@@ -2012,7 +2053,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2058,24 +2099,24 @@
     },
     {
       "pmid": "41926540",
-      "title": "Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury",
+      "title": "Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury.",
       "authors": "Marcatti M, Labastida JA, Tang TZ, et al",
       "journal": "Proc Natl Acad Sci U S A",
       "publication_date": "2026 Apr 7",
       "doi": "10.1073/pnas.2527009123",
-      "pmcid": "",
+      "pmcid": "PMC13056099",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_MEtAl_Neuron-derivedmitochondrialDNAmtDNA_PMID41926540.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
         "Marcatti M",
         "Labastida JA",
@@ -2096,27 +2137,32 @@
       "reference_number": 32,
       "citation_text": "Marcatti M, Labastida JA, Tang TZ, et al. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. Proc Natl Acad Sci U S A 2026; 123: e2527009123.",
       "source_phases": [
-        "phase1"
+        "phase1",
+        "phase4"
       ],
       "artifact_refs": [
-        "phase1:neuroinflammation_microglial_state_change"
+        "phase1:neuroinflammation_microglial_state_change",
+        "phase4:neuroinflammation_microglial_state_change"
       ],
       "support_roles": [
-        "phase1_support"
+        "phase1_support",
+        "phase4_support"
       ],
       "support_notes": [
         "Innate immune activation, cytokine signaling, and microglial state transitions following TBI."
       ],
       "support_statuses": [
-        "longitudinally_seeded"
+        "longitudinally_seeded",
+        "bounded"
       ],
       "supporting_claim_ids": [
-        "phase1_neuroinflammation_microglial_state_change"
+        "phase1_neuroinflammation_microglial_state_change",
+        "phase4_neuroinflammation_microglial_state_change"
       ]
     },
     {
       "pmid": "41747594",
-      "title": "Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury.",
+      "title": "Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury",
       "authors": "Chen W, Wu ZC, Lin L, et al",
       "journal": "Int Immunopharmacol",
       "publication_date": "2026 Apr 15",
@@ -2124,16 +2170,16 @@
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "Abstract only",
-      "extraction_rank": "1",
-      "source_quality_tier": "abstract_only",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_WEtAl_Effectofintranasaltreatment_PMID41747594.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Chen W",
         "Wu ZC",
@@ -2186,24 +2232,24 @@
     },
     {
       "pmid": "41809632",
-      "title": "Mesenchymal stem cells and the central nervous system: historical perspectives and future directions.",
+      "title": "Mesenchymal stem cells and the central nervous system: historical perspectives and future directions",
       "authors": "Mazurek CY, Kaniuk JK and Ahuja CS",
       "journal": "Front Mol Neurosci",
       "publication_date": "2026",
       "doi": "10.3389/fnmol.2026.1742864",
-      "pmcid": "PMC12968201",
+      "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "PMC XML",
-      "extraction_rank": "5",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_CYEtAl_Mesenchymalstemcellsand_PMID41809632.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Mazurek CY",
         "Kaniuk JK",
@@ -2253,7 +2299,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2302,6 +2348,63 @@
       ]
     },
     {
+      "pmid": "41893300",
+      "title": "Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease.",
+      "authors": "Huang YQ, Zhong CY, Burley G, et al",
+      "journal": "Metabolites",
+      "publication_date": "2026 Feb 24",
+      "doi": "10.3390/metabo16030148",
+      "pmcid": "PMC13027838",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_YQEtAl_Tissue-DerivedSmallExtracellularVesicles_PMID41893300.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "Huang YQ",
+        "Zhong CY",
+        "Burley G",
+        "Shi YC",
+        "Lin S"
+      ],
+      "year": "2026",
+      "volume": "16",
+      "issue": "3",
+      "pages": "",
+      "reference_number": 36,
+      "citation_text": "Huang YQ, Zhong CY, Burley G, et al. Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease. Metabolites 2026; 16. DOI: 10.3390/metabo16030148.",
+      "source_phases": [
+        "phase2",
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4:tau_proteinopathy_progression"
+      ],
+      "support_roles": [
+        "phase2_support",
+        "phase4_support"
+      ],
+      "support_notes": [
+        "Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it."
+      ],
+      "support_statuses": [
+        "provisional",
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase2_tau_proteinopathy_progression_to_chronic_network_dysfunction",
+        "phase4_tau_proteinopathy_progression"
+      ]
+    },
+    {
       "pmid": "41328339",
       "title": "Quantitatively controlled and measured-traumatic brain injury impairs adult neurogenesis and alters neuropathological signatures in mice",
       "authors": "Yang S, Kim S, Park U, et al",
@@ -2314,7 +2417,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2341,7 +2444,7 @@
       "volume": "16",
       "issue": "1",
       "pages": "193-219",
-      "reference_number": 36,
+      "reference_number": 37,
       "citation_text": "Yang S, Kim S, Park U, et al. Quantitatively controlled and measured-traumatic brain injury impairs adult neurogenesis and alters neuropathological signatures in mice. Theranostics 2026; 16: 193-219.",
       "source_phases": [
         "phase3",
@@ -2382,7 +2485,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2399,7 +2502,7 @@
       "volume": "16",
       "issue": "1",
       "pages": "",
-      "reference_number": 37,
+      "reference_number": 38,
       "citation_text": "Arachchi S, Daly E, Dwivedi A, et al. Sex Differences in Severity and Recovery Following Mild Traumatic Brain Injury: A Systematic Review. Brain Sci 2026; 16. DOI: 10.3390/brainsci16010077.",
       "source_phases": [
         "phase3",
@@ -2423,8 +2526,7 @@
         "bounded"
       ],
       "supporting_claim_ids": [
-        "phase3_tauopathy_progression",
-        "phase4_tau_proteinopathy_progression"
+        "phase3_tauopathy_progression"
       ]
     },
     {
@@ -2440,7 +2542,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2464,7 +2566,7 @@
       "volume": "6",
       "issue": "1",
       "pages": "885-902",
-      "reference_number": 38,
+      "reference_number": 39,
       "citation_text": "Kommireddy RS, Mehra S, Pompilus M, et al. Functional Connectivity, Tissue Microstructure, and T2 at 11.1 Tesla Distinguishes Neuroadaptive Differences in Two Traumatic Brain Injury Models in Rats: A Translational Outcomes Project in NeuroTrauma (TOP-NT) UG3 Phase Study. Neurotrauma Rep 2025; 6: 885-902.",
       "source_phases": [
         "phase3",
@@ -2502,7 +2604,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2528,7 +2630,7 @@
       "volume": "",
       "issue": "",
       "pages": "1-10",
-      "reference_number": 39,
+      "reference_number": 40,
       "citation_text": "de Souza NL, Meng W, Vaida F, et al. Longitudinal neurocognitive outcomes in children with mild traumatic brain injury: An ABCD cohort analysis. J Int Neuropsychol Soc. Epub ahead of print 2025 Nov 14. DOI: 10.1017/S1355617725101537.",
       "source_phases": [
         "phase3",
@@ -2566,7 +2668,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2587,7 +2689,7 @@
       "volume": "15",
       "issue": "11",
       "pages": "",
-      "reference_number": 40,
+      "reference_number": 41,
       "citation_text": "Bord\u00f3n Guerra R, Pe\u00f1ate Castro W, Ferreiro D\u00edaz-Velis E, et al. Tractography-Based Asymmetries in Acquired Brain Injury: Contributions to the Neuropsychological Profile and Rehabilitation in a Case-Series. Brain Sci 2025; 15. DOI: 10.3390/brainsci15111155.",
       "source_phases": [
         "phase3",
@@ -2625,7 +2727,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2645,7 +2747,7 @@
       "volume": "13",
       "issue": "3",
       "pages": "100468",
-      "reference_number": 41,
+      "reference_number": 42,
       "citation_text": "Ouyang Z, Jiao B, Xiao X, et al. Head injury/traumatic brain injury and the risk of dementia: An observational and Mendelian randomization study. J Prev Alzheimers Dis 2026; 13: 100468.",
       "source_phases": [
         "phase3",
@@ -2683,7 +2785,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2705,7 +2807,7 @@
       "volume": "49",
       "issue": "",
       "pages": "103946",
-      "reference_number": 42,
+      "reference_number": 43,
       "citation_text": "Zhang J, Solar KG, Safar K, et al. The structural, functional, and neurophysiological connectome of mild traumatic brain injury: A DTI, fMRI and MEG multimodal clustering and data fusion study. Neuroimage Clin 2026; 49: 103946.",
       "source_phases": [
         "phase3",
@@ -2743,7 +2845,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2760,7 +2862,7 @@
       "volume": "16",
       "issue": "",
       "pages": "1721726",
-      "reference_number": 43,
+      "reference_number": 44,
       "citation_text": "Marshall WJ, Conner AN, Key AP, et al. Resting-state EEG and machine learning to investigate cortical connectivity as a biomarker in chronic mTBI. Front Neurol 2025; 16: 1721726.",
       "source_phases": [
         "phase3",
@@ -2798,7 +2900,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2823,7 +2925,7 @@
       "volume": "",
       "issue": "",
       "pages": "21580014261425220",
-      "reference_number": 44,
+      "reference_number": 45,
       "citation_text": "Bell NM, Xi Y, Cardoso da Fonseca N, et al. Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. Brain Connect. Epub ahead of print 2026 Feb 18. DOI: 10.1177/21580014261425220.",
       "source_phases": [
         "phase3",
@@ -2861,7 +2963,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2880,7 +2982,7 @@
       "volume": "396",
       "issue": "",
       "pages": "115520",
-      "reference_number": 45,
+      "reference_number": 46,
       "citation_text": "Doust YV, Rowe RK, Langley RC, et al. Worsened axonal injury and gliosis following diffuse brain injury in male and female mice with neurofilament light gene deletion. Exp Neurol 2026; 396: 115520.",
       "source_phases": [
         "phase3",
@@ -2918,7 +3020,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2938,7 +3040,7 @@
       "volume": "43",
       "issue": "5-6",
       "pages": "485-500",
-      "reference_number": 46,
+      "reference_number": 47,
       "citation_text": "Fadon-Padilla L, Chu C, Liang Y, et al. A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction. J Neurotrauma 2026; 43: 485-500.",
       "source_phases": [
         "phase3",
@@ -2977,7 +3079,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -2995,7 +3097,7 @@
       "volume": "233",
       "issue": "",
       "pages": "111617",
-      "reference_number": 47,
+      "reference_number": 48,
       "citation_text": "Wang L, Zhou Q, Chen J, et al. NSUN6 promotes neuronal axon regeneration after traumatic brain injury by enhancing HMGB1 expression via m5C modification. Brain Res Bull 2025; 233: 111617.",
       "source_phases": [
         "phase3",
@@ -3033,7 +3135,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3055,7 +3157,7 @@
       "volume": "14",
       "issue": "1",
       "pages": "8",
-      "reference_number": 48,
+      "reference_number": 49,
       "citation_text": "Eed A, Hamilton J, Xu X, et al. MRI investigation of orientation-dependent changes in microstructure and function in a mouse model of mild traumatic brain injury. Acta Neuropathol Commun 2025; 14: 8.",
       "source_phases": [
         "phase3",
@@ -3093,7 +3195,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3113,7 +3215,7 @@
       "volume": "28",
       "issue": "12",
       "pages": "114221",
-      "reference_number": 49,
+      "reference_number": 50,
       "citation_text": "Li M, Wang Y, Zhang Z, et al. MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. iScience 2025; 28: 114221.",
       "source_phases": [
         "phase3",
@@ -3151,7 +3253,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3165,7 +3267,7 @@
       "volume": "3",
       "issue": "3",
       "pages": "226-252",
-      "reference_number": 50,
+      "reference_number": 51,
       "citation_text": "Rajan RK. A comprehensive review on adaptive plasticity and recovery mechanisms post-acquired brain injury. Neuroprotection 2025; 3: 226-252.",
       "source_phases": [
         "phase4"
@@ -3180,9 +3282,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_tau_proteinopathy_progression"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41618372",
@@ -3197,7 +3297,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3225,7 +3325,7 @@
       "volume": "14",
       "issue": "1",
       "pages": "",
-      "reference_number": 51,
+      "reference_number": 52,
       "citation_text": "Li C, Griffin MN, Triplett SE, et al. Inhibition of p38 MAPK after repetitive mTBI ameliorates immune signaling and functional deficits. Acta Neuropathol Commun 2026; 14. DOI: 10.1186/s40478-026-02226-w.",
       "source_phases": [
         "phase4"
@@ -3240,9 +3340,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_tau_proteinopathy_progression"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41622461",
@@ -3257,7 +3355,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3276,7 +3374,7 @@
       "volume": "",
       "issue": "",
       "pages": "",
-      "reference_number": 52,
+      "reference_number": 53,
       "citation_text": "Bondi CO, Capeci HE, Donald HM, et al. A decade of progress (2014-2025): Environmental enrichment as a validated preclinical model of neurorehabilitation for traumatic brain injury. Neural Regen Res. Epub ahead of print 2026 Jan 27. DOI: 10.4103/NRR.NRR-D-25-01392.",
       "source_phases": [
         "phase4"
@@ -3291,9 +3389,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_tau_proteinopathy_progression"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41667502",
@@ -3308,7 +3404,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3331,14 +3427,13 @@
       "volume": "13",
       "issue": "1",
       "pages": "",
-      "reference_number": 53,
+      "reference_number": 54,
       "citation_text": "Chen R, Zhang S, Liu S, et al. A single-cell transcriptomic dataset profiling traumatic brain injury and NeuroD1-based gene therapy in mice. Sci Data 2026; 13. DOI: 10.1038/s41597-026-06788-1.",
       "source_phases": [
         "phase4"
       ],
       "artifact_refs": [
-        "phase4:tau_proteinopathy_progression",
-        "phase4:glymphatic_astroglial_clearance_failure"
+        "phase4:tau_proteinopathy_progression"
       ],
       "support_roles": [
         "phase4_support"
@@ -3347,9 +3442,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_glymphatic_astroglial_clearance_failure"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41675841",
@@ -3364,7 +3457,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3381,7 +3474,7 @@
       "volume": "88",
       "issue": "2",
       "pages": "2156-2157",
-      "reference_number": 54,
+      "reference_number": 55,
       "citation_text": "Khizar M, Zaib M, Babar M, et al. Targeting neuroinflammation to enhance recovery after brain injury. Ann Med Surg (Lond) 2026; 88: 2156-2157.",
       "source_phases": [
         "phase4"
@@ -3411,7 +3504,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3430,7 +3523,7 @@
       "volume": "43",
       "issue": "3-4",
       "pages": "317-340",
-      "reference_number": 55,
+      "reference_number": 56,
       "citation_text": "Xia J, Sun CY, Su T, et al. Triggering Receptor Expressed on Myeloid Cell 2-Mediated Microglial Phagocytosis in the Subacute Phase of Traumatic Brain Injury Exacerbates Impaired Memory. J Neurotrauma 2026; 43: 317-340.",
       "source_phases": [
         "phase4"
@@ -3460,7 +3553,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3477,7 +3570,7 @@
       "volume": "123",
       "issue": "10",
       "pages": "e2514875123",
-      "reference_number": 56,
+      "reference_number": 57,
       "citation_text": "Hiramatsu S, Kabetani K, Kondo S, et al. Disruption of a selective vesicle pool upon retrograde amnesia dissociates memory at presynaptic terminals. Proc Natl Acad Sci U S A 2026; 123: e2514875123.",
       "source_phases": [
         "phase4"
@@ -3496,7 +3589,7 @@
     },
     {
       "pmid": "41826372",
-      "title": "Neuronal and glial networks interact with traumatic brain injury to modulate cognition in ABCD study.",
+      "title": "Neuronal and glial networks interact with traumatic brain injury to modulate cognition in ABCD study",
       "authors": "Cheng M, Mao M, Meng W, et al",
       "journal": "NPJ Syst Biol Appl",
       "publication_date": "2026 Mar 13",
@@ -3504,16 +3597,16 @@
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "Publisher HTML",
-      "extraction_rank": "3",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_MEtAl_Neuronalandglialnetworks_PMID41826372.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Cheng M",
         "Mao M",
@@ -3533,7 +3626,7 @@
       "volume": "",
       "issue": "",
       "pages": "",
-      "reference_number": 57,
+      "reference_number": 58,
       "citation_text": "Cheng M, Mao M, Meng W, et al. Neuronal and glial networks interact with traumatic brain injury to modulate cognition in ABCD study. NPJ Syst Biol Appl. Epub ahead of print 2026 Mar 13. DOI: 10.1038/s41540-026-00681-8.",
       "source_phases": [
         "phase4"
@@ -3551,62 +3644,6 @@
       "supporting_claim_ids": []
     },
     {
-      "pmid": "41642456",
-      "title": "Mechanical Stretch Disrupts Calcium Dynamics and Redistributes Piezo1 in Human Astrocytes",
-      "authors": "Shiravi S, Chakka A, Xiao X, et al",
-      "journal": "Ann Biomed Eng",
-      "publication_date": "2026 Feb 5",
-      "doi": "10.1007/s10439-026-03995-0",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Shiravi S",
-        "Chakka A",
-        "Xiao X",
-        "Garcia MF",
-        "Yufa A",
-        "Mitevska A",
-        "Seah C",
-        "Gao H",
-        "Huckins LM",
-        "Brennand KJ",
-        "Finan JD"
-      ],
-      "year": "2026",
-      "volume": "",
-      "issue": "",
-      "pages": "",
-      "reference_number": 58,
-      "citation_text": "Shiravi S, Chakka A, Xiao X, et al. Mechanical Stretch Disrupts Calcium Dynamics and Redistributes Piezo1 in Human Astrocytes. Ann Biomed Eng. Epub ahead of print 2026 Feb 5. DOI: 10.1007/s10439-026-03995-0.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:glymphatic_astroglial_clearance_failure"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_glymphatic_astroglial_clearance_failure"
-      ]
-    },
-    {
       "pmid": "41301762",
       "title": "A Bioinformatic Study of Genetics Involved in Determining Mild Traumatic Brain Injury Severity and Recovery",
       "authors": "Tajik M and Noseworthy MD",
@@ -3619,7 +3656,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3655,24 +3692,24 @@
     },
     {
       "pmid": "41792880",
-      "title": "Glymphatic System Dysfunction in Central Nervous System Diseases.",
+      "title": "Glymphatic System Dysfunction in Central Nervous System Diseases",
       "authors": "Zahran A, Abu-Khazneh O, Bdair M, et al",
       "journal": "CNS Neurosci Ther",
       "publication_date": "2026 Mar",
       "doi": "10.1002/cns.70810",
-      "pmcid": "PMC12965907",
+      "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "PMC XML",
-      "extraction_rank": "5",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_AEtAl_GlymphaticSystemDysfunctionin_PMID41792880.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Zahran A",
         "Abu-Khazneh O",
@@ -3715,24 +3752,24 @@
     },
     {
       "pmid": "41801080",
-      "title": "Elucidating Trigonelline's Therapeutic Mechanisms for Traumatic Brain Injury Through Integrated Network Pharmacology and In\u00a0Vivo Validation.",
+      "title": "Elucidating Trigonelline's Therapeutic Mechanisms for Traumatic Brain Injury Through Integrated Network Pharmacology and In\u00a0Vivo Validation",
       "authors": "Zhang Q, Zhang Y, Song Z, et al",
       "journal": "CNS Neurosci Ther",
       "publication_date": "2026 Mar",
       "doi": "10.1002/cns.70803",
-      "pmcid": "PMC12970217",
+      "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "PMC XML",
-      "extraction_rank": "5",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_QEtAl_ElucidatingTrigonellinesTherapeuticMechanisms_PMID41801080.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Zhang Q",
         "Zhang Y",
@@ -3767,36 +3804,43 @@
       ]
     },
     {
-      "pmid": "41079361",
-      "title": "Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude",
-      "authors": "Wang Z, Zhang Z and Liu Z",
-      "journal": "Front Neurol",
-      "publication_date": "2025",
-      "doi": "10.3389/fneur.2025.1669136",
-      "pmcid": "",
+      "pmid": "41853701",
+      "title": "Small extracellular vesicle-integrated by herbal hydrogels for spatiotemporal immunomodulation and neurovascular repair following traumatic brain injury.",
+      "authors": "Wu Y, Sun Y, Chen J, et al",
+      "journal": "Bioact Mater",
+      "publication_date": "2026 Aug",
+      "doi": "10.1016/j.bioactmat.2026.02.056",
+      "pmcid": "PMC12992974",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_YEtAl_Smallextracellularvesicle-integratedby_PMID41853701.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
-        "Wang Z",
-        "Zhang Z",
-        "Liu Z"
+        "Wu Y",
+        "Sun Y",
+        "Chen J",
+        "Hu M",
+        "Zhang X",
+        "Xiong X",
+        "Yu Z",
+        "Yang X",
+        "Li H",
+        "Wang Y"
       ],
-      "year": "2025",
-      "volume": "16",
+      "year": "2026",
+      "volume": "62",
       "issue": "",
-      "pages": "1669136",
+      "pages": "139-156",
       "reference_number": 62,
-      "citation_text": "Wang Z, Zhang Z and Liu Z. Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude. Front Neurol 2025; 16: 1669136.",
+      "citation_text": "Wu Y, Sun Y, Chen J, et al. Small extracellular vesicle-integrated by herbal hydrogels for spatiotemporal immunomodulation and neurovascular repair following traumatic brain injury. Bioact Mater 2026; 62: 139-156.",
       "source_phases": [
         "phase4"
       ],
@@ -3815,6 +3859,105 @@
       ]
     },
     {
+      "pmid": "41954515",
+      "title": "Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury.",
+      "authors": "Chen Y, Yin X, Zhang E, et al",
+      "journal": "CNS Neurosci Ther",
+      "publication_date": "2026 Apr",
+      "doi": "10.1002/cns.70858",
+      "pmcid": "PMC13064413",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_YEtAl_Astrocyte-DerivedExosomalmiR-211-5pAlleviates_PMID41954515.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "Chen Y",
+        "Yin X",
+        "Zhang E",
+        "Li B",
+        "Yu H",
+        "Qi J",
+        "Liu M",
+        "Wang M",
+        "Fan Z",
+        "Yang L"
+      ],
+      "year": "2026",
+      "volume": "32",
+      "issue": "4",
+      "pages": "e70858",
+      "reference_number": 63,
+      "citation_text": "Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:glymphatic_astroglial_clearance_failure"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": []
+    },
+    {
+      "pmid": "41079361",
+      "title": "Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude",
+      "authors": "Wang Z, Zhang Z and Liu Z",
+      "journal": "Front Neurol",
+      "publication_date": "2025",
+      "doi": "10.3389/fneur.2025.1669136",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "authors_list": [
+        "Wang Z",
+        "Zhang Z",
+        "Liu Z"
+      ],
+      "year": "2025",
+      "volume": "16",
+      "issue": "",
+      "pages": "1669136",
+      "reference_number": 64,
+      "citation_text": "Wang Z, Zhang Z and Liu Z. Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude. Front Neurol 2025; 16: 1669136.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:glymphatic_astroglial_clearance_failure"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": []
+    },
+    {
       "pmid": "41177833",
       "title": "Isolated oculomotor nerve palsy following mild traumatic brain injury: diagnostic challenges and insights from High-Resolution MRI",
       "authors": "Charan SPG, Parmar S, Saini J, et al",
@@ -3827,7 +3970,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3844,7 +3987,7 @@
       "volume": "32",
       "issue": "6",
       "pages": "909-920",
-      "reference_number": 63,
+      "reference_number": 65,
       "citation_text": "Charan SPG, Parmar S, Saini J, et al. Isolated oculomotor nerve palsy following mild traumatic brain injury: diagnostic challenges and insights from High-Resolution MRI. Emerg Radiol 2025; 32: 909-920.",
       "source_phases": [
         "phase4"
@@ -3874,7 +4017,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3889,7 +4032,7 @@
       "volume": "221",
       "issue": "",
       "pages": "104979",
-      "reference_number": 64,
+      "reference_number": 66,
       "citation_text": "Zhao X and He Z. Traumatic brain injury and Alzheimer's disease related neurodegenerative diseases: Insights from animal models. Neurosci Res 2025; 221: 104979.",
       "source_phases": [
         "phase4"
@@ -3919,7 +4062,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -3941,7 +4084,7 @@
       "volume": "16",
       "issue": "",
       "pages": "1677730",
-      "reference_number": 65,
+      "reference_number": 67,
       "citation_text": "Chen W, Li S, Zhang T, et al. Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. Front Neurol 2025; 16: 1677730.",
       "source_phases": [
         "phase4"
@@ -3959,179 +4102,6 @@
       "supporting_claim_ids": []
     },
     {
-      "pmid": "41612383",
-      "title": "3D-bioprinted adipose-derived stem cell-secreted GAS6(+)-sEVs reprogram microglia polarization and alleviate neuroinflammation in traumatic brain injury",
-      "authors": "Zhang Q, Chen T, Chen J, et al",
-      "journal": "J Nanobiotechnology",
-      "publication_date": "2026 Jan 30",
-      "doi": "10.1186/s12951-026-04064-3",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Zhang Q",
-        "Chen T",
-        "Chen J",
-        "Ai Y",
-        "Chen Z",
-        "Liu G",
-        "Zhang Y",
-        "Liu B",
-        "Liu J",
-        "Tang Z",
-        "Lin L",
-        "Chen X",
-        "Xia Y",
-        "Xu T",
-        "Liu J"
-      ],
-      "year": "2026",
-      "volume": "24",
-      "issue": "1",
-      "pages": "",
-      "reference_number": 66,
-      "citation_text": "Zhang Q, Chen T, Chen J, et al. 3D-bioprinted adipose-derived stem cell-secreted GAS6(+)-sEVs reprogram microglia polarization and alleviate neuroinflammation in traumatic brain injury. J Nanobiotechnology 2026; 24. DOI: 10.1186/s12951-026-04064-3.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
-      "pmid": "41803087",
-      "title": "PRMT6 is required for initiating and amplifying macrophage-induced inflammation in heterotopic ossification by increasing CCL2 expression.",
-      "authors": "Chu W, Peng W, Wu Z, et al",
-      "journal": "Bone Res",
-      "publication_date": "2026 Mar 10",
-      "doi": "10.1038/s41413-026-00512-w",
-      "pmcid": "PMC12972138",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "PMC XML",
-      "extraction_rank": "5",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_WEtAl_PRMT6isrequiredfor_PMID41803087.md",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
-      "authors_list": [
-        "Chu W",
-        "Peng W",
-        "Wu Z",
-        "Xiong Y",
-        "Gao Z",
-        "Li Y",
-        "Zhang B",
-        "Wang L",
-        "Wang H",
-        "Han C",
-        "Lu X"
-      ],
-      "year": "2026",
-      "volume": "14",
-      "issue": "1",
-      "pages": "",
-      "reference_number": 67,
-      "citation_text": "Chu W, Peng W, Wu Z, et al. PRMT6 is required for initiating and amplifying macrophage-induced inflammation in heterotopic ossification by increasing CCL2 expression. Bone Res 2026; 14. DOI: 10.1038/s41413-026-00512-w.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
-      "pmid": "41511466",
-      "title": "Secondary thalamic neuroinflammation associates with disturbed corticothalamic connectivity in a model of severe traumatic brain injury in male rats-a longitudinal study",
-      "authors": "Dvo\u0159\u00e1kov\u00e1 L, Salo RA, Stenroos P, et al",
-      "journal": "Cereb Cortex",
-      "publication_date": "2026 Jan 6",
-      "doi": "10.1093/cercor/bhaf337",
-      "pmcid": "",
-      "pubmed_url": "",
-      "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
-      "abstract": "",
-      "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
-      "authors_list": [
-        "Dvo\u0159\u00e1kov\u00e1 L",
-        "Salo RA",
-        "Stenroos P",
-        "Jokivarsi K",
-        "Kyyri\u00e4inen J",
-        "Paasonen E",
-        "Manninen E",
-        "Kettunen M",
-        "Poutiainen P",
-        "Sierra A",
-        "Paasonen J",
-        "Gr\u00f6hn O"
-      ],
-      "year": "2026",
-      "volume": "36",
-      "issue": "1",
-      "pages": "",
-      "reference_number": 68,
-      "citation_text": "Dvo\u0159\u00e1kov\u00e1 L, Salo RA, Stenroos P, et al. Secondary thalamic neuroinflammation associates with disturbed corticothalamic connectivity in a model of severe traumatic brain injury in male rats-a longitudinal study. Cereb Cortex 2026; 36. DOI: 10.1093/cercor/bhaf337.",
-      "source_phases": [
-        "phase4"
-      ],
-      "artifact_refs": [
-        "phase4:neuroinflammation_microglial_state_change"
-      ],
-      "support_roles": [
-        "phase4_support"
-      ],
-      "support_notes": [],
-      "support_statuses": [
-        "bounded"
-      ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
-    },
-    {
       "pmid": "41480492",
       "title": "Mitochondrial and ER stress crosstalk in TBI: mechanistic insights and therapeutic opportunities",
       "authors": "Wenzhe L, Boyang X, Yuchao G, et al",
@@ -4144,7 +4114,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4162,8 +4132,114 @@
       "volume": "19",
       "issue": "",
       "pages": "1697060",
-      "reference_number": 69,
+      "reference_number": 68,
       "citation_text": "Wenzhe L, Boyang X, Yuchao G, et al. Mitochondrial and ER stress crosstalk in TBI: mechanistic insights and therapeutic opportunities. Front Cell Neurosci 2025; 19: 1697060.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
+    },
+    {
+      "pmid": "41622481",
+      "title": "Semaglutide exerts neuroprotective effects by blocking the interleukin-17/NOD-like receptor family pyrin domain containing 3-mediated neuroinflammation pathway after traumatic brain injury",
+      "authors": "Zhang B, Kong L, Wang Y, et al",
+      "journal": "Neural Regen Res",
+      "publication_date": "2026 Jan 27",
+      "doi": "10.4103/NRR.NRR-D-25-00990",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "authors_list": [
+        "Zhang B",
+        "Kong L",
+        "Wang Y",
+        "He W",
+        "Yang M",
+        "Zhang X",
+        "Chen X",
+        "Zhang Y",
+        "Liu B",
+        "Bai M",
+        "Shi G"
+      ],
+      "year": "2026",
+      "volume": "",
+      "issue": "",
+      "pages": "",
+      "reference_number": 69,
+      "citation_text": "Zhang B, Kong L, Wang Y, et al. Semaglutide exerts neuroprotective effects by blocking the interleukin-17/NOD-like receptor family pyrin domain containing 3-mediated neuroinflammation pathway after traumatic brain injury. Neural Regen Res. Epub ahead of print 2026 Jan 27. DOI: 10.4103/NRR.NRR-D-25-00990.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": [
+        "phase4_neuroinflammation_microglial_state_change"
+      ]
+    },
+    {
+      "pmid": "41659975",
+      "title": "Phase-targeted erythropoietin derivatives for traumatic brain injury: bridging mechanisms to precision therapy",
+      "authors": "Sun Y, Song B, Zhang Y, et al",
+      "journal": "Front Neurol",
+      "publication_date": "2025",
+      "doi": "10.3389/fneur.2025.1665405",
+      "pmcid": "",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
+      "authors_list": [
+        "Sun Y",
+        "Song B",
+        "Zhang Y",
+        "Zhang Y",
+        "Zhou L"
+      ],
+      "year": "2025",
+      "volume": "16",
+      "issue": "",
+      "pages": "1665405",
+      "reference_number": 70,
+      "citation_text": "Sun Y, Song B, Zhang Y, et al. Phase-targeted erythropoietin derivatives for traumatic brain injury: bridging mechanisms to precision therapy. Front Neurol 2025; 16: 1665405.",
       "source_phases": [
         "phase4"
       ],
@@ -4194,7 +4270,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4213,7 +4289,7 @@
       "volume": "34",
       "issue": "3",
       "pages": "1399-1424",
-      "reference_number": 70,
+      "reference_number": 71,
       "citation_text": "Yadav AK, Verma P, Srivastava A, et al. Molecular insights into glial neuroimmune cross reactivity with CNS antigens and its role in neuroinflammation. Inflammopharmacology 2026; 34: 1399-1424.",
       "source_phases": [
         "phase4"
@@ -4245,7 +4321,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4295,7 +4371,7 @@
       "volume": "",
       "issue": "",
       "pages": "",
-      "reference_number": 71,
+      "reference_number": 72,
       "citation_text": "Cowley J, Harrison N, Pegg A, et al. P2X7R-mediated IL-1\u03b2 release by human brain tissue: the impact of CNS-penetrant potential therapeutics. Brain. Epub ahead of print 2026 Feb 19. DOI: 10.1093/brain/awag068.",
       "source_phases": [
         "phase4"
@@ -4327,7 +4403,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4349,7 +4425,7 @@
       "volume": "",
       "issue": "",
       "pages": "",
-      "reference_number": 72,
+      "reference_number": 73,
       "citation_text": "Green J, Liu Z, Timis S, et al. Deletion of NLRP3 gene blocks traumatic brain injury induced abnormal immune response in 3xTg AD mice. bioRxiv. Epub ahead of print 2026 Feb 13. DOI: 10.64898/2026.02.11.705384.",
       "source_phases": [
         "phase4"
@@ -4364,9 +4440,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41737534",
@@ -4381,7 +4455,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4403,7 +4477,7 @@
       "volume": "20",
       "issue": "",
       "pages": "1726194",
-      "reference_number": 73,
+      "reference_number": 74,
       "citation_text": "Zhao P, Li SY, Liu Q, et al. Reprogramming brain-resident macrophages: from disease drivers to therapeutic allies in neurological disorders. Front Cell Neurosci 2026; 20: 1726194.",
       "source_phases": [
         "phase4"
@@ -4418,9 +4492,7 @@
       "support_statuses": [
         "bounded"
       ],
-      "supporting_claim_ids": [
-        "phase4_neuroinflammation_microglial_state_change"
-      ]
+      "supporting_claim_ids": []
     },
     {
       "pmid": "41769894",
@@ -4435,7 +4507,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4456,7 +4528,7 @@
       "volume": "",
       "issue": "",
       "pages": "",
-      "reference_number": 74,
+      "reference_number": 75,
       "citation_text": "Wu Y, Ma S, Zhang L, et al. PU.1 Inhibition Attenuates Neuroinflammation and Pyroptosis After Traumatic Brain Injury by Modulating Microglial Polarization. J Craniofac Surg. Epub ahead of print 2026 Mar 2. DOI: 10.1097/SCS.0000000000012519.",
       "source_phases": [
         "phase4"
@@ -4475,7 +4547,7 @@
     },
     {
       "pmid": "41803953",
-      "title": "Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications.",
+      "title": "Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications",
       "authors": "Chen Q, Zhu S, Wu M, et al",
       "journal": "J Transl Med",
       "publication_date": "2026 Mar 9",
@@ -4483,16 +4555,16 @@
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "Publisher HTML",
-      "extraction_rank": "3",
-      "source_quality_tier": "full_text_like",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "output/2026-03-16_QEtAl_Noblegasesxenonand_PMID41803953.md",
+      "extraction_source": "",
+      "extraction_rank": "",
+      "source_quality_tier": "unknown",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "legacy",
-      "source_query": "legacy_query",
-      "domain": "legacy_tbi",
+      "retrieval_mode": "",
+      "source_query": "",
+      "domain": "",
       "authors_list": [
         "Chen Q",
         "Zhu S",
@@ -4507,7 +4579,7 @@
       "volume": "24",
       "issue": "1",
       "pages": "",
-      "reference_number": 75,
+      "reference_number": 76,
       "citation_text": "Chen Q, Zhu S, Wu M, et al. Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications. J Transl Med 2026; 24. DOI: 10.1186/s12967-026-07944-2.",
       "source_phases": [
         "phase4"
@@ -4525,44 +4597,39 @@
       "supporting_claim_ids": []
     },
     {
-      "pmid": "41622481",
-      "title": "Semaglutide exerts neuroprotective effects by blocking the interleukin-17/NOD-like receptor family pyrin domain containing 3-mediated neuroinflammation pathway after traumatic brain injury",
-      "authors": "Zhang B, Kong L, Wang Y, et al",
-      "journal": "Neural Regen Res",
-      "publication_date": "2026 Jan 27",
-      "doi": "10.4103/NRR.NRR-D-25-00990",
-      "pmcid": "",
+      "pmid": "41880282",
+      "title": "Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives.",
+      "authors": "Wang Y, Yang N, Chen X, et al",
+      "journal": "PLoS One",
+      "publication_date": "2026",
+      "doi": "10.1371/journal.pone.0344993",
+      "pmcid": "PMC13016288",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_YEtAl_Impactofblastexposure_PMID41880282.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
-        "Zhang B",
-        "Kong L",
         "Wang Y",
-        "He W",
-        "Yang M",
-        "Zhang X",
+        "Yang N",
         "Chen X",
-        "Zhang Y",
-        "Liu B",
-        "Bai M",
-        "Shi G"
+        "Chen X",
+        "Ning Y",
+        "Yuan R"
       ],
       "year": "2026",
-      "volume": "",
-      "issue": "",
-      "pages": "",
-      "reference_number": 76,
-      "citation_text": "Zhang B, Kong L, Wang Y, et al. Semaglutide exerts neuroprotective effects by blocking the interleukin-17/NOD-like receptor family pyrin domain containing 3-mediated neuroinflammation pathway after traumatic brain injury. Neural Regen Res. Epub ahead of print 2026 Jan 27. DOI: 10.4103/NRR.NRR-D-25-00990.",
+      "volume": "21",
+      "issue": "3",
+      "pages": "e0344993",
+      "reference_number": 77,
+      "citation_text": "Wang Y, Yang N, Chen X, et al. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PLoS One 2026; 21: e0344993.",
       "source_phases": [
         "phase4"
       ],
@@ -4579,38 +4646,98 @@
       "supporting_claim_ids": []
     },
     {
-      "pmid": "41659975",
-      "title": "Phase-targeted erythropoietin derivatives for traumatic brain injury: bridging mechanisms to precision therapy",
-      "authors": "Sun Y, Song B, Zhang Y, et al",
-      "journal": "Front Neurol",
-      "publication_date": "2025",
-      "doi": "10.3389/fneur.2025.1665405",
+      "pmid": "41918568",
+      "title": "Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI.",
+      "authors": "Ahmed ME, Suhail H, Nematullah M, et al",
+      "journal": "NeuroImmune Pharm Ther",
+      "publication_date": "2026 Mar 2",
+      "doi": "10.1515/nipt-2024-0019",
+      "pmcid": "PMC13034800",
+      "pubmed_url": "",
+      "pmc_url": "",
+      "extraction_source": "PMC XML",
+      "extraction_rank": "5",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_MEEtAl_LossofAMPKpotentiates_PMID41918568.md",
+      "abstract": "",
+      "full_text_excerpt": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
+      "authors_list": [
+        "Ahmed ME",
+        "Suhail H",
+        "Nematullah M",
+        "Viollet B",
+        "Giri S",
+        "Ahmad AS"
+      ],
+      "year": "2026",
+      "volume": "",
+      "issue": "",
+      "pages": "",
+      "reference_number": 78,
+      "citation_text": "Ahmed ME, Suhail H, Nematullah M, et al. Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI. NeuroImmune Pharm Ther. Epub ahead of print 2026 Mar 2. DOI: 10.1515/nipt-2024-0019.",
+      "source_phases": [
+        "phase4"
+      ],
+      "artifact_refs": [
+        "phase4:neuroinflammation_microglial_state_change"
+      ],
+      "support_roles": [
+        "phase4_support"
+      ],
+      "support_notes": [],
+      "support_statuses": [
+        "bounded"
+      ],
+      "supporting_claim_ids": []
+    },
+    {
+      "pmid": "41952146",
+      "title": "Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury.",
+      "authors": "Li L, Lu T, Gao W, et al",
+      "journal": "Cell Commun Signal",
+      "publication_date": "2026 Apr 9",
+      "doi": "10.1186/s12964-026-02871-7",
       "pmcid": "",
       "pubmed_url": "",
       "pmc_url": "",
-      "extraction_source": "",
-      "extraction_rank": "",
-      "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-      "source_markdown_path": "",
+      "extraction_source": "Publisher HTML",
+      "extraction_rank": "3",
+      "source_quality_tier": "full_text_like",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+      "source_markdown_path": "output/2026-04-19_LEtAl_Hematopoieticcellkinaseregulates_PMID41952146.md",
       "abstract": "",
       "full_text_excerpt": "",
-      "retrieval_mode": "",
-      "source_query": "",
-      "domain": "",
+      "retrieval_mode": "legacy",
+      "source_query": "legacy_query",
+      "domain": "legacy_tbi",
       "authors_list": [
-        "Sun Y",
-        "Song B",
-        "Zhang Y",
-        "Zhang Y",
-        "Zhou L"
+        "Li L",
+        "Lu T",
+        "Gao W",
+        "Li F",
+        "Guo X",
+        "Guan S",
+        "Gheyret D",
+        "Wang J",
+        "Li T",
+        "Cao Y",
+        "Huang C",
+        "Jiang R",
+        "Zhang S",
+        "Liu D",
+        "Zhang J",
+        "Xu X"
       ],
-      "year": "2025",
-      "volume": "16",
+      "year": "2026",
+      "volume": "",
       "issue": "",
-      "pages": "1665405",
-      "reference_number": 77,
-      "citation_text": "Sun Y, Song B, Zhang Y, et al. Phase-targeted erythropoietin derivatives for traumatic brain injury: bridging mechanisms to precision therapy. Front Neurol 2025; 16: 1665405.",
+      "pages": "",
+      "reference_number": 79,
+      "citation_text": "Li L, Lu T, Gao W, et al. Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury. Cell Commun Signal. Epub ahead of print 2026 Apr 9. DOI: 10.1186/s12964-026-02871-7.",
       "source_phases": [
         "phase4"
       ],
@@ -4639,7 +4766,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4666,7 +4793,7 @@
       "volume": "135",
       "issue": "",
       "pages": "106511",
-      "reference_number": 78,
+      "reference_number": 80,
       "citation_text": "Main BS, Villapol S, Buenaventura RG, et al. Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. Brain Behav Immun 2026; 135: 106511.",
       "source_phases": [
         "phase4"
@@ -4696,7 +4823,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4717,7 +4844,7 @@
       "volume": "16",
       "issue": "",
       "pages": "1648046",
-      "reference_number": 79,
+      "reference_number": 81,
       "citation_text": "Wu H, Wang H, Yang X, et al. Multistage investigation of predictive factors for tracheostomy in brain injury: a bibliometric, descriptive, and retrospective analysis. Front Neurol 2025; 16: 1648046.",
       "source_phases": [
         "phase4"
@@ -4747,7 +4874,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4762,7 +4889,7 @@
       "volume": "322",
       "issue": "",
       "pages": "121545",
-      "reference_number": 80,
+      "reference_number": 82,
       "citation_text": "Jafari B and Memar M. Exploring mesoscale brain connectivity variations and developing sex-specific tractography templates. Neuroimage 2025; 322: 121545.",
       "source_phases": [
         "phase4"
@@ -4792,7 +4919,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4822,7 +4949,7 @@
       "volume": "173",
       "issue": "",
       "pages": "156-165",
-      "reference_number": 81,
+      "reference_number": 83,
       "citation_text": "Gavazzi F, Patel V, Erler JA, et al. Critical Functional Domains in Pediatric Onset TUBB4A-Related Leukodystrophy: A Clinical and Caregiver's Perspective. Pediatr Neurol 2025; 173: 156-165.",
       "source_phases": [
         "phase4"
@@ -4852,7 +4979,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4869,7 +4996,7 @@
       "volume": "15",
       "issue": "10",
       "pages": "",
-      "reference_number": 82,
+      "reference_number": 84,
       "citation_text": "Kamble AP, Liu A, Choi D, et al. A Diffusion Tensor Imaging Study: Relation of Wisconsin Card Sorting Covariates to White Matter Abnormalities in Traumatic Brain Injury. Life (Basel) 2025; 15. DOI: 10.3390/life15101633.",
       "source_phases": [
         "phase4"
@@ -4899,7 +5026,7 @@
       "extraction_source": "",
       "extraction_rank": "",
       "source_quality_tier": "unknown",
-      "manifest_source": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
+      "manifest_source": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
       "source_markdown_path": "",
       "abstract": "",
       "full_text_excerpt": "",
@@ -4918,7 +5045,7 @@
       "volume": "46",
       "issue": "16",
       "pages": "e70394",
-      "reference_number": 83,
+      "reference_number": 85,
       "citation_text": "Burnett J, Cobden AL, Burmester A, et al. Association Between Intraindividual Variability in Cognitive Performance and White Matter Organisation in Chronic Mild Traumatic Brain Injury. Hum Brain Mapp 2025; 46: e70394.",
       "source_phases": [
         "phase4"

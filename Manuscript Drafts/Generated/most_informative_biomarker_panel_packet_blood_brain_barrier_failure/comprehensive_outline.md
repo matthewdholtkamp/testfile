@@ -29,7 +29,7 @@
 
 - Claim to carry: Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.
 - Allowed wording: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
-- Support anchors: 41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41752185, 41622772, 41751210, 41740873, 41683989, 41103638, 41135688, 41157272, 41173520, 41197779
+- Support anchors: 41969524, 41663365, 41673382, 41642456, 41649131, 41954515, 41994141, 41039850, 41973273, 41934291, 41532955, 41622772, 41751210, 41752185, 41968392, 41709060, 41740873, 41683989, 41103638, 41135688
 
 #### Blood-Brain Barrier Failure
 
@@ -59,25 +59,25 @@
 
 - Claim to carry: Tight-junction repair and barrier stabilization before inflammatory spillover compounds the injury.
 - Allowed wording: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-- Support anchors: 41663365, 41673382, 41642456, 41649131, 41039850, 41465583, 41725719, 41153827, 41532955, 41709060, 41752185, 41622772, 41751210, 41740873, 41683989, 41103638
+- Support anchors: 41969524, 41663365, 41673382, 41642456, 41649131, 41954515, 41994141, 41039850, 41973273, 41934291, 41532955, 41622772, 41751210, 41752185, 41968392, 41709060
 
 #### Acute Mild Biomarker / Imaging Bridge
 
 - Claim to carry: This is the best early endotype packet for not treating all concussive or mild injury as one disease in the first hours to days.
 - Allowed wording: Use cohort-language as suggestive context only, not as a locked endotype claim.
-- Support anchors: 41707328, 41737590, 41496386, 41173528, 41126936
+- Support anchors: 41707328, 41737590, 41496386, 41173528, 41126936, 41893603
 
 #### Acute Severe Vascular-Dominant
 
 - Claim to carry: This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI.
 - Allowed wording: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
-- Support anchors: 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41604614
+- Support anchors: 41700282, 41725719, 41672813, 41653068, 41714686, 41731737, 41722498, 41896418
 
 #### Acute Blast Vascular / Inflammatory Mixed
 
 - Claim to carry: Blast cohorts are easy to lump into generic TBI groups, but they may represent the clearest case where mixed dominant-process labels are necessary.
 - Allowed wording: Use cohort-language as suggestive context only, not as a locked endotype claim.
-- Support anchors: 41809238, 41794317, 41596245, 41723947
+- Support anchors: 41809238, 41794317, 41596245, 41723947, 41880282
 
 #### Subacute Repetitive Inflammatory-Dominant
 

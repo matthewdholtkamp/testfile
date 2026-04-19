@@ -65,7 +65,7 @@
 
 - Claim to carry: Current TBI evidence suggests that tau and related proteinopathy progression contribute to chronic network dysfunction and cognitive decline.
 - Allowed wording: Use cautious, hypothesis-oriented wording and explicitly note boundedness.
-- Support anchors: 41496386, 41739474, 41747594, 41508043, 41683989
+- Support anchors: 41496386, 41739474, 41747594, 41508043, 41683989, 41853047, 41893300
 
 #### Tauopathy Progression
 
@@ -89,19 +89,19 @@
 
 - Claim to carry: Use the direct DYRK1A perturbation anchor, but keep tau claims bounded until the lane itself is less seeded.
 - Allowed wording: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-- Support anchors: 41651695, 41508043, 41665901, 41496386, 41683989, 41179995, 41809435, 41328339, 41594797, 41700070, 41809632, 41747594, 41739474, 41394307, 41618372, 41622461
+- Support anchors: 41651695, 41508043, 41723222, 41665901, 41853047, 41496386, 41683989, 41179995, 41809435, 41953056, 41809632, 41700070, 41747594, 41739474, 41893300, 41328339
 
 #### Glymphatic / Astroglial Clearance Failure
 
 - Claim to carry: Focus on the AQP4 clearance module and require a real clearance readout, not just astroglial stress markers.
 - Allowed wording: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-- Support anchors: 41179995, 41039850, 41648326, 41700070, 41824127, 41153827, 41795770, 41827388, 41642456, 41667502, 41103638, 41301762, 41747594, 41792880, 41801080, 41079361
+- Support anchors: 41179995, 41039850, 41648326, 41968392, 41960329, 41700070, 41824127, 41153827, 41795770, 41827388, 41103638, 41301762, 41747594, 41792880, 41801080, 41853701
 
 #### Neuroinflammation / Microglial State Change
 
 - Claim to carry: Blunt the inflammasome and cytokine network without pretending one marker equals the whole inflammatory state.
 - Allowed wording: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-- Support anchors: 41157272, 41103638, 41663365, 41734021, 41752185, 41756282, 41824127, 41612383, 41803087, 41511466, 41480492, 41683989, 41709060, 41712436, 41726892, 41737534
+- Support anchors: 41157272, 41103638, 41926211, 41663365, 41734021, 41752185, 41756234, 41756282, 41824127, 41926540, 41480492, 41622481, 41659975, 41683989, 41709060, 41712436
 
 #### Chronic Repetitive Tau / Clearance Mixed
 

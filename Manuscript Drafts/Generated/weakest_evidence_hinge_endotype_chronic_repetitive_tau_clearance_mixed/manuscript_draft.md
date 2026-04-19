@@ -116,7 +116,7 @@ Current evidence gaps: Some supporting rows are abstract-only and should be weig
 
 ### Tau / Proteinopathy Progression
 
-Use the direct DYRK1A perturbation anchor, but keep tau claims bounded until the lane itself is less seeded. (PMIDs: 41651695, 41508043, 41665901, 41496386)
+Use the direct DYRK1A perturbation anchor, but keep tau claims bounded until the lane itself is less seeded. (PMIDs: 41651695, 41508043, 41723222, 41665901)
 
 Drafting rule: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 
@@ -124,7 +124,7 @@ Current contradiction notes: After adjusting for pre-injury baseline differences
 
 ### Glymphatic / Astroglial Clearance Failure
 
-Focus on the AQP4 clearance module and require a real clearance readout, not just astroglial stress markers. (PMIDs: 41179995, 41039850, 41648326, 41700070)
+Focus on the AQP4 clearance module and require a real clearance readout, not just astroglial stress markers. (PMIDs: 41179995, 41039850, 41648326, 41968392)
 
 Drafting rule: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 
@@ -132,7 +132,7 @@ Current contradiction notes: AQP4 abundance can rise while polarization remains 
 
 ### Neuroinflammation / Microglial State Change
 
-Blunt the inflammasome and cytokine network without pretending one marker equals the whole inflammatory state. (PMIDs: 41157272, 41103638, 41663365, 41734021)
+Blunt the inflammasome and cytokine network without pretending one marker equals the whole inflammatory state. (PMIDs: 41157272, 41103638, 41926211, 41663365)
 
 Drafting rule: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
 
@@ -175,7 +175,7 @@ In its current form, this review supports a bounded manuscript centered on Tau /
 
 ## Transparency, Rigor and Reproducibility Summary
 
-- This review was assembled from the linked Phase 1 through Phase 5 evidence chain and 83 cited source records in the current engine pack.
+- This review was assembled from the linked Phase 1 through Phase 5 evidence chain and 85 cited source records in the current engine pack.
 - The synthesis stays anchored to Tau / Proteinopathy Progression and Glymphatic failure -> tau / protein accumulation, with downstream burden carried through Tauopathy Progression, Cognitive Decline Phenotype, Microglial Chronic Activation.
 - Claims were retained only when they remained attached to explicit source support, and 24 contradiction or evidence-boundary item(s) are kept visible in Limitations rather than treated as resolved.
 - The translational packet remains intentionally bounded around DYRK1A; this manuscript does not claim intervention-ready efficacy and instead uses Phase 4 to prioritize readouts and future validation steps such as Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?.
@@ -265,51 +265,53 @@ This review synthesizes published studies and engine-generated evidence maps. Th
 33. Chen W, Wu ZC, Lin L, et al. Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. Int Immunopharmacol 2026; 175: 116415.
 34. Mazurek CY, Kaniuk JK and Ahuja CS. Mesenchymal stem cells and the central nervous system: historical perspectives and future directions. Front Mol Neurosci 2026; 19: 1742864.
 35. Dark HE, Kenney K, de Souza NL, et al. Plasma Biomarkers, Brain Volume, and Cognitive Performance in Service Members and Veterans With mTBI: A LIMBIC-CENC Study. JAMA Netw Open 2026; 9: e2559596.
-36. Yang S, Kim S, Park U, et al. Quantitatively controlled and measured-traumatic brain injury impairs adult neurogenesis and alters neuropathological signatures in mice. Theranostics 2026; 16: 193-219.
-37. Arachchi S, Daly E, Dwivedi A, et al. Sex Differences in Severity and Recovery Following Mild Traumatic Brain Injury: A Systematic Review. Brain Sci 2026; 16. DOI: 10.3390/brainsci16010077.
-38. Kommireddy RS, Mehra S, Pompilus M, et al. Functional Connectivity, Tissue Microstructure, and T2 at 11.1 Tesla Distinguishes Neuroadaptive Differences in Two Traumatic Brain Injury Models in Rats: A Translational Outcomes Project in NeuroTrauma (TOP-NT) UG3 Phase Study. Neurotrauma Rep 2025; 6: 885-902.
-39. de Souza NL, Meng W, Vaida F, et al. Longitudinal neurocognitive outcomes in children with mild traumatic brain injury: An ABCD cohort analysis. J Int Neuropsychol Soc. Epub ahead of print 2025 Nov 14. DOI: 10.1017/S1355617725101537.
-40. Bordón Guerra R, Peñate Castro W, Ferreiro Díaz-Velis E, et al. Tractography-Based Asymmetries in Acquired Brain Injury: Contributions to the Neuropsychological Profile and Rehabilitation in a Case-Series. Brain Sci 2025; 15. DOI: 10.3390/brainsci15111155.
-41. Ouyang Z, Jiao B, Xiao X, et al. Head injury/traumatic brain injury and the risk of dementia: An observational and Mendelian randomization study. J Prev Alzheimers Dis 2026; 13: 100468.
-42. Zhang J, Solar KG, Safar K, et al. The structural, functional, and neurophysiological connectome of mild traumatic brain injury: A DTI, fMRI and MEG multimodal clustering and data fusion study. Neuroimage Clin 2026; 49: 103946.
-43. Marshall WJ, Conner AN, Key AP, et al. Resting-state EEG and machine learning to investigate cortical connectivity as a biomarker in chronic mTBI. Front Neurol 2025; 16: 1721726.
-44. Bell NM, Xi Y, Cardoso da Fonseca N, et al. Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. Brain Connect. Epub ahead of print 2026 Feb 18. DOI: 10.1177/21580014261425220.
-45. Doust YV, Rowe RK, Langley RC, et al. Worsened axonal injury and gliosis following diffuse brain injury in male and female mice with neurofilament light gene deletion. Exp Neurol 2026; 396: 115520.
-46. Fadon-Padilla L, Chu C, Liang Y, et al. A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction. J Neurotrauma 2026; 43: 485-500.
-47. Wang L, Zhou Q, Chen J, et al. NSUN6 promotes neuronal axon regeneration after traumatic brain injury by enhancing HMGB1 expression via m5C modification. Brain Res Bull 2025; 233: 111617.
-48. Eed A, Hamilton J, Xu X, et al. MRI investigation of orientation-dependent changes in microstructure and function in a mouse model of mild traumatic brain injury. Acta Neuropathol Commun 2025; 14: 8.
-49. Li M, Wang Y, Zhang Z, et al. MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. iScience 2025; 28: 114221.
-50. Rajan RK. A comprehensive review on adaptive plasticity and recovery mechanisms post-acquired brain injury. Neuroprotection 2025; 3: 226-252.
-51. Li C, Griffin MN, Triplett SE, et al. Inhibition of p38 MAPK after repetitive mTBI ameliorates immune signaling and functional deficits. Acta Neuropathol Commun 2026; 14. DOI: 10.1186/s40478-026-02226-w.
-52. Bondi CO, Capeci HE, Donald HM, et al. A decade of progress (2014-2025): Environmental enrichment as a validated preclinical model of neurorehabilitation for traumatic brain injury. Neural Regen Res. Epub ahead of print 2026 Jan 27. DOI: 10.4103/NRR.NRR-D-25-01392.
-53. Chen R, Zhang S, Liu S, et al. A single-cell transcriptomic dataset profiling traumatic brain injury and NeuroD1-based gene therapy in mice. Sci Data 2026; 13. DOI: 10.1038/s41597-026-06788-1.
-54. Khizar M, Zaib M, Babar M, et al. Targeting neuroinflammation to enhance recovery after brain injury. Ann Med Surg (Lond) 2026; 88: 2156-2157.
-55. Xia J, Sun CY, Su T, et al. Triggering Receptor Expressed on Myeloid Cell 2-Mediated Microglial Phagocytosis in the Subacute Phase of Traumatic Brain Injury Exacerbates Impaired Memory. J Neurotrauma 2026; 43: 317-340.
-56. Hiramatsu S, Kabetani K, Kondo S, et al. Disruption of a selective vesicle pool upon retrograde amnesia dissociates memory at presynaptic terminals. Proc Natl Acad Sci U S A 2026; 123: e2514875123.
-57. Cheng M, Mao M, Meng W, et al. Neuronal and glial networks interact with traumatic brain injury to modulate cognition in ABCD study. NPJ Syst Biol Appl. Epub ahead of print 2026 Mar 13. DOI: 10.1038/s41540-026-00681-8.
-58. Shiravi S, Chakka A, Xiao X, et al. Mechanical Stretch Disrupts Calcium Dynamics and Redistributes Piezo1 in Human Astrocytes. Ann Biomed Eng. Epub ahead of print 2026 Feb 5. DOI: 10.1007/s10439-026-03995-0.
+36. Huang YQ, Zhong CY, Burley G, et al. Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease. Metabolites 2026; 16. DOI: 10.3390/metabo16030148.
+37. Yang S, Kim S, Park U, et al. Quantitatively controlled and measured-traumatic brain injury impairs adult neurogenesis and alters neuropathological signatures in mice. Theranostics 2026; 16: 193-219.
+38. Arachchi S, Daly E, Dwivedi A, et al. Sex Differences in Severity and Recovery Following Mild Traumatic Brain Injury: A Systematic Review. Brain Sci 2026; 16. DOI: 10.3390/brainsci16010077.
+39. Kommireddy RS, Mehra S, Pompilus M, et al. Functional Connectivity, Tissue Microstructure, and T2 at 11.1 Tesla Distinguishes Neuroadaptive Differences in Two Traumatic Brain Injury Models in Rats: A Translational Outcomes Project in NeuroTrauma (TOP-NT) UG3 Phase Study. Neurotrauma Rep 2025; 6: 885-902.
+40. de Souza NL, Meng W, Vaida F, et al. Longitudinal neurocognitive outcomes in children with mild traumatic brain injury: An ABCD cohort analysis. J Int Neuropsychol Soc. Epub ahead of print 2025 Nov 14. DOI: 10.1017/S1355617725101537.
+41. Bordón Guerra R, Peñate Castro W, Ferreiro Díaz-Velis E, et al. Tractography-Based Asymmetries in Acquired Brain Injury: Contributions to the Neuropsychological Profile and Rehabilitation in a Case-Series. Brain Sci 2025; 15. DOI: 10.3390/brainsci15111155.
+42. Ouyang Z, Jiao B, Xiao X, et al. Head injury/traumatic brain injury and the risk of dementia: An observational and Mendelian randomization study. J Prev Alzheimers Dis 2026; 13: 100468.
+43. Zhang J, Solar KG, Safar K, et al. The structural, functional, and neurophysiological connectome of mild traumatic brain injury: A DTI, fMRI and MEG multimodal clustering and data fusion study. Neuroimage Clin 2026; 49: 103946.
+44. Marshall WJ, Conner AN, Key AP, et al. Resting-state EEG and machine learning to investigate cortical connectivity as a biomarker in chronic mTBI. Front Neurol 2025; 16: 1721726.
+45. Bell NM, Xi Y, Cardoso da Fonseca N, et al. Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. Brain Connect. Epub ahead of print 2026 Feb 18. DOI: 10.1177/21580014261425220.
+46. Doust YV, Rowe RK, Langley RC, et al. Worsened axonal injury and gliosis following diffuse brain injury in male and female mice with neurofilament light gene deletion. Exp Neurol 2026; 396: 115520.
+47. Fadon-Padilla L, Chu C, Liang Y, et al. A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction. J Neurotrauma 2026; 43: 485-500.
+48. Wang L, Zhou Q, Chen J, et al. NSUN6 promotes neuronal axon regeneration after traumatic brain injury by enhancing HMGB1 expression via m5C modification. Brain Res Bull 2025; 233: 111617.
+49. Eed A, Hamilton J, Xu X, et al. MRI investigation of orientation-dependent changes in microstructure and function in a mouse model of mild traumatic brain injury. Acta Neuropathol Commun 2025; 14: 8.
+50. Li M, Wang Y, Zhang Z, et al. MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. iScience 2025; 28: 114221.
+51. Rajan RK. A comprehensive review on adaptive plasticity and recovery mechanisms post-acquired brain injury. Neuroprotection 2025; 3: 226-252.
+52. Li C, Griffin MN, Triplett SE, et al. Inhibition of p38 MAPK after repetitive mTBI ameliorates immune signaling and functional deficits. Acta Neuropathol Commun 2026; 14. DOI: 10.1186/s40478-026-02226-w.
+53. Bondi CO, Capeci HE, Donald HM, et al. A decade of progress (2014-2025): Environmental enrichment as a validated preclinical model of neurorehabilitation for traumatic brain injury. Neural Regen Res. Epub ahead of print 2026 Jan 27. DOI: 10.4103/NRR.NRR-D-25-01392.
+54. Chen R, Zhang S, Liu S, et al. A single-cell transcriptomic dataset profiling traumatic brain injury and NeuroD1-based gene therapy in mice. Sci Data 2026; 13. DOI: 10.1038/s41597-026-06788-1.
+55. Khizar M, Zaib M, Babar M, et al. Targeting neuroinflammation to enhance recovery after brain injury. Ann Med Surg (Lond) 2026; 88: 2156-2157.
+56. Xia J, Sun CY, Su T, et al. Triggering Receptor Expressed on Myeloid Cell 2-Mediated Microglial Phagocytosis in the Subacute Phase of Traumatic Brain Injury Exacerbates Impaired Memory. J Neurotrauma 2026; 43: 317-340.
+57. Hiramatsu S, Kabetani K, Kondo S, et al. Disruption of a selective vesicle pool upon retrograde amnesia dissociates memory at presynaptic terminals. Proc Natl Acad Sci U S A 2026; 123: e2514875123.
+58. Cheng M, Mao M, Meng W, et al. Neuronal and glial networks interact with traumatic brain injury to modulate cognition in ABCD study. NPJ Syst Biol Appl. Epub ahead of print 2026 Mar 13. DOI: 10.1038/s41540-026-00681-8.
 59. Tajik M and Noseworthy MD. A Bioinformatic Study of Genetics Involved in Determining Mild Traumatic Brain Injury Severity and Recovery. Biomedicines 2025; 13. DOI: 10.3390/biomedicines13112669.
 60. Zahran A, Abu-Khazneh O, Bdair M, et al. Glymphatic System Dysfunction in Central Nervous System Diseases. CNS Neurosci Ther 2026; 32: e70810.
 61. Zhang Q, Zhang Y, Song Z, et al. Elucidating Trigonelline's Therapeutic Mechanisms for Traumatic Brain Injury Through Integrated Network Pharmacology and In Vivo Validation. CNS Neurosci Ther 2026; 32: e70803.
-62. Wang Z, Zhang Z and Liu Z. Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude. Front Neurol 2025; 16: 1669136.
-63. Charan SPG, Parmar S, Saini J, et al. Isolated oculomotor nerve palsy following mild traumatic brain injury: diagnostic challenges and insights from High-Resolution MRI. Emerg Radiol 2025; 32: 909-920.
-64. Zhao X and He Z. Traumatic brain injury and Alzheimer's disease related neurodegenerative diseases: Insights from animal models. Neurosci Res 2025; 221: 104979.
-65. Chen W, Li S, Zhang T, et al. Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. Front Neurol 2025; 16: 1677730.
-66. Zhang Q, Chen T, Chen J, et al. 3D-bioprinted adipose-derived stem cell-secreted GAS6(+)-sEVs reprogram microglia polarization and alleviate neuroinflammation in traumatic brain injury. J Nanobiotechnology 2026; 24. DOI: 10.1186/s12951-026-04064-3.
-67. Chu W, Peng W, Wu Z, et al. PRMT6 is required for initiating and amplifying macrophage-induced inflammation in heterotopic ossification by increasing CCL2 expression. Bone Res 2026; 14. DOI: 10.1038/s41413-026-00512-w.
-68. Dvořáková L, Salo RA, Stenroos P, et al. Secondary thalamic neuroinflammation associates with disturbed corticothalamic connectivity in a model of severe traumatic brain injury in male rats-a longitudinal study. Cereb Cortex 2026; 36. DOI: 10.1093/cercor/bhaf337.
-69. Wenzhe L, Boyang X, Yuchao G, et al. Mitochondrial and ER stress crosstalk in TBI: mechanistic insights and therapeutic opportunities. Front Cell Neurosci 2025; 19: 1697060.
-70. Yadav AK, Verma P, Srivastava A, et al. Molecular insights into glial neuroimmune cross reactivity with CNS antigens and its role in neuroinflammation. Inflammopharmacology 2026; 34: 1399-1424.
-71. Cowley J, Harrison N, Pegg A, et al. P2X7R-mediated IL-1β release by human brain tissue: the impact of CNS-penetrant potential therapeutics. Brain. Epub ahead of print 2026 Feb 19. DOI: 10.1093/brain/awag068.
-72. Green J, Liu Z, Timis S, et al. Deletion of NLRP3 gene blocks traumatic brain injury induced abnormal immune response in 3xTg AD mice. bioRxiv. Epub ahead of print 2026 Feb 13. DOI: 10.64898/2026.02.11.705384.
-73. Zhao P, Li SY, Liu Q, et al. Reprogramming brain-resident macrophages: from disease drivers to therapeutic allies in neurological disorders. Front Cell Neurosci 2026; 20: 1726194.
-74. Wu Y, Ma S, Zhang L, et al. PU.1 Inhibition Attenuates Neuroinflammation and Pyroptosis After Traumatic Brain Injury by Modulating Microglial Polarization. J Craniofac Surg. Epub ahead of print 2026 Mar 2. DOI: 10.1097/SCS.0000000000012519.
-75. Chen Q, Zhu S, Wu M, et al. Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications. J Transl Med 2026; 24. DOI: 10.1186/s12967-026-07944-2.
-76. Zhang B, Kong L, Wang Y, et al. Semaglutide exerts neuroprotective effects by blocking the interleukin-17/NOD-like receptor family pyrin domain containing 3-mediated neuroinflammation pathway after traumatic brain injury. Neural Regen Res. Epub ahead of print 2026 Jan 27. DOI: 10.4103/NRR.NRR-D-25-00990.
-77. Sun Y, Song B, Zhang Y, et al. Phase-targeted erythropoietin derivatives for traumatic brain injury: bridging mechanisms to precision therapy. Front Neurol 2025; 16: 1665405.
-78. Main BS, Villapol S, Buenaventura RG, et al. Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. Brain Behav Immun 2026; 135: 106511.
-79. Wu H, Wang H, Yang X, et al. Multistage investigation of predictive factors for tracheostomy in brain injury: a bibliometric, descriptive, and retrospective analysis. Front Neurol 2025; 16: 1648046.
-80. Jafari B and Memar M. Exploring mesoscale brain connectivity variations and developing sex-specific tractography templates. Neuroimage 2025; 322: 121545.
-81. Gavazzi F, Patel V, Erler JA, et al. Critical Functional Domains in Pediatric Onset TUBB4A-Related Leukodystrophy: A Clinical and Caregiver's Perspective. Pediatr Neurol 2025; 173: 156-165.
-82. Kamble AP, Liu A, Choi D, et al. A Diffusion Tensor Imaging Study: Relation of Wisconsin Card Sorting Covariates to White Matter Abnormalities in Traumatic Brain Injury. Life (Basel) 2025; 15. DOI: 10.3390/life15101633.
-83. Burnett J, Cobden AL, Burmester A, et al. Association Between Intraindividual Variability in Cognitive Performance and White Matter Organisation in Chronic Mild Traumatic Brain Injury. Hum Brain Mapp 2025; 46: e70394.
+62. Wu Y, Sun Y, Chen J, et al. Small extracellular vesicle-integrated by herbal hydrogels for spatiotemporal immunomodulation and neurovascular repair following traumatic brain injury. Bioact Mater 2026; 62: 139-156.
+63. Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.
+64. Wang Z, Zhang Z and Liu Z. Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude. Front Neurol 2025; 16: 1669136.
+65. Charan SPG, Parmar S, Saini J, et al. Isolated oculomotor nerve palsy following mild traumatic brain injury: diagnostic challenges and insights from High-Resolution MRI. Emerg Radiol 2025; 32: 909-920.
+66. Zhao X and He Z. Traumatic brain injury and Alzheimer's disease related neurodegenerative diseases: Insights from animal models. Neurosci Res 2025; 221: 104979.
+67. Chen W, Li S, Zhang T, et al. Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. Front Neurol 2025; 16: 1677730.
+68. Wenzhe L, Boyang X, Yuchao G, et al. Mitochondrial and ER stress crosstalk in TBI: mechanistic insights and therapeutic opportunities. Front Cell Neurosci 2025; 19: 1697060.
+69. Zhang B, Kong L, Wang Y, et al. Semaglutide exerts neuroprotective effects by blocking the interleukin-17/NOD-like receptor family pyrin domain containing 3-mediated neuroinflammation pathway after traumatic brain injury. Neural Regen Res. Epub ahead of print 2026 Jan 27. DOI: 10.4103/NRR.NRR-D-25-00990.
+70. Sun Y, Song B, Zhang Y, et al. Phase-targeted erythropoietin derivatives for traumatic brain injury: bridging mechanisms to precision therapy. Front Neurol 2025; 16: 1665405.
+71. Yadav AK, Verma P, Srivastava A, et al. Molecular insights into glial neuroimmune cross reactivity with CNS antigens and its role in neuroinflammation. Inflammopharmacology 2026; 34: 1399-1424.
+72. Cowley J, Harrison N, Pegg A, et al. P2X7R-mediated IL-1β release by human brain tissue: the impact of CNS-penetrant potential therapeutics. Brain. Epub ahead of print 2026 Feb 19. DOI: 10.1093/brain/awag068.
+73. Green J, Liu Z, Timis S, et al. Deletion of NLRP3 gene blocks traumatic brain injury induced abnormal immune response in 3xTg AD mice. bioRxiv. Epub ahead of print 2026 Feb 13. DOI: 10.64898/2026.02.11.705384.
+74. Zhao P, Li SY, Liu Q, et al. Reprogramming brain-resident macrophages: from disease drivers to therapeutic allies in neurological disorders. Front Cell Neurosci 2026; 20: 1726194.
+75. Wu Y, Ma S, Zhang L, et al. PU.1 Inhibition Attenuates Neuroinflammation and Pyroptosis After Traumatic Brain Injury by Modulating Microglial Polarization. J Craniofac Surg. Epub ahead of print 2026 Mar 2. DOI: 10.1097/SCS.0000000000012519.
+76. Chen Q, Zhu S, Wu M, et al. Noble gases xenon and argon: from cellular signalling mechanisms to organoprotection and clinical applications. J Transl Med 2026; 24. DOI: 10.1186/s12967-026-07944-2.
+77. Wang Y, Yang N, Chen X, et al. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PLoS One 2026; 21: e0344993.
+78. Ahmed ME, Suhail H, Nematullah M, et al. Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI. NeuroImmune Pharm Ther. Epub ahead of print 2026 Mar 2. DOI: 10.1515/nipt-2024-0019.
+79. Li L, Lu T, Gao W, et al. Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury. Cell Commun Signal. Epub ahead of print 2026 Apr 9. DOI: 10.1186/s12964-026-02871-7.
+80. Main BS, Villapol S, Buenaventura RG, et al. Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. Brain Behav Immun 2026; 135: 106511.
+81. Wu H, Wang H, Yang X, et al. Multistage investigation of predictive factors for tracheostomy in brain injury: a bibliometric, descriptive, and retrospective analysis. Front Neurol 2025; 16: 1648046.
+82. Jafari B and Memar M. Exploring mesoscale brain connectivity variations and developing sex-specific tractography templates. Neuroimage 2025; 322: 121545.
+83. Gavazzi F, Patel V, Erler JA, et al. Critical Functional Domains in Pediatric Onset TUBB4A-Related Leukodystrophy: A Clinical and Caregiver's Perspective. Pediatr Neurol 2025; 173: 156-165.
+84. Kamble AP, Liu A, Choi D, et al. A Diffusion Tensor Imaging Study: Relation of Wisconsin Card Sorting Covariates to White Matter Abnormalities in Traumatic Brain Injury. Life (Basel) 2025; 15. DOI: 10.3390/life15101633.
+85. Burnett J, Cobden AL, Burmester A, et al. Association Between Intraindividual Variability in Cognitive Performance and White Matter Organisation in Chronic Mild Traumatic Brain Injury. Hum Brain Mapp 2025; 46: e70394.
