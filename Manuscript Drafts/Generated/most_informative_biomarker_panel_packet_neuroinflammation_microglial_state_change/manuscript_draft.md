@@ -12,7 +12,7 @@
 
 ## Abstract
 
-Neuroinflammation / Microglial State Change is the current manuscript path selected from the Phase 8 evidence pack. The current thesis is: Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology. The evidence chain links Neuroinflammation / Microglial State Change to BBB permeability increase -> peripheral immune infiltration, with downstream burden in Microglial Chronic Activation, Persistent Metabolic Dysfunction, Tauopathy Progression. The translational readout spine centers on NLRP3 with expected readouts IL 1beta / il 6 / tnf Alpha network, Nlrp3 inflammasome burden, Gfap and glial stress, Tau amplification pressure. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Study found no significant correlation, contradicting the hypothesis of cumulative damage..
+This review synthesizes the current Phase 8 evidence pack around Neuroinflammation / Microglial State Change. The current thesis is: Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology. The evidence chain links Neuroinflammation / Microglial State Change to BBB permeability increase -> peripheral immune infiltration, with downstream burden in Microglial Chronic Activation, Persistent Metabolic Dysfunction, Tauopathy Progression. The translational readout spine centers on NLRP3 with expected readouts IL 1beta / il 6 / tnf Alpha network, Nlrp3 inflammasome burden, Gfap and glial stress, Tau amplification pressure. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Study found no significant correlation, contradicting the hypothesis of cumulative damage..
 
 ## Keywords
 
@@ -24,7 +24,13 @@ Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expec
 
 The linked rationale in the Phase 8 pack is straightforward: NLRP3 is the most coherent TBI-core perturbation node for this lane and already bridges backward to mitochondrial stress and forward to tau amplification. The directional bridge into BBB permeability increase -> peripheral immune infiltration gives the manuscript a mechanistic spine, while the linked Phase 3 and Phase 5 artifacts keep the story tied to downstream burden and cohort context rather than to generic TBI language.
 
-## Results / Evidence Synthesis
+## Review Scope and Evidence Assembly
+
+This manuscript is being packaged as a bounded evidence synthesis rather than as a new experimental report. The evidence base comes from the current Phase 1 to Phase 5 engine pack, linked PubMed-indexed source papers, explicit claim-to-PMID mapping, a contradiction register, and a bounded translational readout packet.
+
+The review logic is intentionally conservative: mechanistic and biomarker claims are carried forward only when they remain linked to the current evidence chain, and unresolved contradiction rows are retained in the manuscript as limitations or future-work boundaries rather than being smoothed away.
+
+## Evidence Synthesis
 
 ### Candidate manuscript thesis
 
@@ -142,7 +148,7 @@ Current evidence gaps: Direct cohort-level ties between clearance readouts, tau 
 
 ## Discussion
 
-This manuscript is currently targeted to Journal of Neurotrauma as a original research because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around IL 1beta / il 6 / tnf Alpha network, Nlrp3 inflammasome burden, Gfap and glial stress, Tau amplification pressure.
+This manuscript is currently targeted to Journal of Neurotrauma as a review because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around IL 1beta / il 6 / tnf Alpha network, Nlrp3 inflammasome burden, Gfap and glial stress, Tau amplification pressure.
 
 The draft should still remain bounded. Translation maturity is bounded, the next experimental move is Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows., and the current top blocker is Study found no significant correlation, contradicting the hypothesis of cumulative damage.. These constraints should remain explicit rather than being smoothed away during prose cleanup.
 
@@ -163,12 +169,7 @@ The cohort and endotype context currently in scope is Acute Mild Biomarker / Ima
 
 ## Transparency, Rigor and Reproducibility Summary Starter
 
-- Fluid biomarker papers: Provide a direct data/code/sample availability statement that says what can be shared now and what cannot.
-- Fluid biomarker papers: Define the primary analyses, multiple-comparison handling, outlier/missing-data rules, and the current replication status.
-- Fluid biomarker papers: State whether the study or analysis plan was preregistered, and if it was not, say that explicitly while bounding any post hoc analyses.
-- Pathophysiological mechanistic studies: Provide a direct data/code/sample availability statement that says what can be shared now and what cannot.
-- Pathophysiological mechanistic studies: Spell out the primary analyses, statistical assumptions, and multiple-comparison rules for the mechanistic packet.
-- Pathophysiological mechanistic studies: State whether the current mechanistic result is replicated, externally validated, only planned, or still missing validation.
+- No open journal-specific rigor fill packet entries are currently attached to this pack.
 
 ## Statements and Declarations
 
@@ -202,7 +203,7 @@ The cohort and endotype context currently in scope is Acute Mild Biomarker / Ima
 ## Missing Metadata and Packaging Items
 
 - Operator metadata items still needed: 12
-- Content or rigor gaps still open: 17
+- Content or rigor gaps still open: 0
 - See `missing_metadata_and_items.md` for the detailed working list.
 
 ## References

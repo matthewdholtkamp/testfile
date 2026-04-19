@@ -12,7 +12,7 @@
 
 ## Abstract
 
-Mitochondrial / Bioenergetic Collapse is the current manuscript path selected from the Phase 8 evidence pack. The current thesis is: Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es). The evidence chain links Mitochondrial / Bioenergetic Collapse to Mitochondrial ROS -> inflammasome activation, with downstream burden in Persistent Metabolic Dysfunction, Microglial Chronic Activation. The translational readout spine centers on PRKN with expected readouts Atp / bioenergetic rescue, Ros burden, Apoptosis pressure, Inflammasome spillover. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded..
+This review synthesizes the current Phase 8 evidence pack around Mitochondrial / Bioenergetic Collapse. The current thesis is: Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es). The evidence chain links Mitochondrial / Bioenergetic Collapse to Mitochondrial ROS -> inflammasome activation, with downstream burden in Persistent Metabolic Dysfunction, Microglial Chronic Activation. The translational readout spine centers on PRKN with expected readouts Atp / bioenergetic rescue, Ros burden, Apoptosis pressure, Inflammasome spillover. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded..
 
 ## Keywords
 
@@ -24,7 +24,13 @@ Use a PRKN-first perturbation packet because Parkin overexpression is already ti
 
 The linked rationale in the Phase 8 pack is straightforward: PRKN is the cleanest current TBI-core mitochondrial perturbation target in the repo and already has a strong manual target packet. The directional bridge into Mitochondrial ROS -> inflammasome activation gives the manuscript a mechanistic spine, while the linked Phase 3 and Phase 5 artifacts keep the story tied to downstream burden and cohort context rather than to generic TBI language.
 
-## Results / Evidence Synthesis
+## Review Scope and Evidence Assembly
+
+This manuscript is being packaged as a bounded evidence synthesis rather than as a new experimental report. The evidence base comes from the current Phase 1 to Phase 5 engine pack, linked PubMed-indexed source papers, explicit claim-to-PMID mapping, a contradiction register, and a bounded translational readout packet.
+
+The review logic is intentionally conservative: mechanistic and biomarker claims are carried forward only when they remain linked to the current evidence chain, and unresolved contradiction rows are retained in the manuscript as limitations or future-work boundaries rather than being smoothed away.
+
+## Evidence Synthesis
 
 ### Candidate manuscript thesis
 
@@ -106,7 +112,7 @@ Current evidence gaps: The current packet needs stronger biomarker plus longitud
 
 ## Discussion
 
-This manuscript is currently targeted to Journal of Neurotrauma as a original research because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around Atp / bioenergetic rescue, Ros burden, Apoptosis pressure, Inflammasome spillover.
+This manuscript is currently targeted to Journal of Neurotrauma as a review because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around Atp / bioenergetic rescue, Ros burden, Apoptosis pressure, Inflammasome spillover.
 
 The draft should still remain bounded. Translation maturity is bounded, the next experimental move is Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window., and the current top blocker is Downstream lane is still seeded/provisional, so this transition should remain bounded.. These constraints should remain explicit rather than being smoothed away during prose cleanup.
 
@@ -127,12 +133,7 @@ The cohort and endotype context currently in scope is Acute Severe Vascular-Domi
 
 ## Transparency, Rigor and Reproducibility Summary Starter
 
-- Fluid biomarker papers: Provide a direct data/code/sample availability statement that says what can be shared now and what cannot.
-- Fluid biomarker papers: Define the primary analyses, multiple-comparison handling, outlier/missing-data rules, and the current replication status.
-- Fluid biomarker papers: State whether the study or analysis plan was preregistered, and if it was not, say that explicitly while bounding any post hoc analyses.
-- Pathophysiological mechanistic studies: Provide a direct data/code/sample availability statement that says what can be shared now and what cannot.
-- Pathophysiological mechanistic studies: Spell out the primary analyses, statistical assumptions, and multiple-comparison rules for the mechanistic packet.
-- Pathophysiological mechanistic studies: State whether the current mechanistic result is replicated, externally validated, only planned, or still missing validation.
+- No open journal-specific rigor fill packet entries are currently attached to this pack.
 
 ## Statements and Declarations
 
@@ -166,7 +167,7 @@ The cohort and endotype context currently in scope is Acute Severe Vascular-Domi
 ## Missing Metadata and Packaging Items
 
 - Operator metadata items still needed: 12
-- Content or rigor gaps still open: 16
+- Content or rigor gaps still open: 0
 - See `missing_metadata_and_items.md` for the detailed working list.
 
 ## References

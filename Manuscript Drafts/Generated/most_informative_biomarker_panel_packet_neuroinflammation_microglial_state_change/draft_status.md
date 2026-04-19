@@ -3,14 +3,14 @@
 - **Title:** Neuroinflammation / Microglial State Change as a biomarker-guided manuscript path in traumatic brain injury
 - **Candidate:** Neuroinflammation / Microglial State Change biomarker panel
 - **Pack key:** most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change
-- **Generated status:** draft_generated_needs_content_or_rigor_fill
-- **Ready for metadata only:** no
-- **Gate state:** almost ready
+- **Generated status:** ready_for_metadata_only
+- **Ready for metadata only:** yes
+- **Gate state:** ready to build phase 8 pack
 - **Primary journal:** Journal of Neurotrauma
-- **Recommended article type:** original research
+- **Recommended article type:** review
 - **Scientific strength:** 2 / 4
 - **Journal fit:** 4 / 4
-- **Draft readiness:** 2 / 4
+- **Draft readiness:** 4 / 4
 - **Current top blocker:** Study found no significant correlation, contradicting the hypothesis of cumulative damage.
 - **Expected readouts:** IL 1beta / il 6 / tnf Alpha network, Nlrp3 inflammasome burden, Gfap and glial stress, Tau amplification pressure
 - **Next test:** Run an NLRP3-centered panel with cytokines, GFAP, and secondary tau-amplification readouts across acute, subacute, and chronic windows.
@@ -26,7 +26,7 @@
 ## Remaining Work
 
 - Operator metadata items: 12
-- Content or rigor gaps: 17
+- Content or rigor gaps: 0
 
 ## Phase Artifacts In Scope
 

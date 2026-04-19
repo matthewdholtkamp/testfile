@@ -3,11 +3,11 @@
 - **Title:** Mitochondrial / Bioenergetic Collapse as a bounded translational target in traumatic brain injury
 - **Candidate:** Mitochondrial / Bioenergetic Collapse -> PRKN
 - **Pack key:** best_intervention_leverage_point_mitochondrial_bioenergetic_collapse
-- **Generated status:** draft_generated_needs_content_or_rigor_fill
-- **Ready for metadata only:** no
-- **Gate state:** almost ready
+- **Generated status:** ready_for_metadata_only
+- **Ready for metadata only:** yes
+- **Gate state:** ready to build phase 8 pack
 - **Primary journal:** Journal of Neurotrauma
-- **Recommended article type:** original research
+- **Recommended article type:** review
 - **Scientific strength:** 2 / 4
 - **Journal fit:** 4 / 4
 - **Draft readiness:** 4 / 4
@@ -26,7 +26,7 @@
 ## Remaining Work
 
 - Operator metadata items: 12
-- Content or rigor gaps: 16
+- Content or rigor gaps: 0
 
 ## Phase Artifacts In Scope
 

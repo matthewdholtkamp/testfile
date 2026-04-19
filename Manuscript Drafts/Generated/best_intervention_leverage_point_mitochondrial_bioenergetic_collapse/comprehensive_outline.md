@@ -4,7 +4,7 @@
 
 - **Draft title:** Mitochondrial / Bioenergetic Collapse as a bounded translational target in traumatic brain injury
 - **Primary journal:** Journal of Neurotrauma
-- **Recommended article type:** original research
+- **Recommended article type:** review
 - **Core thesis:** Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es).
 
 ## Front Matter
@@ -114,4 +114,4 @@
 ## Remaining Work Before Submission Packaging
 
 - Metadata items still needed: 12
-- Content or rigor gaps still open: 16
+- Content or rigor gaps still open: 0

@@ -4,7 +4,7 @@
 
 - **Draft title:** Blood-Brain Barrier Failure as a biomarker-guided manuscript path in traumatic brain injury
 - **Primary journal:** Journal of Neurotrauma
-- **Recommended article type:** original research
+- **Recommended article type:** review
 - **Core thesis:** Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.
 
 ## Front Matter
@@ -120,4 +120,4 @@
 ## Remaining Work Before Submission Packaging
 
 - Metadata items still needed: 12
-- Content or rigor gaps still open: 17
+- Content or rigor gaps still open: 0

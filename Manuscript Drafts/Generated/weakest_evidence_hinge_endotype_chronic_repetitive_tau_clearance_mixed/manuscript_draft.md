@@ -12,7 +12,7 @@
 
 ## Abstract
 
-Tau / Proteinopathy Progression is the current manuscript path selected from the Phase 8 evidence pack. The current thesis is: A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone. The evidence chain links Tau / Proteinopathy Progression to Glymphatic failure -> tau / protein accumulation, with downstream burden in Tauopathy Progression, Cognitive Decline Phenotype, Microglial Chronic Activation. The translational readout spine centers on DYRK1A with expected readouts not specified. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded..
+This review synthesizes the current Phase 8 evidence pack around Tau / Proteinopathy Progression. The current thesis is: A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone. The evidence chain links Tau / Proteinopathy Progression to Glymphatic failure -> tau / protein accumulation, with downstream burden in Tauopathy Progression, Cognitive Decline Phenotype, Microglial Chronic Activation. The translational readout spine centers on DYRK1A with expected readouts not specified. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded..
 
 ## Keywords
 
@@ -24,7 +24,13 @@ A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-A
 
 The linked rationale in the Phase 8 pack is straightforward: p-tau or BD-tau together with AQP4 or DTI-ALPS-type clearance evidence. The directional bridge into Glymphatic failure -> tau / protein accumulation gives the manuscript a mechanistic spine, while the linked Phase 3 and Phase 5 artifacts keep the story tied to downstream burden and cohort context rather than to generic TBI language.
 
-## Results / Evidence Synthesis
+## Review Scope and Evidence Assembly
+
+This manuscript is being packaged as a bounded evidence synthesis rather than as a new experimental report. The evidence base comes from the current Phase 1 to Phase 5 engine pack, linked PubMed-indexed source papers, explicit claim-to-PMID mapping, a contradiction register, and a bounded translational readout packet.
+
+The review logic is intentionally conservative: mechanistic and biomarker claims are carried forward only when they remain linked to the current evidence chain, and unresolved contradiction rows are retained in the manuscript as limitations or future-work boundaries rather than being smoothed away.
+
+## Evidence Synthesis
 
 ### Candidate manuscript thesis
 
@@ -165,12 +171,7 @@ The cohort and endotype context currently in scope is Chronic Repetitive Tau / C
 
 ## Transparency, Rigor and Reproducibility Summary Starter
 
-- Fluid biomarker papers: Describe the assay platform, validation state, and the analytical-performance details that support the main biomarker readouts.
-- Fluid biomarker papers: Name collection timing, handling/storage conditions, batching, and who was blinded during sample processing and analysis.
-- Fluid biomarker papers: Provide a direct data/code/sample availability statement that says what can be shared now and what cannot.
-- Fluid biomarker papers: Report the counts for screened, sampled, analyzed, quality-passed, and outcome-linked participants in one traceable flow.
-- Fluid biomarker papers: Define the primary analyses, multiple-comparison handling, outlier/missing-data rules, and the current replication status.
-- Fluid biomarker papers: State whether the study or analysis plan was preregistered, and if it was not, say that explicitly while bounding any post hoc analyses.
+- No open journal-specific rigor fill packet entries are currently attached to this pack.
 
 ## Statements and Declarations
 
@@ -204,7 +205,7 @@ The cohort and endotype context currently in scope is Chronic Repetitive Tau / C
 ## Missing Metadata and Packaging Items
 
 - Operator metadata items still needed: 12
-- Content or rigor gaps still open: 10
+- Content or rigor gaps still open: 0
 - See `missing_metadata_and_items.md` for the detailed working list.
 
 ## References

@@ -3,7 +3,7 @@
 - **Primary journal:** Journal of Neurotrauma
 - **Homepage:** https://home.liebertpub.com/publications/journal-of-neurotrauma/50/overview
 - **Submission tier:** Realistic
-- **Recommended article type:** original research
+- **Recommended article type:** review
 - **Requirements snapshot verified:** yes
 
 ## Why This Journal
@@ -23,9 +23,9 @@
 
 ## Article-Type Constraints
 
-- **Word Limit:** 6000
+- **Word Limit Range:** [8000, 12000]
 - **Abstract Type:** unstructured
-- **Abstract Word Limit:** 450
+- **Abstract Word Limit:** 250
 - **Max Figures:** 10
 - **Max Tables:** 6
 

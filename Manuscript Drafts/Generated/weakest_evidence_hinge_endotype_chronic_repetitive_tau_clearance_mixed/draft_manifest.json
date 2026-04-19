@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-18T20:18:14.580357+00:00",
+  "updated_at": "2026-04-19T10:56:04.133550+00:00",
   "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
   "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
   "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
   "draft_title": "Tau / Proteinopathy Progression with DYRK1A-centered readouts in traumatic brain injury",
-  "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
-  "ready_for_metadata_only": false,
+  "generated_draft_status": "ready_for_metadata_only",
+  "ready_for_metadata_only": true,
   "primary_journal": {
     "journal": {
       "id": "journal-of-neurotrauma",
@@ -245,16 +245,16 @@
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
     "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
     "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-    "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
-    "ready_for_metadata_only": false,
+    "generated_draft_status": "ready_for_metadata_only",
+    "ready_for_metadata_only": true,
     "missing_metadata_item_count": 12,
-    "content_gap_count": 10
+    "content_gap_count": 0
   },
   "missing_metadata_summary": {
     "metadata_item_count": 12,
-    "content_gap_count": 10,
-    "task_gap_count": 3,
-    "rigor_gap_count": 7
+    "content_gap_count": 0,
+    "task_gap_count": 0,
+    "rigor_gap_count": 0
   },
   "evidence_bundle_summary": {
     "reference_count": 83,
@@ -264,9 +264,9 @@
     "section_packet_count": 5,
     "primary_journal_verified": true,
     "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-    "journal_specific_rigor_profile_count": 1,
-    "journal_specific_rigor_critical_gaps": 7,
-    "journal_specific_rigor_fill_entries": 7
+    "journal_specific_rigor_profile_count": 0,
+    "journal_specific_rigor_critical_gaps": 0,
+    "journal_specific_rigor_fill_entries": 0
   },
-  "manuscript_gate_state": "almost ready"
+  "manuscript_gate_state": "ready to build phase 8 pack"
 }

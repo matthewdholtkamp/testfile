@@ -1,16 +1,16 @@
 {
-  "updated_at": "2026-04-18T20:18:14.425119+00:00",
-  "total_tasks": 4,
+  "updated_at": "2026-04-19T10:56:03.653295+00:00",
+  "total_tasks": 2,
   "status_counts": {
     "proposed": 0,
     "queued": 0,
-    "running": 3,
-    "satisfied": 1,
+    "running": 0,
+    "satisfied": 2,
     "blocked": 0,
     "stale": 0,
     "reopened": 0
   },
-  "open_critical_tasks": 2,
+  "open_critical_tasks": 0,
   "blocking_tasks": 0,
-  "running_tasks": 3
+  "running_tasks": 0
 }

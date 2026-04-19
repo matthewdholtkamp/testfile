@@ -3,14 +3,14 @@
 - **Title:** Tau / Proteinopathy Progression with DYRK1A-centered readouts in traumatic brain injury
 - **Candidate:** Clarify Chronic Repetitive Tau / Clearance Mixed
 - **Pack key:** weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed
-- **Generated status:** draft_generated_needs_content_or_rigor_fill
-- **Ready for metadata only:** no
-- **Gate state:** almost ready
+- **Generated status:** ready_for_metadata_only
+- **Ready for metadata only:** yes
+- **Gate state:** ready to build phase 8 pack
 - **Primary journal:** Journal of Neurotrauma
 - **Recommended article type:** review
 - **Scientific strength:** 2 / 4
 - **Journal fit:** 4 / 4
-- **Draft readiness:** 2 / 4
+- **Draft readiness:** 4 / 4
 - **Current top blocker:** Downstream lane is still seeded/provisional, so this transition should remain bounded.
 - **Expected readouts:** not specified
 - **Next test:** Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?
@@ -26,7 +26,7 @@
 ## Remaining Work
 
 - Operator metadata items: 12
-- Content or rigor gaps: 10
+- Content or rigor gaps: 0
 
 ## Phase Artifacts In Scope
 

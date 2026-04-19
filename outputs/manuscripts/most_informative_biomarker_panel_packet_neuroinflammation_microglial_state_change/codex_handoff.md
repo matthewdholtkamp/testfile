@@ -5,7 +5,7 @@
 - **Primary journal:** Journal of Neurotrauma
 - **Backups:** Frontiers in Neurology, Neurocritical Care
 - **Article types in play:** review, original research, hypothesis and theory, brief report
-- **Journal-specific rigor gaps:** 14 critical gap(s)
+- **Journal-specific rigor gaps:** 0 critical gap(s)
 
 ## Drafting Rules
 

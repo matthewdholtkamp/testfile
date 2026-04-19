@@ -1,6 +1,31 @@
 {
-  "updated_at": "2026-04-18T20:18:14.584205+00:00",
+  "updated_at": "2026-04-19T10:56:04.247744+00:00",
   "ready_for_metadata_root_relative_path": "Manuscript Drafts/Ready for Metadata Only",
   "ready_for_metadata_root_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only",
-  "docx_files": []
+  "docx_files": [
+    {
+      "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
+      "title": "Blood-Brain Barrier Failure biomarker panel",
+      "docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_blood_brain_barrier_failure.docx",
+      "docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_blood_brain_barrier_failure.docx"
+    },
+    {
+      "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
+      "title": "Neuroinflammation / Microglial State Change biomarker panel",
+      "docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
+      "docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx"
+    },
+    {
+      "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
+      "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
+      "docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
+      "docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx"
+    },
+    {
+      "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
+      "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
+      "docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
+      "docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx"
+    }
+  ]
 }

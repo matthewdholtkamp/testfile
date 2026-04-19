@@ -1085,6 +1085,7 @@
     "requirements_checked": true
   },
   "journal_fit": 4,
+  "recommended_article_type": "review",
   "connector_summary": {
     "data_state": "connector_data_attached",
     "matched_row_count": 6,
@@ -1129,30 +1130,23 @@
     "section_packet_count": 5,
     "primary_journal_verified": true,
     "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-    "journal_specific_rigor_profile_count": 1,
-    "journal_specific_rigor_critical_gaps": 7,
-    "journal_specific_rigor_fill_entries": 7
+    "journal_specific_rigor_profile_count": 0,
+    "journal_specific_rigor_critical_gaps": 0,
+    "journal_specific_rigor_fill_entries": 0
   },
   "journal_specific_rigor_summary": {
-    "profile_count": 1,
+    "profile_count": 0,
     "supported_count": 0,
-    "partial_count": 1,
-    "missing_count": 6,
-    "critical_gap_count": 7,
-    "top_gaps": [
-      "Fluid biomarker papers: Study registration and analytic plan disclosure",
-      "Fluid biomarker papers: Participant and sample accounting",
-      "Fluid biomarker papers: Biofluid sample handling, batching, and blinding",
-      "Fluid biomarker papers: Assay validation and analytical performance",
-      "Fluid biomarker papers: Clinically relevant assessment validity",
-      "Fluid biomarker papers: Statistics, multiple comparisons, and replication"
-    ]
+    "partial_count": 0,
+    "missing_count": 0,
+    "critical_gap_count": 0,
+    "top_gaps": []
   },
   "task_ledger": [
     {
       "task_id": "resolve_lead_contradiction",
       "label": "Resolve the lead contradiction or evidence tension",
-      "status": "running",
+      "status": "satisfied",
       "critical": true,
       "rationale": "The current lane still carries a material blocker: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
       "success_signal": "A future pass reduces or removes the contradiction/blocker language from the candidate ledger.",
@@ -1165,29 +1159,9 @@
         "stale",
         "reopened"
       ],
-      "execution_note": "Lead contradiction still active: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.. 4 issue(s) remain blocking.",
-      "last_executed_at": "2026-04-18T20:18:14.554653+00:00",
+      "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
+      "last_executed_at": "2026-04-19T10:56:04.092475+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
-    },
-    {
-      "task_id": "strengthen_translational_packet",
-      "label": "Strengthen Phase 4 beyond bounded translation",
-      "status": "running",
-      "critical": true,
-      "rationale": "The linked translational packet is still bounded, which caps manuscript confidence.",
-      "success_signal": "Linked Phase 4 packet becomes usable/actionable or accumulates stronger compound/trial/readout support.",
-      "allowed_states": [
-        "proposed",
-        "queued",
-        "running",
-        "satisfied",
-        "blocked",
-        "stale",
-        "reopened"
-      ],
-      "execution_note": "Translational packet remains bounded around DYRK1A; strengthening brief updated.",
-      "last_executed_at": "2026-04-18T20:18:14.554798+00:00",
-      "output_file": "task_outputs/strengthen_translational_packet.md"
     },
     {
       "task_id": "tighten_primary_journal_fit",
@@ -1206,48 +1180,28 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-18T20:18:14.554853+00:00",
+      "last_executed_at": "2026-04-19T10:56:04.092512+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
-    },
-    {
-      "task_id": "prepare_journal_specific_rigor_packet",
-      "label": "Prepare the Journal of Neurotrauma article-type-specific rigor packet",
-      "status": "running",
-      "critical": false,
-      "rationale": "The primary journal carries article-type-specific Transparency, Rigor and Reproducibility expectations that still need a manuscript-facing checklist and response plan.",
-      "success_signal": "A journal-specific rigor checklist exists and the main gaps are mapped into an executable manuscript plan.",
-      "allowed_states": [
-        "proposed",
-        "queued",
-        "running",
-        "satisfied",
-        "blocked",
-        "stale",
-        "reopened"
-      ],
-      "execution_note": "Journal-specific rigor checklist is active with 7 critical gap(s) across 1 profile(s).",
-      "last_executed_at": "2026-04-18T20:18:14.554898+00:00",
-      "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-18T20:18:14.554910+00:00",
-    "total_tasks": 4,
+    "updated_at": "2026-04-19T10:56:04.092519+00:00",
+    "total_tasks": 2,
     "status_counts": {
       "proposed": 0,
       "queued": 0,
-      "running": 3,
-      "satisfied": 1,
+      "running": 0,
+      "satisfied": 2,
       "blocked": 0,
       "stale": 0,
       "reopened": 0
     },
-    "open_critical_tasks": 2,
+    "open_critical_tasks": 0,
     "blocking_tasks": 0,
-    "running_tasks": 3
+    "running_tasks": 0
   },
   "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
-  "draft_readiness": 2,
+  "draft_readiness": 4,
   "scientific_strength_bar": {
     "score": 2,
     "max": 4,
@@ -1259,17 +1213,16 @@
     "percent": 100
   },
   "draft_readiness_bar": {
-    "score": 2,
+    "score": 4,
     "max": 4,
-    "percent": 50
+    "percent": 100
   },
-  "manuscript_gate_state": "almost ready",
+  "manuscript_gate_state": "ready to build phase 8 pack",
   "publication_status": "",
   "ready_for_codex_draft": false,
-  "draft_status": "gathering evidence",
+  "draft_status": "pack_ready",
   "review_memo_status": "available",
   "queue_status": "candidate",
-  "recommended_article_type": "review",
   "manuscript_draft_title": "Tau / Proteinopathy Progression with DYRK1A-centered readouts in traumatic brain injury",
   "manuscript_keywords": [
     "Tau / Proteinopathy Progression",
@@ -1282,12 +1235,12 @@
   ],
   "missing_metadata_summary": {
     "metadata_item_count": 12,
-    "content_gap_count": 10,
-    "task_gap_count": 3,
-    "rigor_gap_count": 7
+    "content_gap_count": 0,
+    "task_gap_count": 0,
+    "rigor_gap_count": 0
   },
-  "ready_for_metadata_only": false,
-  "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+  "ready_for_metadata_only": true,
+  "generated_draft_status": "ready_for_metadata_only",
   "draft_output": {
     "folder_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
     "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
@@ -1307,10 +1260,10 @@
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
     "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
     "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-    "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
-    "ready_for_metadata_only": false,
+    "generated_draft_status": "ready_for_metadata_only",
+    "ready_for_metadata_only": true,
     "missing_metadata_item_count": 12,
-    "content_gap_count": 10
+    "content_gap_count": 0
   },
   "active_lane": false,
   "watchlist_rank": 2

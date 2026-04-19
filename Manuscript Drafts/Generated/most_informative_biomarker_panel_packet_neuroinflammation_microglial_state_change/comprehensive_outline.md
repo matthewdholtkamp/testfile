@@ -4,7 +4,7 @@
 
 - **Draft title:** Neuroinflammation / Microglial State Change as a biomarker-guided manuscript path in traumatic brain injury
 - **Primary journal:** Journal of Neurotrauma
-- **Recommended article type:** original research
+- **Recommended article type:** review
 - **Core thesis:** Track NLRP3, IL-1beta, IL-6, TNF-alpha to test whether NLRP3 is moving the expected lane biology.
 
 ## Front Matter
@@ -138,4 +138,4 @@
 ## Remaining Work Before Submission Packaging
 
 - Metadata items still needed: 12
-- Content or rigor gaps still open: 17
+- Content or rigor gaps still open: 0

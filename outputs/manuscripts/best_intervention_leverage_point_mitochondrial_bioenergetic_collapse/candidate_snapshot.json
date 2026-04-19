@@ -1092,6 +1092,7 @@
     "requirements_checked": true
   },
   "journal_fit": 4,
+  "recommended_article_type": "review",
   "connector_summary": {
     "data_state": "connector_data_attached",
     "matched_row_count": 6,
@@ -1136,46 +1137,19 @@
     "section_packet_count": 5,
     "primary_journal_verified": true,
     "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-    "journal_specific_rigor_profile_count": 2,
-    "journal_specific_rigor_critical_gaps": 14,
-    "journal_specific_rigor_fill_entries": 14
+    "journal_specific_rigor_profile_count": 0,
+    "journal_specific_rigor_critical_gaps": 0,
+    "journal_specific_rigor_fill_entries": 0
   },
   "journal_specific_rigor_summary": {
-    "profile_count": 2,
+    "profile_count": 0,
     "supported_count": 0,
-    "partial_count": 6,
-    "missing_count": 8,
-    "critical_gap_count": 14,
-    "top_gaps": [
-      "Fluid biomarker papers: Study registration and analytic plan disclosure",
-      "Fluid biomarker papers: Participant and sample accounting",
-      "Fluid biomarker papers: Biofluid sample handling, batching, and blinding",
-      "Fluid biomarker papers: Assay validation and analytical performance",
-      "Fluid biomarker papers: Clinically relevant assessment validity",
-      "Fluid biomarker papers: Statistics, multiple comparisons, and replication"
-    ]
+    "partial_count": 0,
+    "missing_count": 0,
+    "critical_gap_count": 0,
+    "top_gaps": []
   },
   "task_ledger": [
-    {
-      "task_id": "strengthen_translational_packet",
-      "label": "Strengthen Phase 4 beyond bounded translation",
-      "status": "running",
-      "critical": true,
-      "rationale": "The linked translational packet is still bounded, which caps manuscript confidence.",
-      "success_signal": "Linked Phase 4 packet becomes usable/actionable or accumulates stronger compound/trial/readout support.",
-      "allowed_states": [
-        "proposed",
-        "queued",
-        "running",
-        "satisfied",
-        "blocked",
-        "stale",
-        "reopened"
-      ],
-      "execution_note": "Translational packet remains bounded around PRKN; strengthening brief updated.",
-      "last_executed_at": "2026-04-18T20:18:14.456814+00:00",
-      "output_file": "task_outputs/strengthen_translational_packet.md"
-    },
     {
       "task_id": "tighten_primary_journal_fit",
       "label": "Check article-type and evidence fit for Journal of Neurotrauma",
@@ -1193,45 +1167,25 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-18T20:18:14.456856+00:00",
+      "last_executed_at": "2026-04-19T10:56:03.972564+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
-    },
-    {
-      "task_id": "prepare_journal_specific_rigor_packet",
-      "label": "Prepare the Journal of Neurotrauma article-type-specific rigor packet",
-      "status": "running",
-      "critical": false,
-      "rationale": "The primary journal carries article-type-specific Transparency, Rigor and Reproducibility expectations that still need a manuscript-facing checklist and response plan.",
-      "success_signal": "A journal-specific rigor checklist exists and the main gaps are mapped into an executable manuscript plan.",
-      "allowed_states": [
-        "proposed",
-        "queued",
-        "running",
-        "satisfied",
-        "blocked",
-        "stale",
-        "reopened"
-      ],
-      "execution_note": "Journal-specific rigor checklist is active with 14 critical gap(s) across 2 profile(s).",
-      "last_executed_at": "2026-04-18T20:18:14.456892+00:00",
-      "output_file": "task_outputs/prepare_journal_specific_rigor_packet.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-18T20:18:14.456901+00:00",
-    "total_tasks": 3,
+    "updated_at": "2026-04-19T10:56:03.972578+00:00",
+    "total_tasks": 1,
     "status_counts": {
       "proposed": 0,
       "queued": 0,
-      "running": 2,
+      "running": 0,
       "satisfied": 1,
       "blocked": 0,
       "stale": 0,
       "reopened": 0
     },
-    "open_critical_tasks": 1,
+    "open_critical_tasks": 0,
     "blocking_tasks": 0,
-    "running_tasks": 2
+    "running_tasks": 0
   },
   "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
   "draft_readiness": 4,
@@ -1250,13 +1204,12 @@
     "max": 4,
     "percent": 100
   },
-  "manuscript_gate_state": "almost ready",
+  "manuscript_gate_state": "ready to build phase 8 pack",
   "publication_status": "",
   "ready_for_codex_draft": false,
-  "draft_status": "gathering evidence",
+  "draft_status": "pack_ready",
   "review_memo_status": "available",
   "queue_status": "candidate",
-  "recommended_article_type": "original research",
   "manuscript_draft_title": "Mitochondrial / Bioenergetic Collapse as a bounded translational target in traumatic brain injury",
   "manuscript_keywords": [
     "Mitochondrial / Bioenergetic Collapse",
@@ -1270,12 +1223,12 @@
   ],
   "missing_metadata_summary": {
     "metadata_item_count": 12,
-    "content_gap_count": 16,
-    "task_gap_count": 2,
-    "rigor_gap_count": 14
+    "content_gap_count": 0,
+    "task_gap_count": 0,
+    "rigor_gap_count": 0
   },
-  "ready_for_metadata_only": false,
-  "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
+  "ready_for_metadata_only": true,
+  "generated_draft_status": "ready_for_metadata_only",
   "draft_output": {
     "folder_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
     "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
@@ -1295,11 +1248,11 @@
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
     "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
     "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
-    "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
-    "ready_for_metadata_only": false,
+    "generated_draft_status": "ready_for_metadata_only",
+    "ready_for_metadata_only": true,
     "missing_metadata_item_count": 12,
-    "content_gap_count": 16
+    "content_gap_count": 0
   },
-  "active_lane": true,
-  "watchlist_rank": null
+  "active_lane": false,
+  "watchlist_rank": 1
 }

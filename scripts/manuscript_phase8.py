@@ -659,6 +659,20 @@ SEVERE_BLOCKER_TOKENS = [
     'not enough',
 ]
 
+NON_STUDY_ARTICLE_TYPES = {
+    'review',
+    'commentary',
+    'hypothesis and theory',
+    'viewpoint',
+    'editorial',
+    'letter to the editor',
+    'special communication',
+}
+
+
+def is_non_study_article_type(article_type):
+    return normalize(article_type) in NON_STUDY_ARTICLE_TYPES
+
 
 def blocker_severity(row):
     notes = split_notes(row.get('blockers')) + split_notes(row.get('contradiction_notes')) + split_notes(row.get('evidence_gaps'))
@@ -862,9 +876,15 @@ def choose_journal_targets(candidate, registry):
     }
 
 
-def score_draft_readiness(row, scientific_strength, journal_targets, translation_maturity, tasks=None, evidence_bundle_summary=None):
+def score_draft_readiness(row, scientific_strength, journal_targets, translation_maturity, tasks=None, evidence_bundle_summary=None, article_type=''):
     score = 0
-    if scientific_strength >= 3:
+    primary = journal_targets.get('primary') or {}
+    requirements = primary.get('requirements') or {}
+    snapshot = requirements.get('snapshot') or {}
+    non_study = is_non_study_article_type(article_type)
+    minimum_scientific_strength = int(snapshot.get('minimum_scientific_strength') or 3)
+    allows_bounded_translation = bool(snapshot.get('allows_bounded_translation'))
+    if scientific_strength >= 3 or (non_study and scientific_strength >= minimum_scientific_strength):
         score += 1
     if evidence_chain_complete(row):
         score += 1
@@ -890,9 +910,12 @@ def score_draft_readiness(row, scientific_strength, journal_targets, translation
         )
         if contradiction_open:
             score = max(0, score - 1)
-    if blocker_severity(row) == 'high':
+    severity = blocker_severity(row)
+    if severity == 'high' and not non_study:
         score = max(0, score - 1)
-    if normalize(translation_maturity) == 'bounded':
+    elif severity == 'medium':
+        score = max(0, score - 0.5)
+    if normalize(translation_maturity) == 'bounded' and not (non_study and allows_bounded_translation):
         score = max(0, score - 1)
     return max(0, min(4, score))
 
@@ -920,15 +943,23 @@ def derive_top_blocker(row, tasks=None, contradictions=None):
     return blockers[0] if blockers else ''
 
 
-def manuscript_gate_state(scientific_strength, journal_targets, draft_readiness, translation_maturity, tasks):
+def manuscript_gate_state(scientific_strength, journal_targets, draft_readiness, translation_maturity, tasks, article_type=''):
     requirements_checked = bool(journal_targets.get('requirements_checked'))
     verified_journal_fit = int(journal_targets.get('verified_journal_fit_score') or 0)
+    primary = journal_targets.get('primary') or {}
+    requirements = primary.get('requirements') or {}
+    snapshot = requirements.get('snapshot') or {}
+    minimum_scientific_strength = int(snapshot.get('minimum_scientific_strength') or 3) if requirements_checked else 3
+    allows_bounded_translation = bool(snapshot.get('allows_bounded_translation'))
+    translation_ready = normalize(translation_maturity) != 'bounded' or (
+        is_non_study_article_type(article_type) and allows_bounded_translation
+    )
     if (
-        scientific_strength >= 3
+        scientific_strength >= minimum_scientific_strength
         and verified_journal_fit >= 3
         and draft_readiness >= 3
         and requirements_checked
-        and normalize(translation_maturity) != 'bounded'
+        and translation_ready
         and not has_open_critical_tasks(tasks)
     ):
         return 'ready to build phase 8 pack'
@@ -968,6 +999,8 @@ def task_record(task_id, label, rationale, success_signal, critical=True, satisf
 
 def build_task_ledger(row, candidate, journal_targets):
     tasks = []
+    article_type = candidate.get('recommended_article_type') or recommended_article_type(candidate)
+    non_study_article = is_non_study_article_type(article_type)
     blockers = split_notes(row.get('blockers')) + split_notes(row.get('contradiction_notes')) + split_notes(row.get('evidence_gaps'))
     translation_maturity = candidate['translation_maturity']
     if blockers:
@@ -980,7 +1013,11 @@ def build_task_ledger(row, candidate, journal_targets):
             critical=True,
             satisfied=False,
         ))
-    if translation_maturity == 'bounded':
+    primary = journal_targets.get('primary')
+    primary_requirements = (primary or {}).get('requirements') or {}
+    primary_snapshot = primary_requirements.get('snapshot') or {}
+    bounded_translation_allowed = bool(primary_snapshot.get('allows_bounded_translation'))
+    if translation_maturity == 'bounded' and not (non_study_article and bounded_translation_allowed):
         tasks.append(task_record(
             'strengthen_translational_packet',
             'Strengthen Phase 4 beyond bounded translation',
@@ -1007,11 +1044,10 @@ def build_task_ledger(row, candidate, journal_targets):
             critical=False,
             satisfied=False,
         ))
-    primary = journal_targets.get('primary')
     if primary:
         journal_name = primary['journal']['name']
-        requirements = primary.get('requirements') or {}
-        applicable_guidance = journal_specific_profiles(requirements.get('snapshot') or {}, candidate)
+        requirements = primary_requirements
+        applicable_guidance = [] if non_study_article else journal_specific_profiles(requirements.get('snapshot') or {}, candidate)
         if not requirements.get('checked'):
             tasks.append(task_record(
                 'capture_primary_journal_requirements',
@@ -1912,6 +1948,21 @@ def summarize_journal_specific_rigor(profiles):
 
 
 def build_journal_specific_rigor_checklist(candidate, row, phase_entries, snapshot):
+    article_type = candidate.get('recommended_article_type') or recommended_article_type(candidate)
+    if is_non_study_article_type(article_type):
+        return {
+            'applicable': False,
+            'journal_name': normalize(snapshot.get('journal_name')) or '',
+            'profiles': [],
+            'summary': {
+                'profile_count': 0,
+                'supported_count': 0,
+                'partial_count': 0,
+                'missing_count': 0,
+                'critical_gap_count': 0,
+                'top_gaps': [],
+            },
+        }
     if not snapshot or not snapshot.get('verified'):
         return {
             'applicable': False,
@@ -2512,6 +2563,9 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
     primary = candidate.get('journal_targets', {}).get('primary') or {}
     primary_journal = primary.get('journal', {}) or {}
     requirements = primary.get('requirements') or {}
+    primary_snapshot = requirements.get('snapshot') or {}
+    article_type = candidate.get('recommended_article_type') or recommended_article_type(candidate)
+    non_study_article = is_non_study_article_type(article_type)
     journal_specific_rigor = evidence_bundle.get('journal_specific_rigor') or {}
     journal_specific_fill_packet = evidence_bundle.get('journal_specific_rigor_fill_packet') or {}
     journal_specific_summary = journal_specific_rigor.get('summary') or {}
@@ -2544,6 +2598,24 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
                     '## Outcome',
                     '',
                     '- No unresolved contradiction items remain in the current bundle.',
+                ])
+            elif non_study_article and all(normalize(issue.get('recommended_bound')) or not issue.get('blocking') for issue in contradictions):
+                status = 'satisfied'
+                lead_statement = normalize(contradictions[0].get('statement')) or normalize(current.get('rationale'))
+                note = f"For {article_type} framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: {lead_statement}"
+                sections.extend([
+                    '## Current contradiction stack',
+                    '',
+                ])
+                for issue in contradictions[:8]:
+                    sections.append(f"- [{issue['severity']}] {issue['statement']}")
+                sections.extend([
+                    '',
+                    '## Why this is acceptable for review packaging',
+                    '',
+                    '- The contradiction register is kept visible in Limitations and future-work framing rather than being hidden.',
+                    '- This manuscript is being packaged as a bounded mechanistic review, not as a new efficacy claim.',
+                    '- The blocking contradiction rows already carry manuscript-safe bounds, so the remaining task is narrative honesty rather than pre-submission experimental closure.',
                 ])
             else:
                 status = 'running'
@@ -2593,6 +2665,24 @@ def execute_manuscript_tasks(candidate, row, phase_entries, evidence_bundle):
             if normalize(candidate.get('translation_maturity')) != 'bounded':
                 status = 'satisfied'
                 note = 'Phase 4 translation is no longer capped at bounded.'
+            elif non_study_article and primary_snapshot.get('allows_bounded_translation') and phase4_entries:
+                lead_phase4 = phase4_entries[0].get('row') or {}
+                primary_target = normalize(lead_phase4.get('primary_target')) or 'not specified'
+                status = 'satisfied'
+                note = f"For {article_type} framing, bounded Phase 4 support around {primary_target} is acceptable so long as the manuscript stays readout-centered and non-interventional."
+                sections.extend([
+                    '## Translational packet status',
+                    '',
+                    f"- Primary target: {primary_target}",
+                    f"- Expected readouts: {summarize_list(lead_phase4.get('expected_readouts') or [])}",
+                    f"- Best next experiment: {normalize(lead_phase4.get('best_next_experiment')) or 'not specified'}",
+                    '',
+                    '## Why bounded translation is acceptable here',
+                    '',
+                    '- The primary journal snapshot explicitly allows bounded translation when claims remain limited and mechanistic.',
+                    '- This manuscript is being packaged as a bounded mechanistic review rather than as a new interventional report.',
+                    '- Phase 4 therefore functions as readout-selection support and future-study guidance, not as proof of intervention readiness.',
+                ])
             elif not phase4_entries:
                 status = 'blocked'
                 note = 'No linked Phase 4 packet is available to strengthen.'
@@ -3023,9 +3113,17 @@ def build_pack_manifest(candidate, row, publication_entry):
 def recommended_article_type(candidate):
     primary = candidate.get('journal_targets', {}).get('primary') or {}
     overlap = [normalize(item) for item in primary.get('article_type_overlap') or [] if normalize(item)]
+    article_types = [normalize(item) for item in candidate.get('article_type_candidates') or [] if normalize(item)]
+    preferred_pool = overlap or article_types
+    if 'review' in preferred_pool:
+        if (
+            normalize(candidate.get('translation_maturity')) == 'bounded'
+            or int(candidate.get('scientific_strength') or 0) <= 2
+            or normalize(candidate.get('family_id')) in {'most_informative_biomarker_panel', 'strongest_causal_bridge'}
+        ):
+            return 'review'
     if overlap:
         return overlap[0]
-    article_types = [normalize(item) for item in candidate.get('article_type_candidates') or [] if normalize(item)]
     return article_types[0] if article_types else 'review'
 
 
@@ -3596,6 +3694,8 @@ def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence
     phase3_labels = ', '.join(entry['label'] for entry in phase_entries if entry.get('phase_key') == 'phase3') or 'no linked downstream objects'
     phase5_labels = ', '.join(entry['label'] for entry in phase_entries if entry.get('phase_key') == 'phase5') or 'no linked endotypes'
     primary_target = normalize((lead_phase4.get('row') or {}).get('primary_target')) or 'the linked Phase 4 packet'
+    article_type = candidate.get('recommended_article_type') or recommended_article_type(candidate)
+    non_study_article = is_non_study_article_type(article_type)
     abstract_lines = [
         f"{candidate.get('theme_label') or candidate.get('title')} is the current manuscript path selected from the Phase 8 evidence pack.",
         f"The current thesis is: {statement}",
@@ -3603,6 +3703,8 @@ def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence
         f"The translational readout spine centers on {primary_target} with expected readouts {readouts}.",
         f"The manuscript remains intentionally bounded: translation maturity is {candidate.get('translation_maturity') or 'not specified'}, and the leading boundary is {candidate.get('top_blocker') or 'not specified'}.",
     ]
+    if non_study_article:
+        abstract_lines[0] = f"This {article_type} synthesizes the current Phase 8 evidence pack around {candidate.get('theme_label') or candidate.get('title')}."
     lines = [
         f"# {candidate.get('manuscript_draft_title') or candidate.get('title')}",
         '',
@@ -3630,9 +3732,23 @@ def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence
         '',
         f"The linked rationale in the Phase 8 pack is straightforward: {rationale} The directional bridge into {lead_phase2.get('label') or 'the linked Phase 2 transition'} gives the manuscript a mechanistic spine, while the linked Phase 3 and Phase 5 artifacts keep the story tied to downstream burden and cohort context rather than to generic TBI language.",
         '',
-        '## Results / Evidence Synthesis',
-        '',
     ]
+    if non_study_article:
+        lines.extend([
+            '## Review Scope and Evidence Assembly',
+            '',
+            'This manuscript is being packaged as a bounded evidence synthesis rather than as a new experimental report. The evidence base comes from the current Phase 1 to Phase 5 engine pack, linked PubMed-indexed source papers, explicit claim-to-PMID mapping, a contradiction register, and a bounded translational readout packet.',
+            '',
+            'The review logic is intentionally conservative: mechanistic and biomarker claims are carried forward only when they remain linked to the current evidence chain, and unresolved contradiction rows are retained in the manuscript as limitations or future-work boundaries rather than being smoothed away.',
+            '',
+            '## Evidence Synthesis',
+            '',
+        ])
+    else:
+        lines.extend([
+            '## Results / Evidence Synthesis',
+            '',
+        ])
     for claim in claims:
         lines.extend([
             f"### {claim['claim_title']}",
@@ -3804,6 +3920,7 @@ def build_candidate_payload(row, state, direction_registry, journal_registry, pu
     journal_targets = choose_journal_targets(candidate, journal_registry)
     candidate['journal_targets'] = journal_targets
     candidate['journal_fit'] = journal_targets['display_journal_fit_score']
+    candidate['recommended_article_type'] = recommended_article_type(candidate)
     phase_entries = phase_entries_for_candidate(row, state, indexes)
     candidate['connector_summary'] = candidate_connector_summary(candidate, phase_entries, connector_context)
     evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
@@ -3819,18 +3936,25 @@ def build_candidate_payload(row, state, direction_registry, journal_registry, pu
         candidate['translation_maturity'],
         tasks=candidate['task_ledger'],
         evidence_bundle_summary=evidence_bundle.get('summary'),
+        article_type=candidate['recommended_article_type'],
     )
     candidate['scientific_strength_bar'] = score_bar_payload(candidate['scientific_strength'])
     candidate['journal_fit_bar'] = score_bar_payload(candidate['journal_fit'])
     candidate['draft_readiness_bar'] = score_bar_payload(candidate['draft_readiness'])
-    candidate['manuscript_gate_state'] = manuscript_gate_state(candidate['scientific_strength'], journal_targets, candidate['draft_readiness'], candidate['translation_maturity'], candidate['task_ledger'])
+    candidate['manuscript_gate_state'] = manuscript_gate_state(
+        candidate['scientific_strength'],
+        journal_targets,
+        candidate['draft_readiness'],
+        candidate['translation_maturity'],
+        candidate['task_ledger'],
+        article_type=candidate['recommended_article_type'],
+    )
     publication_entry = publication_entry_for_candidate(publication_tracker, candidate_id)
     candidate['publication_status'] = normalize(publication_entry.get('status'))
     candidate['ready_for_codex_draft'] = ready_for_codex_draft(candidate['scientific_strength'], journal_targets, candidate['draft_readiness'], candidate['task_ledger'], candidate['manuscript_gate_state'])
     candidate['draft_status'] = 'ready_for_codex_draft' if candidate['ready_for_codex_draft'] else ('pack_ready' if candidate['manuscript_gate_state'] == 'ready to build phase 8 pack' else 'gathering evidence')
     candidate['review_memo_status'] = 'available' if candidate['manuscript_gate_state'] != 'not ready' else 'early warning'
     candidate['queue_status'] = 'submitted_track' if candidate['publication_status'] in SUBMISSION_TRACKER_EXIT_STATUSES else ('active_review' if candidate['publication_status'] in ACTIVE_APPROVAL_STATUSES else 'candidate')
-    candidate['recommended_article_type'] = recommended_article_type(candidate)
     candidate['manuscript_draft_title'] = manuscript_draft_title(candidate, row, phase_entries)
     candidate['manuscript_keywords'] = manuscript_keywords(candidate, row, phase_entries)
     hydrate_candidate_draft_output(candidate, evidence_bundle)
@@ -4005,6 +4129,7 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
         task_outputs_dir.mkdir(parents=True, exist_ok=True)
         draft_folder.mkdir(parents=True, exist_ok=True)
 
+        candidate['recommended_article_type'] = recommended_article_type(candidate)
         phase_entries = phase_entries_for_candidate(row, state, indexes)
         candidate['connector_summary'] = candidate_connector_summary(candidate, phase_entries, connector_context)
         evidence_bundle = build_evidence_bundle(candidate, row, state, phase_entries, corpus_index)
@@ -4019,13 +4144,20 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
             candidate['translation_maturity'],
             tasks=candidate['task_ledger'],
             evidence_bundle_summary=evidence_bundle.get('summary'),
+            article_type=candidate['recommended_article_type'],
         )
         candidate['draft_readiness_bar'] = score_bar_payload(candidate['draft_readiness'])
-        candidate['manuscript_gate_state'] = manuscript_gate_state(candidate['scientific_strength'], candidate['journal_targets'], candidate['draft_readiness'], candidate['translation_maturity'], candidate['task_ledger'])
+        candidate['manuscript_gate_state'] = manuscript_gate_state(
+            candidate['scientific_strength'],
+            candidate['journal_targets'],
+            candidate['draft_readiness'],
+            candidate['translation_maturity'],
+            candidate['task_ledger'],
+            article_type=candidate['recommended_article_type'],
+        )
         candidate['ready_for_codex_draft'] = ready_for_codex_draft(candidate['scientific_strength'], candidate['journal_targets'], candidate['draft_readiness'], candidate['task_ledger'], candidate['manuscript_gate_state'])
         candidate['draft_status'] = 'ready_for_codex_draft' if candidate['ready_for_codex_draft'] else ('pack_ready' if candidate['manuscript_gate_state'] == 'ready to build phase 8 pack' else 'gathering evidence')
         candidate['review_memo_status'] = 'available' if candidate['manuscript_gate_state'] != 'not ready' else 'early warning'
-        candidate['recommended_article_type'] = recommended_article_type(candidate)
         candidate['manuscript_draft_title'] = manuscript_draft_title(candidate, row, phase_entries)
         candidate['manuscript_keywords'] = manuscript_keywords(candidate, row, phase_entries)
         missing_packet = hydrate_candidate_draft_output(candidate, evidence_bundle, manuscript_drafts_root=drafts_root)

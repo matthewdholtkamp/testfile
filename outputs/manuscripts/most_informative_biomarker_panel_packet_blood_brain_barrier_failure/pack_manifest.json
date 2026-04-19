@@ -1,18 +1,18 @@
 {
-  "updated_at": "2026-04-18T20:18:14.426533+00:00",
+  "updated_at": "2026-04-19T10:56:03.654167+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
   "title": "Blood-Brain Barrier Failure biomarker panel",
   "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
   "candidate_title": "Blood-Brain Barrier Failure biomarker panel",
   "top_blocker": "Downstream lane is still seeded/provisional, so this transition should remain bounded.",
   "theme_key": "blood_brain_barrier_failure",
-  "manuscript_gate_state": "almost ready",
+  "manuscript_gate_state": "ready to build phase 8 pack",
   "scientific_strength": 2,
   "journal_fit": 4,
   "journal_shortlist_score": 2,
   "journal_verified_fit_score": 4,
   "journal_requirements_checked": true,
-  "draft_readiness": 3,
+  "draft_readiness": 4,
   "active_lane": true,
   "watchlist_rank": null,
   "publication_status": "",
@@ -330,9 +330,9 @@
     "section_packet_count": 5,
     "primary_journal_verified": true,
     "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-    "journal_specific_rigor_profile_count": 2,
-    "journal_specific_rigor_critical_gaps": 14,
-    "journal_specific_rigor_fill_entries": 14
+    "journal_specific_rigor_profile_count": 0,
+    "journal_specific_rigor_critical_gaps": 0,
+    "journal_specific_rigor_fill_entries": 0
   },
   "connector_summary": {
     "data_state": "connector_data_attached",
@@ -371,38 +371,31 @@
     }
   },
   "journal_specific_rigor": {
-    "profile_count": 2,
+    "profile_count": 0,
     "supported_count": 0,
-    "partial_count": 6,
-    "missing_count": 8,
-    "critical_gap_count": 14,
-    "top_gaps": [
-      "Fluid biomarker papers: Study registration and analytic plan disclosure",
-      "Fluid biomarker papers: Participant and sample accounting",
-      "Fluid biomarker papers: Biofluid sample handling, batching, and blinding",
-      "Fluid biomarker papers: Assay validation and analytical performance",
-      "Fluid biomarker papers: Clinically relevant assessment validity",
-      "Fluid biomarker papers: Statistics, multiple comparisons, and replication"
-    ]
+    "partial_count": 0,
+    "missing_count": 0,
+    "critical_gap_count": 0,
+    "top_gaps": []
   },
   "journal_specific_rigor_fill_packet": {
-    "open_entry_count": 14
+    "open_entry_count": 0
   },
   "task_execution": {
-    "updated_at": "2026-04-18T20:18:14.425338+00:00",
-    "total_tasks": 4,
+    "updated_at": "2026-04-19T10:56:03.653295+00:00",
+    "total_tasks": 2,
     "status_counts": {
       "proposed": 0,
       "queued": 0,
-      "running": 3,
-      "satisfied": 1,
+      "running": 0,
+      "satisfied": 2,
       "blocked": 0,
       "stale": 0,
       "reopened": 0
     },
-    "open_critical_tasks": 2,
+    "open_critical_tasks": 0,
     "blocking_tasks": 0,
-    "running_tasks": 3
+    "running_tasks": 0
   },
   "improvement_window": {
     "default_pass_target": 3,

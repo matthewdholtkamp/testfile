@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-18T20:18:14.544252+00:00",
+  "updated_at": "2026-04-19T10:56:03.879137+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
   "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
   "title": "Neuroinflammation / Microglial State Change biomarker panel",
   "draft_title": "Neuroinflammation / Microglial State Change as a biomarker-guided manuscript path in traumatic brain injury",
-  "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
-  "ready_for_metadata_only": false,
+  "generated_draft_status": "ready_for_metadata_only",
+  "ready_for_metadata_only": true,
   "primary_journal": {
     "journal": {
       "id": "journal-of-neurotrauma",
@@ -227,7 +227,7 @@
       }
     }
   },
-  "recommended_article_type": "original research",
+  "recommended_article_type": "review",
   "draft_output": {
     "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
     "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
@@ -247,16 +247,16 @@
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
     "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
     "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
-    "generated_draft_status": "draft_generated_needs_content_or_rigor_fill",
-    "ready_for_metadata_only": false,
+    "generated_draft_status": "ready_for_metadata_only",
+    "ready_for_metadata_only": true,
     "missing_metadata_item_count": 12,
-    "content_gap_count": 17
+    "content_gap_count": 0
   },
   "missing_metadata_summary": {
     "metadata_item_count": 12,
-    "content_gap_count": 17,
-    "task_gap_count": 3,
-    "rigor_gap_count": 14
+    "content_gap_count": 0,
+    "task_gap_count": 0,
+    "rigor_gap_count": 0
   },
   "evidence_bundle_summary": {
     "reference_count": 60,
@@ -266,9 +266,9 @@
     "section_packet_count": 5,
     "primary_journal_verified": true,
     "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-03-16_100622.csv",
-    "journal_specific_rigor_profile_count": 2,
-    "journal_specific_rigor_critical_gaps": 14,
-    "journal_specific_rigor_fill_entries": 14
+    "journal_specific_rigor_profile_count": 0,
+    "journal_specific_rigor_critical_gaps": 0,
+    "journal_specific_rigor_fill_entries": 0
   },
-  "manuscript_gate_state": "almost ready"
+  "manuscript_gate_state": "ready to build phase 8 pack"
 }

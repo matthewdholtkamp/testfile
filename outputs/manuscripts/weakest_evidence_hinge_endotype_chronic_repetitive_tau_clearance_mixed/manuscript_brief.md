@@ -2,10 +2,10 @@
 
 - **Candidate:** Clarify Chronic Repetitive Tau / Clearance Mixed
 - **Theme:** Tau / Proteinopathy Progression
-- **Gate state:** almost ready
+- **Gate state:** ready to build phase 8 pack
 - **Scientific strength:** 2 / 4
 - **Journal fit:** 4 / 4
-- **Draft readiness:** 2 / 4
+- **Draft readiness:** 4 / 4
 - **Current path:** No
 - **Connector data state:** Connector Data Attached
 - **Connector sources:** Open Targets
@@ -15,7 +15,7 @@
 - **Statement:** A chronic repetitive tau/clearance endotype may separate better by AQP4 or DTI-ALPS plus tau variants than by inflammation markers alone.
 - **Readouts:** not specified
 - **Best next test:** Do chronic repetitive cohorts separate more cleanly by clearance failure plus tau than by inflammatory burden alone?
-- **Journal-specific rigor gaps:** 7 critical gap(s)
+- **Journal-specific rigor gaps:** 0 critical gap(s)
 
 ## Improvement Window
 

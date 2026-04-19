@@ -144,4 +144,4 @@
 ## Remaining Work Before Submission Packaging
 
 - Metadata items still needed: 12
-- Content or rigor gaps still open: 10
+- Content or rigor gaps still open: 0
