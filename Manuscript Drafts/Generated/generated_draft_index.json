@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-19T11:08:17.111860+00:00",
+  "updated_at": "2026-04-19T12:08:37.900555+00:00",
   "summary": {
     "active_count": 2,
     "watchlist_count": 2,
@@ -161,11 +161,11 @@
   },
   "draft_manifests": [
     {
-      "updated_at": "2026-04-19T11:08:16.947776+00:00",
+      "updated_at": "2026-04-19T12:08:37.604683+00:00",
       "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
       "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
       "title": "Blood-Brain Barrier Failure biomarker panel",
-      "draft_title": "Blood-Brain Barrier Failure as a biomarker-guided manuscript path in traumatic brain injury",
+      "draft_title": "Blood-Brain Barrier Dysfunction as an Early Vascular Gate Linking Traumatic Brain Injury to Downstream Neuroinflammation",
       "generated_draft_status": "ready_for_metadata_only",
       "ready_for_metadata_only": true,
       "primary_journal": {
@@ -435,7 +435,7 @@
       "manuscript_gate_state": "ready to build phase 8 pack"
     },
     {
-      "updated_at": "2026-04-19T11:08:17.078348+00:00",
+      "updated_at": "2026-04-19T12:08:37.790242+00:00",
       "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
       "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
       "title": "Neuroinflammation / Microglial State Change biomarker panel",
@@ -709,7 +709,7 @@
       "manuscript_gate_state": "ready to build phase 8 pack"
     },
     {
-      "updated_at": "2026-04-19T11:08:17.093703+00:00",
+      "updated_at": "2026-04-19T12:08:37.833461+00:00",
       "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
       "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
       "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
@@ -983,7 +983,7 @@
       "manuscript_gate_state": "ready to build phase 8 pack"
     },
     {
-      "updated_at": "2026-04-19T11:08:17.111077+00:00",
+      "updated_at": "2026-04-19T12:08:37.898643+00:00",
       "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
       "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
       "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",

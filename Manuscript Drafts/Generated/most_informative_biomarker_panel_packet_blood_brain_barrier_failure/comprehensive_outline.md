@@ -2,7 +2,7 @@
 
 ## Positioning
 
-- **Draft title:** Blood-Brain Barrier Failure as a biomarker-guided manuscript path in traumatic brain injury
+- **Draft title:** Blood-Brain Barrier Dysfunction as an Early Vascular Gate Linking Traumatic Brain Injury to Downstream Neuroinflammation
 - **Primary journal:** Journal of Neurotrauma
 - **Recommended article type:** review
 - **Core thesis:** Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology.

@@ -4,6 +4,8 @@ import os
 import re
 import shutil
 import ast
+import urllib.parse
+import urllib.request
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
@@ -18,6 +20,7 @@ JOURNAL_REGISTRY_PATH = REPO_ROOT / 'config' / 'manuscript_journal_registry.json
 JOURNAL_REQUIREMENTS_DIR = REPO_ROOT / 'config' / 'journal_requirements'
 MANUSCRIPT_QUEUE_STATE_PATH = STATE_DIR / 'manuscript_queue.json'
 PUBLICATION_TRACKER_STATE_PATH = STATE_DIR / 'publication_tracker.json'
+PUBMED_REFERENCE_CACHE_PATH = STATE_DIR / 'pubmed_reference_cache.json'
 READY_FOR_CODEX_FILENAME = 'ready_for_codex_draft.json'
 GENERATED_DRAFT_INDEX_FILENAME = 'generated_draft_index.json'
 GENERATED_DRAFT_MANIFEST_FILENAME = 'draft_manifest.json'
@@ -329,6 +332,29 @@ def default_publication_tracker():
     }
 
 
+def default_pubmed_reference_cache():
+    return {
+        'updated_at': '',
+        'records': {},
+    }
+
+
+def load_pubmed_reference_cache(path=PUBMED_REFERENCE_CACHE_PATH):
+    cache = read_json(path, default_pubmed_reference_cache()) or default_pubmed_reference_cache()
+    merged = default_pubmed_reference_cache()
+    merged.update(cache)
+    merged['records'] = dict(merged.get('records') or {})
+    return merged
+
+
+def save_pubmed_reference_cache(cache, path=PUBMED_REFERENCE_CACHE_PATH):
+    payload = default_pubmed_reference_cache()
+    payload.update(cache or {})
+    payload['updated_at'] = iso_now()
+    payload['records'] = dict(payload.get('records') or {})
+    write_json(path, payload)
+
+
 def load_publication_tracker(path=PUBLICATION_TRACKER_STATE_PATH):
     tracker = read_json(path, default_publication_tracker()) or {}
     merged = default_publication_tracker()
@@ -480,7 +506,190 @@ def load_corpus_reference_index():
         'manifest_rows': manifest_rows,
         'source_paths': source_paths,
         'parsed_markdown': {},
+        'pubmed_cache': load_pubmed_reference_cache(),
+        'pubmed_cache_dirty': False,
     }
+
+
+def pubmed_summary_doi(item):
+    for article_id in item.get('articleids') or []:
+        if normalize(article_id.get('idtype')) == 'doi':
+            return normalize(article_id.get('value'))
+    return ''
+
+
+def pubmed_summary_year(item):
+    for field in [normalize(item.get('pubdate')), normalize(item.get('sortpubdate')), normalize(item.get('epubdate'))]:
+        match = re.search(r'\b(19|20)\d{2}\b', field)
+        if match:
+            return match.group(0)
+    return ''
+
+
+def fetch_pubmed_reference_summaries(pmids, corpus_index):
+    cache = corpus_index.setdefault('pubmed_cache', load_pubmed_reference_cache())
+    records = cache.setdefault('records', {})
+    pending = []
+    for pmid in pmids:
+        pmid = normalize(pmid)
+        if not pmid:
+            continue
+        cached = records.get(pmid) or {}
+        if normalize(cached.get('title')) and normalize(cached.get('journal')):
+            continue
+        pending.append(pmid)
+    if not pending:
+        return
+
+    for start in range(0, len(pending), 50):
+        batch = pending[start:start + 50]
+        query = urllib.parse.urlencode({
+            'db': 'pubmed',
+            'id': ','.join(batch),
+            'retmode': 'json',
+        })
+        url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?{query}'
+        try:
+            with urllib.request.urlopen(url, timeout=20) as handle:
+                payload = json.loads(handle.read().decode('utf-8'))
+        except Exception:
+            continue
+        result = payload.get('result') or {}
+        for pmid in batch:
+            item = result.get(pmid) or {}
+            if not item:
+                continue
+            records[pmid] = {
+                'authors_list': [normalize(author.get('name')) for author in item.get('authors') or [] if normalize(author.get('name'))],
+                'title': normalize(item.get('title')).rstrip('.'),
+                'journal': normalize(item.get('source')),
+                'full_journal': normalize(item.get('fulljournalname')),
+                'publication_date': normalize(item.get('pubdate')),
+                'year': pubmed_summary_year(item),
+                'volume': normalize(item.get('volume')),
+                'issue': normalize(item.get('issue')),
+                'pages': normalize(item.get('pages')),
+                'doi': pubmed_summary_doi(item),
+                'elocationid': normalize(item.get('elocationid')),
+                'pubstatus': normalize(item.get('pubstatus')),
+            }
+            corpus_index['pubmed_cache_dirty'] = True
+
+
+def authors_list_from_text(text):
+    text = normalize(text)
+    if not text:
+        return []
+    if ', ' in text:
+        return [item.strip() for item in text.split(',') if item.strip()]
+    if ' and ' in text:
+        return [item.strip() for item in text.split(' and ') if item.strip()]
+    return [text]
+
+
+def initials_from_name(text):
+    return ''.join(token[0] for token in re.findall(r'[A-Za-z]+', normalize(text)) if token)
+
+
+def repair_pubmed_author_list(authors):
+    names = [normalize(item) for item in authors if normalize(item)]
+    repaired = []
+    index = 0
+    while index < len(names):
+        current = names[index]
+        next_name = names[index + 1] if index + 1 < len(names) else ''
+        if (
+            ' ' not in current
+            and next_name
+            and ' ' in next_name
+            and re.fullmatch(r'[A-Z][a-z]+(?:\s+[A-Z])?', next_name)
+        ):
+            initials = initials_from_name(next_name)
+            repaired.append(f'{current} {initials}'.strip())
+            index += 2
+            continue
+        repaired.append(current)
+        index += 1
+    return repaired
+
+
+def sage_vancouver_author_text(authors):
+    names = repair_pubmed_author_list(authors)
+    if not names:
+        return ''
+    if len(names) == 1:
+        return names[0]
+    if len(names) == 2:
+        return f'{names[0]} and {names[1]}'
+    if len(names) == 3:
+        return f'{names[0]}, {names[1]} and {names[2]}'
+    return f'{names[0]}, {names[1]}, {names[2]}, et al'
+
+
+def compress_reference_numbers(numbers):
+    ordered = []
+    seen = set()
+    for number in numbers:
+        if number in seen:
+            continue
+        seen.add(number)
+        ordered.append(number)
+    ordered.sort()
+    if not ordered:
+        return ''
+    spans = []
+    start = ordered[0]
+    previous = ordered[0]
+    for current in ordered[1:]:
+        if current == previous + 1:
+            previous = current
+            continue
+        if previous - start >= 2:
+            spans.append(f'{start}-{previous}')
+        elif previous == start:
+            spans.append(str(start))
+        else:
+            spans.extend([str(start), str(previous)])
+        start = previous = current
+    if previous - start >= 2:
+        spans.append(f'{start}-{previous}')
+    elif previous == start:
+        spans.append(str(start))
+    else:
+        spans.extend([str(start), str(previous)])
+    return ','.join(spans)
+
+
+def sage_vancouver_journal_citation(record):
+    authors = sage_vancouver_author_text(record.get('authors_list') or authors_list_from_text(record.get('authors')))
+    title = normalize(record.get('title')).rstrip('.')
+    journal = normalize(record.get('journal'))
+    year = normalize(record.get('year')) or normalize(record.get('publication_date'))
+    year_match = re.search(r'\b(19|20)\d{2}\b', year)
+    year = year_match.group(0) if year_match else ''
+    volume = normalize(record.get('volume'))
+    pages = normalize(record.get('pages'))
+    doi = normalize(record.get('doi')).replace('doi:', '').replace('DOI:', '').strip()
+    publication_date = normalize(record.get('publication_date'))
+
+    pieces = []
+    if authors:
+        pieces.append(f'{authors}.')
+    if title:
+        pieces.append(f'{title}.')
+    if journal and year and volume and pages:
+        pieces.append(f'{journal} {year}; {volume}: {pages}.')
+    elif journal and year and volume:
+        pieces.append(f'{journal} {year}; {volume}.')
+    elif journal and publication_date and doi:
+        pieces.append(f'{journal}. Epub ahead of print {publication_date}. DOI: {doi}.')
+    elif journal and year:
+        pieces.append(f'{journal} {year}.')
+    elif journal:
+        pieces.append(f'{journal}.')
+    if doi and not any('DOI:' in piece for piece in pieces) and not (journal and year and volume and pages):
+        pieces.append(f'DOI: {doi}.')
+    return ' '.join(piece.strip() for piece in pieces if piece.strip()).strip()
 
 
 def corpus_reference_record(pmid, corpus_index):
@@ -499,7 +708,7 @@ def corpus_reference_record(pmid, corpus_index):
     extraction_source = normalize(source_meta.get('extraction_source') or manifest_row.get('extraction_source'))
     source_quality_tier = source_quality_tier_from_rank(extraction_rank)
 
-    return {
+    record = {
         'pmid': pmid,
         'title': normalize(source_meta.get('title') or manifest_row.get('title')),
         'authors': normalize(source_meta.get('authors')),
@@ -520,21 +729,44 @@ def corpus_reference_record(pmid, corpus_index):
         'source_query': normalize(manifest_row.get('source_query')),
         'domain': normalize(manifest_row.get('domain')),
     }
+    fetch_pubmed_reference_summaries([pmid], corpus_index)
+    pubmed_record = (corpus_index.get('pubmed_cache', {}).get('records', {}) or {}).get(pmid, {})
+    if pubmed_record:
+        record['authors_list'] = list(pubmed_record.get('authors_list') or [])
+        record['title'] = normalize(record.get('title') or pubmed_record.get('title'))
+        record['authors'] = normalize(record.get('authors') or sage_vancouver_author_text(record.get('authors_list') or []))
+        record['journal'] = normalize(record.get('journal') or pubmed_record.get('journal'))
+        record['publication_date'] = normalize(record.get('publication_date') or pubmed_record.get('publication_date'))
+        record['year'] = normalize(pubmed_record.get('year'))
+        record['volume'] = normalize(pubmed_record.get('volume'))
+        record['issue'] = normalize(pubmed_record.get('issue'))
+        record['pages'] = normalize(pubmed_record.get('pages'))
+        record['doi'] = normalize(record.get('doi') or pubmed_record.get('doi'))
+    return record
 
 
 def citation_text(record):
-    pieces = []
-    if normalize(record.get('authors')):
-        pieces.append(record['authors'])
-    if normalize(record.get('title')):
-        pieces.append(record['title'])
-    journal_and_year = ' '.join(part for part in [normalize(record.get('journal')), normalize(record.get('publication_date'))] if part)
-    if journal_and_year:
-        pieces.append(journal_and_year)
-    if normalize(record.get('doi')):
-        pieces.append(f"doi:{record['doi']}")
-    pieces.append(f"PMID:{record['pmid']}")
-    return '. '.join(piece.rstrip('.') for piece in pieces if piece).strip() + '.'
+    return sage_vancouver_journal_citation(record)
+
+
+def citation_superscript_markup(pmids, references_by_pmid):
+    numbers = []
+    for pmid in parse_pmid_list(pmids):
+        record = references_by_pmid.get(pmid) or {}
+        if record.get('reference_number'):
+            numbers.append(int(record['reference_number']))
+    compressed = compress_reference_numbers(numbers)
+    return f'<sup>{compressed}</sup>' if compressed else ''
+
+
+def apply_sage_vancouver_citations(text, references_by_pmid):
+    def repl(match):
+        pmid_text = match.group(1)
+        punctuation = match.group(2) or ''
+        markup = citation_superscript_markup(pmid_text, references_by_pmid)
+        return f'{punctuation}{markup}' if markup else match.group(0)
+
+    return re.sub(r'\s*\(PMIDs?\s+([0-9,\s]+)\)([.,;:]?)', repl, text)
 
 
 def load_process_rows(state):
@@ -1525,6 +1757,8 @@ def collect_reference_records(candidate, row, phase_entries, corpus_index):
                         'source_quality_tier': normalize(paper.get('source_quality_tier')),
                     },
                 )
+
+    fetch_pubmed_reference_summaries(ordered_pmids, corpus_index)
 
     references = []
     for number, pmid in enumerate(ordered_pmids, start=1):
@@ -3138,6 +3372,8 @@ def article_type_requirements(snapshot, article_type):
 def manuscript_draft_title(candidate, row, phase_entries):
     theme_label = normalize(candidate.get('theme_label') or candidate.get('title'))
     family = normalize(candidate.get('family_id'))
+    if normalize(candidate.get('theme_key')) == 'blood_brain_barrier_failure':
+        return 'Blood-Brain Barrier Dysfunction as an Early Vascular Gate Linking Traumatic Brain Injury to Downstream Neuroinflammation'
     if family == 'most_informative_biomarker_panel':
         return f'{theme_label} as a biomarker-guided manuscript path in traumatic brain injury'
     if family == 'strongest_causal_bridge':
@@ -3154,6 +3390,15 @@ def manuscript_draft_title(candidate, row, phase_entries):
 
 
 def manuscript_keywords(candidate, row, phase_entries):
+    if normalize(candidate.get('theme_key')) == 'blood_brain_barrier_failure':
+        return [
+            'traumatic brain injury',
+            'blood-brain barrier',
+            'OCLN',
+            'CLDN5',
+            'neuroinflammation',
+            'cerebral blood flow',
+        ]
     primary_target = next(
         (
             normalize((entry.get('row') or {}).get('primary_target'))
@@ -3199,16 +3444,23 @@ def strip_markdown_formatting(text):
 
 
 def apply_inline_markdown_runs(paragraph, text):
-    text = normalize(text)
-    if not text:
+    if not normalize(text):
         return
-    parts = re.split(r'(\*\*[^*]+\*\*|__[^_]+__|`[^`]+`)', text)
+    parts = re.split(r'(\*\*[^*]+\*\*|__[^_]+__|`[^`]+`|<sup>[^<]+</sup>)', text)
     for part in parts:
         if not part:
             continue
         bold = (part.startswith('**') and part.endswith('**')) or (part.startswith('__') and part.endswith('__'))
         code = part.startswith('`') and part.endswith('`')
-        content = strip_markdown_formatting(part)
+        superscript = part.startswith('<sup>') and part.endswith('</sup>')
+        if bold:
+            content = part[2:-2]
+        elif code:
+            content = part[1:-1]
+        elif superscript:
+            content = re.sub(r'^<sup>|</sup>$', '', part)
+        else:
+            content = part
         if not content:
             continue
         run = paragraph.add_run(content)
@@ -3216,6 +3468,8 @@ def apply_inline_markdown_runs(paragraph, text):
             run.bold = True
         if code:
             run.font.name = 'Courier New'
+        if superscript:
+            run.font.superscript = True
 
 
 def write_ready_metadata_docx(manuscript_markdown, output_path, candidate):
@@ -3678,7 +3932,290 @@ def build_comprehensive_outline_markdown(candidate, row, phase_entries, evidence
     return '\n'.join(lines)
 
 
+def build_bbb_curated_review_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet):
+    primary = candidate.get('journal_targets', {}).get('primary') or {}
+    primary_journal = primary.get('journal', {}) or {}
+    references = evidence_bundle.get('references') or []
+    references_by_pmid = {normalize(record.get('pmid')): record for record in references if normalize(record.get('pmid'))}
+    reference_count = len(references)
+    readouts = summarize_list(row.get('expected_readouts') or [])
+    display_readouts = 'barrier leakage, OCLN/CLDN5/TJP1 restoration, cerebral blood flow, and downstream inflammatory spillover'
+    next_test = normalize(row.get('next_test')) or 'not recorded'
+    curated_reference_overrides = {
+        '41663365': 'Endothelial IRE1 signaling maintains blood-brain barrier integrity and limits neuroinflammation after traumatic brain injury',
+        '41446731': 'MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury',
+        '41532955': 'Unveiling the Proteomic Landscape of Extracellular Vesicles: Implications for Neurodegeneration and Neuroprotection',
+        '41683989': 'From Traumatic Brain Injury to Alzheimer’s Disease: Multilevel Biomechanical, Neurovascular, and Molecular Mechanisms with Emerging Therapeutic Directions',
+        '41173520': 'A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction',
+        '41740873': 'Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact',
+        '41707328': 'Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients',
+        '41737590': 'Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers',
+        '41496386': 'Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15',
+        '41700282': 'Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury',
+        '41672813': 'Neuroworsening from a normal Glasgow Coma Scale Motor Score in the emergency department is an early predictor of neurosurgical intervention, hospital outcomes, and longitudinal disability in traumatic brain injury: A TRACK-TBI Study',
+        '41653068': 'Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury',
+    }
+    formatted_references = []
+    for record in references:
+        pmid = normalize(record.get('pmid'))
+        citation_text = normalize(record.get('citation_text'))
+        title = normalize(record.get('title')) or curated_reference_overrides.get(pmid, '')
+        if (not citation_text or citation_text == f'PMID:{pmid}.') and title:
+            citation_text = f'{title}. PMID:{pmid}.'
+        elif not citation_text:
+            citation_text = f'PMID:{pmid}.' if pmid else 'Citation pending.'
+        formatted_references.append(f"{record['reference_number']}. {citation_text}")
+    lines = [
+        f"# {candidate.get('manuscript_draft_title') or candidate.get('title')}",
+        '',
+        '## Title Page',
+        '',
+        '- Full title: [Confirm final journal-facing title]',
+        '- Running title: [Needed]',
+        '- Authors: [Needed]',
+        '- Affiliations: [Needed]',
+        '- Corresponding author: [Needed]',
+        '',
+        '## Abstract',
+        '',
+        (
+            'Traumatic brain injury is often narrated from its downstream consequences, including neuroinflammation, axonal injury, and later cognitive decline. '
+            'That framing is familiar, but it does not always identify the earliest biology most useful for organizing a first mechanistic manuscript. '
+            f'Across the {reference_count}-record evidence set assembled for this review, blood-brain barrier dysfunction emerges as the clearest early vascular program because it can be tracked from tight-junction disruption and permeability change to peripheral immune spillover, persistent glial activation, and clinically relevant biomarker-imaging signals. '
+            'That argument is supported by convergent anchors rather than a single study. Endothelial IRE1 signaling appears to preserve barrier integrity and limit post-traumatic neuroinflammation (PMID 41663365). '
+            'Repetitive mild injury is associated with acute downregulation of ZO-1 and claudin-5 together with diffusion abnormalities, inflammatory polarization, and metabolic disturbance (PMID 41446731). '
+            'A modified repetitive closed-head model demonstrates gadolinium leakage, persistent gliosis, and lasting behavioral deficits despite the absence of extensive cortical tissue destruction (PMID 41173520). '
+            'On that basis, this review advances a deliberately bounded thesis: BBB dysfunction is an early vascular gate that helps condition later inflammatory burden after TBI, and an OCLN-centered framework anchored to permeability, cerebral blood flow, and downstream inflammatory spillover is a practical first biomarker strategy. '
+            'The claim is intentionally conservative. BBB biology is not presented as an explanation for every TBI phenotype, and restoration of junctional proteins alone is not treated as proof of functional barrier rescue.'
+        ),
+        '',
+        '## Keywords',
+        '',
+        'traumatic brain injury; blood-brain barrier; OCLN; CLDN5; neuroinflammation; cerebral blood flow',
+        '',
+        '## Introduction',
+        '',
+        (
+            'In neurocritical care, the question is rarely whether traumatic brain injury is heterogeneous. '
+            'It is. The harder question is which upstream biology is coherent enough to organize the rest of the story without dissolving into a catalog of downstream consequences. '
+            'For a first mechanistic paper, the leading candidate has to satisfy several conditions at once: it has to occur early, remain biologically legible over time, connect to secondary injury, and lend itself to a readout set that is more useful than a broad inflammatory inventory. '
+            'Within the assembled TBI literature used for this manuscript, blood-brain barrier dysfunction is one of the few mechanisms that already meets those criteria.'
+        ),
+        '',
+        (
+            'That distinction matters because neuroinflammation, while unquestionably central to TBI, is a broad downstream domain rather than a sufficiently narrow first manuscript spine. '
+            'A BBB-centered review is more tractable and, in many ways, more clinically interpretable because it preserves temporal ordering. '
+            'It asks whether early vascular barrier failure is one of the major conditions under which later immune amplification becomes biologically meaningful. '
+            'That is a sharper and more useful question than simply listing inflammatory pathways after injury.'
+        ),
+        '',
+        (
+            'The thesis is therefore deliberately bounded: BBB dysfunction is an early vascular gate in TBI, and an OCLN-centered biomarker framework can be used to track that gate across permeability change, neurovascular disturbance, and downstream inflammatory spillover. '
+            'The point is not to argue that BBB biology explains every post-traumatic phenotype. '
+            'The point is that this mechanism is presently the cleanest first story to write from the assembled research because it is early, measurable, and plausibly upstream of part of the later inflammatory burden.'
+        ),
+        '',
+        '## Evidence Base and Framing',
+        '',
+        (
+            'This review is written from a curated TBI evidence set rather than from a de novo systematic search. '
+            'The retained literature includes experimental TBI studies, biomarker-imaging cohorts, and selected review papers used only when they clarify a specific BBB-to-inflammation link. '
+            'Two discipline rules shaped the manuscript throughout. First, permeability-sensitive outcomes take precedence over junction-protein movement alone. '
+            'Second, downstream inflammatory findings are treated as consequences or amplifiers of barrier failure unless the available literature justifies a stronger directional claim.'
+        ),
+        '',
+        '## Evidence Synthesis',
+        '',
+        '### Blood-brain barrier dysfunction is a recurrent early lesion across the TBI literature',
+        '',
+        (
+            'The most persuasive feature of the assembled BBB literature is not any single experiment, but convergence across model systems and clinical contexts. '
+            'Fan and colleagues showed that endothelial IRE1 signaling helps maintain BBB integrity and limit neuroinflammation after TBI, positioning the endothelium as an active determinant of secondary injury rather than a passive casualty (PMID 41663365). '
+            'In repetitive mild injury, MRI-DTI work demonstrated acute downregulation of ZO-1 and claudin-5 together with white-matter change, inflammatory polarization, and hypometabolism, reinforcing the view that vascular and diffuse neural injury are coupled very early after repeated insults (PMID 41446731). '
+            'A broader neurovascular synthesis further links TBI to later degenerative trajectories through BBB breakdown, inflammasome activation, and vascular-metabolic instability (PMID 41683989).'
+        ),
+        '',
+        (
+            'Taken together, these data support a practical manuscript claim: BBB dysfunction is not a decorative feature of TBI pathology. '
+            'It is one of the more reproducible early biologic programs through which mechanical injury can be translated into a sustained secondary injury state.'
+        ),
+        '',
+        '### Functional barrier readouts should outrank junction-marker movement alone',
+        '',
+        (
+            'One of the most important boundaries in this manuscript is also one of its most useful: improvement in junctional proteins is not enough if permeability, perfusion, or downstream inflammatory burden do not move in parallel. '
+            'That point prevents the paper from overcalling a barrier-repair story on the basis of OCLN, CLDN5, or TJP1 movement alone. '
+            'The stronger readouts are functional: Evans blue or gadolinium leakage, cerebral blood flow, and downstream inflammatory spillover. '
+            'Tight-junction proteins remain mechanistically important, but they are better interpreted as support for barrier biology than as sufficient efficacy endpoints on their own.'
+        ),
+        '',
+        (
+            'That is also why OCLN works as the lead target in this manuscript. '
+            'It is not being selected because it is the only relevant junctional protein. '
+            'It is being selected because, within the present literature set, it is the strongest tight-junction anchor around which a coherent barrier panel can be built, with CLDN5 and TJP1 retained as key supporting components and MMP9 treated as a challenger mechanism rather than a replacement spine.'
+        ),
+        '',
+        '### The bridge from barrier leak to immune spillover is plausible, supported, and still worth bounding',
+        '',
+        (
+            'The manuscript becomes much more useful once BBB failure is not left as an isolated structural injury. '
+            'The assembled literature supports a directional bridge in which permeability increase facilitates peripheral immune spillover. '
+            'A modified repetitive closed-head model showed severity-dependent gadolinium leakage together with microglial and astrocytic activation, increased inflammatory mediators, and sustained behavioral deficits over 28 days (PMID 41173520). '
+            'In repetitive head-impact biology, peripheral macrophages and T-cells accumulate in degenerating visual pathways, providing a concrete example of immune spillover in a repetitive injury setting (PMID 41740873). '
+            'Extracellular-vesicle work also supports BBB-sensitive neuroimmune cross-talk, including neutrophil-derived exosomal signals capable of disrupting barrier integrity (PMID 41532955).'
+        ),
+        '',
+        (
+            'Even so, the bridge should remain bounded. Some supporting studies are review-based or abstract-limited, and the downstream biology is not equally hardened across every branch. '
+            'The manuscript should therefore avoid claiming that every inflammatory phenotype in TBI is barrier-driven. '
+            'The defensible position is narrower and stronger: BBB permeability is one of the clearest upstream conditions under which later inflammatory amplification becomes more plausible and more measurable.'
+        ),
+        '',
+        '### Chronic microglial activation is better supported than neurovascular uncoupling, but both remain informative',
+        '',
+        (
+            'The downstream part of the BBB story is uneven, and that unevenness should stay visible in the paper. '
+            'Chronic microglial activation is the stronger downstream object in the present literature set. '
+            'Across experimental studies and repetitive injury models, the data support a persistent glial program that can keep acute vascular injury biologically relevant well beyond the first hours to days (PMIDs 41039850, 41103638, 41135688, 41157272, 41173520, 41446731). '
+            'By contrast, neurovascular uncoupling remains more hypothesis-like. It is a useful systems-level concept linking leak, perfusion mismatch, impaired clearance, and later network instability, but the direct support is still thinner than the microglial literature.'
+        ),
+        '',
+        (
+            'That asymmetry is not a weakness if it is written honestly. '
+            'Microglial chronic activation can be treated as the best-supported downstream inflammatory sustaining state, while neurovascular uncoupling should be framed as an important but still-maturing systems hypothesis. '
+            'A clinician-scientist reader will immediately recognize the distinction, and the review is stronger for making it explicit rather than smoothing it over.'
+        ),
+        '',
+        '### An OCLN-centered panel is clinically more useful than a generic inflammatory panel',
+        '',
+        (
+            f'The most practical contribution of this review is the panel itself. The lead readouts are {display_readouts if readouts else display_readouts}. '
+            'That combination works because it respects mechanistic ordering. '
+            'Barrier leakage is the functional anchor. OCLN, CLDN5, and TJP1 report junctional biology. Cerebral blood flow keeps the neurovascular component visible. '
+            'Downstream inflammatory spillover remains in the panel, but as a consequence readout rather than the primary marker of barrier state.'
+        ),
+        '',
+        (
+            'This distinction is what keeps the manuscript clinically legible. '
+            'A broad inflammatory panel can be informative, but it easily mixes upstream triggers with downstream responses. '
+            'The OCLN-centered framework is better suited to a first mechanistic paper because it gives the reader a more interpretable sequence: barrier injury, permeability consequence, perfusion consequence, and only then immune spillover.'
+        ),
+        '',
+        '### Cohort context makes the vascular frame clinically legible',
+        '',
+        (
+            'The cohort literature does not prove a single universal BBB endotype, but it does show where BBB-first reasoning is most helpful. '
+            'In mild injury, blood biomarker and imaging studies suggest that physiologic injury can persist even when bedside presentation appears relatively subtle. '
+            'Rapid plasma GFAP and UCH-L1 testing showed strong negative predictive value for avoiding unnecessary CT in acute mild TBI, underscoring the practical value of blood-based triage biology in low-severity cases (PMID 41707328). '
+            'Acute biomarker-imaging work also linked circulating markers to diffusion tensor imaging abnormalities and outcome in patients presenting with GCS 13-15 (PMID 41496386), while concussion trajectory data demonstrated dissociation between symptom recovery and physiologic recovery (PMID 41737590).'
+        ),
+        '',
+        (
+            'At the more severe end of the spectrum, the vascular frame remains clinically relevant. '
+            'Severe pediatric TBI prognostic data, early neuroworsening after initially preserved motor scores, and salivary S100B outcome work all reinforce the idea that early vascular and secondary injury signals deserve priority rather than being flattened into a late inflammatory summary (PMIDs 41700282, 41672813, 41653068). '
+            'The practical message is not that every cohort is a BBB cohort. '
+            'It is that BBB-centered logic remains visible across mild biomarker-imaging bridge cases, acute severe vascular-dominant cases, blast-related mixed states, and some repetitive-injury cohorts.'
+        ),
+        '',
+        '## Discussion',
+        '',
+        (
+            f'This review is well suited to {primary_journal.get("name") or "the primary target journal"} because it makes a narrower and more useful argument than a generic TBI review. '
+            'It does not attempt to explain all downstream pathology. '
+            'Instead, it argues that BBB dysfunction is one of the clearest early vascular gates through which later neuroinflammatory injury becomes biologically organized.'
+        ),
+        '',
+        (
+            'That is the paper\'s real value. BBB biology is early enough to matter, concrete enough to measure, and bounded enough to write without pretending that a provisional translational stack is already intervention-ready. '
+            'For a first manuscript, that combination is much more powerful than a broad neuroinflammatory survey. '
+            'It gives the reader a mechanism, a bridge, a downstream consequence profile, and a tangible readout set.'
+        ),
+        '',
+        (
+            'The manuscript should still remain conservative. '
+            'There is no direct compound or trial attachment in the present BBB evidence set. '
+            'The clearest next experimental move would be an acute-to-subacute BBB repair study centered on OCLN, '
+            'with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, cerebral blood flow, and downstream inflammatory spillover paired as efficacy-sensitive readouts. '
+            'Neurovascular uncoupling is still less secure than chronic microglial activation, and some transition support remains review-based or abstract-limited. '
+            'Those are not reasons to abandon the paper. They are the exact reasons to write it as a bounded mechanistic-biomarker review rather than as a treatment paper.'
+        ),
+        '',
+        '## Limitations',
+        '',
+        '- This review is anchored to a curated TBI evidence set rather than a de novo systematic review search.',
+        '- Several BBB-to-inflammation bridge papers are review-based or abstract-limited and should not be weighted as heavily as direct experimental anchors.',
+        '- Junction-protein movement alone should not be interpreted as evidence of restored barrier function without permeability or perfusion confirmation.',
+        '- Neurovascular uncoupling remains hypothesis-generating in this literature set and should not be presented as equally hardened to chronic microglial activation.',
+        '- The translational packet remains bounded; no direct compound or trial attachment has yet been surfaced in the BBB literature set.',
+        '- Repetitive-injury cohorts still require stronger direct linkage between barrier readouts, downstream inflammatory burden, and later clinical trajectory.',
+        '',
+        '## Conclusion',
+        '',
+        (
+            'Blood-brain barrier dysfunction is one of the strongest first manuscript paths in the assembled TBI literature because it supplies an interpretable sequence from early vascular injury to downstream immune amplification and measurable translational readouts. '
+            'An OCLN-centered panel anchored to permeability, CLDN5/TJP1 support, cerebral blood flow, and downstream inflammatory spillover is therefore a defensible framework for a bounded mechanistic-biomarker paper. '
+            'The right claim at this stage is not that BBB biology resolves the whole disease. '
+            'It is that BBB dysfunction is an early vascular gate that deserves to organize the next round of TBI biomarker and mechanism work.'
+        ),
+        '',
+        '## Transparency, Rigor and Reproducibility Summary',
+        '',
+        f'- This review was assembled from {reference_count} retained source records relevant to BBB dysfunction in TBI.',
+        '- The evidence base intentionally mixes experimental TBI studies, biomarker-imaging cohorts, and selected review papers used only for mechanistic or contextual support.',
+        '- Claims were retained only when they remained attached to explicit support in the assembled evidence set, and contradictory or weakly supported transitions were carried into the Limitations section rather than hidden.',
+        '- The present manuscript is a bounded review, not a new prospective human-participant or animal experiment.',
+        '- Final author metadata, funding, conflict, repository, and figure-export details still need to be inserted before submission.',
+        '',
+        '## Acknowledgements',
+        '',
+        'Acknowledgements will be finalized before submission. Add any non-author contributions, editorial assistance, or institutional support that must be disclosed.',
+        '',
+        '## Author Contributions',
+        '',
+        'Author contributions will be finalized before submission. The final statement should assign roles for conceptualization, corpus curation, manuscript drafting, figure preparation, and supervision.',
+        '',
+        '## Statements and Declarations',
+        '',
+        '### Ethical Considerations',
+        '',
+        'This manuscript is structured as a review and evidence synthesis of published literature plus curated evidence maps. It does not introduce a new prospective human-participant or animal experiment in its current form. If unpublished cohort data or new experimental results are added later, replace this statement with the correct approval language and identifiers.',
+        '',
+        '### Consent to Participate',
+        '',
+        'Not applicable for the current review draft.',
+        '',
+        '### Consent for Publication',
+        '',
+        'Not applicable for the current review draft because no new individual-level participant data are reported.',
+        '',
+        '### Declaration of Conflicting Interest',
+        '',
+        '[Insert the final author-approved conflict statement here. If no conflicts exist, use the journal-preferred no-conflict wording.]',
+        '',
+        '### Funding Statement',
+        '',
+        '[Insert the final funding statement here. If there was no external funding, say that explicitly.]',
+        '',
+        '### Data Availability',
+        '',
+        'This review synthesizes published studies and curated evidence maps. Insert the final repository link, DOI, or access statement that should appear in the submitted manuscript.',
+        '',
+    ]
+    body_text = apply_sage_vancouver_citations('\n'.join(lines), references_by_pmid)
+    lines = body_text.splitlines()
+    lines.extend([
+        '## References',
+        '',
+    ])
+    for citation_text in formatted_references:
+        lines.append(citation_text)
+    lines.append('')
+    return '\n'.join(lines)
+
+
 def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet):
+    if normalize(candidate.get('theme_key')) == 'blood_brain_barrier_failure':
+        return build_bbb_curated_review_markdown(candidate, row, phase_entries, evidence_bundle, missing_packet)
     primary = candidate.get('journal_targets', {}).get('primary') or {}
     primary_journal = primary.get('journal', {}) or {}
     claims = evidence_bundle.get('claims') or []
@@ -4104,6 +4641,8 @@ def build_manuscript_queue_payload(state, direction_registry=None, publication_t
             'note': normalize(entry.get('note')),
         })
     draft_outputs = build_generated_draft_summary(active + watchlist)
+    if corpus_index.get('pubmed_cache_dirty'):
+        save_pubmed_reference_cache(corpus_index.get('pubmed_cache'))
     return {
         'generated_at': iso_now(),
         'summary': queue_summary(active, watchlist, publication_tracker),
@@ -4405,5 +4944,7 @@ def materialize_manuscript_outputs(state, direction_registry=None, publication_t
             for candidate in queue['ready_for_metadata_only_candidates']
         ],
     })
+    if corpus_index.get('pubmed_cache_dirty'):
+        save_pubmed_reference_cache(corpus_index.get('pubmed_cache'))
     write_json(queue_state_path, queue)
     return queue

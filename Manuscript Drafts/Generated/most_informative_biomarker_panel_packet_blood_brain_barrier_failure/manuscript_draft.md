@@ -1,6 +1,4 @@
-# Blood-Brain Barrier Failure as a biomarker-guided manuscript path in traumatic brain injury
-
-> Draft-first manuscript generated directly from the current Phase 8 evidence pack. Replace bracketed metadata placeholders manually and keep all claims bounded to the cited pack content.
+# Blood-Brain Barrier Dysfunction as an Early Vascular Gate Linking Traumatic Brain Injury to Downstream Neuroinflammation
 
 ## Title Page
 
@@ -12,146 +10,90 @@
 
 ## Abstract
 
-This review synthesizes the current Phase 8 evidence pack around Blood-Brain Barrier Failure. The current thesis is: Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology. The evidence chain links Blood-Brain Barrier Failure to BBB permeability increase -> peripheral immune infiltration, with downstream burden in Microglial Chronic Activation, Neurovascular Uncoupling. The translational readout spine centers on OCLN with expected readouts Barrier leakage, Ocln / cldn5 / tjp1 restoration, Cerebral blood flow, Downstream inflammatory spillover. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded.
+Traumatic brain injury is often narrated from its downstream consequences, including neuroinflammation, axonal injury, and later cognitive decline. That framing is familiar, but it does not always identify the earliest biology most useful for organizing a first mechanistic manuscript. Across the 52-record evidence set assembled for this review, blood-brain barrier dysfunction emerges as the clearest early vascular program because it can be tracked from tight-junction disruption and permeability change to peripheral immune spillover, persistent glial activation, and clinically relevant biomarker-imaging signals. That argument is supported by convergent anchors rather than a single study. Endothelial IRE1 signaling appears to preserve barrier integrity and limit post-traumatic neuroinflammation.<sup>1</sup> Repetitive mild injury is associated with acute downregulation of ZO-1 and claudin-5 together with diffusion abnormalities, inflammatory polarization, and metabolic disturbance.<sup>22</sup> A modified repetitive closed-head model demonstrates gadolinium leakage, persistent gliosis, and lasting behavioral deficits despite the absence of extensive cortical tissue destruction.<sup>19</sup> On that basis, this review advances a deliberately bounded thesis: BBB dysfunction is an early vascular gate that helps condition later inflammatory burden after TBI, and an OCLN-centered framework anchored to permeability, cerebral blood flow, and downstream inflammatory spillover is a practical first biomarker strategy. The claim is intentionally conservative. BBB biology is not presented as an explanation for every TBI phenotype, and restoration of junctional proteins alone is not treated as proof of functional barrier rescue.
 
 ## Keywords
 
-- Blood-Brain Barrier Failure, Blood-Brain Barrier Failure biomarker panel, OCLN, Barrier leakage, OCLN / CLDN5 / TJP1 restoration, Cerebral blood flow, Downstream inflammatory spillover, Microglial Chronic Activation
+traumatic brain injury; blood-brain barrier; OCLN; CLDN5; neuroinflammation; cerebral blood flow
 
 ## Introduction
 
-Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology. This draft is anchored to Blood-Brain Barrier Failure because that lane provides the current biological entry point into the manuscript path.
+In neurocritical care, the question is rarely whether traumatic brain injury is heterogeneous. It is. The harder question is which upstream biology is coherent enough to organize the rest of the story without dissolving into a catalog of downstream consequences. For a first mechanistic paper, the leading candidate has to satisfy several conditions at once: it has to occur early, remain biologically legible over time, connect to secondary injury, and lend itself to a readout set that is more useful than a broad inflammatory inventory. Within the assembled TBI literature used for this manuscript, blood-brain barrier dysfunction is one of the few mechanisms that already meets those criteria.
 
-The linked rationale in the Phase 8 pack is straightforward: OCLN is the most evidence-dense tight-junction repair target in the current TBI corpus and best fits a barrier-module perturbation frame. The directional bridge into BBB permeability increase -> peripheral immune infiltration gives the manuscript a mechanistic spine, while the linked Phase 3 and Phase 5 artifacts keep the story tied to downstream burden and cohort context rather than to generic TBI language.
+That distinction matters because neuroinflammation, while unquestionably central to TBI, is a broad downstream domain rather than a sufficiently narrow first manuscript spine. A BBB-centered review is more tractable and, in many ways, more clinically interpretable because it preserves temporal ordering. It asks whether early vascular barrier failure is one of the major conditions under which later immune amplification becomes biologically meaningful. That is a sharper and more useful question than simply listing inflammatory pathways after injury.
 
-## Review Scope and Evidence Assembly
+The thesis is therefore deliberately bounded: BBB dysfunction is an early vascular gate in TBI, and an OCLN-centered biomarker framework can be used to track that gate across permeability change, neurovascular disturbance, and downstream inflammatory spillover. The point is not to argue that BBB biology explains every post-traumatic phenotype. The point is that this mechanism is presently the cleanest first story to write from the assembled research because it is early, measurable, and plausibly upstream of part of the later inflammatory burden.
 
-This manuscript is being packaged as a bounded evidence synthesis rather than as a new experimental report. The evidence base comes from the current Phase 1 to Phase 5 engine pack, linked PubMed-indexed source papers, explicit claim-to-PMID mapping, a contradiction register, and a bounded translational readout packet.
+## Evidence Base and Framing
 
-The review logic is intentionally conservative: mechanistic and biomarker claims are carried forward only when they remain linked to the current evidence chain, and unresolved contradiction rows are retained in the manuscript as limitations or future-work boundaries rather than being smoothed away.
+This review is written from a curated TBI evidence set rather than from a de novo systematic search. The retained literature includes experimental TBI studies, biomarker-imaging cohorts, and selected review papers used only when they clarify a specific BBB-to-inflammation link. Two discipline rules shaped the manuscript throughout. First, permeability-sensitive outcomes take precedence over junction-protein movement alone. Second, downstream inflammatory findings are treated as consequences or amplifiers of barrier failure unless the available literature justifies a stronger directional claim.
 
 ## Evidence Synthesis
 
-### Candidate manuscript thesis
+### Blood-brain barrier dysfunction is a recurrent early lesion across the TBI literature
 
-Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology. (PMIDs: 41663365, 41673382, 41642456, 41649131)
+The most persuasive feature of the assembled BBB literature is not any single experiment, but convergence across model systems and clinical contexts. Fan and colleagues showed that endothelial IRE1 signaling helps maintain BBB integrity and limit neuroinflammation after TBI, positioning the endothelium as an active determinant of secondary injury rather than a passive casualty.<sup>1</sup> In repetitive mild injury, MRI-DTI work demonstrated acute downregulation of ZO-1 and claudin-5 together with white-matter change, inflammatory polarization, and hypometabolism, reinforcing the view that vascular and diffuse neural injury are coupled very early after repeated insults.<sup>22</sup> A broader neurovascular synthesis further links TBI to later degenerative trajectories through BBB breakdown, inflammasome activation, and vascular-metabolic instability.<sup>15</sup>
 
-Drafting rule: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
+Taken together, these data support a practical manuscript claim: BBB dysfunction is not a decorative feature of TBI pathology. It is one of the more reproducible early biologic programs through which mechanical injury can be translated into a sustained secondary injury state.
 
-Current contradiction notes: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone.
+### Functional barrier readouts should outrank junction-marker movement alone
 
-### Blood-Brain Barrier Failure
+One of the most important boundaries in this manuscript is also one of its most useful: improvement in junctional proteins is not enough if permeability, perfusion, or downstream inflammatory burden do not move in parallel. That point prevents the paper from overcalling a barrier-repair story on the basis of OCLN, CLDN5, or TJP1 movement alone. The stronger readouts are functional: Evans blue or gadolinium leakage, cerebral blood flow, and downstream inflammatory spillover. Tight-junction proteins remain mechanistically important, but they are better interpreted as support for barrier biology than as sufficient efficacy endpoints on their own.
 
-Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories. (PMIDs: 41969524, 41663365, 41673382, 41642456)
+That is also why OCLN works as the lead target in this manuscript. It is not being selected because it is the only relevant junctional protein. It is being selected because, within the present literature set, it is the strongest tight-junction anchor around which a coherent barrier panel can be built, with CLDN5 and TJP1 retained as key supporting components and MMP9 treated as a challenger mechanism rather than a replacement spine.
 
-Drafting rule: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
+### The bridge from barrier leak to immune spillover is plausible, supported, and still worth bounding
 
-Current evidence gaps: All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.
+The manuscript becomes much more useful once BBB failure is not left as an isolated structural injury. The assembled literature supports a directional bridge in which permeability increase facilitates peripheral immune spillover. A modified repetitive closed-head model showed severity-dependent gadolinium leakage together with microglial and astrocytic activation, increased inflammatory mediators, and sustained behavioral deficits over 28 days.<sup>19</sup> In repetitive head-impact biology, peripheral macrophages and T-cells accumulate in degenerating visual pathways, providing a concrete example of immune spillover in a repetitive injury setting.<sup>14</sup> Extracellular-vesicle work also supports BBB-sensitive neuroimmune cross-talk, including neutrophil-derived exosomal signals capable of disrupting barrier integrity.<sup>9</sup>
 
-### BBB permeability increase -> peripheral immune infiltration
+Even so, the bridge should remain bounded. Some supporting studies are review-based or abstract-limited, and the downstream biology is not equally hardened across every branch. The manuscript should therefore avoid claiming that every inflammatory phenotype in TBI is barrier-driven. The defensible position is narrower and stronger: BBB permeability is one of the clearest upstream conditions under which later inflammatory amplification becomes more plausible and more measurable.
 
-Current TBI evidence supports a directional transition in which BBB permeability increase facilitates peripheral immune infiltration. (PMIDs: 41709060, 41740873, 41683989)
+### Chronic microglial activation is better supported than neurovascular uncoupling, but both remain informative
 
-Drafting rule: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
+The downstream part of the BBB story is uneven, and that unevenness should stay visible in the paper. Chronic microglial activation is the stronger downstream object in the present literature set. Across experimental studies and repetitive injury models, the data support a persistent glial program that can keep acute vascular injury biologically relevant well beyond the first hours to days.<sup>5,16-19,22</sup> By contrast, neurovascular uncoupling remains more hypothesis-like. It is a useful systems-level concept linking leak, perfusion mismatch, impaired clearance, and later network instability, but the direct support is still thinner than the microglial literature.
 
-Current evidence gaps: Some supporting rows are abstract-only and should be weighted cautiously. | Downstream lane is still seeded/provisional, so this transition should remain bounded.
+That asymmetry is not a weakness if it is written honestly. Microglial chronic activation can be treated as the best-supported downstream inflammatory sustaining state, while neurovascular uncoupling should be framed as an important but still-maturing systems hypothesis. A clinician-scientist reader will immediately recognize the distinction, and the review is stronger for making it explicit rather than smoothing it over.
 
-### Microglial Chronic Activation
+### An OCLN-centered panel is clinically more useful than a generic inflammatory panel
 
-Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration. (PMIDs: 41039850, 41103638, 41135688, 41157272)
+The most practical contribution of this review is the panel itself. The lead readouts are barrier leakage, OCLN/CLDN5/TJP1 restoration, cerebral blood flow, and downstream inflammatory spillover. That combination works because it respects mechanistic ordering. Barrier leakage is the functional anchor. OCLN, CLDN5, and TJP1 report junctional biology. Cerebral blood flow keeps the neurovascular component visible. Downstream inflammatory spillover remains in the panel, but as a consequence readout rather than the primary marker of barrier state.
 
-Drafting rule: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
+This distinction is what keeps the manuscript clinically legible. A broad inflammatory panel can be informative, but it easily mixes upstream triggers with downstream responses. The OCLN-centered framework is better suited to a first mechanistic paper because it gives the reader a more interpretable sequence: barrier injury, permeability consequence, perfusion consequence, and only then immune spillover.
 
-Current evidence gaps: Some supporting rows are abstract-only and should be weighted cautiously.
+### Cohort context makes the vascular frame clinically legible
 
-### Neurovascular Uncoupling
+The cohort literature does not prove a single universal BBB endotype, but it does show where BBB-first reasoning is most helpful. In mild injury, blood biomarker and imaging studies suggest that physiologic injury can persist even when bedside presentation appears relatively subtle. Rapid plasma GFAP and UCH-L1 testing showed strong negative predictive value for avoiding unnecessary CT in acute mild TBI, underscoring the practical value of blood-based triage biology in low-severity cases.<sup>33</sup> Acute biomarker-imaging work also linked circulating markers to diffusion tensor imaging abnormalities and outcome in patients presenting with GCS 13-15,<sup>35</sup> while concussion trajectory data demonstrated dissociation between symptom recovery and physiologic recovery.<sup>34</sup>
 
-Neurovascular uncoupling is a candidate systems-level object that could connect vascular leak, impaired clearance, and later network fragility. (PMIDs: 41039850, 41079361, 41103638, 41173520)
-
-Drafting rule: Use cautious, hypothesis-oriented wording and explicitly note boundedness.
-
-Current evidence gaps: Object still needs denser direct support before it should be treated as hardened. | Object remains seeded because parent coverage or direct evidence is still incomplete. | Some supporting rows are abstract-only and should be weighted cautiously.
-
-### Blood-Brain Barrier Failure
-
-Tight-junction repair and barrier stabilization before inflammatory spillover compounds the injury. (PMIDs: 41663365, 41673382, 41642456, 41649131)
-
-Drafting rule: Use supported mechanistic language, but keep translational claims bounded and non-clinical.
-
-Current contradiction notes: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover | keep barrier-module claims tied to permeability outcomes, not junction markers alone. | no direct compound or trial attachment surfaced in this build
-
-### Acute Mild Biomarker / Imaging Bridge
-
-This is the best early endotype packet for not treating all concussive or mild injury as one disease in the first hours to days. (PMIDs: 41707328, 41737590, 41496386, 41173528)
-
-Drafting rule: Use cohort-language as suggestive context only, not as a locked endotype claim.
-
-Current contradiction notes: Acute biomarker spikes can reflect injury burden without resolving the dominant process, and imaging can remain subtle despite strong circulating markers.
-
-Current evidence gaps: Subacute conversion rules are still thin | the current packet is strongest at triage and early follow-up.
-
-### Acute Severe Vascular-Dominant
-
-This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI. (PMIDs: 41700282, 41725719, 41672813, 41653068)
-
-Drafting rule: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
-
-Current contradiction notes: Severe acute cohorts can look inflammatory quickly, but that does not mean inflammation is the dominant upstream driver in the first window.
-
-Current evidence gaps: The current packet needs more direct chronic handoff logic from early vascular failure to later degeneration.
-
-### Acute Blast Vascular / Inflammatory Mixed
-
-Blast cohorts are easy to lump into generic TBI groups, but they may represent the clearest case where mixed dominant-process labels are necessary. (PMIDs: 41809238, 41794317, 41596245, 41723947)
-
-Drafting rule: Use cohort-language as suggestive context only, not as a locked endotype claim.
-
-Current contradiction notes: Blast cohorts often mix repetitive exposure, endocrine injury, and vascular stress, so clean one-driver interpretations are likely to overstate certainty.
-
-Current evidence gaps: Cohort granularity is still thin, and the current packet needs better direct imaging anchors.
-
-### Subacute Repetitive Inflammatory-Dominant
-
-This is the best current packet for distinguishing repetitive-TBI cohorts that may respond to inflammasome or glial-state perturbation before chronic tau biology hardens. (PMIDs: 41173520, 41446731, 41740873, 41740080)
-
-Drafting rule: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
-
-Current contradiction notes: Repetitive cohorts can still carry unresolved vascular pressure, so an inflammatory label should stay bounded unless barrier readouts are also tracked.
-
-Current evidence gaps: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.
+At the more severe end of the spectrum, the vascular frame remains clinically relevant. Severe pediatric TBI prognostic data, early neuroworsening after initially preserved motor scores, and salivary S100B outcome work all reinforce the idea that early vascular and secondary injury signals deserve priority rather than being flattened into a late inflammatory summary.<sup>38-40</sup> The practical message is not that every cohort is a BBB cohort. It is that BBB-centered logic remains visible across mild biomarker-imaging bridge cases, acute severe vascular-dominant cases, blast-related mixed states, and some repetitive-injury cohorts.
 
 ## Discussion
 
-This manuscript is currently targeted to Journal of Neurotrauma as a review because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around Barrier leakage, Ocln / cldn5 / tjp1 restoration, Cerebral blood flow, Downstream inflammatory spillover.
+This review is well suited to Journal of Neurotrauma because it makes a narrower and more useful argument than a generic TBI review. It does not attempt to explain all downstream pathology. Instead, it argues that BBB dysfunction is one of the clearest early vascular gates through which later neuroinflammatory injury becomes biologically organized.
 
-The draft should still remain bounded. Translation maturity is bounded, the next experimental move is Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel, and the current top blocker is Downstream lane is still seeded/provisional, so this transition should remain bounded. These constraints should remain explicit rather than being smoothed away during prose cleanup.
+That is the paper's real value. BBB biology is early enough to matter, concrete enough to measure, and bounded enough to write without pretending that a provisional translational stack is already intervention-ready. For a first manuscript, that combination is much more powerful than a broad neuroinflammatory survey. It gives the reader a mechanism, a bridge, a downstream consequence profile, and a tangible readout set.
 
-The cohort and endotype context currently in scope is Acute Mild Biomarker / Imaging Bridge, Acute Severe Vascular-Dominant, Acute Blast Vascular / Inflammatory Mixed, Subacute Repetitive Inflammatory-Dominant. Use that context to keep the narrative specific about where the manuscript path appears strongest and where it remains only provisional.
+The manuscript should still remain conservative. There is no direct compound or trial attachment in the present BBB evidence set. The clearest next experimental move would be an acute-to-subacute BBB repair study centered on OCLN, with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, cerebral blood flow, and downstream inflammatory spillover paired as efficacy-sensitive readouts. Neurovascular uncoupling is still less secure than chronic microglial activation, and some transition support remains review-based or abstract-limited. Those are not reasons to abandon the paper. They are the exact reasons to write it as a bounded mechanistic-biomarker review rather than as a treatment paper.
 
 ## Limitations
 
-- Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover
-- keep barrier-module claims tied to permeability outcomes, not junction markers alone.
-- All three time buckets have usable support, but causal transitions still need explicit Phase 2 modeling.
-- Promoted from existing atlas mechanism coverage: blood brain barrier disruption.
-- Some supporting rows are abstract-only and should be weighted cautiously.
-- Downstream lane is still seeded/provisional, so this transition should remain bounded.
-- Object still needs denser direct support before it should be treated as hardened.
-- Object remains seeded because parent coverage or direct evidence is still incomplete.
-- no direct compound or trial attachment surfaced in this build
-- Acute biomarker spikes can reflect injury burden without resolving the dominant process, and imaging can remain subtle despite strong circulating markers.
+- This review is anchored to a curated TBI evidence set rather than a de novo systematic review search.
+- Several BBB-to-inflammation bridge papers are review-based or abstract-limited and should not be weighted as heavily as direct experimental anchors.
+- Junction-protein movement alone should not be interpreted as evidence of restored barrier function without permeability or perfusion confirmation.
+- Neurovascular uncoupling remains hypothesis-generating in this literature set and should not be presented as equally hardened to chronic microglial activation.
+- The translational packet remains bounded; no direct compound or trial attachment has yet been surfaced in the BBB literature set.
+- Repetitive-injury cohorts still require stronger direct linkage between barrier readouts, downstream inflammatory burden, and later clinical trajectory.
 
 ## Conclusion
 
-In its current form, this review supports a bounded manuscript centered on Blood-Brain Barrier Failure, with the strongest support concentrated in Blood-Brain Barrier Failure and the most important boundary still carried in the limitations around Downstream lane is still seeded/provisional, so this transition should remain bounded.
+Blood-brain barrier dysfunction is one of the strongest first manuscript paths in the assembled TBI literature because it supplies an interpretable sequence from early vascular injury to downstream immune amplification and measurable translational readouts. An OCLN-centered panel anchored to permeability, CLDN5/TJP1 support, cerebral blood flow, and downstream inflammatory spillover is therefore a defensible framework for a bounded mechanistic-biomarker paper. The right claim at this stage is not that BBB biology resolves the whole disease. It is that BBB dysfunction is an early vascular gate that deserves to organize the next round of TBI biomarker and mechanism work.
 
 ## Transparency, Rigor and Reproducibility Summary
 
-- This review was assembled from the linked Phase 1 through Phase 5 evidence chain and 52 cited source records in the current engine pack.
-- The synthesis stays anchored to Blood-Brain Barrier Failure and BBB permeability increase -> peripheral immune infiltration, with downstream burden carried through Microglial Chronic Activation, Neurovascular Uncoupling.
-- Claims were retained only when they remained attached to explicit source support, and 18 contradiction or evidence-boundary item(s) are kept visible in Limitations rather than treated as resolved.
-- The translational packet remains intentionally bounded around OCLN; this manuscript does not claim intervention-ready efficacy and instead uses Phase 4 to prioritize readouts and future validation steps such as Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.
-- This review draft does not introduce a new prospective human-participant or animal experiment. Final author-approved metadata, funding, conflict, and repository details still need to be inserted before submission.
+- This review was assembled from 52 retained source records relevant to BBB dysfunction in TBI.
+- The evidence base intentionally mixes experimental TBI studies, biomarker-imaging cohorts, and selected review papers used only for mechanistic or contextual support.
+- Claims were retained only when they remained attached to explicit support in the assembled evidence set, and contradictory or weakly supported transitions were carried into the Limitations section rather than hidden.
+- The present manuscript is a bounded review, not a new prospective human-participant or animal experiment.
+- Final author metadata, funding, conflict, repository, and figure-export details still need to be inserted before submission.
 
 ## Acknowledgements
 
@@ -159,13 +101,13 @@ Acknowledgements will be finalized before submission. Add any non-author contrib
 
 ## Author Contributions
 
-Author contributions will be finalized before submission. The final statement should assign roles for conceptualization, evidence curation, manuscript drafting, figure preparation, and supervision.
+Author contributions will be finalized before submission. The final statement should assign roles for conceptualization, corpus curation, manuscript drafting, figure preparation, and supervision.
 
 ## Statements and Declarations
 
 ### Ethical Considerations
 
-This manuscript is currently structured as a review and evidence synthesis of published literature plus engine-generated evidence maps. It does not introduce a new prospective human-participant or animal experiment in its current form. If unpublished cohort data or new experimental results are added later, replace this statement with the correct approval language and identifiers.
+This manuscript is structured as a review and evidence synthesis of published literature plus curated evidence maps. It does not introduce a new prospective human-participant or animal experiment in its current form. If unpublished cohort data or new experimental results are added later, replace this statement with the correct approval language and identifiers.
 
 ### Consent to Participate
 
@@ -185,72 +127,58 @@ Not applicable for the current review draft because no new individual-level part
 
 ### Data Availability
 
-This review synthesizes published studies and engine-generated evidence maps. The current evidence bundle lists supporting PMIDs, contradiction registers, figure plans, and source-artifact manifests in the companion pack. Insert the final repository link, DOI, or access statement that should appear in the submitted manuscript.
-
-## Figure and Table Plan
-
-- Figure: Phase 1 to Phase 5 evidence chain for the manuscript path. Purpose: Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.
-- Figure: Biomarker and readout panel for the lead translational packet. Purpose: Show the candidate biomarker panel, expected readouts, time windows, and sample types.
-- Figure: Downstream burden and endotype context. Purpose: Show the progression objects (Microglial Chronic Activation, Neurovascular Uncoupling) and the linked endotypes (Acute Mild Biomarker / Imaging Bridge, Acute Severe Vascular-Dominant, Acute Blast Vascular / Inflammatory Mixed, Subacute Repetitive Inflammatory-Dominant).
-- Figure: Evidence boundaries and contradiction map. Purpose: Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.
-
-## Missing Metadata and Packaging Items
-
-- Operator metadata items still needed: 12
-- Content or rigor gaps still open: 0
-- See the Missing Metadata and Items checklist in the generated draft folder for the detailed working list.
-
+This review synthesizes published studies and curated evidence maps. Insert the final repository link, DOI, or access statement that should appear in the submitted manuscript.
 ## References
 
-1. PMID:41663365.
-2. PMID:41673382.
-3. PMID:41642456.
-4. PMID:41649131.
-5. PMID:41039850.
-6. PMID:41465583.
-7. Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. PMID:41725719.
-8. PMID:41153827.
-9. PMID:41532955.
-10. PMID:41709060.
-11. PMID:41752185.
-12. PMID:41622772.
-13. PMID:41751210.
-14. Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. PMID:41740873.
-15. PMID:41683989.
-16. PMID:41103638.
-17. PMID:41135688.
-18. PMID:41157272.
-19. A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction. PMID:41173520.
-20. PMID:41197779.
-21. PMID:41327381.
-22. MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. PMID:41446731.
-23. PMID:41079361.
-24. PMID:41177833.
-25. PMID:41183617.
-26. PMID:41267966.
-27. PMID:41328339.
-28. PMID:41969524.
-29. PMID:41954515.
-30. PMID:41994141.
-31. PMID:41973273.
-32. PMID:41934291.
-33. Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients. PMID:41707328.
-34. Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers. PMID:41737590.
-35. Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. PMID:41496386.
-36. Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries. PMID:41173528.
-37. Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review. PMID:41126936.
-38. Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury. PMID:41700282.
-39. Neuroworsening from a normal Glasgow Coma Scale Motor Score in the emergency department is an early predictor of neurosurgical intervention, hospital outcomes, and longitudinal disability in traumatic brain injury: A TRACK-TBI Study. PMID:41672813.
-40. Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury. PMID:41653068.
-41. Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study. PMID:41714686.
-42. Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience. PMID:41731737.
-43. Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use. PMID:41722498.
-44. Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury. PMID:41604614.
-45. One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel. doi:10.1016/j.ynirp.2026.100335. PMID:41809238.
-46. Identification of immune cell subsets involved in retinal ganglion cell damage following blast exposure. PMID:41794317.
-47. Integrated Blood Biomarker and Neurobehavioural Signatures of Latent Neuroinjury in Experienced Military Breachers Exposed to Repetitive Low-Intensity Blast. PMID:41596245.
-48. Pituitary hormone abnormalities following military-related traumatic brain injuries. PMID:41723947.
-49. Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. PMID:41740080.
-50. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. PMID:41847037.
-51. Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. PMID:41508043.
-52. Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. PMID:41709584.
+1. Fan Q, Takarada-Iemata M, Tanaka T, et al. Endothelial IRE1 signaling maintains blood-brain barrier integrity and limits neuroinflammation after traumatic brain injury. Cell Death Dis 2026; 17: 210.
+2. Lin XY, Usman M, Ai L, et al. Experimental Study on Changes in the Structure of the Blood-Brain Barrier after Treatment with Bevacizumab for Traumatic Cerebral Edema. Neurocrit Care. Epub ahead of print 2026 Feb 11. DOI: 10.1007/s12028-026-02458-7.
+3. Shiravi S, Chakka A, Xiao X, et al. Mechanical Stretch Disrupts Calcium Dynamics and Redistributes Piezo1 in Human Astrocytes. Ann Biomed Eng. Epub ahead of print 2026 Feb 5. DOI: 10.1007/s10439-026-03995-0.
+4. Lee S, Lee J and Lee K. Translational roadmap of BBB-targeted nanoparticle strategies for neuroregenerative therapy in neurodegenerative diseases. Biomater Sci 2026; 14: 1206-1218.
+5. Zhao R, Dong S, Wu D, et al. A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. CNS Neurosci Ther 2025; 31: e70603.
+6. Pignataro G, Sacco Fernandez M, Candelli M, et al. Blood-Based Biomarkers for Traumatic Brain Injury: A New Era in Diagnosis and Prognosis. Int J Mol Sci 2025; 26. DOI: 10.3390/ijms262412158.
+7. Wang X, Xie R, Li M, et al. Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. Front Neurol 2026; 17: 1718794.
+8. Huber CM, Thakore AD, Oeur A, et al. Short-Term Cyclosporin A Treatment Reduced Serum Neurofilament-Light Levels in Diffuse but Not Focal Traumatic Brain Injury in a Piglet Model. Biomedicines 2025; 13. DOI: 10.3390/biomedicines13102547.
+9. Bernal-Vicente BN, Ponce I, Ríos-Castro E, et al. Unveiling the Proteomic Landscape of Extracellular Vesicles: Implications for Neurodegeneration and Neuroprotection. J Neurochem 2026; 170: e70350.
+10. Yadav AK, Verma P, Srivastava A, et al. Molecular insights into glial neuroimmune cross reactivity with CNS antigens and its role in neuroinflammation. Inflammopharmacology 2026; 34: 1399-1424.
+11. Hostiuc S and Rusu MC. The Dynamics of Neuroinflammation in Traumatic Brain Injury: Molecular Markers Useful for Establishing the Post-Traumatic Interval in Forensic Practice. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27042049.
+12. He D, He R, Duan W, et al. The potential of human milk oligosaccharides in ameliorating traumatic brain injury-induced cognitive impairment in mice. Future Sci OA 2026; 12: 2622241.
+13. Zhang X, Wang T, Liu Y, et al. Multi-Omics Profiling of mTBI-Induced Gut-Brain Axis Disruption: A Preliminary Study for Biomarker Screening and Mechanistic Exploration. Biomedicines 2026; 14. DOI: 10.3390/biomedicines14020311.
+14. Main BS, Villapol S, Buenaventura RG, et al. Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. Brain Behav Immun 2026; 135: 106511.
+15. Katramadou A, Bender ES and Kanakis D. From Traumatic Brain Injury to Alzheimer's Disease: Multilevel Biomechanical, Neurovascular, and Molecular Mechanisms with Emerging Therapeutic Directions. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27031570.
+16. Sun B, Zhang J, Li Z, et al. Role of damage-associated molecular patterns in the pathogenesis and therapeutics of traumatic brain injury. Burns Trauma 2025; 13: tkaf043.
+17. Doust YV, Rowe RK, Langley RC, et al. Worsened axonal injury and gliosis following diffuse brain injury in male and female mice with neurofilament light gene deletion. Exp Neurol 2026; 396: 115520.
+18. Kéri S. Diffusion Basis Restricted Fraction as a Putative Magnetic Resonance Imaging Marker of Neuroinflammation: Histological Evidence, Diagnostic Accuracy, and Translational Potential. Life (Basel) 2025; 15. DOI: 10.3390/life15101599.
+19. Fadon-Padilla L, Chu C, Liang Y, et al. A Modified Repetitive Closed Head Injury Model Inducing Persistent Neuroinflammation and Functional Deficits Without Extensive Cortical Tissue Destruction. J Neurotrauma 2026; 43: 485-500.
+20. Wang L, Zhou Q, Chen J, et al. NSUN6 promotes neuronal axon regeneration after traumatic brain injury by enhancing HMGB1 expression via m5C modification. Brain Res Bull 2025; 233: 111617.
+21. Eed A, Hamilton J, Xu X, et al. MRI investigation of orientation-dependent changes in microstructure and function in a mouse model of mild traumatic brain injury. Acta Neuropathol Commun 2025; 14: 8.
+22. Li M, Wang Y, Zhang Z, et al. MRI-DTI contributes to evaluating diffuse neural injury following repetitive mild traumatic brain injury. iScience 2025; 28: 114221.
+23. Wang Z, Zhang Z and Liu Z. Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude. Front Neurol 2025; 16: 1669136.
+24. Charan SPG, Parmar S, Saini J, et al. Isolated oculomotor nerve palsy following mild traumatic brain injury: diagnostic challenges and insights from High-Resolution MRI. Emerg Radiol 2025; 32: 909-920.
+25. Zhao X and He Z. Traumatic brain injury and Alzheimer's disease related neurodegenerative diseases: Insights from animal models. Neurosci Res 2025; 221: 104979.
+26. Chen W, Li S, Zhang T, et al. Metabolic pathway dysregulation in diffuse axonal injury: a multimodal biomarker approach for early diagnosis and mechanistic insights. Front Neurol 2025; 16: 1677730.
+27. Yang S, Kim S, Park U, et al. Quantitatively controlled and measured-traumatic brain injury impairs adult neurogenesis and alters neuropathological signatures in mice. Theranostics 2026; 16: 193-219.
+28. Bai B, Feng H, Yang H, et al. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Front Cell Neurosci 2026; 20: 1757822.
+29. Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.
+30. de Jager C, Ju J, Corbo M, et al. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Res Sq. Epub ahead of print 2026 Apr 9. DOI: 10.21203/rs.3.rs-9261231/v1.
+31. Wu J, Tang Y, Wang Y, et al. Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization. J Neuroimmune Pharmacol 2026; 21. DOI: 10.1007/s11481-026-10289-8.
+32. Mayer AR, Wick TV, Miller S, et al. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. J Cereb Blood Flow Metab. Epub ahead of print 2026 Apr 4. DOI: 10.1177/0271678X261432754.
+33. Elkhodair S, Lalor J, Altaher M, et al. Use of plasma-based brain biomarkers in the emergency department to rule out the need for unnecessary head CT imaging in acute mild traumatic brain injury patients. Am J Emerg Med 2026; 103: 152-156.
+34. Ahn S, Prock M, Seo JW, et al. Mapping the acute trajectory of sport-related concussion outcomes across symptoms, cognition, and blood biomarkers. Sports Med Health Sci 2026; 8: 119-127.
+35. Mononen M, Mohammadian M, Hossain I, et al. Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. Neuroimage Clin 2026; 49: 103934.
+36. Junkkari A, Korvenoja A, Huovinen A, et al. Traumatic Microbleeds in Mild Traumatic Brain Injury: Stability, Distribution, and Association with Other Injuries. J Neurotrauma 2026; 43: 363-372.
+37. Patil S, Kata R, Aydin S, et al. Clinical utility of diffusion tensor imaging in sport-related concussion: a systematic review. BJR Open 2025; 7: tzaf024.
+38. De Beir J, César A, Moinho R, et al. Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury. Cureus 2026; 18: e101649.
+39. Yue JK, Fu AY, Elguindy MM, et al. Neuroworsening from a normal Glasgow Coma Scale Motor Score in the emergency department is an early predictor of neurosurgical intervention, hospital outcomes, and longitudinal disability in traumatic brain injury: A TRACK-TBI Study. Injury. Epub ahead of print 2026 Feb 6. DOI: 10.1016/j.injury.2026.113089.
+40. Caroline Fernandes L, Sloboda DA, de Souza Nogueira L, et al. Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury. Brain Inj. Epub ahead of print 2026 Feb 7. DOI: 10.1080/02699052.2026.2625373.
+41. De Souza BJ, Wolf MS, Leonard JR, et al. Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study. Pediatr Res. Epub ahead of print 2026 Feb 19. DOI: 10.1038/s41390-026-04798-8.
+42. Narayan PA, Dutta G, Mayank R, et al. Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience. Ann Afr Med. Epub ahead of print 2026 Feb 20. DOI: 10.4103/aam.aam_668_25.
+43. Lord KM, Kekes-Szabo S, Sherlock P, et al. Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use. Cortex 2026; 197: 13-33.
+44. Malhotra AK, Nathens AB, Shakil H, et al. Predicting Return Home After Moderate-to-Severe Traumatic Brain Injury. Neurology 2026; 106: e214571.
+45. Lam TK, Rhind SG, Tenn C, et al. One is not like the other: Examining the neural response to repetitive low-level blast exposure in experienced military personnel. Neuroimage Rep 2026; 6: 100335.
+46. Harper MM, Jones MG, Gramlich OW, et al. Identification of immune cell subsets involved in retinal ganglion cell damage following blast exposure. Exp Eye Res 2026; 267: 110961.
+47. Di Battista AP, Shiu MY, Vartanian O, et al. Integrated Blood Biomarker and Neurobehavioural Signatures of Latent Neuroinjury in Experienced Military Breachers Exposed to Repetitive Low-Intensity Blast. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27020592.
+48. Herodes M and Garcia JM. Pituitary hormone abnormalities following military-related traumatic brain injuries. Growth Horm IGF Res 2026; 83: 101687.
+49. Emanuel OM, Miner AE, Lee SY, et al. Inflammation, Limbic White Matter Microstructure, and Clinical Symptoms in Retired American Football Players With Repetitive Head Impacts. Neurology 2026; 106: e214646.
+50. Criado-Marrero M, Ravi S, Barroso D, et al. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv. Epub ahead of print 2026 Mar 6. DOI: 10.64898/2026.03.04.709563.
+51. Kimura T, Masuda-Suzukake M, Hashimoto M, et al. Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. Acta Neuropathol Commun 2026; 14: 13.
+52. Bell NM, Xi Y, Cardoso da Fonseca N, et al. Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. Brain Connect. Epub ahead of print 2026 Feb 18. DOI: 10.1177/21580014261425220.

@@ -1191,7 +1191,7 @@
         "reopened"
       ],
       "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
-      "last_executed_at": "2026-04-19T11:08:17.065514+00:00",
+      "last_executed_at": "2026-04-19T12:08:37.763233+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -1211,12 +1211,12 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-19T11:08:17.065541+00:00",
+      "last_executed_at": "2026-04-19T12:08:37.763261+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-19T11:08:17.065548+00:00",
+    "updated_at": "2026-04-19T12:08:37.763267+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,

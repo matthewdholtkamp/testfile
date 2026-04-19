@@ -1,6 +1,6 @@
 # Draft Status
 
-- **Title:** Blood-Brain Barrier Failure as a biomarker-guided manuscript path in traumatic brain injury
+- **Title:** Blood-Brain Barrier Dysfunction as an Early Vascular Gate Linking Traumatic Brain Injury to Downstream Neuroinflammation
 - **Candidate:** Blood-Brain Barrier Failure biomarker panel
 - **Pack key:** most_informative_biomarker_panel_packet_blood_brain_barrier_failure
 - **Generated status:** ready_for_metadata_only

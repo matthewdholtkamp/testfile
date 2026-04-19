@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-19T11:08:17.099077+00:00",
+  "updated_at": "2026-04-19T12:08:37.880198+00:00",
   "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
   "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
   "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
@@ -317,7 +317,7 @@
     "open_entry_count": 0
   },
   "task_execution": {
-    "updated_at": "2026-04-19T11:08:17.098366+00:00",
+    "updated_at": "2026-04-19T12:08:37.879376+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,
