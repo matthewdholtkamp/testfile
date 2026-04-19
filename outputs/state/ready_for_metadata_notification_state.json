@@ -1,8 +1,13 @@
 {
-  "updated_at": "2026-04-18T21:04:06.672303+00:00",
-  "notified_docx_relative_paths": [],
-  "last_email_sent_at": "",
-  "last_email_subject": "[TBI Engine] Ready-for-metadata email test",
+  "updated_at": "2026-04-19T11:04:11.826153+00:00",
+  "notified_docx_relative_paths": [
+    "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
+    "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_blood_brain_barrier_failure.docx",
+    "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
+    "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx"
+  ],
+  "last_email_sent_at": "2026-04-19T11:04:11.826153+00:00",
+  "last_email_subject": "[TBI Engine] 4 manuscripts ready for metadata",
   "last_email_transport": "smtp",
   "last_test_email_sent_at": "2026-04-18T21:04:06.672303+00:00"
 }
