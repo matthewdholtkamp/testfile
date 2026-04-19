@@ -12,7 +12,7 @@
 
 ## Abstract
 
-This review synthesizes the current Phase 8 evidence pack around Mitochondrial / Bioenergetic Collapse. The current thesis is: Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es). The evidence chain links Mitochondrial / Bioenergetic Collapse to Mitochondrial ROS -> inflammasome activation, with downstream burden in Persistent Metabolic Dysfunction, Microglial Chronic Activation. The translational readout spine centers on PRKN with expected readouts Atp / bioenergetic rescue, Ros burden, Apoptosis pressure, Inflammasome spillover. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded..
+This review synthesizes the current Phase 8 evidence pack around Mitochondrial / Bioenergetic Collapse. The current thesis is: Use a PRKN-first perturbation packet because Parkin overexpression is already tied in this corpus to reduced mitochondrial dysfunction, apoptosis, and neurotoxicity, while CYBB remains the main challenger for ROS-driven inflammatory amplification. Current repo support: 3 full-text-like target-seed hit(s) and 3 exact target match(es). The evidence chain links Mitochondrial / Bioenergetic Collapse to Mitochondrial ROS -> inflammasome activation, with downstream burden in Persistent Metabolic Dysfunction, Microglial Chronic Activation. The translational readout spine centers on PRKN with expected readouts Atp / bioenergetic rescue, Ros burden, Apoptosis pressure, Inflammasome spillover. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded.
 
 ## Keywords
 
@@ -114,7 +114,7 @@ Current evidence gaps: The current packet needs stronger biomarker plus longitud
 
 This manuscript is currently targeted to Journal of Neurotrauma as a review because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around Atp / bioenergetic rescue, Ros burden, Apoptosis pressure, Inflammasome spillover.
 
-The draft should still remain bounded. Translation maturity is bounded, the next experimental move is Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window., and the current top blocker is Downstream lane is still seeded/provisional, so this transition should remain bounded.. These constraints should remain explicit rather than being smoothed away during prose cleanup.
+The draft should still remain bounded. Translation maturity is bounded, the next experimental move is Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window, and the current top blocker is Downstream lane is still seeded/provisional, so this transition should remain bounded. These constraints should remain explicit rather than being smoothed away during prose cleanup.
 
 The cohort and endotype context currently in scope is Acute Severe Vascular-Dominant, Chronic Mild Metabolic / White Matter Dominant, Chronic Severe Axonal / Network Decline. Use that context to keep the narrative specific about where the manuscript path appears strongest and where it remains only provisional.
 
@@ -131,44 +131,64 @@ The cohort and endotype context currently in scope is Acute Severe Vascular-Domi
 - Study found no significant correlation, contradicting the hypothesis of cumulative damage.
 - Object still needs denser direct support before it should be treated as hardened.
 
-## Transparency, Rigor and Reproducibility Summary Starter
+## Conclusion
 
-- No open journal-specific rigor fill packet entries are currently attached to this pack.
+In its current form, this review supports a bounded manuscript centered on Mitochondrial / Bioenergetic Collapse, with the strongest support concentrated in Mitochondrial / Bioenergetic Collapse and the most important boundary still carried in the limitations around Downstream lane is still seeded/provisional, so this transition should remain bounded.
+
+## Transparency, Rigor and Reproducibility Summary
+
+- This review was assembled from the linked Phase 1 through Phase 5 evidence chain and 47 cited source records in the current engine pack.
+- The synthesis stays anchored to Mitochondrial / Bioenergetic Collapse and Mitochondrial ROS -> inflammasome activation, with downstream burden carried through Persistent Metabolic Dysfunction, Microglial Chronic Activation.
+- Claims were retained only when they remained attached to explicit source support, and 21 contradiction or evidence-boundary item(s) are kept visible in Limitations rather than treated as resolved.
+- The translational packet remains intentionally bounded around PRKN; this manuscript does not claim intervention-ready efficacy and instead uses Phase 4 to prioritize readouts and future validation steps such as Test a PRKN-centered rescue packet with ATP, ROS, apoptosis, and NLRP3 / IL-1beta readouts across the acute-to-subacute window.
+- This review draft does not introduce a new prospective human-participant or animal experiment. Final author-approved metadata, funding, conflict, and repository details still need to be inserted before submission.
+
+## Acknowledgements
+
+Acknowledgements will be finalized before submission. Add any non-author contributions, editorial assistance, or institutional support that must be disclosed.
+
+## Author Contributions
+
+Author contributions will be finalized before submission. The final statement should assign roles for conceptualization, evidence curation, manuscript drafting, figure preparation, and supervision.
 
 ## Statements and Declarations
 
-### Funding
+### Ethical Considerations
 
-[Needed]
+This manuscript is currently structured as a review and evidence synthesis of published literature plus engine-generated evidence maps. It does not introduce a new prospective human-participant or animal experiment in its current form. If unpublished cohort data or new experimental results are added later, replace this statement with the correct approval language and identifiers.
 
-### Conflict of Interest
+### Consent to Participate
 
-[Needed]
+Not applicable for the current review draft.
 
-### Author Contributions
+### Consent for Publication
 
-[Needed]
+Not applicable for the current review draft because no new individual-level participant data are reported.
+
+### Declaration of Conflicting Interest
+
+[Insert the final author-approved conflict statement here. If no conflicts exist, use the journal-preferred no-conflict wording.]
+
+### Funding Statement
+
+[Insert the final funding statement here. If there was no external funding, say that explicitly.]
 
 ### Data Availability
 
-[Needed]
-
-### Ethics / Approvals
-
-[Needed]
+This review synthesizes published studies and engine-generated evidence maps. The current evidence bundle lists supporting PMIDs, contradiction registers, figure plans, and source-artifact manifests in the companion pack. Insert the final repository link, DOI, or access statement that should appear in the submitted manuscript.
 
 ## Figure and Table Plan
 
-- **Phase 1 to Phase 5 evidence chain for the manuscript path:** Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.
-- **Biomarker and readout panel for the lead translational packet:** Show the candidate biomarker panel, expected readouts, time windows, and sample types.
-- **Downstream burden and endotype context:** Show the progression objects (Persistent Metabolic Dysfunction, Microglial Chronic Activation) and the linked endotypes (Acute Severe Vascular-Dominant, Chronic Mild Metabolic / White Matter Dominant, Chronic Severe Axonal / Network Decline).
-- **Evidence boundaries and contradiction map:** Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.
+- Figure: Phase 1 to Phase 5 evidence chain for the manuscript path. Purpose: Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.
+- Figure: Biomarker and readout panel for the lead translational packet. Purpose: Show the candidate biomarker panel, expected readouts, time windows, and sample types.
+- Figure: Downstream burden and endotype context. Purpose: Show the progression objects (Persistent Metabolic Dysfunction, Microglial Chronic Activation) and the linked endotypes (Acute Severe Vascular-Dominant, Chronic Mild Metabolic / White Matter Dominant, Chronic Severe Axonal / Network Decline).
+- Figure: Evidence boundaries and contradiction map. Purpose: Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.
 
 ## Missing Metadata and Packaging Items
 
 - Operator metadata items still needed: 12
 - Content or rigor gaps still open: 0
-- See `missing_metadata_and_items.md` for the detailed working list.
+- See the Missing Metadata and Items checklist in the generated draft folder for the detailed working list.
 
 ## References
 

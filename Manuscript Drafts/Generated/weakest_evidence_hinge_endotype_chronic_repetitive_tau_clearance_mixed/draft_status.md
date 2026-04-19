@@ -3,8 +3,8 @@
 - **Title:** Tau / Proteinopathy Progression with DYRK1A-centered readouts in traumatic brain injury
 - **Candidate:** Clarify Chronic Repetitive Tau / Clearance Mixed
 - **Pack key:** weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed
-- **Generated status:** ready_for_metadata_only
-- **Ready for metadata only:** yes
+- **Generated status:** draft_generated_needs_metadata
+- **Ready for metadata only:** no
 - **Gate state:** ready to build phase 8 pack
 - **Primary journal:** Journal of Neurotrauma
 - **Recommended article type:** review

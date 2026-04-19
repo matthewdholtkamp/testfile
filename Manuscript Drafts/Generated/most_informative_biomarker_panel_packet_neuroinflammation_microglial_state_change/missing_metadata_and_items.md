@@ -1,7 +1,7 @@
 # Missing Metadata and Items
 
-- **Generated draft status:** ready_for_metadata_only
-- **Ready for metadata only:** yes
+- **Generated draft status:** draft_generated_needs_metadata
+- **Ready for metadata only:** no
 
 ## Operator-Supplied Metadata Still Needed
 

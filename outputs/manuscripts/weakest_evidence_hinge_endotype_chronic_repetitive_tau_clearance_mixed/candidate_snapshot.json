@@ -1160,7 +1160,7 @@
         "reopened"
       ],
       "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
-      "last_executed_at": "2026-04-19T10:56:04.092475+00:00",
+      "last_executed_at": "2026-04-19T11:08:17.098335+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -1180,12 +1180,12 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-19T10:56:04.092512+00:00",
+      "last_executed_at": "2026-04-19T11:08:17.098360+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-19T10:56:04.092519+00:00",
+    "updated_at": "2026-04-19T11:08:17.098366+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,
@@ -1239,8 +1239,8 @@
     "task_gap_count": 0,
     "rigor_gap_count": 0
   },
-  "ready_for_metadata_only": true,
-  "generated_draft_status": "ready_for_metadata_only",
+  "ready_for_metadata_only": false,
+  "generated_draft_status": "draft_generated_needs_metadata",
   "draft_output": {
     "folder_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
     "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
@@ -1260,8 +1260,8 @@
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
     "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
     "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-    "generated_draft_status": "ready_for_metadata_only",
-    "ready_for_metadata_only": true,
+    "generated_draft_status": "draft_generated_needs_metadata",
+    "ready_for_metadata_only": false,
     "missing_metadata_item_count": 12,
     "content_gap_count": 0
   },

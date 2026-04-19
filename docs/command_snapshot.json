@@ -946,7 +946,7 @@
     "reason": "Future slates use this panel as the default operator readout set."
   },
   "board_state": {
-    "snapshot_generated_at": "2026-04-19T10:56:04.467431+00:00",
+    "snapshot_generated_at": "2026-04-19T11:08:17.258659+00:00",
     "source_artifact_timestamps": {
       "process": "2026-03-29 02:26:55",
       "transition": "2026-03-29 02:26:56",
@@ -1012,13 +1012,13 @@
     }
   },
   "manuscript_queue": {
-    "generated_at": "2026-04-19T10:56:04.295023+00:00",
+    "generated_at": "2026-04-19T11:08:17.144610+00:00",
     "summary": {
       "active_count": 2,
       "watchlist_count": 2,
       "tracked_publications": 0,
       "ready_for_codex_draft_count": 0,
-      "ready_for_metadata_only_count": 4
+      "ready_for_metadata_only_count": 1
     },
     "connector_status": {
       "latest_enrichment_path": "reports/connector_enrichment_curated/connector_enrichment_curated_2026-03-26_062041.csv",
@@ -2239,7 +2239,7 @@
               "reopened"
             ],
             "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: Barrier readouts can improve in tissue without reducing leakage or downstream inflammatory spillover",
-            "last_executed_at": "2026-04-19T10:56:04.274454+00:00",
+            "last_executed_at": "2026-04-19T11:08:17.128030+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -2259,12 +2259,12 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-19T10:56:04.274483+00:00",
+            "last_executed_at": "2026-04-19T11:08:17.128107+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-19T10:56:04.274490+00:00",
+          "updated_at": "2026-04-19T11:08:17.128128+00:00",
           "total_tasks": 2,
           "status_counts": {
             "proposed": 0,
@@ -3541,7 +3541,7 @@
               "reopened"
             ],
             "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
-            "last_executed_at": "2026-04-19T10:56:04.280948+00:00",
+            "last_executed_at": "2026-04-19T11:08:17.133573+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -3561,12 +3561,12 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-19T10:56:04.280976+00:00",
+            "last_executed_at": "2026-04-19T11:08:17.133595+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-19T10:56:04.280983+00:00",
+          "updated_at": "2026-04-19T11:08:17.133601+00:00",
           "total_tasks": 2,
           "status_counts": {
             "proposed": 0,
@@ -3621,8 +3621,8 @@
           "task_gap_count": 0,
           "rigor_gap_count": 0
         },
-        "ready_for_metadata_only": true,
-        "generated_draft_status": "ready_for_metadata_only",
+        "ready_for_metadata_only": false,
+        "generated_draft_status": "draft_generated_needs_metadata",
         "draft_output": {
           "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
           "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
@@ -3642,8 +3642,8 @@
           "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
           "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
           "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
+          "generated_draft_status": "draft_generated_needs_metadata",
+          "ready_for_metadata_only": false,
           "missing_metadata_item_count": 12,
           "content_gap_count": 0
         },
@@ -4821,12 +4821,12 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-19T10:56:04.286469+00:00",
+            "last_executed_at": "2026-04-19T11:08:17.138206+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-19T10:56:04.286483+00:00",
+          "updated_at": "2026-04-19T11:08:17.138213+00:00",
           "total_tasks": 1,
           "status_counts": {
             "proposed": 0,
@@ -4881,8 +4881,8 @@
           "task_gap_count": 0,
           "rigor_gap_count": 0
         },
-        "ready_for_metadata_only": true,
-        "generated_draft_status": "ready_for_metadata_only",
+        "ready_for_metadata_only": false,
+        "generated_draft_status": "draft_generated_needs_metadata",
         "draft_output": {
           "folder_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
           "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
@@ -4902,8 +4902,8 @@
           "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
           "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
           "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
+          "generated_draft_status": "draft_generated_needs_metadata",
+          "ready_for_metadata_only": false,
           "missing_metadata_item_count": 12,
           "content_gap_count": 0
         },
@@ -6072,7 +6072,7 @@
               "reopened"
             ],
             "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
-            "last_executed_at": "2026-04-19T10:56:04.293827+00:00",
+            "last_executed_at": "2026-04-19T11:08:17.143511+00:00",
             "output_file": "task_outputs/resolve_lead_contradiction.md"
           },
           {
@@ -6092,12 +6092,12 @@
               "reopened"
             ],
             "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-            "last_executed_at": "2026-04-19T10:56:04.293856+00:00",
+            "last_executed_at": "2026-04-19T11:08:17.143530+00:00",
             "output_file": "task_outputs/tighten_primary_journal_fit.md"
           }
         ],
         "task_execution_summary": {
-          "updated_at": "2026-04-19T10:56:04.293863+00:00",
+          "updated_at": "2026-04-19T11:08:17.143535+00:00",
           "total_tasks": 2,
           "status_counts": {
             "proposed": 0,
@@ -6151,8 +6151,8 @@
           "task_gap_count": 0,
           "rigor_gap_count": 0
         },
-        "ready_for_metadata_only": true,
-        "generated_draft_status": "ready_for_metadata_only",
+        "ready_for_metadata_only": false,
+        "generated_draft_status": "draft_generated_needs_metadata",
         "draft_output": {
           "folder_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
           "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
@@ -6172,8 +6172,8 @@
           "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
           "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
           "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
+          "generated_draft_status": "draft_generated_needs_metadata",
+          "ready_for_metadata_only": false,
           "missing_metadata_item_count": 12,
           "content_gap_count": 0
         },
@@ -6232,8 +6232,8 @@
           "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
           "title": "Neuroinflammation / Microglial State Change biomarker panel",
           "manuscript_gate_state": "ready to build phase 8 pack",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
+          "generated_draft_status": "draft_generated_needs_metadata",
+          "ready_for_metadata_only": false,
           "active_lane": true,
           "watchlist_rank": null,
           "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
@@ -6260,8 +6260,8 @@
           "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
           "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
           "manuscript_gate_state": "ready to build phase 8 pack",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
+          "generated_draft_status": "draft_generated_needs_metadata",
+          "ready_for_metadata_only": false,
           "active_lane": false,
           "watchlist_rank": 1,
           "folder_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
@@ -6288,8 +6288,8 @@
           "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
           "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
           "manuscript_gate_state": "ready to build phase 8 pack",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
+          "generated_draft_status": "draft_generated_needs_metadata",
+          "ready_for_metadata_only": false,
           "active_lane": false,
           "watchlist_rank": 2,
           "folder_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
@@ -6340,90 +6340,6 @@
           "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
           "missing_metadata_item_count": 12,
           "content_gap_count": 0
-        },
-        {
-          "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
-          "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
-          "title": "Neuroinflammation / Microglial State Change biomarker panel",
-          "manuscript_gate_state": "ready to build phase 8 pack",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
-          "active_lane": true,
-          "watchlist_rank": null,
-          "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
-          "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
-          "status_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_status.md",
-          "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_status.md",
-          "target_journal_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/target_journal.md",
-          "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/target_journal.md",
-          "outline_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/comprehensive_outline.md",
-          "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/comprehensive_outline.md",
-          "missing_items_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
-          "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
-          "manuscript_draft_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
-          "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
-          "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
-          "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
-          "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
-          "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
-          "missing_metadata_item_count": 12,
-          "content_gap_count": 0
-        },
-        {
-          "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
-          "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
-          "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
-          "manuscript_gate_state": "ready to build phase 8 pack",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
-          "active_lane": false,
-          "watchlist_rank": 1,
-          "folder_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
-          "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
-          "status_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_status.md",
-          "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_status.md",
-          "target_journal_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/target_journal.md",
-          "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/target_journal.md",
-          "outline_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/comprehensive_outline.md",
-          "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/comprehensive_outline.md",
-          "missing_items_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
-          "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
-          "manuscript_draft_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
-          "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
-          "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
-          "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
-          "manifest_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
-          "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
-          "missing_metadata_item_count": 12,
-          "content_gap_count": 0
-        },
-        {
-          "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
-          "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
-          "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
-          "manuscript_gate_state": "ready to build phase 8 pack",
-          "generated_draft_status": "ready_for_metadata_only",
-          "ready_for_metadata_only": true,
-          "active_lane": false,
-          "watchlist_rank": 2,
-          "folder_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
-          "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
-          "status_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_status.md",
-          "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_status.md",
-          "target_journal_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/target_journal.md",
-          "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/target_journal.md",
-          "outline_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/comprehensive_outline.md",
-          "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/comprehensive_outline.md",
-          "missing_items_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
-          "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
-          "manuscript_draft_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
-          "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
-          "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-          "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-          "manifest_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
-          "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
-          "missing_metadata_item_count": 12,
-          "content_gap_count": 0
         }
       ]
     },
@@ -6453,90 +6369,6 @@
         "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_blood_brain_barrier_failure.docx",
         "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
         "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_blood_brain_barrier_failure/draft_manifest.json",
-        "missing_metadata_item_count": 12,
-        "content_gap_count": 0
-      },
-      {
-        "candidate_id": "most_informative_biomarker_panel--packet--neuroinflammation_microglial_state_change",
-        "pack_key": "most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
-        "title": "Neuroinflammation / Microglial State Change biomarker panel",
-        "manuscript_gate_state": "ready to build phase 8 pack",
-        "generated_draft_status": "ready_for_metadata_only",
-        "ready_for_metadata_only": true,
-        "active_lane": true,
-        "watchlist_rank": null,
-        "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
-        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
-        "status_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_status.md",
-        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_status.md",
-        "target_journal_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/target_journal.md",
-        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/target_journal.md",
-        "outline_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/comprehensive_outline.md",
-        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/comprehensive_outline.md",
-        "missing_items_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
-        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/missing_metadata_and_items.md",
-        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
-        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/manuscript_draft.md",
-        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
-        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
-        "manifest_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
-        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
-        "missing_metadata_item_count": 12,
-        "content_gap_count": 0
-      },
-      {
-        "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
-        "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
-        "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
-        "manuscript_gate_state": "ready to build phase 8 pack",
-        "generated_draft_status": "ready_for_metadata_only",
-        "ready_for_metadata_only": true,
-        "active_lane": false,
-        "watchlist_rank": 1,
-        "folder_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
-        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
-        "status_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_status.md",
-        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_status.md",
-        "target_journal_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/target_journal.md",
-        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/target_journal.md",
-        "outline_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/comprehensive_outline.md",
-        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/comprehensive_outline.md",
-        "missing_items_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
-        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/missing_metadata_and_items.md",
-        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
-        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/manuscript_draft.md",
-        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
-        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse.docx",
-        "manifest_relative_path": "Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
-        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/best_intervention_leverage_point_mitochondrial_bioenergetic_collapse/draft_manifest.json",
-        "missing_metadata_item_count": 12,
-        "content_gap_count": 0
-      },
-      {
-        "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
-        "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
-        "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
-        "manuscript_gate_state": "ready to build phase 8 pack",
-        "generated_draft_status": "ready_for_metadata_only",
-        "ready_for_metadata_only": true,
-        "active_lane": false,
-        "watchlist_rank": 2,
-        "folder_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
-        "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
-        "status_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_status.md",
-        "status_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_status.md",
-        "target_journal_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/target_journal.md",
-        "target_journal_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/target_journal.md",
-        "outline_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/comprehensive_outline.md",
-        "outline_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/comprehensive_outline.md",
-        "missing_items_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
-        "missing_items_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/missing_metadata_and_items.md",
-        "manuscript_draft_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
-        "manuscript_draft_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/manuscript_draft.md",
-        "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-        "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-        "manifest_relative_path": "Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
-        "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
         "missing_metadata_item_count": 12,
         "content_gap_count": 0
       }

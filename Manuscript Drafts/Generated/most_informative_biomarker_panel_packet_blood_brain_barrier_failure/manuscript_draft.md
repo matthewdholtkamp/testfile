@@ -12,7 +12,7 @@
 
 ## Abstract
 
-This review synthesizes the current Phase 8 evidence pack around Blood-Brain Barrier Failure. The current thesis is: Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology. The evidence chain links Blood-Brain Barrier Failure to BBB permeability increase -> peripheral immune infiltration, with downstream burden in Microglial Chronic Activation, Neurovascular Uncoupling. The translational readout spine centers on OCLN with expected readouts Barrier leakage, Ocln / cldn5 / tjp1 restoration, Cerebral blood flow, Downstream inflammatory spillover. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded..
+This review synthesizes the current Phase 8 evidence pack around Blood-Brain Barrier Failure. The current thesis is: Track OCLN, CLDN5, TJP1, Cerebral blood flow to test whether OCLN is moving the expected lane biology. The evidence chain links Blood-Brain Barrier Failure to BBB permeability increase -> peripheral immune infiltration, with downstream burden in Microglial Chronic Activation, Neurovascular Uncoupling. The translational readout spine centers on OCLN with expected readouts Barrier leakage, Ocln / cldn5 / tjp1 restoration, Cerebral blood flow, Downstream inflammatory spillover. The manuscript remains intentionally bounded: translation maturity is bounded, and the leading boundary is Downstream lane is still seeded/provisional, so this transition should remain bounded.
 
 ## Keywords
 
@@ -124,7 +124,7 @@ Current evidence gaps: The packet needs more direct cohort-level translation int
 
 This manuscript is currently targeted to Journal of Neurotrauma as a review because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around Barrier leakage, Ocln / cldn5 / tjp1 restoration, Cerebral blood flow, Downstream inflammatory spillover.
 
-The draft should still remain bounded. Translation maturity is bounded, the next experimental move is Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel., and the current top blocker is Downstream lane is still seeded/provisional, so this transition should remain bounded.. These constraints should remain explicit rather than being smoothed away during prose cleanup.
+The draft should still remain bounded. Translation maturity is bounded, the next experimental move is Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel, and the current top blocker is Downstream lane is still seeded/provisional, so this transition should remain bounded. These constraints should remain explicit rather than being smoothed away during prose cleanup.
 
 The cohort and endotype context currently in scope is Acute Mild Biomarker / Imaging Bridge, Acute Severe Vascular-Dominant, Acute Blast Vascular / Inflammatory Mixed, Subacute Repetitive Inflammatory-Dominant. Use that context to keep the narrative specific about where the manuscript path appears strongest and where it remains only provisional.
 
@@ -141,44 +141,64 @@ The cohort and endotype context currently in scope is Acute Mild Biomarker / Ima
 - no direct compound or trial attachment surfaced in this build
 - Acute biomarker spikes can reflect injury burden without resolving the dominant process, and imaging can remain subtle despite strong circulating markers.
 
-## Transparency, Rigor and Reproducibility Summary Starter
+## Conclusion
 
-- No open journal-specific rigor fill packet entries are currently attached to this pack.
+In its current form, this review supports a bounded manuscript centered on Blood-Brain Barrier Failure, with the strongest support concentrated in Blood-Brain Barrier Failure and the most important boundary still carried in the limitations around Downstream lane is still seeded/provisional, so this transition should remain bounded.
+
+## Transparency, Rigor and Reproducibility Summary
+
+- This review was assembled from the linked Phase 1 through Phase 5 evidence chain and 52 cited source records in the current engine pack.
+- The synthesis stays anchored to Blood-Brain Barrier Failure and BBB permeability increase -> peripheral immune infiltration, with downstream burden carried through Microglial Chronic Activation, Neurovascular Uncoupling.
+- Claims were retained only when they remained attached to explicit source support, and 18 contradiction or evidence-boundary item(s) are kept visible in Limitations rather than treated as resolved.
+- The translational packet remains intentionally bounded around OCLN; this manuscript does not claim intervention-ready efficacy and instead uses Phase 4 to prioritize readouts and future validation steps such as Run an acute-to-subacute BBB repair packet around OCLN with Evans blue or gadolinium leakage, CLDN5/OCLN/TJP1 restoration, and a downstream inflammatory spillover panel.
+- This review draft does not introduce a new prospective human-participant or animal experiment. Final author-approved metadata, funding, conflict, and repository details still need to be inserted before submission.
+
+## Acknowledgements
+
+Acknowledgements will be finalized before submission. Add any non-author contributions, editorial assistance, or institutional support that must be disclosed.
+
+## Author Contributions
+
+Author contributions will be finalized before submission. The final statement should assign roles for conceptualization, evidence curation, manuscript drafting, figure preparation, and supervision.
 
 ## Statements and Declarations
 
-### Funding
+### Ethical Considerations
 
-[Needed]
+This manuscript is currently structured as a review and evidence synthesis of published literature plus engine-generated evidence maps. It does not introduce a new prospective human-participant or animal experiment in its current form. If unpublished cohort data or new experimental results are added later, replace this statement with the correct approval language and identifiers.
 
-### Conflict of Interest
+### Consent to Participate
 
-[Needed]
+Not applicable for the current review draft.
 
-### Author Contributions
+### Consent for Publication
 
-[Needed]
+Not applicable for the current review draft because no new individual-level participant data are reported.
+
+### Declaration of Conflicting Interest
+
+[Insert the final author-approved conflict statement here. If no conflicts exist, use the journal-preferred no-conflict wording.]
+
+### Funding Statement
+
+[Insert the final funding statement here. If there was no external funding, say that explicitly.]
 
 ### Data Availability
 
-[Needed]
-
-### Ethics / Approvals
-
-[Needed]
+This review synthesizes published studies and engine-generated evidence maps. The current evidence bundle lists supporting PMIDs, contradiction registers, figure plans, and source-artifact manifests in the companion pack. Insert the final repository link, DOI, or access statement that should appear in the submitted manuscript.
 
 ## Figure and Table Plan
 
-- **Phase 1 to Phase 5 evidence chain for the manuscript path:** Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.
-- **Biomarker and readout panel for the lead translational packet:** Show the candidate biomarker panel, expected readouts, time windows, and sample types.
-- **Downstream burden and endotype context:** Show the progression objects (Microglial Chronic Activation, Neurovascular Uncoupling) and the linked endotypes (Acute Mild Biomarker / Imaging Bridge, Acute Severe Vascular-Dominant, Acute Blast Vascular / Inflammatory Mixed, Subacute Repetitive Inflammatory-Dominant).
-- **Evidence boundaries and contradiction map:** Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.
+- Figure: Phase 1 to Phase 5 evidence chain for the manuscript path. Purpose: Show how the selected manuscript path moves from lane anchor to causal bridge to progression burden to translational packet to endotype context.
+- Figure: Biomarker and readout panel for the lead translational packet. Purpose: Show the candidate biomarker panel, expected readouts, time windows, and sample types.
+- Figure: Downstream burden and endotype context. Purpose: Show the progression objects (Microglial Chronic Activation, Neurovascular Uncoupling) and the linked endotypes (Acute Mild Biomarker / Imaging Bridge, Acute Severe Vascular-Dominant, Acute Blast Vascular / Inflammatory Mixed, Subacute Repetitive Inflammatory-Dominant).
+- Figure: Evidence boundaries and contradiction map. Purpose: Show the main contradictions, evidence gaps, and source-quality boundaries that still limit the paper.
 
 ## Missing Metadata and Packaging Items
 
 - Operator metadata items still needed: 12
 - Content or rigor gaps still open: 0
-- See `missing_metadata_and_items.md` for the detailed working list.
+- See the Missing Metadata and Items checklist in the generated draft folder for the detailed working list.
 
 ## References
 

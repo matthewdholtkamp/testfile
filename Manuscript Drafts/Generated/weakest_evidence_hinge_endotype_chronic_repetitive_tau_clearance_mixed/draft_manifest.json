@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-19T10:56:04.133550+00:00",
+  "updated_at": "2026-04-19T11:08:17.111077+00:00",
   "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
   "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
   "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
   "draft_title": "Tau / Proteinopathy Progression with DYRK1A-centered readouts in traumatic brain injury",
-  "generated_draft_status": "ready_for_metadata_only",
-  "ready_for_metadata_only": true,
+  "generated_draft_status": "draft_generated_needs_metadata",
+  "ready_for_metadata_only": false,
   "primary_journal": {
     "journal": {
       "id": "journal-of-neurotrauma",
@@ -245,8 +245,8 @@
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed/draft_manifest.json",
     "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
     "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed.docx",
-    "generated_draft_status": "ready_for_metadata_only",
-    "ready_for_metadata_only": true,
+    "generated_draft_status": "draft_generated_needs_metadata",
+    "ready_for_metadata_only": false,
     "missing_metadata_item_count": 12,
     "content_gap_count": 0
   },

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-19T10:56:03.973355+00:00",
+  "updated_at": "2026-04-19T11:08:17.082686+00:00",
   "candidate_id": "best_intervention_leverage_point--mitochondrial_bioenergetic_collapse",
   "title": "Mitochondrial / Bioenergetic Collapse -> PRKN",
   "pack_key": "best_intervention_leverage_point_mitochondrial_bioenergetic_collapse",
@@ -355,7 +355,7 @@
     "open_entry_count": 0
   },
   "task_execution": {
-    "updated_at": "2026-04-19T10:56:03.972578+00:00",
+    "updated_at": "2026-04-19T11:08:17.081994+00:00",
     "total_tasks": 1,
     "status_counts": {
       "proposed": 0,

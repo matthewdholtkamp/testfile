@@ -1191,7 +1191,7 @@
         "reopened"
       ],
       "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: Study found no significant correlation, contradicting the hypothesis of cumulative damage.",
-      "last_executed_at": "2026-04-19T10:56:03.857397+00:00",
+      "last_executed_at": "2026-04-19T11:08:17.065514+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -1211,12 +1211,12 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-19T10:56:03.857427+00:00",
+      "last_executed_at": "2026-04-19T11:08:17.065541+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-19T10:56:03.857434+00:00",
+    "updated_at": "2026-04-19T11:08:17.065548+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,
@@ -1271,8 +1271,8 @@
     "task_gap_count": 0,
     "rigor_gap_count": 0
   },
-  "ready_for_metadata_only": true,
-  "generated_draft_status": "ready_for_metadata_only",
+  "ready_for_metadata_only": false,
+  "generated_draft_status": "draft_generated_needs_metadata",
   "draft_output": {
     "folder_relative_path": "Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
     "folder_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change",
@@ -1292,8 +1292,8 @@
     "manifest_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Generated/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change/draft_manifest.json",
     "ready_metadata_docx_relative_path": "Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
     "ready_metadata_docx_absolute_path": "/Users/matthewholtkamp/Documents/testfile/Manuscript Drafts/Ready for Metadata Only/most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change.docx",
-    "generated_draft_status": "ready_for_metadata_only",
-    "ready_for_metadata_only": true,
+    "generated_draft_status": "draft_generated_needs_metadata",
+    "ready_for_metadata_only": false,
     "missing_metadata_item_count": 12,
     "content_gap_count": 0
   },

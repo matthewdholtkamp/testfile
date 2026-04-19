@@ -3412,9 +3412,11 @@ def build_missing_metadata_packet(candidate, evidence_bundle):
             'manuscript_sections': entry.get('manuscript_sections') or [],
         })
     content_gap_count = len(open_tasks) + len(rigor_entries)
+    promotion_allowed = bool(candidate.get('is_active_path')) or int(candidate.get('scientific_strength') or 0) >= 3
     ready_for_metadata_only = (
         normalize(candidate.get('manuscript_gate_state')) == 'ready to build phase 8 pack'
         and content_gap_count == 0
+        and promotion_allowed
     )
     return {
         'metadata_items': metadata_items,
@@ -3688,6 +3690,7 @@ def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence
     rationale = normalize(row.get('decision_rationale') or row.get('rationale')) or 'No explicit decision rationale is recorded.'
     readouts = summarize_list(row.get('expected_readouts') or [])
     next_test = normalize(row.get('next_test')) or 'not recorded'
+    next_test_clause = next_test.rstrip('.')
     lead_phase1 = next((entry for entry in phase_entries if entry.get('phase_key') == 'phase1'), {})
     lead_phase2 = next((entry for entry in phase_entries if entry.get('phase_key') == 'phase2'), {})
     lead_phase4 = next((entry for entry in phase_entries if entry.get('phase_key') == 'phase4'), {})
@@ -3696,12 +3699,15 @@ def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence
     primary_target = normalize((lead_phase4.get('row') or {}).get('primary_target')) or 'the linked Phase 4 packet'
     article_type = candidate.get('recommended_article_type') or recommended_article_type(candidate)
     non_study_article = is_non_study_article_type(article_type)
+    contradiction_count = len(contradictions)
+    reference_count = len(references)
+    top_blocker_text = normalize(candidate.get('top_blocker') or 'not specified').rstrip('.')
     abstract_lines = [
         f"{candidate.get('theme_label') or candidate.get('title')} is the current manuscript path selected from the Phase 8 evidence pack.",
         f"The current thesis is: {statement}",
         f"The evidence chain links {lead_phase1.get('label') or 'the linked Phase 1 lane'} to {lead_phase2.get('label') or 'the linked Phase 2 bridge'}, with downstream burden in {phase3_labels}.",
         f"The translational readout spine centers on {primary_target} with expected readouts {readouts}.",
-        f"The manuscript remains intentionally bounded: translation maturity is {candidate.get('translation_maturity') or 'not specified'}, and the leading boundary is {candidate.get('top_blocker') or 'not specified'}.",
+        f"The manuscript remains intentionally bounded: translation maturity is {candidate.get('translation_maturity') or 'not specified'}, and the leading boundary is {top_blocker_text}.",
     ]
     if non_study_article:
         abstract_lines[0] = f"This {article_type} synthesizes the current Phase 8 evidence pack around {candidate.get('theme_label') or candidate.get('title')}."
@@ -3769,7 +3775,7 @@ def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence
         '',
         f"This manuscript is currently targeted to {primary_journal.get('name') or 'the current primary journal'} as a {candidate.get('recommended_article_type') or 'draft manuscript'} because the current evidence pack already carries a named thesis, a linked Phase 1 to Phase 5 chain, and a draft readout spine built around {readouts}.",
         '',
-        f"The draft should still remain bounded. Translation maturity is {candidate.get('translation_maturity') or 'not specified'}, the next experimental move is {next_test}, and the current top blocker is {candidate.get('top_blocker') or 'not specified'}. These constraints should remain explicit rather than being smoothed away during prose cleanup.",
+        f"The draft should still remain bounded. Translation maturity is {candidate.get('translation_maturity') or 'not specified'}, the next experimental move is {next_test_clause}, and the current top blocker is {top_blocker_text}. These constraints should remain explicit rather than being smoothed away during prose cleanup.",
         '',
         f"The cohort and endotype context currently in scope is {phase5_labels}. Use that context to keep the narrative specific about where the manuscript path appears strongest and where it remains only provisional.",
         '',
@@ -3781,53 +3787,90 @@ def build_full_manuscript_draft_markdown(candidate, row, phase_entries, evidence
             lines.append(f"- {issue['statement']}")
     else:
         lines.append('- No explicit contradiction register items are attached in the current pack.')
+    if non_study_article:
+        trr_lines = [
+            f"This {article_type} was assembled from the linked Phase 1 through Phase 5 evidence chain and {reference_count} cited source records in the current engine pack.",
+            f"The synthesis stays anchored to {lead_phase1.get('label') or 'the lead mechanism lane'} and {lead_phase2.get('label') or 'the lead causal bridge'}, with downstream burden carried through {phase3_labels}.",
+            f"Claims were retained only when they remained attached to explicit source support, and {contradiction_count} contradiction or evidence-boundary item(s) are kept visible in Limitations rather than treated as resolved.",
+            f"The translational packet remains intentionally bounded around {primary_target}; this manuscript does not claim intervention-ready efficacy and instead uses Phase 4 to prioritize readouts and future validation steps such as {next_test_clause}.",
+            'This review draft does not introduce a new prospective human-participant or animal experiment. Final author-approved metadata, funding, conflict, and repository details still need to be inserted before submission.',
+        ]
+        ethics_text = (
+            'This manuscript is currently structured as a review and evidence synthesis of published literature plus engine-generated evidence maps. '
+            'It does not introduce a new prospective human-participant or animal experiment in its current form. '
+            'If unpublished cohort data or new experimental results are added later, replace this statement with the correct approval language and identifiers.'
+        )
+        consent_to_participate = 'Not applicable for the current review draft.'
+        consent_for_publication = 'Not applicable for the current review draft because no new individual-level participant data are reported.'
+    else:
+        trr_lines = [
+            entry.get('draft_stub') or entry.get('needed_next') or entry.get('gap_label')
+            for entry in (evidence_bundle.get('journal_specific_rigor_fill_packet') or {}).get('entries')[:6]
+        ]
+        if not trr_lines:
+            trr_lines = ['No open journal-specific rigor fill packet entries are currently attached to this pack.']
+        ethics_text = '[Insert the study-specific ethics approval or waiver statement here.]'
+        consent_to_participate = '[Insert the consent-to-participate statement here.]'
+        consent_for_publication = '[Insert the consent-for-publication statement here.]'
     lines.extend([
         '',
-        '## Transparency, Rigor and Reproducibility Summary Starter',
+        '## Conclusion',
+        '',
+        f"In its current form, this {article_type} supports a bounded manuscript centered on {candidate.get('theme_label') or candidate.get('title')}, with the strongest support concentrated in {lead_phase1.get('label') or 'the lead lane'} and the most important boundary still carried in the limitations around {top_blocker_text or 'the downstream evidence chain'}.",
+        '',
+        '## Transparency, Rigor and Reproducibility Summary',
         '',
     ])
-    rigor_entries = (evidence_bundle.get('journal_specific_rigor_fill_packet') or {}).get('entries') or []
-    if rigor_entries:
-        for entry in rigor_entries[:6]:
-            lines.append(f"- {entry.get('draft_stub') or entry.get('needed_next') or entry.get('gap_label')}")
-    else:
-        lines.append('- No open journal-specific rigor fill packet entries are currently attached to this pack.')
+    for item in trr_lines:
+        lines.append(f"- {item}")
     lines.extend([
+        '',
+        '## Acknowledgements',
+        '',
+        'Acknowledgements will be finalized before submission. Add any non-author contributions, editorial assistance, or institutional support that must be disclosed.',
+        '',
+        '## Author Contributions',
+        '',
+        'Author contributions will be finalized before submission. The final statement should assign roles for conceptualization, evidence curation, manuscript drafting, figure preparation, and supervision.',
         '',
         '## Statements and Declarations',
         '',
-        '### Funding',
+        '### Ethical Considerations',
         '',
-        '[Needed]',
+        ethics_text,
         '',
-        '### Conflict of Interest',
+        '### Consent to Participate',
         '',
-        '[Needed]',
+        consent_to_participate,
         '',
-        '### Author Contributions',
+        '### Consent for Publication',
         '',
-        '[Needed]',
+        consent_for_publication,
+        '',
+        '### Declaration of Conflicting Interest',
+        '',
+        '[Insert the final author-approved conflict statement here. If no conflicts exist, use the journal-preferred no-conflict wording.]',
+        '',
+        '### Funding Statement',
+        '',
+        '[Insert the final funding statement here. If there was no external funding, say that explicitly.]',
         '',
         '### Data Availability',
         '',
-        '[Needed]',
-        '',
-        '### Ethics / Approvals',
-        '',
-        '[Needed]',
+        'This review synthesizes published studies and engine-generated evidence maps. The current evidence bundle lists supporting PMIDs, contradiction registers, figure plans, and source-artifact manifests in the companion pack. Insert the final repository link, DOI, or access statement that should appear in the submitted manuscript.',
         '',
         '## Figure and Table Plan',
         '',
     ])
     for figure in figures:
-        lines.append(f"- **{figure['title']}:** {figure['purpose']}")
+        lines.append(f"- Figure: {figure['title']}. Purpose: {figure['purpose']}")
     lines.extend([
         '',
         '## Missing Metadata and Packaging Items',
         '',
         f"- Operator metadata items still needed: {missing_packet.get('summary', {}).get('metadata_item_count', 0)}",
         f"- Content or rigor gaps still open: {missing_packet.get('summary', {}).get('content_gap_count', 0)}",
-        f"- See `{Path(candidate.get('draft_output', {}).get('missing_items_relative_path') or '').name or 'missing_metadata_and_items.md'}` for the detailed working list.",
+        '- See the Missing Metadata and Items checklist in the generated draft folder for the detailed working list.',
         '',
         '## References',
         '',

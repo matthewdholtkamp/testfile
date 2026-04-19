@@ -3,8 +3,8 @@
 - **Title:** Neuroinflammation / Microglial State Change as a biomarker-guided manuscript path in traumatic brain injury
 - **Candidate:** Neuroinflammation / Microglial State Change biomarker panel
 - **Pack key:** most_informative_biomarker_panel_packet_neuroinflammation_microglial_state_change
-- **Generated status:** ready_for_metadata_only
-- **Ready for metadata only:** yes
+- **Generated status:** draft_generated_needs_metadata
+- **Ready for metadata only:** no
 - **Gate state:** ready to build phase 8 pack
 - **Primary journal:** Journal of Neurotrauma
 - **Recommended article type:** review
