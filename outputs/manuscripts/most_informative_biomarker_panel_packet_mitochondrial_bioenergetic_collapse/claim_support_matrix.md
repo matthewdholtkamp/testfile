@@ -4,8 +4,8 @@
 
 - **Phase:** phase6
 - **Claim:** Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.
-- **Support status:** supported
-- **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
+- **Support status:** provisional
+- **Allowed language:** Use cautious, hypothesis-oriented wording and explicitly note boundedness.
 - **Artifact refs:** phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse
 - **Support PMIDs:** 41651694, 41926540, 41480492, 41576094, 41764101, 41648326, 41267966, 41876825, 41735605, 41153827, 41625091, 41103638, 41709060, 41069428, 41110648, 41129987, 41157305, 41175081, 41179995, 41039850
 - **Reference details:**

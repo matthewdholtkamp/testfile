@@ -36,7 +36,7 @@ The review logic is intentionally conservative: mechanistic and biomarker claims
 
 Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology. (PMIDs: 41651694, 41926540, 41480492, 41576094)
 
-Drafting rule: Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
+Drafting rule: Use cautious, hypothesis-oriented wording and explicitly note boundedness.
 
 Current contradiction notes: Study found no significant correlation, contradicting the hypothesis of cumulative damage. | Oxidative-stress markers may improve without real ATP rescue or downstream inflammasome relief | keep this packet tied to both mitochondrial and inflammatory readouts.
 

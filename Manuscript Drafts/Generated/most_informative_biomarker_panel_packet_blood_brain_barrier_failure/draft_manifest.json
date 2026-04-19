@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-19T14:29:22.375129+00:00",
+  "updated_at": "2026-04-19T14:32:44.880083+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
   "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
   "title": "Blood-Brain Barrier Failure biomarker panel",
@@ -265,7 +265,7 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+    "corpus_manifest_path": "",
     "journal_specific_rigor_profile_count": 0,
     "journal_specific_rigor_critical_gaps": 0,
     "journal_specific_rigor_fill_entries": 0

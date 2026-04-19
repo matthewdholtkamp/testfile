@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-19T14:29:22.987215+00:00",
+  "updated_at": "2026-04-19T14:32:47.817541+00:00",
   "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
   "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
   "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
@@ -266,20 +266,28 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-19_135639.csv",
+    "corpus_manifest_path": "",
     "journal_specific_rigor_profile_count": 0,
     "journal_specific_rigor_critical_gaps": 0,
     "journal_specific_rigor_fill_entries": 0
   },
   "connector_summary": {
-    "data_state": "no_connector_data_attached",
-    "matched_row_count": 0,
-    "latest_attached_at": "",
-    "sources": [],
-    "source_labels": [],
+    "data_state": "connector_data_attached",
+    "matched_row_count": 8,
+    "latest_attached_at": "2026-04-19T14:29:54Z",
+    "sources": [
+      {
+        "key": "open_targets",
+        "label": "Open Targets",
+        "count": 8
+      }
+    ],
+    "source_labels": [
+      "Open Targets"
+    ],
     "target_context": {
       "status": "provisional",
-      "source": "repo target-seed pack",
+      "source": "Open Targets + repo target-seed pack",
       "detail": "Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem."
     },
     "trial_context": {
@@ -296,7 +304,7 @@
       "state": "not_prepared",
       "imported_row_count": 0,
       "template_row_count": 0,
-      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-19_142913.csv"
+      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-19_143235.csv"
     }
   },
   "journal_specific_rigor": {
@@ -311,7 +319,7 @@
     "open_entry_count": 0
   },
   "task_execution": {
-    "updated_at": "2026-04-19T14:29:22.985870+00:00",
+    "updated_at": "2026-04-19T14:32:47.816457+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,
