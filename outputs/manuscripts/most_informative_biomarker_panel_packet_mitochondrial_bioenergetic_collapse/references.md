@@ -8,7 +8,7 @@
 
 2. Marcatti M, Labastida JA, Tang TZ, et al. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. Proc Natl Acad Sci U S A 2026; 123: e2527009123.
    - Source phases: phase6, phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse, phase1:mitochondrial_bioenergetic_collapse, phase4:mitochondrial_bioenergetic_collapse
    - Why included: Ranked manuscript candidate support. | Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.
 
@@ -44,7 +44,7 @@
 
 8. Baral H, Kumari D, Rahi V, et al. Endoplasmic Reticulum-Mitochondrial Crosstalk in Calcium Regulation: Mechanistic Insights and Therapeutic Implications in Traumatic Brain Injury. Mol Neurobiol 2026; 63. DOI: 10.1007/s12035-026-05818-8.
    - Source phases: phase6, phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse, phase1:mitochondrial_bioenergetic_collapse, phase4:mitochondrial_bioenergetic_collapse
    - Why included: Ranked manuscript candidate support. | Metabolic failure, ROS stress, mitophagy disruption, and mitochondrial apoptosis signals across the TBI trajectory.
 
@@ -200,7 +200,7 @@
 
 34. Cela E, Tweddell D, Daley M, et al. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. Inflamm Res 2026; 75. DOI: 10.1007/s00011-026-02209-6.
    - Source phases: phase5
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase5:acute_severe_vascular_dominant
    - Why included: This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI. | Cohort-supporting paper in linked endotype packet.
 
@@ -236,7 +236,7 @@
 
 40. Mavroudis I, Petridis F, Ciobîcă AS, et al. A structural network fingerprint of mild traumatic brain injury: a multi-study synthesis of T1-weighted MRI abnormalities. Front Hum Neurosci 2026; 20: 1800956.
    - Source phases: phase5
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase5:chronic_mild_metabolic_white_matter_dominant
    - Why included: This is the packet most likely to turn chronic mild TBI from a symptom bucket into a mechanistically distinct endotype with a different perturbation bias. | Cohort-supporting paper in linked endotype packet.
 

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-20T15:33:27.398178+00:00",
+  "updated_at": "2026-04-20T15:35:49.952144+00:00",
   "summary": {
     "active_count": 2,
     "watchlist_count": 2,
@@ -161,7 +161,7 @@
   },
   "draft_manifests": [
     {
-      "updated_at": "2026-04-20T15:33:27.194312+00:00",
+      "updated_at": "2026-04-20T15:35:49.747174+00:00",
       "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
       "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
       "title": "Blood-Brain Barrier Failure biomarker panel",
@@ -427,7 +427,7 @@
         "figure_count": 4,
         "section_packet_count": 5,
         "primary_journal_verified": true,
-        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-20_143435.csv",
+        "corpus_manifest_path": "",
         "journal_specific_rigor_profile_count": 0,
         "journal_specific_rigor_critical_gaps": 0,
         "journal_specific_rigor_fill_entries": 0
@@ -435,7 +435,7 @@
       "manuscript_gate_state": "ready to build phase 8 pack"
     },
     {
-      "updated_at": "2026-04-20T15:33:27.320229+00:00",
+      "updated_at": "2026-04-20T15:35:49.873989+00:00",
       "candidate_id": "most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
       "pack_key": "most_informative_biomarker_panel_endotype_subacute_repetitive_inflammatory_dominant",
       "title": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
@@ -701,7 +701,7 @@
         "figure_count": 4,
         "section_packet_count": 5,
         "primary_journal_verified": true,
-        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-20_143435.csv",
+        "corpus_manifest_path": "",
         "journal_specific_rigor_profile_count": 0,
         "journal_specific_rigor_critical_gaps": 0,
         "journal_specific_rigor_fill_entries": 0
@@ -709,7 +709,7 @@
       "manuscript_gate_state": "ready to build phase 8 pack"
     },
     {
-      "updated_at": "2026-04-20T15:33:27.351089+00:00",
+      "updated_at": "2026-04-20T15:35:49.905019+00:00",
       "candidate_id": "most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse",
       "pack_key": "most_informative_biomarker_panel_packet_mitochondrial_bioenergetic_collapse",
       "title": "Mitochondrial / Bioenergetic Collapse biomarker panel",
@@ -975,7 +975,7 @@
         "figure_count": 4,
         "section_packet_count": 5,
         "primary_journal_verified": true,
-        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-20_143435.csv",
+        "corpus_manifest_path": "",
         "journal_specific_rigor_profile_count": 0,
         "journal_specific_rigor_critical_gaps": 0,
         "journal_specific_rigor_fill_entries": 0
@@ -983,7 +983,7 @@
       "manuscript_gate_state": "ready to build phase 8 pack"
     },
     {
-      "updated_at": "2026-04-20T15:33:27.397310+00:00",
+      "updated_at": "2026-04-20T15:35:49.951279+00:00",
       "candidate_id": "weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed",
       "pack_key": "weakest_evidence_hinge_endotype_chronic_repetitive_tau_clearance_mixed",
       "title": "Clarify Chronic Repetitive Tau / Clearance Mixed",
@@ -1247,7 +1247,7 @@
         "figure_count": 4,
         "section_packet_count": 5,
         "primary_journal_verified": true,
-        "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-20_143435.csv",
+        "corpus_manifest_path": "",
         "journal_specific_rigor_profile_count": 0,
         "journal_specific_rigor_critical_gaps": 0,
         "journal_specific_rigor_fill_entries": 0

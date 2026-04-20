@@ -27,7 +27,7 @@
   ],
   "evidence_chain_complete": true,
   "is_active_path": false,
-  "last_pack_refresh": "2026-04-20 15:33:23",
+  "last_pack_refresh": "2026-04-20 15:35:46",
   "scientific_strength": 2,
   "journal_targets": {
     "primary": {
@@ -1087,14 +1087,22 @@
   "journal_fit": 4,
   "recommended_article_type": "review",
   "connector_summary": {
-    "data_state": "no_connector_data_attached",
-    "matched_row_count": 0,
-    "latest_attached_at": "",
-    "sources": [],
-    "source_labels": [],
+    "data_state": "connector_data_attached",
+    "matched_row_count": 8,
+    "latest_attached_at": "2026-04-20T15:34:24Z",
+    "sources": [
+      {
+        "key": "open_targets",
+        "label": "Open Targets",
+        "count": 8
+      }
+    ],
+    "source_labels": [
+      "Open Targets"
+    ],
     "target_context": {
       "status": "provisional",
-      "source": "repo target-seed pack",
+      "source": "Open Targets + repo target-seed pack",
       "detail": "Use a DYRK1A-first packet because the current TBI corpus already contains a direct perturbation anchor in which DYRK1A inhibition with SM07883 reduced tau burden and improved recovery, while NLRP3 and AQP4 remain important upstream challengers rather than the first tau-lane perturbation. Direct corpus signal: SM07883 treatment reduces RHI-induced tau hyperphosphorylation at Thr231 and Ser202 in the brainstem."
     },
     "trial_context": {
@@ -1111,7 +1119,7 @@
       "state": "not_prepared",
       "imported_row_count": 0,
       "template_row_count": 0,
-      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-20_153320.csv"
+      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-20_153543.csv"
     }
   },
   "evidence_bundle_summary": {
@@ -1121,7 +1129,7 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-20_143435.csv",
+    "corpus_manifest_path": "",
     "journal_specific_rigor_profile_count": 0,
     "journal_specific_rigor_critical_gaps": 0,
     "journal_specific_rigor_fill_entries": 0
@@ -1152,7 +1160,7 @@
         "reopened"
       ],
       "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.",
-      "last_executed_at": "2026-04-20T15:33:27.385395+00:00",
+      "last_executed_at": "2026-04-20T15:35:49.939467+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -1172,12 +1180,12 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-20T15:33:27.385423+00:00",
+      "last_executed_at": "2026-04-20T15:35:49.939497+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     }
   ],
   "task_execution_summary": {
-    "updated_at": "2026-04-20T15:33:27.385429+00:00",
+    "updated_at": "2026-04-20T15:35:49.939503+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,

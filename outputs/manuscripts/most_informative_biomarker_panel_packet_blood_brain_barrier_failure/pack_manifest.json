@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-20T15:33:27.184193+00:00",
+  "updated_at": "2026-04-20T15:35:49.736791+00:00",
   "candidate_id": "most_informative_biomarker_panel--packet--blood_brain_barrier_failure",
   "title": "Blood-Brain Barrier Failure biomarker panel",
   "pack_key": "most_informative_biomarker_panel_packet_blood_brain_barrier_failure",
@@ -340,20 +340,28 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-20_143435.csv",
+    "corpus_manifest_path": "",
     "journal_specific_rigor_profile_count": 0,
     "journal_specific_rigor_critical_gaps": 0,
     "journal_specific_rigor_fill_entries": 0
   },
   "connector_summary": {
-    "data_state": "template_only",
-    "matched_row_count": 0,
-    "latest_attached_at": "",
-    "sources": [],
-    "source_labels": [],
+    "data_state": "connector_data_attached",
+    "matched_row_count": 9,
+    "latest_attached_at": "2026-04-20T15:34:24Z",
+    "sources": [
+      {
+        "key": "open_targets",
+        "label": "Open Targets",
+        "count": 9
+      }
+    ],
+    "source_labels": [
+      "Open Targets"
+    ],
     "target_context": {
-      "status": "supported",
-      "source": "repo target-seed pack",
+      "status": "provisional",
+      "source": "Open Targets + repo target-seed pack",
       "detail": "Prioritize an OCLN-centered barrier-repair packet first because the current BBB target packets are strongest around OCLN, CLDN5, and TJP1, and this lane already anchors the BBB-to-immune-infiltration bridge. Direct corpus signal: The treatment repaired BBB structure and function."
     },
     "trial_context": {
@@ -370,7 +378,7 @@
       "state": "template_only",
       "imported_row_count": 0,
       "template_row_count": 1,
-      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-20_153320.csv"
+      "template_path": "reports/connector_candidate_manifest/templates/tenx_genomics_import_template_2026-04-20_153543.csv"
     }
   },
   "journal_specific_rigor": {
@@ -385,7 +393,7 @@
     "open_entry_count": 0
   },
   "task_execution": {
-    "updated_at": "2026-04-20T15:33:27.183198+00:00",
+    "updated_at": "2026-04-20T15:35:49.735819+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,

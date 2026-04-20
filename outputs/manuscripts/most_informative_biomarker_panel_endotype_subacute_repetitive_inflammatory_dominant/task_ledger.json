@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-04-20T15:33:27.310917+00:00",
+  "updated_at": "2026-04-20T15:35:49.864688+00:00",
   "summary": {
-    "updated_at": "2026-04-20T15:33:27.309417+00:00",
+    "updated_at": "2026-04-20T15:35:49.863180+00:00",
     "total_tasks": 2,
     "status_counts": {
       "proposed": 0,
@@ -34,7 +34,7 @@
         "reopened"
       ],
       "execution_note": "For review framing, the contradiction stack is carried explicitly as bounded limitation and future-work language rather than requiring experimental resolution before packaging. Lead issue: The packet needs more direct cohort-level translation into chronic outcomes and transcriptomic stratifiers.",
-      "last_executed_at": "2026-04-20T15:33:27.309379+00:00",
+      "last_executed_at": "2026-04-20T15:35:49.863137+00:00",
       "output_file": "task_outputs/resolve_lead_contradiction.md"
     },
     {
@@ -54,7 +54,7 @@
         "reopened"
       ],
       "execution_note": "Requirements check for Journal of Neurotrauma is fully aligned.",
-      "last_executed_at": "2026-04-20T15:33:27.309410+00:00",
+      "last_executed_at": "2026-04-20T15:35:49.863173+00:00",
       "output_file": "task_outputs/tighten_primary_journal_fit.md"
     }
   ]

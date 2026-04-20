@@ -26,7 +26,7 @@
 
 5. Criado-Marrero M, Ravi S, Barroso D, et al. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv. Epub ahead of print 2026 Mar 6. DOI: 10.64898/2026.03.04.709563.
    - Source phases: phase6, phase5
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase6:most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant, phase5:subacute_repetitive_inflammatory_dominant
    - Why included: Ranked manuscript candidate support. | This is the best current packet for distinguishing repetitive-TBI cohorts that may respond to inflammasome or glial-state perturbation before chronic tau biology hardens.
 
@@ -56,7 +56,7 @@
 
 10. Lu Z, Shuai Y, Wang C, et al. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. J Clin Invest. Epub ahead of print 2026 Apr 2. DOI: 10.1172/JCI196112.
    - Source phases: phase1, phase4
-   - Quality: abstract_only
+   - Quality: unknown
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
@@ -98,13 +98,13 @@
 
 17. Marcatti M, Labastida JA, Tang TZ, et al. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. Proc Natl Acad Sci U S A 2026; 123: e2527009123.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
 18. Bai B, Feng H, Yang H, et al. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Front Cell Neurosci 2026; 20: 1757822.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -128,13 +128,13 @@
 
 22. Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
 23. de Jager C, Ju J, Corbo M, et al. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Res Sq. Epub ahead of print 2026 Apr 9. DOI: 10.21203/rs.3.rs-9261231/v1.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -146,13 +146,13 @@
 
 25. Wu J, Tang Y, Wang Y, et al. Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization. J Neuroimmune Pharmacol 2026; 21. DOI: 10.1007/s11481-026-10289-8.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
 26. Mayer AR, Wick TV, Miller S, et al. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. J Cereb Blood Flow Metab. Epub ahead of print 2026 Apr 4. DOI: 10.1177/0271678X261432754.
    - Source phases: phase1, phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -229,17 +229,17 @@
 
 40. Wang Y, Yang N, Chen X, et al. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PLoS One 2026; 21: e0344993.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
 41. Ahmed ME, Suhail H, Nematullah M, et al. Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI. NeuroImmune Pharm Ther. Epub ahead of print 2026 Mar 2. DOI: 10.1515/nipt-2024-0019.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
 42. Li L, Lu T, Gao W, et al. Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury. Cell Commun Signal. Epub ahead of print 2026 Apr 9. DOI: 10.1186/s12964-026-02871-7.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
 43. Mazurek CY, Kaniuk JK and Ahuja CS. Mesenchymal stem cells and the central nervous system: historical perspectives and future directions. Front Mol Neurosci 2026; 19: 1742864.
@@ -329,7 +329,7 @@
 
 60. Wu D, Ma Y, Wang B, et al. Pathological Roles of Astrocytes in Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70856.
    - Source phases: phase4
-   - Quality: full_text_like
+   - Quality: unknown
    - Artifact refs: phase4:blood_brain_barrier_failure
 
 61. Wang Z, Zhang Z and Liu Z. Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude. Front Neurol 2025; 16: 1669136.
