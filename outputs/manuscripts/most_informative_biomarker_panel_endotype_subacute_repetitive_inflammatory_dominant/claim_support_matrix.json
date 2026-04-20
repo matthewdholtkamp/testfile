@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-19T14:32:45.023966+00:00",
+  "updated_at": "2026-04-20T15:33:27.315423+00:00",
   "claims": [
     {
       "claim_id": "phase6_candidate_thesis",
@@ -191,7 +191,7 @@
         "no direct compound or trial attachment surfaced in this build"
       ],
       "evidence_gaps": [],
-      "source_quality_mix": "lane 127 full-text-like / 28 abstract-only; direct target mentions 14 full-text-like / 3 abstract-only"
+      "source_quality_mix": "lane 128 full-text-like / 28 abstract-only; direct target mentions 14 full-text-like / 3 abstract-only"
     },
     {
       "claim_id": "phase4_blood_brain_barrier_failure",

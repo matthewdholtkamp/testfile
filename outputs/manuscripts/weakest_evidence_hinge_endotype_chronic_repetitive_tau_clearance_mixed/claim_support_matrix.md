@@ -16,7 +16,7 @@
   - Miettinen P, Utz B, Bañuelos-Cabrera I, et al. Glymphatic system and mild traumatic brain injury: a mini review. Front Neurosci 2025; 19: 1705690.
   - Zhao R, Dong S, Wu D, et al. A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. CNS Neurosci Ther 2025; 31: e70603.
   - Ma X, Da M, Huang W, et al. Alterations in white matter microstructure and glymphatic function in post-traumatic disorders of consciousness: impact on consciousness levels and prognosis. Neuroreport 2026; 37: 21-29.
-  - Are enlarged perivascular spaces a predictor of early post-traumatic seizures after traumatic brain injury?- A pilot study.
+  - Hlauschek G, Sinclair B, Sødal HF, et al. Are enlarged perivascular spaces a predictor of early post-traumatic seizures after traumatic brain injury?- A pilot study. Seizure 2026; 136: 86-92.
 - **Contradictions:** Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.
 
 ## Tau / Proteinopathy Progression
@@ -87,7 +87,7 @@
 - **Reference details:**
   - Miettinen P, Utz B, Bañuelos-Cabrera I, et al. Glymphatic system and mild traumatic brain injury: a mini review. Front Neurosci 2025; 19: 1705690.
   - Miyata M. [MRI-Based Insights into the Connection Between Traumatic Brain Injury, Glymphatic Dysfunction, and Neurodegenerative Disease]. Brain Nerve 2026; 78: 159-167.
-  - PMID:41747594
+  - Chen W, Wu ZC, Lin L, et al. Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. Int Immunopharmacol 2026; 175: 116415.
 - **Evidence gaps:** Some supporting rows are abstract-only and should be weighted cautiously. | Downstream lane is still seeded/provisional, so this transition should remain bounded. | Upstream lane still needs stronger longitudinal support.
 
 ## Neuroinflammation / microglial state change -> tau / proteinopathy progression
@@ -114,7 +114,7 @@
 - **Reference details:**
   - Mononen M, Mohammadian M, Hossain I, et al. Association of acute blood biomarkers with diffusion tensor imaging and outcome in patients with traumatic brain injury presenting with GCS of 13-15. Neuroimage Clin 2026; 49: 103934.
   - Dark HE, Kenney K, de Souza NL, et al. Plasma Biomarkers, Brain Volume, and Cognitive Performance in Service Members and Veterans With mTBI: A LIMBIC-CENC Study. JAMA Netw Open 2026; 9: e2559596.
-  - PMID:41747594
+  - Chen W, Wu ZC, Lin L, et al. Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. Int Immunopharmacol 2026; 175: 116415.
   - Kimura T, Masuda-Suzukake M, Hashimoto M, et al. Repetitive mild traumatic brain injury with the closed-head impact model of engineered rotational acceleration (CHIMERA) promotes tau pathology in tau transgenic mice and its propagation in brains injected with tau fibrils. Acta Neuropathol Commun 2026; 14: 13.
   - Katramadou A, Bender ES and Kanakis D. From Traumatic Brain Injury to Alzheimer's Disease: Multilevel Biomechanical, Neurovascular, and Molecular Mechanisms with Emerging Therapeutic Directions. Int J Mol Sci 2026; 27. DOI: 10.3390/ijms27031570.
   - Lora SJ, Rhind SG, Watling SE, et al. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain Commun 2026; 8: fcag070.
@@ -149,11 +149,11 @@
 - **Artifact refs:** phase3:cognitive_decline_phenotype
 - **Support PMIDs:** 41132417, 41157272, 41234125, 41300163, 41513584, 41564671, 41669533, 41709584
 - **Reference details:**
-  - PMID:41132417
+  - Kommireddy RS, Mehra S, Pompilus M, et al. Functional Connectivity, Tissue Microstructure, and T2 at 11.1 Tesla Distinguishes Neuroadaptive Differences in Two Traumatic Brain Injury Models in Rats: A Translational Outcomes Project in NeuroTrauma (TOP-NT) UG3 Phase Study. Neurotrauma Rep 2025; 6: 885-902.
   - Kéri S. Diffusion Basis Restricted Fraction as a Putative Magnetic Resonance Imaging Marker of Neuroinflammation: Histological Evidence, Diagnostic Accuracy, and Translational Potential. Life (Basel) 2025; 15. DOI: 10.3390/life15101599.
   - de Souza NL, Meng W, Vaida F, et al. Longitudinal neurocognitive outcomes in children with mild traumatic brain injury: An ABCD cohort analysis. J Int Neuropsychol Soc. Epub ahead of print 2025 Nov 14. DOI: 10.1017/S1355617725101537.
   - Bordón Guerra R, Peñate Castro W, Ferreiro Díaz-Velis E, et al. Tractography-Based Asymmetries in Acquired Brain Injury: Contributions to the Neuropsychological Profile and Rehabilitation in a Case-Series. Brain Sci 2025; 15. DOI: 10.3390/brainsci15111155.
-  - PMID:41513584
+  - Ouyang Z, Jiao B, Xiao X, et al. Head injury/traumatic brain injury and the risk of dementia: An observational and Mendelian randomization study. J Prev Alzheimers Dis 2026; 13: 100468.
   - Zhang J, Solar KG, Safar K, et al. The structural, functional, and neurophysiological connectome of mild traumatic brain injury: A DTI, fMRI and MEG multimodal clustering and data fusion study. Neuroimage Clin 2026; 49: 103946.
   - Marshall WJ, Conner AN, Key AP, et al. Resting-state EEG and machine learning to investigate cortical connectivity as a biomarker in chronic mTBI. Front Neurol 2025; 16: 1721726.
   - Bell NM, Xi Y, Cardoso da Fonseca N, et al. Understanding the Neural Connectivity Changes of Repetitive Head Impacts in Youth Football Players: A Cross-Sectional MEG Analysis. Brain Connect. Epub ahead of print 2026 Feb 18. DOI: 10.1177/21580014261425220.
@@ -252,6 +252,6 @@
   - Miettinen P, Utz B, Bañuelos-Cabrera I, et al. Glymphatic system and mild traumatic brain injury: a mini review. Front Neurosci 2025; 19: 1705690.
   - Zhao R, Dong S, Wu D, et al. A Drug Delivery to Improve Prognosis of Traumatic Brain Injury Mice Through Mouse-Derived Nerve Growth Factor Coated by a Nanoparticle. CNS Neurosci Ther 2025; 31: e70603.
   - Ma X, Da M, Huang W, et al. Alterations in white matter microstructure and glymphatic function in post-traumatic disorders of consciousness: impact on consciousness levels and prognosis. Neuroreport 2026; 37: 21-29.
-  - Are enlarged perivascular spaces a predictor of early post-traumatic seizures after traumatic brain injury?- A pilot study.
+  - Hlauschek G, Sinclair B, Sødal HF, et al. Are enlarged perivascular spaces a predictor of early post-traumatic seizures after traumatic brain injury?- A pilot study. Seizure 2026; 136: 86-92.
 - **Contradictions:** Tau and clearance signals can co-occur without proving directionality, and repetitive cohorts can still carry unresolved inflammatory pressure.
 - **Evidence gaps:** Direct cohort-level ties between clearance readouts, tau variants, and longitudinal function are still sparse.

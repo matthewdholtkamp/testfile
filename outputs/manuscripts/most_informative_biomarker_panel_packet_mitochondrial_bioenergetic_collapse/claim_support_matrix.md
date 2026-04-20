@@ -4,8 +4,8 @@
 
 - **Phase:** phase6
 - **Claim:** Track ATP, ROS, NfL, Bcl-2 to test whether PRKN is moving the expected lane biology.
-- **Support status:** provisional
-- **Allowed language:** Use cautious, hypothesis-oriented wording and explicitly note boundedness.
+- **Support status:** supported
+- **Allowed language:** Use affirmative language for the mechanism or pattern, while staying within the current artifact scope.
 - **Artifact refs:** phase6:most_informative_biomarker_panel--packet--mitochondrial_bioenergetic_collapse
 - **Support PMIDs:** 41651694, 41926540, 41480492, 41576094, 41764101, 41648326, 41267966, 41876825, 41735605, 41153827, 41625091, 41103638, 41709060, 41069428, 41110648, 41129987, 41157305, 41175081, 41179995, 41039850
 - **Reference details:**
@@ -122,7 +122,7 @@
   - De Beir J, César A, Moinho R, et al. Characterization and Prognostic Factors of Severe Pediatric Traumatic Brain Injury. Cureus 2026; 18: e101649.
   - Wang X, Xie R, Li M, et al. Explainable machine learning reveals multifactorial drivers of early intracranial hematoma progression in traumatic brain injury: development of a SHAP-guided SVM nomogram. Front Neurol 2026; 17: 1718794.
   - Yue JK, Fu AY, Elguindy MM, et al. Neuroworsening from a normal Glasgow Coma Scale Motor Score in the emergency department is an early predictor of neurosurgical intervention, hospital outcomes, and longitudinal disability in traumatic brain injury: A TRACK-TBI Study. Injury. Epub ahead of print 2026 Feb 6. DOI: 10.1016/j.injury.2026.113089.
-  - Caroline Fernandes L, Sloboda DA, de Souza Nogueira L, et al. Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury. Brain Inj. Epub ahead of print 2026 Feb 7. DOI: 10.1080/02699052.2026.2625373.
+  - Caroline Fernandes L, Sloboda DA, de Souza Nogueira L, et al. Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury. Brain Inj 2026; 40: 480-492.
   - De Souza BJ, Wolf MS, Leonard JR, et al. Aptamer-based proteomics in pediatric patients with severe traumatic brain injury: a pilot study. Pediatr Res. Epub ahead of print 2026 Feb 19. DOI: 10.1038/s41390-026-04798-8.
   - Narayan PA, Dutta G, Mayank R, et al. Epidemiology, Clinical Profiling, Management, and Functional Outcome in Moderate-to-Severe Traumatic Brain Injury in Children: A Single-center Experience. Ann Afr Med. Epub ahead of print 2026 Feb 20. DOI: 10.4103/aam.aam_668_25.
   - Lord KM, Kekes-Szabo S, Sherlock P, et al. Moderate-severe traumatic brain injury disrupts core mechanisms of online language processing and use. Cortex 2026; 197: 13-33.

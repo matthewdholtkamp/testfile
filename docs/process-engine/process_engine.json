@@ -1,9 +1,9 @@
 {
   "metadata": {
-    "generated_at": "2026-04-19_142915",
-    "claims_csv": "reports/investigation_claims_2026-04-19_142847.csv",
-    "edges_csv": "reports/investigation_edges_2026-04-19_142847.csv",
-    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-19_142847.csv"
+    "generated_at": "2026-04-20_153321",
+    "claims_csv": "reports/investigation_claims_2026-04-20_153248.csv",
+    "edges_csv": "reports/investigation_edges_2026-04-20_153248.csv",
+    "paper_qa_csv": "reports/post_extraction_paper_qa_2026-04-20_153248.csv"
   },
   "summary": {
     "lane_count": 6,
@@ -911,10 +911,10 @@
         "It likely consolidates upstream vascular and metabolic injury into chronic tissue-level damage, but specific transition edges belong in Phase 2."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 155,
-      "full_text_like_papers": 127,
+      "paper_count": 156,
+      "full_text_like_papers": 128,
       "abstract_only_papers": 28,
-      "claim_mentions": 316,
+      "claim_mentions": 317,
       "edge_mentions": 278,
       "unbucketed_mentions": 100,
       "supported_buckets": 0,
@@ -983,7 +983,7 @@
         },
         {
           "label": "astrocyte",
-          "count": 57
+          "count": 58
         },
         {
           "label": "neuron",
@@ -1013,7 +1013,7 @@
       "top_brain_regions": [
         {
           "label": "cortex",
-          "count": 195
+          "count": 196
         },
         {
           "label": "hippocampus",
@@ -1261,10 +1261,10 @@
         },
         "chronic": {
           "status": "provisional",
-          "paper_count": 22,
-          "full_text_like_papers": 17,
+          "paper_count": 23,
+          "full_text_like_papers": 18,
           "abstract_only_papers": 5,
-          "claim_mentions": 32,
+          "claim_mentions": 33,
           "edge_mentions": 18,
           "anchor_pmids": [
             "41511466",
@@ -1323,7 +1323,7 @@
             },
             {
               "label": "astrocyte",
-              "count": 4
+              "count": 5
             },
             {
               "label": "axon",
@@ -1337,7 +1337,7 @@
           "brain_region_cues": [
             {
               "label": "cortex",
-              "count": 14
+              "count": 15
             },
             {
               "label": "hippocampus",
@@ -1383,10 +1383,10 @@
         "Treat it as a tissue-consequence lane that also interacts with inflammatory and metabolic stress rather than as a purely downstream endpoint."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 147,
-      "full_text_like_papers": 108,
+      "paper_count": 148,
+      "full_text_like_papers": 109,
       "abstract_only_papers": 39,
-      "claim_mentions": 333,
+      "claim_mentions": 334,
       "edge_mentions": 206,
       "unbucketed_mentions": 114,
       "supported_buckets": 2,
@@ -1497,7 +1497,7 @@
         },
         {
           "label": "cortex",
-          "count": 71
+          "count": 72
         },
         {
           "label": "corpus callosum",
@@ -1735,10 +1735,10 @@
         },
         "chronic": {
           "status": "supported",
-          "paper_count": 41,
-          "full_text_like_papers": 32,
+          "paper_count": 42,
+          "full_text_like_papers": 33,
           "abstract_only_papers": 9,
-          "claim_mentions": 80,
+          "claim_mentions": 81,
           "edge_mentions": 48,
           "anchor_pmids": [
             "41157305",
@@ -1823,7 +1823,7 @@
             },
             {
               "label": "cortex",
-              "count": 10
+              "count": 11
             },
             {
               "label": "cingulum (ipsilateral)",
@@ -1853,11 +1853,11 @@
         "Treat it as a plausible bridge from early structural/vascular disruption into chronic clearance failure and protein accumulation."
       ],
       "lane_status": "longitudinally_seeded",
-      "paper_count": 91,
-      "full_text_like_papers": 71,
+      "paper_count": 92,
+      "full_text_like_papers": 72,
       "abstract_only_papers": 19,
-      "claim_mentions": 153,
-      "edge_mentions": 128,
+      "claim_mentions": 154,
+      "edge_mentions": 129,
       "unbucketed_mentions": 58,
       "supported_buckets": 0,
       "provisional_buckets": 3,
@@ -1925,7 +1925,7 @@
       "top_cell_states": [
         {
           "label": "astrocyte",
-          "count": 169
+          "count": 171
         },
         {
           "label": "neuron",
@@ -1959,7 +1959,7 @@
       "top_brain_regions": [
         {
           "label": "cortex",
-          "count": 85
+          "count": 87
         },
         {
           "label": "diffuse / multisite",
@@ -2207,11 +2207,11 @@
         },
         "chronic": {
           "status": "provisional",
-          "paper_count": 15,
-          "full_text_like_papers": 9,
+          "paper_count": 16,
+          "full_text_like_papers": 10,
           "abstract_only_papers": 5,
-          "claim_mentions": 21,
-          "edge_mentions": 22,
+          "claim_mentions": 22,
+          "edge_mentions": 23,
           "anchor_pmids": [
             "41700070",
             "41179995",
@@ -2219,8 +2219,8 @@
             "41651695",
             "41853047",
             "41739474",
-            "41511466",
-            "41756282"
+            "41974514",
+            "41511466"
           ],
           "example_signals": [
             {
@@ -2261,7 +2261,7 @@
           "cell_state_cues": [
             {
               "label": "astrocyte",
-              "count": 16
+              "count": 18
             },
             {
               "label": "neuron",
@@ -2275,7 +2275,7 @@
             },
             {
               "label": "cortex",
-              "count": 7
+              "count": 9
             },
             {
               "label": "diffuse / multisite",

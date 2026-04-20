@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-19T14:32:45.028957+00:00",
+  "updated_at": "2026-04-20T15:33:27.320229+00:00",
   "candidate_id": "most_informative_biomarker_panel--endotype--subacute_repetitive_inflammatory_dominant",
   "pack_key": "most_informative_biomarker_panel_endotype_subacute_repetitive_inflammatory_dominant",
   "title": "Subacute Repetitive Inflammatory-Dominant discriminator panel",
@@ -265,7 +265,7 @@
     "figure_count": 4,
     "section_packet_count": 5,
     "primary_journal_verified": true,
-    "corpus_manifest_path": "",
+    "corpus_manifest_path": "output/pubmed_tbi_manifest_2026-04-20_143435.csv",
     "journal_specific_rigor_profile_count": 0,
     "journal_specific_rigor_critical_gaps": 0,
     "journal_specific_rigor_fill_entries": 0

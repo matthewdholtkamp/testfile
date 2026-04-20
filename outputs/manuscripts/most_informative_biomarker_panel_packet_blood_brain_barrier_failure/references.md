@@ -2,7 +2,7 @@
 
 1. Bai B, Feng H, Yang H, et al. The GPR68-NINJ1 axis: an emerging mechano-chemical checkpoint in blood-brain barrier disruption-a hypothetical framework and therapeutic promise. Front Cell Neurosci 2026; 20: 1757822.
    - Source phases: phase6, phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -32,13 +32,13 @@
 
 6. Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.
    - Source phases: phase6, phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
 7. de Jager C, Ju J, Corbo M, et al. Spatial Transcriptomics and Dual Dye Mapping Identify Wnt-Driven BBB Protection in Endothelial EphA4-Deficiency. Res Sq. Epub ahead of print 2026 Apr 9. DOI: 10.21203/rs.3.rs-9261231/v1.
    - Source phases: phase6, phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -50,13 +50,13 @@
 
 9. Wu J, Tang Y, Wang Y, et al. Ganoderic Acid a Promotes Functional Recovery After Traumatic Brain Injury By Protecting Blood-brain Barrier Integrity and Modulating Microglial Polarization. J Neuroimmune Pharmacol 2026; 21. DOI: 10.1007/s11481-026-10289-8.
    - Source phases: phase6, phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
 10. Mayer AR, Wick TV, Miller S, et al. Mechanisms and barriers for understanding neural abundant protein efflux following traumatic brain injury. J Cereb Blood Flow Metab. Epub ahead of print 2026 Apr 4. DOI: 10.1177/0271678X261432754.
    - Source phases: phase6, phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase1:blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support. | Vascular barrier disruption and neurovascular-unit failure across acute, subacute, and chronic TBI trajectories.
 
@@ -86,7 +86,7 @@
 
 15. Wu D, Ma Y, Wang B, et al. Pathological Roles of Astrocytes in Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70856.
    - Source phases: phase6, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase6:most_informative_biomarker_panel--packet--blood_brain_barrier_failure, phase4:blood_brain_barrier_failure
    - Why included: Ranked manuscript candidate support.
 
@@ -212,7 +212,7 @@
 
 36. Stavitz J, Swan K Jr, Eckart A, et al. Evolution of Multifaceted Sport-Related Concussion Management: A 25-Year Narrative Review of Multidomain Assessment and Multimodal Rehabilitation. Sports (Basel) 2026; 14. DOI: 10.3390/sports14030112.
    - Source phases: phase5
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase5:acute_mild_biomarker_imaging_bridge
    - Why included: This is the best early endotype packet for not treating all concussive or mild injury as one disease in the first hours to days. | Cohort-supporting paper in linked endotype packet.
 
@@ -234,7 +234,7 @@
    - Artifact refs: phase5:acute_severe_vascular_dominant
    - Why included: This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI. | Cohort-supporting paper in linked endotype packet.
 
-40. Caroline Fernandes L, Sloboda DA, de Souza Nogueira L, et al. Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury. Brain Inj. Epub ahead of print 2026 Feb 7. DOI: 10.1080/02699052.2026.2625373.
+40. Caroline Fernandes L, Sloboda DA, de Souza Nogueira L, et al. Prognostic ability of salivary S100B in predicting unfavorable outcomes in patients with moderate and severe traumatic brain injury. Brain Inj 2026; 40: 480-492.
    - Source phases: phase5
    - Quality: unknown
    - Artifact refs: phase5:acute_severe_vascular_dominant
@@ -260,7 +260,7 @@
 
 44. Cela E, Tweddell D, Daley M, et al. Multi-dimensional plasma proteomic profiling elucidates molecular mechanisms and pathophysiological networks in pediatric severe traumatic brain injury. Inflamm Res 2026; 75. DOI: 10.1007/s00011-026-02209-6.
    - Source phases: phase5
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase5:acute_severe_vascular_dominant
    - Why included: This is the cleanest current endotype for deciding whether barrier repair and vascular stabilization should outrank broader anti-inflammatory logic in acute severe TBI. | Cohort-supporting paper in linked endotype packet.
 
@@ -290,7 +290,7 @@
 
 49. Wang Y, Yang N, Chen X, et al. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PLoS One 2026; 21: e0344993.
    - Source phases: phase5
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase5:acute_blast_vascular_inflammatory_mixed
    - Why included: Blast cohorts are easy to lump into generic TBI groups, but they may represent the clearest case where mixed dominant-process labels are necessary. | Cohort-supporting paper in linked endotype packet.
 
@@ -302,7 +302,7 @@
 
 51. Criado-Marrero M, Ravi S, Barroso D, et al. PERK Deficiency Amplifies Molecular, Structural, and Network Vulnerability to Repetitive Mild Traumatic Brain Injury. bioRxiv. Epub ahead of print 2026 Mar 6. DOI: 10.64898/2026.03.04.709563.
    - Source phases: phase5
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase5:subacute_repetitive_inflammatory_dominant
    - Why included: This is the best current packet for distinguishing repetitive-TBI cohorts that may respond to inflammasome or glial-state perturbation before chronic tau biology hardens. | Cohort-supporting paper in linked endotype packet.
 

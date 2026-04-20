@@ -42,7 +42,7 @@
    - Artifact refs: phase6:weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed, phase5:chronic_repetitive_tau_clearance_mixed
    - Why included: Ranked manuscript candidate support. | This is the strongest current packet for testing whether repetitive-impact cohorts need a clearance-first or tau-first translational logic instead of a generic inflammatory one.
 
-8. Are enlarged perivascular spaces a predictor of early post-traumatic seizures after traumatic brain injury?- A pilot study.
+8. Hlauschek G, Sinclair B, Sødal HF, et al. Are enlarged perivascular spaces a predictor of early post-traumatic seizures after traumatic brain injury?- A pilot study. Seizure 2026; 136: 86-92.
    - Source phases: phase6, phase5
    - Quality: unknown
    - Artifact refs: phase6:weakest_evidence_hinge--endotype--chronic_repetitive_tau_clearance_mixed, phase5:chronic_repetitive_tau_clearance_mixed
@@ -68,7 +68,7 @@
 
 12. Lora SJ, Rhind SG, Watling SE, et al. Tau-PET imaging and blood biomarkers reveal early tauopathy in special operations forces exposed to repetitive blast. Brain Commun 2026; 8: fcag070.
    - Source phases: phase1, phase2, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:tau_proteinopathy_progression, phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction, phase4:tau_proteinopathy_progression
    - Why included: Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline. | Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.
 
@@ -84,7 +84,7 @@
    - Artifact refs: phase1:tau_proteinopathy_progression, phase2:neuroinflammation_to_tau_proteinopathy_progression, phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction, phase3:tauopathy_progression, phase4:tau_proteinopathy_progression, phase4:glymphatic_astroglial_clearance_failure, phase4:neuroinflammation_microglial_state_change
    - Why included: Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline. | Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.
 
-15. 
+15. Do TS, Carnes C, Yang Z, et al. Serum biomarker trajectory clusters predict functional outcome and quality of life for traumatic brain injury. Brain Commun 2026; 8: fcag055.
    - Source phases: phase1, phase4
    - Quality: unknown
    - Artifact refs: phase1:tau_proteinopathy_progression, phase4:tau_proteinopathy_progression
@@ -92,7 +92,7 @@
 
 16. Nguyen F and Shetty AK. Post-traumatic stress disorder: pathogenesis, epidemiological characteristics, animal models, and potential therapeutic strategies. Mil Med Res 2026; 13: 100005.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:tau_proteinopathy_progression, phase4:tau_proteinopathy_progression
    - Why included: Tau accumulation, neurofibrillary pathology, and proteinopathy-linked degeneration across the TBI timeline.
 
@@ -104,13 +104,13 @@
 
 18. Wu D, Ma Y, Wang B, et al. Pathological Roles of Astrocytes in Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70856.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:glymphatic_astroglial_clearance_failure, phase4:glymphatic_astroglial_clearance_failure
    - Why included: AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.
 
 19. Lilova RL, Bernas T, Ryu J, et al. Water channel changes in astrocytes associated with buprenorphine administration in a rat model of diffuse traumatic brain injury. Res Sq. Epub ahead of print 2026 Mar 30. DOI: 10.21203/rs.3.rs-9152535/v1.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:glymphatic_astroglial_clearance_failure, phase4:glymphatic_astroglial_clearance_failure
    - Why included: AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.
 
@@ -126,7 +126,7 @@
    - Artifact refs: phase1:glymphatic_astroglial_clearance_failure, phase4:glymphatic_astroglial_clearance_failure, phase4:neuroinflammation_microglial_state_change
    - Why included: AQP4 polarization, glymphatic flow, and astroglial clearance disruption across the TBI timeline.
 
-22. 
+22. Rauk Z, Maciak P, Setkowicz Z, et al. β-hydroxybutyrate Modulates Neuroinflammatory Responses and Astrocyte Reactivity in an In Vitro Model of Traumatic Brain Injury. Mol Neurobiol 2026; 63. DOI: 10.1007/s12035-026-05759-2.
    - Source phases: phase1, phase4
    - Quality: unknown
    - Artifact refs: phase1:glymphatic_astroglial_clearance_failure, phase4:glymphatic_astroglial_clearance_failure
@@ -152,7 +152,7 @@
 
 26. Lu Z, Shuai Y, Wang C, et al. Aging-dependent microglial heterogeneity worsens outcomes in models of traumatic brain injury. J Clin Invest. Epub ahead of print 2026 Apr 2. DOI: 10.1172/JCI196112.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: abstract_only
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
@@ -188,11 +188,11 @@
 
 32. Marcatti M, Labastida JA, Tang TZ, et al. Neuron-derived mitochondrial DNA (mtDNA) activates microglia via the Z-DNA binding protein 1 (ZBP1)-mediated pathway in mild traumatic brain injury. Proc Natl Acad Sci U S A 2026; 123: e2527009123.
    - Source phases: phase1, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase1:neuroinflammation_microglial_state_change, phase4:neuroinflammation_microglial_state_change
    - Why included: Innate immune activation, cytokine signaling, and microglial state transitions following TBI.
 
-33. 
+33. Chen W, Wu ZC, Lin L, et al. Effect of intranasal treatment with NAMPT-EVs on acetylated tau and cognitive function in mice with repeated controlled cortical injury. Int Immunopharmacol 2026; 175: 116415.
    - Source phases: phase2, phase4
    - Quality: unknown
    - Artifact refs: phase2:glymphatic_failure_to_tau_protein_accumulation, phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction, phase4:tau_proteinopathy_progression, phase4:glymphatic_astroglial_clearance_failure
@@ -212,7 +212,7 @@
 
 36. Huang YQ, Zhong CY, Burley G, et al. Tissue-Derived Small Extracellular Vesicles: Emerging Regulators of Inter-Organ Crosstalk in Health and Disease. Metabolites 2026; 16. DOI: 10.3390/metabo16030148.
    - Source phases: phase2, phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase2:tau_proteinopathy_progression_to_chronic_network_dysfunction, phase4:tau_proteinopathy_progression
    - Why included: Transition has at least one direct edge-backed anchor, but the evidence is not yet dense enough to harden it.
 
@@ -228,7 +228,7 @@
    - Artifact refs: phase3:tauopathy_progression, phase4:tau_proteinopathy_progression, phase4:glymphatic_astroglial_clearance_failure, phase4:neuroinflammation_microglial_state_change
    - Why included: Tauopathy progression is one of the clearest bridges from repeated injury biology into chronic neurodegenerative trajectory risk.
 
-39. 
+39. Kommireddy RS, Mehra S, Pompilus M, et al. Functional Connectivity, Tissue Microstructure, and T2 at 11.1 Tesla Distinguishes Neuroadaptive Differences in Two Traumatic Brain Injury Models in Rats: A Translational Outcomes Project in NeuroTrauma (TOP-NT) UG3 Phase Study. Neurotrauma Rep 2025; 6: 885-902.
    - Source phases: phase3, phase4
    - Quality: unknown
    - Artifact refs: phase3:cognitive_decline_phenotype, phase4:tau_proteinopathy_progression
@@ -246,7 +246,7 @@
    - Artifact refs: phase3:cognitive_decline_phenotype, phase4:tau_proteinopathy_progression
    - Why included: Cognitive decline is the downstream phenotype that makes the rest of the process engine clinically meaningful rather than merely mechanistic.
 
-42. 
+42. Ouyang Z, Jiao B, Xiao X, et al. Head injury/traumatic brain injury and the risk of dementia: An observational and Mendelian randomization study. J Prev Alzheimers Dis 2026; 13: 100468.
    - Source phases: phase3, phase4
    - Quality: unknown
    - Artifact refs: phase3:cognitive_decline_phenotype, phase4:tau_proteinopathy_progression
@@ -300,7 +300,7 @@
    - Artifact refs: phase3:microglial_chronic_activation, phase4:neuroinflammation_microglial_state_change
    - Why included: Chronic microglial activation is a plausible sustaining object that keeps acute injury biology alive long enough to drive later degeneration.
 
-51. 
+51. Rajan RK. A comprehensive review on adaptive plasticity and recovery mechanisms post-acquired brain injury. Neuroprotection 2025; 3: 226-252.
    - Source phases: phase4
    - Quality: unknown
    - Artifact refs: phase4:tau_proteinopathy_progression
@@ -310,7 +310,7 @@
    - Quality: unknown
    - Artifact refs: phase4:tau_proteinopathy_progression
 
-53. 
+53. Bondi CO, Capeci HE, Donald HM, et al. A decade of progress (2014-2025): Environmental enrichment as a validated preclinical model of neurorehabilitation for traumatic brain injury. Neural Regen Res. Epub ahead of print 2026 Jan 27. DOI: 10.4103/NRR.NRR-D-25-01392.
    - Source phases: phase4
    - Quality: unknown
    - Artifact refs: phase4:tau_proteinopathy_progression
@@ -325,7 +325,7 @@
    - Quality: unknown
    - Artifact refs: phase4:tau_proteinopathy_progression
 
-56. 
+56. Xia J, Sun CY, Su T, et al. Triggering Receptor Expressed on Myeloid Cell 2-Mediated Microglial Phagocytosis in the Subacute Phase of Traumatic Brain Injury Exacerbates Impaired Memory. J Neurotrauma 2026; 43: 317-340.
    - Source phases: phase4
    - Quality: unknown
    - Artifact refs: phase4:tau_proteinopathy_progression
@@ -350,19 +350,19 @@
    - Quality: unknown
    - Artifact refs: phase4:glymphatic_astroglial_clearance_failure
 
-61. 
+61. Zhang Q, Zhang Y, Song Z, et al. Elucidating Trigonelline's Therapeutic Mechanisms for Traumatic Brain Injury Through Integrated Network Pharmacology and In Vivo Validation. CNS Neurosci Ther 2026; 32: e70803.
    - Source phases: phase4
    - Quality: unknown
    - Artifact refs: phase4:glymphatic_astroglial_clearance_failure
 
 62. Wu Y, Sun Y, Chen J, et al. Small extracellular vesicle-integrated by herbal hydrogels for spatiotemporal immunomodulation and neurovascular repair following traumatic brain injury. Bioact Mater 2026; 62: 139-156.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:glymphatic_astroglial_clearance_failure
 
 63. Chen Y, Yin X, Zhang E, et al. Astrocyte-Derived Exosomal miR-211-5p Alleviates Blood-Brain Barrier Injury in a Rat Model of Traumatic Brain Injury. CNS Neurosci Ther 2026; 32: e70858.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:glymphatic_astroglial_clearance_failure
 
 64. Wang Z, Zhang Z and Liu Z. Association of hemoglobin variation and hospital mortality in patients with traumatic brain injury at high altitude. Front Neurol 2025; 16: 1669136.
@@ -432,17 +432,17 @@
 
 77. Wang Y, Yang N, Chen X, et al. Impact of blast exposure on visual pathway: Mechanism exploration and novel diagnostic perspectives. PLoS One 2026; 21: e0344993.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
 78. Ahmed ME, Suhail H, Nematullah M, et al. Loss of AMPK potentiates inflammation by activating the infammasome in a preclinical mouse model of TBI. NeuroImmune Pharm Ther. Epub ahead of print 2026 Mar 2. DOI: 10.1515/nipt-2024-0019.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
 79. Li L, Lu T, Gao W, et al. Hematopoietic cell kinase regulates microglial/macrophage activation to drive neuroinflammation after traumatic brain injury. Cell Commun Signal. Epub ahead of print 2026 Apr 9. DOI: 10.1186/s12964-026-02871-7.
    - Source phases: phase4
-   - Quality: unknown
+   - Quality: full_text_like
    - Artifact refs: phase4:neuroinflammation_microglial_state_change
 
 80. Main BS, Villapol S, Buenaventura RG, et al. Peripheral macrophages and T-cells accumulate in the degenerating optic tract after repetitive head impact. Brain Behav Immun 2026; 135: 106511.
